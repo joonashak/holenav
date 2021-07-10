@@ -1,9 +1,16 @@
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
-import IconButton from "@material-ui/core/IconButton";
+import {
+  makeStyles,
+  Theme,
+  AppBar,
+  Toolbar,
+  IconButton,
+  Typography,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+} from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
-import { makeStyles, Theme } from "@material-ui/core";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
 const useStyles = makeStyles((theme: Theme) => ({
   container: {
@@ -27,6 +34,42 @@ export default () => {
           <Typography variant="h6">J123456 - K5A ABC</Typography>
         </Toolbar>
       </AppBar>
+      <Accordion>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="system-info-content"
+          id="system-info-header"
+        >
+          <Typography>System: Class 5 - Pulsar</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Typography>Region, effects, activity stats, etc.</Typography>
+        </AccordionDetails>
+      </Accordion>
+      <Accordion>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="scanning-content"
+          id="scanning-header"
+        >
+          <Typography>Scanning: 5 sigs (10 anoms)</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Typography>Sigs and anoms editable list</Typography>
+        </AccordionDetails>
+      </Accordion>
+      <Accordion>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="intel-content"
+          id="intel-header"
+        >
+          <Typography>Intel: 2 structures</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Typography>Structures, notes, etc.</Typography>
+        </AccordionDetails>
+      </Accordion>
     </div>
   );
 };
