@@ -1,0 +1,21 @@
+{
+  "name": "holenav",
+  "version": "1.0.0",
+  "description": "New mapper for make benefit of the glorious EVE community. Currently in early prototyping.",
+  "scripts": {
+    "start": "docker-compose up -d",
+    "start:logs": "npm start && npm run logs",
+    "stop": "docker-compose down",
+    "logs": "docker-compose logs -f"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joonashak/holenav.git"
+  },
+  "author": "Joonas Häkkinen <hakkijoo@gmail.com>",
+  "license": "EUPL-1.2",
+  "bugs": {
+    "url": "https://github.com/joonashak/holenav/issues"
+  },
+  "homepage": "https://github.com/joonashak/holenav#readme"
+}
