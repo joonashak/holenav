@@ -5,6 +5,7 @@ New mapper for make benefit of the glorious EVE community. Currently in early pr
 ## Development Environment
 
 Docker Compose configuration is provided for containerized development. You need to have Docker, Docker Compose and NPM installed. The development environment is controlled with NPM scripts defined in `./package.json`.
+
 ### Commands
 
 #### Start In Development Mode (Detached)

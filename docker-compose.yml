@@ -9,8 +9,11 @@ services:
     environment:
       - NODE_ENV=development
       - PORT=3001
+      - DATABASE_URL=mongodb://db/holenav
     volumes:
       - ./server/src:/usr/src/app/src
+    depends_on:
+      - db
 
   client:
     build: ./client/
@@ -23,3 +26,12 @@ services:
       - INTERNAL_STATUS_PORT=30011
     volumes:
       - ./client/src:/usr/src/app/src
+
+  db:
+    image: mongo:4.4-bionic
+    restart: unless-stopped
+    container_name: holenav-db
+    volumes:
+      - ./mongo_data:/data/db
+    ports:
+      - 27017:27017
