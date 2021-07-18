@@ -10,6 +10,8 @@
     "sourceMap": true,
     "outDir": "./dist",
     "baseUrl": "./",
-    "incremental": true
+    "incremental": true,
+    // https://github.com/nestjs/graphql/issues/1621#issuecomment-878199238
+    "skipLibCheck": true
   }
 }
