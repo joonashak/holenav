@@ -1,7 +1,8 @@
-import { downloadSde } from "./downloadSde";
+import { downloadSde, getSystemData } from "./sde";
 
 const main = async () => {
-  await downloadSde();
+  //await downloadSde();
+  await getSystemData();
 };
 
 main();
