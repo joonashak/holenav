@@ -8,6 +8,7 @@ import unzip from "extract-zip";
  * Download SDE (Static Data Export) from EVE's dev website and save locally.
  */
 export const downloadSde = async () => {
+  // FIXME: Something here is not awaiting properly.
   console.log("Downloading SDE.");
 
   const url = process.env.SDE_DOWNLOAD_URL || "";

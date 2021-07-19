@@ -1,0 +1,3000 @@
+30844:
+    description:
+        de: Einzelne besondere räumliche Erscheinungen können Ihr Schiff auf seltsame
+            Weise beeinträchtigen.
+        en: Local spatial phenomena may cause strange effects on your ship systems.
+        fr: Phénomène local de l'espace pouvant avoir d'étranges effets sur les systèmes
+            de votre vaisseau.
+        ja: 周囲の空間で発生している現象が、船のシステムに不可解な効果を与えるかもしれない。
+        ru: Излучение местной звезды влияет на работу бортовых систем вашего корабля.
+        zh: 本地空间现象可能会对你的舰船系统造成影响。
+    graphicID: 1217
+    groupID: 920
+    mass: 1.0
+    name:
+        de: Class 1 Pulsar Effects
+        en: Class 1 Pulsar Effects
+        fr: Effets Pulsar de classe 1
+        ja: クラス1パルサー効果
+        ru: Class 1 Pulsar Effects
+        zh: 一类脉冲星效果光束
+    portionSize: 250
+    published: true
+    sofFactionName: genericbase
+    traits:
+        iconID: 24306
+        miscBonuses:
+        -   bonus: 15.0
+            bonusText:
+                de: Reduktion der Wiederaufladezeit des Energiespeichers
+                en: reduction in capacitor recharge time
+                fr: de réduction au temps de recharge du capaciteur
+                ja: キャパシタのリチャージ時間が短縮
+                ru: уменьшение времени перезарядки накопителя
+                zh: 电容回充速度加成
+            importance: 2
+            isPositive: true
+            unitID: 105
+        -   bonus: 15.0
+            bonusText:
+                de: Abzug auf alle Panzerungsresistenzen
+                en: penalty to armor resistances
+                fr: de pénalité aux résistances de blindage
+                ja: アーマーレジスタンスにペナルティ
+                ru: штраф к сопротивляемости брони
+                zh: 装甲抗性惩罚
+            importance: 4
+            isPositive: false
+            unitID: 105
+        -   bonus: 30.0
+            bonusText:
+                de: Bonus auf die HP von Schilden
+                en: bonus to shield hitpoints
+                fr: de bonus aux points de vie du bouclier
+                ja: シールドHPが増加
+                ru: бонус к запасу прочности щитов
+                zh: 护盾值加成
+            importance: 1
+            isPositive: true
+            unitID: 105
+        -   bonus: 30.0
+            bonusText:
+                de: Bonus auf die Transfermenge von Nosferatu- und Energieneutralisierer-Modulen
+                en: bonus to Energy Nosferatu and Neutralizer drain amount
+                fr: de bonus au volume d'énergie drainée par les Nosferatu à énergie
+                    et les neutraliseurs d'énergie
+                ja: エネルギーノスフェラトゥとニュートラライザーの吸収量が増加
+                ru: бонус к эффективности энергопоглощения и энергонейтрализатора
+                zh: 掠能器和能量中和器吸取量加成
+            importance: 3
+            isPositive: true
+            unitID: 105
+        -   bonus: 30.0
+            bonusText:
+                de: Erhöhung des Signaturradius von Schiffen
+                en: increase in ship signature radius
+                fr: d'augmentation du rayon de signature du vaisseau
+                ja: 艦船のシグネチャ半径が拡大
+                ru: увеличение размера сигнатуры корабля
+                zh: 舰船信号半径提高
+            importance: 5
+            isPositive: false
+            unitID: 105
+        roleBonuses: []
+        types: {}
+    volume: 20.0
+30845:
+    description:
+        de: Einzelne besondere räumliche Erscheinungen können Ihr Schiff auf seltsame
+            Weise beeinträchtigen.
+        en: Local spatial phenomena may cause strange effects on your ship systems.
+        fr: Phénomène local de l'espace pouvant avoir d'étranges effets sur les systèmes
+            de votre vaisseau.
+        ja: 周囲の空間で発生している現象が、船のシステムに不可解な効果を与えるかもしれない。
+        ru: Излучение местной звезды влияет на работу бортовых систем вашего корабля.
+        zh: 本地空间现象可能会对你的舰船系统造成影响。
+    graphicID: 1217
+    groupID: 920
+    mass: 1.0
+    name:
+        de: Class 1 Black Hole Effects
+        en: Class 1 Black Hole Effects
+        fr: Effets Trou noir de classe 1
+        ja: クラス1ブラックホール効果
+        ru: Class 1 Black Hole Effects
+        zh: 一类黑洞效果光束
+    portionSize: 250
+    published: true
+    sofFactionName: genericbase
+    traits:
+        iconID: 24303
+        miscBonuses:
+        -   bonus: 15.0
+            bonusText:
+                de: Bonus auf die Geschwindigkeit von Lenkwaffen
+                en: bonus to missile velocity
+                fr: de bonus à la vitesse des missiles
+                ja: ミサイルの速度が上昇
+                ru: бонус к скорости полёта ракет
+                zh: 导弹飞行速度加成
+            importance: 3
+            isPositive: true
+            unitID: 105
+        -   bonus: 15.0
+            bonusText:
+                de: Abzug auf die Wendigkeit von Schiffen
+                en: penalty to ship agility
+                fr: de pénalité à la maniabilité du vaisseau
+                ja: 艦船の機動性にペナルティ
+                ru: штраф к манёвренности корабля
+                zh: 舰船灵活性惩罚
+            importance: 5
+            isPositive: false
+            unitID: 105
+        -   bonus: 15.0
+            bonusText:
+                de: Abzug auf die Stärke von Stasisnetzen
+                en: penalty to stasis webifier strength
+                fr: de pénalité à la puissance des générateurs de stase
+                ja: ステイシスウェビファイヤーの強度にペナルティ
+                ru: штраф к эффективности стазис-индуктора
+                zh: 停滞缠绕光束强度惩罚
+            importance: 6
+            isPositive: false
+            unitID: 105
+        -   bonus: 30.0
+            bonusText:
+                de: Bonus auf die Geschwindigkeit von Schiffen
+                en: bonus to ship velocity
+                fr: de bonus à la vitesse du vaisseau
+                ja: 艦船の速度が上昇
+                ru: бонус к скорости корабля
+                zh: 舰船速度加成
+            importance: 1
+            isPositive: true
+            unitID: 105
+        -   bonus: 30.0
+            bonusText:
+                de: Bonus auf die maximale Zielerfassungsreichweite
+                en: bonus to maximum targeting range
+                fr: de bonus à la portée de ciblage maximum
+                ja: 最大ターゲット範囲が拡大
+                ru: бонус к максимальной дальности наведения
+                zh: 最大锁定距离加成
+            importance: 2
+            isPositive: true
+            unitID: 105
+        -   bonus: 30.0
+            bonusText:
+                de: Bonus auf die Explosionsgeschwindigkeit von Lenkwaffen
+                en: bonus to missile explosion velocity
+                fr: de bonus à la vitesse d'explosion des missiles
+                ja: ミサイルの爆風速度が上昇
+                ru: бонус к скорости распространения взрыва ракет
+                zh: 导弹爆炸速度加成
+            importance: 4
+            isPositive: true
+            unitID: 105
+        roleBonuses: []
+        types: {}
+    volume: 20.0
+30846:
+    description:
+        de: Einzelne besondere räumliche Erscheinungen können Ihr Schiff auf seltsame
+            Weise beeinträchtigen.
+        en: Local spatial phenomena may cause strange effects on your ship systems.
+        fr: Phénomène local de l'espace pouvant avoir d'étranges effets sur les systèmes
+            de votre vaisseau.
+        ja: 周囲の空間で発生している現象が、船のシステムに不可解な効果を与えるかもしれない。
+        ru: Излучение местной звезды влияет на работу бортовых систем вашего корабля.
+        zh: 本地空间现象可能会对你的舰船系统造成影响。
+    graphicID: 1217
+    groupID: 920
+    mass: 1.0
+    name:
+        de: Class 1 Cataclysmic Variable Effects
+        en: Class 1 Cataclysmic Variable Effects
+        fr: Effets Variable cataclysmique de classe 1
+        ja: クラス1激変星効果
+        ru: Class 1 Cataclysmic Variable Effects
+        zh: 一类激变变星效果光束
+    portionSize: 250
+    published: true
+    sofFactionName: genericbase
+    traits:
+        iconID: 24304
+        miscBonuses:
+        -   bonus: 15.0
+            bonusText:
+                de: Abzug auf die Wiederaufladezeit des Energiespeichers
+                en: penalty to capacitor recharge time
+                fr: de pénalité au temps de recharge du capaciteur
+                ja: キャパシタのリチャージ時間にペナルティ
+                ru: штраф к времени перезарядки накопителя
+                zh: 电容器回充时间惩罚
+            importance: 3
+            isPositive: false
+            unitID: 105
+        -   bonus: 15.0
+            bonusText:
+                de: Abzug auf die Effektivität von Energiespeicher-Ferntransmittern
+                en: penalty to remote capacitor transmitter effectiveness
+                fr: de pénalité à l'efficacité du transmetteur de capaciteur à distance
+                ja: リモートキャパシタトランスミッターの効果にペナルティ
+                ru: штраф к эффективности модуля дистанционного пополнения накопителя
+                zh: 远程电容传输装置效果惩罚
+            importance: 4
+            isPositive: false
+            unitID: 105
+        -   bonus: 15.0
+            bonusText:
+                de: Abzug auf die Effektivität von Panzerungsreparatursystemen und
+                    Schildboostern
+                en: penalty to local armor repairer and shield booster effectiveness
+                fr: de pénalité à l'efficacité des réparateurs de blindage locaux
+                    et des boosters de bouclier
+                ja: ローカルアーマーリペアラとシールドブースターの効果にペナルティ
+                ru: штраф к эффективности локального ремонта брони и усиления щитов
+                zh: 自身装甲维修器和护盾回充增量器效果惩罚
+            importance: 5
+            isPositive: false
+            unitID: 105
+        -   bonus: 30.0
+            bonusText:
+                de: Bonus auf die Effektivität von Panzerungs-Fernreparatursystemen
+                    und Schildfernboostern
+                en: bonus to remote armor repairer and remote shield booster effectiveness
+                fr: de bonus à l'efficacité des réparateurs de blindage à distance
+                    et des boosters de bouclier à distance
+                ja: リモートアーマーリペアラとリモートシールドブースターの効果が上昇
+                ru: бонус к эффективности модуля дистанционного ремонта брони и модуля
+                    дистанционного усиления щитов
+                zh: 远程装甲维修器和远程护盾回充增量器效果加成
+            importance: 1
+            isPositive: true
+            unitID: 105
+        -   bonus: 30.0
+            bonusText:
+                de: Bonus auf die Energiespeicherkapazität
+                en: bonus to capacitor capacity
+                fr: de bonus à la charge du capaciteur
+                ja: キャパシタ容量が増加
+                ru: бонус к ёмкости накопителя
+                zh: 电容器电容量加成
+            importance: 2
+            isPositive: true
+            unitID: 105
+        roleBonuses: []
+        types: {}
+    volume: 20.0
+30847:
+    description:
+        de: Einzelne besondere räumliche Erscheinungen können Ihr Schiff auf seltsame
+            Weise beeinträchtigen.
+        en: Local spatial phenomena may cause strange effects on your ship systems.
+        fr: Phénomène local de l'espace pouvant avoir d'étranges effets sur les systèmes
+            de votre vaisseau.
+        ja: 周囲の空間で発生している現象が、船のシステムに不可解な効果を与えるかもしれない。
+        ru: Излучение местной звезды влияет на работу бортовых систем вашего корабля.
+        zh: 本地空间现象可能会对你的舰船系统造成影响。
+    graphicID: 1217
+    groupID: 920
+    mass: 1.0
+    name:
+        de: Class 1 Magnetar Effects
+        en: Class 1 Magnetar Effects
+        fr: Effets Magnétar de classe 1
+        ja: クラス1帯磁星効果
+        ru: Class 1 Magnetar Effects
+        zh: 一类磁星效果光束
+    portionSize: 250
+    published: true
+    sofFactionName: genericbase
+    traits:
+        iconID: 24305
+        miscBonuses:
+        -   bonus: 15.0
+            bonusText:
+                de: Abzug auf Nachführungsgeschwindigkeit von Geschütztürmen und Drohnen
+                en: penalty to turret and drone tracking speed
+                fr: de pénalité à la vitesse de poursuite des tourelles et des drones
+                ja: タレットとドローンの追跡速度が上昇
+                ru: штраф к скорости наведения турелей и дронов
+                zh: 炮台和无人机跟踪速度惩罚
+            importance: 2
+            isPositive: false
+            unitID: 105
+        -   bonus: 15.0
+            bonusText:
+                de: Abzug auf den Explosionsradius von Lenkwaffen
+                en: penalty to missile explosion radius
+                fr: de pénalité au rayon d'explosion des missiles
+                ja: ミサイルの爆風半径にペナルティ
+                ru: штраф к радиусу взрыва ракет
+                zh: 导弹爆炸半径惩罚
+            importance: 3
+            isPositive: false
+            unitID: 105
+        -   bonus: 15.0
+            bonusText:
+                de: Abzug auf die Effektivität der Zielmarkierung
+                en: penalty to target painter effectiveness
+                fr: de pénalité à l'efficacité du marqueur de cible
+                ja: ターゲットペインターの効果にペナルティ
+                ru: штраф к эффективности системы подсветки целей
+                zh: 目标标记装置效果惩罚
+            importance: 4
+            isPositive: false
+            unitID: 105
+        -   bonus: 15.0
+            bonusText:
+                de: Abzug auf die maximale Zielerfassungsreichweite
+                en: penalty to maximum targeting range
+                fr: de pénalité à la portée de ciblage maximum
+                ja: 最大ターゲット範囲にペナルティ
+                ru: штраф к максимальной дальности захвата целей
+                zh: 锁定范围上限惩罚
+            importance: 5
+            isPositive: false
+            unitID: 105
+        -   bonus: 30.0
+            bonusText:
+                de: Bonus auf den Schaden durch Geschütztürme, Lenkwaffen und Drohnen
+                en: bonus to turret, missile, and drone damage
+                fr: de bonus aux dégâts de tourelles, missiles et drones
+                ja: タレット、ミサイル、ドローンのダメージ上昇
+                ru: бонус к урону от турелей, ракет и дронов
+                zh: 炮台，导弹和无人机伤害加成
+            importance: 1
+            isPositive: true
+            unitID: 105
+        roleBonuses: []
+        types: {}
+    volume: 20.0
+30848:
+    description:
+        de: Einzelne besondere räumliche Erscheinungen können Ihr Schiff auf seltsame
+            Weise beeinträchtigen.
+        en: Local spatial phenomena may cause strange effects on your ship systems.
+        fr: Phénomène local de l'espace pouvant avoir d'étranges effets sur les systèmes
+            de votre vaisseau.
+        ja: 周囲の空間で発生している現象が、船のシステムに不可解な効果を与えるかもしれない。
+        ru: Излучение местной звезды влияет на работу бортовых систем вашего корабля.
+        zh: 本地空间现象可能会对你的舰船系统造成影响。
+    graphicID: 1217
+    groupID: 920
+    mass: 1.0
+    name:
+        de: Class 1 Red Giant Effects
+        en: Class 1 Red Giant Effects
+        fr: Effets Géante rouge de classe 1
+        ja: クラス1赤色巨星効果
+        ru: Class 1 Red Giant Effects
+        zh: 一类红巨星效果光束
+    portionSize: 250
+    published: true
+    sofFactionName: genericbase
+    traits:
+        iconID: 24307
+        miscBonuses:
+        -   bonus: 15.0
+            bonusText:
+                de: erhöhter Hitzeschaden durch Überlastung von Modulen
+                en: increased heat damage from overloading modules
+                fr: d'augmentation des dégâts thermiques provoqués par la surcharge
+                    des modules
+                ja: オーバーロードしたモジュールの熱ダメージが増加
+                ru: увеличение теплового урона от перегрузки модулей
+                zh: 装备过载损伤提高
+            importance: 4
+            isPositive: false
+            unitID: 105
+        -   bonus: 30.0
+            bonusText:
+                de: Bonus auf den Nutzen der Überlastung von Modulen
+                en: bonus to the benefits of overloading modules
+                fr: de bonus aux avantages de la surcharge des modules
+                ja: オーバーヒートしたモジュールの恩恵が増加
+                ru: бонус к преимуществам от перегрузки модулей
+                zh: 装备过载效果加成
+            importance: 1
+            isPositive: true
+            unitID: 105
+        -   bonus: 30.0
+            bonusText:
+                de: Bonus auf Schaden und Reichweite von Smartbombs
+                en: bonus to smartbomb damage and range
+                fr: de bonus aux dégâts et à la portée des bombes de proximité
+                ja: スマートボムのダメージおよび射程距離が増加
+                ru: бонус к урону и дальности импульсного излучателя
+                zh: 立体炸弹伤害和范围加成
+            importance: 2
+            isPositive: true
+            unitID: 105
+        -   bonus: 30.0
+            bonusText:
+                de: Bonus auf den Schaden von Bomben
+                en: bonus to bomb damage
+                fr: de bonus aux dégâts des bombes
+                ja: ボムのダメージが増加
+                ru: бонус к урону от бомб
+                zh: 炸弹伤害加成
+            importance: 3
+            isPositive: true
+            unitID: 105
+        roleBonuses: []
+        types: {}
+    volume: 20.0
+30849:
+    description:
+        de: Einzelne besondere räumliche Erscheinungen können Ihr Schiff auf seltsame
+            Weise beeinträchtigen.
+        en: Local spatial phenomena may cause strange effects on your ship systems.
+        fr: Phénomène local de l'espace pouvant avoir d'étranges effets sur les systèmes
+            de votre vaisseau.
+        ja: 周囲の空間で発生している現象が、船のシステムに不可解な効果を与えるかもしれない。
+        ru: Излучение местной звезды влияет на работу бортовых систем вашего корабля.
+        zh: 本地空间现象可能会对你的舰船系统造成影响。
+    graphicID: 1217
+    groupID: 920
+    mass: 1.0
+    name:
+        de: Class 1 Wolf Rayet Effects
+        en: Class 1 Wolf Rayet Effects
+        fr: Effets Wolf-Rayet de classe 1
+        ja: クラス1ウルフ・ライエ効果
+        ru: Class 1 Wolf Rayet Effects
+        zh: 一类沃尔夫-拉叶星效果光束
+    portionSize: 250
+    published: true
+    sofFactionName: genericbase
+    traits:
+        iconID: 24308
+        miscBonuses:
+        -   bonus: 15.0
+            bonusText:
+                de: Reduktion des Signaturradius von Schiffen
+                en: reduction in ship signature radius
+                fr: de réduction du rayon de signature du vaisseau
+                ja: 艦船のシグネチャ半径が縮小
+                ru: уменьшение размера сигнатуры корабля
+                zh: 舰船信号半径降低
+            importance: 3
+            isPositive: true
+            unitID: 105
+        -   bonus: 15.0
+            bonusText:
+                de: Abzug auf alle Schildresistenzen
+                en: penalty to shield resistances
+                fr: de pénalité aux résistances du bouclier
+                ja: シールドレジスタンスにペナルティ
+                ru: штраф к сопротивляемости щитов
+                zh: 护盾抗性惩罚
+            importance: 4
+            isPositive: false
+            unitID: 105
+        -   bonus: 30.0
+            bonusText:
+                de: Bonus auf die HP der Panzerung
+                en: bonus to armor hitpoints
+                fr: de bonus aux points de vie du blindage
+                ja: アーマーHPが増加
+                ru: бонус к запасу прочности брони
+                zh: 装甲值加成
+            importance: 2
+            isPositive: true
+            unitID: 105
+        -   bonus: 60.0
+            bonusText:
+                de: Bonus auf den Schaden von kleinen Waffen
+                en: bonus to small weapon damage
+                fr: de bonus aux dégâts de petites armes
+                ja: 小型兵器のダメージが増加
+                ru: бонус к урону от малых орудий
+                zh: 小型武器伤害加成
+            importance: 1
+            isPositive: true
+            unitID: 105
+        roleBonuses: []
+        types: {}
+    volume: 20.0
+30850:
+    description:
+        de: Einzelne besondere räumliche Erscheinungen können Ihr Schiff auf seltsame
+            Weise beeinträchtigen.
+        en: Local spatial phenomena may cause strange effects on your ship systems.
+        fr: Phénomène local de l'espace pouvant avoir d'étranges effets sur les systèmes
+            de votre vaisseau.
+        ja: 周囲の空間で発生している現象が、船のシステムに不可解な効果を与えるかもしれない。
+        ru: Излучение местной звезды влияет на работу бортовых систем вашего корабля.
+        zh: 本地空间现象可能会对你的舰船系统造成影响。
+    graphicID: 1217
+    groupID: 920
+    mass: 1.0
+    name:
+        de: Class 2 Black Hole Effects
+        en: Class 2 Black Hole Effects
+        fr: Effets Trou noir de classe 2
+        ja: クラス2ブラックホール効果
+        ru: Class 2 Black Hole Effects
+        zh: 二类黑洞效果光束
+    portionSize: 250
+    published: true
+    sofFactionName: genericbase
+    traits:
+        iconID: 24303
+        miscBonuses:
+        -   bonus: 22.0
+            bonusText:
+                de: Bonus auf die Geschwindigkeit von Lenkwaffen
+                en: bonus to missile velocity
+                fr: de bonus à la vitesse des missiles
+                ja: ミサイルの速度が上昇
+                ru: бонус к скорости полёта ракет
+                zh: 导弹飞行速度加成
+            importance: 3
+            isPositive: true
+            unitID: 105
+        -   bonus: 22.0
+            bonusText:
+                de: Abzug auf die Wendigkeit von Schiffen
+                en: penalty to ship agility
+                fr: de pénalité à la maniabilité du vaisseau
+                ja: 艦船の機動性にペナルティ
+                ru: штраф к манёвренности корабля
+                zh: 舰船灵活性惩罚
+            importance: 5
+            isPositive: false
+            unitID: 105
+        -   bonus: 22.0
+            bonusText:
+                de: Abzug auf die Stärke von Stasisnetzen
+                en: penalty to stasis webifier strength
+                fr: de pénalité à la puissance des générateurs de stase
+                ja: ステイシスウェビファイヤーの強度にペナルティ
+                ru: штраф к эффективности стазис-индуктора
+                zh: 停滞缠绕光束强度惩罚
+            importance: 6
+            isPositive: false
+            unitID: 105
+        -   bonus: 44.0
+            bonusText:
+                de: Bonus auf die Geschwindigkeit von Schiffen
+                en: bonus to ship velocity
+                fr: de bonus à la vitesse du vaisseau
+                ja: 艦船の速度が上昇
+                ru: бонус к скорости корабля
+                zh: 舰船速度加成
+            importance: 1
+            isPositive: true
+            unitID: 105
+        -   bonus: 44.0
+            bonusText:
+                de: Bonus auf die maximale Zielerfassungsreichweite
+                en: bonus to maximum targeting range
+                fr: de bonus à la portée de ciblage maximum
+                ja: 最大ターゲット範囲が拡大
+                ru: бонус к максимальной дальности наведения
+                zh: 最大锁定距离加成
+            importance: 2
+            isPositive: true
+            unitID: 105
+        -   bonus: 44.0
+            bonusText:
+                de: Bonus auf die Explosionsgeschwindigkeit von Lenkwaffen
+                en: bonus to missile explosion velocity
+                fr: de bonus à la vitesse d'explosion des missiles
+                ja: ミサイルの爆風速度が上昇
+                ru: бонус к скорости распространения взрыва ракет
+                zh: 导弹爆炸速度加成
+            importance: 4
+            isPositive: true
+            unitID: 105
+        roleBonuses: []
+        types: {}
+    volume: 20.0
+30851:
+    description:
+        de: Einzelne besondere räumliche Erscheinungen können Ihr Schiff auf seltsame
+            Weise beeinträchtigen.
+        en: Local spatial phenomena may cause strange effects on your ship systems.
+        fr: Phénomène local de l'espace pouvant avoir d'étranges effets sur les systèmes
+            de votre vaisseau.
+        ja: 周囲の空間で発生している現象が、船のシステムに不可解な効果を与えるかもしれない。
+        ru: Излучение местной звезды влияет на работу бортовых систем вашего корабля.
+        zh: 本地空间现象可能会对你的舰船系统造成影响。
+    graphicID: 1217
+    groupID: 920
+    mass: 1.0
+    name:
+        de: Class 3 Black Hole Effects
+        en: Class 3 Black Hole Effects
+        fr: Effets Trou noir de classe 3
+        ja: クラス3ブラックホール効果
+        ru: Class 3 Black Hole Effects
+        zh: 三类黑洞效果光束
+    portionSize: 250
+    published: true
+    sofFactionName: genericbase
+    traits:
+        iconID: 24303
+        miscBonuses:
+        -   bonus: 29.0
+            bonusText:
+                de: Bonus auf die Geschwindigkeit von Lenkwaffen
+                en: bonus to missile velocity
+                fr: de bonus à la vitesse des missiles
+                ja: ミサイルの速度が上昇
+                ru: бонус к скорости полёта ракет
+                zh: 导弹飞行速度加成
+            importance: 3
+            isPositive: true
+            unitID: 105
+        -   bonus: 29.0
+            bonusText:
+                de: Abzug auf die Wendigkeit von Schiffen
+                en: penalty to ship agility
+                fr: de pénalité à la maniabilité du vaisseau
+                ja: 艦船の機動性にペナルティ
+                ru: штраф к манёвренности корабля
+                zh: 舰船灵活性惩罚
+            importance: 5
+            isPositive: false
+            unitID: 105
+        -   bonus: 29.0
+            bonusText:
+                de: Abzug auf die Stärke von Stasisnetzen
+                en: penalty to stasis webifier strength
+                fr: de pénalité à la puissance des générateurs de stase
+                ja: ステイシスウェビファイヤーの強度にペナルティ
+                ru: штраф к эффективности стазис-индуктора
+                zh: 停滞缠绕光束强度惩罚
+            importance: 6
+            isPositive: false
+            unitID: 105
+        -   bonus: 58.0
+            bonusText:
+                de: Bonus auf die Geschwindigkeit von Schiffen
+                en: bonus to ship velocity
+                fr: de bonus à la vitesse du vaisseau
+                ja: 艦船の速度が上昇
+                ru: бонус к скорости корабля
+                zh: 舰船速度加成
+            importance: 1
+            isPositive: true
+            unitID: 105
+        -   bonus: 58.0
+            bonusText:
+                de: Bonus auf die maximale Zielerfassungsreichweite
+                en: bonus to maximum targeting range
+                fr: de bonus à la portée de ciblage maximum
+                ja: 最大ターゲット範囲が拡大
+                ru: бонус к максимальной дальности наведения
+                zh: 最大锁定距离加成
+            importance: 2
+            isPositive: true
+            unitID: 105
+        -   bonus: 58.0
+            bonusText:
+                de: Bonus auf die Explosionsgeschwindigkeit von Lenkwaffen
+                en: bonus to missile explosion velocity
+                fr: de bonus à la vitesse d'explosion des missiles
+                ja: ミサイルの爆風速度が上昇
+                ru: бонус к скорости распространения взрыва ракет
+                zh: 导弹爆炸速度加成
+            importance: 4
+            isPositive: true
+            unitID: 105
+        roleBonuses: []
+        types: {}
+    volume: 20.0
+30852:
+    description:
+        de: Einzelne besondere räumliche Erscheinungen können Ihr Schiff auf seltsame
+            Weise beeinträchtigen.
+        en: Local spatial phenomena may cause strange effects on your ship systems.
+        fr: Phénomène local de l'espace pouvant avoir d'étranges effets sur les systèmes
+            de votre vaisseau.
+        ja: 周囲の空間で発生している現象が、船のシステムに不可解な効果を与えるかもしれない。
+        ru: Излучение местной звезды влияет на работу бортовых систем вашего корабля.
+        zh: 本地空间现象可能会对你的舰船系统造成影响。
+    graphicID: 1217
+    groupID: 920
+    mass: 1.0
+    name:
+        de: Class 4 Black Hole Effects
+        en: Class 4 Black Hole Effects
+        fr: Effets Trou noir de classe 4
+        ja: クラス4ブラックホール効果
+        ru: Class 4 Black Hole Effects
+        zh: 四类黑洞效果光束
+    portionSize: 250
+    published: true
+    sofFactionName: genericbase
+    traits:
+        iconID: 24303
+        miscBonuses:
+        -   bonus: 36.0
+            bonusText:
+                de: Bonus auf die Geschwindigkeit von Lenkwaffen
+                en: bonus to missile velocity
+                fr: de bonus à la vitesse des missiles
+                ja: ミサイルの速度が上昇
+                ru: бонус к скорости полёта ракет
+                zh: 导弹飞行速度加成
+            importance: 3
+            isPositive: true
+            unitID: 105
+        -   bonus: 36.0
+            bonusText:
+                de: Abzug auf die Wendigkeit von Schiffen
+                en: penalty to ship agility
+                fr: de pénalité à la maniabilité du vaisseau
+                ja: 艦船の機動性にペナルティ
+                ru: штраф к манёвренности корабля
+                zh: 舰船灵活性惩罚
+            importance: 5
+            isPositive: false
+            unitID: 105
+        -   bonus: 36.0
+            bonusText:
+                de: Abzug auf die Stärke von Stasisnetzen
+                en: penalty to stasis webifier strength
+                fr: de pénalité à la puissance des générateurs de stase
+                ja: ステイシスウェビファイヤーの強度にペナルティ
+                ru: штраф к эффективности стазис-индуктора
+                zh: 停滞缠绕光束强度惩罚
+            importance: 6
+            isPositive: false
+            unitID: 105
+        -   bonus: 72.0
+            bonusText:
+                de: Bonus auf die Geschwindigkeit von Schiffen
+                en: bonus to ship velocity
+                fr: de bonus à la vitesse du vaisseau
+                ja: 艦船の速度が上昇
+                ru: бонус к скорости корабля
+                zh: 舰船速度加成
+            importance: 1
+            isPositive: true
+            unitID: 105
+        -   bonus: 72.0
+            bonusText:
+                de: Bonus auf die maximale Zielerfassungsreichweite
+                en: bonus to maximum targeting range
+                fr: de bonus à la portée de ciblage maximum
+                ja: 最大ターゲット範囲が拡大
+                ru: бонус к максимальной дальности наведения
+                zh: 最大锁定距离加成
+            importance: 2
+            isPositive: true
+            unitID: 105
+        -   bonus: 72.0
+            bonusText:
+                de: Bonus auf die Explosionsgeschwindigkeit von Lenkwaffen
+                en: bonus to missile explosion velocity
+                fr: de bonus à la vitesse d'explosion des missiles
+                ja: ミサイルの爆風速度が上昇
+                ru: бонус к скорости распространения взрыва ракет
+                zh: 导弹爆炸速度加成
+            importance: 4
+            isPositive: true
+            unitID: 105
+        roleBonuses: []
+        types: {}
+    volume: 20.0
+30853:
+    description:
+        de: Einzelne besondere räumliche Erscheinungen können Ihr Schiff auf seltsame
+            Weise beeinträchtigen.
+        en: Local spatial phenomena may cause strange effects on your ship systems.
+        fr: Phénomène local de l'espace pouvant avoir d'étranges effets sur les systèmes
+            de votre vaisseau.
+        ja: 周囲の空間で発生している現象が、船のシステムに不可解な効果を与えるかもしれない。
+        ru: Излучение местной звезды влияет на работу бортовых систем вашего корабля.
+        zh: 本地空间现象可能会对你的舰船系统造成影响。
+    graphicID: 1217
+    groupID: 920
+    mass: 1.0
+    name:
+        de: Class 5 Black Hole Effects
+        en: Class 5 Black Hole Effects
+        fr: Effets Trou noir de classe 5
+        ja: クラス5ブラックホール効果
+        ru: Class 5 Black Hole Effects
+        zh: 五类黑洞效果光束
+    portionSize: 250
+    published: true
+    sofFactionName: genericbase
+    traits:
+        iconID: 24303
+        miscBonuses:
+        -   bonus: 43.0
+            bonusText:
+                de: Bonus auf die Geschwindigkeit von Lenkwaffen
+                en: bonus to missile velocity
+                fr: de bonus à la vitesse des missiles
+                ja: ミサイルの速度が上昇
+                ru: бонус к скорости полёта ракет
+                zh: 导弹飞行速度加成
+            importance: 3
+            isPositive: true
+            unitID: 105
+        -   bonus: 43.0
+            bonusText:
+                de: Abzug auf die Wendigkeit von Schiffen
+                en: penalty to ship agility
+                fr: de pénalité à la maniabilité du vaisseau
+                ja: 艦船の機動性にペナルティ
+                ru: штраф к манёвренности корабля
+                zh: 舰船灵活性惩罚
+            importance: 5
+            isPositive: false
+            unitID: 105
+        -   bonus: 43.0
+            bonusText:
+                de: Abzug auf die Stärke von Stasisnetzen
+                en: penalty to stasis webifier strength
+                fr: de pénalité à la puissance des générateurs de stase
+                ja: ステイシスウェビファイヤーの強度にペナルティ
+                ru: штраф к эффективности стазис-индуктора
+                zh: 停滞缠绕光束强度惩罚
+            importance: 6
+            isPositive: false
+            unitID: 105
+        -   bonus: 86.0
+            bonusText:
+                de: Bonus auf die Geschwindigkeit von Schiffen
+                en: bonus to ship velocity
+                fr: de bonus à la vitesse du vaisseau
+                ja: 艦船の速度が上昇
+                ru: бонус к скорости корабля
+                zh: 舰船速度加成
+            importance: 1
+            isPositive: true
+            unitID: 105
+        -   bonus: 86.0
+            bonusText:
+                de: Bonus auf die maximale Zielerfassungsreichweite
+                en: bonus to maximum targeting range
+                fr: de bonus à la portée de ciblage maximum
+                ja: 最大ターゲット範囲が拡大
+                ru: бонус к максимальной дальности наведения
+                zh: 最大锁定距离加成
+            importance: 2
+            isPositive: true
+            unitID: 105
+        -   bonus: 86.0
+            bonusText:
+                de: Bonus auf die Explosionsgeschwindigkeit von Lenkwaffen
+                en: bonus to missile explosion velocity
+                fr: de bonus à la vitesse d'explosion des missiles
+                ja: ミサイルの爆風速度が上昇
+                ru: бонус к скорости распространения взрыва ракет
+                zh: 导弹爆炸速度加成
+            importance: 4
+            isPositive: true
+            unitID: 105
+        roleBonuses: []
+        types: {}
+    volume: 20.0
+30854:
+    description:
+        de: Einzelne besondere räumliche Erscheinungen können Ihr Schiff auf seltsame
+            Weise beeinträchtigen.
+        en: Local spatial phenomena may cause strange effects on your ship systems.
+        fr: Phénomène local de l'espace pouvant avoir d'étranges effets sur les systèmes
+            de votre vaisseau.
+        ja: 周囲の空間で発生している現象が、船のシステムに不可解な効果を与えるかもしれない。
+        ru: Излучение местной звезды влияет на работу бортовых систем вашего корабля.
+        zh: 本地空间现象可能会对你的舰船系统造成影响。
+    graphicID: 1217
+    groupID: 920
+    mass: 1.0
+    name:
+        de: Class 6 Black Hole Effects
+        en: Class 6 Black Hole Effects
+        fr: Effets Trou noir de classe 6
+        ja: クラス6ブラックホール効果
+        ru: Class 6 Black Hole Effects
+        zh: 六类黑洞效果光束
+    portionSize: 250
+    published: true
+    sofFactionName: genericbase
+    traits:
+        iconID: 24303
+        miscBonuses:
+        -   bonus: 50.0
+            bonusText:
+                de: Bonus auf die Geschwindigkeit von Lenkwaffen
+                en: bonus to missile velocity
+                fr: de bonus à la vitesse des missiles
+                ja: ミサイルの速度が上昇
+                ru: бонус к скорости полёта ракет
+                zh: 导弹飞行速度加成
+            importance: 3
+            isPositive: true
+            unitID: 105
+        -   bonus: 50.0
+            bonusText:
+                de: Abzug auf die Wendigkeit von Schiffen
+                en: penalty to ship agility
+                fr: de pénalité à la maniabilité du vaisseau
+                ja: 艦船の機動性にペナルティ
+                ru: штраф к манёвренности корабля
+                zh: 舰船灵活性惩罚
+            importance: 5
+            isPositive: false
+            unitID: 105
+        -   bonus: 50.0
+            bonusText:
+                de: Abzug auf die Stärke von Stasisnetzen
+                en: penalty to stasis webifier strength
+                fr: de pénalité à la puissance des générateurs de stase
+                ja: ステイシスウェビファイヤーの強度にペナルティ
+                ru: штраф к эффективности стазис-индуктора
+                zh: 停滞缠绕光束强度惩罚
+            importance: 6
+            isPositive: false
+            unitID: 105
+        -   bonus: 100.0
+            bonusText:
+                de: Bonus auf die Geschwindigkeit von Schiffen
+                en: bonus to ship velocity
+                fr: de bonus à la vitesse du vaisseau
+                ja: 艦船の速度が上昇
+                ru: бонус к скорости корабля
+                zh: 舰船速度加成
+            importance: 1
+            isPositive: true
+            unitID: 105
+        -   bonus: 100.0
+            bonusText:
+                de: Bonus auf die maximale Zielerfassungsreichweite
+                en: bonus to maximum targeting range
+                fr: de bonus à la portée de ciblage maximum
+                ja: 最大ターゲット範囲が拡大
+                ru: бонус к максимальной дальности наведения
+                zh: 最大锁定距离加成
+            importance: 2
+            isPositive: true
+            unitID: 105
+        -   bonus: 100.0
+            bonusText:
+                de: Bonus auf die Explosionsgeschwindigkeit von Lenkwaffen
+                en: bonus to missile explosion velocity
+                fr: de bonus à la vitesse d'explosion des missiles
+                ja: ミサイルの爆風速度が上昇
+                ru: бонус к скорости распространения взрыва ракет
+                zh: 导弹爆炸速度加成
+            importance: 4
+            isPositive: true
+            unitID: 105
+        roleBonuses: []
+        types: {}
+    volume: 20.0
+30860:
+    description:
+        de: Einzelne besondere räumliche Erscheinungen können Ihr Schiff auf seltsame
+            Weise beeinträchtigen.
+        en: Local spatial phenomena may cause strange effects on your ship systems.
+        fr: Phénomène local de l'espace pouvant avoir d'étranges effets sur les systèmes
+            de votre vaisseau.
+        ja: 周囲の空間で発生している現象が、船のシステムに不可解な効果を与えるかもしれない。
+        ru: Излучение местной звезды влияет на работу бортовых систем вашего корабля.
+        zh: 本地空间现象可能会对你的舰船系统造成影响。
+    graphicID: 1217
+    groupID: 920
+    mass: 1.0
+    name:
+        de: Class 2 Magnetar Effects
+        en: Class 2 Magnetar Effects
+        fr: Effets Magnétar de classe 2
+        ja: クラス2帯磁星効果
+        ru: Class 2 Magnetar Effects
+        zh: 二类磁星效果光束
+    portionSize: 250
+    published: true
+    sofFactionName: genericbase
+    traits:
+        iconID: 24305
+        miscBonuses:
+        -   bonus: 22.0
+            bonusText:
+                de: Abzug auf Nachführungsgeschwindigkeit von Geschütztürmen und Drohnen
+                en: penalty to turret and drone tracking speed
+                fr: de pénalité à la vitesse de poursuite des tourelles et des drones
+                ja: タレットとドローンの追跡速度が上昇
+                ru: штраф к скорости наведения турелей и дронов
+                zh: 炮台和无人机跟踪速度惩罚
+            importance: 2
+            isPositive: false
+            unitID: 105
+        -   bonus: 22.0
+            bonusText:
+                de: Abzug auf den Explosionsradius von Lenkwaffen
+                en: penalty to missile explosion radius
+                fr: de pénalité au rayon d'explosion des missiles
+                ja: ミサイルの爆風半径にペナルティ
+                ru: штраф к радиусу взрыва ракет
+                zh: 导弹爆炸半径惩罚
+            importance: 3
+            isPositive: false
+            unitID: 105
+        -   bonus: 22.0
+            bonusText:
+                de: Abzug auf die Effektivität der Zielmarkierung
+                en: penalty to target painter effectiveness
+                fr: de pénalité à l'efficacité du marqueur de cible
+                ja: ターゲットペインターの効果にペナルティ
+                ru: штраф к эффективности системы подсветки целей
+                zh: 目标标记装置效果惩罚
+            importance: 4
+            isPositive: false
+            unitID: 105
+        -   bonus: 22.0
+            bonusText:
+                de: Abzug auf die maximale Zielerfassungsreichweite
+                en: penalty to maximum targeting range
+                fr: de pénalité à la portée de ciblage maximum
+                ja: 最大ターゲット範囲にペナルティ
+                ru: штраф к максимальной дальности захвата целей
+                zh: 锁定范围上限惩罚
+            importance: 5
+            isPositive: false
+            unitID: 105
+        -   bonus: 44.0
+            bonusText:
+                de: Bonus auf den Schaden durch Geschütztürme, Lenkwaffen und Drohnen
+                en: bonus to turret, missile, and drone damage
+                fr: de bonus aux dégâts de tourelles, missiles et drones
+                ja: タレット、ミサイル、ドローンのダメージ上昇
+                ru: бонус к урону от турелей, ракет и дронов
+                zh: 炮台，导弹和无人机伤害加成
+            importance: 1
+            isPositive: true
+            unitID: 105
+        roleBonuses: []
+        types: {}
+    volume: 20.0
+30861:
+    description:
+        de: Einzelne besondere räumliche Erscheinungen können Ihr Schiff auf seltsame
+            Weise beeinträchtigen.
+        en: Local spatial phenomena may cause strange effects on your ship systems.
+        fr: Phénomène local de l'espace pouvant avoir d'étranges effets sur les systèmes
+            de votre vaisseau.
+        ja: 周囲の空間で発生している現象が、船のシステムに不可解な効果を与えるかもしれない。
+        ru: Излучение местной звезды влияет на работу бортовых систем вашего корабля.
+        zh: 本地空间现象可能会对你的舰船系统造成影响。
+    graphicID: 1217
+    groupID: 920
+    mass: 1.0
+    name:
+        de: Class 3 Magnetar Effects
+        en: Class 3 Magnetar Effects
+        fr: Effets Magnétar de classe 3
+        ja: クラス3帯磁星効果
+        ru: Class 3 Magnetar Effects
+        zh: 三类磁星效果光束
+    portionSize: 250
+    published: true
+    sofFactionName: genericbase
+    traits:
+        iconID: 24305
+        miscBonuses:
+        -   bonus: 29.0
+            bonusText:
+                de: Abzug auf Nachführungsgeschwindigkeit von Geschütztürmen und Drohnen
+                en: penalty to turret and drone tracking speed
+                fr: de pénalité à la vitesse de poursuite des tourelles et des drones
+                ja: タレットとドローンの追跡速度が上昇
+                ru: штраф к скорости наведения турелей и дронов
+                zh: 炮台和无人机跟踪速度惩罚
+            importance: 2
+            isPositive: false
+            unitID: 105
+        -   bonus: 29.0
+            bonusText:
+                de: Abzug auf den Explosionsradius von Lenkwaffen
+                en: penalty to missile explosion radius
+                fr: de pénalité au rayon d'explosion des missiles
+                ja: ミサイルの爆風半径にペナルティ
+                ru: штраф к радиусу взрыва ракет
+                zh: 导弹爆炸半径惩罚
+            importance: 3
+            isPositive: false
+            unitID: 105
+        -   bonus: 29.0
+            bonusText:
+                de: Abzug auf die Effektivität der Zielmarkierung
+                en: penalty to target painter effectiveness
+                fr: de pénalité à l'efficacité du marqueur de cible
+                ja: ターゲットペインターの効果にペナルティ
+                ru: штраф к эффективности системы подсветки целей
+                zh: 目标标记装置效果惩罚
+            importance: 4
+            isPositive: false
+            unitID: 105
+        -   bonus: 29.0
+            bonusText:
+                de: Abzug auf die maximale Zielerfassungsreichweite
+                en: penalty to maximum targeting range
+                fr: de pénalité à la portée de ciblage maximum
+                ja: 最大ターゲット範囲にペナルティ
+                ru: штраф к максимальной дальности захвата целей
+                zh: 锁定范围上限惩罚
+            importance: 5
+            isPositive: false
+            unitID: 105
+        -   bonus: 58.0
+            bonusText:
+                de: Bonus auf den Schaden durch Geschütztürme, Lenkwaffen und Drohnen
+                en: bonus to turret, missile, and drone damage
+                fr: de bonus aux dégâts de tourelles, missiles et drones
+                ja: タレット、ミサイル、ドローンのダメージ上昇
+                ru: бонус к урону от турелей, ракет и дронов
+                zh: 炮台，导弹和无人机伤害加成
+            importance: 1
+            isPositive: true
+            unitID: 105
+        roleBonuses: []
+        types: {}
+    volume: 20.0
+30862:
+    description:
+        de: Einzelne besondere räumliche Erscheinungen können Ihr Schiff auf seltsame
+            Weise beeinträchtigen.
+        en: Local spatial phenomena may cause strange effects on your ship systems.
+        fr: Phénomène local de l'espace pouvant avoir d'étranges effets sur les systèmes
+            de votre vaisseau.
+        ja: 周囲の空間で発生している現象が、船のシステムに不可解な効果を与えるかもしれない。
+        ru: Излучение местной звезды влияет на работу бортовых систем вашего корабля.
+        zh: 本地空间现象可能会对你的舰船系统造成影响。
+    graphicID: 1217
+    groupID: 920
+    mass: 1.0
+    name:
+        de: Class 4 Magnetar Effects
+        en: Class 4 Magnetar Effects
+        fr: Effets Magnétar de classe 4
+        ja: クラス4帯磁星効果
+        ru: Class 4 Magnetar Effects
+        zh: 四类磁星效果光束
+    portionSize: 250
+    published: true
+    sofFactionName: genericbase
+    traits:
+        iconID: 24305
+        miscBonuses:
+        -   bonus: 36.0
+            bonusText:
+                de: Abzug auf Nachführungsgeschwindigkeit von Geschütztürmen und Drohnen
+                en: penalty to turret and drone tracking speed
+                fr: de pénalité à la vitesse de poursuite des tourelles et des drones
+                ja: タレットとドローンの追跡速度が上昇
+                ru: штраф к скорости наведения турелей и дронов
+                zh: 炮台和无人机跟踪速度惩罚
+            importance: 2
+            isPositive: false
+            unitID: 105
+        -   bonus: 36.0
+            bonusText:
+                de: Abzug auf den Explosionsradius von Lenkwaffen
+                en: penalty to missile explosion radius
+                fr: de pénalité au rayon d'explosion des missiles
+                ja: ミサイルの爆風半径にペナルティ
+                ru: штраф к радиусу взрыва ракет
+                zh: 导弹爆炸半径惩罚
+            importance: 3
+            isPositive: false
+            unitID: 105
+        -   bonus: 36.0
+            bonusText:
+                de: Abzug auf die Effektivität der Zielmarkierung
+                en: penalty to target painter effectiveness
+                fr: de pénalité à l'efficacité du marqueur de cible
+                ja: ターゲットペインターの効果にペナルティ
+                ru: штраф к эффективности системы подсветки целей
+                zh: 目标标记装置效果惩罚
+            importance: 4
+            isPositive: false
+            unitID: 105
+        -   bonus: 36.0
+            bonusText:
+                de: Abzug auf die maximale Zielerfassungsreichweite
+                en: penalty to maximum targeting range
+                fr: de pénalité à la portée de ciblage maximum
+                ja: 最大ターゲット範囲にペナルティ
+                ru: штраф к максимальной дальности захвата целей
+                zh: 锁定范围上限惩罚
+            importance: 5
+            isPositive: false
+            unitID: 105
+        -   bonus: 72.0
+            bonusText:
+                de: Bonus auf den Schaden durch Geschütztürme, Lenkwaffen und Drohnen
+                en: bonus to turret, missile, and drone damage
+                fr: de bonus aux dégâts de tourelles, missiles et drones
+                ja: タレット、ミサイル、ドローンのダメージ上昇
+                ru: бонус к урону от турелей, ракет и дронов
+                zh: 炮台，导弹和无人机伤害加成
+            importance: 1
+            isPositive: true
+            unitID: 105
+        roleBonuses: []
+        types: {}
+    volume: 20.0
+30863:
+    description:
+        de: Einzelne besondere räumliche Erscheinungen können Ihr Schiff auf seltsame
+            Weise beeinträchtigen.
+        en: Local spatial phenomena may cause strange effects on your ship systems.
+        fr: Phénomène local de l'espace pouvant avoir d'étranges effets sur les systèmes
+            de votre vaisseau.
+        ja: 周囲の空間で発生している現象が、船のシステムに不可解な効果を与えるかもしれない。
+        ru: Излучение местной звезды влияет на работу бортовых систем вашего корабля.
+        zh: 本地空间现象可能会对你的舰船系统造成影响。
+    graphicID: 1217
+    groupID: 920
+    mass: 1.0
+    name:
+        de: Class 5 Magnetar Effects
+        en: Class 5 Magnetar Effects
+        fr: Effets Magnétar de classe 5
+        ja: クラス5帯磁星効果
+        ru: Class 5 Magnetar Effects
+        zh: 五类磁星效果光束
+    portionSize: 250
+    published: true
+    sofFactionName: genericbase
+    traits:
+        iconID: 24305
+        miscBonuses:
+        -   bonus: 43.0
+            bonusText:
+                de: Abzug auf Nachführungsgeschwindigkeit von Geschütztürmen und Drohnen
+                en: penalty to turret and drone tracking speed
+                fr: de pénalité à la vitesse de poursuite des tourelles et des drones
+                ja: タレットとドローンの追跡速度が上昇
+                ru: штраф к скорости наведения турелей и дронов
+                zh: 炮台和无人机跟踪速度惩罚
+            importance: 2
+            isPositive: false
+            unitID: 105
+        -   bonus: 43.0
+            bonusText:
+                de: Abzug auf den Explosionsradius von Lenkwaffen
+                en: penalty to missile explosion radius
+                fr: de pénalité au rayon d'explosion des missiles
+                ja: ミサイルの爆風半径にペナルティ
+                ru: штраф к радиусу взрыва ракет
+                zh: 导弹爆炸半径惩罚
+            importance: 3
+            isPositive: false
+            unitID: 105
+        -   bonus: 43.0
+            bonusText:
+                de: Abzug auf die Effektivität der Zielmarkierung
+                en: penalty to target painter effectiveness
+                fr: de pénalité à l'efficacité du marqueur de cible
+                ja: ターゲットペインターの効果にペナルティ
+                ru: штраф к эффективности системы подсветки целей
+                zh: 目标标记装置效果惩罚
+            importance: 4
+            isPositive: false
+            unitID: 105
+        -   bonus: 43.0
+            bonusText:
+                de: Abzug auf die maximale Zielerfassungsreichweite
+                en: penalty to maximum targeting range
+                fr: de pénalité à la portée de ciblage maximum
+                ja: 最大ターゲット範囲にペナルティ
+                ru: штраф к максимальной дальности захвата целей
+                zh: 锁定范围上限惩罚
+            importance: 5
+            isPositive: false
+            unitID: 105
+        -   bonus: 86.0
+            bonusText:
+                de: Bonus auf den Schaden durch Geschütztürme, Lenkwaffen und Drohnen
+                en: bonus to turret, missile, and drone damage
+                fr: de bonus aux dégâts de tourelles, missiles et drones
+                ja: タレット、ミサイル、ドローンのダメージ上昇
+                ru: бонус к урону от турелей, ракет и дронов
+                zh: 炮台，导弹和无人机伤害加成
+            importance: 1
+            isPositive: true
+            unitID: 105
+        roleBonuses: []
+        types: {}
+    volume: 20.0
+30864:
+    description:
+        de: Einzelne besondere räumliche Erscheinungen können Ihr Schiff auf seltsame
+            Weise beeinträchtigen.
+        en: Local spatial phenomena may cause strange effects on your ship systems.
+        fr: Phénomène local de l'espace pouvant avoir d'étranges effets sur les systèmes
+            de votre vaisseau.
+        ja: 周囲の空間で発生している現象が、船のシステムに不可解な効果を与えるかもしれない。
+        ru: Излучение местной звезды влияет на работу бортовых систем вашего корабля.
+        zh: 本地空间现象可能会对你的舰船系统造成影响。
+    graphicID: 1217
+    groupID: 920
+    mass: 1.0
+    name:
+        de: Class 6 Magnetar Effects
+        en: Class 6 Magnetar Effects
+        fr: Effets Magnétar de classe 6
+        ja: クラス6帯磁星効果
+        ru: Class 6 Magnetar Effects
+        zh: 六类磁星效果光束
+    portionSize: 250
+    published: true
+    sofFactionName: genericbase
+    traits:
+        iconID: 24305
+        miscBonuses:
+        -   bonus: 50.0
+            bonusText:
+                de: Abzug auf Nachführungsgeschwindigkeit von Geschütztürmen und Drohnen
+                en: penalty to turret and drone tracking speed
+                fr: de pénalité à la vitesse de poursuite des tourelles et des drones
+                ja: タレットとドローンの追跡速度が上昇
+                ru: штраф к скорости наведения турелей и дронов
+                zh: 炮台和无人机跟踪速度惩罚
+            importance: 2
+            isPositive: false
+            unitID: 105
+        -   bonus: 50.0
+            bonusText:
+                de: Abzug auf den Explosionsradius von Lenkwaffen
+                en: penalty to missile explosion radius
+                fr: de pénalité au rayon d'explosion des missiles
+                ja: ミサイルの爆風半径にペナルティ
+                ru: штраф к радиусу взрыва ракет
+                zh: 导弹爆炸半径惩罚
+            importance: 3
+            isPositive: false
+            unitID: 105
+        -   bonus: 50.0
+            bonusText:
+                de: Abzug auf die Effektivität der Zielmarkierung
+                en: penalty to target painter effectiveness
+                fr: de pénalité à l'efficacité du marqueur de cible
+                ja: ターゲットペインターの効果にペナルティ
+                ru: штраф к эффективности системы подсветки целей
+                zh: 目标标记装置效果惩罚
+            importance: 4
+            isPositive: false
+            unitID: 105
+        -   bonus: 50.0
+            bonusText:
+                de: Abzug auf die maximale Zielerfassungsreichweite
+                en: penalty to maximum targeting range
+                fr: de pénalité à la portée de ciblage maximum
+                ja: 最大ターゲット範囲にペナルティ
+                ru: штраф к максимальной дальности захвата целей
+                zh: 锁定范围上限惩罚
+            importance: 5
+            isPositive: false
+            unitID: 105
+        -   bonus: 100.0
+            bonusText:
+                de: Bonus auf den Schaden durch Geschütztürme, Lenkwaffen und Drohnen
+                en: bonus to turret, missile, and drone damage
+                fr: de bonus aux dégâts de tourelles, missiles et drones
+                ja: タレット、ミサイル、ドローンのダメージ上昇
+                ru: бонус к урону от турелей, ракет и дронов
+                zh: 炮台，导弹和无人机伤害加成
+            importance: 1
+            isPositive: true
+            unitID: 105
+        roleBonuses: []
+        types: {}
+    volume: 20.0
+30865:
+    description:
+        de: Einzelne besondere räumliche Erscheinungen können Ihr Schiff auf seltsame
+            Weise beeinträchtigen.
+        en: Local spatial phenomena may cause strange effects on your ship systems.
+        fr: Phénomène local de l'espace pouvant avoir d'étranges effets sur les systèmes
+            de votre vaisseau.
+        ja: 周囲の空間で発生している現象が、船のシステムに不可解な効果を与えるかもしれない。
+        ru: Излучение местной звезды влияет на работу бортовых систем вашего корабля.
+        zh: 本地空间现象可能会对你的舰船系统造成影响。
+    graphicID: 1217
+    groupID: 920
+    mass: 1.0
+    name:
+        de: Class 2 Pulsar Effects
+        en: Class 2 Pulsar Effects
+        fr: Effets Pulsar de classe 2
+        ja: クラス2パルサー効果
+        ru: Class 2 Pulsar Effects
+        zh: 二类脉冲星效果光束
+    portionSize: 250
+    published: true
+    sofFactionName: genericbase
+    traits:
+        iconID: 24306
+        miscBonuses:
+        -   bonus: 22.0
+            bonusText:
+                de: Reduktion der Wiederaufladezeit des Energiespeichers
+                en: reduction in capacitor recharge time
+                fr: de réduction au temps de recharge du capaciteur
+                ja: キャパシタのリチャージ時間が短縮
+                ru: уменьшение времени перезарядки накопителя
+                zh: 电容回充速度加成
+            importance: 2
+            isPositive: true
+            unitID: 105
+        -   bonus: 22.0
+            bonusText:
+                de: Abzug auf alle Panzerungsresistenzen
+                en: penalty to armor resistances
+                fr: de pénalité aux résistances de blindage
+                ja: アーマーレジスタンスにペナルティ
+                ru: штраф к сопротивляемости брони
+                zh: 装甲抗性惩罚
+            importance: 4
+            isPositive: false
+            unitID: 105
+        -   bonus: 44.0
+            bonusText:
+                de: Bonus auf die HP von Schilden
+                en: bonus to shield hitpoints
+                fr: de bonus aux points de vie du bouclier
+                ja: シールドHPが増加
+                ru: бонус к запасу прочности щитов
+                zh: 护盾值加成
+            importance: 1
+            isPositive: true
+            unitID: 105
+        -   bonus: 44.0
+            bonusText:
+                de: Bonus auf die Transfermenge von Nosferatu- und Energieneutralisierer-Modulen
+                en: bonus to Energy Nosferatu and Neutralizer drain amount
+                fr: de bonus au volume d'énergie drainée par les Nosferatu à énergie
+                    et les neutraliseurs d'énergie
+                ja: エネルギーノスフェラトゥとニュートラライザーの吸収量が増加
+                ru: бонус к эффективности энергопоглощения и энергонейтрализатора
+                zh: 掠能器和能量中和器吸取量加成
+            importance: 3
+            isPositive: true
+            unitID: 105
+        -   bonus: 44.0
+            bonusText:
+                de: Erhöhung des Signaturradius von Schiffen
+                en: increase in ship signature radius
+                fr: d'augmentation du rayon de signature du vaisseau
+                ja: 艦船のシグネチャ半径が拡大
+                ru: увеличение размера сигнатуры корабля
+                zh: 舰船信号半径提高
+            importance: 5
+            isPositive: false
+            unitID: 105
+        roleBonuses: []
+        types: {}
+    volume: 20.0
+30866:
+    description:
+        de: Einzelne besondere räumliche Erscheinungen können Ihr Schiff auf seltsame
+            Weise beeinträchtigen.
+        en: Local spatial phenomena may cause strange effects on your ship systems.
+        fr: Phénomène local de l'espace pouvant avoir d'étranges effets sur les systèmes
+            de votre vaisseau.
+        ja: 周囲の空間で発生している現象が、船のシステムに不可解な効果を与えるかもしれない。
+        ru: Излучение местной звезды влияет на работу бортовых систем вашего корабля.
+        zh: 本地空间现象可能会对你的舰船系统造成影响。
+    graphicID: 1217
+    groupID: 920
+    mass: 1.0
+    name:
+        de: Class 3 Pulsar Effects
+        en: Class 3 Pulsar Effects
+        fr: Effets Pulsar de classe 3
+        ja: クラス3パルサー効果
+        ru: Class 3 Pulsar Effects
+        zh: 三类脉冲星效果光束
+    portionSize: 250
+    published: true
+    sofFactionName: genericbase
+    traits:
+        iconID: 24306
+        miscBonuses:
+        -   bonus: 29.0
+            bonusText:
+                de: Reduktion der Wiederaufladezeit des Energiespeichers
+                en: reduction in capacitor recharge time
+                fr: de réduction au temps de recharge du capaciteur
+                ja: キャパシタのリチャージ時間が短縮
+                ru: уменьшение времени перезарядки накопителя
+                zh: 电容回充速度加成
+            importance: 2
+            isPositive: true
+            unitID: 105
+        -   bonus: 29.0
+            bonusText:
+                de: Abzug auf alle Panzerungsresistenzen
+                en: penalty to armor resistances
+                fr: de pénalité aux résistances de blindage
+                ja: アーマーレジスタンスにペナルティ
+                ru: штраф к сопротивляемости брони
+                zh: 装甲抗性惩罚
+            importance: 4
+            isPositive: false
+            unitID: 105
+        -   bonus: 58.0
+            bonusText:
+                de: Bonus auf die HP von Schilden
+                en: bonus to shield hitpoints
+                fr: de bonus aux points de vie du bouclier
+                ja: シールドHPが増加
+                ru: бонус к запасу прочности щитов
+                zh: 护盾值加成
+            importance: 1
+            isPositive: true
+            unitID: 105
+        -   bonus: 58.0
+            bonusText:
+                de: Bonus auf die Transfermenge von Nosferatu- und Energieneutralisierer-Modulen
+                en: bonus to Energy Nosferatu and Neutralizer drain amount
+                fr: de bonus au volume d'énergie drainée par les Nosferatu à énergie
+                    et les neutraliseurs d'énergie
+                ja: エネルギーノスフェラトゥとニュートラライザーの吸収量が増加
+                ru: бонус к эффективности энергопоглощения и энергонейтрализатора
+                zh: 掠能器和能量中和器吸取量加成
+            importance: 3
+            isPositive: true
+            unitID: 105
+        -   bonus: 58.0
+            bonusText:
+                de: Erhöhung des Signaturradius von Schiffen
+                en: increase in ship signature radius
+                fr: d'augmentation du rayon de signature du vaisseau
+                ja: 艦船のシグネチャ半径が拡大
+                ru: увеличение размера сигнатуры корабля
+                zh: 舰船信号半径提高
+            importance: 5
+            isPositive: false
+            unitID: 105
+        roleBonuses: []
+        types: {}
+    volume: 20.0
+30867:
+    description:
+        de: Einzelne besondere räumliche Erscheinungen können Ihr Schiff auf seltsame
+            Weise beeinträchtigen.
+        en: Local spatial phenomena may cause strange effects on your ship systems.
+        fr: Phénomène local de l'espace pouvant avoir d'étranges effets sur les systèmes
+            de votre vaisseau.
+        ja: 周囲の空間で発生している現象が、船のシステムに不可解な効果を与えるかもしれない。
+        ru: Излучение местной звезды влияет на работу бортовых систем вашего корабля.
+        zh: 本地空间现象可能会对你的舰船系统造成影响。
+    graphicID: 1217
+    groupID: 920
+    mass: 1.0
+    name:
+        de: Class 4 Pulsar Effects
+        en: Class 4 Pulsar Effects
+        fr: Effets Pulsar de classe 4
+        ja: クラス4パルサー効果
+        ru: Class 4 Pulsar Effects
+        zh: 四类脉冲星效果光束
+    portionSize: 250
+    published: true
+    sofFactionName: genericbase
+    traits:
+        iconID: 24306
+        miscBonuses:
+        -   bonus: 36.0
+            bonusText:
+                de: Reduktion der Wiederaufladezeit des Energiespeichers
+                en: reduction in capacitor recharge time
+                fr: de réduction au temps de recharge du capaciteur
+                ja: キャパシタのリチャージ時間が短縮
+                ru: уменьшение времени перезарядки накопителя
+                zh: 电容回充速度加成
+            importance: 2
+            isPositive: true
+            unitID: 105
+        -   bonus: 36.0
+            bonusText:
+                de: Abzug auf alle Panzerungsresistenzen
+                en: penalty to armor resistances
+                fr: de pénalité aux résistances de blindage
+                ja: アーマーレジスタンスにペナルティ
+                ru: штраф к сопротивляемости брони
+                zh: 装甲抗性惩罚
+            importance: 4
+            isPositive: false
+            unitID: 105
+        -   bonus: 72.0
+            bonusText:
+                de: Bonus auf die HP von Schilden
+                en: bonus to shield hitpoints
+                fr: de bonus aux points de vie du bouclier
+                ja: シールドHPが増加
+                ru: бонус к запасу прочности щитов
+                zh: 护盾值加成
+            importance: 1
+            isPositive: true
+            unitID: 105
+        -   bonus: 72.0
+            bonusText:
+                de: Bonus auf die Transfermenge von Nosferatu- und Energieneutralisierer-Modulen
+                en: bonus to Energy Nosferatu and Neutralizer drain amount
+                fr: de bonus au volume d'énergie drainée par les Nosferatu à énergie
+                    et les neutraliseurs d'énergie
+                ja: エネルギーノスフェラトゥとニュートラライザーの吸収量が増加
+                ru: бонус к эффективности энергопоглощения и энергонейтрализатора
+                zh: 掠能器和能量中和器吸取量加成
+            importance: 3
+            isPositive: true
+            unitID: 105
+        -   bonus: 72.0
+            bonusText:
+                de: Erhöhung des Signaturradius von Schiffen
+                en: increase in ship signature radius
+                fr: d'augmentation du rayon de signature du vaisseau
+                ja: 艦船のシグネチャ半径が拡大
+                ru: увеличение размера сигнатуры корабля
+                zh: 舰船信号半径提高
+            importance: 5
+            isPositive: false
+            unitID: 105
+        roleBonuses: []
+        types: {}
+    volume: 20.0
+30868:
+    description:
+        de: Einzelne besondere räumliche Erscheinungen können Ihr Schiff auf seltsame
+            Weise beeinträchtigen.
+        en: Local spatial phenomena may cause strange effects on your ship systems.
+        fr: Phénomène local de l'espace pouvant avoir d'étranges effets sur les systèmes
+            de votre vaisseau.
+        ja: 周囲の空間で発生している現象が、船のシステムに不可解な効果を与えるかもしれない。
+        ru: Излучение местной звезды влияет на работу бортовых систем вашего корабля.
+        zh: 本地空间现象可能会对你的舰船系统造成影响。
+    graphicID: 1217
+    groupID: 920
+    mass: 1.0
+    name:
+        de: Class 5 Pulsar Effects
+        en: Class 5 Pulsar Effects
+        fr: Effets Pulsar de classe 5
+        ja: クラス5パルサー効果
+        ru: Class 5 Pulsar Effects
+        zh: 五类脉冲星效果光束
+    portionSize: 250
+    published: true
+    sofFactionName: genericbase
+    traits:
+        iconID: 24306
+        miscBonuses:
+        -   bonus: 43.0
+            bonusText:
+                de: Reduktion der Wiederaufladezeit des Energiespeichers
+                en: reduction in capacitor recharge time
+                fr: de réduction au temps de recharge du capaciteur
+                ja: キャパシタのリチャージ時間が短縮
+                ru: уменьшение времени перезарядки накопителя
+                zh: 电容回充速度加成
+            importance: 2
+            isPositive: true
+            unitID: 105
+        -   bonus: 43.0
+            bonusText:
+                de: Abzug auf alle Panzerungsresistenzen
+                en: penalty to armor resistances
+                fr: de pénalité aux résistances de blindage
+                ja: アーマーレジスタンスにペナルティ
+                ru: штраф к сопротивляемости брони
+                zh: 装甲抗性惩罚
+            importance: 4
+            isPositive: false
+            unitID: 105
+        -   bonus: 86.0
+            bonusText:
+                de: Bonus auf die HP von Schilden
+                en: bonus to shield hitpoints
+                fr: de bonus aux points de vie du bouclier
+                ja: シールドHPが増加
+                ru: бонус к запасу прочности щитов
+                zh: 护盾值加成
+            importance: 1
+            isPositive: true
+            unitID: 105
+        -   bonus: 86.0
+            bonusText:
+                de: Bonus auf die Transfermenge von Nosferatu- und Energieneutralisierer-Modulen
+                en: bonus to Energy Nosferatu and Neutralizer drain amount
+                fr: de bonus au volume d'énergie drainée par les Nosferatu à énergie
+                    et les neutraliseurs d'énergie
+                ja: エネルギーノスフェラトゥとニュートラライザーの吸収量が増加
+                ru: бонус к эффективности энергопоглощения и энергонейтрализатора
+                zh: 掠能器和能量中和器吸取量加成
+            importance: 3
+            isPositive: true
+            unitID: 105
+        -   bonus: 86.0
+            bonusText:
+                de: Erhöhung des Signaturradius von Schiffen
+                en: increase in ship signature radius
+                fr: d'augmentation du rayon de signature du vaisseau
+                ja: 艦船のシグネチャ半径が拡大
+                ru: увеличение размера сигнатуры корабля
+                zh: 舰船信号半径提高
+            importance: 5
+            isPositive: false
+            unitID: 105
+        roleBonuses: []
+        types: {}
+    volume: 20.0
+30869:
+    description:
+        de: Einzelne besondere räumliche Erscheinungen können Ihr Schiff auf seltsame
+            Weise beeinträchtigen.
+        en: Local spatial phenomena may cause strange effects on your ship systems.
+        fr: Phénomène local de l'espace pouvant avoir d'étranges effets sur les systèmes
+            de votre vaisseau.
+        ja: 周囲の空間で発生している現象が、船のシステムに不可解な効果を与えるかもしれない。
+        ru: Излучение местной звезды влияет на работу бортовых систем вашего корабля.
+        zh: 本地空间现象可能会对你的舰船系统造成影响。
+    graphicID: 1217
+    groupID: 920
+    mass: 1.0
+    name:
+        de: Class 6 Pulsar Effects
+        en: Class 6 Pulsar Effects
+        fr: Effets Pulsar de classe 6
+        ja: クラス6パルサー効果
+        ru: Class 6 Pulsar Effects
+        zh: 六类脉冲星效果光束
+    portionSize: 250
+    published: true
+    sofFactionName: genericbase
+    traits:
+        iconID: 24306
+        miscBonuses:
+        -   bonus: 50.0
+            bonusText:
+                de: Reduktion der Wiederaufladezeit des Energiespeichers
+                en: reduction in capacitor recharge time
+                fr: de réduction au temps de recharge du capaciteur
+                ja: キャパシタのリチャージ時間が短縮
+                ru: уменьшение времени перезарядки накопителя
+                zh: 电容回充速度加成
+            importance: 2
+            isPositive: true
+            unitID: 105
+        -   bonus: 50.0
+            bonusText:
+                de: Abzug auf alle Panzerungsresistenzen
+                en: penalty to armor resistances
+                fr: de pénalité aux résistances de blindage
+                ja: アーマーレジスタンスにペナルティ
+                ru: штраф к сопротивляемости брони
+                zh: 装甲抗性惩罚
+            importance: 4
+            isPositive: false
+            unitID: 105
+        -   bonus: 100.0
+            bonusText:
+                de: Bonus auf die HP von Schilden
+                en: bonus to shield hitpoints
+                fr: de bonus aux points de vie du bouclier
+                ja: シールドHPが増加
+                ru: бонус к запасу прочности щитов
+                zh: 护盾值加成
+            importance: 1
+            isPositive: true
+            unitID: 105
+        -   bonus: 100.0
+            bonusText:
+                de: Bonus auf die Transfermenge von Nosferatu- und Energieneutralisierer-Modulen
+                en: bonus to Energy Nosferatu and Neutralizer drain amount
+                fr: de bonus au volume d'énergie drainée par les Nosferatu à énergie
+                    et les neutraliseurs d'énergie
+                ja: エネルギーノスフェラトゥとニュートラライザーの吸収量が増加
+                ru: бонус к эффективности энергопоглощения и энергонейтрализатора
+                zh: 掠能器和能量中和器吸取量加成
+            importance: 3
+            isPositive: true
+            unitID: 105
+        -   bonus: 100.0
+            bonusText:
+                de: Erhöhung des Signaturradius von Schiffen
+                en: increase in ship signature radius
+                fr: d'augmentation du rayon de signature du vaisseau
+                ja: 艦船のシグネチャ半径が拡大
+                ru: увеличение размера сигнатуры корабля
+                zh: 舰船信号半径提高
+            importance: 5
+            isPositive: false
+            unitID: 105
+        roleBonuses: []
+        types: {}
+    volume: 20.0
+30870:
+    description:
+        de: Einzelne besondere räumliche Erscheinungen können Ihr Schiff auf seltsame
+            Weise beeinträchtigen.
+        en: Local spatial phenomena may cause strange effects on your ship systems.
+        fr: Phénomène local de l'espace pouvant avoir d'étranges effets sur les systèmes
+            de votre vaisseau.
+        ja: 周囲の空間で発生している現象が、船のシステムに不可解な効果を与えるかもしれない。
+        ru: Излучение местной звезды влияет на работу бортовых систем вашего корабля.
+        zh: 本地空间现象可能会对你的舰船系统造成影响。
+    graphicID: 1217
+    groupID: 920
+    mass: 1.0
+    name:
+        de: Class 2 Red Giant Effects
+        en: Class 2 Red Giant Effects
+        fr: Effets Géante rouge de classe 2
+        ja: クラス2赤色巨星効果
+        ru: Class 2 Red Giant Effects
+        zh: 二类红巨星效果光束
+    portionSize: 250
+    published: true
+    sofFactionName: genericbase
+    traits:
+        iconID: 24307
+        miscBonuses:
+        -   bonus: 22.0
+            bonusText:
+                de: erhöhter Hitzeschaden durch Überlastung von Modulen
+                en: increased heat damage from overloading modules
+                fr: d'augmentation des dégâts thermiques provoqués par la surcharge
+                    des modules
+                ja: オーバーロードしたモジュールの熱ダメージが増加
+                ru: увеличение теплового урона от перегрузки модулей
+                zh: 装备过载损伤提高
+            importance: 4
+            isPositive: false
+            unitID: 105
+        -   bonus: 44.0
+            bonusText:
+                de: Bonus auf den Nutzen der Überlastung von Modulen
+                en: bonus to the benefits of overloading modules
+                fr: de bonus aux avantages de la surcharge des modules
+                ja: オーバーヒートしたモジュールの恩恵が増加
+                ru: бонус к преимуществам от перегрузки модулей
+                zh: 装备过载效果加成
+            importance: 1
+            isPositive: true
+            unitID: 105
+        -   bonus: 44.0
+            bonusText:
+                de: Bonus auf Schaden und Reichweite von Smartbombs
+                en: bonus to smartbomb damage and range
+                fr: de bonus aux dégâts et à la portée des bombes de proximité
+                ja: スマートボムのダメージおよび射程距離が増加
+                ru: бонус к урону и дальности импульсного излучателя
+                zh: 立体炸弹伤害和范围加成
+            importance: 2
+            isPositive: true
+            unitID: 105
+        -   bonus: 44.0
+            bonusText:
+                de: Bonus auf den Schaden von Bomben
+                en: bonus to bomb damage
+                fr: de bonus aux dégâts des bombes
+                ja: ボムのダメージが増加
+                ru: бонус к урону от бомб
+                zh: 炸弹伤害加成
+            importance: 3
+            isPositive: true
+            unitID: 105
+        roleBonuses: []
+        types: {}
+    volume: 20.0
+30871:
+    description:
+        de: Einzelne besondere räumliche Erscheinungen können Ihr Schiff auf seltsame
+            Weise beeinträchtigen.
+        en: Local spatial phenomena may cause strange effects on your ship systems.
+        fr: Phénomène local de l'espace pouvant avoir d'étranges effets sur les systèmes
+            de votre vaisseau.
+        ja: 周囲の空間で発生している現象が、船のシステムに不可解な効果を与えるかもしれない。
+        ru: Излучение местной звезды влияет на работу бортовых систем вашего корабля.
+        zh: 本地空间现象可能会对你的舰船系统造成影响。
+    graphicID: 1217
+    groupID: 920
+    mass: 1.0
+    name:
+        de: Class 3 Red Giant Effects
+        en: Class 3 Red Giant Effects
+        fr: Effets Géante rouge de classe 3
+        ja: クラス3赤色巨星効果
+        ru: Class 3 Red Giant Effects
+        zh: 三类红巨星效果光束
+    portionSize: 250
+    published: true
+    sofFactionName: genericbase
+    traits:
+        iconID: 24307
+        miscBonuses:
+        -   bonus: 29.0
+            bonusText:
+                de: erhöhter Hitzeschaden durch Überlastung von Modulen
+                en: increased heat damage from overloading modules
+                fr: d'augmentation des dégâts thermiques provoqués par la surcharge
+                    des modules
+                ja: オーバーロードしたモジュールの熱ダメージが増加
+                ru: увеличение теплового урона от перегрузки модулей
+                zh: 装备过载损伤提高
+            importance: 4
+            isPositive: false
+            unitID: 105
+        -   bonus: 58.0
+            bonusText:
+                de: Bonus auf den Nutzen der Überlastung von Modulen
+                en: bonus to the benefits of overloading modules
+                fr: de bonus aux avantages de la surcharge des modules
+                ja: オーバーヒートしたモジュールの恩恵が増加
+                ru: бонус к преимуществам от перегрузки модулей
+                zh: 装备过载效果加成
+            importance: 1
+            isPositive: true
+            unitID: 105
+        -   bonus: 58.0
+            bonusText:
+                de: Bonus auf Schaden und Reichweite von Smartbombs
+                en: bonus to smartbomb damage and range
+                fr: de bonus aux dégâts et à la portée des bombes de proximité
+                ja: スマートボムのダメージおよび射程距離が増加
+                ru: бонус к урону и дальности импульсного излучателя
+                zh: 立体炸弹伤害和范围加成
+            importance: 2
+            isPositive: true
+            unitID: 105
+        -   bonus: 58.0
+            bonusText:
+                de: Bonus auf den Schaden von Bomben
+                en: bonus to bomb damage
+                fr: de bonus aux dégâts des bombes
+                ja: ボムのダメージが増加
+                ru: бонус к урону от бомб
+                zh: 炸弹伤害加成
+            importance: 3
+            isPositive: true
+            unitID: 105
+        roleBonuses: []
+        types: {}
+    volume: 20.0
+30872:
+    description:
+        de: Einzelne besondere räumliche Erscheinungen können Ihr Schiff auf seltsame
+            Weise beeinträchtigen.
+        en: Local spatial phenomena may cause strange effects on your ship systems.
+        fr: Phénomène local de l'espace pouvant avoir d'étranges effets sur les systèmes
+            de votre vaisseau.
+        ja: 周囲の空間で発生している現象が、船のシステムに不可解な効果を与えるかもしれない。
+        ru: Излучение местной звезды влияет на работу бортовых систем вашего корабля.
+        zh: 本地空间现象可能会对你的舰船系统造成影响。
+    graphicID: 1217
+    groupID: 920
+    mass: 1.0
+    name:
+        de: Class 4 Red Giant Effects
+        en: Class 4 Red Giant Effects
+        fr: Effets Géante rouge de classe 4
+        ja: クラス4赤色巨星効果
+        ru: Class 4 Red Giant Effects
+        zh: 四类红巨星效果光束
+    portionSize: 250
+    published: true
+    sofFactionName: genericbase
+    traits:
+        iconID: 24307
+        miscBonuses:
+        -   bonus: 36.0
+            bonusText:
+                de: erhöhter Hitzeschaden durch Überlastung von Modulen
+                en: increased heat damage from overloading modules
+                fr: d'augmentation des dégâts thermiques provoqués par la surcharge
+                    des modules
+                ja: オーバーロードしたモジュールの熱ダメージが増加
+                ru: увеличение теплового урона от перегрузки модулей
+                zh: 装备过载损伤提高
+            importance: 4
+            isPositive: false
+            unitID: 105
+        -   bonus: 72.0
+            bonusText:
+                de: Bonus auf den Nutzen der Überlastung von Modulen
+                en: bonus to the benefits of overloading modules
+                fr: de bonus aux avantages de la surcharge des modules
+                ja: オーバーヒートしたモジュールの恩恵が増加
+                ru: бонус к преимуществам от перегрузки модулей
+                zh: 装备过载效果加成
+            importance: 1
+            isPositive: true
+            unitID: 105
+        -   bonus: 72.0
+            bonusText:
+                de: Bonus auf Schaden und Reichweite von Smartbombs
+                en: bonus to smartbomb damage and range
+                fr: de bonus aux dégâts et à la portée des bombes de proximité
+                ja: スマートボムのダメージおよび射程距離が増加
+                ru: бонус к урону и дальности импульсного излучателя
+                zh: 立体炸弹伤害和范围加成
+            importance: 2
+            isPositive: true
+            unitID: 105
+        -   bonus: 72.0
+            bonusText:
+                de: Bonus auf den Schaden von Bomben
+                en: bonus to bomb damage
+                fr: de bonus aux dégâts des bombes
+                ja: ボムのダメージが増加
+                ru: бонус к урону от бомб
+                zh: 炸弹伤害加成
+            importance: 3
+            isPositive: true
+            unitID: 105
+        roleBonuses: []
+        types: {}
+    volume: 20.0
+30873:
+    description:
+        de: Einzelne besondere räumliche Erscheinungen können Ihr Schiff auf seltsame
+            Weise beeinträchtigen.
+        en: Local spatial phenomena may cause strange effects on your ship systems.
+        fr: Phénomène local de l'espace pouvant avoir d'étranges effets sur les systèmes
+            de votre vaisseau.
+        ja: 周囲の空間で発生している現象が、船のシステムに不可解な効果を与えるかもしれない。
+        ru: Излучение местной звезды влияет на работу бортовых систем вашего корабля.
+        zh: 本地空间现象可能会对你的舰船系统造成影响。
+    graphicID: 1217
+    groupID: 920
+    mass: 1.0
+    name:
+        de: Class 5 Red Giant Effects
+        en: Class 5 Red Giant Effects
+        fr: Effets Géante rouge de classe 5
+        ja: クラス5赤色巨星効果
+        ru: Class 5 Red Giant Effects
+        zh: 五类红巨星效果光束
+    portionSize: 250
+    published: true
+    sofFactionName: genericbase
+    traits:
+        iconID: 24307
+        miscBonuses:
+        -   bonus: 43.0
+            bonusText:
+                de: erhöhter Hitzeschaden durch Überlastung von Modulen
+                en: increased heat damage from overloading modules
+                fr: d'augmentation des dégâts thermiques provoqués par la surcharge
+                    des modules
+                ja: オーバーロードしたモジュールの熱ダメージが増加
+                ru: увеличение теплового урона от перегрузки модулей
+                zh: 装备过载损伤提高
+            importance: 4
+            isPositive: false
+            unitID: 105
+        -   bonus: 86.0
+            bonusText:
+                de: Bonus auf den Nutzen der Überlastung von Modulen
+                en: bonus to the benefits of overloading modules
+                fr: de bonus aux avantages de la surcharge des modules
+                ja: オーバーヒートしたモジュールの恩恵が増加
+                ru: бонус к преимуществам от перегрузки модулей
+                zh: 装备过载效果加成
+            importance: 1
+            isPositive: true
+            unitID: 105
+        -   bonus: 86.0
+            bonusText:
+                de: Bonus auf Schaden und Reichweite von Smartbombs
+                en: bonus to smartbomb damage and range
+                fr: de bonus aux dégâts et à la portée des bombes de proximité
+                ja: スマートボムのダメージおよび射程距離が増加
+                ru: бонус к урону и дальности импульсного излучателя
+                zh: 立体炸弹伤害和范围加成
+            importance: 2
+            isPositive: true
+            unitID: 105
+        -   bonus: 86.0
+            bonusText:
+                de: Bonus auf den Schaden von Bomben
+                en: bonus to bomb damage
+                fr: de bonus aux dégâts des bombes
+                ja: ボムのダメージが増加
+                ru: бонус к урону от бомб
+                zh: 炸弹伤害加成
+            importance: 3
+            isPositive: true
+            unitID: 105
+        roleBonuses: []
+        types: {}
+    volume: 20.0
+30874:
+    description:
+        de: Einzelne besondere räumliche Erscheinungen können Ihr Schiff auf seltsame
+            Weise beeinträchtigen.
+        en: Local spatial phenomena may cause strange effects on your ship systems.
+        fr: Phénomène local de l'espace pouvant avoir d'étranges effets sur les systèmes
+            de votre vaisseau.
+        ja: 周囲の空間で発生している現象が、船のシステムに不可解な効果を与えるかもしれない。
+        ru: Излучение местной звезды влияет на работу бортовых систем вашего корабля.
+        zh: 本地空间现象可能会对你的舰船系统造成影响。
+    graphicID: 1217
+    groupID: 920
+    mass: 1.0
+    name:
+        de: Class 6 Red Giant Effects
+        en: Class 6 Red Giant Effects
+        fr: Effets Géante rouge de classe 6
+        ja: クラス6赤色巨星効果
+        ru: Class 6 Red Giant Effects
+        zh: 六类红巨星效果光束
+    portionSize: 250
+    published: true
+    sofFactionName: genericbase
+    traits:
+        iconID: 24307
+        miscBonuses:
+        -   bonus: 50.0
+            bonusText:
+                de: erhöhter Hitzeschaden durch Überlastung von Modulen
+                en: increased heat damage from overloading modules
+                fr: d'augmentation des dégâts thermiques provoqués par la surcharge
+                    des modules
+                ja: オーバーロードしたモジュールの熱ダメージが増加
+                ru: увеличение теплового урона от перегрузки модулей
+                zh: 装备过载损伤提高
+            importance: 4
+            isPositive: false
+            unitID: 105
+        -   bonus: 100.0
+            bonusText:
+                de: Bonus auf den Nutzen der Überlastung von Modulen
+                en: bonus to the benefits of overloading modules
+                fr: de bonus aux avantages de la surcharge des modules
+                ja: オーバーヒートしたモジュールの恩恵が増加
+                ru: бонус к преимуществам от перегрузки модулей
+                zh: 装备过载效果加成
+            importance: 1
+            isPositive: true
+            unitID: 105
+        -   bonus: 100.0
+            bonusText:
+                de: Bonus auf Schaden und Reichweite von Smartbombs
+                en: bonus to smartbomb damage and range
+                fr: de bonus aux dégâts et à la portée des bombes de proximité
+                ja: スマートボムのダメージおよび射程距離が増加
+                ru: бонус к урону и дальности импульсного излучателя
+                zh: 立体炸弹伤害和范围加成
+            importance: 2
+            isPositive: true
+            unitID: 105
+        -   bonus: 100.0
+            bonusText:
+                de: Bonus auf den Schaden von Bomben
+                en: bonus to bomb damage
+                fr: de bonus aux dégâts des bombes
+                ja: ボムのダメージが増加
+                ru: бонус к урону от бомб
+                zh: 炸弹伤害加成
+            importance: 3
+            isPositive: true
+            unitID: 105
+        roleBonuses: []
+        types: {}
+    volume: 20.0
+30875:
+    description:
+        de: Einzelne besondere räumliche Erscheinungen können Ihr Schiff auf seltsame
+            Weise beeinträchtigen.
+        en: Local spatial phenomena may cause strange effects on your ship systems.
+        fr: Phénomène local de l'espace pouvant avoir d'étranges effets sur les systèmes
+            de votre vaisseau.
+        ja: 周囲の空間で発生している現象が、船のシステムに不可解な効果を与えるかもしれない。
+        ru: Излучение местной звезды влияет на работу бортовых систем вашего корабля.
+        zh: 本地空间现象可能会对你的舰船系统造成影响。
+    graphicID: 1217
+    groupID: 920
+    mass: 1.0
+    name:
+        de: Class 2 Wolf Rayet Effects
+        en: Class 2 Wolf Rayet Effects
+        fr: Effets Wolf-Rayet de classe 2
+        ja: クラス2ウォルフ・ライエ星効果
+        ru: Class 2 Wolf Rayet Effects
+        zh: 二类沃尔夫-拉叶星效果光束
+    portionSize: 250
+    published: true
+    sofFactionName: genericbase
+    traits:
+        iconID: 24308
+        miscBonuses:
+        -   bonus: 22.0
+            bonusText:
+                de: Reduktion des Signaturradius von Schiffen
+                en: reduction in ship signature radius
+                fr: de réduction du rayon de signature du vaisseau
+                ja: 艦船のシグネチャ半径が縮小
+                ru: уменьшение размера сигнатуры корабля
+                zh: 舰船信号半径降低
+            importance: 3
+            isPositive: true
+            unitID: 105
+        -   bonus: 22.0
+            bonusText:
+                de: Abzug auf alle Schildresistenzen
+                en: penalty to shield resistances
+                fr: de pénalité aux résistances du bouclier
+                ja: シールドレジスタンスにペナルティ
+                ru: штраф к сопротивляемости щитов
+                zh: 护盾抗性惩罚
+            importance: 4
+            isPositive: false
+            unitID: 105
+        -   bonus: 44.0
+            bonusText:
+                de: Bonus auf die HP der Panzerung
+                en: bonus to armor hitpoints
+                fr: de bonus aux points de vie du blindage
+                ja: アーマーHPが増加
+                ru: бонус к запасу прочности брони
+                zh: 装甲值加成
+            importance: 2
+            isPositive: true
+            unitID: 105
+        -   bonus: 88.0
+            bonusText:
+                de: Bonus auf den Schaden von kleinen Waffen
+                en: bonus to small weapon damage
+                fr: de bonus aux dégâts de petites armes
+                ja: 小型兵器のダメージが増加
+                ru: бонус к урону от малых орудий
+                zh: 小型武器伤害加成
+            importance: 1
+            isPositive: true
+            unitID: 105
+        roleBonuses: []
+        types: {}
+    volume: 20.0
+30876:
+    description:
+        de: Einzelne besondere räumliche Erscheinungen können Ihr Schiff auf seltsame
+            Weise beeinträchtigen.
+        en: Local spatial phenomena may cause strange effects on your ship systems.
+        fr: Phénomène local de l'espace pouvant avoir d'étranges effets sur les systèmes
+            de votre vaisseau.
+        ja: 周囲の空間で発生している現象が、船のシステムに不可解な効果を与えるかもしれない。
+        ru: Излучение местной звезды влияет на работу бортовых систем вашего корабля.
+        zh: 本地空间现象可能会对你的舰船系统造成影响。
+    graphicID: 1217
+    groupID: 920
+    mass: 1.0
+    name:
+        de: Class 3 Wolf Rayet Effects
+        en: Class 3 Wolf Rayet Effects
+        fr: Effets Wolf-Rayet de classe 3
+        ja: クラス3ウォルフ・ライエ星効果
+        ru: Class 3 Wolf Rayet Effects
+        zh: 三类沃尔夫-拉叶星效果光束
+    portionSize: 250
+    published: true
+    sofFactionName: genericbase
+    traits:
+        iconID: 24308
+        miscBonuses:
+        -   bonus: 29.0
+            bonusText:
+                de: Reduktion des Signaturradius von Schiffen
+                en: reduction in ship signature radius
+                fr: de réduction du rayon de signature du vaisseau
+                ja: 艦船のシグネチャ半径が縮小
+                ru: уменьшение размера сигнатуры корабля
+                zh: 舰船信号半径降低
+            importance: 3
+            isPositive: true
+            unitID: 105
+        -   bonus: 29.0
+            bonusText:
+                de: Abzug auf alle Schildresistenzen
+                en: penalty to shield resistances
+                fr: de pénalité aux résistances du bouclier
+                ja: シールドレジスタンスにペナルティ
+                ru: штраф к сопротивляемости щитов
+                zh: 护盾抗性惩罚
+            importance: 4
+            isPositive: false
+            unitID: 105
+        -   bonus: 58.0
+            bonusText:
+                de: Bonus auf die HP der Panzerung
+                en: bonus to armor hitpoints
+                fr: de bonus aux points de vie du blindage
+                ja: アーマーHPが増加
+                ru: бонус к запасу прочности брони
+                zh: 装甲值加成
+            importance: 2
+            isPositive: true
+            unitID: 105
+        -   bonus: 116.0
+            bonusText:
+                de: Bonus auf den Schaden von kleinen Waffen
+                en: bonus to small weapon damage
+                fr: de bonus aux dégâts de petites armes
+                ja: 小型兵器のダメージが増加
+                ru: бонус к урону от малых орудий
+                zh: 小型武器伤害加成
+            importance: 1
+            isPositive: true
+            unitID: 105
+        roleBonuses: []
+        types: {}
+    volume: 20.0
+30877:
+    description:
+        de: Einzelne besondere räumliche Erscheinungen können Ihr Schiff auf seltsame
+            Weise beeinträchtigen.
+        en: Local spatial phenomena may cause strange effects on your ship systems.
+        fr: Phénomène local de l'espace pouvant avoir d'étranges effets sur les systèmes
+            de votre vaisseau.
+        ja: 周囲の空間で発生している現象が、船のシステムに不可解な効果を与えるかもしれない。
+        ru: Излучение местной звезды влияет на работу бортовых систем вашего корабля.
+        zh: 本地空间现象可能会对你的舰船系统造成影响。
+    graphicID: 1217
+    groupID: 920
+    mass: 1.0
+    name:
+        de: Class 4 Wolf Rayet Effects
+        en: Class 4 Wolf Rayet Effects
+        fr: Effets Wolf-Rayet de classe 4
+        ja: クラス4ウォルフ・ライエ星効果
+        ru: Class 4 Wolf Rayet Effects
+        zh: 四类沃尔夫-拉叶星效果光束
+    portionSize: 250
+    published: true
+    sofFactionName: genericbase
+    traits:
+        iconID: 24308
+        miscBonuses:
+        -   bonus: 36.0
+            bonusText:
+                de: Reduktion des Signaturradius von Schiffen
+                en: reduction in ship signature radius
+                fr: de réduction du rayon de signature du vaisseau
+                ja: 艦船のシグネチャ半径が縮小
+                ru: уменьшение размера сигнатуры корабля
+                zh: 舰船信号半径降低
+            importance: 3
+            isPositive: true
+            unitID: 105
+        -   bonus: 36.0
+            bonusText:
+                de: Abzug auf alle Schildresistenzen
+                en: penalty to shield resistances
+                fr: de pénalité aux résistances du bouclier
+                ja: シールドレジスタンスにペナルティ
+                ru: штраф к сопротивляемости щитов
+                zh: 护盾抗性惩罚
+            importance: 4
+            isPositive: false
+            unitID: 105
+        -   bonus: 72.0
+            bonusText:
+                de: Bonus auf die HP der Panzerung
+                en: bonus to armor hitpoints
+                fr: de bonus aux points de vie du blindage
+                ja: アーマーHPが増加
+                ru: бонус к запасу прочности брони
+                zh: 装甲值加成
+            importance: 2
+            isPositive: true
+            unitID: 105
+        -   bonus: 144.0
+            bonusText:
+                de: Bonus auf den Schaden von kleinen Waffen
+                en: bonus to small weapon damage
+                fr: de bonus aux dégâts de petites armes
+                ja: 小型兵器のダメージが増加
+                ru: бонус к урону от малых орудий
+                zh: 小型武器伤害加成
+            importance: 1
+            isPositive: true
+            unitID: 105
+        roleBonuses: []
+        types: {}
+    volume: 20.0
+30878:
+    description:
+        de: Einzelne besondere räumliche Erscheinungen können Ihr Schiff auf seltsame
+            Weise beeinträchtigen.
+        en: Local spatial phenomena may cause strange effects on your ship systems.
+        fr: Phénomène local de l'espace pouvant avoir d'étranges effets sur les systèmes
+            de votre vaisseau.
+        ja: 周囲の空間で発生している現象が、船のシステムに不可解な効果を与えるかもしれない。
+        ru: Излучение местной звезды влияет на работу бортовых систем вашего корабля.
+        zh: 本地空间现象可能会对你的舰船系统造成影响。
+    graphicID: 1217
+    groupID: 920
+    mass: 1.0
+    name:
+        de: Class 5 Wolf Rayet Effects
+        en: Class 5 Wolf Rayet Effects
+        fr: Effets Wolf-Rayet de classe 5
+        ja: クラス5ウルフ・ライエ効果
+        ru: Class 5 Wolf Rayet Effects
+        zh: 五类沃尔夫-拉叶星效果光束
+    portionSize: 250
+    published: true
+    sofFactionName: genericbase
+    traits:
+        iconID: 24308
+        miscBonuses:
+        -   bonus: 43.0
+            bonusText:
+                de: Reduktion des Signaturradius von Schiffen
+                en: reduction in ship signature radius
+                fr: de réduction du rayon de signature du vaisseau
+                ja: 艦船のシグネチャ半径が縮小
+                ru: уменьшение размера сигнатуры корабля
+                zh: 舰船信号半径降低
+            importance: 3
+            isPositive: true
+            unitID: 105
+        -   bonus: 43.0
+            bonusText:
+                de: Abzug auf alle Schildresistenzen
+                en: penalty to shield resistances
+                fr: de pénalité aux résistances du bouclier
+                ja: シールドレジスタンスにペナルティ
+                ru: штраф к сопротивляемости щитов
+                zh: 护盾抗性惩罚
+            importance: 4
+            isPositive: false
+            unitID: 105
+        -   bonus: 86.0
+            bonusText:
+                de: Bonus auf die HP der Panzerung
+                en: bonus to armor hitpoints
+                fr: de bonus aux points de vie du blindage
+                ja: アーマーHPが増加
+                ru: бонус к запасу прочности брони
+                zh: 装甲值加成
+            importance: 2
+            isPositive: true
+            unitID: 105
+        -   bonus: 172.0
+            bonusText:
+                de: Bonus auf den Schaden von kleinen Waffen
+                en: bonus to small weapon damage
+                fr: de bonus aux dégâts de petites armes
+                ja: 小型兵器のダメージが増加
+                ru: бонус к урону от малых орудий
+                zh: 小型武器伤害加成
+            importance: 1
+            isPositive: true
+            unitID: 105
+        roleBonuses: []
+        types: {}
+    volume: 20.0
+30879:
+    description:
+        de: Einzelne besondere räumliche Erscheinungen können Ihr Schiff auf seltsame
+            Weise beeinträchtigen.
+        en: Local spatial phenomena may cause strange effects on your ship systems.
+        fr: Phénomène local de l'espace pouvant avoir d'étranges effets sur les systèmes
+            de votre vaisseau.
+        ja: 周囲の空間で発生している現象が、船のシステムに不可解な効果を与えるかもしれない。
+        ru: Излучение местной звезды влияет на работу бортовых систем вашего корабля.
+        zh: 本地空间现象可能会对你的舰船系统造成影响。
+    graphicID: 1217
+    groupID: 920
+    mass: 1.0
+    name:
+        de: Class 6 Wolf Rayet Effects
+        en: Class 6 Wolf Rayet Effects
+        fr: Effets Wolf-Rayet de classe 6
+        ja: クラス6ウルフ・ライエ効果
+        ru: Class 6 Wolf Rayet Effects
+        zh: 六类沃尔夫-拉叶星效果光束
+    portionSize: 250
+    published: true
+    sofFactionName: genericbase
+    traits:
+        iconID: 24308
+        miscBonuses:
+        -   bonus: 50.0
+            bonusText:
+                de: Reduktion des Signaturradius von Schiffen
+                en: reduction in ship signature radius
+                fr: de réduction du rayon de signature du vaisseau
+                ja: 艦船のシグネチャ半径が縮小
+                ru: уменьшение размера сигнатуры корабля
+                zh: 舰船信号半径降低
+            importance: 3
+            isPositive: true
+            unitID: 105
+        -   bonus: 50.0
+            bonusText:
+                de: Abzug auf alle Schildresistenzen
+                en: penalty to shield resistances
+                fr: de pénalité aux résistances du bouclier
+                ja: シールドレジスタンスにペナルティ
+                ru: штраф к сопротивляемости щитов
+                zh: 护盾抗性惩罚
+            importance: 4
+            isPositive: false
+            unitID: 105
+        -   bonus: 100.0
+            bonusText:
+                de: Bonus auf die HP der Panzerung
+                en: bonus to armor hitpoints
+                fr: de bonus aux points de vie du blindage
+                ja: アーマーHPが増加
+                ru: бонус к запасу прочности брони
+                zh: 装甲值加成
+            importance: 2
+            isPositive: true
+            unitID: 105
+        -   bonus: 200.0
+            bonusText:
+                de: Bonus auf den Schaden von kleinen Waffen
+                en: bonus to small weapon damage
+                fr: de bonus aux dégâts de petites armes
+                ja: 小型兵器のダメージが増加
+                ru: бонус к урону от малых орудий
+                zh: 小型武器伤害加成
+            importance: 1
+            isPositive: true
+            unitID: 105
+        roleBonuses: []
+        types: {}
+    volume: 20.0
+30880:
+    description:
+        de: Einzelne besondere räumliche Erscheinungen können Ihr Schiff auf seltsame
+            Weise beeinträchtigen.
+        en: Local spatial phenomena may cause strange effects on your ship systems.
+        fr: Phénomène local de l'espace pouvant avoir d'étranges effets sur les systèmes
+            de votre vaisseau.
+        ja: 周囲の空間で発生している現象が、船のシステムに不可解な効果を与えるかもしれない。
+        ru: Излучение местной звезды влияет на работу бортовых систем вашего корабля.
+        zh: 本地空间现象可能会对你的舰船系统造成影响。
+    graphicID: 1217
+    groupID: 920
+    mass: 1.0
+    name:
+        de: Class 2 Cataclysmic Variable Effects
+        en: Class 2 Cataclysmic Variable Effects
+        fr: Effets Variable cataclysmique de classe 2
+        ja: クラス2激変星効果
+        ru: Class 2 Cataclysmic Variable Effects
+        zh: 二类激变变星效果光束
+    portionSize: 250
+    published: true
+    sofFactionName: genericbase
+    traits:
+        iconID: 24304
+        miscBonuses:
+        -   bonus: 22.0
+            bonusText:
+                de: Abzug auf die Wiederaufladezeit des Energiespeichers
+                en: penalty to capacitor recharge time
+                fr: de pénalité au temps de recharge du capaciteur
+                ja: キャパシタのリチャージ時間にペナルティ
+                ru: штраф к времени перезарядки накопителя
+                zh: 电容器回充时间惩罚
+            importance: 3
+            isPositive: false
+            unitID: 105
+        -   bonus: 22.0
+            bonusText:
+                de: Abzug auf die Effektivität von Energiespeicher-Ferntransmittern
+                en: penalty to remote capacitor transmitter effectiveness
+                fr: de pénalité à l'efficacité du transmetteur de capaciteur à distance
+                ja: リモートキャパシタトランスミッターの効果にペナルティ
+                ru: штраф к эффективности модуля дистанционного пополнения накопителя
+                zh: 远程电容传输装置效果惩罚
+            importance: 4
+            isPositive: false
+            unitID: 105
+        -   bonus: 22.0
+            bonusText:
+                de: Abzug auf die Effektivität von Panzerungsreparatursystemen und
+                    Schildboostern
+                en: penalty to local armor repairer and shield booster effectiveness
+                fr: de pénalité à l'efficacité des réparateurs de blindage locaux
+                    et des boosters de bouclier
+                ja: ローカルアーマーリペアラとシールドブースターの効果にペナルティ
+                ru: штраф к эффективности локального ремонта брони и усиления щитов
+                zh: 自身装甲维修器和护盾回充增量器效果惩罚
+            importance: 5
+            isPositive: false
+            unitID: 105
+        -   bonus: 44.0
+            bonusText:
+                de: Bonus auf die Effektivität von Panzerungs-Fernreparatursystemen
+                    und Schildfernboostern
+                en: bonus to remote armor repairer and remote shield booster effectiveness
+                fr: de bonus à l'efficacité des réparateurs de blindage à distance
+                    et des boosters de bouclier à distance
+                ja: リモートアーマーリペアラとリモートシールドブースターの効果が上昇
+                ru: бонус к эффективности модуля дистанционного ремонта брони и модуля
+                    дистанционного усиления щитов
+                zh: 远程装甲维修器和远程护盾回充增量器效果加成
+            importance: 1
+            isPositive: true
+            unitID: 105
+        -   bonus: 44.0
+            bonusText:
+                de: Bonus auf die Energiespeicherkapazität
+                en: bonus to capacitor capacity
+                fr: de bonus à la charge du capaciteur
+                ja: キャパシタ容量が増加
+                ru: бонус к ёмкости накопителя
+                zh: 电容器电容量加成
+            importance: 2
+            isPositive: true
+            unitID: 105
+        roleBonuses: []
+        types: {}
+    volume: 20.0
+30881:
+    description:
+        de: Einzelne besondere räumliche Erscheinungen können Ihr Schiff auf seltsame
+            Weise beeinträchtigen.
+        en: Local spatial phenomena may cause strange effects on your ship systems.
+        fr: Phénomène local de l'espace pouvant avoir d'étranges effets sur les systèmes
+            de votre vaisseau.
+        ja: 周囲の空間で発生している現象が、船のシステムに不可解な効果を与えるかもしれない。
+        ru: Излучение местной звезды влияет на работу бортовых систем вашего корабля.
+        zh: 本地空间现象可能会对你的舰船系统造成影响。
+    graphicID: 1217
+    groupID: 920
+    mass: 1.0
+    name:
+        de: Class 3 Cataclysmic Variable Effects
+        en: Class 3 Cataclysmic Variable Effects
+        fr: Effets Variable cataclysmique de classe 3
+        ja: クラス3激変星効果
+        ru: Class 3 Cataclysmic Variable Effects
+        zh: 三类激变变星效果光束
+    portionSize: 250
+    published: true
+    sofFactionName: genericbase
+    traits:
+        iconID: 24304
+        miscBonuses:
+        -   bonus: 29.0
+            bonusText:
+                de: Abzug auf die Wiederaufladezeit des Energiespeichers
+                en: penalty to capacitor recharge time
+                fr: de pénalité au temps de recharge du capaciteur
+                ja: キャパシタのリチャージ時間にペナルティ
+                ru: штраф к времени перезарядки накопителя
+                zh: 电容器回充时间惩罚
+            importance: 3
+            isPositive: false
+            unitID: 105
+        -   bonus: 29.0
+            bonusText:
+                de: Abzug auf die Effektivität von Energiespeicher-Ferntransmittern
+                en: penalty to remote capacitor transmitter effectiveness
+                fr: de pénalité à l'efficacité du transmetteur de capaciteur à distance
+                ja: リモートキャパシタトランスミッターの効果にペナルティ
+                ru: штраф к эффективности модуля дистанционного пополнения накопителя
+                zh: 远程电容传输装置效果惩罚
+            importance: 4
+            isPositive: false
+            unitID: 105
+        -   bonus: 29.0
+            bonusText:
+                de: Abzug auf die Effektivität von Panzerungsreparatursystemen und
+                    Schildboostern
+                en: penalty to local armor repairer and shield booster effectiveness
+                fr: de pénalité à l'efficacité des réparateurs de blindage locaux
+                    et des boosters de bouclier
+                ja: ローカルアーマーリペアラとシールドブースターの効果にペナルティ
+                ru: штраф к эффективности локального ремонта брони и усиления щитов
+                zh: 自身装甲维修器和护盾回充增量器效果惩罚
+            importance: 5
+            isPositive: false
+            unitID: 105
+        -   bonus: 58.0
+            bonusText:
+                de: Bonus auf die Effektivität von Panzerungs-Fernreparatursystemen
+                    und Schildfernboostern
+                en: bonus to remote armor repairer and remote shield booster effectiveness
+                fr: de bonus à l'efficacité des réparateurs de blindage à distance
+                    et des boosters de bouclier à distance
+                ja: リモートアーマーリペアラとリモートシールドブースターの効果が上昇
+                ru: бонус к эффективности модуля дистанционного ремонта брони и модуля
+                    дистанционного усиления щитов
+                zh: 远程装甲维修器和远程护盾回充增量器效果加成
+            importance: 1
+            isPositive: true
+            unitID: 105
+        -   bonus: 58.0
+            bonusText:
+                de: Bonus auf die Energiespeicherkapazität
+                en: bonus to capacitor capacity
+                fr: de bonus à la charge du capaciteur
+                ja: キャパシタ容量が増加
+                ru: бонус к ёмкости накопителя
+                zh: 电容器电容量加成
+            importance: 2
+            isPositive: true
+            unitID: 105
+        roleBonuses: []
+        types: {}
+    volume: 20.0
+30882:
+    description:
+        de: Einzelne besondere räumliche Erscheinungen können Ihr Schiff auf seltsame
+            Weise beeinträchtigen.
+        en: Local spatial phenomena may cause strange effects on your ship systems.
+        fr: Phénomène local de l'espace pouvant avoir d'étranges effets sur les systèmes
+            de votre vaisseau.
+        ja: 周囲の空間で発生している現象が、船のシステムに不可解な効果を与えるかもしれない。
+        ru: Излучение местной звезды влияет на работу бортовых систем вашего корабля.
+        zh: 本地空间现象可能会对你的舰船系统造成影响。
+    graphicID: 1217
+    groupID: 920
+    mass: 1.0
+    name:
+        de: Class 6 Cataclysmic Variable Effects
+        en: Class 6 Cataclysmic Variable Effects
+        fr: Effets Variable cataclysmique de classe 6
+        ja: クラス6激変星効果
+        ru: Class 6 Cataclysmic Variable Effects
+        zh: 六类激变变星效果光束
+    portionSize: 250
+    published: true
+    sofFactionName: genericbase
+    traits:
+        iconID: 24304
+        miscBonuses:
+        -   bonus: 50.0
+            bonusText:
+                de: Abzug auf die Wiederaufladezeit des Energiespeichers
+                en: penalty to capacitor recharge time
+                fr: de pénalité au temps de recharge du capaciteur
+                ja: キャパシタのリチャージ時間にペナルティ
+                ru: штраф к времени перезарядки накопителя
+                zh: 电容器回充时间惩罚
+            importance: 3
+            isPositive: false
+            unitID: 105
+        -   bonus: 50.0
+            bonusText:
+                de: Abzug auf die Effektivität von Energiespeicher-Ferntransmittern
+                en: penalty to remote capacitor transmitter effectiveness
+                fr: de pénalité à l'efficacité du transmetteur de capaciteur à distance
+                ja: リモートキャパシタトランスミッターの効果にペナルティ
+                ru: штраф к эффективности модуля дистанционного пополнения накопителя
+                zh: 远程电容传输装置效果惩罚
+            importance: 4
+            isPositive: false
+            unitID: 105
+        -   bonus: 50.0
+            bonusText:
+                de: Abzug auf die Effektivität von Panzerungsreparatursystemen und
+                    Schildboostern
+                en: penalty to local armor repairer and shield booster effectiveness
+                fr: de pénalité à l'efficacité des réparateurs de blindage locaux
+                    et des boosters de bouclier
+                ja: ローカルアーマーリペアラとシールドブースターの効果にペナルティ
+                ru: штраф к эффективности локального ремонта брони и усиления щитов
+                zh: 自身装甲维修器和护盾回充增量器效果惩罚
+            importance: 5
+            isPositive: false
+            unitID: 105
+        -   bonus: 100.0
+            bonusText:
+                de: Bonus auf die Effektivität von Panzerungs-Fernreparatursystemen
+                    und Schildfernboostern
+                en: bonus to remote armor repairer and remote shield booster effectiveness
+                fr: de bonus à l'efficacité des réparateurs de blindage à distance
+                    et des boosters de bouclier à distance
+                ja: リモートアーマーリペアラとリモートシールドブースターの効果が上昇
+                ru: бонус к эффективности модуля дистанционного ремонта брони и модуля
+                    дистанционного усиления щитов
+                zh: 远程装甲维修器和远程护盾回充增量器效果加成
+            importance: 1
+            isPositive: true
+            unitID: 105
+        -   bonus: 100.0
+            bonusText:
+                de: Bonus auf die Energiespeicherkapazität
+                en: bonus to capacitor capacity
+                fr: de bonus à la charge du capaciteur
+                ja: キャパシタ容量が増加
+                ru: бонус к ёмкости накопителя
+                zh: 电容器电容量加成
+            importance: 2
+            isPositive: true
+            unitID: 105
+        roleBonuses: []
+        types: {}
+    volume: 20.0
+30883:
+    description:
+        de: Einzelne besondere räumliche Erscheinungen können Ihr Schiff auf seltsame
+            Weise beeinträchtigen.
+        en: Local spatial phenomena may cause strange effects on your ship systems.
+        fr: Phénomène local de l'espace pouvant avoir d'étranges effets sur les systèmes
+            de votre vaisseau.
+        ja: 周囲の空間で発生している現象が、船のシステムに不可解な効果を与えるかもしれない。
+        ru: Излучение местной звезды влияет на работу бортовых систем вашего корабля.
+        zh: 本地空间现象可能会对你的舰船系统造成影响。
+    graphicID: 1217
+    groupID: 920
+    mass: 1.0
+    name:
+        de: Class 5 Cataclysmic Variable Effects
+        en: Class 5 Cataclysmic Variable Effects
+        fr: Effets Variable cataclysmique de classe 5
+        ja: クラス5激変星効果
+        ru: Class 5 Cataclysmic Variable Effects
+        zh: 五类激变变星效果光束
+    portionSize: 250
+    published: true
+    sofFactionName: genericbase
+    traits:
+        iconID: 24304
+        miscBonuses:
+        -   bonus: 43.0
+            bonusText:
+                de: Abzug auf die Wiederaufladezeit des Energiespeichers
+                en: penalty to capacitor recharge time
+                fr: de pénalité au temps de recharge du capaciteur
+                ja: キャパシタのリチャージ時間にペナルティ
+                ru: штраф к времени перезарядки накопителя
+                zh: 电容器回充时间惩罚
+            importance: 3
+            isPositive: false
+            unitID: 105
+        -   bonus: 43.0
+            bonusText:
+                de: Abzug auf die Effektivität von Energiespeicher-Ferntransmittern
+                en: penalty to remote capacitor transmitter effectiveness
+                fr: de pénalité à l'efficacité du transmetteur de capaciteur à distance
+                ja: リモートキャパシタトランスミッターの効果にペナルティ
+                ru: штраф к эффективности модуля дистанционного пополнения накопителя
+                zh: 远程电容传输装置效果惩罚
+            importance: 4
+            isPositive: false
+            unitID: 105
+        -   bonus: 43.0
+            bonusText:
+                de: Abzug auf die Effektivität von Panzerungsreparatursystemen und
+                    Schildboostern
+                en: penalty to local armor repairer and shield booster effectiveness
+                fr: de pénalité à l'efficacité des réparateurs de blindage locaux
+                    et des boosters de bouclier
+                ja: ローカルアーマーリペアラとシールドブースターの効果にペナルティ
+                ru: штраф к эффективности локального ремонта брони и усиления щитов
+                zh: 自身装甲维修器和护盾回充增量器效果惩罚
+            importance: 5
+            isPositive: false
+            unitID: 105
+        -   bonus: 86.0
+            bonusText:
+                de: Bonus auf die Effektivität von Panzerungs-Fernreparatursystemen
+                    und Schildfernboostern
+                en: bonus to remote armor repairer and remote shield booster effectiveness
+                fr: de bonus à l'efficacité des réparateurs de blindage à distance
+                    et des boosters de bouclier à distance
+                ja: リモートアーマーリペアラとリモートシールドブースターの効果が上昇
+                ru: бонус к эффективности модуля дистанционного ремонта брони и модуля
+                    дистанционного усиления щитов
+                zh: 远程装甲维修器和远程护盾回充增量器效果加成
+            importance: 1
+            isPositive: true
+            unitID: 105
+        -   bonus: 86.0
+            bonusText:
+                de: Bonus auf die Energiespeicherkapazität
+                en: bonus to capacitor capacity
+                fr: de bonus à la charge du capaciteur
+                ja: キャパシタ容量が増加
+                ru: бонус к ёмкости накопителя
+                zh: 电容器电容量加成
+            importance: 2
+            isPositive: true
+            unitID: 105
+        roleBonuses: []
+        types: {}
+    volume: 20.0
+30884:
+    description:
+        de: Einzelne besondere räumliche Erscheinungen können Ihr Schiff auf seltsame
+            Weise beeinträchtigen.
+        en: Local spatial phenomena may cause strange effects on your ship systems.
+        fr: Phénomène local de l'espace pouvant avoir d'étranges effets sur les systèmes
+            de votre vaisseau.
+        ja: 周囲の空間で発生している現象が、船のシステムに不可解な効果を与えるかもしれない。
+        ru: Излучение местной звезды влияет на работу бортовых систем вашего корабля.
+        zh: 本地空间现象可能会对你的舰船系统造成影响。
+    graphicID: 1217
+    groupID: 920
+    mass: 1.0
+    name:
+        de: Class 4 Cataclysmic Variable Effects
+        en: Class 4 Cataclysmic Variable Effects
+        fr: Effets Variable cataclysmique de classe 4
+        ja: クラス4激変星効果
+        ru: Class 4 Cataclysmic Variable Effects
+        zh: 四类激变变星效果光束
+    portionSize: 250
+    published: true
+    sofFactionName: genericbase
+    traits:
+        iconID: 24304
+        miscBonuses:
+        -   bonus: 36.0
+            bonusText:
+                de: Abzug auf die Wiederaufladezeit des Energiespeichers
+                en: penalty to capacitor recharge time
+                fr: de pénalité au temps de recharge du capaciteur
+                ja: キャパシタのリチャージ時間にペナルティ
+                ru: штраф к времени перезарядки накопителя
+                zh: 电容器回充时间惩罚
+            importance: 3
+            isPositive: false
+            unitID: 105
+        -   bonus: 36.0
+            bonusText:
+                de: Abzug auf die Effektivität von Energiespeicher-Ferntransmittern
+                en: penalty to remote capacitor transmitter effectiveness
+                fr: de pénalité à l'efficacité du transmetteur de capaciteur à distance
+                ja: リモートキャパシタトランスミッターの効果にペナルティ
+                ru: штраф к эффективности модуля дистанционного пополнения накопителя
+                zh: 远程电容传输装置效果惩罚
+            importance: 4
+            isPositive: false
+            unitID: 105
+        -   bonus: 36.0
+            bonusText:
+                de: Abzug auf die Effektivität von Panzerungsreparatursystemen und
+                    Schildboostern
+                en: penalty to local armor repairer and shield booster effectiveness
+                fr: de pénalité à l'efficacité des réparateurs de blindage locaux
+                    et des boosters de bouclier
+                ja: ローカルアーマーリペアラとシールドブースターの効果にペナルティ
+                ru: штраф к эффективности локального ремонта брони и усиления щитов
+                zh: 自身装甲维修器和护盾回充增量器效果惩罚
+            importance: 5
+            isPositive: false
+            unitID: 105
+        -   bonus: 72.0
+            bonusText:
+                de: Bonus auf die Effektivität von Panzerungs-Fernreparatursystemen
+                    und Schildfernboostern
+                en: bonus to remote armor repairer and remote shield booster effectiveness
+                fr: de bonus à l'efficacité des réparateurs de blindage à distance
+                    et des boosters de bouclier à distance
+                ja: リモートアーマーリペアラとリモートシールドブースターの効果が上昇
+                ru: бонус к эффективности модуля дистанционного ремонта брони и модуля
+                    дистанционного усиления щитов
+                zh: 远程装甲维修器和远程护盾回充增量器效果加成
+            importance: 1
+            isPositive: true
+            unitID: 105
+        -   bonus: 72.0
+            bonusText:
+                de: Bonus auf die Energiespeicherkapazität
+                en: bonus to capacitor capacity
+                fr: de bonus à la charge du capaciteur
+                ja: キャパシタ容量が増加
+                ru: бонус к ёмкости накопителя
+                zh: 电容器电容量加成
+            importance: 2
+            isPositive: true
+            unitID: 105
+        roleBonuses: []
+        types: {}
+    volume: 20.0
