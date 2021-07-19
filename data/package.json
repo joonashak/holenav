@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "generate": "npx ts-node generate-data.ts"
+    "generate": "npx ts-node generateData.ts"
   },
   "keywords": [],
   "author": "Joonas Häkkinen <hakkijoo@gmail.com>",
