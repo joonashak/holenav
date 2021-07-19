@@ -1,18 +1,15 @@
 type EsiSystemData = {
   name: string;
-  security_status: number;
-  system_id: number;
-  constellation_id: number;
+  security: number;
+  solarSystemID: number;
 };
 
 export const formatSystem = ({
   name,
-  security_status,
-  system_id,
-  constellation_id,
+  security,
+  solarSystemID,
 }: EsiSystemData) => ({
   name,
-  security_status,
-  system_esi_id: system_id,
-  constellation_esi_id: constellation_id,
+  securityStatus: security,
+  systemEsiId: solarSystemID,
 });
