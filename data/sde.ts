@@ -58,11 +58,18 @@ const namesById = async (min: number, max: number) => {
 };
 
 const addNamesToSystems = async (systems: EsiSystem[]) => {
-  const ids = systems.map(({ solarSystemID }) => solarSystemID);
-  const names = await namesById(Math.min(...ids), Math.max(...ids));
-  return systems.map((system) =>
-    Object.assign(system, { name: names[system.solarSystemID] })
-  );
+  try {
+    const ids = systems.map(({ solarSystemID }) => solarSystemID);
+    const names = await namesById(Math.min(...ids), Math.max(...ids));
+    return systems.map((system) =>
+      Object.assign(system, { name: names[system.solarSystemID] })
+    );
+  } catch (error) {
+    console.log("FAILED");
+    console.log(systems);
+  }
+
+  return [];
 };
 
 /**
@@ -99,8 +106,7 @@ const traverseUniverse = async (
 export const getSystemData = async () => {
   const kSpaceSystems = await traverseUniverse("sde/fsd/universe/eve");
   const wSpaceSystems = await traverseUniverse("sde/fsd/universe/wormhole");
-  const systems = (await addNamesToSystems(kSpaceSystems + wSpaceSystems)).map(
-    formatSystem
-  );
+  const systemsRaw = kSpaceSystems.concat(wSpaceSystems);
+  const systems = (await addNamesToSystems(systemsRaw)).map(formatSystem);
   return systems;
 };
