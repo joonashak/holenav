@@ -1,5 +1,7 @@
 import axios from "axios";
 import { createWriteStream } from "fs";
+import { resolve } from "path";
+import unzip from "extract-zip";
 
 /**
  * Download SDE (Static Data Export) from EVE's dev website and save locally.
@@ -14,6 +16,10 @@ export const downloadSde = async () => {
     throw new Error(res.statusText);
   }
 
-  res.data.pipe(createWriteStream("sde.zip"));
-  res.data.on("end", () => console.log("doned"));
+  await res.data.pipe(createWriteStream("sde.zip"));
+  await res.data.on("end", async () => {
+    console.log("SDE downloaded. Extracting ZIP.");
+    const target = resolve(__dirname);
+    await unzip("./sde.zip", { dir: target });
+  });
 };
