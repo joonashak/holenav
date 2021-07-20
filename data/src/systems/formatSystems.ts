@@ -1,5 +1,5 @@
 import { HolenavSystem } from "../types/holenavStaticDataTypes";
-import { SdeSystem } from "../types/SdeTypes";
+import { SdeSystemExtended } from "../types/sdeTypes";
 
 enum SecurityClass {
   High = "HIGH",
@@ -23,9 +23,12 @@ const securityClassFromStatus = (securityStatus: number) => {
   return SecurityClass.Wormhole;
 };
 
-export default (systems: SdeSystem[], systemNames: any): HolenavSystem[] =>
+export default (
+  systems: SdeSystemExtended[],
+  systemNames: any
+): HolenavSystem[] =>
   systems.map((system) => {
-    const { solarSystemID, security, secondarySun } = system;
+    const { solarSystemID, security, secondarySun, regionId, whClass } = system;
     const name = systemNames[solarSystemID];
     const securityClass = securityClassFromStatus(security);
     const effectId = secondarySun?.effectBeaconTypeID || null;
@@ -36,5 +39,8 @@ export default (systems: SdeSystem[], systemNames: any): HolenavSystem[] =>
       securityStatus: security,
       securityClass,
       effectId,
+      regionId,
+      // Some k-space systems have a wh class set in SDE...
+      whClass: securityClass === SecurityClass.Wormhole ? whClass : null,
     };
   });

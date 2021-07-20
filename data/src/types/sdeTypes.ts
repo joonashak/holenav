@@ -9,6 +9,11 @@ export type SdeSystem = {
   };
 };
 
+export type SdeSystemExtended = SdeSystem & {
+  regionId: number;
+  whClass: number;
+};
+
 export type SdeName = {
   itemID: number;
   itemName: string;
