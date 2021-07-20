@@ -23,4 +23,4 @@ jobs:
           context: ./server
           platforms: linux/amd64
           push: true
-          tags: ${{ github.actor }}/holenav-server:staging
+          tags: ghcr.io/${{ github.actor }}/holenav-server:staging
