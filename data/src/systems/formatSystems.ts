@@ -25,14 +25,16 @@ const securityClassFromStatus = (securityStatus: number) => {
 
 export default (systems: SdeSystem[], systemNames: any): HolenavSystem[] =>
   systems.map((system) => {
-    const { solarSystemID, security } = system;
+    const { solarSystemID, security, secondarySun } = system;
     const name = systemNames[solarSystemID];
     const securityClass = securityClassFromStatus(security);
+    const effectId = secondarySun?.effectBeaconTypeID || null;
 
     return {
       name,
       systemEsiId: solarSystemID,
       securityStatus: security,
       securityClass,
+      effectId,
     };
   });
