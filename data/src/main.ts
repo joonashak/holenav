@@ -8,8 +8,7 @@ dotenv.config();
 
 const main = async () => {
   const hrstart = process.hrtime();
-  // FIXME: Does not await correctly.
-  //await downloadSde();
+  await downloadSde();
 
   const effects = await getWormholeEffects();
   const effectsStr = JSON.stringify(effects, null, 4);

@@ -8,7 +8,6 @@ import unzip from "extract-zip";
  * Download SDE (Static Data Export) from EVE's dev website and save locally.
  */
 export const downloadSde = async () => {
-  // FIXME: Something here is not awaiting properly.
   console.log("Downloading SDE.");
 
   const url = process.env.SDE_DOWNLOAD_URL || "";
@@ -22,11 +21,11 @@ export const downloadSde = async () => {
 
   const tempPath = process.env.SDE_TEMP_FILE || "sde.zip";
   await res.data.pipe(createWriteStream(tempPath));
-  await res.data.on("end", async () => {
-    console.log("SDE downloaded. Extracting ZIP.");
-    const dir = resolve(process.env.SDE_UNZIP_DIR || "./");
-    await unzip(tempPath, { dir });
-    await unlink(tempPath);
-    console.log("SDE fetch complete.");
-  });
+  await new Promise((resolve) => res.data.on("end", resolve));
+
+  console.log("SDE downloaded. Extracting ZIP.");
+  const dir = resolve(process.env.SDE_UNZIP_DIR || "./");
+  await unzip(tempPath, { dir });
+  await unlink(tempPath);
+  console.log("SDE fetch complete.");
 };
