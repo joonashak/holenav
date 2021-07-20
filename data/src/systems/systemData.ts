@@ -1,17 +1,8 @@
 import { opendir, readFile } from "fs/promises";
 import { resolve } from "path";
 import { parse as parseYaml } from "yaml";
-import formatSystem from "./formatSystem";
-
-type EsiSystem = {
-  solarSystemID: number;
-  security: number;
-};
-
-type EsiName = {
-  itemID: number;
-  itemName: string;
-};
+import { SdeName, SdeSystem } from "../types/SdeTypes";
+import formatSystems from "./formatSystems";
 
 /**
  * Get the contents of the names file as an object where keys are itemID's and values
@@ -23,29 +14,20 @@ const namesById = async (min: number, max: number) => {
     encoding: "utf8",
   });
   const items = parseYaml(itemsYaml).filter(
-    ({ itemID }: EsiName) => itemID >= min && itemID <= max
+    ({ itemID }: SdeName) => itemID >= min && itemID <= max
   );
 
   return items.reduce(
-    (names: any, { itemID, itemName }: EsiName) =>
+    (names: any, { itemID, itemName }: SdeName) =>
       Object.assign(names, { [itemID]: itemName }),
     {}
   );
 };
 
-const addNamesToSystems = async (systems: EsiSystem[]) => {
-  try {
-    const ids = systems.map(({ solarSystemID }) => solarSystemID);
-    const names = await namesById(Math.min(...ids), Math.max(...ids));
-    return systems.map((system) =>
-      Object.assign(system, { name: names[system.solarSystemID] })
-    );
-  } catch (error) {
-    console.log("FAILED");
-    console.log(systems);
-  }
-
-  return [];
+const getSystemNames = async (systems: SdeSystem[]) => {
+  const ids = systems.map(({ solarSystemID }) => solarSystemID);
+  const names = await namesById(Math.min(...ids), Math.max(...ids));
+  return names;
 };
 
 /**
@@ -83,6 +65,7 @@ export default async () => {
   const kSpaceSystems = await traverseUniverse("sde/fsd/universe/eve");
   const wSpaceSystems = await traverseUniverse("sde/fsd/universe/wormhole");
   const systemsRaw = kSpaceSystems.concat(wSpaceSystems);
-  const systems = (await addNamesToSystems(systemsRaw)).map(formatSystem);
+  const names = await getSystemNames(systemsRaw);
+  const systems = formatSystems(systemsRaw, names);
   return systems;
 };
