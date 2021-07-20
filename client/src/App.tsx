@@ -1,5 +1,5 @@
 import { Container, makeStyles, Theme } from "@material-ui/core";
-import Overview from "./components/Overview";
+import Router from "./components/Router";
 
 const useStyles = makeStyles((theme: Theme) => ({
   container: {
@@ -13,7 +13,7 @@ export default () => {
 
   return (
     <Container maxWidth={false} disableGutters className={classes.container}>
-      <Overview />
+      <Router />
     </Container>
   );
 };
