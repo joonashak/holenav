@@ -26,11 +26,7 @@ const securityClass = (securityStatus: number) => {
   return SecurityClass.Wormhole;
 };
 
-export const formatSystem = ({
-  name,
-  security,
-  solarSystemID,
-}: EsiSystemData) => ({
+export default ({ name, security, solarSystemID }: EsiSystemData) => ({
   name,
   securityStatus: security,
   securityClass: securityClass(security),

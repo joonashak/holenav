@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 import { writeFile } from "fs/promises";
 import { downloadSde } from "./sde";
-import getSystemData from "./systemData";
+import getSystemData from "./systems/systemData";
 import getWormholeEffects from "./wormholeEffects";
 
 dotenv.config();

@@ -1,7 +1,7 @@
 import { opendir, readFile } from "fs/promises";
 import { resolve } from "path";
 import { parse as parseYaml } from "yaml";
-import { formatSystem } from "./formatters";
+import formatSystem from "./formatSystem";
 
 type EsiSystem = {
   solarSystemID: number;
