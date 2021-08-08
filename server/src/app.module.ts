@@ -12,6 +12,7 @@ import { SystemModule } from "./entities/system/system.module";
       autoSchemaFile: true,
       playground: true,
       debug: false,
+      cors: { origin: process.env.CLIENT_URL },
     }),
     SystemModule,
   ],
