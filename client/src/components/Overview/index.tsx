@@ -7,6 +7,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
+import { gql, useQuery } from "@apollo/client";
 import SystemInfo from "./SystemInfo";
 import ScanningPanel from "./ScanningPanel";
 import IntelPanel from "./IntelPanel";
@@ -22,6 +23,15 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 export default () => {
   const classes = useStyles();
+
+  const { data } = useQuery(gql`
+    query {
+      systems {
+        name
+      }
+    }
+  `);
+  console.log(data);
 
   return (
     <div className={classes.container}>
