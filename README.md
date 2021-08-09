@@ -59,3 +59,7 @@ npm run db:drop
 ```bash
 npm run db:seed
 ```
+
+## Deployment
+
+Working Kubernetes configurations are provided in `.manifests/` along with a [README](.manifests/README.md) detailing the usage.
