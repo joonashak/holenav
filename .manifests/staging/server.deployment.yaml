@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: holenav-server-dep
+  namespace: holenav-staging
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: holenav-server
+  template:
+    metadata:
+      labels:
+        app: holenav-server
+    spec:
+      containers:
+        - name: holenav-server
+          image: ghcr.io/joonashak/holenav-server:staging
