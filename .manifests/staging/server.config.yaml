@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: holenav-server-config-staging
+  namespace: holenav-staging
+data:
+  NODE_ENV: staging
+  PORT: "3001"
+  DATABASE_URL: na
+  CLIENT_URL: na
