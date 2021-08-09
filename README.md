@@ -1,6 +1,6 @@
 # holenav
 
-New mapper for make benefit of the glorious EVE community. Currently in early prototyping.
+New mapper for make benefit of the glorious EVE community. Currently in early prototyping. Follow the [Stable Release milestone](https://github.com/joonashak/holenav/milestone/1) to see where we are currently at.
 
 ## Development Environment
 
@@ -62,4 +62,4 @@ npm run db:seed
 
 ## Deployment
 
-Working Kubernetes configurations are provided in `.manifests/` along with a [README](.manifests/README.md) detailing the usage.
+Working Kubernetes configurations are provided in `.manifests/` along with a [README](.manifests/README.md) detailing the usage. The frontend can be hosted on any static website host by building the CRA project in `client/`.
