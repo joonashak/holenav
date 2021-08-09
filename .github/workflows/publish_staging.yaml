@@ -1,4 +1,4 @@
-name: Publish to staging
+name: Publish for staging
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
 
 jobs:
   deploy:
-    name: Publish to staging
+    name: Publish for staging
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -17,10 +17,11 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Build server image and push it to DockerHub
+      - name: Build server image and push it to GHCR
         uses: docker/build-push-action@v2
         with:
           context: ./server
+          file: Dockerfile.production
           platforms: linux/amd64
           push: true
           tags: ghcr.io/${{ github.actor }}/holenav-server:staging
