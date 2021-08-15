@@ -1,5 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import axios from "axios";
+import { SsoUrl } from "./ssoUrl.enum";
 
 const callbackUrl = process.env.SSO_CALLBACK_URL;
 const clientId = process.env.SSO_CLIENT_ID;
@@ -11,7 +12,7 @@ export class SsoService {
    * Generate EVE SSO login page URL.
    */
   getClientLoginUrl() {
-    const loginUrl = `https://login.eveonline.com/v2/oauth/authorize/?response_type=code&redirect_uri=${callbackUrl}&client_id=${clientId}&state=asdasd`;
+    const loginUrl = `${SsoUrl.Authorize}/?response_type=code&redirect_uri=${callbackUrl}&client_id=${clientId}&state=asdasd`;
     return encodeURI(loginUrl);
   }
 
@@ -20,7 +21,7 @@ export class SsoService {
    */
   async getTokens(authorizationCode: string) {
     const res = await axios.post(
-      "https://login.eveonline.com/v2/oauth/token",
+      SsoUrl.Token,
       { grant_type: "authorization_code", code: authorizationCode },
       { auth: { username: clientId, password: secretKey } },
     );
@@ -40,7 +41,7 @@ export class SsoService {
    */
   async verifyAndDecodeToken(token: string) {
     // Implicitly fails on non-200 status code.
-    const { data } = await axios.get("https://login.eveonline.com/oauth/verify", {
+    const { data } = await axios.get(SsoUrl.Verify, {
       headers: { Authorization: `Bearer ${token}` },
     });
 
