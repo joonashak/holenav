@@ -11,6 +11,8 @@ services:
       - PORT=3001
       - DATABASE_URL=mongodb://db/holenav
       - CLIENT_URL=http://localhost:3000
+    env_file:
+      - .env.development
     volumes:
       - ./server/src:/usr/src/app/src
     depends_on:

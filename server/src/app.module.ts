@@ -4,6 +4,7 @@ import { MongooseModule } from "@nestjs/mongoose";
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
 import { SystemModule } from "./entities/system/system.module";
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { SystemModule } from "./entities/system/system.module";
       cors: { origin: process.env.CLIENT_URL },
     }),
     SystemModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

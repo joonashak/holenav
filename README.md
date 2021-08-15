@@ -10,6 +10,13 @@ Docker Compose configuration is provided for containerized development. You need
 
 Database is not automatically seeded at this time. Start with `npm run db:seed` and follow with `npm run start:logs` to verify that everything is working.
 
+You will also need to have the following environment variables in `.env.development` (project root):
+
+|Variable Name|Description|
+|-|-|
+|`SSO_CALLBACK_URL`|EVE SSO callback URL.|
+|`SSO_CLIENT_ID`|EVE SSO client ID.|
+
 ### Basic Commands
 
 #### Start In Development Mode (Detached)
