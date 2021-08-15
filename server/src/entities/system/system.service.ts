@@ -5,9 +5,7 @@ import { System, SystemDocument } from "./system.model";
 
 @Injectable()
 export class SystemService {
-  constructor(
-    @InjectModel(System.name) private systemModel: Model<SystemDocument>,
-  ) {}
+  constructor(@InjectModel(System.name) private systemModel: Model<SystemDocument>) {}
 
   list() {
     return this.systemModel.find().exec();

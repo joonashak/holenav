@@ -5,9 +5,7 @@ import { SystemService } from "./system.service";
 import { SystemResolver } from "./system.resolver";
 
 @Module({
-  imports: [
-    MongooseModule.forFeature([{ name: System.name, schema: SystemSchema }]),
-  ],
+  imports: [MongooseModule.forFeature([{ name: System.name, schema: SystemSchema }])],
   providers: [SystemService, SystemResolver],
 })
 export class SystemModule {}

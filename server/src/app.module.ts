@@ -5,6 +5,7 @@ import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
 import { SystemModule } from "./entities/system/system.module";
 import { AuthModule } from './auth/auth.module';
+import { CharacterModule } from './entities/character/character.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { AuthModule } from './auth/auth.module';
     }),
     SystemModule,
     AuthModule,
+    CharacterModule,
   ],
   controllers: [AppController],
   providers: [AppService],
