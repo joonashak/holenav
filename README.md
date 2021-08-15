@@ -14,8 +14,9 @@ You will also need to have the following environment variables in `.env.developm
 
 |Variable Name|Description|
 |-|-|
-|`SSO_CALLBACK_URL`|EVE SSO callback URL.|
-|`SSO_CLIENT_ID`|EVE SSO client ID.|
+|`SSO_CALLBACK_URL`|EVE SSO application callback URL.|
+|`SSO_CLIENT_ID`|EVE SSO application client ID.|
+|`SSO_SECRET_KEY`|EVE SSO application secret key.|
 
 ### Basic Commands
 

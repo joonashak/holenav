@@ -15,13 +15,17 @@ export class AuthController {
     response.redirect(ssoLoginUrl);
   }
 
+  /**
+   * Callback path for getting the authorization code after player auth with EVE SSO.
+   */
   @Get("callback")
-  callback(
+  async callback(
     @Query("code") authorizationCode: string,
     @Res() response: Response,
   ) {
     // TODO: Check state parameter.
-    console.log(authorizationCode);
+    const tokens = await this.ssoService.getTokens(authorizationCode);
+    console.log(tokens);
 
     return response.send("OK");
   }
