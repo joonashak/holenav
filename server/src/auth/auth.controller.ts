@@ -1,4 +1,4 @@
-import { Controller, Get, Res } from "@nestjs/common";
+import { Controller, Get, Query, Res } from "@nestjs/common";
 import { Response } from "express";
 import { SsoService } from "./sso/sso.service";
 
@@ -13,5 +13,16 @@ export class AuthController {
   login(@Res() response: Response) {
     const ssoLoginUrl = this.ssoService.getClientLoginUrl();
     response.redirect(ssoLoginUrl);
+  }
+
+  @Get("callback")
+  callback(
+    @Query("code") authorizationCode: string,
+    @Res() response: Response,
+  ) {
+    // TODO: Check state parameter.
+    console.log(authorizationCode);
+
+    return response.send("OK");
   }
 }
