@@ -27,11 +27,23 @@ export class SsoService {
 
     const { data } = res;
 
-    // TODO: Verify tokens!
-
     return {
       accessToken: data.access_token,
       refreshToken: data.refresh_token,
     };
+  }
+
+  /**
+   * Verify JWT token through EVE SSO.
+   *
+   * Returns character data if the token is valid.
+   */
+  async verifyAndDecodeToken(token: string) {
+    // Implicitly fails on non-200 status code.
+    const { data } = await axios.get("https://login.eveonline.com/oauth/verify", {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    return data;
   }
 }
