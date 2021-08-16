@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 const apolloClient = new ApolloClient({
-  uri: process.env.REACT_APP_GRAPHQL_URL,
+  uri: `${process.env.REACT_APP_CMS_URL}/graphql`,
   cache: new InMemoryCache(),
 });
 
