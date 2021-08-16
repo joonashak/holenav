@@ -1,5 +1,5 @@
-import { Controller, Get, Query, Res } from "@nestjs/common";
-import { Response } from "express";
+import { Controller, Get, Query, Req, Res } from "@nestjs/common";
+import { Request, Response } from "express";
 import { CharacterService } from "src/entities/character/character.service";
 import { SsoService } from "./sso/sso.service";
 
@@ -41,6 +41,12 @@ export class AuthController {
     };
     await this.characterService.upsert(data);
 
+    return response.send("OK");
+  }
+
+  @Get("cookie-test")
+  cookieTest(@Req() request: Request, @Res() response: Response) {
+    console.log(request.headers);
     response.cookie("testing", "jeeje");
     return response.send("OK");
   }
