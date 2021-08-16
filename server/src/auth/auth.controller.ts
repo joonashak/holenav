@@ -41,6 +41,7 @@ export class AuthController {
     };
     await this.characterService.upsert(data);
 
+    response.cookie("testing", "jeeje");
     return response.send("OK");
   }
 }
