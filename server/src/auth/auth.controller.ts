@@ -47,7 +47,7 @@ export class AuthController {
   @Get("cookie-test")
   cookieTest(@Req() request: Request, @Res() response: Response) {
     console.log(request.headers);
-    response.cookie("testing", "jeeje");
+    response.cookie("testing", "jeeje", { sameSite: false });
     return response.send("OK");
   }
 }
