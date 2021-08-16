@@ -5,7 +5,7 @@ import { Document } from "mongoose";
 export type SsoStateDocument = SsoState & Document;
 
 @ObjectType()
-@Schema()
+@Schema({ collection: "ssoStates" })
 export class SsoState {
   @Field()
   @Prop({ unique: true })
@@ -14,6 +14,10 @@ export class SsoState {
   @Field()
   @Prop()
   expiry: Date;
+
+  @Field()
+  @Prop({ default: false })
+  ssoLoginSuccess: boolean;
 }
 
 export const SsoStateSchema = SchemaFactory.createForClass(SsoState);

@@ -39,4 +39,12 @@ export class SsoStateService {
       throw new Error("SSO state expired.");
     }
   }
+
+  /**
+   * Mark given (and valid) SSO state with a successful login.
+   */
+  async setSsoLoginSuccess(state: string) {
+    await this.verifySsoState(state);
+    await this.ssoStateModel.findOneAndUpdate({ value: state }, { ssoLoginSuccess: true });
+  }
 }

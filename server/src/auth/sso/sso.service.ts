@@ -57,20 +57,23 @@ export class SsoService {
     return data;
   }
 
+  /**
+   * Handle callback after player has successfully logged in through EVE SSO.
+   */
   async handleCallback(authorizationCode: string, state: string) {
     await this.ssoStateService.verifySsoState(state);
 
     const { accessToken, refreshToken } = await this.getSsoTokens(authorizationCode);
 
     const jwtData = await this.verifyAndDecodeToken(accessToken);
-    console.log(jwtData);
 
-    const data = {
+    await this.characterService.upsert({
       name: jwtData.CharacterName,
       esiId: jwtData.CharacterID,
       accessToken,
       refreshToken,
-    };
-    await this.characterService.upsert(data);
+    });
+
+    await this.ssoStateService.setSsoLoginSuccess(state);
   }
 }
