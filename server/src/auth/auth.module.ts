@@ -6,13 +6,17 @@ import { CharacterService } from "src/entities/character/character.service";
 import { AuthController } from "./auth.controller";
 import { SsoModule } from "./sso/sso.module";
 import { SsoService } from "./sso/sso.service";
+import { SsoState, SsoStateSchema } from "./sso/ssoState.model";
 
 @Module({
   controllers: [AuthController],
   imports: [
     SsoModule,
     CharacterModule,
-    MongooseModule.forFeature([{ name: Character.name, schema: CharacterSchema }]),
+    MongooseModule.forFeature([
+      { name: Character.name, schema: CharacterSchema },
+      { name: SsoState.name, schema: SsoStateSchema },
+    ]),
   ],
   providers: [SsoService, CharacterService],
 })

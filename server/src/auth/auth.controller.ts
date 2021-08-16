@@ -11,8 +11,8 @@ export class AuthController {
    * Redirect client to EVE SSO login page.
    */
   @Get("login")
-  login(@Res() response: Response) {
-    const ssoLoginUrl = this.ssoService.getClientLoginUrl();
+  async login(@Res() response: Response) {
+    const ssoLoginUrl = await this.ssoService.getClientLoginUrl();
     response.redirect(ssoLoginUrl);
   }
 
@@ -20,8 +20,14 @@ export class AuthController {
    * Callback path for getting the authorization code after player auth with EVE SSO.
    */
   @Get("callback")
-  async callback(@Query("code") authorizationCode: string, @Res() response: Response) {
+  async callback(
+    @Query("code") authorizationCode: string,
+    @Query("state") state: string,
+    @Res() response: Response,
+  ) {
     // TODO: Check state parameter.
+    await this.ssoService.verifySsoState(state);
+
     const { accessToken, refreshToken } = await this.ssoService.getTokens(authorizationCode);
 
     const jwtData = await this.ssoService.verifyAndDecodeToken(accessToken);
