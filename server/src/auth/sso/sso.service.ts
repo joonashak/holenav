@@ -1,10 +1,7 @@
 import { Injectable } from "@nestjs/common";
-import { InjectModel } from "@nestjs/mongoose";
 import axios from "axios";
-import dayjs from "dayjs";
-import { Model } from "mongoose";
-import { v4 as uuid } from "uuid";
-import { SsoState, SsoStateDocument } from "./ssoState.model";
+import { CharacterService } from "src/entities/character/character.service";
+import { SsoStateService } from "./ssoState/ssoState.service";
 import { SsoUrl } from "./ssoUrl.enum";
 
 const callbackUrl = process.env.SSO_CALLBACK_URL;
@@ -13,18 +10,18 @@ const secretKey = process.env.SSO_SECRET_KEY;
 
 @Injectable()
 export class SsoService {
-  constructor(@InjectModel(SsoState.name) private ssoStateModel: Model<SsoStateDocument>) {}
+  constructor(
+    private ssoStateService: SsoStateService,
+    private characterService: CharacterService,
+  ) {}
 
   /**
    * Generate EVE SSO login page URL.
    */
   async getClientLoginUrl() {
-    const state = await this.ssoStateModel.create({
-      value: uuid(),
-      expiry: dayjs().add(5, "minute"),
-    });
+    const state = await this.ssoStateService.getSsoState();
 
-    const loginUrl = `${SsoUrl.Authorize}/?response_type=code&redirect_uri=${callbackUrl}&client_id=${clientId}&state=${state.value}`;
+    const loginUrl = `${SsoUrl.Authorize}/?response_type=code&redirect_uri=${callbackUrl}&client_id=${clientId}&state=${state}`;
     return encodeURI(loginUrl);
   }
 
@@ -60,22 +57,20 @@ export class SsoService {
     return data;
   }
 
-  /**
-   * Remove given SSO state secret.
-   */
-  async removeSsoState(state: string) {
-    await this.ssoStateModel.findOneAndRemove({ value: state });
-  }
+  async handleCallback(authorizationCode: string, state: string) {
+    await this.ssoStateService.verifySsoState(state);
 
-  /**
-   * Verify given SSO state secret to be valid and not expired.
-   */
-  async verifySsoState(state: string) {
-    const { expiry } = await this.ssoStateModel.findOne({ value: state });
+    const { accessToken, refreshToken } = await this.getSsoTokens(authorizationCode);
 
-    if (dayjs().isAfter(expiry)) {
-      await this.removeSsoState(state);
-      throw new Error("SSO state expired.");
-    }
+    const jwtData = await this.verifyAndDecodeToken(accessToken);
+    console.log(jwtData);
+
+    const data = {
+      name: jwtData.CharacterName,
+      esiId: jwtData.CharacterID,
+      accessToken,
+      refreshToken,
+    };
+    await this.characterService.upsert(data);
   }
 }

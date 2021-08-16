@@ -7,8 +7,9 @@ import { CharacterService } from "../entities/character/character.service";
 import { AuthController } from "./auth.controller";
 import { SsoModule } from "./sso/sso.module";
 import { SsoService } from "./sso/sso.service";
-import { SsoState, SsoStateSchema } from "./sso/ssoState.model";
+import { SsoState, SsoStateSchema } from "./sso/ssoState/ssoState.model";
 import { AuthService } from "./auth.service";
+import { SsoStateService } from "./sso/ssoState/ssoState.service";
 
 @Module({
   controllers: [AuthController],
@@ -24,6 +25,6 @@ import { AuthService } from "./auth.service";
       signOptions: { expiresIn: "30d" },
     }),
   ],
-  providers: [SsoService, CharacterService, AuthService],
+  providers: [SsoService, SsoStateService, CharacterService, AuthService],
 })
 export class AuthModule {}

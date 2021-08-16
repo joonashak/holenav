@@ -31,22 +31,7 @@ export class AuthController {
     @Query("state") state: string,
     @Res() response: Response,
   ) {
-    // TODO: Check state parameter.
-    await this.ssoService.verifySsoState(state);
-
-    const { accessToken, refreshToken } = await this.ssoService.getSsoTokens(authorizationCode);
-
-    const jwtData = await this.ssoService.verifyAndDecodeToken(accessToken);
-    console.log(jwtData);
-
-    const data = {
-      name: jwtData.CharacterName,
-      esiId: jwtData.CharacterID,
-      accessToken,
-      refreshToken,
-    };
-    await this.characterService.upsert(data);
-
+    await this.ssoService.handleCallback(authorizationCode, state);
     return response.send("OK");
   }
 

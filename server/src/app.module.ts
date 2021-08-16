@@ -4,8 +4,8 @@ import { MongooseModule } from "@nestjs/mongoose";
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
 import { SystemModule } from "./entities/system/system.module";
-import { AuthModule } from './auth/auth.module';
-import { CharacterModule } from './entities/character/character.module';
+import { AuthModule } from "./auth/auth.module";
+import { CharacterModule } from "./entities/character/character.module";
 
 @Module({
   imports: [
