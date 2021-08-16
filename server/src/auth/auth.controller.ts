@@ -1,17 +1,12 @@
 import { Body, Controller, Get, Post, Query, Res } from "@nestjs/common";
 import { Response } from "express";
-import { CharacterService } from "src/entities/character/character.service";
 import { AuthService } from "./auth.service";
 import { GetTokenDto } from "./dto/getToken.dto";
 import { SsoService } from "./sso/sso.service";
 
 @Controller("auth")
 export class AuthController {
-  constructor(
-    private ssoService: SsoService,
-    private characterService: CharacterService,
-    private authService: AuthService,
-  ) {}
+  constructor(private ssoService: SsoService, private authService: AuthService) {}
 
   /**
    * Redirect client to EVE SSO login page.
