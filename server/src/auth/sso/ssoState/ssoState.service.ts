@@ -31,13 +31,15 @@ export class SsoStateService {
   /**
    * Verify given SSO state secret to be valid and not expired.
    */
-  async verifySsoState(state: string) {
-    const { expiry } = await this.ssoStateModel.findOne({ value: state });
+  async verifySsoState(state: string): Promise<SsoState> {
+    const currentState = await this.ssoStateModel.findOne({ value: state });
 
-    if (dayjs().isAfter(expiry)) {
+    if (dayjs().isAfter(currentState.expiry)) {
       await this.removeSsoState(state);
       throw new Error("SSO state expired.");
     }
+
+    return currentState;
   }
 
   /**
@@ -46,5 +48,16 @@ export class SsoStateService {
   async setSsoLoginSuccess(state: string) {
     await this.verifySsoState(state);
     await this.ssoStateModel.findOneAndUpdate({ value: state }, { ssoLoginSuccess: true });
+  }
+
+  /**
+   * Verify that given state is valid and is associated with a successful SSO login.
+   *
+   * The given SSO state secret is always removed after this operation.
+   */
+  async verifySsoLoginSuccess(state: string) {
+    const { ssoLoginSuccess } = await this.verifySsoState(state);
+    await this.removeSsoState(state);
+    return ssoLoginSuccess;
   }
 }
