@@ -1,11 +1,17 @@
-import { Controller, Get, Query, Req, Res } from "@nestjs/common";
-import { Request, Response } from "express";
+import { Body, Controller, Get, Post, Query, Res } from "@nestjs/common";
+import { Response } from "express";
 import { CharacterService } from "src/entities/character/character.service";
+import { AuthService } from "./auth.service";
+import { GetTokenDto } from "./dto/getToken.dto";
 import { SsoService } from "./sso/sso.service";
 
 @Controller("auth")
 export class AuthController {
-  constructor(private ssoService: SsoService, private characterService: CharacterService) {}
+  constructor(
+    private ssoService: SsoService,
+    private characterService: CharacterService,
+    private authService: AuthService,
+  ) {}
 
   /**
    * Redirect client to EVE SSO login page.
@@ -28,7 +34,7 @@ export class AuthController {
     // TODO: Check state parameter.
     await this.ssoService.verifySsoState(state);
 
-    const { accessToken, refreshToken } = await this.ssoService.getTokens(authorizationCode);
+    const { accessToken, refreshToken } = await this.ssoService.getSsoTokens(authorizationCode);
 
     const jwtData = await this.ssoService.verifyAndDecodeToken(accessToken);
     console.log(jwtData);
@@ -44,10 +50,11 @@ export class AuthController {
     return response.send("OK");
   }
 
-  @Get("cookie-test")
-  cookieTest(@Req() request: Request, @Res() response: Response) {
-    console.log(request.headers);
-    response.cookie("testing", "jeeje", { sameSite: false });
-    return response.send("OK");
+  /**
+   * Callback for client to get Holenav's auth token.
+   */
+  @Post("getToken")
+  async getToken(@Body() { state }: GetTokenDto) {
+    return this.authService.getToken(state);
   }
 }

@@ -31,7 +31,7 @@ export class SsoService {
   /**
    * Get access and refresh tokens from EVE SSO server.
    */
-  async getTokens(authorizationCode: string) {
+  async getSsoTokens(authorizationCode: string) {
     const res = await axios.post(
       SsoUrl.Token,
       { grant_type: "authorization_code", code: authorizationCode },
@@ -60,11 +60,21 @@ export class SsoService {
     return data;
   }
 
-  async verifySsoState(userState: string) {
-    // Remove state right away so we never have to worry about it being used twice.
-    const { expiry } = await this.ssoStateModel.findOneAndRemove({ value: userState });
+  /**
+   * Remove given SSO state secret.
+   */
+  async removeSsoState(state: string) {
+    await this.ssoStateModel.findOneAndRemove({ value: state });
+  }
+
+  /**
+   * Verify given SSO state secret to be valid and not expired.
+   */
+  async verifySsoState(state: string) {
+    const { expiry } = await this.ssoStateModel.findOne({ value: state });
 
     if (dayjs().isAfter(expiry)) {
+      await this.removeSsoState(state);
       throw new Error("SSO state expired.");
     }
   }
