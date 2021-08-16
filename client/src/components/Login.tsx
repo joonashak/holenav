@@ -3,7 +3,7 @@ import axios from "axios";
 
 export default () => {
   const onClick = async () =>
-    axios.get("http://localhost:3001/auth/cookie-test", {
+    axios.get("http://65.21.180.194/auth/cookie-test", {
       withCredentials: true,
     });
 
