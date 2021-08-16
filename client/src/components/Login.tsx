@@ -1,11 +1,7 @@
 import { Button } from "@material-ui/core";
-import axios from "axios";
 
 export default () => {
-  const onClick = async () =>
-    axios.get("http://65.21.180.194/auth/cookie-test", {
-      withCredentials: true,
-    });
+  const loginUrl = `${process.env.REACT_APP_CMS_URL}/auth/login`;
 
-  return <Button onClick={onClick}>Login Test</Button>;
+  return <Button href={loginUrl}>Login</Button>;
 };
