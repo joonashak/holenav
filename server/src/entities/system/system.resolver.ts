@@ -1,4 +1,4 @@
-import { Query, Resolver } from "@nestjs/graphql";
+import { Args, Query, Resolver } from "@nestjs/graphql";
 import { System } from "./system.model";
 import { SystemService } from "./system.service";
 
@@ -9,5 +9,10 @@ export class SystemResolver {
   @Query((returns) => [System])
   async systems() {
     return this.systemService.list();
+  }
+
+  @Query((returns) => System)
+  async getSystemByName(@Args("name") name: string) {
+    return this.systemService.getByName(name);
   }
 }

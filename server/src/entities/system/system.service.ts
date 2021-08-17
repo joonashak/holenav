@@ -10,4 +10,8 @@ export class SystemService {
   list() {
     return this.systemModel.find().exec();
   }
+
+  getByName(name: string) {
+    return this.systemModel.findOne({ name });
+  }
 }
