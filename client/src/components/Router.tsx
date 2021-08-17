@@ -1,18 +1,14 @@
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import GetToken from "./GetToken";
 import Login from "./Login";
-import Overview from "./Overview";
+import SystemView from "./SystemView";
 
 export default () => (
   <BrowserRouter>
     <Switch>
-      <Route path="/login" exact>
-        <Login />
-      </Route>
       <Route path="/login/:state" exact component={GetToken} />
-      <Route path="/">
-        <Overview />
-      </Route>
+      <Route path="/system/:systemName" exact component={SystemView} />
+      <Route path="/" component={Login} />
     </Switch>
   </BrowserRouter>
 );
