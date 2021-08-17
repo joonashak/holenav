@@ -1,5 +1,12 @@
 import axios from "axios";
-import { createContext, useState, ReactNode, useContext } from "react";
+import {
+  createContext,
+  useState,
+  ReactNode,
+  useContext,
+  useEffect,
+} from "react";
+import tokenStore from "./tokenStore";
 
 const AuthContext = createContext([[], () => {}]);
 
@@ -9,6 +16,13 @@ interface AuthProviderProps {
 
 const AuthProvider = ({ children }: AuthProviderProps) => {
   const [state, setState] = useState<any>(null);
+
+  useEffect(() => {
+    (async () => {
+      const token = await tokenStore.getToken();
+      setState(token);
+    })();
+  }, []);
 
   return (
     <AuthContext.Provider value={[state, setState]}>
@@ -27,7 +41,10 @@ export default () => {
       `${process.env.REACT_APP_CMS_URL}/auth/getToken`,
       { state }
     );
-    setToken(data.accessToken);
+
+    const { accessToken } = data;
+    setToken(accessToken);
+    tokenStore.setToken(accessToken);
   };
 
   return {
