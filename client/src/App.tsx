@@ -1,5 +1,6 @@
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 import { Container, makeStyles, Theme } from "@material-ui/core";
+import { AuthProvider } from "./auth/useAuth";
 import Router from "./components/Router";
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -18,10 +19,16 @@ export default () => {
   const classes = useStyles();
 
   return (
-    <ApolloProvider client={apolloClient}>
-      <Container maxWidth={false} disableGutters className={classes.container}>
-        <Router />
-      </Container>
-    </ApolloProvider>
+    <AuthProvider>
+      <ApolloProvider client={apolloClient}>
+        <Container
+          maxWidth={false}
+          disableGutters
+          className={classes.container}
+        >
+          <Router />
+        </Container>
+      </ApolloProvider>
+    </AuthProvider>
   );
 };

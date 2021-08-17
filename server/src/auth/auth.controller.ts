@@ -27,7 +27,8 @@ export class AuthController {
     @Res() response: Response,
   ) {
     await this.ssoService.handleCallback(authorizationCode, state);
-    return response.send("OK");
+    const clientCallbackUrl = `${process.env.CLIENT_URL}/login/${state}`;
+    response.redirect(clientCallbackUrl);
   }
 
   /**
