@@ -1,9 +1,16 @@
 import { useEffect } from "react";
 import useAuth from "../auth/useAuth";
 
-export default (props: any) => {
-  // eslint-disable-next-line
-  const { state } = props.match.params;
+interface GetTokenProps {
+  match: {
+    params: {
+      state: string;
+    };
+  };
+}
+
+export default ({ match }: GetTokenProps) => {
+  const { state } = match.params;
   const { fetchAndSaveToken } = useAuth();
 
   useEffect(() => {
