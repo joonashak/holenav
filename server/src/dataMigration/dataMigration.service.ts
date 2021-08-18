@@ -5,9 +5,17 @@ import { System, SystemDocument } from "../entities/system/system.model";
 import systems from "../../assets/staticData/systems.json";
 import { DataMigration } from "./dataMigration.model";
 
+/**
+ * Pretty crude hack to keep database contents up to date :sad_face:
+ */
 @Injectable()
 export class DataMigrationService implements OnApplicationBootstrap {
   private readonly logger = new Logger(DataMigrationService.name);
+
+  // Add new migrations here and they will be applied on next launch.
+  private readonly migrations = {
+    1: () => this.upsertAllSystems(),
+  };
 
   constructor(
     @InjectModel(System.name) private systemModel: Model<SystemDocument>,
@@ -16,7 +24,36 @@ export class DataMigrationService implements OnApplicationBootstrap {
 
   async onApplicationBootstrap() {
     this.logger.log("Starting data migration...");
+    await this.migrate();
+    this.logger.log("Data migration finished.");
+  }
 
+  async getVersion(): Promise<number> {
+    try {
+      const { version } = await this.dataMigrationModel.findOne();
+      return version;
+    } catch (error) {
+      return 0;
+    }
+  }
+
+  async updateVersion(version: number) {
+    await this.dataMigrationModel.create({ version });
+  }
+
+  async migrate() {
+    const currentVersion = await this.getVersion();
+    const pendingVersions = Object.keys(this.migrations).filter(
+      (version) => currentVersion < Number(version),
+    );
+
+    for (const version of pendingVersions) {
+      await this.migrations[version]();
+      await this.updateVersion(Number(version));
+    }
+  }
+
+  async upsertAllSystems() {
     const ops = systems.map(({ name, ...rest }) => ({
       updateOne: {
         filter: { name },
@@ -24,17 +61,6 @@ export class DataMigrationService implements OnApplicationBootstrap {
         upsert: true,
       },
     }));
-    //await this.systemModel.bulkWrite(ops);
-
-    this.logger.log("Data migration finished.");
-  }
-
-  async getVersion(): Promise<number> {
-    const { version } = await this.dataMigrationModel.findOne();
-    return version;
-  }
-
-  async updateVersion(version: number) {
-    await this.dataMigrationModel.create({ version });
+    await this.systemModel.bulkWrite(ops);
   }
 }
