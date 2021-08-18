@@ -6,6 +6,7 @@ import { AppService } from "./app.service";
 import { SystemModule } from "./entities/system/system.module";
 import { AuthModule } from "./auth/auth.module";
 import { CharacterModule } from "./entities/character/character.module";
+import { DataMigrationModule } from "./dataMigration/dataMigration.module";
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { CharacterModule } from "./entities/character/character.module";
     SystemModule,
     AuthModule,
     CharacterModule,
+    DataMigrationModule,
   ],
   controllers: [AppController],
   providers: [AppService],
