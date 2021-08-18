@@ -16,6 +16,7 @@ services:
       - .env.development
     volumes:
       - ./server/src:/usr/src/app/src
+      - ./data/staticData:/usr/src/app/assets/staticData
     depends_on:
       - db
 

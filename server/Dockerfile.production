@@ -2,10 +2,11 @@ FROM node:16-alpine
 
 # Install dependencies.
 WORKDIR /usr/src/app
-COPY package.json package-lock.json ./
+COPY ./server/package.json ./server/package-lock.json ./
 RUN npm ci
 
-COPY . .
+COPY ./server .
+COPY ./data/staticData ./assets/staticData
 
 # Build and clean up.
 ARG NODE_ENV=production
