@@ -15,4 +15,4 @@ RUN npm run build
 RUN npm prune --production
 
 # Start via Nest in development mode.
-CMD node dist/main.js
+CMD node dist/src/main.js
