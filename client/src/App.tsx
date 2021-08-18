@@ -1,11 +1,12 @@
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
-import { Container, makeStyles, Theme } from "@material-ui/core";
+import { Container, makeStyles, Theme, ThemeProvider } from "@material-ui/core";
 import { AuthProvider } from "./auth/useAuth";
 import Router from "./components/Router";
+import appTheme from "./theme";
 
 const useStyles = makeStyles((theme: Theme) => ({
   container: {
-    backgroundColor: theme.palette.primary.dark,
+    backgroundColor: theme.palette.primary.main,
     minHeight: "100vh",
   },
 }));
@@ -19,16 +20,18 @@ export default () => {
   const classes = useStyles();
 
   return (
-    <AuthProvider>
-      <ApolloProvider client={apolloClient}>
-        <Container
-          maxWidth={false}
-          disableGutters
-          className={classes.container}
-        >
-          <Router />
-        </Container>
-      </ApolloProvider>
-    </AuthProvider>
+    <ThemeProvider theme={appTheme}>
+      <AuthProvider>
+        <ApolloProvider client={apolloClient}>
+          <Container
+            maxWidth={false}
+            disableGutters
+            className={classes.container}
+          >
+            <Router />
+          </Container>
+        </ApolloProvider>
+      </AuthProvider>
+    </ThemeProvider>
   );
 };
