@@ -1,13 +1,23 @@
-import { makeStyles } from "@material-ui/core";
+import { makeStyles, Theme } from "@material-ui/core";
+import AppTitle from "./AppTitle";
 import LoginButton from "./LoginButton";
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme: Theme) => ({
   root: {
     display: "flex",
+    flexDirection: "column",
+    height: "100vh",
+  },
+  titleContainer: {
+    paddingLeft: "1rem",
+    backgroundColor: theme.palette.primary.dark,
+  },
+  buttonContainer: {
+    display: "flex",
+    flexGrow: 1,
     alignItems: "center",
     justifyContent: "center",
-    height: "100vh",
-    width: "100vw",
+    paddingBottom: "7rem",
   },
 }));
 
@@ -16,7 +26,12 @@ export default () => {
 
   return (
     <div className={classes.root}>
-      <LoginButton />
+      <div className={classes.titleContainer}>
+        <AppTitle />
+      </div>
+      <div className={classes.buttonContainer}>
+        <LoginButton />
+      </div>
     </div>
   );
 };
