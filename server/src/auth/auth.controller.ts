@@ -28,7 +28,6 @@ export class AuthController {
   ) {
     await this.ssoService.handleCallback(authorizationCode, state);
     const clientCallbackUrl = `${process.env.CLIENT_URL}/login/${state}`;
-    response.send();
     response.redirect(clientCallbackUrl);
   }
 
@@ -37,6 +36,7 @@ export class AuthController {
    */
   @Post("getToken")
   async getToken(@Body() { state }: GetTokenDto) {
-    return this.authService.getToken(state);
+    const accessToken = this.authService.login(state);
+    return { accessToken };
   }
 }

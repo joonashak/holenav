@@ -59,9 +59,9 @@ export class SsoStateService {
    *
    * The given SSO state secret is always removed after this operation.
    */
-  async verifySsoLoginSuccess(state: string) {
-    const { ssoLoginSuccess } = await this.verifySsoState(state);
+  async verifySsoLoginSuccess(state: string): Promise<SsoState> {
+    const ssoState = await this.verifySsoState(state);
     await this.removeSsoState(state);
-    return ssoLoginSuccess;
+    return ssoState;
   }
 }
