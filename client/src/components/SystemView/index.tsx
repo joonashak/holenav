@@ -1,3 +1,4 @@
+import Container from "./Container";
 import Overview from "./Overview";
 import SystemData from "./SystemData";
 
@@ -14,7 +15,9 @@ export default ({ match }: SystemViewProps) => {
 
   return (
     <SystemData name={systemName}>
-      <Overview />
+      <Container>
+        <Overview />
+      </Container>
     </SystemData>
   );
 };
