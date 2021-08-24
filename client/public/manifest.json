@@ -1,6 +1,7 @@
 {
   "name": "Holenav",
   "short_name": "Holenav",
+  "start_url": "/",
   "display": "standalone",
   "background_color": "#2E2E2E",
   "theme_color": "#798A93",
