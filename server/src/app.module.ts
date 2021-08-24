@@ -11,7 +11,7 @@ import { UserModule } from "./user/user.module";
 
 @Module({
   imports: [
-    MongooseModule.forRoot(process.env.DATABASE_URL),
+    MongooseModule.forRoot(process.env.DATABASE_URL, { useFindAndModify: false }),
     GraphQLModule.forRoot({
       autoSchemaFile: true,
       playground: true,

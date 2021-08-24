@@ -7,8 +7,17 @@ import { Character, CharacterDocument } from "./character.model";
 export class CharacterService {
   constructor(@InjectModel(Character.name) private characterModel: Model<CharacterDocument>) {}
 
-  async upsert(data: Character) {
+  /**
+   * Upsert character into DB.
+   * @param data Character to be upserted.
+   * @returns New or updated character.
+   */
+  async upsert(data: Character): Promise<Character> {
     const { esiId, ...rest } = data;
-    await this.characterModel.findOneAndUpdate({ esiId }, rest, { upsert: true });
+    const newCharacter = await this.characterModel.findOneAndUpdate({ esiId }, rest, {
+      upsert: true,
+      new: true,
+    });
+    return newCharacter;
   }
 }

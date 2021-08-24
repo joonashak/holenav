@@ -12,6 +12,9 @@ export class AuthService {
   async getToken(state: string) {
     const ssoLoginSuccess = await this.ssoStateService.verifySsoLoginSuccess(state);
 
+    // TODO: Figure out if this character is associated with a user account and create
+    // new one, if not.
+
     if (!ssoLoginSuccess) {
       throw new Error("SSO login unsuccessful.");
     }

@@ -2,6 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import dayjs from "dayjs";
 import { Model } from "mongoose";
+import { Character } from "../../../entities/character/character.model";
 import { v4 as uuid } from "uuid";
 import { SsoState, SsoStateDocument } from "./ssoState.model";
 
@@ -45,9 +46,12 @@ export class SsoStateService {
   /**
    * Mark given (and valid) SSO state with a successful login.
    */
-  async setSsoLoginSuccess(state: string) {
+  async setSsoLoginSuccess(state: string, character: Character) {
     await this.verifySsoState(state);
-    await this.ssoStateModel.findOneAndUpdate({ value: state }, { ssoLoginSuccess: true });
+    await this.ssoStateModel.findOneAndUpdate(
+      { value: state },
+      { ssoLoginSuccess: true, character },
+    );
   }
 
   /**

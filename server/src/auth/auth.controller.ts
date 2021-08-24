@@ -18,7 +18,7 @@ export class AuthController {
   }
 
   /**
-   * Callback path for getting the authorization code after player auth with EVE SSO.
+   * Handle callback after player has successfully logged in through EVE SSO.
    */
   @Get("callback")
   async callback(
@@ -28,6 +28,7 @@ export class AuthController {
   ) {
     await this.ssoService.handleCallback(authorizationCode, state);
     const clientCallbackUrl = `${process.env.CLIENT_URL}/login/${state}`;
+    response.send();
     response.redirect(clientCallbackUrl);
   }
 
