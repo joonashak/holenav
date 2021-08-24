@@ -6,7 +6,7 @@
     "start": "docker-compose up -d",
     "start:logs": "npm start && npm run logs",
     "stop": "docker-compose down",
-    "logs": "docker-compose logs -f",
+    "logs": "docker-compose logs -f server client",
     "db:seed": "docker exec -i holenav-db sh -c 'mongoimport -c systems -d holenav --jsonArray' < data/staticData/systems.json",
     "db:dump": "docker exec -i holenav-db mongoexport -c systems -d holenav > db_dump.json",
     "db:drop": "docker exec -i holenav-db mongo holenav --eval 'db.dropDatabase()'"
