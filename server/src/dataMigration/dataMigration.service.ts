@@ -2,7 +2,7 @@ import { Injectable, Logger, OnApplicationBootstrap } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { System, SystemDocument } from "../entities/system/system.model";
-import systems from "../../assets/staticData/systems.json";
+import systems from "@eve-data/systems";
 import { DataMigration } from "./dataMigration.model";
 
 /**

@@ -1,6 +1,6 @@
 {
   "name": "holenav",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "New mapper for make benefit of the glorious EVE community. Currently in early prototyping.",
   "scripts": {
     "start": "docker-compose up -d",
