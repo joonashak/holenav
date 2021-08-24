@@ -10,6 +10,7 @@ import MenuIcon from "@material-ui/icons/Menu";
 import SystemInfo from "./SystemInfo";
 import ScanningPanel from "./ScanningPanel";
 import IntelPanel from "./IntelPanel";
+import useSystemData from "../SystemData/useSystemData";
 
 const useStyles = makeStyles((theme: Theme) => ({
   container: {
@@ -22,6 +23,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 export default () => {
   const classes = useStyles();
+  const { name } = useSystemData();
 
   return (
     <div className={classes.container}>
@@ -30,7 +32,7 @@ export default () => {
           <IconButton edge="start" aria-label="Menu">
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6">J123456 - K5A ABC</Typography>
+          <Typography variant="h6">{name} - [bm name]</Typography>
         </Toolbar>
       </AppBar>
       <SystemInfo />
