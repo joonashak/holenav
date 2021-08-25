@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import useAuth from "../auth/useAuth";
+import useAuth from "./useAuth";
 
 interface GetTokenProps {
   match: {
