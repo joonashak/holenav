@@ -10,6 +10,7 @@ import tokenStore from "./tokenStore";
 
 const defaultState = {
   token: null,
+  storedToken: null,
   pending: true,
 };
 
@@ -24,8 +25,11 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
 
   useEffect(() => {
     (async () => {
-      const token = await tokenStore.getToken();
-      setState({ token, pending: false });
+      const storedToken = await tokenStore.getToken();
+      // Token from localforage is saved in another field to get around
+      // the race condition introduced by <GetToken> fetching a new token
+      // at the same time.
+      setState({ storedToken, pending: false });
     })();
   }, []);
 
@@ -40,7 +44,7 @@ export { AuthProvider };
 
 export default () => {
   const [state, setState] = useContext<any>(AuthContext);
-  const { token, pending } = state;
+  const { token, pending, storedToken } = state;
 
   const fetchAndSaveToken = async (ssoState: string) => {
     setState({ token: null, pending: true });
@@ -51,12 +55,12 @@ export default () => {
     );
 
     const { accessToken } = data;
+    await tokenStore.setToken(accessToken);
     setState({ token: accessToken, pending: false });
-    tokenStore.setToken(accessToken);
   };
 
   return {
-    token,
+    token: token || storedToken,
     pending,
     fetchAndSaveToken,
   };

@@ -1,4 +1,5 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { Redirect } from "react-router-dom";
 import useAuth from "./useAuth";
 
 interface GetTokenProps {
@@ -11,11 +12,19 @@ interface GetTokenProps {
 
 export default ({ match }: GetTokenProps) => {
   const { state } = match.params;
+  const [pending, setPending] = useState(true);
   const { fetchAndSaveToken } = useAuth();
 
   useEffect(() => {
-    (async () => fetchAndSaveToken(state))();
+    (async () => {
+      await fetchAndSaveToken(state);
+      setPending(false);
+    })();
   }, []);
 
-  return <div>moi</div>;
+  if (pending) {
+    return null;
+  }
+
+  return <Redirect to="/system/Jita" />;
 };
