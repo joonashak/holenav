@@ -25,6 +25,11 @@ export class UserService {
     return newUser;
   }
 
+  async findById(id: string): Promise<User> {
+    const user = await this.userModel.findOne({ id });
+    return user;
+  }
+
   /**
    * Find a user by (main) character.
    * @param character Character to search for.

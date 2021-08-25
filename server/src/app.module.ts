@@ -8,7 +8,7 @@ import { AuthModule } from "./auth/auth.module";
 import { CharacterModule } from "./entities/character/character.module";
 import { DataMigrationModule } from "./dataMigration/dataMigration.module";
 import { UserModule } from "./user/user.module";
-import { RoleModule } from './role/role.module';
+import { RoleModule } from "./role/role.module";
 
 @Module({
   imports: [
