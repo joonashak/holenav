@@ -1,5 +1,15 @@
-import { Body, Controller, Get, Post, Query, Res } from "@nestjs/common";
-import { Response } from "express";
+import {
+  Body,
+  Controller,
+  Get,
+  HttpException,
+  HttpStatus,
+  Post,
+  Query,
+  Req,
+  Res,
+} from "@nestjs/common";
+import { Request, Response } from "express";
 import { AuthService } from "./auth.service";
 import { GetTokenDto } from "./dto/getToken.dto";
 import { SsoService } from "./sso/sso.service";
@@ -38,5 +48,26 @@ export class AuthController {
   async getToken(@Body() { state }: GetTokenDto) {
     const accessToken = await this.authService.login(state);
     return { accessToken };
+  }
+
+  /**
+   * Check if an authentication token is still valid.
+   */
+  @Get("validateToken")
+  async validateToken(@Req() request: Request) {
+    const {
+      headers: { accesstoken },
+    } = request;
+
+    if (!accesstoken || typeof accesstoken === "object") {
+      throw new HttpException("Bad token format.", HttpStatus.BAD_REQUEST);
+    }
+
+    const valid = await this.authService.validateToken(accesstoken);
+    if (!valid) {
+      throw new HttpException("Token not valid.", HttpStatus.UNAUTHORIZED);
+    }
+
+    return "Token OK.";
   }
 }
