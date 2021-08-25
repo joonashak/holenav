@@ -16,7 +16,7 @@ export class SystemResolver {
     return this.systemService.list();
   }
 
-  @RequiredRole(Roles.ADMIN)
+  @RequiredRole(Roles.READ)
   @Query((returns) => System)
   async getSystemByName(@Args("name") name: string) {
     return this.systemService.getByName(name);

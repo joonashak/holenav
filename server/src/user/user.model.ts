@@ -23,7 +23,7 @@ export class User {
   main: Character;
 
   @Field((type) => [Role])
-  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, reg: "Role" }] })
+  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Role" }] })
   roles: Role[];
 }
 
