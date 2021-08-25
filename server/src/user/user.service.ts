@@ -25,8 +25,24 @@ export class UserService {
     return newUser;
   }
 
+  /**
+   * Find a user by ID (Holenav's internal `User.id`).
+   * @param id User id to search for.
+   * @returns The found user or `undefined`.
+   */
   async findById(id: string): Promise<User> {
     const user = await this.userModel.findOne({ id }).populate("roles");
+    return user;
+  }
+
+  /**
+   * Find a user by ID (Holenav's internal `User.id`), include *SECRET* tokens
+   * in return value.
+   * @param id User id to search for.
+   * @returns The found user or `undefined`.
+   */
+  async findByIdWithTokens(id: string): Promise<User> {
+    const user = await this.userModel.findOne({ id }).select("+tokens").populate("roles");
     return user;
   }
 

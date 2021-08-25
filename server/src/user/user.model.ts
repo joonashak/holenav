@@ -15,7 +15,7 @@ export class User {
   id: string;
 
   @Field((type) => [String])
-  @Prop([String])
+  @Prop({ type: [String], select: false })
   tokens: string[];
 
   @Field((type) => Character)

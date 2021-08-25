@@ -23,7 +23,7 @@ export class RoleGuard implements CanActivate {
     const gqlContext = GqlExecutionContext.create(context);
     const { accesstoken } = gqlContext.getContext().req.headers;
     const { uid }: any = this.jwtService.decode(accesstoken);
-    const user = await this.userService.findById(uid);
+    const user = await this.userService.findByIdWithTokens(uid);
 
     return this.checkToken(user, accesstoken) && this.checkRole(user, context);
   }
