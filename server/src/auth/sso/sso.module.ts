@@ -1,18 +1,13 @@
 import { Module } from "@nestjs/common";
-import { MongooseModule } from "@nestjs/mongoose";
-import { Character, CharacterSchema } from "src/entities/character/character.model";
+import { CharacterModule } from "../../entities/character/character.module";
 import { CharacterService } from "../../entities/character/character.service";
 import { SsoService } from "./sso.service";
-import { SsoState, SsoStateSchema } from "./ssoState/ssoState.model";
+import { SsoStateModule } from "./ssoState/ssoState.module";
 import { SsoStateService } from "./ssoState/ssoState.service";
 
 @Module({
-  imports: [
-    MongooseModule.forFeature([
-      { name: Character.name, schema: CharacterSchema },
-      { name: SsoState.name, schema: SsoStateSchema },
-    ]),
-  ],
+  imports: [SsoStateModule, CharacterModule],
   providers: [SsoService, SsoStateService, CharacterService],
+  exports: [SsoService],
 })
 export class SsoModule {}

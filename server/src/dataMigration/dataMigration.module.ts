@@ -1,15 +1,13 @@
 import { Module } from "@nestjs/common";
 import { MongooseModule } from "@nestjs/mongoose";
-import { System, SystemSchema } from "../entities/system/system.model";
+import { SystemModule } from "../entities/system/system.module";
 import { DataMigration, DataMigrationSchema } from "./dataMigration.model";
 import { DataMigrationService } from "./dataMigration.service";
 
 @Module({
   imports: [
-    MongooseModule.forFeature([
-      { name: System.name, schema: SystemSchema },
-      { name: DataMigration.name, schema: DataMigrationSchema },
-    ]),
+    MongooseModule.forFeature([{ name: DataMigration.name, schema: DataMigrationSchema }]),
+    SystemModule,
   ],
   providers: [DataMigrationService],
 })

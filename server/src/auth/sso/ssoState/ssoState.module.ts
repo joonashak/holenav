@@ -6,5 +6,6 @@ import { SsoStateService } from "./ssoState.service";
 @Module({
   imports: [MongooseModule.forFeature([{ name: SsoState.name, schema: SsoStateSchema }])],
   providers: [SsoStateService],
+  exports: [SsoStateService, MongooseModule],
 })
 export class SsoStateModule {}

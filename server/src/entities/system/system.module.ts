@@ -4,22 +4,21 @@ import { System, SystemSchema } from "./system.model";
 import { SystemService } from "./system.service";
 import { SystemResolver } from "./system.resolver";
 import { UserService } from "../../user/user.service";
-import { User, UserSchema } from "../../user/user.model";
 import { RoleService } from "../../role/role.service";
-import { Role, RoleSchema } from "../../role/role.model";
-import { JwtModule, JwtService } from "@nestjs/jwt";
+import { JwtModule } from "@nestjs/jwt";
+import { UserModule } from "../../user/user.module";
+import { RoleModule } from "../../role/role.module";
 
 @Module({
   imports: [
-    MongooseModule.forFeature([
-      { name: System.name, schema: SystemSchema },
-      { name: User.name, schema: UserSchema },
-      { name: Role.name, schema: RoleSchema },
-    ]),
+    UserModule,
+    RoleModule,
+    MongooseModule.forFeature([{ name: System.name, schema: SystemSchema }]),
     JwtModule.register({
       secret: process.env.JWT_SECRET,
     }),
   ],
   providers: [SystemService, SystemResolver, UserService, RoleService],
+  exports: [SystemService, MongooseModule],
 })
 export class SystemModule {}
