@@ -36,7 +36,7 @@ export class AuthController {
    */
   @Post("getToken")
   async getToken(@Body() { state }: GetTokenDto) {
-    const accessToken = this.authService.login(state);
+    const accessToken = await this.authService.login(state);
     return { accessToken };
   }
 }
