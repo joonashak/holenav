@@ -1,19 +1,23 @@
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import GetToken from "../auth/GetToken";
 import AuthenticatedApollo from "../auth/AuthenticatedApollo";
-import LoginView from "./LoginView";
 import SystemView from "./SystemView";
+import AuthenticationGuard from "../auth/AuthenticationGuard";
+import LoginView from "./LoginView";
 
 export default () => (
   <BrowserRouter>
     <Switch>
+      <Route path="/login" exact component={LoginView} />
       <Route path="/login/:state" exact component={GetToken} />
       <Route path="/">
-        <AuthenticatedApollo>
-          <Switch>
-            <Route path="/system/:systemName" exact component={SystemView} />
-          </Switch>
-        </AuthenticatedApollo>
+        <AuthenticationGuard>
+          <AuthenticatedApollo>
+            <Switch>
+              <Route path="/system/:systemName" exact component={SystemView} />
+            </Switch>
+          </AuthenticatedApollo>
+        </AuthenticationGuard>
       </Route>
     </Switch>
   </BrowserRouter>

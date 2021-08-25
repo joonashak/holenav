@@ -8,6 +8,11 @@ import {
 } from "react";
 import tokenStore from "./tokenStore";
 
+const defaultState = {
+  token: null,
+  pending: true,
+};
+
 const AuthContext = createContext([[], () => {}]);
 
 interface AuthProviderProps {
@@ -15,12 +20,12 @@ interface AuthProviderProps {
 }
 
 const AuthProvider = ({ children }: AuthProviderProps) => {
-  const [state, setState] = useState<any>(null);
+  const [state, setState] = useState<any>(defaultState);
 
   useEffect(() => {
     (async () => {
       const token = await tokenStore.getToken();
-      setState(token);
+      setState({ token, pending: false });
     })();
   }, []);
 
@@ -34,21 +39,25 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
 export { AuthProvider };
 
 export default () => {
-  const [token, setToken] = useContext<any>(AuthContext);
+  const [state, setState] = useContext<any>(AuthContext);
+  const { token, pending } = state;
 
-  const fetchAndSaveToken = async (state: string) => {
+  const fetchAndSaveToken = async (ssoState: string) => {
+    setState({ token: null, pending: true });
+
     const { data } = await axios.post(
       `${process.env.REACT_APP_CMS_URL}/auth/getToken`,
-      { state }
+      { state: ssoState }
     );
 
     const { accessToken } = data;
-    setToken(accessToken);
+    setState({ token: accessToken, pending: false });
     tokenStore.setToken(accessToken);
   };
 
   return {
     token,
+    pending,
     fetchAndSaveToken,
   };
 };
