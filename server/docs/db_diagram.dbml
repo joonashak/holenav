@@ -1,0 +1,42 @@
+Project holenav_server {
+  database_type: "MongoDB"
+}
+
+Table users {
+  id uuid
+  main characters [ref: - characters._id]
+  alts characters[] [ref: < characters._id]
+  tokens string[]
+  roles roles[] [ref: < roles._id]
+}
+
+Table characters {
+  _id number
+  name string
+  esiId string
+  accessToken string
+  refreshToken string
+}
+
+Table roles {
+  _id number
+  role Roles
+}
+
+Table ssoStates {
+  value string
+  expiry Date
+  ssoLoginSuccess boolean
+  character characters [ref: - characters._id]
+}
+
+Table systems {
+  name string
+}
+
+enum Roles {
+  READ
+  WRITE
+  MANAGE
+  ADMIN
+}
