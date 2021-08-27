@@ -11,6 +11,8 @@ import { UserModule } from "../user/user.module";
 import { RoleModule } from "../role/role.module";
 import { CharacterModule } from "../entities/character/character.module";
 import { SsoStateModule } from "./sso/ssoState/ssoState.module";
+import { FolderService } from "../entities/folder/folder.service";
+import { FolderModule } from "../entities/folder/folder.module";
 
 @Module({
   controllers: [AuthController],
@@ -23,7 +25,16 @@ import { SsoStateModule } from "./sso/ssoState/ssoState.module";
     RoleModule,
     CharacterModule,
     SsoStateModule,
+    FolderModule,
   ],
-  providers: [SsoService, SsoStateService, CharacterService, AuthService, UserService, RoleService],
+  providers: [
+    SsoService,
+    SsoStateService,
+    CharacterService,
+    AuthService,
+    UserService,
+    RoleService,
+    FolderService,
+  ],
 })
 export class AuthModule {}
