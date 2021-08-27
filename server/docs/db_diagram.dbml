@@ -21,6 +21,7 @@ Table characters {
 Table roles {
   _id number
   role Roles
+  folder folders[] [ref: > folders._id]
 }
 
 Table ssoStates {
@@ -30,8 +31,20 @@ Table ssoStates {
   character characters [ref: - characters._id]
 }
 
+Table folders {
+  _id number
+  systems systems[] [ref: < systems._id]
+}
+
 Table systems {
+  _id number
   name string
+  signatures signatures[] [ref: < signatures._id]
+}
+
+Table signatures {
+  _id number
+  eveId string
 }
 
 enum Roles {
