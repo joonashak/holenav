@@ -1,10 +1,9 @@
 import { Field, ObjectType } from "@nestjs/graphql";
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import mongoose from "mongoose";
+import { Document } from "mongoose";
 import { v4 as uuid } from "uuid";
-import { System } from "../system/system.model";
 
-export type FolderDocument = Folder & mongoose.Document;
+export type FolderDocument = Folder & Document;
 
 @ObjectType()
 @Schema()
@@ -16,10 +15,6 @@ export class Folder {
   @Field()
   @Prop()
   name: string;
-
-  @Field((type) => [System])
-  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: "System" }] })
-  roles: System[];
 }
 
 export const FolderSchema = SchemaFactory.createForClass(Folder);

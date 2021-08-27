@@ -3,6 +3,7 @@ import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { DataMigration } from "./dataMigration.model";
 import { Folder, FolderDocument } from "../entities/folder/folder.model";
+import { FolderService } from "../entities/folder/folder.service";
 
 /**
  * Pretty crude hack to keep database contents up to date :sad_face:
@@ -13,12 +14,13 @@ export class DataMigrationService implements OnApplicationBootstrap {
 
   // Add new migrations here and they will be applied on next launch.
   private readonly migrations = {
-    2: () => this.createDefaultFolder(),
+    1: () => this.createDefaultFolder(),
   };
 
   constructor(
     @InjectModel(DataMigration.name) private dataMigrationModel: Model<DataMigration>,
     @InjectModel(Folder.name) private folderModel: Model<FolderDocument>,
+    private folderService: FolderService,
   ) {}
 
   async onApplicationBootstrap() {
@@ -53,6 +55,6 @@ export class DataMigrationService implements OnApplicationBootstrap {
   }
 
   async createDefaultFolder() {
-    await this.folderModel.create({ name: "Default Folder", systems: [] });
+    await this.folderService.createFolder("Default Folder");
   }
 }

@@ -7,11 +7,21 @@ import { System, SystemDocument } from "./system.model";
 export class SystemService {
   constructor(@InjectModel(System.name) private systemModel: Model<SystemDocument>) {}
 
-  list() {
+  async list() {
     return this.systemModel.find().exec();
   }
 
-  getByName(name: string) {
+  async getByName(name: string) {
     return this.systemModel.findOne({ name });
+  }
+
+  async bulkSave(systems: System[]) {
+    const ops = systems.map((system) => ({
+      insertOne: {
+        document: system,
+      },
+    }));
+
+    return this.systemModel.bulkWrite(ops);
   }
 }
