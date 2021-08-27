@@ -13,6 +13,10 @@ export class Folder {
   @Prop({ default: uuid, unique: true })
   id: string;
 
+  @Field()
+  @Prop()
+  name: string;
+
   @Field((type) => [System])
   @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: "System" }] })
   roles: System[];

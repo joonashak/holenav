@@ -4,6 +4,7 @@ import { Model } from "mongoose";
 import { System, SystemDocument } from "../entities/system/system.model";
 import systems from "@eve-data/systems";
 import { DataMigration } from "./dataMigration.model";
+import { Folder, FolderDocument } from "../entities/folder/folder.model";
 
 /**
  * Pretty crude hack to keep database contents up to date :sad_face:
@@ -15,11 +16,13 @@ export class DataMigrationService implements OnApplicationBootstrap {
   // Add new migrations here and they will be applied on next launch.
   private readonly migrations = {
     1: () => this.upsertAllSystems(),
+    2: () => this.createDefaultFolder(),
   };
 
   constructor(
     @InjectModel(System.name) private systemModel: Model<SystemDocument>,
     @InjectModel(DataMigration.name) private dataMigrationModel: Model<DataMigration>,
+    @InjectModel(Folder.name) private folderModel: Model<FolderDocument>,
   ) {}
 
   async onApplicationBootstrap() {
@@ -62,5 +65,9 @@ export class DataMigrationService implements OnApplicationBootstrap {
       },
     }));
     await this.systemModel.bulkWrite(ops);
+  }
+
+  async createDefaultFolder() {
+    await this.folderModel.create({ name: "Default Folder", systems: [] });
   }
 }
