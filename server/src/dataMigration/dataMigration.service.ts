@@ -1,8 +1,6 @@
 import { Injectable, Logger, OnApplicationBootstrap } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
-import { System, SystemDocument } from "../entities/system/system.model";
-import systems from "@eve-data/systems";
 import { DataMigration } from "./dataMigration.model";
 import { Folder, FolderDocument } from "../entities/folder/folder.model";
 
@@ -15,12 +13,10 @@ export class DataMigrationService implements OnApplicationBootstrap {
 
   // Add new migrations here and they will be applied on next launch.
   private readonly migrations = {
-    1: () => this.upsertAllSystems(),
     2: () => this.createDefaultFolder(),
   };
 
   constructor(
-    @InjectModel(System.name) private systemModel: Model<SystemDocument>,
     @InjectModel(DataMigration.name) private dataMigrationModel: Model<DataMigration>,
     @InjectModel(Folder.name) private folderModel: Model<FolderDocument>,
   ) {}
@@ -54,17 +50,6 @@ export class DataMigrationService implements OnApplicationBootstrap {
       await this.migrations[version]();
       await this.updateVersion(Number(version));
     }
-  }
-
-  async upsertAllSystems() {
-    const ops = systems.map(({ name, ...rest }) => ({
-      updateOne: {
-        filter: { name },
-        update: { ...rest },
-        upsert: true,
-      },
-    }));
-    await this.systemModel.bulkWrite(ops);
   }
 
   async createDefaultFolder() {
