@@ -16,6 +16,11 @@ export class FolderService {
     return this.folderModel.findOne({ name: "Default Folder" });
   }
 
+  /**
+   * Create new folder and populate it with star systems.
+   * @param name Folder name.
+   * @returns The created folder.
+   */
   async createFolder(name: string): Promise<Folder> {
     const folder = await this.folderModel.create({ name });
     const newSystems = systemData.map(({ name }) => ({ name, folder }));

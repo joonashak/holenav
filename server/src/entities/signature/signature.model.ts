@@ -13,7 +13,7 @@ registerEnumType(SigTypes, { name: "SigTypes" });
 export class Signature {
   @Field()
   @Prop({ default: uuid, unique: true })
-  id: string;
+  id?: string;
 
   @Field()
   @Prop()
