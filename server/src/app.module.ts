@@ -10,6 +10,7 @@ import { DataMigrationModule } from "./dataMigration/dataMigration.module";
 import { UserModule } from "./user/user.module";
 import { RoleModule } from "./role/role.module";
 import { FolderModule } from "./entities/folder/folder.module";
+import { SignatureModule } from "./entities/signature/signature.module";
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { FolderModule } from "./entities/folder/folder.module";
     UserModule,
     RoleModule,
     FolderModule,
+    SignatureModule,
   ],
   controllers: [AppController],
   providers: [AppService],
