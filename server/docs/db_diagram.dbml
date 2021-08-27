@@ -33,18 +33,23 @@ Table ssoStates {
 
 Table folders {
   _id number
-  systems systems[] [ref: < systems._id]
+  id uuid
+  name string
 }
 
 Table systems {
   _id number
   name string
   signatures signatures[] [ref: < signatures._id]
+  folder folders [ref: > folders._id]
 }
 
 Table signatures {
   _id number
+  id uuid
   eveId string
+  type SigTypes
+  name string
 }
 
 enum Roles {
@@ -52,4 +57,10 @@ enum Roles {
   WRITE
   MANAGE
   ADMIN
+}
+
+enum SigTypes {
+  DATA
+  RELIC
+  WH
 }
