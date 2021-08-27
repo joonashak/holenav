@@ -1,4 +1,4 @@
-import { Module } from "@nestjs/common";
+import { Global, Module } from "@nestjs/common";
 import { MongooseModule } from "@nestjs/mongoose";
 import { System, SystemSchema } from "./system.model";
 import { SystemService } from "./system.service";
@@ -11,6 +11,7 @@ import { RoleModule } from "../../role/role.module";
 import { FolderService } from "../folder/folder.service";
 import { FolderModule } from "../folder/folder.module";
 
+@Global()
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: System.name, schema: SystemSchema }]),
