@@ -9,6 +9,7 @@ import { CharacterModule } from "./entities/character/character.module";
 import { DataMigrationModule } from "./dataMigration/dataMigration.module";
 import { UserModule } from "./user/user.module";
 import { RoleModule } from "./role/role.module";
+import { FolderModule } from "./entities/folder/folder.module";
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { RoleModule } from "./role/role.module";
     DataMigrationModule,
     UserModule,
     RoleModule,
+    FolderModule,
   ],
   controllers: [AppController],
   providers: [AppService],
