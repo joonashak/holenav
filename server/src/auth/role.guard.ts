@@ -29,11 +29,20 @@ export class RoleGuard implements CanActivate {
 
   async canActivate(context: ExecutionContext) {
     const gqlContext = GqlExecutionContext.create(context);
-    const { accesstoken } = gqlContext.getContext().req.headers;
+    const request = gqlContext.getContext().req;
+    const { accesstoken } = request.headers;
     const { uid }: any = this.jwtService.decode(accesstoken);
     const user = await this.userService.findByIdWithTokens(uid);
 
-    return this.checkToken(user, accesstoken) && this.checkRole(user, context);
+    const authorized = this.checkToken(user, accesstoken) && this.checkRole(user, context);
+
+    // Add user data to request only after authorization to avoid mistakes.
+    if (authorized) {
+      user.tokens = null;
+      request.user = user;
+    }
+
+    return authorized;
   }
 
   checkToken(user: User, token: string): boolean {
