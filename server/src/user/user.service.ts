@@ -45,7 +45,10 @@ export class UserService {
    * @returns The found user or `undefined`.
    */
   async findByIdWithTokens(id: string): Promise<User> {
-    const user = await this.userModel.findOne({ id }).select("+tokens").populate("roles");
+    const user = await this.userModel
+      .findOne({ id })
+      .select("+tokens")
+      .populate({ path: "roles", populate: { path: "folder" } });
     return user;
   }
 

@@ -1,6 +1,6 @@
 import { UseGuards } from "@nestjs/common";
 import { Args, Query, Resolver } from "@nestjs/graphql";
-import { RequiredRole } from "../../auth/requiredRoles.decorator";
+import { FolderRole } from "../../auth/role.decorator";
 import { RoleGuard } from "../../auth/role.guard";
 import Roles from "../../role/roles.enum";
 import { System } from "./system.model";
@@ -16,9 +16,9 @@ export class SystemResolver {
     return this.systemService.list();
   }
 
-  @RequiredRole(Roles.READ)
+  @FolderRole({ role: Roles.READ, key: "folderId" })
   @Query((returns) => System)
-  async getSystemByName(@Args("name") name: string) {
+  async getSystemByName(@Args("name") name: string, @Args("folderId") folderId: string) {
     return this.systemService.getByName(name);
   }
 }
