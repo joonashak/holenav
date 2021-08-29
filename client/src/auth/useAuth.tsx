@@ -15,6 +15,7 @@ const defaultState = {
 };
 
 const AuthContext = createContext([[], () => {}]);
+AuthContext.displayName = "Authentication";
 
 interface AuthProviderProps {
   children: ReactNode;

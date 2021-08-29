@@ -3,6 +3,7 @@ import { findOneSystem } from "@eve-data/systems";
 import { createContext, useState, ReactNode, useEffect } from "react";
 
 export const SystemDataContext = createContext([[], () => {}]);
+SystemDataContext.displayName = "System Data";
 
 interface SystemDataProviderProps {
   children: ReactNode;
