@@ -2,6 +2,7 @@ import { useMutation } from "@apollo/client";
 import { Button, Modal, Paper, Typography } from "@material-ui/core";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import ControlledSelect from "../../../../controls/ControlledSelect";
 import ControlledTextField from "../../../../controls/ControlledTextField";
 import { ADD_SIGNATURE } from "../../../SystemData/graphql";
 import useSystemData from "../../../SystemData/useSystemData";
@@ -17,11 +18,7 @@ export default ({ open, onClose }: SigModalProps) => {
   const [addSigMutation, { data, loading, error }] = useMutation(ADD_SIGNATURE);
 
   const onSubmit = (formData: any) => {
-    try {
-      addSigMutation({ variables: { ...formData, type: "RELIC", systemId: id } });
-    } catch (err) {
-      console.log(err);
-    }
+    addSigMutation({ variables: { ...formData, systemId: id } });
   };
 
   useEffect(() => {
@@ -37,6 +34,16 @@ export default ({ open, onClose }: SigModalProps) => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <ControlledTextField name="eveId" control={control} label="ID" />
           <ControlledTextField name="name" control={control} label="Name" />
+          <ControlledSelect
+            name="type"
+            control={control}
+            label="Type"
+            options={[
+              { key: "type-relic", value: "RELIC", label: "Relic" },
+              { key: "type-data", value: "DATA", label: "Data" },
+              { key: "type-wh", value: "WORMHOLE", label: "Wormhole" },
+            ]}
+          />
           <Button type="submit" variant="contained" color="primary">
             Add
           </Button>
