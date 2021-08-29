@@ -7,6 +7,14 @@ type SystemData = {
   securityClass: SecurityClasses;
   securityStatus: number;
   whClass: number | null;
+  signatures: Signature[];
+};
+
+type Signature = {
+  id: string;
+  eveId: string;
+  name: string;
+  type: string;
 };
 
 export default (): SystemData => {

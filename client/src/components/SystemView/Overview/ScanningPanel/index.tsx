@@ -5,6 +5,7 @@ import {
   AccordionDetails,
 } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import SigList from "./SigList";
 
 export default () => (
   <Accordion>
@@ -16,7 +17,7 @@ export default () => (
       <Typography>Scanning: 5 sigs (10 anoms)</Typography>
     </AccordionSummary>
     <AccordionDetails>
-      <Typography>Sigs and anoms editable list</Typography>
+      <SigList />
     </AccordionDetails>
   </Accordion>
 );
