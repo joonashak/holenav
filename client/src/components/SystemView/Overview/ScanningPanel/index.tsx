@@ -1,12 +1,7 @@
-import {
-  Typography,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-  makeStyles,
-} from "@material-ui/core";
+import { Accordion, AccordionSummary, AccordionDetails, makeStyles } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import AddSigButton from "./AddSigButton";
+import ScanningTitle from "./ScanningTitle";
 import SigList from "./SigList";
 
 const useStyles = makeStyles({
@@ -25,7 +20,7 @@ export default () => {
         aria-controls="scanning-content"
         id="scanning-header"
       >
-        <Typography>Scanning: 5 sigs (10 anoms)</Typography>
+        <ScanningTitle />
       </AccordionSummary>
       <AccordionDetails className={classes.details}>
         <SigList />
