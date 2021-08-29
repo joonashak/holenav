@@ -1,5 +1,4 @@
-import { Typography, AccordionSummary } from "@material-ui/core";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import { Typography } from "@material-ui/core";
 import SecurityClasses from "../../../../enum/SecurityClasses";
 import useSystemData from "../../SystemData/useSystemData";
 
@@ -14,13 +13,5 @@ export default () => {
     [SecurityClasses.Wormhole]: `Class ${whClass}`,
   };
 
-  return (
-    <AccordionSummary
-      expandIcon={<ExpandMoreIcon />}
-      aria-controls="system-info-content"
-      id="system-info-header"
-    >
-      <Typography>{classTextMap[securityClass]} - [add effect]</Typography>
-    </AccordionSummary>
-  );
+  return <Typography>{classTextMap[securityClass]} - [add effect]</Typography>;
 };
