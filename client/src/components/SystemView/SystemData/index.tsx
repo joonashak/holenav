@@ -13,24 +13,35 @@ export default ({ children, name }: SystemDataProviderProps) => {
   const [state, setState] = useState<any>(null);
 
   useEffect(() => {
-    const system = findOneSystem({ name });
-    setState(system);
+    const { id, ...system } = findOneSystem({ name });
+    setState({ eveId: id, ...system });
   }, [name]);
 
   const query = gql`
-    query System($name: String!) {
-      getSystemByName(name: $name) {
-        name
+    query System($name: String!, $folderId: String!) {
+      getSystemByName(name: $name, folderId: $folderId) {
+        id
+        signatures {
+          id
+          name
+        }
       }
     }
   `;
 
-  // TODO: Load data into state when backend resolvers are done.
-  // eslint-disable-next-line
-  const { data } = useQuery(query, { variables: { name } });
+  // FIXME: Remove hard-coded folderId.
+  const { data, loading, error } = useQuery(query, {
+    variables: { name, folderId: "d990d0c5-2557-458e-b562-a169052215fe" },
+  });
 
-  // eslint-disable-next-line
-  console.log("SystemDataProvider state", state);
+  useEffect(() => {
+    if (!loading && !error) {
+      const {
+        getSystemByName: { id, signatures },
+      } = data;
+      setState((prev: any) => ({ ...prev, id, signatures }));
+    }
+  }, [data]);
 
   // FIXME: Handle loading and errors properly.
   if (!state) {
