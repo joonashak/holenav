@@ -13,7 +13,7 @@ export class SystemService {
   }
 
   async getByName(name: string) {
-    return this.systemModel.findOne({ name });
+    return this.systemModel.findOne({ name }).populate("signatures");
   }
 
   async bulkSave(systems: Partial<System>[]) {
