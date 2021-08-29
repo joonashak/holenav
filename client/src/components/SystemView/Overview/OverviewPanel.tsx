@@ -15,14 +15,14 @@ type OverviewPanelProps = {
   title: ReactNode;
   children: ReactNode;
   name: string;
-  expanded?: boolean;
+  defaultExpanded?: boolean;
 };
 
-const OverviewPanel = ({ title, children, name, expanded }: OverviewPanelProps) => {
+const OverviewPanel = ({ title, children, name, defaultExpanded }: OverviewPanelProps) => {
   const classes = useStyles();
 
   return (
-    <Accordion expanded={expanded} classes={{ expanded: classes.expanded }}>
+    <Accordion defaultExpanded={defaultExpanded} classes={{ expanded: classes.expanded }}>
       <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
         aria-controls={`${name}-content`}
@@ -36,7 +36,7 @@ const OverviewPanel = ({ title, children, name, expanded }: OverviewPanelProps) 
 };
 
 OverviewPanel.defaultProps = {
-  expanded: false,
+  defaultExpanded: false,
 };
 
 export default OverviewPanel;
