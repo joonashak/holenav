@@ -6,6 +6,9 @@ const useStyles = makeStyles({
   details: {
     flexDirection: "column",
   },
+  expanded: {
+    "&$expanded": { margin: 0 },
+  },
 });
 
 type OverviewPanelProps = {
@@ -19,7 +22,7 @@ const OverviewPanel = ({ title, children, name, expanded }: OverviewPanelProps) 
   const classes = useStyles();
 
   return (
-    <Accordion expanded={expanded}>
+    <Accordion expanded={expanded} classes={{ expanded: classes.expanded }}>
       <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
         aria-controls={`${name}-content`}
