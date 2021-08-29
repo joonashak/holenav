@@ -1,6 +1,7 @@
-import { gql, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { findOneSystem } from "@eve-data/systems";
 import { createContext, useState, ReactNode, useEffect } from "react";
+import { GET_SYSTEM_BY_NAME } from "./graphql";
 
 export const SystemDataContext = createContext([[], () => {}]);
 SystemDataContext.displayName = "System Data";
@@ -18,20 +19,8 @@ export default ({ children, name }: SystemDataProviderProps) => {
     setState({ eveId: id, ...system });
   }, [name]);
 
-  const query = gql`
-    query System($name: String!, $folderId: String!) {
-      getSystemByName(name: $name, folderId: $folderId) {
-        id
-        signatures {
-          id
-          name
-        }
-      }
-    }
-  `;
-
   // FIXME: Remove hard-coded folderId.
-  const { data, loading, error } = useQuery(query, {
+  const { data, loading, error } = useQuery(GET_SYSTEM_BY_NAME, {
     variables: { name, folderId: "d990d0c5-2557-458e-b562-a169052215fe" },
   });
 
@@ -50,8 +39,6 @@ export default ({ children, name }: SystemDataProviderProps) => {
   }
 
   return (
-    <SystemDataContext.Provider value={[state, setState]}>
-      {children}
-    </SystemDataContext.Provider>
+    <SystemDataContext.Provider value={[state, setState]}>{children}</SystemDataContext.Provider>
   );
 };

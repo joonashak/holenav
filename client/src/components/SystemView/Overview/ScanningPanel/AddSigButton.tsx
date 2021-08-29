@@ -3,7 +3,7 @@ import { useState } from "react";
 import SigModal from "./SigModal";
 
 export default () => {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
 
   const toggleOpen = () => setOpen((prev) => !prev);
 

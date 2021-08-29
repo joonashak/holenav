@@ -9,11 +9,7 @@ type ControlledTextFieldProps = {
 };
 
 export default ({ name, control, label }: ControlledTextFieldProps) => {
-  const Render = ({ field }: any) => (
-    <TextField {...field} label={label} variant="outlined" />
-  );
+  const Render = ({ field }: any) => <TextField {...field} label={label} variant="outlined" />;
 
-  return (
-    <Controller name={name} control={control} render={Render} defaultValue="" />
-  );
+  return <Controller name={name} control={control} render={Render} defaultValue="" />;
 };
