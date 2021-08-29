@@ -1,11 +1,5 @@
 import axios from "axios";
-import {
-  createContext,
-  useState,
-  ReactNode,
-  useContext,
-  useEffect,
-} from "react";
+import { createContext, useState, ReactNode, useContext, useEffect } from "react";
 import tokenStore from "./tokenStore";
 
 const defaultState = {
@@ -34,11 +28,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
     })();
   }, []);
 
-  return (
-    <AuthContext.Provider value={[state, setState]}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={[state, setState]}>{children}</AuthContext.Provider>;
 };
 
 export { AuthProvider };
@@ -50,10 +40,9 @@ export default () => {
   const fetchAndSaveToken = async (ssoState: string) => {
     setState({ token: null, pending: true });
 
-    const { data } = await axios.post(
-      `${process.env.REACT_APP_CMS_URL}/auth/getToken`,
-      { state: ssoState }
-    );
+    const { data } = await axios.post(`${process.env.REACT_APP_CMS_URL}/auth/getToken`, {
+      state: ssoState,
+    });
 
     const { accessToken } = data;
     await tokenStore.setToken(accessToken);

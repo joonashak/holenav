@@ -1,11 +1,4 @@
-import {
-  makeStyles,
-  Theme,
-  AppBar,
-  Toolbar,
-  IconButton,
-  Typography,
-} from "@material-ui/core";
+import { makeStyles, Theme, AppBar, Toolbar, IconButton, Typography } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import SystemInfo from "./SystemInfo";
 import ScanningPanel from "./ScanningPanel";
