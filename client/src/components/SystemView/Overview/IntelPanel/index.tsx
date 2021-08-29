@@ -1,17 +1,15 @@
-import { Typography, Accordion, AccordionSummary, AccordionDetails } from "@material-ui/core";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import { Typography } from "@material-ui/core";
+import OverviewPanel from "../OverviewPanel";
 
 export default () => (
-  <Accordion>
-    <AccordionSummary
-      expandIcon={<ExpandMoreIcon />}
-      aria-controls="intel-content"
-      id="intel-header"
-    >
-      <Typography>Intel: 2 structures</Typography>
-    </AccordionSummary>
-    <AccordionDetails>
-      <Typography>Structures, notes, etc.</Typography>
-    </AccordionDetails>
-  </Accordion>
+  <OverviewPanel
+    name="intel"
+    title={
+      <>
+        <Typography>Intel: 2 structures</Typography>
+      </>
+    }
+  >
+    <Typography>Structures, notes, etc.</Typography>
+  </OverviewPanel>
 );
