@@ -1,15 +1,35 @@
-import { Accordion, AccordionSummary, AccordionDetails, makeStyles } from "@material-ui/core";
+import {
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+  makeStyles,
+  Theme,
+} from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { ReactNode } from "react";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme: Theme) => ({
+  accordion: {
+    backgroundColor: theme.palette.primary.main,
+    color: theme.palette.text.primary,
+    "&$expanded": { marginTop: 0, marginBottom: 0 },
+  },
+  summary: {
+    minHeight: 56,
+    "&$expanded": {
+      minHeight: 56,
+    },
+  },
+  summaryContent: {
+    justifyContent: "space-between",
+    alignItems: "center",
+    "&$expanded": { marginTop: 0, marginBottom: 0 },
+  },
   details: {
     flexDirection: "column",
   },
-  expanded: {
-    "&$expanded": { margin: 0 },
-  },
-});
+  expanded: {},
+}));
 
 type OverviewPanelProps = {
   title: ReactNode;
@@ -22,11 +42,17 @@ const OverviewPanel = ({ title, children, name, defaultExpanded }: OverviewPanel
   const classes = useStyles();
 
   return (
-    <Accordion defaultExpanded={defaultExpanded} classes={{ expanded: classes.expanded }}>
+    <Accordion
+      defaultExpanded={defaultExpanded}
+      classes={{ expanded: classes.expanded }}
+      className={classes.accordion}
+    >
       <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
         aria-controls={`${name}-content`}
         id={`${name}-header`}
+        className={classes.summary}
+        classes={{ content: classes.summaryContent, expanded: classes.expanded }}
       >
         {title}
       </AccordionSummary>
