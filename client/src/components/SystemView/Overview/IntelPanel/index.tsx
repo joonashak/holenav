@@ -6,7 +6,7 @@ export default () => (
     name="intel"
     title={
       <>
-        <Typography>Intel: 2 structures</Typography>
+        <Typography variant="h3">Intel: 2 structures</Typography>
       </>
     }
   >

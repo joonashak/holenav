@@ -15,6 +15,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     "&$expanded": { marginTop: 0, marginBottom: 0 },
   },
   summary: {
+    color: theme.palette.secondary.light,
     minHeight: 56,
     "&$expanded": {
       minHeight: 56,
@@ -48,7 +49,7 @@ const OverviewPanel = ({ title, children, name, defaultExpanded }: OverviewPanel
       className={classes.accordion}
     >
       <AccordionSummary
-        expandIcon={<ExpandMoreIcon />}
+        expandIcon={<ExpandMoreIcon color="secondary" />}
         aria-controls={`${name}-content`}
         id={`${name}-header`}
         className={classes.summary}

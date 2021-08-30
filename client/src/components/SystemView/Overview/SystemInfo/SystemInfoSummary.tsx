@@ -13,5 +13,5 @@ export default () => {
     [SecurityClasses.Wormhole]: `Class ${whClass}`,
   };
 
-  return <Typography>{classTextMap[securityClass]} - [add effect]</Typography>;
+  return <Typography variant="h3">{classTextMap[securityClass]} - [add effect]</Typography>;
 };
