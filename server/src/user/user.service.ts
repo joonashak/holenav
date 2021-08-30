@@ -24,7 +24,7 @@ export class UserService {
   async create(user: CreateUserDto): Promise<User> {
     const folder = await this.folderService.getDefaultFolder();
     const role = await this.roleService.create({ role: Roles.WRITE, folder });
-    const newUser = await this.userModel.create({ ...user, roles: role });
+    const newUser = await this.userModel.create({ ...user, roles: role, activeFolder: folder });
     return newUser;
   }
 
