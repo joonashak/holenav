@@ -8,6 +8,7 @@ Table users {
   alts characters[] [ref: < characters._id]
   tokens string[]
   roles roles[] [ref: < roles._id]
+  activeFolder folders [ref: - folders._id]
 }
 
 Table characters {
