@@ -9,7 +9,6 @@ import { GqlExecutionContext } from "@nestjs/graphql";
 import { JwtService } from "@nestjs/jwt";
 import { User } from "../../user/user.model";
 import { UserService } from "../../user/user.service";
-import checkToken from "./checkToken";
 
 /**
  * Guard to require only token authentication.
@@ -24,7 +23,13 @@ export class AuthGuard implements CanActivate {
     let user: User;
 
     try {
-      user = await checkToken(request, this.jwtService, this.userService);
+      const accessToken = request.headers.accesstoken;
+      const { uid }: any = this.jwtService.decode(accessToken);
+      user = await this.userService.findByIdWithTokens(uid);
+
+      if (!user.tokens.includes(accessToken)) {
+        throw true;
+      }
     } catch {
       throw new HttpException("Authentication failed.", HttpStatus.FORBIDDEN);
     }

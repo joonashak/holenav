@@ -7,13 +7,10 @@ import {
 } from "@nestjs/common";
 import { Reflector } from "@nestjs/core";
 import { GqlExecutionContext } from "@nestjs/graphql";
-import { JwtService } from "@nestjs/jwt";
 import { Role } from "../../role/role.model";
 import Roles from "../../role/roles.enum";
 import { User } from "../../user/user.model";
-import { UserService } from "../../user/user.service";
 import { FolderRoleSpec } from "../decorators/role.decorator";
-import checkToken from "./checkToken";
 
 /**
  * Guard to require *at least* a certain role for access. Use with custom
@@ -22,37 +19,15 @@ import checkToken from "./checkToken";
  */
 @Injectable()
 export class RoleGuard implements CanActivate {
-  constructor(
-    private reflector: Reflector,
-    private userService: UserService,
-    private jwtService: JwtService,
-  ) {}
+  constructor(private reflector: Reflector) {}
 
-  async canActivate(context: ExecutionContext) {
+  canActivate(context: ExecutionContext) {
     const gqlContext = GqlExecutionContext.create(context);
-    const request = gqlContext.getContext().req;
-    let user: User;
+    const { user } = gqlContext.getContext().req;
 
-    try {
-      user = await checkToken(request, this.jwtService, this.userService);
-    } catch {
-      throw new HttpException("Authentication failed.", HttpStatus.FORBIDDEN);
-    }
-
-    const authorized = user && this.checkRole(user, context);
-
-    // Add user data to request only after authorization to avoid mistakes.
-    if (authorized) {
-      user.tokens = null;
-      request.user = user;
-    }
-
-    return authorized;
-  }
-
-  checkRole(user: User, context: ExecutionContext): boolean {
     const requiredRole = this.getRequiredRole(context);
     const userRole = this.getUserRole(user, context);
+
     return userRole >= requiredRole;
   }
 
