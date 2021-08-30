@@ -13,6 +13,7 @@ import Roles from "../../role/roles.enum";
 import { User } from "../../user/user.model";
 import { UserService } from "../../user/user.service";
 import { FolderRoleSpec } from "../decorators/role.decorator";
+import checkToken from "./checkToken";
 
 /**
  * Guard to require *at least* a certain role for access. Use with custom
@@ -30,11 +31,15 @@ export class RoleGuard implements CanActivate {
   async canActivate(context: ExecutionContext) {
     const gqlContext = GqlExecutionContext.create(context);
     const request = gqlContext.getContext().req;
-    const { accesstoken } = request.headers;
-    const { uid }: any = this.jwtService.decode(accesstoken);
-    const user = await this.userService.findByIdWithTokens(uid);
+    let user: User;
 
-    const authorized = this.checkToken(user, accesstoken) && this.checkRole(user, context);
+    try {
+      user = await checkToken(request, this.jwtService, this.userService);
+    } catch {
+      throw new HttpException("Authentication failed.", HttpStatus.FORBIDDEN);
+    }
+
+    const authorized = user && this.checkRole(user, context);
 
     // Add user data to request only after authorization to avoid mistakes.
     if (authorized) {
@@ -43,11 +48,6 @@ export class RoleGuard implements CanActivate {
     }
 
     return authorized;
-  }
-
-  checkToken(user: User, token: string): boolean {
-    const { tokens } = user;
-    return tokens.includes(token);
   }
 
   checkRole(user: User, context: ExecutionContext): boolean {
