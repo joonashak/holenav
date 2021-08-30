@@ -4,9 +4,10 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  TableCell,
+  TableCell as MuiTableCell,
   Paper,
   makeStyles,
+  withStyles,
   Theme,
 } from "@material-ui/core";
 import useSystemData from "../../../SystemData/useSystemData";
@@ -17,18 +18,32 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
+const TableHeadCell = withStyles((theme: Theme) => ({
+  root: {
+    backgroundColor: theme.palette.primary.dark,
+    color: theme.palette.secondary.light,
+    fontSize: "0.95rem",
+    fontWeight: 500,
+    borderBottomColor: theme.palette.primary.dark,
+  },
+}))(MuiTableCell);
+
+const TableCell = withStyles((theme: Theme) => ({
+  root: { borderBottomColor: theme.palette.primary.main },
+}))(MuiTableCell);
+
 export default () => {
   const { signatures } = useSystemData();
   const classes = useStyles();
 
   return (
     <TableContainer component={Paper} className={classes.container}>
-      <Table aria-label="simple table">
+      <Table aria-label="simple table" size="small">
         <TableHead>
           <TableRow>
-            <TableCell>ID</TableCell>
-            <TableCell>Type</TableCell>
-            <TableCell>Name</TableCell>
+            <TableHeadCell>ID</TableHeadCell>
+            <TableHeadCell>Type</TableHeadCell>
+            <TableHeadCell>Name</TableHeadCell>
           </TableRow>
         </TableHead>
         <TableBody>
