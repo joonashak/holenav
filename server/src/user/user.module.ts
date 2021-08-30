@@ -6,14 +6,19 @@ import { RoleModule } from "../role/role.module";
 import { RoleService } from "../role/role.service";
 import { User, UserSchema } from "./user.model";
 import { UserService } from "./user.service";
+import { UserResolver } from "./user.resolver";
+import { JwtModule } from "@nestjs/jwt";
 
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
+    JwtModule.register({
+      secret: process.env.JWT_SECRET,
+    }),
     FolderModule,
     RoleModule,
   ],
-  providers: [UserService, RoleService, FolderService],
+  providers: [UserService, RoleService, FolderService, UserResolver],
   exports: [UserService, MongooseModule],
 })
 export class UserModule {}

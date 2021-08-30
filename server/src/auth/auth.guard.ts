@@ -18,7 +18,6 @@ export class AuthGuard implements CanActivate {
     const request = gqlContext.getContext().req;
     const { accesstoken } = request.headers;
     const { uid }: any = this.jwtService.decode(accesstoken);
-    console.log(uid);
     const user = await this.userService.findByIdWithTokens(uid);
 
     const authorized = this.checkToken(user, accesstoken);

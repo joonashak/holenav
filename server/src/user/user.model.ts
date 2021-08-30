@@ -3,6 +3,7 @@ import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import mongoose from "mongoose";
 import { v4 as uuid } from "uuid";
 import { Character } from "../entities/character/character.model";
+import { Folder } from "../entities/folder/folder.model";
 import { Role } from "../role/role.model";
 
 export type UserDocument = User & mongoose.Document;
@@ -25,6 +26,10 @@ export class User {
   @Field((type) => [Role])
   @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Role" }] })
   roles: Role[];
+
+  @Field((type) => Folder)
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: "Folder" })
+  activeFolder: Folder;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
