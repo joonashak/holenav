@@ -1,5 +1,5 @@
 import { SetMetadata } from "@nestjs/common";
-import Roles from "../role/roles.enum";
+import Roles from "../../role/roles.enum";
 
 /**
  * Configure `RoleGuard` to require at least given app-level role.

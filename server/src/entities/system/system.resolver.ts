@@ -1,7 +1,7 @@
 import { UseGuards } from "@nestjs/common";
 import { Args, Query, Resolver } from "@nestjs/graphql";
-import { FolderRole } from "../../auth/role.decorator";
-import { RoleGuard } from "../../auth/role.guard";
+import { FolderRole } from "../../auth/decorators/role.decorator";
+import { RoleGuard } from "../../auth/guards/role.guard";
 import Roles from "../../role/roles.enum";
 import { System } from "./system.model";
 import { SystemService } from "./system.service";

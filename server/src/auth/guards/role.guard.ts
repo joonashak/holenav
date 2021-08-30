@@ -8,11 +8,11 @@ import {
 import { Reflector } from "@nestjs/core";
 import { GqlExecutionContext } from "@nestjs/graphql";
 import { JwtService } from "@nestjs/jwt";
-import { Role } from "../role/role.model";
-import Roles from "../role/roles.enum";
-import { User } from "../user/user.model";
-import { UserService } from "../user/user.service";
-import { FolderRoleSpec } from "./role.decorator";
+import { Role } from "../../role/role.model";
+import Roles from "../../role/roles.enum";
+import { User } from "../../user/user.model";
+import { UserService } from "../../user/user.service";
+import { FolderRoleSpec } from "../decorators/role.decorator";
 
 /**
  * Guard to require *at least* a certain role for access. Use with custom

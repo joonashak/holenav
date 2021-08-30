@@ -1,8 +1,8 @@
 import { CanActivate, ExecutionContext, Injectable } from "@nestjs/common";
 import { GqlExecutionContext } from "@nestjs/graphql";
 import { JwtService } from "@nestjs/jwt";
-import { User } from "../user/user.model";
-import { UserService } from "../user/user.service";
+import { User } from "../../user/user.model";
+import { UserService } from "../../user/user.service";
 
 /**
  * Guard to require *at least* a certain role for access. Use with custom
