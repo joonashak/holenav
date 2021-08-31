@@ -32,7 +32,7 @@ export default ({ open, onClose }: SigModalProps) => {
     if (data && !loading && !error) {
       addSignature(data.addSignature);
     }
-  }, [data]);
+  }, [data, loading, error]);
 
   return (
     <Modal open={open} onClose={onClose}>

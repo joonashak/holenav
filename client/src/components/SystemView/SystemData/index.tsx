@@ -1,6 +1,7 @@
 import { useQuery } from "@apollo/client";
 import { findOneSystem } from "@eve-data/systems";
 import { createContext, useState, ReactNode, useEffect } from "react";
+import useUserData from "../../UserData/useUserData";
 import { GET_SYSTEM_BY_NAME } from "./graphql";
 
 export const SystemDataContext = createContext([[], () => {}]);
@@ -13,15 +14,15 @@ interface SystemDataProviderProps {
 
 export default ({ children, name }: SystemDataProviderProps) => {
   const [state, setState] = useState<any>(null);
+  const { activeFolder } = useUserData();
 
   useEffect(() => {
     const { id, ...system } = findOneSystem({ name });
     setState({ eveId: id, ...system });
   }, [name]);
 
-  // FIXME: Remove hard-coded folderId.
   const { data, loading, error } = useQuery(GET_SYSTEM_BY_NAME, {
-    variables: { name, folderId: "d990d0c5-2557-458e-b562-a169052215fe" },
+    variables: { name, folderId: activeFolder },
   });
 
   useEffect(() => {

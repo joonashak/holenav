@@ -4,6 +4,7 @@ import AuthenticatedApollo from "../auth/AuthenticatedApollo";
 import SystemView from "./SystemView";
 import AuthenticationGuard from "../auth/AuthenticationGuard";
 import LoginView from "./LoginView";
+import UserData from "./UserData";
 
 export default () => (
   <BrowserRouter>
@@ -13,9 +14,11 @@ export default () => (
       <Route path="/">
         <AuthenticationGuard>
           <AuthenticatedApollo>
-            <Switch>
-              <Route path="/system/:systemName" exact component={SystemView} />
-            </Switch>
+            <UserData>
+              <Switch>
+                <Route path="/system/:systemName" exact component={SystemView} />
+              </Switch>
+            </UserData>
           </AuthenticatedApollo>
         </AuthenticationGuard>
       </Route>

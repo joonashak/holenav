@@ -33,7 +33,7 @@ export default ({ children }: UserDataProviderProps) => {
   }, [data]);
 
   // FIXME: Handle loading and errors properly.
-  if (!state) {
+  if (!data || !state.id) {
     return null;
   }
 
