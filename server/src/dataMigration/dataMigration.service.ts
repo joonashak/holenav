@@ -2,8 +2,11 @@ import { Injectable, Logger, OnApplicationBootstrap } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { DataMigration } from "./dataMigration.model";
-import { Folder, FolderDocument } from "../entities/folder/folder.model";
 import { FolderService } from "../entities/folder/folder.service";
+import mockConnections from "./migrations/mockConnections";
+import { Signature, SignatureDocument } from "../entities/signature/signature.model";
+import { SignatureService } from "../entities/signature/signature.service";
+import { SystemService } from "../entities/system/system.service";
 
 /**
  * Pretty crude hack to keep database contents up to date :sad_face:
@@ -19,14 +22,17 @@ export class DataMigrationService implements OnApplicationBootstrap {
 
   constructor(
     @InjectModel(DataMigration.name) private dataMigrationModel: Model<DataMigration>,
-    @InjectModel(Folder.name) private folderModel: Model<FolderDocument>,
+    @InjectModel(Signature.name) private sigModel: Model<SignatureDocument>,
     private folderService: FolderService,
+    private sigService: SignatureService,
+    private systemService: SystemService,
   ) {}
 
   async onApplicationBootstrap() {
     this.logger.log("Starting data migration...");
     await this.migrate();
     this.logger.log("Data migration finished.");
+    await mockConnections(this.sigModel, this.sigService, this.systemService);
   }
 
   async getVersion(): Promise<number> {
