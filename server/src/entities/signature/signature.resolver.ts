@@ -7,6 +7,7 @@ import { SignatureService } from "./signature.service";
 export class SignatureResolver {
   constructor(private sigService: SignatureService) {}
 
+  // FIXME: Add authentication.
   @Mutation((returns) => Signature)
   async addSignature(@Args() args: AggSignatureArgs) {
     const { systemId, ...signature } = args;

@@ -32,7 +32,7 @@ export class DataMigrationService implements OnApplicationBootstrap {
     this.logger.log("Starting data migration...");
     await this.migrate();
     this.logger.log("Data migration finished.");
-    await mockConnections(this.sigModel, this.sigService, this.systemService);
+    //await mockConnections(this.sigModel, this.sigService, this.systemService);
   }
 
   async getVersion(): Promise<number> {
