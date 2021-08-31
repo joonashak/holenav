@@ -2,7 +2,7 @@ import { Container, makeStyles, Theme } from "@material-ui/core";
 import { ReactChild } from "react";
 
 type ContainerProps = {
-  children: ReactChild;
+  children: ReactChild | ReactChild[];
 };
 
 const useStyles = makeStyles((theme: Theme) => ({
