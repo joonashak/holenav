@@ -1,10 +1,11 @@
 import { Field, ObjectType, registerEnumType } from "@nestjs/graphql";
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import { Document } from "mongoose";
+import mongoose from "mongoose";
 import { v4 as uuid } from "uuid";
+import { System } from "../system/system.model";
 import SigTypes from "./sigTypes.enum";
 
-export type SignatureDocument = Signature & Document;
+export type SignatureDocument = Signature & mongoose.Document;
 
 registerEnumType(SigTypes, { name: "SigTypes" });
 
@@ -26,6 +27,10 @@ export class Signature {
   @Field()
   @Prop()
   name: string;
+
+  @Field((type) => System)
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: "System", nullable: true })
+  destination?: System;
 }
 
 export const SignatureSchema = SchemaFactory.createForClass(Signature);
