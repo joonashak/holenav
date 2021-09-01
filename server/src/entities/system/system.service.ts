@@ -59,9 +59,23 @@ export class SystemService {
         },
       },
     });
-    console.log(res2.signatures[0]);
-    console.log(res2.signatures[1]);
-    console.log(res2.signatures[0].destination.signatures[0].destination.signatures[0]);
+    //console.log(res2.signatures[0]);
+    //console.log(res2.signatures[1]);
+    //console.log(res2.signatures[0].destination.signatures[0].destination.signatures[0]);
+
+    const reduceToConnections = (system: System) => {
+      const { signatures } = system;
+
+      const connections = signatures.map((sig) => ({
+        name: sig.destination.name,
+        children: reduceToConnections(sig.destination),
+      }));
+
+      return connections;
+    };
+
+    console.log(reduceToConnections(res2));
+
     return null;
   }
 }
