@@ -1,7 +1,8 @@
 import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
-import { Model, Types } from "mongoose";
+import { Model } from "mongoose";
 import { Signature } from "../signature/signature.model";
+import { MapTreeNode } from "./dto/system.dto";
 import { System, SystemDocument } from "./system.model";
 
 @Injectable()
@@ -12,8 +13,10 @@ export class SystemService {
     return this.systemModel.find().exec();
   }
 
-  async getByName(name: string) {
-    return this.systemModel.findOne({ name }).populate("signatures");
+  async getByName(name: string): Promise<System> {
+    const system = await this.systemModel.findOne({ name });
+    const mapTree = await this.getMapTree(system);
+    return { ...system.toObject(), mapTree };
   }
 
   async bulkSave(systems: Partial<System>[]) {
@@ -30,23 +33,8 @@ export class SystemService {
     await this.systemModel.findOneAndUpdate({ id: systemId }, { $push: { signatures: signature } });
   }
 
-  async getConnectionGraph(): Promise<Signature> {
-    const res = await this.systemModel.aggregate([
-      { $match: { _id: Types.ObjectId("612e8138ec201f0102b2c9f4") } },
-      {
-        $graphLookup: {
-          from: "systems",
-          startWith: "$_id",
-          connectFromField: "signatures.destination",
-          connectToField: "_id",
-          maxDepth: 5,
-          as: "connections",
-        },
-      },
-    ]);
-    //console.log(res[0].connections);
-
-    const res2 = await this.systemModel.findOne({ name: "Jita" }).populate({
+  async getMapTree(system: SystemDocument): Promise<MapTreeNode> {
+    const populatedSystem = await this.systemModel.populate(system, {
       path: "signatures",
       populate: {
         path: "destination",
@@ -59,9 +47,6 @@ export class SystemService {
         },
       },
     });
-    //console.log(res2.signatures[0]);
-    //console.log(res2.signatures[1]);
-    //console.log(res2.signatures[0].destination.signatures[0].destination.signatures[0]);
 
     const reduceToConnections = (system: System) => {
       const { signatures } = system;
@@ -74,8 +59,7 @@ export class SystemService {
       return connections;
     };
 
-    console.log(reduceToConnections(res2));
-
-    return null;
+    // TODO: Probably just return the children because the root node will be different (type) from the rest?
+    return { name: system.name, children: reduceToConnections(populatedSystem) };
   }
 }

@@ -18,9 +18,4 @@ export class SystemResolver {
   async getSystemByName(@Args("name") name: string, @Args("folderId") folderId: string) {
     return this.systemService.getByName(name);
   }
-
-  @Query((returns) => System)
-  async getConnectionGraph() {
-    return this.systemService.getConnectionGraph();
-  }
 }

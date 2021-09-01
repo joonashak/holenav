@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import { v4 as uuid } from "uuid";
 import { Folder } from "../folder/folder.model";
 import { Signature } from "../signature/signature.model";
+import { MapTreeNode } from "./dto/system.dto";
 
 export type SystemDocument = System & mongoose.Document;
 
@@ -25,6 +26,9 @@ export class System {
   @Field((type) => [Signature])
   @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Signature" }] })
   signatures: Signature[];
+
+  @Field((type) => MapTreeNode)
+  mapTree?: MapTreeNode;
 }
 
 export const SystemSchema = SchemaFactory.createForClass(System);
