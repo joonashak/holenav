@@ -1,5 +1,6 @@
 import { makeStyles, Theme } from "@material-ui/core";
 import Tree from "react-d3-tree";
+import { CustomNodeElementProps } from "react-d3-tree/lib/types/common";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import useSystemData from "../SystemData/useSystemData";
 import MapNode from "./MapNode";
@@ -13,6 +14,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     width: "100vw",
     height: "100vh",
   },
+  // Reset rd3t node styles so they can be styled in component code.
+  nodeReset: {
+    stroke: "none !important",
+  },
 }));
 
 export default () => {
@@ -23,12 +28,18 @@ export default () => {
   const { width } = useWindowDimensions();
   const x = width / 2 + 240;
 
+  // FIXME: Hack to enable hooks in MapNode...
+  // eslint-disable-next-line
+  const Node = (props: CustomNodeElementProps) => <MapNode {...props} />;
+
   return (
     <div className={classes.container}>
       <Tree
         data={data}
         orientation="vertical"
-        renderCustomNodeElement={MapNode}
+        renderCustomNodeElement={Node}
+        branchNodeClassName={classes.nodeReset}
+        rootNodeClassName={classes.nodeReset}
         translate={{ x, y: 100 }}
       />
     </div>
