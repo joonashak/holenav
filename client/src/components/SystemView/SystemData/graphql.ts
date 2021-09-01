@@ -4,11 +4,24 @@ export const GET_SYSTEM_BY_NAME = gql`
   query System($name: String!, $folderId: String!) {
     getSystemByName(name: $name, folderId: $folderId) {
       id
-      signatures {
-        id
+      name
+      mapTree {
         name
-        type
-        eveId
+        children {
+          name
+          children {
+            name
+            children {
+              name
+              children {
+                name
+                children {
+                  name
+                }
+              }
+            }
+          }
+        }
       }
     }
   }

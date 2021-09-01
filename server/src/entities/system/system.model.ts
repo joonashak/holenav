@@ -27,8 +27,8 @@ export class System {
   @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Signature" }] })
   signatures: Signature[];
 
-  @Field((type) => MapTreeNode)
-  mapTree?: MapTreeNode;
+  @Field((type) => [MapTreeNode])
+  mapTree?: MapTreeNode[];
 }
 
 export const SystemSchema = SchemaFactory.createForClass(System);

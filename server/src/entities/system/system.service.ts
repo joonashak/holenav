@@ -33,7 +33,7 @@ export class SystemService {
     await this.systemModel.findOneAndUpdate({ id: systemId }, { $push: { signatures: signature } });
   }
 
-  async getMapTree(system: SystemDocument): Promise<MapTreeNode> {
+  async getMapTree(system: SystemDocument): Promise<MapTreeNode[]> {
     const populatedSystem = await this.systemModel.populate(system, {
       path: "signatures",
       populate: {
@@ -59,7 +59,6 @@ export class SystemService {
       return connections;
     };
 
-    // TODO: Probably just return the children because the root node will be different (type) from the rest?
-    return { name: system.name, children: reduceToConnections(populatedSystem) };
+    return reduceToConnections(populatedSystem);
   }
 }
