@@ -7,6 +7,8 @@ import useSystemData from "../SystemData/useSystemData";
 
 const useStyles = makeStyles((theme: Theme) => ({
   container: {
+    zIndex: 1,
+    height: "fit-content",
     width: "100vw",
     [theme.breakpoints.up("sm")]: {
       width: "30rem",

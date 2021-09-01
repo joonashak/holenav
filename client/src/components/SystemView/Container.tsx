@@ -7,6 +7,7 @@ type ContainerProps = {
 
 const useStyles = makeStyles((theme: Theme) => ({
   container: {
+    display: "flex",
     backgroundColor: theme.palette.primary.dark,
     width: "100%",
     maxWidth: "100vw",
