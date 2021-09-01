@@ -5,6 +5,12 @@ export const GET_SYSTEM_BY_NAME = gql`
     getSystemByName(name: $name, folderId: $folderId) {
       id
       name
+      signatures {
+        id
+        name
+        type
+        eveId
+      }
       mapTree {
         name
         children {
