@@ -29,6 +29,7 @@ services:
       - PORT=3000
       - INTERNAL_STATUS_PORT=30011
       - REACT_APP_CMS_URL=http://localhost:3001
+      - REACT_APP_ENABLE_DEVTOOLS=true
     volumes:
       - ./client/src:/usr/src/app/src
 

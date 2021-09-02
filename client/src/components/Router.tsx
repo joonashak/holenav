@@ -7,6 +7,8 @@ import LoginView from "./LoginView";
 import UserData from "./UserData";
 import DevTools from "../dev/DevTools";
 
+const enableDevTools = process.env.REACT_APP_ENABLE_DEVTOOLS === "true";
+
 export default () => (
   <BrowserRouter>
     <Switch>
@@ -19,7 +21,7 @@ export default () => (
               <Switch>
                 <Route path="/system/:systemName" exact component={SystemView} />
               </Switch>
-              <DevTools />
+              {enableDevTools && <DevTools />}
             </UserData>
           </AuthenticatedApollo>
         </AuthenticationGuard>
