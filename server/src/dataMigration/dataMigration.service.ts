@@ -3,7 +3,6 @@ import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { DataMigration } from "./dataMigration.model";
 import { FolderService } from "../entities/folder/folder.service";
-import mockConnections from "./migrations/mockConnections";
 import { Signature, SignatureDocument } from "../entities/signature/signature.model";
 import { SignatureService } from "../entities/signature/signature.service";
 import { SystemService } from "../entities/system/system.service";
@@ -32,7 +31,6 @@ export class DataMigrationService implements OnApplicationBootstrap {
     this.logger.log("Starting data migration...");
     await this.migrate();
     this.logger.log("Data migration finished.");
-    //await mockConnections(this.sigModel, this.sigService, this.systemService);
   }
 
   async getVersion(): Promise<number> {

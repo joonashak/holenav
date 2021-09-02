@@ -7,9 +7,12 @@ import { DataMigrationService } from "../dataMigration/dataMigration.service";
 import { Character } from "../entities/character/character.model";
 import { Folder } from "../entities/folder/folder.model";
 import { Signature } from "../entities/signature/signature.model";
+import { SignatureService } from "../entities/signature/signature.service";
 import { System } from "../entities/system/system.model";
+import { SystemService } from "../entities/system/system.service";
 import { Role } from "../role/role.model";
 import { User } from "../user/user.model";
+import mockConnections from "./mockConnections";
 
 @Injectable()
 export class DevToolsService {
@@ -23,6 +26,8 @@ export class DevToolsService {
     @InjectModel(System.name) private systemModel: Model<System>,
     @InjectModel(User.name) private userModel: Model<User>,
     private dataMigrationService: DataMigrationService,
+    private signatureService: SignatureService,
+    private systemService: SystemService,
   ) {}
 
   /**
@@ -30,6 +35,14 @@ export class DevToolsService {
    */
   async resetDatabase() {
     await this.clearCollections();
+  }
+
+  /**
+   * Clear database and seed it with mock data.
+   */
+  async seedDatabase() {
+    await this.clearCollections();
+    await mockConnections(this.signatureModel, this.signatureService, this.systemService);
   }
 
   private async clearCollections() {

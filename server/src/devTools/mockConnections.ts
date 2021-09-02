@@ -1,8 +1,8 @@
 import { Model } from "mongoose";
-import { SignatureDocument } from "../../entities/signature/signature.model";
-import { SignatureService } from "../../entities/signature/signature.service";
-import SigTypes from "../../entities/signature/sigTypes.enum";
-import { SystemService } from "../../entities/system/system.service";
+import { Signature } from "../entities/signature/signature.model";
+import { SignatureService } from "../entities/signature/signature.service";
+import SigTypes from "../entities/signature/sigTypes.enum";
+import { SystemService } from "../entities/system/system.service";
 
 type Connection = {
   name: string;
@@ -18,7 +18,7 @@ const connectionsFromJita = [
 ];
 
 export default async (
-  sigModel: Model<SignatureDocument>,
+  sigModel: Model<Signature>,
   sigService: SignatureService,
   systemService: SystemService,
 ) => {

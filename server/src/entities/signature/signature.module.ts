@@ -6,7 +6,7 @@ import { SignatureService } from "./signature.service";
 
 @Module({
   imports: [MongooseModule.forFeature([{ name: Signature.name, schema: SignatureSchema }])],
-  exports: [MongooseModule],
+  exports: [MongooseModule, SignatureService],
   providers: [SignatureResolver, SignatureService],
 })
 export class SignatureModule {}

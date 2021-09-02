@@ -10,4 +10,10 @@ export class DevToolsController {
     await this.devToolsService.resetDatabase();
     return "OK";
   }
+
+  @Get("seed")
+  async seed() {
+    await this.devToolsService.seedDatabase();
+    return "OK";
+  }
 }
