@@ -9,7 +9,9 @@ import { SignatureModule } from "../entities/signature/signature.module";
 import { SsoStateModule } from "../auth/sso/ssoState/ssoState.module";
 import { UserModule } from "../user/user.module";
 
-@Module({
+const devToolsEnabled = process.env.ENABLE_DEVTOOLS === "true";
+
+const options = {
   imports: [
     CharacterModule,
     DataMigrationModule,
@@ -21,5 +23,7 @@ import { UserModule } from "../user/user.module";
   ],
   providers: [DevToolsService],
   controllers: [DevToolsController],
-})
+};
+
+@Module(devToolsEnabled ? options : {})
 export class DevToolsModule {}
