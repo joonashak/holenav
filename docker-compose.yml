@@ -12,6 +12,7 @@ services:
       - DATABASE_URL=mongodb://db/holenav
       - CLIENT_URL=http://localhost:3000
       - JWT_SECRET=asdasd
+      - ENABLE_DEVTOOLS=true
     env_file:
       - .env.development
     volumes:
