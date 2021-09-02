@@ -13,5 +13,6 @@ import { DataMigrationService } from "./dataMigration.service";
     SignatureModule,
   ],
   providers: [DataMigrationService, SignatureService],
+  exports: [DataMigrationService, MongooseModule],
 })
 export class DataMigrationModule {}
