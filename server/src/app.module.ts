@@ -11,6 +11,7 @@ import { UserModule } from "./user/user.module";
 import { RoleModule } from "./role/role.module";
 import { FolderModule } from "./entities/folder/folder.module";
 import { SignatureModule } from "./entities/signature/signature.module";
+import { DevToolsModule } from "./devTools/devTools.module";
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { SignatureModule } from "./entities/signature/signature.module";
     RoleModule,
     FolderModule,
     SignatureModule,
+    DevToolsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
