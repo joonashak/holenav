@@ -5,6 +5,7 @@ import SystemView from "./SystemView";
 import AuthenticationGuard from "../auth/AuthenticationGuard";
 import LoginView from "./LoginView";
 import UserData from "./UserData";
+import DevControlPanel from "../dev/DevControlPanel";
 
 export default () => (
   <BrowserRouter>
@@ -18,6 +19,7 @@ export default () => (
               <Switch>
                 <Route path="/system/:systemName" exact component={SystemView} />
               </Switch>
+              <DevControlPanel />
             </UserData>
           </AuthenticatedApollo>
         </AuthenticationGuard>
