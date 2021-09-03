@@ -13,6 +13,7 @@ import { SystemService } from "../entities/system/system.service";
 import { Role } from "../role/role.model";
 import { User } from "../user/user.model";
 import mockConnections from "./mockConnections";
+import { MockUserService } from "./mockUser.service";
 
 @Injectable()
 export class DevToolsService {
@@ -28,6 +29,7 @@ export class DevToolsService {
     private dataMigrationService: DataMigrationService,
     private signatureService: SignatureService,
     private systemService: SystemService,
+    private mockUserService: MockUserService,
   ) {}
 
   /**
@@ -42,6 +44,8 @@ export class DevToolsService {
    */
   async seedDatabase() {
     await this.clearCollections();
+
+    await this.mockUserService.mock();
     await mockConnections(this.signatureModel, this.signatureService, this.systemService);
   }
 

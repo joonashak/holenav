@@ -8,6 +8,7 @@ import { RoleModule } from "../role/role.module";
 import { SignatureModule } from "../entities/signature/signature.module";
 import { SsoStateModule } from "../auth/sso/ssoState/ssoState.module";
 import { UserModule } from "../user/user.module";
+import { MockUserService } from "./mockUser.service";
 
 const devToolsEnabled = process.env.ENABLE_DEVTOOLS === "true";
 
@@ -21,7 +22,7 @@ const options = {
     SsoStateModule,
     UserModule,
   ],
-  providers: [DevToolsService],
+  providers: [DevToolsService, MockUserService],
   controllers: [DevToolsController],
 };
 
