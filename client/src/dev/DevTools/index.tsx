@@ -3,7 +3,7 @@ import DevToolsDrawer from "./DevToolsDrawer";
 import DevToolsFab from "./DevToolsFab";
 
 export default () => {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   const toggleOpen = () => setOpen((prev) => !prev);
 
   return (
