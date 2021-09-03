@@ -9,8 +9,7 @@ import { SignatureModule } from "../entities/signature/signature.module";
 import { SsoStateModule } from "../auth/sso/ssoState/ssoState.module";
 import { UserModule } from "../user/user.module";
 import { MockUserService } from "./mockUser.service";
-
-const devToolsEnabled = process.env.ENABLE_DEVTOOLS === "true";
+import { devToolsEnabled } from "../config";
 
 const options = {
   imports: [

@@ -13,12 +13,13 @@ import { CharacterModule } from "../entities/character/character.module";
 import { SsoStateModule } from "./sso/ssoState/ssoState.module";
 import { FolderService } from "../entities/folder/folder.service";
 import { FolderModule } from "../entities/folder/folder.module";
+import { jwtSecret } from "../config";
 
 @Module({
   controllers: [AuthController],
   imports: [
     JwtModule.register({
-      secret: process.env.JWT_SECRET,
+      secret: jwtSecret,
       signOptions: { expiresIn: "30d" },
     }),
     UserModule,

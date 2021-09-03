@@ -10,6 +10,7 @@ import {
   Res,
 } from "@nestjs/common";
 import { Request, Response } from "express";
+import { getClientLoginCallbackUrl } from "../config";
 import { AuthService } from "./auth.service";
 import { GetTokenDto } from "./dto/getToken.dto";
 import { SsoService } from "./sso/sso.service";
@@ -37,7 +38,7 @@ export class AuthController {
     @Res() response: Response,
   ) {
     await this.ssoService.handleCallback(authorizationCode, state);
-    const clientCallbackUrl = `${process.env.CLIENT_URL}/login/${state}`;
+    const clientCallbackUrl = getClientLoginCallbackUrl(state);
     response.redirect(clientCallbackUrl);
   }
 

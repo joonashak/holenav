@@ -10,15 +10,16 @@ import { RoleModule } from "./role/role.module";
 import { FolderModule } from "./entities/folder/folder.module";
 import { SignatureModule } from "./entities/signature/signature.module";
 import { DevToolsModule } from "./devTools/devTools.module";
+import { clientUrl, databaseUrl } from "./config";
 
 @Module({
   imports: [
-    MongooseModule.forRoot(process.env.DATABASE_URL, { useFindAndModify: false }),
+    MongooseModule.forRoot(databaseUrl, { useFindAndModify: false }),
     GraphQLModule.forRoot({
       autoSchemaFile: true,
       playground: true,
       debug: false,
-      cors: { origin: process.env.CLIENT_URL },
+      cors: { origin: clientUrl },
     }),
     SystemModule,
     AuthModule,

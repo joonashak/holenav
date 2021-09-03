@@ -1,12 +1,9 @@
 import { Injectable } from "@nestjs/common";
 import axios from "axios";
 import { CharacterService } from "src/entities/character/character.service";
+import { ssoCallbackUrl, ssoClientId, ssoSecretKey } from "../../config";
 import { SsoStateService } from "./ssoState/ssoState.service";
 import { SsoUrl } from "./ssoUrl.enum";
-
-const callbackUrl = process.env.SSO_CALLBACK_URL;
-const clientId = process.env.SSO_CLIENT_ID;
-const secretKey = process.env.SSO_SECRET_KEY;
 
 @Injectable()
 export class SsoService {
@@ -21,7 +18,7 @@ export class SsoService {
   async getClientLoginUrl() {
     const state = await this.ssoStateService.getSsoState();
 
-    const loginUrl = `${SsoUrl.Authorize}/?response_type=code&redirect_uri=${callbackUrl}&client_id=${clientId}&state=${state}`;
+    const loginUrl = `${SsoUrl.Authorize}/?response_type=code&redirect_uri=${ssoCallbackUrl}&client_id=${ssoClientId}&state=${state}`;
     return encodeURI(loginUrl);
   }
 
@@ -32,7 +29,7 @@ export class SsoService {
     const res = await axios.post(
       SsoUrl.Token,
       { grant_type: "authorization_code", code: authorizationCode },
-      { auth: { username: clientId, password: secretKey } },
+      { auth: { username: ssoClientId, password: ssoSecretKey } },
     );
 
     const { data } = res;

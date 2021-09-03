@@ -10,13 +10,14 @@ import { UserModule } from "../../user/user.module";
 import { RoleModule } from "../../role/role.module";
 import { FolderService } from "../folder/folder.service";
 import { FolderModule } from "../folder/folder.module";
+import { jwtSecret } from "../../config";
 
 @Global()
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: System.name, schema: SystemSchema }]),
     JwtModule.register({
-      secret: process.env.JWT_SECRET,
+      secret: jwtSecret,
     }),
     UserModule,
     RoleModule,
