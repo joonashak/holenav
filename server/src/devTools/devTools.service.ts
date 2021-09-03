@@ -12,6 +12,7 @@ import { System } from "../entities/system/system.model";
 import { SystemService } from "../entities/system/system.service";
 import { Role } from "../role/role.model";
 import { User } from "../user/user.model";
+import users from "./data/users";
 import mockConnections from "./mockConnections";
 import { MockUserService } from "./mockUser.service";
 
@@ -47,6 +48,11 @@ export class DevToolsService {
 
     await this.mockUserService.mock();
     await mockConnections(this.signatureModel, this.signatureService, this.systemService);
+  }
+
+  async getMockUsers() {
+    // Do not read these from db to avoid potentially leaking actual user data!
+    return users.map(({ id, role, main: { name } }) => ({ id, role, name }));
   }
 
   private async clearCollections() {

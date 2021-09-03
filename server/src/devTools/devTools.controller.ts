@@ -16,4 +16,9 @@ export class DevToolsController {
     await this.devToolsService.seedDatabase();
     return "OK";
   }
+
+  @Get("mockUsers")
+  async mockUsers() {
+    return this.devToolsService.getMockUsers();
+  }
 }
