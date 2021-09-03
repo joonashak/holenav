@@ -51,7 +51,6 @@ export class AuthGuard implements CanActivate {
     const mocking =
       devToolsEnabled && !!headers.mockuser && allowedMockUsers.includes(headers.mockuser);
     let uid: string;
-    console.log("mocking", mocking);
 
     if (mocking) {
       uid = headers.mockuser;
