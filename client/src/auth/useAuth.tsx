@@ -1,5 +1,6 @@
 import axios from "axios";
 import { createContext, useState, ReactNode, useContext, useEffect } from "react";
+import { endpoints } from "../config";
 import tokenStore from "./tokenStore";
 
 const defaultState = {
@@ -40,7 +41,7 @@ export default () => {
   const fetchAndSaveToken = async (ssoState: string) => {
     setState({ token: null, pending: true });
 
-    const { data } = await axios.post(`${process.env.REACT_APP_CMS_URL}/auth/getToken`, {
+    const { data } = await axios.post(endpoints.getToken, {
       state: ssoState,
     });
 

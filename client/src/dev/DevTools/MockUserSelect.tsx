@@ -1,6 +1,7 @@
 import { FormControl, InputLabel, makeStyles, MenuItem, Select, Theme } from "@material-ui/core";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { endpoints } from "../../config";
 import mockUserStore from "../mockUserStore";
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -27,7 +28,7 @@ export default () => {
 
   useEffect(() => {
     (async () => {
-      const { data } = await axios.get(`${process.env.REACT_APP_CMS_URL}/dev/mockUsers`);
+      const { data } = await axios.get(endpoints.dev.mockUsers);
       const storedUser = await mockUserStore.getMockUser();
       setActiveUser(storedUser || "none");
       setUsers(data);

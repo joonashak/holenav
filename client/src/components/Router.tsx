@@ -7,8 +7,7 @@ import LoginView from "./LoginView";
 import UserData from "./UserData";
 import DevTools from "../dev/DevTools";
 import FrontPage from "./FrontPage";
-
-const enableDevTools = process.env.REACT_APP_ENABLE_DEVTOOLS === "true";
+import { devToolsEnabled } from "../config";
 
 export default () => (
   <BrowserRouter>
@@ -28,6 +27,6 @@ export default () => (
         </AuthenticationGuard>
       </Route>
     </Switch>
-    {enableDevTools && <DevTools />}
+    {devToolsEnabled && <DevTools />}
   </BrowserRouter>
 );

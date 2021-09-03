@@ -1,6 +1,7 @@
 import { Button, Drawer, makeStyles } from "@material-ui/core";
 import { yellow } from "@material-ui/core/colors";
 import axios from "axios";
+import { endpoints } from "../../config";
 import MockUserSelect from "./MockUserSelect";
 
 const useStyles = makeStyles({
@@ -24,11 +25,11 @@ export default ({ open, onClose }: DevToolsDrawerProps) => {
   const classes = useStyles();
 
   const reset = async () => {
-    await axios.get(`${process.env.REACT_APP_CMS_URL}/dev/reset`);
+    await axios.get(endpoints.dev.reset);
     window.location.reload();
   };
   const seed = async () => {
-    await axios.get(`${process.env.REACT_APP_CMS_URL}/dev/seed`);
+    await axios.get(endpoints.dev.seed);
     window.location.reload();
   };
 

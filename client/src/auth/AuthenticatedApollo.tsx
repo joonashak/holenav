@@ -1,5 +1,6 @@
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 import { ReactChild } from "react";
+import { endpoints } from "../config";
 import useAuth from "./useAuth";
 
 type AuthenticatedApolloProps = {
@@ -15,7 +16,7 @@ export default ({ children }: AuthenticatedApolloProps) => {
   }
 
   const apolloClient = new ApolloClient({
-    uri: `${process.env.REACT_APP_CMS_URL}/graphql`,
+    uri: endpoints.graphQl,
     cache: new InMemoryCache(),
     headers: { accessToken: token },
   });
