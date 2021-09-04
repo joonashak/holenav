@@ -55,10 +55,11 @@ export default () => {
         id="mock-user-select"
         className={classes.select}
         onChange={onChange}
+        data-cy="mock-user-select"
       >
         <MenuItem value="none">None</MenuItem>
         {users.map(({ id, name }) => (
-          <MenuItem value={id} key={id}>
+          <MenuItem value={id} key={id} data-cy={`mock-user-option-${id}`}>
             {name}
           </MenuItem>
         ))}

@@ -39,6 +39,7 @@ export default ({ onClick }: DevToolsFabProps) => {
       onMouseOver={() => setExtended(true)}
       onMouseOut={() => setExtended(false)}
       onClick={onClick}
+      data-cy="devtools-open"
     >
       <BuildIcon className={iconClassName} />
       {extended ? "Dev Tools" : null}
