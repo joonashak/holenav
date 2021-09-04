@@ -42,3 +42,38 @@ services:
       - ./mongo_data:/data/db
     ports:
       - 27017:27017
+
+  # Duplicate containers to have an independent and hot-reloaded test env
+  # running at all times.
+  server-test:
+    build: ./server/
+    ports:
+      - 4001:3001
+    container_name: holenav-server-test
+    environment:
+      - NODE_ENV=test
+      - PORT=3001
+      - DATABASE_URL=mongodb://db/holenav-test
+      - CLIENT_URL=http://localhost:4000
+      - JWT_SECRET=asdasd
+      - ENABLE_DEVTOOLS=true
+    #env_file:
+    #  - .env.development
+    volumes:
+      - ./server/src:/usr/src/app/src
+    depends_on:
+      - db
+
+  client-test:
+    build: ./client/
+    ports:
+      - 4000:3000
+      - 40011:30011
+    container_name: holenav-client-test
+    environment:
+      - PORT=3000
+      - INTERNAL_STATUS_PORT=30011
+      - REACT_APP_CMS_URL=http://localhost:4001
+      - REACT_APP_ENABLE_DEVTOOLS=true
+    volumes:
+      - ./client/src:/usr/src/app/src
