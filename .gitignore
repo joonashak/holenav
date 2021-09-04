@@ -3,3 +3,7 @@ node_modules
 /mongo_data_test
 /db_dump.json
 .env*
+
+# E2E
+/e2e/cypress/screenshots
+/e2e/cypress/videos

@@ -15,8 +15,6 @@ services:
       - CLIENT_URL=http://localhost:3000
       - JWT_SECRET=asdasd
       - ENABLE_DEVTOOLS=true
-    env_file:
-      - .env.development
     volumes:
       - ./server/src:/usr/src/app/src
     depends_on:
