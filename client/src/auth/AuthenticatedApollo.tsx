@@ -20,7 +20,7 @@ export default ({ children }: AuthenticatedApolloProps) => {
   }, []);
 
   // Prevent unauthorized request.
-  if (!token || (devToolsEnabled && !mockUser)) {
+  if (!token && !(devToolsEnabled && mockUser !== "none")) {
     return null;
   }
 

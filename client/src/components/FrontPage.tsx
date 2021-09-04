@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { Redirect } from "react-router-dom";
 import tokenStore from "../auth/tokenStore";
+import { devToolsEnabled } from "../config";
+import mockUserStore from "../dev/mockUserStore";
 import LoginView from "./LoginView";
 
 export default () => {
@@ -9,7 +11,10 @@ export default () => {
   useEffect(() => {
     (async () => {
       const token = await tokenStore.getToken();
-      if (token) {
+      const mockUser = await mockUserStore.getMockUser();
+      const mocking = devToolsEnabled && mockUser && mockUser !== "none";
+
+      if (token || mocking) {
         setRedirect(true);
       }
     })();
