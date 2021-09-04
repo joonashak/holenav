@@ -2,7 +2,8 @@ name: Publish for staging
 
 on:
   push:
-    branches: [trunk]
+    branches:
+      - main
 
 jobs:
   deploy:

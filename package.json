@@ -5,12 +5,13 @@
   "scripts": {
     "start": "docker-compose up -d",
     "start:logs": "npm start && npm run logs",
-    "stop": "docker-compose down",
+    "stop": "docker-compose down && docker-compose -f docker-compose-ci.yml down",
     "logs": "docker-compose logs -f server client",
     "logs:all": "docker-compose logs -f",
     "test": "npm run lint && npm run test:e2e",
     "test:e2e": "cd e2e && npm test",
     "test:open": "cd e2e && npm start",
+    "test:ci": "scripts/run-tests-ci.sh",
     "lint": "cd client && npm run lint && cd ../server && npm run lint && cd ../e2e && npm run lint"
   },
   "repository": {

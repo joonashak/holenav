@@ -1,0 +1,65 @@
+version: "3.8"
+
+services:
+  server-ci:
+    build: ./server/
+    ports:
+      - 3001:3001
+    networks:
+      - ci
+    container_name: holenav-server-ci
+    environment:
+      - NODE_ENV=development
+      - PORT=3001
+      - DATABASE_URL=mongodb://db/ci
+      - CLIENT_URL=http://localhost:3000
+      - JWT_SECRET=asdasd
+      - ENABLE_DEVTOOLS=true
+    env_file:
+      - .env.development
+    volumes:
+      - ./server/src:/usr/src/app/src
+    depends_on:
+      - db-ci
+
+  client-ci:
+    build: ./client/
+    ports:
+      - 3000:3000
+      - 30011:30011
+    networks:
+      - ci
+    container_name: holenav-client-ci
+    environment:
+      - PORT=3000
+      - INTERNAL_STATUS_PORT=30011
+      - REACT_APP_CMS_URL=http://localhost:3001
+      - REACT_APP_ENABLE_DEVTOOLS=true
+    volumes:
+      - ./client/src:/usr/src/app/src
+
+  db-ci:
+    image: mongo:4.4-bionic
+    restart: unless-stopped
+    container_name: holenav-db-ci
+    ports:
+      - 27017:27017
+    networks:
+      - ci
+
+  e2e-ci:
+    build: ./e2e/
+    networks:
+      - ci
+    container_name: holenav-e2e-ci
+    environment:
+      - CYPRESS_BASE_URL=http://client-ci:3000/
+      - CYPRESS_API_URL=http://server-ci:3001
+    volumes:
+      - ./e2e/cypress:/e2e/cypress
+    depends_on:
+      - server-ci
+
+networks:
+  ci:
+  
