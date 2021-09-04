@@ -1,0 +1,13 @@
+{
+  "name": "holenav-e2e-tests",
+  "version": "0.0.1",
+  "scripts": {
+    "start": "cypress open",
+    "test": "cypress run"
+  },
+  "author": "Joonas Häkkinen <hakkijoo@gmail.com>",
+  "license": "EUPL-1.2",
+  "dependencies": {
+    "cypress": "^8.3.1"
+  }
+}
