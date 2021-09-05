@@ -12,7 +12,8 @@
     "test:e2e": "cd e2e && npm test",
     "test:open": "cd e2e && npm start",
     "test:ci": "scripts/run-tests-ci.sh",
-    "lint": "cd client && npm run lint && cd ../server && npm run lint && cd ../e2e && npm run lint"
+    "lint": "cd client && npm run lint && cd ../server && npm run lint && cd ../e2e && npm run lint",
+    "setup": "cd client && npm ci && cd../server && npm ci && cd ../e2e && npm ci"
   },
   "repository": {
     "type": "git",
