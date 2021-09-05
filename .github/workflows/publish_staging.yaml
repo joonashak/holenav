@@ -26,3 +26,12 @@ jobs:
           platforms: linux/amd64
           push: true
           tags: ghcr.io/${{ github.actor }}/holenav-server:staging
+      - name: Deploy frontend to Vercel
+        uses: amondnet/vercel-action@v19
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID}} 
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID}}
+          alias-domains: |
+            holenav-staging.vercel.app
+          working-directory: ./client
