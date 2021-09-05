@@ -24,7 +24,6 @@ export default () => {
   const classes = useStyles();
   const [users, setUsers] = useState([]);
   const [activeUser, setActiveUser] = useState("none");
-  const disabled = !users.length;
 
   useEffect(() => {
     (async () => {
