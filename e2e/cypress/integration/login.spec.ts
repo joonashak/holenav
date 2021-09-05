@@ -10,6 +10,5 @@ describe("Login", () => {
 
   it("User mocking works", () => {
     cy.mockUser(1);
-    cy.contains("fail on purpose :)");
   });
 });
