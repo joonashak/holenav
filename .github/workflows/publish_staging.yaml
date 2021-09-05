@@ -22,7 +22,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: ./server
-          file: ./Dockerfile.production
+          file: ./server/Dockerfile.production
           platforms: linux/amd64
           push: true
           tags: ghcr.io/${{ github.actor }}/holenav-server:staging
