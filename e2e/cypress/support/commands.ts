@@ -14,7 +14,6 @@ Cypress.Commands.add("mockUser", (id) => {
   indexedDB.deleteDatabase("localforage");
   cy.visit("/");
   cy.cs("devtools-open").click();
-  cy.wait(2000);
   cy.cs("mock-user-select").click();
   cy.cs(`mock-user-option-mock-${id}`).click();
 });

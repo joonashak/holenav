@@ -43,7 +43,7 @@ export default () => {
   };
 
   return (
-    <FormControl className={classes.formControl} disabled={disabled}>
+    <FormControl className={classes.formControl}>
       <InputLabel id="mock-user-select-label" className={classes.label}>
         Mock User
       </InputLabel>
