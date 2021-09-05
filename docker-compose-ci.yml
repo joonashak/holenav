@@ -51,6 +51,8 @@ services:
     environment:
       - CYPRESS_BASE_URL=http://client-ci:3000
       - CYPRESS_API_URL=http://server-ci:3001
+    volumes:
+      - ./e2e/cypress:/e2e/cypress
     depends_on:
       - server-ci
 
