@@ -2,10 +2,10 @@ FROM node:16-alpine
 
 # Install dependencies.
 WORKDIR /usr/src/app
-COPY ./server/package.json ./server/package-lock.json ./
+COPY ./package.json ./package-lock.json ./
 RUN npm ci
 
-COPY ./server .
+COPY . .
 
 # Build and clean up.
 ARG NODE_ENV=production
@@ -13,5 +13,4 @@ ENV NODE_ENV=${NODE_ENV}
 RUN npm run build
 RUN npm prune --production
 
-# Start via Nest in development mode.
-CMD node dist/src/main.js
+CMD node dist/main.js
