@@ -11,8 +11,8 @@ services:
     environment:
       - NODE_ENV=development
       - PORT=3001
-      - DATABASE_URL=mongodb://db/ci
-      - CLIENT_URL=http://localhost:3000
+      - DATABASE_URL=mongodb://db-ci/ci
+      - CLIENT_URL=http://client-ci:3000
       - JWT_SECRET=asdasd
       - ENABLE_DEVTOOLS=true
     volumes:
@@ -31,7 +31,7 @@ services:
     environment:
       - PORT=3000
       - INTERNAL_STATUS_PORT=30011
-      - REACT_APP_CMS_URL=http://localhost:3001
+      - REACT_APP_CMS_URL=http://server-ci:3001
       - REACT_APP_ENABLE_DEVTOOLS=true
     volumes:
       - ./client/src:/usr/src/app/src
@@ -51,7 +51,7 @@ services:
       - ci
     container_name: holenav-e2e-ci
     environment:
-      - CYPRESS_BASE_URL=http://client-ci:3000/
+      - CYPRESS_BASE_URL=http://client-ci:3000
       - CYPRESS_API_URL=http://server-ci:3001
     volumes:
       - ./e2e/cypress:/e2e/cypress
