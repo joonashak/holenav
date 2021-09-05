@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # Run server linter in dev container, because dev deps are pruned from production container.
+touch .env.development
 docker-compose build server || exit 1
 docker-compose run --no-deps server npm run lint || exit 1
 
