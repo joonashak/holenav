@@ -9,7 +9,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 interface ViewportContainerProps {
-  children: ReactChild;
+  children: ReactChild | ReactChild[];
 }
 
 export default ({ children }: ViewportContainerProps) => {
