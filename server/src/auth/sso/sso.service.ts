@@ -1,7 +1,8 @@
 import { Injectable } from "@nestjs/common";
 import axios from "axios";
-import { CharacterService } from "src/entities/character/character.service";
+import FormData from "form-data";
 import { ssoCallbackUrl, ssoClientId, ssoSecretKey } from "../../config";
+import { CharacterService } from "../../entities/character/character.service";
 import { SsoStateService } from "./ssoState/ssoState.service";
 import { SsoUrl } from "./ssoUrl.enum";
 
@@ -26,11 +27,14 @@ export class SsoService {
    * Get access and refresh tokens from EVE SSO server.
    */
   async getSsoTokens(authorizationCode: string) {
-    const res = await axios.post(
-      SsoUrl.Token,
-      { grant_type: "authorization_code", code: authorizationCode },
-      { auth: { username: ssoClientId, password: ssoSecretKey } },
-    );
+    const formData = new FormData();
+    formData.append("grant_type", "authorization_code");
+    formData.append("code", authorizationCode);
+
+    const res = await axios.post(SsoUrl.Token, formData, {
+      auth: { username: ssoClientId, password: ssoSecretKey },
+      headers: { "Content-Type": `multipart/form-data; boundary=${formData.getBoundary()}` },
+    });
 
     const { data } = res;
 
