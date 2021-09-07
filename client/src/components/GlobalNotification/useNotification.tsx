@@ -34,8 +34,11 @@ export default () => {
    * `success`).
    * @param {bool} autoHide Pass `true` to automatically hide the notification after a while.
    */
-  const setNotification = (message: string, type: string, autoHide = false) =>
-    setState({ type, message, autoHide });
+  const setNotification = (
+    message: string,
+    type: "error" | "warning" | "info" | "success",
+    autoHide = false
+  ) => setState({ type, message, autoHide });
 
   const resetNotification = () => setState(defaultState);
 
