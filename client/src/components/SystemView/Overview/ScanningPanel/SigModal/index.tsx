@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import SigTypes from "../../../../../enum/SigTypes";
 import ControlledSelect from "../../../../controls/ControlledSelect";
 import ControlledTextField from "../../../../controls/ControlledTextField";
+import useNotification from "../../../../GlobalNotification/useNotification";
 import { ADD_SIGNATURE } from "../../../SystemData/graphql";
 import useSystemData from "../../../SystemData/useSystemData";
 
@@ -23,6 +24,7 @@ export default ({ open, onClose }: SigModalProps) => {
   const { handleSubmit, control } = useForm({ defaultValues: { type: typeOptions[0].value } });
   const { addSignature, id } = useSystemData();
   const [addSigMutation, { data, loading, error }] = useMutation(ADD_SIGNATURE);
+  const { setNotification } = useNotification();
 
   const onSubmit = (formData: any) => {
     addSigMutation({ variables: { ...formData, systemId: id } });
@@ -31,6 +33,7 @@ export default ({ open, onClose }: SigModalProps) => {
   useEffect(() => {
     if (data && !loading && !error) {
       addSignature(data.addSignature);
+      setNotification("Signature added.", "success", true);
     }
   }, [data, loading, error]);
 
