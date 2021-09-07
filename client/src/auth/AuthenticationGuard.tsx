@@ -20,11 +20,11 @@ export default ({ children }: AuthenticationGuardProps) => {
       const mockUser = await mockUserStore.getMockUser();
       const mocking = devToolsEnabled && mockUser && mockUser !== "none";
 
-      if (!token && !mocking) {
+      if (!token && !pending && !mocking) {
         setRedirect(true);
       }
     })();
-  }, []);
+  }, [token, pending]);
 
   if (pending) {
     return null;
