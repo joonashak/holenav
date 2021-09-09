@@ -34,7 +34,12 @@ const saveSigs = async (
 ) => {
   for (const conn of connections) {
     const { systemId, ...sig } = await createSig(conn, systemName, systemService);
-    await sigService.createSignature(systemId, sig);
+    await sigService.createSignature(systemId, {
+      ...sig,
+      whType: "K162",
+      whEol: false,
+      whMass: "stable",
+    });
 
     if (conn.connections.length) {
       await saveSigs(conn.connections, conn.name, sigService, systemService);

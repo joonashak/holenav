@@ -31,6 +31,18 @@ export class Signature {
   @Field((type) => System)
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: "System", nullable: true })
   destination?: System;
+
+  @Field()
+  @Prop({ nullable: true })
+  whType?: string;
+
+  @Field()
+  @Prop({ default: false })
+  whEol?: boolean;
+
+  @Field()
+  @Prop({ nullable: true })
+  whMass?: string;
 }
 
 export const SignatureSchema = SchemaFactory.createForClass(Signature);

@@ -14,4 +14,13 @@ export default class AggSignatureArgs {
 
   @Field()
   systemId: string;
+
+  @Field({ nullable: true })
+  whType?: string;
+
+  @Field({ defaultValue: false })
+  whEol?: boolean;
+
+  @Field({ nullable: true })
+  whMass?: string;
 }

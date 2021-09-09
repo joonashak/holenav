@@ -52,7 +52,7 @@ Table signatures {
   name string
   destination systems [ref: - systems._id]
   whType string
-  whLife WhLife
+  whEol boolean
   whMass WhMass
 }
 
@@ -67,11 +67,6 @@ enum SigTypes {
   DATA
   RELIC
   WH
-}
-
-enum WhLife {
-  LT24HRS
-  EOL
 }
 
 enum WhMass {
