@@ -41,7 +41,6 @@ Table folders {
 Table systems {
   _id number
   name string
-  signatures signatures[] [ref: < signatures._id]
   folder folders [ref: > folders._id]
 }
 
@@ -51,6 +50,10 @@ Table signatures {
   eveId string
   type SigTypes
   name string
+  destination systems [ref: - systems._id]
+  whType string
+  whLife WhLife
+  whMass WhMass
 }
 
 enum Roles {
@@ -64,4 +67,15 @@ enum SigTypes {
   DATA
   RELIC
   WH
+}
+
+enum WhLife {
+  LT24HRS
+  EOL
+}
+
+enum WhMass {
+  STABLE
+  DESTAB
+  CRIT
 }
