@@ -5,6 +5,7 @@
   "dependencies": {
     "@apollo/client": "^3.4.5",
     "@eve-data/systems": "^1.0.1",
+    "@eve-data/wormholes": "^0.0.2",
     "@fontsource/gugi": "^4.5.0",
     "@material-ui/core": "^4.12.0",
     "@material-ui/icons": "^4.11.2",
