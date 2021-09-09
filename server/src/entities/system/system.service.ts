@@ -36,6 +36,7 @@ export class SystemService {
   async getMapTree(system: SystemDocument): Promise<MapTreeNode[]> {
     const populatedSystem = await this.systemModel.populate(system, {
       path: "signatures",
+      match: { type: "WH" }, // Quick fix only on this level, non-wh sigs elsewhere will still fail epicly.
       populate: {
         path: "destination",
         populate: {
