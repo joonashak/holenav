@@ -2,7 +2,7 @@ import { ArgsType, Field } from "@nestjs/graphql";
 import SigTypes from "../sigTypes.enum";
 
 @ArgsType()
-export default class AddSignatureArgs {
+export default class AddConnectionArgs {
   @Field()
   eveId: string;
 
@@ -14,4 +14,16 @@ export default class AddSignatureArgs {
 
   @Field()
   systemId: string;
+
+  @Field()
+  destinationSystemId: string;
+
+  @Field({ nullable: true })
+  whType: string;
+
+  @Field({ defaultValue: false })
+  whEol: boolean;
+
+  @Field({ nullable: true })
+  whMass: string;
 }
