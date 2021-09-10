@@ -3,7 +3,7 @@ import SigTypes from "../sigTypes.enum";
 
 @ArgsType()
 export default class AddConnectionArgs {
-  @Field()
+  @Field({ nullable: true })
   eveId: string;
 
   @Field((type) => SigTypes)
