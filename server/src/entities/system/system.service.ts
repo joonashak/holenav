@@ -9,12 +9,14 @@ import { System, SystemDocument } from "./system.model";
 export class SystemService {
   constructor(@InjectModel(System.name) private systemModel: Model<SystemDocument>) {}
 
-  async list() {
-    return this.systemModel.find().exec();
+  async getById(id: string): Promise<System> {
+    const system = await this.systemModel.findOne({ id });
+    return system;
   }
 
   async getByName(name: string): Promise<System> {
     const system = await this.systemModel.findOne({ name });
+    // TODO: Move tree to it's own query.
     const mapTree = await this.getMapTree(system);
     return { ...system.toObject(), mapTree };
   }

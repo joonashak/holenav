@@ -18,7 +18,7 @@ export class Signature {
 
   @Field()
   @Prop({ nullable: true })
-  eveId: string;
+  eveId?: string;
 
   @Field((type) => SigTypes)
   @Prop()
@@ -31,6 +31,10 @@ export class Signature {
   @Field((type) => System)
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: "System", nullable: true })
   destination?: System;
+
+  @Field((type) => Signature)
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: "Signature", nullable: true })
+  reverse?: Signature;
 
   @Field()
   @Prop({ nullable: true })

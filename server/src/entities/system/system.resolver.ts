@@ -8,11 +8,6 @@ import { SystemService } from "./system.service";
 export class SystemResolver {
   constructor(private systemService: SystemService) {}
 
-  @Query((returns) => [System])
-  async systems() {
-    return this.systemService.list();
-  }
-
   @RequireFolderRole(Roles.READ)
   @Query((returns) => System)
   async getSystemByName(@Args("name") name: string, @Args("folderId") folderId: string) {
