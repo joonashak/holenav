@@ -1,11 +1,14 @@
-import { Field, ObjectType } from "@nestjs/graphql";
+import { Field, ObjectType, registerEnumType } from "@nestjs/graphql";
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import mongoose from "mongoose";
 import { v4 as uuid } from "uuid";
 import { Folder } from "../folder/folder.model";
 import { System } from "../system/system.model";
+import MassStatus from "./massStatus.enum";
 
 export type WormholeDocument = Wormhole & mongoose.Document;
+
+registerEnumType(MassStatus, { name: "MassStatus" });
 
 @ObjectType()
 @Schema()
@@ -30,9 +33,9 @@ export class Wormhole {
   @Prop({ default: false })
   eol: boolean;
 
-  @Field()
+  @Field((type) => MassStatus)
   @Prop()
-  massStatus: string;
+  massStatus: MassStatus;
 
   @Field((type) => Folder)
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: "Folder" })
