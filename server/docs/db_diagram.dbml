@@ -40,8 +40,10 @@ Table folders {
 
 Table systems {
   _id number
+  id uuid
   name string
   folder folders [ref: > folders._id]
+  signatures signatures[] [ref: < signatures._id]
 }
 
 Table signatures {
@@ -50,10 +52,20 @@ Table signatures {
   eveId string
   type SigTypes
   name string
+}
+
+Table wormholes {
+  _id number
+  id uuid
+  eveId string
+  name string
+  type string
+  eol boolean
+  massStatus WhMass
+  folder folders [ref: > folders._id]
+  system systems [ref: > systems._id]
   destination systems [ref: - systems._id]
-  whType string
-  whEol boolean
-  whMass WhMass
+  reverse wormholes [ref: - wormholes._id]
 }
 
 enum Roles {
