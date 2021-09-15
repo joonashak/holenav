@@ -11,6 +11,7 @@ import { FolderModule } from "./entities/folder/folder.module";
 import { SignatureModule } from "./entities/signature/signature.module";
 import { DevToolsModule } from "./devTools/devTools.module";
 import { clientUrl, databaseUrl } from "./config";
+import { WormholeModule } from "./entities/wormhole/wormhole.module";
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { clientUrl, databaseUrl } from "./config";
     FolderModule,
     SignatureModule,
     DevToolsModule,
+    WormholeModule,
   ],
 })
 export class AppModule {}
