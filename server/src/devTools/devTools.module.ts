@@ -10,6 +10,7 @@ import { SsoStateModule } from "../auth/sso/ssoState/ssoState.module";
 import { UserModule } from "../user/user.module";
 import { MockUserService } from "./mockUser.service";
 import { devToolsEnabled } from "../config";
+import { WormholeModule } from "../entities/wormhole/wormhole.module";
 
 const options = {
   imports: [
@@ -20,6 +21,7 @@ const options = {
     SignatureModule,
     SsoStateModule,
     UserModule,
+    WormholeModule,
   ],
   providers: [DevToolsService, MockUserService],
   controllers: [DevToolsController],

@@ -10,11 +10,13 @@ import { Signature } from "../entities/signature/signature.model";
 import { SignatureService } from "../entities/signature/signature.service";
 import { System } from "../entities/system/system.model";
 import { SystemService } from "../entities/system/system.service";
+import { Wormhole } from "../entities/wormhole/wormhole.model";
 import { Role } from "../role/role.model";
 import { User } from "../user/user.model";
 import users from "./data/users";
 import mockConnections from "./mockConnections";
 import { MockUserService } from "./mockUser.service";
+import mockWormholes from "./mockWormholes";
 
 @Injectable()
 export class DevToolsService {
@@ -27,6 +29,7 @@ export class DevToolsService {
     @InjectModel(SsoState.name) private ssoStateModel: Model<SsoState>,
     @InjectModel(System.name) private systemModel: Model<System>,
     @InjectModel(User.name) private userModel: Model<User>,
+    @InjectModel(Wormhole.name) private whModel: Model<Wormhole>,
     private dataMigrationService: DataMigrationService,
     private signatureService: SignatureService,
     private systemService: SystemService,
@@ -53,6 +56,11 @@ export class DevToolsService {
   async getMockUsers() {
     // Do not read these from db to avoid potentially leaking actual user data!
     return users.map(({ id, role, main: { name } }) => ({ id, role, name }));
+  }
+
+  async mockWormholes() {
+    // FIXME: testing
+    await mockWormholes(this.whModel, this.systemService);
   }
 
   private async clearCollections() {
