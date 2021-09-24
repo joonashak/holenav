@@ -9,4 +9,14 @@ export default [
     destinationName: "Jita",
     systemName: "Ikuchi",
   },
+  {
+    name: "Ansila",
+    destinationName: "Ansila",
+    systemName: "Ikuchi",
+  },
+  {
+    name: "Ikuchi",
+    destinationName: "Ikuchi",
+    systemName: "Ansila",
+  },
 ];

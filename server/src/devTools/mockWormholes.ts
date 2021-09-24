@@ -8,11 +8,9 @@ export default async (whModel: Model<Wormhole>, systemService: SystemService) =>
 
   for (const mock of whMockData) {
     const wh = await whFromMock(mock, systemService);
-    console.log(wh);
+    await whModel.create(wh);
   }
 };
-
-const saveWh = async (wh: Wormhole) => {};
 
 const whFromMock = async (mock: any, systemService: SystemService) => {
   const { name, systemName, destinationName } = mock;
