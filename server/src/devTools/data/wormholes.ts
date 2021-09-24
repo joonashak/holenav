@@ -19,4 +19,14 @@ export default [
     destinationName: "Ikuchi",
     systemName: "Ansila",
   },
+  {
+    name: "Urhinichi",
+    destinationName: "Urhinichi",
+    systemName: "Otanuomi",
+  },
+  {
+    name: "Otanuomi",
+    destinationName: "Otanuomi",
+    systemName: "Urhinichi",
+  },
 ];
