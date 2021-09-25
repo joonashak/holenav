@@ -63,8 +63,8 @@ Table wormholes {
   eol boolean
   massStatus WhMass
   folder folders [ref: > folders._id]
-  system systems [ref: > systems._id]
-  destination systems [ref: - systems._id]
+  systemName string
+  destinationName string
   reverse wormholes [ref: - wormholes._id]
 }
 
@@ -78,7 +78,6 @@ enum Roles {
 enum SigTypes {
   DATA
   RELIC
-  WH
 }
 
 enum WhMass {
