@@ -1,13 +1,14 @@
 import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
+import { ConnectionTree, ConnectionTreeNode } from "./dto/connectionTree.dto";
 import { Wormhole } from "./wormhole.model";
 
 @Injectable()
 export class WormholeService {
   constructor(@InjectModel(Wormhole.name) private whModel: Model<Wormhole>) {}
 
-  async getConnectionTree(rootSystemName: string) {
+  async getConnectionTree(rootSystemName: string): Promise<ConnectionTree> {
     console.time("Wormhole graphlookup");
 
     // FIXME: Add folder to $match.
@@ -30,23 +31,31 @@ export class WormholeService {
     console.timeEnd("Wormhole graphlookup");
     console.time("Construct map tree");
 
-    const { children, ...system } = res[0];
+    const { children } = res[0];
     const rootChildren = this.findChildren(children, rootSystemName);
 
     console.timeEnd("Construct map tree");
 
-    return {};
+    return {
+      rootSystemName,
+      children: rootChildren,
+    };
   }
 
-  findChildren(allChildren: Wormhole[], systemName: string, parentName = ""): any[] {
-    const directChildren = allChildren
+  private findChildren(
+    allChildren: Wormhole[],
+    systemName: string,
+    parentName = "",
+  ): ConnectionTreeNode[] {
+    const rootChildren = allChildren
       .filter((child) => child.systemName === systemName && child.destinationName !== parentName)
-      .map((child) => {
+      .map(({ name, destinationName, systemName }) => {
         return {
-          ...child,
-          children: this.findChildren(allChildren, child.destinationName, child.systemName),
+          name,
+          children: this.findChildren(allChildren, destinationName, systemName),
         };
       });
-    return directChildren;
+
+    return rootChildren;
   }
 }
