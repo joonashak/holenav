@@ -1,5 +1,6 @@
 import Container from "./Container";
 import Map from "./Map";
+import MapData from "./Map/MapData";
 import Overview from "./Overview";
 import SystemData from "./SystemData";
 
@@ -16,10 +17,12 @@ export default ({ match }: SystemViewProps) => {
 
   return (
     <SystemData name={systemName}>
-      <Container>
-        <Overview />
-        <Map />
-      </Container>
+      <MapData>
+        <Container>
+          <Overview />
+          <Map />
+        </Container>
+      </MapData>
     </SystemData>
   );
 };

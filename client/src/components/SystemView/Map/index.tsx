@@ -2,7 +2,7 @@ import { makeStyles, Theme } from "@material-ui/core";
 import Tree from "react-d3-tree";
 import { CustomNodeElementProps } from "react-d3-tree/lib/types/common";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
-import useSystemData from "../SystemData/useSystemData";
+import useMapData from "./MapData/useMapData";
 import MapNode from "./MapNode";
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -22,8 +22,8 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 export default () => {
   const classes = useStyles();
-  const { mapTree, name } = useSystemData();
-  const data = { name, children: mapTree };
+  const { rootSystemName, children } = useMapData();
+  const data = { name: rootSystemName, children };
 
   const { width } = useWindowDimensions();
   const x = width / 2 + 240;

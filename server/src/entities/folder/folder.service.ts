@@ -27,4 +27,8 @@ export class FolderService {
     await this.systemService.bulkSave(newSystems);
     return folder;
   }
+
+  async getFolderById(id: string): Promise<FolderDocument> {
+    return this.folderModel.findOne({ id });
+  }
 }
