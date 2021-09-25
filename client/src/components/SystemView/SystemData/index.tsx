@@ -28,9 +28,9 @@ export default ({ children, name }: SystemDataProviderProps) => {
   useEffect(() => {
     if (!loading && !error) {
       const {
-        getSystemByName: { id, signatures, mapTree },
+        getSystemByName: { id, signatures },
       } = data;
-      setState((prev: any) => ({ ...prev, id, signatures, mapTree }));
+      setState((prev: any) => ({ ...prev, id, signatures }));
     }
   }, [data]);
 

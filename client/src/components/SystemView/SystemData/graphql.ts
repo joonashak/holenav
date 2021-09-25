@@ -11,24 +11,6 @@ export const GET_SYSTEM_BY_NAME = gql`
         type
         eveId
       }
-      mapTree {
-        name
-        children {
-          name
-          children {
-            name
-            children {
-              name
-              children {
-                name
-                children {
-                  name
-                }
-              }
-            }
-          }
-        }
-      }
     }
   }
 `;

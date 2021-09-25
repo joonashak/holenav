@@ -1,5 +1,4 @@
 import { useContext } from "react";
-import { RawNodeDatum } from "react-d3-tree/lib/types/common";
 import { SystemDataContext } from ".";
 import SecurityClasses from "../../../enum/SecurityClasses";
 
@@ -10,7 +9,6 @@ type SystemData = {
   securityStatus: number;
   whClass: number | null;
   signatures: Signature[];
-  mapTree: RawNodeDatum[];
   addSignature: (newSig: any) => void;
 };
 

@@ -59,6 +59,6 @@ export class DataMigrationService implements OnApplicationBootstrap {
   }
 
   async createDefaultFolder() {
-    await this.folderService.createFolder("Default Folder");
+    const res = await this.folderService.createFolder("Default Folder");
   }
 }

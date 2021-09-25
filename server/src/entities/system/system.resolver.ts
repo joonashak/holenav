@@ -11,6 +11,7 @@ export class SystemResolver {
   @RequireFolderRole(Roles.READ)
   @Query((returns) => System)
   async getSystemByName(@Args("name") name: string, @Args("folderId") folderId: string) {
-    return this.systemService.getByName(name);
+    const res = await this.systemService.getByName(name);
+    return res;
   }
 }

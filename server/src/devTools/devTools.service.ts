@@ -8,14 +8,11 @@ import { Character } from "../entities/character/character.model";
 import { Folder } from "../entities/folder/folder.model";
 import { FolderService } from "../entities/folder/folder.service";
 import { Signature } from "../entities/signature/signature.model";
-import { SignatureService } from "../entities/signature/signature.service";
 import { System } from "../entities/system/system.model";
-import { SystemService } from "../entities/system/system.service";
 import { Wormhole } from "../entities/wormhole/wormhole.model";
 import { Role } from "../role/role.model";
 import { User } from "../user/user.model";
 import users from "./data/users";
-import mockConnections from "./mockConnections";
 import { MockUserService } from "./mockUser.service";
 import mockWormholes from "./mockWormholes";
 
@@ -32,8 +29,6 @@ export class DevToolsService {
     @InjectModel(User.name) private userModel: Model<User>,
     @InjectModel(Wormhole.name) private whModel: Model<Wormhole>,
     private dataMigrationService: DataMigrationService,
-    private signatureService: SignatureService,
-    private systemService: SystemService,
     private mockUserService: MockUserService,
     private folderService: FolderService,
   ) {}
@@ -52,17 +47,12 @@ export class DevToolsService {
     await this.clearCollections();
 
     await this.mockUserService.mock();
-    await mockConnections(this.signatureModel, this.signatureService, this.systemService);
+    await mockWormholes(this.whModel, this.folderService);
   }
 
   async getMockUsers() {
     // Do not read these from db to avoid potentially leaking actual user data!
     return users.map(({ id, role, main: { name } }) => ({ id, role, name }));
-  }
-
-  async mockWormholes() {
-    // FIXME: testing
-    await mockWormholes(this.whModel, this.folderService);
   }
 
   private async clearCollections() {

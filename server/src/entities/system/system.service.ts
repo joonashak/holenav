@@ -2,7 +2,6 @@ import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { Signature } from "../signature/signature.model";
-import { MapTreeNode } from "./dto/system.dto";
 import { System, SystemDocument } from "./system.model";
 
 @Injectable()
@@ -15,10 +14,8 @@ export class SystemService {
   }
 
   async getByName(name: string): Promise<System> {
-    const system = await this.systemModel.findOne({ name });
-    // TODO: Move tree to it's own query.
-    const mapTree = await this.getMapTree(system);
-    return { ...system.toObject(), mapTree };
+    const system = await this.systemModel.findOne({ name }).populate("signatures");
+    return { ...system.toObject() };
   }
 
   async bulkSave(systems: Partial<System>[]) {
@@ -33,35 +30,5 @@ export class SystemService {
 
   async appendToSignatures(systemId: string, signature: Signature) {
     await this.systemModel.findOneAndUpdate({ id: systemId }, { $push: { signatures: signature } });
-  }
-
-  async getMapTree(system: SystemDocument): Promise<MapTreeNode[]> {
-    const populatedSystem = await this.systemModel.populate(system, {
-      path: "signatures",
-      match: { type: "WH" }, // Quick fix only on this level, non-wh sigs elsewhere will still fail epicly.
-      populate: {
-        path: "destination",
-        populate: {
-          path: "signatures",
-          populate: {
-            path: "destination",
-            populate: { path: "signatures", populate: { path: "destination" } },
-          },
-        },
-      },
-    });
-
-    const reduceToConnections = (system: System) => {
-      const { signatures } = system;
-
-      const connections = signatures.map((sig) => ({
-        name: sig.destination.name,
-        children: reduceToConnections(sig.destination),
-      }));
-
-      return connections;
-    };
-
-    return reduceToConnections(populatedSystem);
   }
 }

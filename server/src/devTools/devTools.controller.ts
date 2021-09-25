@@ -21,11 +21,4 @@ export class DevToolsController {
   async mockUsers() {
     return this.devToolsService.getMockUsers();
   }
-
-  // FIXME: testing
-  @Get("mockWormholes")
-  async mockWormholes() {
-    await this.devToolsService.mockWormholes();
-    return "OK";
-  }
 }
