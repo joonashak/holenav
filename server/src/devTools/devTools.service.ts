@@ -6,6 +6,7 @@ import { DataMigration } from "../dataMigration/dataMigration.model";
 import { DataMigrationService } from "../dataMigration/dataMigration.service";
 import { Character } from "../entities/character/character.model";
 import { Folder } from "../entities/folder/folder.model";
+import { FolderService } from "../entities/folder/folder.service";
 import { Signature } from "../entities/signature/signature.model";
 import { SignatureService } from "../entities/signature/signature.service";
 import { System } from "../entities/system/system.model";
@@ -34,6 +35,7 @@ export class DevToolsService {
     private signatureService: SignatureService,
     private systemService: SystemService,
     private mockUserService: MockUserService,
+    private folderService: FolderService,
   ) {}
 
   /**
@@ -60,7 +62,7 @@ export class DevToolsService {
 
   async mockWormholes() {
     // FIXME: testing
-    await mockWormholes(this.whModel);
+    await mockWormholes(this.whModel, this.folderService);
   }
 
   private async clearCollections() {

@@ -1,4 +1,4 @@
-import { Query, Resolver } from "@nestjs/graphql";
+import { Args, Query, Resolver } from "@nestjs/graphql";
 import { ConnectionTree } from "./dto/connectionTree.dto";
 import { WormholeService } from "./wormhole.service";
 
@@ -7,7 +7,10 @@ export class WormholeResolver {
   constructor(private whService: WormholeService) {}
 
   @Query((returns) => ConnectionTree)
-  async getConnectionTree(): Promise<ConnectionTree> {
-    return this.whService.getConnectionTree("Jita");
+  async getConnectionTree(
+    @Args("rootSystem") rootSystemName: string,
+    @Args("folderId") folderId: string,
+  ): Promise<ConnectionTree> {
+    return this.whService.getConnectionTree(rootSystemName, folderId);
   }
 }

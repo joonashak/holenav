@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
-import { Model } from "mongoose";
+import { Model, Types } from "mongoose";
 import { ConnectionTree, ConnectionTreeNode } from "./dto/connectionTree.dto";
 import { Wormhole } from "./wormhole.model";
 
@@ -8,12 +8,12 @@ import { Wormhole } from "./wormhole.model";
 export class WormholeService {
   constructor(@InjectModel(Wormhole.name) private whModel: Model<Wormhole>) {}
 
-  async getConnectionTree(rootSystemName: string): Promise<ConnectionTree> {
+  async getConnectionTree(rootSystemName: string, folderId: string): Promise<ConnectionTree> {
     console.time("Wormhole graphlookup");
 
     // FIXME: Add folder to $match.
     const res = await this.whModel.aggregate([
-      { $match: { systemName: rootSystemName } },
+      { $match: { systemName: rootSystemName, folder: Types.ObjectId(folderId) } },
       // Children are flattened so no need to do the recursive search for more than one wh.
       { $limit: 1 },
       {
