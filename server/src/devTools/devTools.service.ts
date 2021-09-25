@@ -60,7 +60,7 @@ export class DevToolsService {
 
   async mockWormholes() {
     // FIXME: testing
-    await mockWormholes(this.whModel, this.systemService);
+    await mockWormholes(this.whModel);
   }
 
   private async clearCollections() {

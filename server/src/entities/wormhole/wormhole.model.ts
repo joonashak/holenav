@@ -3,7 +3,6 @@ import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import mongoose from "mongoose";
 import { v4 as uuid } from "uuid";
 import { Folder } from "../folder/folder.model";
-import { System } from "../system/system.model";
 import MassStatus from "./massStatus.enum";
 
 export type WormholeDocument = Wormhole & mongoose.Document;
@@ -41,13 +40,13 @@ export class Wormhole {
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: "Folder" })
   folder: Folder;
 
-  @Field((type) => System)
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: "System" })
-  system: System;
+  @Field()
+  @Prop()
+  systemName: string;
 
-  @Field((type) => System)
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: "System", nullable: true })
-  destination?: System;
+  @Field()
+  @Prop()
+  destinationName: string;
 
   @Field((type) => Wormhole)
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: "Wormhole", nullable: true })

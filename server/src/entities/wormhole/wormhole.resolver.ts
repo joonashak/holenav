@@ -8,12 +8,6 @@ export class WormholeResolver {
 
   @Query((returns) => Wormhole)
   async getConnectionTree() {
-    // Jita
-    const rootId = "6133e9bd849685002125725f";
-    // Ikuchi
-    // const rootId = "6133e9bd849685002125723a";
-    // Otanuomi
-    // const rootId = "6133e9bd849685002125689a";
-    return this.whService.getConnectionTree(rootId);
+    return this.whService.getConnectionTree("Jita");
   }
 }
