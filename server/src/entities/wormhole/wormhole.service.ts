@@ -2,6 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model, Types } from "mongoose";
 import { FolderService } from "../folder/folder.service";
+import { SystemService } from "../system/system.service";
 import { ConnectionTree, ConnectionTreeNode } from "./dto/connectionTree.dto";
 import { Wormhole } from "./wormhole.model";
 
@@ -10,6 +11,7 @@ export class WormholeService {
   constructor(
     @InjectModel(Wormhole.name) private whModel: Model<Wormhole>,
     private folderService: FolderService,
+    private systemService: SystemService,
   ) {}
 
   async getConnectionTree(rootSystemName: string, folderId: string): Promise<ConnectionTree> {
@@ -63,5 +65,10 @@ export class WormholeService {
       });
 
     return rootChildren;
+  }
+
+  async getBySystem(systemId: string) {
+    const { name, folder } = await this.systemService.getById(systemId);
+    return this.whModel.find({ systemName: name, folder });
   }
 }
