@@ -4,8 +4,6 @@ import { Model } from "mongoose";
 import { DataMigration } from "./dataMigration.model";
 import { FolderService } from "../entities/folder/folder.service";
 import { Signature, SignatureDocument } from "../entities/signature/signature.model";
-import { SignatureService } from "../entities/signature/signature.service";
-import { SystemService } from "../entities/system/system.service";
 
 /**
  * Pretty crude hack to keep database contents up to date :sad_face:
@@ -21,10 +19,7 @@ export class DataMigrationService implements OnApplicationBootstrap {
 
   constructor(
     @InjectModel(DataMigration.name) private dataMigrationModel: Model<DataMigration>,
-    @InjectModel(Signature.name) private sigModel: Model<SignatureDocument>,
     private folderService: FolderService,
-    private sigService: SignatureService,
-    private systemService: SystemService,
   ) {}
 
   async onApplicationBootstrap() {
@@ -59,6 +54,6 @@ export class DataMigrationService implements OnApplicationBootstrap {
   }
 
   async createDefaultFolder() {
-    const res = await this.folderService.createFolder("Default Folder");
+    await this.folderService.createDefaultFolder();
   }
 }
