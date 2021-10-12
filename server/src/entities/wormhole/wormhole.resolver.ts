@@ -16,7 +16,10 @@ export class WormholeResolver {
   }
 
   @Query((returns) => [Wormhole])
-  async getWormholesBySystem(@Args("systemId") systemId: string): Promise<Wormhole[]> {
-    return this.whService.getBySystem(systemId);
+  async getWormholesBySystem(
+    @Args("name") systemName: string,
+    @Args("folderId") folderId: string,
+  ): Promise<Wormhole[]> {
+    return this.whService.getBySystem(systemName, folderId);
   }
 }

@@ -67,8 +67,8 @@ export class WormholeService {
     return rootChildren;
   }
 
-  async getBySystem(systemId: string) {
-    const { name, folder } = await this.systemService.getById(systemId);
-    return this.whModel.find({ systemName: name, folder });
+  async getBySystem(systemName: string, folderId: string): Promise<Wormhole[]> {
+    const folder = await this.folderService.getFolderById(folderId);
+    return this.whModel.find({ systemName, folder });
   }
 }
