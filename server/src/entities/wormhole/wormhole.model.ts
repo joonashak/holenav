@@ -16,24 +16,24 @@ export class Wormhole {
   @Prop({ default: uuid, unique: true })
   id?: string;
 
-  @Field()
-  @Prop({ nullable: true })
+  @Field({ nullable: true })
+  @Prop()
   eveId?: string;
 
-  @Field()
+  @Field({ nullable: true })
   @Prop()
-  name: string;
+  name?: string;
 
-  @Field()
+  @Field({ nullable: true })
   @Prop()
-  type: string;
+  type?: string;
 
   @Field()
   @Prop({ default: false })
   eol: boolean;
 
   @Field((type) => MassStatus)
-  @Prop()
+  @Prop({ default: MassStatus.STABLE })
   massStatus: MassStatus;
 
   @Field((type) => Folder)
@@ -44,11 +44,11 @@ export class Wormhole {
   @Prop()
   systemName: string;
 
-  @Field()
+  @Field({ nullable: true })
   @Prop()
-  destinationName: string;
+  destinationName?: string;
 
-  @Field((type) => Wormhole)
+  @Field((type) => Wormhole, { nullable: true })
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: "Wormhole", nullable: true })
   reverse?: Wormhole;
 }

@@ -16,23 +16,30 @@ export default ({ children, name }: SystemDataProviderProps) => {
   const [state, setState] = useState<any>(null);
   const { activeFolder } = useUserData();
 
+  // Static data.
   useEffect(() => {
     const { id, ...system } = findOneSystem({ name });
-    setState({ eveId: id, ...system });
+    setState((prev: any) => ({ ...prev, eveId: id, ...system }));
   }, [name]);
 
-  const { data, loading, error } = useQuery(GET_SYSTEM_BY_NAME, {
+  // System data from API.
+  const systemQuery = useQuery(GET_SYSTEM_BY_NAME, {
     variables: { name, folderId: activeFolder },
   });
 
   useEffect(() => {
+    const { data, loading, error } = systemQuery;
+
     if (!loading && !error) {
       const {
         getSystemByName: { id, signatures },
+        getWormholesBySystem: wormholes,
       } = data;
-      setState((prev: any) => ({ ...prev, id, signatures }));
+      setState((prev: any) => ({ ...prev, id, signatures, wormholes }));
     }
-  }, [data]);
+  }, [systemQuery]);
+
+  // Wormhole data from API.
 
   // FIXME: Handle loading and errors properly.
   if (!state) {

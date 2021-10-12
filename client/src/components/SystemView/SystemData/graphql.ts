@@ -12,6 +12,18 @@ export const GET_SYSTEM_BY_NAME = gql`
         eveId
       }
     }
+
+    getWormholesBySystem(name: $name, folderId: $folderId) {
+      name
+      id
+      type
+      eol
+      massStatus
+      destinationName
+      reverse {
+        id
+      }
+    }
   }
 `;
 
