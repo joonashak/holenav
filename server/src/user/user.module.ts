@@ -1,4 +1,4 @@
-import { Module } from "@nestjs/common";
+import { Global, Module } from "@nestjs/common";
 import { MongooseModule } from "@nestjs/mongoose";
 import { FolderModule } from "../entities/folder/folder.module";
 import { FolderService } from "../entities/folder/folder.service";
@@ -10,6 +10,7 @@ import { UserResolver } from "./user.resolver";
 import { JwtModule } from "@nestjs/jwt";
 import { jwtSecret } from "../config";
 
+@Global()
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),

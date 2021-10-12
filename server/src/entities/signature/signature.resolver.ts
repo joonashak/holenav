@@ -11,7 +11,7 @@ export class SignatureResolver {
   @Mutation((returns) => Signature)
   async addSignature(@Args() args: AddSignatureArgs): Promise<Signature> {
     if (args.type === SigTypes.WORMHOLE) {
-      throw new Error("Use addConnection mutation for wormhole signatures.");
+      throw new Error("Use addWormhole mutation for wormhole signatures.");
     }
 
     const { systemId, ...signature } = args;

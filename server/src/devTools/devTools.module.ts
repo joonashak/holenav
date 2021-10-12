@@ -7,7 +7,6 @@ import { FolderModule } from "../entities/folder/folder.module";
 import { RoleModule } from "../role/role.module";
 import { SignatureModule } from "../entities/signature/signature.module";
 import { SsoStateModule } from "../auth/sso/ssoState/ssoState.module";
-import { UserModule } from "../user/user.module";
 import { MockUserService } from "./mockUser.service";
 import { devToolsEnabled } from "../config";
 import { WormholeModule } from "../entities/wormhole/wormhole.module";
@@ -20,7 +19,6 @@ const options = {
     RoleModule,
     SignatureModule,
     SsoStateModule,
-    UserModule,
     WormholeModule,
   ],
   providers: [DevToolsService, MockUserService],

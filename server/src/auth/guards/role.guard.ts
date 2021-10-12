@@ -7,6 +7,7 @@ import {
 } from "@nestjs/common";
 import { Reflector } from "@nestjs/core";
 import { GqlExecutionContext } from "@nestjs/graphql";
+import { FolderService } from "../../entities/folder/folder.service";
 import { Role } from "../../role/role.model";
 import Roles from "../../role/roles.enum";
 import { User } from "../../user/user.model";
@@ -19,32 +20,37 @@ import { FolderRoleSpec } from "../decorators/role.decorator";
  */
 @Injectable()
 export class RoleGuard implements CanActivate {
-  constructor(private reflector: Reflector) {}
+  constructor(private reflector: Reflector, private folderService: FolderService) {}
 
-  canActivate(context: ExecutionContext) {
+  async canActivate(context: ExecutionContext) {
     const gqlContext = GqlExecutionContext.create(context);
     const { user } = gqlContext.getContext().req;
 
     const requiredRole = this.getRequiredRole(context);
-    const userRole = this.getUserRole(user, context);
+    const userRole = await this.getUserRole(user, context);
 
     return userRole >= requiredRole;
   }
 
   getRequiredRole(context: ExecutionContext): Roles {
     const systemRole = this.reflector.get<Roles>("systemRole", context.getHandler());
+    if (systemRole) {
+      return systemRole;
+    }
+
     const { role: folderRole } = this.reflector.get<FolderRoleSpec>(
       "folderRole",
       context.getHandler(),
     );
 
-    const requiredRole = systemRole || folderRole || Roles.ADMIN;
-    return requiredRole;
+    return folderRole || Roles.ADMIN;
   }
 
-  getUserRole(user: User, context: ExecutionContext): Roles {
+  async getUserRole(user: User, context: ExecutionContext): Promise<Roles> {
     const systemRoleMode = !!this.reflector.get<Roles>("systemRole", context.getHandler());
-    const roles = systemRoleMode ? this.getSystemRoles(user) : this.getFolderRoles(user, context);
+    const roles = systemRoleMode
+      ? this.getSystemRoles(user)
+      : await this.getFolderRoles(user, context);
 
     const roleLevels = roles.map(({ role }) => role);
     const maxRole = Math.max(...roleLevels);
@@ -57,14 +63,19 @@ export class RoleGuard implements CanActivate {
     return roles.filter(({ folder }) => !folder);
   }
 
-  getFolderRoles(user: User, context: ExecutionContext): Role[] {
+  async getFolderRoles(user: User, context: ExecutionContext): Promise<Role[]> {
     const { key } = this.reflector.get<FolderRoleSpec>("folderRole", context.getHandler());
-    const gqlArgs = GqlExecutionContext.create(context).getArgs();
+    const gqlContext = GqlExecutionContext.create(context);
 
+    const gqlArgs = gqlContext.getArgs();
     const folderId = gqlArgs[key];
     if (!folderId) {
       throw new HttpException("Folder ID is required.", HttpStatus.BAD_REQUEST);
     }
+
+    const request = gqlContext.getContext().req;
+    const folder = await this.folderService.getFolderById(folderId);
+    request.folder = folder;
 
     return user.roles.filter(({ folder }) => folder.id === folderId);
   }
