@@ -40,7 +40,7 @@ export default ({ children, name }: SystemDataProviderProps) => {
   }, [systemQuery]);
 
   // FIXME: Handle loading and errors properly.
-  if (!state) {
+  if (!state || !Object.keys(state).includes("signatures")) {
     return null;
   }
 
