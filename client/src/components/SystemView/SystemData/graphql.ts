@@ -16,6 +16,7 @@ export const GET_SYSTEM_BY_NAME = gql`
     getWormholesBySystem(name: $name, folderId: $folderId) {
       name
       id
+      eveId
       type
       eol
       massStatus

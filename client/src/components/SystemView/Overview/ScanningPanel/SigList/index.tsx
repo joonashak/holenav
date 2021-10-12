@@ -33,8 +33,10 @@ const TableCell = withStyles((theme: Theme) => ({
 }))(MuiTableCell);
 
 export default () => {
-  const { signatures } = useSystemData();
   const classes = useStyles();
+
+  const { signatures, wormholes } = useSystemData();
+  const allSigs = signatures.concat(wormholes);
 
   return (
     <TableContainer component={Paper} className={classes.container}>
@@ -47,8 +49,8 @@ export default () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {signatures &&
-            signatures.map((sig) => (
+          {allSigs &&
+            allSigs.map((sig) => (
               <TableRow key={sig.id}>
                 <TableCell component="th" scope="row">
                   {sig.eveId}

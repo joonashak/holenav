@@ -9,6 +9,7 @@ type SystemData = {
   securityStatus: number;
   whClass: number | null;
   signatures: Signature[];
+  wormholes: Wormhole[];
   addSignature: (newSig: any) => void;
 };
 
@@ -17,6 +18,10 @@ type Signature = {
   eveId: string;
   name: string;
   type: string;
+};
+
+type Wormhole = Signature & {
+  eol: boolean;
 };
 
 export default (): SystemData => {

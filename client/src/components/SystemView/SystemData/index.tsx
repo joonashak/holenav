@@ -39,8 +39,6 @@ export default ({ children, name }: SystemDataProviderProps) => {
     }
   }, [systemQuery]);
 
-  // Wormhole data from API.
-
   // FIXME: Handle loading and errors properly.
   if (!state) {
     return null;
