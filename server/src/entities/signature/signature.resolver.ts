@@ -1,5 +1,4 @@
 import { Args, Mutation, Resolver } from "@nestjs/graphql";
-import AddConnectionArgs from "./dto/addConnection.args";
 import AddSignatureArgs from "./dto/addSignature.args";
 import { Signature } from "./signature.model";
 import { SignatureService } from "./signature.service";
@@ -18,10 +17,5 @@ export class SignatureResolver {
     const { systemId, ...signature } = args;
     const newSig = await this.sigService.createSignature(systemId, signature);
     return newSig;
-  }
-
-  @Mutation((returns) => Signature)
-  async addConnection(@Args() args: AddConnectionArgs): Promise<Signature> {
-    return null;
   }
 }

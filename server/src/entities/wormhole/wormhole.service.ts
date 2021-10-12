@@ -17,8 +17,6 @@ export class WormholeService {
   async getConnectionTree(rootSystemName: string, folderId: string): Promise<ConnectionTree> {
     console.time("Wormhole graphlookup");
     const folder = await this.folderService.getFolderById(folderId);
-    console.log("name", rootSystemName);
-    console.log("folder", folder);
 
     const res = await this.whModel.aggregate([
       { $match: { systemName: rootSystemName, folder: Types.ObjectId(folder._id) } },
@@ -38,7 +36,6 @@ export class WormholeService {
 
     console.timeEnd("Wormhole graphlookup");
     console.time("Construct map tree");
-    console.log("res", res);
     const { children } = res[0];
     const rootChildren = this.findChildren(children, rootSystemName);
 
