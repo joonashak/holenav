@@ -11,6 +11,7 @@ type SystemData = {
   signatures: Signature[];
   wormholes: Wormhole[];
   addSignature: (newSig: any) => void;
+  addWormhole: (newWormhole: any) => void;
 };
 
 type Signature = {
@@ -33,8 +34,15 @@ export default (): SystemData => {
       signatures: signatures.concat(newSig),
     }));
 
+  const addWormhole = (newWormhole: any) =>
+    setState(({ wormholes, ...rest }: SystemData) => ({
+      ...rest,
+      wormholes: wormholes.concat(newWormhole),
+    }));
+
   return {
     ...state,
     addSignature,
+    addWormhole,
   };
 };

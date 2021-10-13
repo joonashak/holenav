@@ -38,3 +38,15 @@ export const ADD_SIGNATURE = gql`
     }
   }
 `;
+
+export const ADD_WORMHOLE = gql`
+  mutation AddWormhole($name: String!, $systemName: String!) {
+    addWormhole(name: $name, systemName: $systemName) {
+      id
+      eveId
+      name
+      type
+      eol
+    }
+  }
+`;

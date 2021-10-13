@@ -3,12 +3,11 @@ import wormholes from "@eve-data/wormholes";
 import { Button } from "@material-ui/core";
 import { useEffect } from "react";
 import { Control, useForm } from "react-hook-form";
-import SigTypes from "../../../../../enum/SigTypes";
 import ControlledRadioGroup from "../../../../controls/ControlledRadioGroup";
 import ControlledSelect from "../../../../controls/ControlledSelect";
 import ControlledTextField from "../../../../controls/ControlledTextField";
 import useNotification from "../../../../GlobalNotification/useNotification";
-import { ADD_SIGNATURE } from "../../../SystemData/graphql";
+import { ADD_WORMHOLE } from "../../../SystemData/graphql";
 import useSystemData from "../../../SystemData/useSystemData";
 
 const lifeOptions = [
@@ -38,19 +37,19 @@ export default () => {
       whType: "K162",
     },
   });
-  const { addSignature, id } = useSystemData();
-  const [addSigMutation, { data, loading, error }] = useMutation(ADD_SIGNATURE);
+  const { addWormhole, name: systemName } = useSystemData();
+  const [addWhMutation, { data, loading, error }] = useMutation(ADD_WORMHOLE);
   const { setNotification } = useNotification();
 
   const onSubmit = (formData: any) => {
-    const mutationData = { ...formData };
-    console.log(mutationData);
-    // addSigMutation({ variables: { ...formData, systemId: id } });
+    const { name } = formData;
+    const mutationData = { name, systemName };
+    addWhMutation({ variables: mutationData });
   };
 
   useEffect(() => {
     if (data && !loading && !error) {
-      addSignature(data.addSignature);
+      addWormhole(data.addWormhole);
       setNotification("Signature added.", "success", true);
     }
   }, [data, loading, error]);
