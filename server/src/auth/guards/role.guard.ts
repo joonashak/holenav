@@ -26,9 +26,12 @@ export enum RequiredRoleTypes {
  */
 @Injectable()
 export class RoleGuard implements CanActivate {
+  private context: ExecutionContext;
+
   constructor(private reflector: Reflector, private folderService: FolderService) {}
 
   async canActivate(context: ExecutionContext) {
+    this.context = context;
     const gqlContext = GqlExecutionContext.create(context);
     const { user } = gqlContext.getContext().req;
 
@@ -38,19 +41,19 @@ export class RoleGuard implements CanActivate {
     );
 
     if (requiredRoleType === RequiredRoleTypes.SYSTEM) {
-      return this.canActivateSystemResource(user, context);
+      return this.canActivateSystemResource(user);
     }
 
-    return await this.canActivateFolderResource(user, context);
+    return await this.canActivateFolderResource(user);
   }
 
-  private getRequiredRole(context: ExecutionContext): Roles {
-    const requiredRole = this.reflector.get<Roles>(requiredRoleLevelKey, context.getHandler());
+  private getRequiredRole(): Roles {
+    const requiredRole = this.reflector.get<Roles>(requiredRoleLevelKey, this.context.getHandler());
     return requiredRole || Roles.ADMIN;
   }
 
-  private canActivateSystemResource(user: User, context: ExecutionContext): boolean {
-    const requiredRole = this.getRequiredRole(context);
+  private canActivateSystemResource(user: User): boolean {
+    const requiredRole = this.getRequiredRole();
     const systemRole = this.getSystemRole(user);
     return systemRole >= requiredRole;
   }
@@ -62,14 +65,14 @@ export class RoleGuard implements CanActivate {
     return Math.max(...roleLevels);
   }
 
-  private async canActivateFolderResource(user: User, context: ExecutionContext): Promise<boolean> {
-    const requiredRole = this.getRequiredRole(context);
-    const folderRole = await this.getFolderRole(user, context);
+  private async canActivateFolderResource(user: User): Promise<boolean> {
+    const requiredRole = this.getRequiredRole();
+    const folderRole = await this.getFolderRole(user);
     return folderRole >= requiredRole;
   }
 
-  private async getFolderRole(user: User, context: ExecutionContext): Promise<Roles> {
-    const gqlContext = GqlExecutionContext.create(context);
+  private async getFolderRole(user: User): Promise<Roles> {
+    const gqlContext = GqlExecutionContext.create(this.context);
     const request = gqlContext.getContext().req;
 
     const folderId = request.headers.activefolder;
