@@ -8,14 +8,21 @@ import {
 import { Reflector } from "@nestjs/core";
 import { GqlExecutionContext } from "@nestjs/graphql";
 import { FolderService } from "../../entities/folder/folder.service";
-import { Role } from "../../role/role.model";
 import Roles from "../../role/roles.enum";
 import { User } from "../../user/user.model";
 
+export const requiredRoleLevelKey = "requiredRoleLevel";
+export const requiredRoleTypeKey = "requiredRoleType";
+
+export enum RequiredRoleTypes {
+  SYSTEM,
+  FOLDER,
+}
+
 /**
- * Guard to require *at least* a certain role for access. Use with custom
- * `@SystemRole` or `@FolderRole` decorator to specify what role is required,
- * otherwise this guard defaults to admin role.
+ * Guard to require *at least* a certain role for access. Use metadata to configure
+ * what role level is required and whether to check for system or folder roles.
+ * See `@RequireSystemRole` and `@RequireFolderRole` decorators.
  */
 @Injectable()
 export class RoleGuard implements CanActivate {
@@ -23,44 +30,45 @@ export class RoleGuard implements CanActivate {
 
   async canActivate(context: ExecutionContext) {
     const gqlContext = GqlExecutionContext.create(context);
-    console.log(gqlContext.getContext().req.headers);
     const { user } = gqlContext.getContext().req;
 
-    const requiredRole = this.getRequiredRole(context);
-    const userRole = await this.getUserRole(user, context);
+    const requiredRoleType = this.reflector.get<RequiredRoleTypes>(
+      requiredRoleTypeKey,
+      context.getHandler(),
+    );
 
-    return userRole >= requiredRole;
-  }
-
-  getRequiredRole(context: ExecutionContext): Roles {
-    const systemRole = this.reflector.get<Roles>("systemRole", context.getHandler());
-    if (systemRole) {
-      return systemRole;
+    if (requiredRoleType === RequiredRoleTypes.SYSTEM) {
+      return this.canActivateSystemResource(user, context);
     }
 
-    const folderRole = this.reflector.get<Roles>("folderRole", context.getHandler());
-
-    return folderRole || Roles.ADMIN;
+    return await this.canActivateFolderResource(user, context);
   }
 
-  async getUserRole(user: User, context: ExecutionContext): Promise<Roles> {
-    const systemRoleMode = !!this.reflector.get<Roles>("systemRole", context.getHandler());
-    const roles = systemRoleMode
-      ? this.getSystemRoles(user)
-      : await this.getFolderRoles(user, context);
-
-    const roleLevels = roles.map(({ role }) => role);
-    const maxRole = Math.max(...roleLevels);
-
-    return maxRole;
+  private getRequiredRole(context: ExecutionContext): Roles {
+    const requiredRole = this.reflector.get<Roles>(requiredRoleLevelKey, context.getHandler());
+    return requiredRole || Roles.ADMIN;
   }
 
-  getSystemRoles(user: User): Role[] {
+  private canActivateSystemResource(user: User, context: ExecutionContext): boolean {
+    const requiredRole = this.getRequiredRole(context);
+    const systemRole = this.getSystemRole(user);
+    return systemRole >= requiredRole;
+  }
+
+  private getSystemRole(user: User): Roles {
     const { roles } = user;
-    return roles.filter(({ folder }) => !folder);
+    const systemRoles = roles.filter(({ folder }) => !folder);
+    const roleLevels = systemRoles.map(({ role }) => role);
+    return Math.max(...roleLevels);
   }
 
-  async getFolderRoles(user: User, context: ExecutionContext): Promise<Role[]> {
+  private async canActivateFolderResource(user: User, context: ExecutionContext): Promise<boolean> {
+    const requiredRole = this.getRequiredRole(context);
+    const folderRole = await this.getFolderRole(user, context);
+    return folderRole >= requiredRole;
+  }
+
+  private async getFolderRole(user: User, context: ExecutionContext): Promise<Roles> {
     const gqlContext = GqlExecutionContext.create(context);
     const request = gqlContext.getContext().req;
 
@@ -79,10 +87,8 @@ export class RoleGuard implements CanActivate {
 
     request.activeFolder = folder;
 
-    return user.roles.filter(({ folder }) => folder.id === folderId);
+    const folderRoles = user.roles.filter(({ folder }) => folder.id === folderId);
+    const roleLevels = folderRoles.map(({ role }) => role);
+    return Math.max(...roleLevels);
   }
 }
-
-// If you are wondering about the epic level of shittiness that is this piece
-// of coding, I'll just go on record that today I also thought goat cheese is
-// lovely buffalo mozzarella.
