@@ -35,16 +35,29 @@ export class RoleGuard implements CanActivate {
     const gqlContext = GqlExecutionContext.create(context);
     const { user } = gqlContext.getContext().req;
 
-    const requiredRoleType = this.reflector.get<RequiredRoleTypes>(
-      requiredRoleTypeKey,
-      context.getHandler(),
-    );
+    const requiredRoleType = this.getRequiredRoleType();
 
     if (requiredRoleType === RequiredRoleTypes.SYSTEM) {
       return this.canActivateSystemResource(user);
     }
 
     return await this.canActivateFolderResource(user);
+  }
+
+  private getRequiredRoleType(): RequiredRoleTypes {
+    const requiredRoleType = this.reflector.get<RequiredRoleTypes>(
+      requiredRoleTypeKey,
+      this.context.getHandler(),
+    );
+
+    if (!requiredRoleType) {
+      throw new HttpException(
+        "Required role type not configured.",
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+
+    return requiredRoleType;
   }
 
   private getRequiredRole(): Roles {
