@@ -1,21 +1,6 @@
-import { useMutation } from "@apollo/client";
-import {
-  Button,
-  Dialog,
-  makeStyles,
-  MenuItem,
-  Paper,
-  Select,
-  Theme,
-  Typography,
-} from "@material-ui/core";
-import { ChangeEvent, useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { Dialog, makeStyles, MenuItem, Paper, Select, Theme, Typography } from "@material-ui/core";
+import { ChangeEvent, useState } from "react";
 import SigTypes from "../../../../../enum/SigTypes";
-import ControlledSelect from "../../../../controls/ControlledSelect";
-import useNotification from "../../../../GlobalNotification/useNotification";
-import { ADD_SIGNATURE } from "../../../SystemData/graphql";
-import useSystemData from "../../../SystemData/useSystemData";
 import SigForm from "./SigForm";
 import WormholeForm from "./WormholeForm";
 
@@ -48,6 +33,8 @@ export default ({ open, onClose }: SigModalProps) => {
     setType(target.value as SigTypes);
   };
 
+  const showWormholeForm = type === SigTypes.WORMHOLE.toUpperCase();
+
   return (
     <Dialog open={open} onClose={onClose}>
       <Paper className={classes.paper}>
@@ -61,7 +48,7 @@ export default ({ open, onClose }: SigModalProps) => {
             </MenuItem>
           ))}
         </Select>
-        <SigForm type={type} />
+        {showWormholeForm ? <WormholeForm /> : <SigForm type={type} />}
       </Paper>
     </Dialog>
   );

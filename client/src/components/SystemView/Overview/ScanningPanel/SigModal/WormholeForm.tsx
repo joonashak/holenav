@@ -11,12 +11,6 @@ import useNotification from "../../../../GlobalNotification/useNotification";
 import { ADD_SIGNATURE } from "../../../SystemData/graphql";
 import useSystemData from "../../../SystemData/useSystemData";
 
-const typeOptions = Object.entries(SigTypes).map(([key, label]) => ({
-  key: `sig-type-${key}`,
-  value: key,
-  label,
-}));
-
 const lifeOptions = [
   { key: "lt-24-hrs", value: "lt-24-hrs", label: "Less than 24 hrs" },
   { key: "eol", value: "eol", label: "End of life" },
@@ -37,22 +31,21 @@ type WormholeFormProps = {
 };
 
 export default () => {
-  const { handleSubmit, control, watch } = useForm({
+  const { handleSubmit, control } = useForm({
     defaultValues: {
-      type: typeOptions[2].value,
       life: "lt-24-hrs",
       mass: "stable",
       whType: "K162",
     },
   });
-  const type = watch("type");
   const { addSignature, id } = useSystemData();
   const [addSigMutation, { data, loading, error }] = useMutation(ADD_SIGNATURE);
   const { setNotification } = useNotification();
 
   const onSubmit = (formData: any) => {
-    console.log(formData);
-    //addSigMutation({ variables: { ...formData, systemId: id } });
+    const mutationData = { ...formData };
+    console.log(mutationData);
+    // addSigMutation({ variables: { ...formData, systemId: id } });
   };
 
   useEffect(() => {
@@ -64,7 +57,6 @@ export default () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <ControlledSelect name="type" control={control} label="Type" options={typeOptions} />
       <ControlledTextField name="eveId" control={control} label="ID" />
       <ControlledTextField name="name" control={control} label="Name" />
       <ControlledRadioGroup
