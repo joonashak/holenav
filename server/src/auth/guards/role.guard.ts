@@ -11,7 +11,6 @@ import { FolderService } from "../../entities/folder/folder.service";
 import { Role } from "../../role/role.model";
 import Roles from "../../role/roles.enum";
 import { User } from "../../user/user.model";
-import { FolderRoleSpec } from "../decorators/role.decorator";
 
 /**
  * Guard to require *at least* a certain role for access. Use with custom
@@ -39,10 +38,7 @@ export class RoleGuard implements CanActivate {
       return systemRole;
     }
 
-    const { role: folderRole } = this.reflector.get<FolderRoleSpec>(
-      "folderRole",
-      context.getHandler(),
-    );
+    const folderRole = this.reflector.get<Roles>("folderRole", context.getHandler());
 
     return folderRole || Roles.ADMIN;
   }
@@ -65,8 +61,6 @@ export class RoleGuard implements CanActivate {
   }
 
   async getFolderRoles(user: User, context: ExecutionContext): Promise<Role[]> {
-    // TODO: Remove "key code" from everywhere -> require use of headers.
-    const { key } = this.reflector.get<FolderRoleSpec>("folderRole", context.getHandler());
     const gqlContext = GqlExecutionContext.create(context);
     const request = gqlContext.getContext().req;
 

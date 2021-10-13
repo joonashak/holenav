@@ -10,19 +10,9 @@ import { RoleGuard } from "../guards/role.guard";
 export const SystemRole = (role: Roles) =>
   applyDecorators(UseGuards(AuthGuard, RoleGuard), SetMetadata("systemRole", role));
 
-export type FolderRoleSpec = {
-  role: Roles;
-  key: string;
-};
-
 /**
  * Require folder role.
  * @param role Minimum required role level.
- * @param folderKey GraphQL argument key where applicable folder ID is
- * supplied, if not `folderId`.
  */
-export const RequireFolderRole = (role: Roles, folderKey = "folderId") =>
-  applyDecorators(
-    SetMetadata("folderRole", { role, key: folderKey }),
-    UseGuards(AuthGuard, RoleGuard),
-  );
+export const RequireFolderRole = (role: Roles) =>
+  applyDecorators(SetMetadata("folderRole", role), UseGuards(AuthGuard, RoleGuard));
