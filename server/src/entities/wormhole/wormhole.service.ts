@@ -61,4 +61,8 @@ export class WormholeService {
   async getBySystem(systemName: string, folder: Folder): Promise<Wormhole[]> {
     return this.whModel.find({ systemName, folder });
   }
+
+  async createWormhole(data: Wormhole): Promise<Wormhole> {
+    return this.whModel.create(data);
+  }
 }

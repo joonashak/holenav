@@ -30,11 +30,11 @@ export class Wormhole {
 
   @Field()
   @Prop({ default: false })
-  eol: boolean;
+  eol?: boolean;
 
   @Field((type) => MassStatus)
   @Prop({ default: MassStatus.STABLE })
-  massStatus: MassStatus;
+  massStatus?: MassStatus;
 
   @Field((type) => Folder)
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: "Folder" })
