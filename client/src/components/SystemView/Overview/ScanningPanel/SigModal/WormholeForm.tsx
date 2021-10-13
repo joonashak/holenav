@@ -46,7 +46,6 @@ export default () => {
     },
   });
   const type = watch("type");
-  const whSelected = type === SigTypes.WORMHOLE.toUpperCase();
   const { addSignature, id } = useSystemData();
   const [addSigMutation, { data, loading, error }] = useMutation(ADD_SIGNATURE);
   const { setNotification } = useNotification();

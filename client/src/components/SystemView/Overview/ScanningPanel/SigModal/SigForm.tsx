@@ -1,9 +1,8 @@
 import { useMutation } from "@apollo/client";
 import { Button } from "@material-ui/core";
 import { useEffect } from "react";
-import { Control, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import SigTypes from "../../../../../enum/SigTypes";
-import ControlledSelect from "../../../../controls/ControlledSelect";
 import ControlledTextField from "../../../../controls/ControlledTextField";
 import useNotification from "../../../../GlobalNotification/useNotification";
 import { ADD_SIGNATURE } from "../../../SystemData/graphql";
@@ -16,17 +15,17 @@ const typeOptions = Object.entries(SigTypes).map(([key, label]) => ({
 }));
 
 type SigFormProps = {
-  control: Control<any, object>;
+  type: SigTypes;
 };
 
-export default () => {
+export default ({ type }: SigFormProps) => {
   const { handleSubmit, control } = useForm({ defaultValues: { type: typeOptions[0].value } });
   const { addSignature, id } = useSystemData();
   const [addSigMutation, { data, loading, error }] = useMutation(ADD_SIGNATURE);
   const { setNotification } = useNotification();
 
   const onSubmit = (formData: any) => {
-    addSigMutation({ variables: { ...formData, systemId: id } });
+    addSigMutation({ variables: { ...formData, type, systemId: id } });
   };
 
   useEffect(() => {
@@ -38,8 +37,6 @@ export default () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <ControlledSelect name="type" control={control} label="Type" options={typeOptions} />
-
       <ControlledTextField name="eveId" control={control} label="ID" />
       <ControlledTextField name="name" control={control} label="Name" />
       <Button type="submit" variant="contained" color="primary">

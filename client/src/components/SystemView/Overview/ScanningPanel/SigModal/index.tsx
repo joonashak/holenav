@@ -1,6 +1,15 @@
 import { useMutation } from "@apollo/client";
-import { Button, Dialog, makeStyles, Paper, Theme, Typography } from "@material-ui/core";
-import { useEffect } from "react";
+import {
+  Button,
+  Dialog,
+  makeStyles,
+  MenuItem,
+  Paper,
+  Select,
+  Theme,
+  Typography,
+} from "@material-ui/core";
+import { ChangeEvent, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import SigTypes from "../../../../../enum/SigTypes";
 import ControlledSelect from "../../../../controls/ControlledSelect";
@@ -33,6 +42,11 @@ type SigModalProps = {
 
 export default ({ open, onClose }: SigModalProps) => {
   const classes = useStyles();
+  const [type, setType] = useState<SigTypes>(SigTypes.DATA.toUpperCase() as SigTypes);
+
+  const onTypeChange = ({ target }: ChangeEvent<{ value: unknown }>) => {
+    setType(target.value as SigTypes);
+  };
 
   return (
     <Dialog open={open} onClose={onClose}>
@@ -40,7 +54,14 @@ export default ({ open, onClose }: SigModalProps) => {
         <Typography variant="h2" className={classes.h2}>
           New Signature
         </Typography>
-        <SigForm />
+        <Select value={type} onChange={onTypeChange}>
+          {typeOptions.map(({ key, value, label }) => (
+            <MenuItem key={key} value={value}>
+              {label}
+            </MenuItem>
+          ))}
+        </Select>
+        <SigForm type={type} />
       </Paper>
     </Dialog>
   );
