@@ -13,6 +13,7 @@ export class SystemService {
     return system;
   }
 
+  // FIXME: Add folder!
   async getByName(name: string): Promise<System> {
     const system = await this.systemModel.findOne({ name }).populate("signatures");
     return { ...system.toObject() };

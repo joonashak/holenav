@@ -1,23 +1,16 @@
 import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model, Types } from "mongoose";
-import { Folder } from "../folder/folder.model";
-import { FolderService } from "../folder/folder.service";
-import { SystemService } from "../system/system.service";
+import { Folder, FolderDocument } from "../folder/folder.model";
 import { ConnectionTree, ConnectionTreeNode } from "./dto/connectionTree.dto";
 import { Wormhole } from "./wormhole.model";
 
 @Injectable()
 export class WormholeService {
-  constructor(
-    @InjectModel(Wormhole.name) private whModel: Model<Wormhole>,
-    private folderService: FolderService,
-    private systemService: SystemService,
-  ) {}
+  constructor(@InjectModel(Wormhole.name) private whModel: Model<Wormhole>) {}
 
-  async getConnectionTree(rootSystemName: string, folderId: string): Promise<ConnectionTree> {
+  async getConnectionTree(rootSystemName: string, folder: FolderDocument): Promise<ConnectionTree> {
     console.time("Wormhole graphlookup");
-    const folder = await this.folderService.getFolderById(folderId);
 
     const res = await this.whModel.aggregate([
       { $match: { systemName: rootSystemName, folder: Types.ObjectId(folder._id) } },

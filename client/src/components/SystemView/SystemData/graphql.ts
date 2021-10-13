@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
 export const GET_SYSTEM_BY_NAME = gql`
-  query System($name: String!, $folderId: String!) {
-    getSystemByName(name: $name, folderId: $folderId) {
+  query System($name: String!) {
+    getSystemByName(name: $name) {
       id
       name
       signatures {
@@ -13,7 +13,7 @@ export const GET_SYSTEM_BY_NAME = gql`
       }
     }
 
-    getWormholesBySystem(name: $name, folderId: $folderId) {
+    getWormholesBySystem(name: $name) {
       name
       id
       eveId
