@@ -9,6 +9,7 @@ describe("Login", () => {
   });
 
   it("User mocking works", () => {
+    // FIXME: Does not really test anything...
     cy.mockUser(1);
   });
 });

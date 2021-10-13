@@ -4,7 +4,7 @@ Cypress.Commands.add("resetDatabase", () => {
   indexedDB.deleteDatabase("localforage");
   cy.request({
     method: "GET",
-    url: `${apiUrl}/dev/reset`,
+    url: `${apiUrl}/dev/seed`,
   });
 });
 

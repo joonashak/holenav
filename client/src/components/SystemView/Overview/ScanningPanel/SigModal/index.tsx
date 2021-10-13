@@ -41,9 +41,9 @@ export default ({ open, onClose }: SigModalProps) => {
         <Typography variant="h2" className={classes.h2}>
           New Signature
         </Typography>
-        <Select value={type} onChange={onTypeChange}>
+        <Select value={type} onChange={onTypeChange} data-cy="select-sig-type">
           {typeOptions.map(({ key, value, label }) => (
-            <MenuItem key={key} value={value}>
+            <MenuItem key={key} value={value} data-cy={`select-sig-type-option-${value}`}>
               {label}
             </MenuItem>
           ))}

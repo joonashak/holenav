@@ -50,7 +50,7 @@ export default () => {
   useEffect(() => {
     if (data && !loading && !error) {
       addWormhole(data.addWormhole);
-      setNotification("Signature added.", "success", true);
+      setNotification("Wormhole added.", "success", true);
     }
   }, [data, loading, error]);
 
@@ -76,7 +76,7 @@ export default () => {
         label="Wormhole Type"
         options={whTypeOptions}
       />
-      <Button type="submit" variant="contained" color="primary">
+      <Button type="submit" variant="contained" color="primary" data-cy="wh-form-submit">
         Add
       </Button>
     </form>
