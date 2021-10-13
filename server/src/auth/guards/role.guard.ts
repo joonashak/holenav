@@ -24,6 +24,7 @@ export class RoleGuard implements CanActivate {
 
   async canActivate(context: ExecutionContext) {
     const gqlContext = GqlExecutionContext.create(context);
+    console.log(gqlContext.getContext().req.headers);
     const { user } = gqlContext.getContext().req;
 
     const requiredRole = this.getRequiredRole(context);
@@ -64,17 +65,24 @@ export class RoleGuard implements CanActivate {
   }
 
   async getFolderRoles(user: User, context: ExecutionContext): Promise<Role[]> {
+    // TODO: Remove "key code" from everywhere -> require use of headers.
     const { key } = this.reflector.get<FolderRoleSpec>("folderRole", context.getHandler());
     const gqlContext = GqlExecutionContext.create(context);
+    const request = gqlContext.getContext().req;
 
-    const gqlArgs = gqlContext.getArgs();
-    const folderId = gqlArgs[key];
+    const folderId = request.headers.activefolder;
     if (!folderId) {
-      throw new HttpException("Folder ID is required.", HttpStatus.BAD_REQUEST);
+      throw new HttpException(
+        "Active folder's ID must be passed in headers.",
+        HttpStatus.BAD_REQUEST,
+      );
     }
 
-    const request = gqlContext.getContext().req;
     const folder = await this.folderService.getFolderById(folderId);
+    if (!folder) {
+      throw new HttpException("Active folder not found.", HttpStatus.BAD_REQUEST);
+    }
+
     request.folder = folder;
 
     return user.roles.filter(({ folder }) => folder.id === folderId);
