@@ -33,30 +33,6 @@ type SigModalProps = {
 
 export default ({ open, onClose }: SigModalProps) => {
   const classes = useStyles();
-  const { handleSubmit, control, watch } = useForm({
-    defaultValues: {
-      type: typeOptions[2].value,
-      life: "lt-24-hrs",
-      mass: "stable",
-      whType: "K162",
-    },
-  });
-  const type = watch("type");
-  const whSelected = type === SigTypes.WORMHOLE.toUpperCase();
-  const { addSignature, id } = useSystemData();
-  const [addSigMutation, { data, loading, error }] = useMutation(ADD_SIGNATURE);
-  const { setNotification } = useNotification();
-
-  const onSubmit = (formData: any) => {
-    addSigMutation({ variables: { ...formData, systemId: id } });
-  };
-
-  useEffect(() => {
-    if (data && !loading && !error) {
-      addSignature(data.addSignature);
-      setNotification("Signature added.", "success", true);
-    }
-  }, [data, loading, error]);
 
   return (
     <Dialog open={open} onClose={onClose}>
@@ -64,13 +40,7 @@ export default ({ open, onClose }: SigModalProps) => {
         <Typography variant="h2" className={classes.h2}>
           New Signature
         </Typography>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <ControlledSelect name="type" control={control} label="Type" options={typeOptions} />
-          {whSelected ? <WormholeForm control={control} /> : <SigForm control={control} />}
-          <Button type="submit" variant="contained" color="primary">
-            Add
-          </Button>
-        </form>
+        <SigForm />
       </Paper>
     </Dialog>
   );
