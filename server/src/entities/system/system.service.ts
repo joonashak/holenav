@@ -1,6 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
+import { FolderDocument } from "../folder/folder.model";
 import { Signature } from "../signature/signature.model";
 import { System, SystemDocument } from "./system.model";
 
@@ -13,9 +14,8 @@ export class SystemService {
     return system;
   }
 
-  // FIXME: Add folder!
-  async getByName(name: string): Promise<System> {
-    const system = await this.systemModel.findOne({ name }).populate("signatures");
+  async getByName(name: string, folder: FolderDocument): Promise<System> {
+    const system = await this.systemModel.findOne({ name, folder }).populate("signatures");
     return { ...system.toObject() };
   }
 
