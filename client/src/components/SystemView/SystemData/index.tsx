@@ -1,7 +1,6 @@
 import { useQuery } from "@apollo/client";
 import { findOneSystem } from "@eve-data/systems";
 import { createContext, useState, ReactNode, useEffect } from "react";
-import useUserData from "../../UserData/useUserData";
 import { GET_SYSTEM_BY_NAME } from "./graphql";
 
 export const SystemDataContext = createContext([[], () => {}]);
@@ -14,7 +13,6 @@ interface SystemDataProviderProps {
 
 export default ({ children, name }: SystemDataProviderProps) => {
   const [state, setState] = useState<any>(null);
-  const { activeFolder } = useUserData();
 
   // Static data.
   useEffect(() => {
@@ -24,7 +22,7 @@ export default ({ children, name }: SystemDataProviderProps) => {
 
   // System data from API.
   const systemQuery = useQuery(GET_SYSTEM_BY_NAME, {
-    variables: { name, folderId: activeFolder },
+    variables: { name },
   });
 
   useEffect(() => {
