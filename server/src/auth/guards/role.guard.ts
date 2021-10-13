@@ -83,7 +83,7 @@ export class RoleGuard implements CanActivate {
       throw new HttpException("Active folder not found.", HttpStatus.BAD_REQUEST);
     }
 
-    request.folder = folder;
+    request.activeFolder = folder;
 
     return user.roles.filter(({ folder }) => folder.id === folderId);
   }

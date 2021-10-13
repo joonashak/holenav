@@ -1,6 +1,8 @@
-import { Args, Context, Query, Resolver } from "@nestjs/graphql";
+import { Args, Query, Resolver } from "@nestjs/graphql";
+import { ActiveFolder } from "../../auth/decorators/activeFolder.decorator";
 import { RequireFolderRole } from "../../auth/decorators/role.decorator";
 import Roles from "../../role/roles.enum";
+import { FolderDocument } from "../folder/folder.model";
 import { ConnectionTree } from "./dto/connectionTree.dto";
 import { Wormhole } from "./wormhole.model";
 import { WormholeService } from "./wormhole.service";
@@ -13,17 +15,17 @@ export class WormholeResolver {
   @Query((returns) => ConnectionTree)
   async getConnectionTree(
     @Args("rootSystem") rootSystemName: string,
-    @Context() ctx,
+    @ActiveFolder() activeFolder: FolderDocument,
   ): Promise<ConnectionTree> {
-    return this.whService.getConnectionTree(rootSystemName, ctx.req.folder);
+    return this.whService.getConnectionTree(rootSystemName, activeFolder);
   }
 
   @RequireFolderRole(Roles.READ)
   @Query((returns) => [Wormhole])
   async getWormholesBySystem(
     @Args("name") systemName: string,
-    @Context() ctx,
+    @ActiveFolder() activeFolder: FolderDocument,
   ): Promise<Wormhole[]> {
-    return this.whService.getBySystem(systemName, ctx.req.folder);
+    return this.whService.getBySystem(systemName, activeFolder);
   }
 }
