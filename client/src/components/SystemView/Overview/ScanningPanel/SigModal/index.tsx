@@ -4,7 +4,6 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import SigTypes from "../../../../../enum/SigTypes";
 import ControlledSelect from "../../../../controls/ControlledSelect";
-import ControlledTextField from "../../../../controls/ControlledTextField";
 import useNotification from "../../../../GlobalNotification/useNotification";
 import { ADD_SIGNATURE } from "../../../SystemData/graphql";
 import useSystemData from "../../../SystemData/useSystemData";

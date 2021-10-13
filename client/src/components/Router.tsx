@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import GetToken from "../auth/GetToken";
-import AuthenticatedApollo from "../auth/AuthenticatedApollo";
+import { AuthenticatedApolloProvider } from "../auth/useAuthenticatedApollo";
 import SystemView from "./SystemView";
 import AuthenticationGuard from "../auth/AuthenticationGuard";
 import LoginView from "./LoginView";
@@ -17,13 +17,13 @@ export default () => (
       <Route path="/login/:state" exact component={GetToken} />
       <Route path="/">
         <AuthenticationGuard>
-          <AuthenticatedApollo>
+          <AuthenticatedApolloProvider>
             <UserData>
               <Switch>
                 <Route path="/system/:systemName" exact component={SystemView} />
               </Switch>
             </UserData>
-          </AuthenticatedApollo>
+          </AuthenticatedApolloProvider>
         </AuthenticationGuard>
       </Route>
     </Switch>

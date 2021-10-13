@@ -1,5 +1,6 @@
 import { useQuery } from "@apollo/client";
 import { createContext, useState, ReactNode, useEffect } from "react";
+import useAuthenticatedApollo from "../../auth/useAuthenticatedApollo";
 import { GET_SYSTEM_DATA } from "./graphql";
 
 export const UserDataContext = createContext([[], () => {}]);
@@ -21,6 +22,7 @@ interface UserDataProviderProps {
 
 export default ({ children }: UserDataProviderProps) => {
   const [state, setState] = useState<any>(defaultState);
+  const { setActiveFolder } = useAuthenticatedApollo();
   const { data, loading, error } = useQuery(GET_SYSTEM_DATA);
 
   useEffect(() => {
@@ -29,6 +31,7 @@ export default ({ children }: UserDataProviderProps) => {
         whoami: { id, activeFolder },
       } = data;
       setState((prev: any) => ({ ...prev, id, activeFolder: activeFolder.id }));
+      setActiveFolder(activeFolder.id);
     }
   }, [data]);
 
