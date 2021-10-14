@@ -5,7 +5,8 @@ import { v4 as uuid } from "uuid";
 import { Character } from "../entities/character/character.model";
 import { Folder } from "../entities/folder/folder.model";
 import { Role } from "../role/role.model";
-import { defaultUserSettings, UserSettings, UserSettingsSchema } from "./user.settings.model";
+import defaultUserSettings from "./settings/defaultUserSettings";
+import { UserSettings, UserSettingsSchema } from "./settings/userSettings.model";
 
 export type UserDocument = User & mongoose.Document;
 

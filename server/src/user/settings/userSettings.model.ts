@@ -10,7 +10,3 @@ export class UserSettings {
 }
 
 export const UserSettingsSchema = SchemaFactory.createForClass(UserSettings);
-
-export const defaultUserSettings: UserSettings = {
-  activeMap: "Jita",
-};
