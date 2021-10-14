@@ -5,6 +5,7 @@ import { v4 as uuid } from "uuid";
 import { Character } from "../entities/character/character.model";
 import { Folder } from "../entities/folder/folder.model";
 import { Role } from "../role/role.model";
+import { defaultUserSettings, UserSettings, UserSettingsSchema } from "./user.settings.model";
 
 export type UserDocument = User & mongoose.Document;
 
@@ -30,6 +31,10 @@ export class User {
   @Field((type) => Folder)
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: "Folder" })
   activeFolder: Folder;
+
+  @Field((type) => UserSettings)
+  @Prop({ type: UserSettingsSchema, default: defaultUserSettings })
+  settings: UserSettings;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
