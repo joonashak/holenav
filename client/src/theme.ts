@@ -12,6 +12,7 @@ const theme = createTheme({
       primary: "#fff",
     },
   },
+
   typography: {
     h2: {
       fontSize: "1.8rem",
