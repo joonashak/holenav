@@ -6,6 +6,7 @@ export type UserData = {
 
 export type UserSettings = {
   maps: SavedMap[];
+  selectedMap: SavedMap;
 };
 
 export type SavedMap = {

@@ -12,9 +12,9 @@ interface MapDataProviderProps {
 
 export default ({ children }: MapDataProviderProps) => {
   const {
-    settings: { maps },
+    settings: { selectedMap },
   } = useUserData();
-  const [state, setState] = useState<any>({ selectedMap: maps[0] });
+  const [state, setState] = useState<any>({ selectedMap });
 
   const { data, loading, error } = useQuery(GET_CONNECTION_TREE, {
     variables: { rootSystem: state.selectedMap.rootSystemName },

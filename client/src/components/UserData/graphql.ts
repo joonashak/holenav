@@ -14,6 +14,11 @@ export const GET_SYSTEM_DATA = gql`
           name
           rootSystemName
         }
+        selectedMap {
+          id
+          name
+          rootSystemName
+        }
       }
     }
   }
