@@ -6,6 +6,10 @@ const defaultUserSettings: UserSettings = {
       name: "Default Map",
       rootSystemName: "Jita",
     },
+    {
+      name: "Another Map",
+      rootSystemName: "Amarr",
+    },
   ],
 };
 

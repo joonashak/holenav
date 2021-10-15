@@ -6,37 +6,27 @@ import { GET_SYSTEM_DATA } from "./graphql";
 export const UserDataContext = createContext([[], () => {}]);
 UserDataContext.displayName = "User Data";
 
-export type UserDataState = {
-  id: string | null;
-  activeFolder: string | null;
-};
-
-const defaultState: UserDataState = {
-  id: null,
-  activeFolder: null,
-};
-
 interface UserDataProviderProps {
   children: ReactNode;
 }
 
 export default ({ children }: UserDataProviderProps) => {
-  const [state, setState] = useState<any>(defaultState);
+  const [state, setState] = useState<any>(null);
   const { setActiveFolder } = useAuthenticatedApollo();
   const { data, loading, error } = useQuery(GET_SYSTEM_DATA);
 
   useEffect(() => {
     if (!loading && !error) {
       const {
-        whoami: { id, activeFolder },
+        whoami: { id, activeFolder, settings },
       } = data;
-      setState((prev: any) => ({ ...prev, id, activeFolder: activeFolder.id }));
+      setState((prev: any) => ({ ...prev, id, activeFolder: activeFolder.id, settings }));
       setActiveFolder(activeFolder.id);
     }
   }, [data]);
 
   // FIXME: Handle loading and errors properly.
-  if (!data || !state.id) {
+  if (!data || !state) {
     return null;
   }
 

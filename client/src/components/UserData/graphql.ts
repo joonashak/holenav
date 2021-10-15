@@ -8,6 +8,13 @@ export const GET_SYSTEM_DATA = gql`
       activeFolder {
         id
       }
+      settings {
+        maps {
+          id
+          name
+          rootSystemName
+        }
+      }
     }
   }
 `;

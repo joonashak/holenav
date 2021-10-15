@@ -1,7 +1,8 @@
 import { useContext } from "react";
-import { UserDataContext, UserDataState } from ".";
+import { UserDataContext } from ".";
+import { UserData } from "./userData.types";
 
-export default (): UserDataState => {
+export default (): UserData => {
   const [state] = useContext<any>(UserDataContext);
 
   return {
