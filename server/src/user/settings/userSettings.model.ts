@@ -11,7 +11,7 @@ export class UserSettings {
 
   @Field((type) => SavedMap, { nullable: true })
   @Prop({ type: SavedMap })
-  selectedMap?: SavedMap;
+  selectedMap?: SavedMap | null;
 }
 
 export const UserSettingsSchema = SchemaFactory.createForClass(UserSettings);

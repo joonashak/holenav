@@ -1,6 +1,7 @@
 import { UserSettings } from "./userSettings.model";
 
 const defaultUserSettings: UserSettings = {
+  selectedMap: null,
   maps: [
     {
       name: "Default Map",
