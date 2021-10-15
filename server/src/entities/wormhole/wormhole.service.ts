@@ -29,6 +29,14 @@ export class WormholeService {
     ]);
 
     console.timeEnd("Wormhole graphlookup");
+
+    if (!res.length) {
+      return {
+        rootSystemName,
+        children: [],
+      };
+    }
+
     console.time("Construct map tree");
     const { children } = res[0];
     const rootChildren = this.findChildren(children, rootSystemName);

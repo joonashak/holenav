@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 export default () => {
   const classes = useStyles();
   const { name } = useSystemData();
-  const [menuOpen, setMenuOpen] = useState(true);
+  const [menuOpen, setMenuOpen] = useState(false);
   const toggleMenu = () => setMenuOpen((prev) => !prev);
 
   return (

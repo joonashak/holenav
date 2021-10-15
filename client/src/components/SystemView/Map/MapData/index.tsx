@@ -1,5 +1,6 @@
 import { useQuery } from "@apollo/client";
 import { createContext, useState, ReactNode, useEffect } from "react";
+import useUserData from "../../../UserData/useUserData";
 import { GET_CONNECTION_TREE } from "./graphql";
 
 export const MapDataContext = createContext([[], () => {}]);
@@ -10,21 +11,24 @@ interface MapDataProviderProps {
 }
 
 export default ({ children }: MapDataProviderProps) => {
-  const [state, setState] = useState<any>(null);
+  const {
+    settings: { maps },
+  } = useUserData();
+  const [state, setState] = useState<any>({ selectedMap: maps[0] });
 
   const { data, loading, error } = useQuery(GET_CONNECTION_TREE, {
-    variables: { rootSystem: "Jita" },
+    variables: { rootSystem: state.selectedMap.rootSystemName },
   });
 
   useEffect(() => {
     if (!loading && !error) {
       const { getConnectionTree } = data;
-      setState((prev: any) => ({ ...prev, ...getConnectionTree }));
+      setState((prev: any) => ({ ...prev, connectionTree: getConnectionTree }));
     }
   }, [data]);
 
   // FIXME: Handle loading and errors properly.
-  if (!state) {
+  if (!state.connectionTree) {
     return null;
   }
 

@@ -22,7 +22,9 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 export default () => {
   const classes = useStyles();
-  const { rootSystemName, children } = useMapData();
+  const {
+    connectionTree: { rootSystemName, children },
+  } = useMapData();
   const data = { name: rootSystemName, children };
 
   const { width } = useWindowDimensions();
