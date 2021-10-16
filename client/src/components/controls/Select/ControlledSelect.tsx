@@ -15,7 +15,7 @@ type Options = {
   label: string;
 };
 
-// FIXME: Rename and update to use styled select.
+// FIXME: Rename and update to use styled select (or integrate in the same mess...?)
 export default ({ options, name, control, label }: ControlledSelectProps) => {
   const Render = ({ field }: any) => (
     <TextField {...field} select label={label}>
