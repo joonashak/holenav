@@ -1,44 +1,18 @@
-import { FormControl, InputLabel, makeStyles, MenuItem, Select, Theme } from "@material-ui/core";
 import { ChangeEvent } from "react";
+import Select from "../../../controls/Select";
 import useUserData from "../../../UserData/useUserData";
 
-const useLabelStyles = makeStyles((theme: Theme) => ({
-  root: {
-    color: theme.palette.secondary.light,
-    "&.Mui-focused": {
-      color: theme.palette.secondary.main,
-    },
-  },
-}));
-
 export default () => {
-  const labelClasses = useLabelStyles();
   const {
     setSelectedMap,
-    settings: { maps },
+    settings: { maps, selectedMap },
   } = useUserData();
 
   const onChange = ({ target }: ChangeEvent<{ value: unknown }>) => {
     setSelectedMap(target.value as string);
   };
 
-  return (
-    <FormControl fullWidth>
-      <InputLabel id="map-selector-label" classes={labelClasses}>
-        Map
-      </InputLabel>
-      <Select
-        defaultValue={maps[0].id}
-        label="Moi"
-        labelId="map-selector-label"
-        onChange={onChange}
-      >
-        {maps.map(({ id, name }) => (
-          <MenuItem key={`map-selector-option-${id}`} value={id}>
-            {name}
-          </MenuItem>
-        ))}
-      </Select>
-    </FormControl>
-  );
+  const options = maps.map(({ id, name }) => ({ id, value: id, label: name }));
+
+  return <Select title="Map" onChange={onChange} value={selectedMap.id} options={options} />;
 };

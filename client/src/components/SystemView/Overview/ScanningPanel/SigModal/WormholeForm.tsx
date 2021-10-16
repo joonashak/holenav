@@ -4,7 +4,7 @@ import { Button } from "@material-ui/core";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import ControlledRadioGroup from "../../../../controls/ControlledRadioGroup";
-import ControlledSelect from "../../../../controls/ControlledSelect";
+import ControlledSelect from "../../../../controls/Select/ControlledSelect";
 import ControlledTextField from "../../../../controls/ControlledTextField";
 import useNotification from "../../../../GlobalNotification/useNotification";
 import { ADD_WORMHOLE } from "../../../SystemData/graphql";
