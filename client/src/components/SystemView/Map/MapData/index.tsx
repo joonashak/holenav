@@ -14,10 +14,10 @@ export default ({ children }: MapDataProviderProps) => {
   const {
     settings: { selectedMap },
   } = useUserData();
-  const [state, setState] = useState<any>({ selectedMap });
+  const [state, setState] = useState<any>(null);
 
   const { data, loading, error } = useQuery(GET_CONNECTION_TREE, {
-    variables: { rootSystem: state.selectedMap.rootSystemName },
+    variables: { rootSystem: selectedMap.rootSystemName },
   });
 
   useEffect(() => {
@@ -28,7 +28,7 @@ export default ({ children }: MapDataProviderProps) => {
   }, [data]);
 
   // FIXME: Handle loading and errors properly.
-  if (!state.connectionTree) {
+  if (!state) {
     return null;
   }
 

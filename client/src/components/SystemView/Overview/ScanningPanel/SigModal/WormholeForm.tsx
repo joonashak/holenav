@@ -2,7 +2,7 @@ import { useMutation } from "@apollo/client";
 import wormholes from "@eve-data/wormholes";
 import { Button } from "@material-ui/core";
 import { useEffect } from "react";
-import { Control, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import ControlledRadioGroup from "../../../../controls/ControlledRadioGroup";
 import ControlledSelect from "../../../../controls/ControlledSelect";
 import ControlledTextField from "../../../../controls/ControlledTextField";
@@ -24,10 +24,6 @@ const massOptions = [
 const whTypeOptions = [{ key: "wh-K162", value: "K162", label: "K162" }].concat(
   wormholes.map(({ type }) => ({ key: `wh-${type}`, value: type, label: type }))
 );
-
-type WormholeFormProps = {
-  control: Control<any, object>;
-};
 
 export default () => {
   const { handleSubmit, control } = useForm({

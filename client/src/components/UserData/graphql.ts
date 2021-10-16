@@ -23,3 +23,17 @@ export const GET_SYSTEM_DATA = gql`
     }
   }
 `;
+
+export const UPDATE_SELECTED_MAP = gql`
+  mutation UpdateSelectedMap($selectedMapId: String!) {
+    updateSelectedMap(selectedMapId: $selectedMapId) {
+      settings {
+        selectedMap {
+          id
+          name
+          rootSystemName
+        }
+      }
+    }
+  }
+`;

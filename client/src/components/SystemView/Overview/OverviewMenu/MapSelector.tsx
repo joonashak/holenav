@@ -1,7 +1,6 @@
 import { FormControl, InputLabel, makeStyles, MenuItem, Select, Theme } from "@material-ui/core";
 import { ChangeEvent } from "react";
 import useUserData from "../../../UserData/useUserData";
-import useMapData from "../../Map/MapData/useMapData";
 
 const useLabelStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -14,8 +13,8 @@ const useLabelStyles = makeStyles((theme: Theme) => ({
 
 export default () => {
   const labelClasses = useLabelStyles();
-  const { setSelectedMap } = useMapData();
   const {
+    setSelectedMap,
     settings: { maps },
   } = useUserData();
 
