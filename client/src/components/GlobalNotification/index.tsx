@@ -3,8 +3,8 @@
  * To trigger the notification, use the custom hook `useNotification`.
  */
 import React, { useState, useEffect } from "react";
-import { Snackbar } from "@material-ui/core";
-import { Alert } from "@material-ui/lab";
+import { Snackbar, Alert } from "@mui/material";
+
 import useNotification from "./useNotification";
 
 export default () => {

@@ -1,4 +1,4 @@
-import { Typography } from "@material-ui/core";
+import { Typography } from "@mui/material";
 import SecurityClasses from "../../../../enum/SecurityClasses";
 import useSystemData from "../../SystemData/useSystemData";
 

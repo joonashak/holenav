@@ -1,8 +1,5 @@
-import {
-  responsiveFontSizes,
-  unstable_createMuiStrictModeTheme as createTheme,
-} from "@material-ui/core";
-import { grey, lightGreen } from "@material-ui/core/colors";
+import { responsiveFontSizes, createTheme } from "@mui/material";
+import { grey, lightGreen } from "@mui/material/colors";
 
 const theme = createTheme({
   palette: {

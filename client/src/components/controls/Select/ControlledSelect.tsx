@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import { MenuItem, TextField } from "@material-ui/core";
+import { MenuItem, TextField } from "@mui/material";
 import { Controller } from "react-hook-form";
 
 type ControlledSelectProps = {

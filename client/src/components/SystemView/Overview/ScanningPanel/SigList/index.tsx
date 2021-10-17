@@ -6,10 +6,10 @@ import {
   TableRow,
   TableCell as MuiTableCell,
   Paper,
-  makeStyles,
-  withStyles,
   Theme,
-} from "@material-ui/core";
+} from "@mui/material";
+import makeStyles from "@mui/styles/makeStyles";
+import withStyles from "@mui/styles/withStyles";
 import useSystemData from "../../../SystemData/useSystemData";
 
 const useStyles = makeStyles((theme: Theme) => ({

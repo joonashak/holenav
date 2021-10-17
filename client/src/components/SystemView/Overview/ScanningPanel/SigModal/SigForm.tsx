@@ -1,5 +1,5 @@
 import { useMutation } from "@apollo/client";
-import { Button } from "@material-ui/core";
+import { Button } from "@mui/material";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import SigTypes from "../../../../../enum/SigTypes";

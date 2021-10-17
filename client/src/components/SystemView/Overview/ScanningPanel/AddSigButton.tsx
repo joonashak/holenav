@@ -1,4 +1,4 @@
-import { Button } from "@material-ui/core";
+import { Button } from "@mui/material";
 import { useState } from "react";
 import SigModal from "./SigModal";
 
@@ -9,7 +9,7 @@ export default () => {
 
   return (
     <>
-      <Button onClick={toggleOpen} data-cy="add-sig-button">
+      <Button onClick={toggleOpen} variant="contained" data-cy="add-sig-button">
         Add Signature
       </Button>
       <SigModal open={open} onClose={toggleOpen} />

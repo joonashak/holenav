@@ -1,4 +1,4 @@
-import { Typography } from "@material-ui/core";
+import { Typography } from "@mui/material";
 import OverviewPanel from "../OverviewPanel";
 import SystemInfoSummary from "./SystemInfoSummary";
 

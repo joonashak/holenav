@@ -1,5 +1,6 @@
-import { Button, Drawer, makeStyles } from "@material-ui/core";
-import { yellow } from "@material-ui/core/colors";
+import { Button, Drawer } from "@mui/material";
+import makeStyles from "@mui/styles/makeStyles";
+import { yellow } from "@mui/material/colors";
 import axios from "axios";
 import { endpoints } from "../../config";
 import MockUserSelect from "./MockUserSelect";

@@ -1,4 +1,5 @@
-import { FormControl, InputLabel, makeStyles, MenuItem, Select, Theme } from "@material-ui/core";
+import { FormControl, InputLabel, MenuItem, Select, Theme } from "@mui/material";
+import makeStyles from "@mui/styles/makeStyles";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { endpoints } from "../../config";

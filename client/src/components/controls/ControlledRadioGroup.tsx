@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import { FormControl, FormControlLabel, FormLabel, Radio, RadioGroup } from "@material-ui/core";
+import { FormControl, FormControlLabel, FormLabel, Radio, RadioGroup } from "@mui/material";
 import { Controller } from "react-hook-form";
 
 type ControlledRadioGroupProps = {

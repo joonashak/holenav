@@ -1,5 +1,14 @@
-import { Dialog, makeStyles, MenuItem, Paper, Select, Theme, Typography } from "@material-ui/core";
-import { ChangeEvent, useState } from "react";
+import {
+  Dialog,
+  MenuItem,
+  Paper,
+  Select,
+  SelectChangeEvent,
+  Theme,
+  Typography,
+} from "@mui/material";
+import makeStyles from "@mui/styles/makeStyles";
+import { useState } from "react";
 import SigTypes from "../../../../../enum/SigTypes";
 import SigForm from "./SigForm";
 import WormholeForm from "./WormholeForm";
@@ -29,7 +38,7 @@ export default ({ open, onClose }: SigModalProps) => {
   const classes = useStyles();
   const [type, setType] = useState<SigTypes>(SigTypes.DATA.toUpperCase() as SigTypes);
 
-  const onTypeChange = ({ target }: ChangeEvent<{ value: unknown }>) => {
+  const onTypeChange = ({ target }: SelectChangeEvent) => {
     setType(target.value as SigTypes);
   };
 

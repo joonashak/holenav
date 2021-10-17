@@ -1,11 +1,6 @@
-import {
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-  makeStyles,
-  Theme,
-} from "@material-ui/core";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import { Accordion, AccordionSummary, AccordionDetails, Theme } from "@mui/material";
+import makeStyles from "@mui/styles/makeStyles";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { ReactNode } from "react";
 
 const useStyles = makeStyles((theme: Theme) => ({

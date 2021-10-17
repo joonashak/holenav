@@ -1,6 +1,6 @@
 import { useMutation } from "@apollo/client";
 import wormholes from "@eve-data/wormholes";
-import { Button } from "@material-ui/core";
+import { Button } from "@mui/material";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import ControlledRadioGroup from "../../../../controls/ControlledRadioGroup";

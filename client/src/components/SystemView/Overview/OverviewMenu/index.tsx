@@ -1,4 +1,5 @@
-import { Container, Drawer, List, ListItem, makeStyles, Theme } from "@material-ui/core";
+import { Container, Drawer, List, ListItem, Theme } from "@mui/material";
+import makeStyles from "@mui/styles/makeStyles";
 import MapSelector from "./MapSelector";
 
 type OverviewMenuProps = {

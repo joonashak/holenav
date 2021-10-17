@@ -1,5 +1,6 @@
-import { makeStyles, Theme, AppBar, Toolbar, IconButton, Typography } from "@material-ui/core";
-import MenuIcon from "@material-ui/icons/Menu";
+import { Theme, AppBar, Toolbar, IconButton, Typography } from "@mui/material";
+import makeStyles from "@mui/styles/makeStyles";
+import MenuIcon from "@mui/icons-material/Menu";
 import { useState } from "react";
 import SystemInfo from "./SystemInfo";
 import ScanningPanel from "./ScanningPanel";
@@ -28,7 +29,7 @@ export default () => {
     <div className={classes.container}>
       <AppBar position="static">
         <Toolbar>
-          <IconButton edge="start" aria-label="Open Menu" onClick={toggleMenu}>
+          <IconButton edge="start" aria-label="Open Menu" onClick={toggleMenu} size="large">
             <MenuIcon />
           </IconButton>
           <OverviewMenu open={menuOpen} toggle={toggleMenu} />

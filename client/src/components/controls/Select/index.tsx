@@ -1,16 +1,16 @@
 import {
   FormControl,
   InputLabel,
-  makeStyles,
   MenuItem,
   Select as MuiSelect,
+  SelectChangeEvent,
   Theme,
-} from "@material-ui/core";
-import { ChangeEvent } from "react";
+} from "@mui/material";
+import makeStyles from "@mui/styles/makeStyles";
 
 type SelectProps = {
   options: Array<{ id: string; value: string; label: string }>;
-  onChange: (event: ChangeEvent<{ value: unknown }>) => void;
+  onChange: (event: SelectChangeEvent) => void;
   value: string;
   title: string;
 };

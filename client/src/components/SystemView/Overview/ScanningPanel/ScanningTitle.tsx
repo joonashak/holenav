@@ -1,4 +1,5 @@
-import { Chip, makeStyles, Theme, Typography } from "@material-ui/core";
+import { Chip, Theme, Typography } from "@mui/material";
+import makeStyles from "@mui/styles/makeStyles";
 import useSystemData from "../../SystemData/useSystemData";
 
 const useStyles = makeStyles((theme: Theme) => ({

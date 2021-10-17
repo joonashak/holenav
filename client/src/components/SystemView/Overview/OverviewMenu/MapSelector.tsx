@@ -1,4 +1,4 @@
-import { ChangeEvent } from "react";
+import { SelectChangeEvent } from "@mui/material";
 import Select from "../../../controls/Select";
 import useUserData from "../../../UserData/useUserData";
 
@@ -8,7 +8,7 @@ export default () => {
     settings: { maps, selectedMap },
   } = useUserData();
 
-  const onChange = ({ target }: ChangeEvent<{ value: unknown }>) => {
+  const onChange = ({ target }: SelectChangeEvent) => {
     setSelectedMap(target.value as string);
   };
 

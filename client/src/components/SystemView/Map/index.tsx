@@ -1,4 +1,5 @@
-import { makeStyles, Theme } from "@material-ui/core";
+import { Theme } from "@mui/material";
+import makeStyles from "@mui/styles/makeStyles";
 import Tree from "react-d3-tree";
 import { CustomNodeElementProps } from "react-d3-tree/lib/types/common";
 import useWindowDimensions from "../../../utils/useWindowDimensions";

@@ -1,4 +1,4 @@
-import { Button } from "@material-ui/core";
+import { Button } from "@mui/material";
 import { endpoints } from "../../../config";
 import ssoLogo from "./eve_sso_login_button_dark.png";
 
