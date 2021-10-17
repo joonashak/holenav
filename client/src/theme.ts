@@ -1,7 +1,7 @@
 import { responsiveFontSizes, createTheme } from "@mui/material";
 import { grey, lightGreen } from "@mui/material/colors";
 
-const theme = createTheme({
+let theme = createTheme({
   palette: {
     primary: { main: grey[800] },
     secondary: { main: lightGreen[600] },
@@ -18,6 +18,19 @@ const theme = createTheme({
     h3: {
       fontSize: "1.3rem",
       fontWeight: 400,
+    },
+  },
+});
+
+theme = createTheme(theme, {
+  components: {
+    MuiSelect: {
+      styleOverrides: {
+        outlined: {
+          border: `1px solid ${theme.palette.primary.light}`,
+        },
+        icon: { color: theme.palette.secondary.light },
+      },
     },
   },
 });

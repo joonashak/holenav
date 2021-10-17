@@ -15,7 +15,7 @@ import WormholeForm from "./WormholeForm";
 
 const useStyles = makeStyles((theme: Theme) => ({
   paper: {
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: theme.palette.primary.dark,
     padding: "1rem",
   },
   h2: {
