@@ -1,5 +1,4 @@
-import { Container, Drawer, List, ListItem, Theme } from "@mui/material";
-import makeStyles from "@mui/styles/makeStyles";
+import { Container, Drawer, List, ListItem } from "@mui/material";
 import MapSelector from "./MapSelector";
 
 type OverviewMenuProps = {
@@ -7,24 +6,19 @@ type OverviewMenuProps = {
   toggle: () => void;
 };
 
-const useStyles = makeStyles((theme: Theme) => ({
-  paper: {
-    backgroundColor: theme.palette.primary.dark,
-  },
-}));
-
-export default ({ open, toggle }: OverviewMenuProps) => {
-  const { paper } = useStyles();
-
-  return (
-    <Drawer anchor="top" open={open} onClose={toggle} classes={{ paper }}>
-      <Container>
-        <List>
-          <ListItem>
-            <MapSelector />
-          </ListItem>
-        </List>
-      </Container>
-    </Drawer>
-  );
-};
+export default ({ open, toggle }: OverviewMenuProps) => (
+  <Drawer
+    anchor="top"
+    open={open}
+    onClose={toggle}
+    PaperProps={{ sx: { bgcolor: "primary.dark" } }}
+  >
+    <Container>
+      <List>
+        <ListItem>
+          <MapSelector />
+        </ListItem>
+      </List>
+    </Container>
+  </Drawer>
+);

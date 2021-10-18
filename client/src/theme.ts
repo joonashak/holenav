@@ -9,27 +9,32 @@ let theme = createTheme({
       primary: "#fff",
     },
   },
+});
 
+theme = createTheme(theme, {
   typography: {
     h2: {
       fontSize: "1.8rem",
       fontWeight: 400,
+      color: theme.palette.secondary.light,
     },
     h3: {
       fontSize: "1.3rem",
       fontWeight: 400,
     },
   },
-});
 
-theme = createTheme(theme, {
   components: {
     MuiSelect: {
       styleOverrides: {
-        outlined: {
-          border: `1px solid ${theme.palette.primary.light}`,
-        },
         icon: { color: theme.palette.secondary.light },
+      },
+    },
+    MuiOutlinedInput: {
+      styleOverrides: {
+        notchedOutline: {
+          borderColor: theme.palette.primary.light,
+        },
       },
     },
   },

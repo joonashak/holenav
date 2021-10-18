@@ -1,24 +1,31 @@
-import { Chip, Theme, Typography } from "@mui/material";
-import makeStyles from "@mui/styles/makeStyles";
+import { Box, Chip, Typography } from "@mui/material";
 import useSystemData from "../../SystemData/useSystemData";
-
-const useStyles = makeStyles((theme: Theme) => ({
-  chip: {
-    backgroundColor: theme.palette.primary.dark,
-    color: theme.palette.primary.contrastText,
-    fontWeight: "bold",
-    fontSize: "1.05rem",
-  },
-}));
 
 export default () => {
   const { signatures } = useSystemData();
-  const classes = useStyles();
 
   return (
-    <>
+    <Box
+      sx={{
+        width: 1,
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+      }}
+    >
       <Typography variant="h3">Signatures</Typography>
-      {signatures && <Chip label={signatures.length} className={classes.chip} />}
-    </>
+      {signatures && (
+        <Chip
+          label={signatures.length}
+          sx={{
+            bgcolor: "primary.dark",
+            color: "primary.contrastText",
+            fontWeight: "bold",
+            fontSize: "1.05rem",
+          }}
+        />
+      )}
+    </Box>
   );
 };

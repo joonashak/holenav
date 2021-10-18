@@ -3,45 +3,34 @@ import {
   TableBody,
   TableContainer,
   TableHead,
-  TableRow,
+  TableRow as MuiTableRow,
   TableCell as MuiTableCell,
   Paper,
-  Theme,
+  TableCellProps,
+  TableRowProps,
 } from "@mui/material";
-import makeStyles from "@mui/styles/makeStyles";
-import withStyles from "@mui/styles/withStyles";
 import useSystemData from "../../../SystemData/useSystemData";
 
-const useStyles = makeStyles((theme: Theme) => ({
-  container: {
-    backgroundColor: theme.palette.primary.light,
-  },
-}));
+const TableRow = ({ children }: TableRowProps) => (
+  <MuiTableRow sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>{children}</MuiTableRow>
+);
 
-const TableHeadCell = withStyles((theme: Theme) => ({
-  root: {
-    backgroundColor: theme.palette.primary.dark,
-    color: theme.palette.secondary.light,
-    fontSize: "0.95rem",
-    fontWeight: 500,
-    borderBottomColor: theme.palette.primary.dark,
-  },
-}))(MuiTableCell);
+const TableHeadCell = ({ children }: TableCellProps) => (
+  <MuiTableCell sx={{ color: "secondary.light", fontSize: "0.95rem" }}>{children}</MuiTableCell>
+);
 
-const TableCell = withStyles((theme: Theme) => ({
-  root: { borderBottomColor: theme.palette.primary.main },
-}))(MuiTableCell);
+const TableCell = ({ children }: TableCellProps) => (
+  <MuiTableCell sx={{ borderBottomColor: "primary.main" }}>{children}</MuiTableCell>
+);
 
 export default () => {
-  const classes = useStyles();
-
   const { signatures, wormholes } = useSystemData();
   const allSigs = signatures.concat(wormholes);
 
   return (
-    <TableContainer component={Paper} className={classes.container}>
+    <TableContainer component={Paper} sx={{ bgcolor: "primary.light" }}>
       <Table aria-label="simple table" size="small">
-        <TableHead>
+        <TableHead sx={{ bgcolor: "primary.dark" }}>
           <TableRow>
             <TableHeadCell>ID</TableHeadCell>
             <TableHeadCell>Type</TableHeadCell>
