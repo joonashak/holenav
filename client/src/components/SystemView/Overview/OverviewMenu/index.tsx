@@ -7,12 +7,7 @@ type OverviewMenuProps = {
 };
 
 export default ({ open, toggle }: OverviewMenuProps) => (
-  <Drawer
-    anchor="top"
-    open={open}
-    onClose={toggle}
-    PaperProps={{ sx: { bgcolor: "primary.dark" } }}
-  >
+  <Drawer anchor="top" open={open} onClose={toggle}>
     <Container>
       <List>
         <ListItem>

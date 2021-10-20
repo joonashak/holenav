@@ -13,22 +13,27 @@ type SelectProps = {
   title: string;
 };
 
-const Select = ({ options, onChange, value, title }: SelectProps) => (
-  <FormControl fullWidth>
-    <InputLabel id={`select-${title}-label`}>{title}</InputLabel>
-    <MuiSelect
-      value={value}
-      labelId={`select-${title}-label`}
-      onChange={onChange}
-      variant="outlined"
-    >
-      {options.map((opt) => (
-        <MenuItem key={`select-${title}-option-${opt.id}`} value={opt.value}>
-          {opt.label}
-        </MenuItem>
-      ))}
-    </MuiSelect>
-  </FormControl>
-);
+const Select = ({ options, onChange, value, title }: SelectProps) => {
+  const labelId = `select-${title}-label`;
+
+  return (
+    <FormControl fullWidth>
+      <InputLabel id={labelId}>{title}</InputLabel>
+      <MuiSelect
+        value={value}
+        labelId={labelId}
+        label={title}
+        onChange={onChange}
+        variant="outlined"
+      >
+        {options.map((opt) => (
+          <MenuItem key={`select-${title}-option-${opt.id}`} value={opt.value}>
+            {opt.label}
+          </MenuItem>
+        ))}
+      </MuiSelect>
+    </FormControl>
+  );
+};
 
 export default Select;

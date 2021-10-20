@@ -43,6 +43,13 @@ theme = createTheme(theme, {
         },
       },
     },
+    MuiInputLabel: {
+      styleOverrides: {
+        outlined: {
+          color: theme.palette.secondary.light,
+        },
+      },
+    },
   },
 });
 
