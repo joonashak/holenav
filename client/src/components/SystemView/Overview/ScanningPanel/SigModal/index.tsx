@@ -1,11 +1,20 @@
-import { Dialog, MenuItem, Paper, Select, SelectChangeEvent, Typography } from "@mui/material";
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  FormGroup,
+  Paper,
+  SelectChangeEvent,
+  Typography,
+} from "@mui/material";
 import { useState } from "react";
+import Select from "../../../../controls/Select";
 import SigTypes from "../../../../../enum/SigTypes";
 import SigForm from "./SigForm";
 import WormholeForm from "./WormholeForm";
 
 const typeOptions = Object.entries(SigTypes).map(([key, label]) => ({
-  key: `sig-type-${key}`,
+  id: `sig-type-${key}`,
   value: key,
   label,
 }));
@@ -26,17 +35,18 @@ export default ({ open, onClose }: SigModalProps) => {
 
   return (
     <Dialog open={open} onClose={onClose}>
-      <Paper sx={{ padding: "1rem" }}>
-        <Typography variant="h2">New Signature</Typography>
-        <Select value={type} onChange={onTypeChange} data-cy="select-sig-type">
-          {typeOptions.map(({ key, value, label }) => (
-            <MenuItem key={key} value={value} data-cy={`select-sig-type-option-${value}`}>
-              {label}
-            </MenuItem>
-          ))}
-        </Select>
+      <DialogTitle>New Signature</DialogTitle>
+      <DialogContent>
+        <FormGroup>
+          <Select
+            value={type}
+            onChange={onTypeChange}
+            title="Signature Type"
+            options={typeOptions}
+          />
+        </FormGroup>
         {showWormholeForm ? <WormholeForm /> : <SigForm type={type} />}
-      </Paper>
+      </DialogContent>
     </Dialog>
   );
 };

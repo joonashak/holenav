@@ -1,5 +1,5 @@
 import { useMutation } from "@apollo/client";
-import { Button } from "@mui/material";
+import { Box, Button, FormGroup } from "@mui/material";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import SigTypes from "../../../../../enum/SigTypes";
@@ -37,11 +37,17 @@ export default ({ type }: SigFormProps) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <ControlledTextField name="eveId" control={control} label="ID" />
-      <ControlledTextField name="name" control={control} label="Name" />
-      <Button type="submit" variant="contained" color="primary">
-        Add
-      </Button>
+      <Box sx={{ "& > *": { mt: 3, mb: 3 } }}>
+        <FormGroup>
+          <ControlledTextField name="eveId" control={control} label="ID" />
+        </FormGroup>
+        <FormGroup>
+          <ControlledTextField name="name" control={control} label="Name" />
+        </FormGroup>
+        <FormGroup>
+          <Button variant="contained">Add</Button>
+        </FormGroup>
+      </Box>
     </form>
   );
 };

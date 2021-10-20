@@ -63,6 +63,15 @@ theme = createTheme(theme, {
         },
       },
     },
+    MuiDialogContent: {
+      styleOverrides: {
+        root: {
+          "&&": {
+            paddingTop: theme.spacing(1),
+          },
+        },
+      },
+    },
   },
 });
 
