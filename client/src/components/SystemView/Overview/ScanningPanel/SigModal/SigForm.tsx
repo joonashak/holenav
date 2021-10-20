@@ -16,16 +16,17 @@ const typeOptions = Object.entries(SigTypes).map(([key, label]) => ({
 
 type SigFormProps = {
   type: SigTypes;
+  eveId: string;
 };
 
-export default ({ type }: SigFormProps) => {
+export default ({ type, eveId }: SigFormProps) => {
   const { handleSubmit, control } = useForm({ defaultValues: { type: typeOptions[0].value } });
   const { addSignature, id } = useSystemData();
   const [addSigMutation, { data, loading, error }] = useMutation(ADD_SIGNATURE);
   const { setNotification } = useNotification();
 
   const onSubmit = (formData: any) => {
-    addSigMutation({ variables: { ...formData, type, systemId: id } });
+    addSigMutation({ variables: { ...formData, type, eveId, systemId: id } });
   };
 
   useEffect(() => {
@@ -39,13 +40,12 @@ export default ({ type }: SigFormProps) => {
     <form onSubmit={handleSubmit(onSubmit)}>
       <Box sx={{ "& > *": { mt: 3, mb: 3 } }}>
         <FormGroup>
-          <ControlledTextField name="eveId" control={control} label="ID" />
-        </FormGroup>
-        <FormGroup>
           <ControlledTextField name="name" control={control} label="Name" />
         </FormGroup>
         <FormGroup>
-          <Button variant="contained">Add</Button>
+          <Button type="submit" variant="contained" color="secondary">
+            Save Signature
+          </Button>
         </FormGroup>
       </Box>
     </form>

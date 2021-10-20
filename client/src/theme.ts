@@ -61,6 +61,10 @@ theme = createTheme(theme, {
         containedPrimary: {
           backgroundColor: theme.palette.primary.dark,
         },
+        containedSecondary: {
+          backgroundColor: theme.palette.secondary.main,
+          color: theme.palette.primary.dark,
+        },
       },
     },
     MuiDialogContent: {
