@@ -18,7 +18,7 @@ type Options = {
 // FIXME: Rename and update to use styled select (or integrate in the same mess...?)
 export default ({ options, name, control, label }: ControlledSelectProps) => {
   const Render = ({ field }: any) => (
-    <TextField {...field} select label={label}>
+    <TextField {...field} select label={label} fullWidth>
       {options.map(({ key, value, label: optionLabel }) => (
         <MenuItem key={key} value={value}>
           {optionLabel}

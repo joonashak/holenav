@@ -43,6 +43,14 @@ theme = createTheme(theme, {
         },
       },
     },
+    MuiRadio: {
+      styleOverrides: {
+        root: {
+          paddingTop: theme.spacing(0.5),
+          paddingBottom: theme.spacing(0.5),
+        },
+      },
+    },
     MuiInputLabel: {
       styleOverrides: {
         outlined: {
@@ -50,6 +58,21 @@ theme = createTheme(theme, {
           "&.Mui-focused": {
             color: theme.palette.secondary.main,
           },
+        },
+      },
+    },
+    MuiFormLabel: {
+      styleOverrides: {
+        root: {
+          color: theme.palette.secondary.light,
+          marginBottom: theme.spacing(1),
+        },
+      },
+    },
+    MuiFormControlLabel: {
+      styleOverrides: {
+        label: {
+          fontSize: "0.85rem",
         },
       },
     },

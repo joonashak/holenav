@@ -17,7 +17,7 @@ type Options = {
 
 export default ({ options, name, control, label }: ControlledRadioGroupProps) => {
   const Render = ({ field }: any) => (
-    <FormControl component="fieldset">
+    <FormControl component="fieldset" fullWidth>
       <FormLabel component="legend">{label}</FormLabel>
       <RadioGroup aria-label={label} {...field}>
         {options.map(({ key, value, label: optLabel }) => (

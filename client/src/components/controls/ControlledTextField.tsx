@@ -10,7 +10,13 @@ type ControlledTextFieldProps = {
 
 export default ({ name, control, label }: ControlledTextFieldProps) => {
   const Render = ({ field }: any) => (
-    <TextField {...field} label={label} variant="outlined" data-cy={`textfield-${name}`} />
+    <TextField
+      {...field}
+      label={label}
+      variant="outlined"
+      data-cy={`textfield-${name}`}
+      fullWidth
+    />
   );
 
   return <Controller name={name} control={control} render={Render} defaultValue="" />;

@@ -9,6 +9,7 @@ import ControlledTextField from "../../../../controls/ControlledTextField";
 import useNotification from "../../../../GlobalNotification/useNotification";
 import { ADD_WORMHOLE } from "../../../SystemData/graphql";
 import useSystemData from "../../../SystemData/useSystemData";
+import FormGroupRow from "../../../../controls/FormGroupRow";
 
 const lifeOptions = [
   { key: "lt-24-hrs", value: "lt-24-hrs", label: "Less than 24 hrs" },
@@ -25,7 +26,11 @@ const whTypeOptions = [{ key: "wh-K162", value: "K162", label: "K162" }].concat(
   wormholes.map(({ type }) => ({ key: `wh-${type}`, value: type, label: type }))
 );
 
-export default () => {
+type WormholeFormProps = {
+  eveId: string;
+};
+
+const WormholeForm = ({ eveId }: WormholeFormProps) => {
   const { handleSubmit, control } = useForm({
     defaultValues: {
       life: "lt-24-hrs",
@@ -39,7 +44,7 @@ export default () => {
 
   const onSubmit = (formData: any) => {
     const { name } = formData;
-    const mutationData = { name, systemName };
+    const mutationData = { name, eveId, systemName };
     addWhMutation({ variables: mutationData });
   };
 
@@ -52,29 +57,40 @@ export default () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <ControlledTextField name="eveId" control={control} label="ID" />
-      <ControlledTextField name="name" control={control} label="Name" />
-      <ControlledRadioGroup
-        name="life"
-        control={control}
-        label="Lifetime Status"
-        options={lifeOptions}
-      />
-      <ControlledRadioGroup
-        name="mass"
-        control={control}
-        label="Mass Status"
-        options={massOptions}
-      />
-      <ControlledSelect
-        name="whType"
-        control={control}
-        label="Wormhole Type"
-        options={whTypeOptions}
-      />
-      <Button type="submit" variant="contained" color="primary" data-cy="wh-form-submit">
-        Add
+      <FormGroupRow>
+        <ControlledSelect
+          name="whType"
+          control={control}
+          label="Wormhole Type"
+          options={whTypeOptions}
+        />
+        <ControlledTextField name="name" control={control} label="Name" />
+      </FormGroupRow>
+      <FormGroupRow>
+        <ControlledRadioGroup
+          name="life"
+          control={control}
+          label="Lifetime Status"
+          options={lifeOptions}
+        />
+        <ControlledRadioGroup
+          name="mass"
+          control={control}
+          label="Mass Status"
+          options={massOptions}
+        />
+      </FormGroupRow>
+      <Button
+        type="submit"
+        variant="contained"
+        color="secondary"
+        data-cy="wh-form-submit"
+        fullWidth
+      >
+        Save Wormhole
       </Button>
     </form>
   );
 };
+
+export default WormholeForm;
