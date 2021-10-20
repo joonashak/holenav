@@ -12,6 +12,12 @@ let theme = createTheme({
 });
 
 theme = createTheme(theme, {
+  palette: {
+    background: {
+      paper: theme.palette.primary.dark,
+    },
+  },
+
   typography: {
     h2: {
       fontSize: "1.8rem",

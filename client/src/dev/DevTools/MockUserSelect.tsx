@@ -34,6 +34,10 @@ export default () => {
         id="mock-user-select"
         onChange={onChange}
         data-cy="mock-user-select"
+        sx={{
+          color: "primary.dark",
+          "& .MuiSelect-icon": { color: "primary.main" },
+        }}
       >
         <MenuItem value="none">None</MenuItem>
         {users.map(({ id, name }) => (

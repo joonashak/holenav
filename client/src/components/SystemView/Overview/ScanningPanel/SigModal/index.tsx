@@ -26,12 +26,7 @@ export default ({ open, onClose }: SigModalProps) => {
 
   return (
     <Dialog open={open} onClose={onClose}>
-      <Paper
-        sx={{
-          backgroundColor: "primary.dark",
-          padding: "1rem",
-        }}
-      >
+      <Paper sx={{ padding: "1rem" }}>
         <Typography variant="h2">New Signature</Typography>
         <Select value={type} onChange={onTypeChange} data-cy="select-sig-type">
           {typeOptions.map(({ key, value, label }) => (
