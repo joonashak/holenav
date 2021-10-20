@@ -47,6 +47,9 @@ theme = createTheme(theme, {
       styleOverrides: {
         outlined: {
           color: theme.palette.secondary.light,
+          "&.Mui-focused": {
+            color: theme.palette.secondary.main,
+          },
         },
       },
     },
