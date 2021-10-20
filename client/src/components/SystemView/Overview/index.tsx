@@ -9,7 +9,7 @@ import OverviewMenu from "./OverviewMenu";
 
 export default () => {
   const { name } = useSystemData();
-  const [menuOpen, setMenuOpen] = useState(true);
+  const [menuOpen, setMenuOpen] = useState(false);
   const toggleMenu = () => setMenuOpen((prev) => !prev);
 
   return (

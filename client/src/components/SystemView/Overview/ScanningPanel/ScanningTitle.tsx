@@ -23,6 +23,7 @@ export default () => {
             color: "primary.contrastText",
             fontWeight: "bold",
             fontSize: "1.05rem",
+            mr: 1,
           }}
         />
       )}

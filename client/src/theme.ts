@@ -53,6 +53,16 @@ theme = createTheme(theme, {
         },
       },
     },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          fontSize: "0.9rem",
+        },
+        containedPrimary: {
+          backgroundColor: theme.palette.primary.dark,
+        },
+      },
+    },
   },
 });
 

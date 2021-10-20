@@ -9,7 +9,13 @@ export default () => {
 
   return (
     <>
-      <Button onClick={toggleOpen} variant="contained" data-cy="add-sig-button">
+      <Button
+        onClick={toggleOpen}
+        variant="contained"
+        data-cy="add-sig-button"
+        fullWidth
+        sx={{ mt: 2 }}
+      >
         Add Signature
       </Button>
       <SigModal open={open} onClose={toggleOpen} />
