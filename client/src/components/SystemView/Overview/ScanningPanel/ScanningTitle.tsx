@@ -2,7 +2,8 @@ import { Box, Chip, Typography } from "@mui/material";
 import useSystemData from "../../SystemData/useSystemData";
 
 export default () => {
-  const { signatures } = useSystemData();
+  const { signatures, wormholes } = useSystemData();
+  const nSigs = signatures.concat(wormholes).length;
 
   return (
     <Box
@@ -17,7 +18,7 @@ export default () => {
       <Typography variant="h3">Signatures</Typography>
       {signatures && (
         <Chip
-          label={signatures.length}
+          label={nSigs}
           sx={{
             bgcolor: "primary.dark",
             color: "primary.contrastText",
