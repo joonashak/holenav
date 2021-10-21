@@ -1,6 +1,6 @@
 import { useMutation } from "@apollo/client";
 import wormholes from "@eve-data/wormholes";
-import { Autocomplete, Button, TextField } from "@mui/material";
+import { Button } from "@mui/material";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import systems from "@eve-data/systems";
@@ -11,6 +11,7 @@ import useNotification from "../../../../GlobalNotification/useNotification";
 import { ADD_WORMHOLE } from "../../../SystemData/graphql";
 import useSystemData from "../../../SystemData/useSystemData";
 import FormGroupRow from "../../../../controls/FormGroupRow";
+import RhfAutocomplete from "../../../../controls/RhfAutocomplete";
 
 const lifeOptions = [
   { key: "lt-24-hrs", value: "lt-24-hrs", label: "Less than 24 hrs" },
@@ -38,6 +39,7 @@ const WormholeForm = ({ eveId }: WormholeFormProps) => {
       mass: "stable",
       whType: "K162",
       whTypeReverse: "",
+      destinationName: null,
     },
   });
   const { addWormhole, name: systemName } = useSystemData();
@@ -89,11 +91,10 @@ const WormholeForm = ({ eveId }: WormholeFormProps) => {
           label="Wormhole Type (Farside)"
           options={whTypeOptions}
         />
-        <Autocomplete
+        <RhfAutocomplete
+          name="destinationName"
+          control={control}
           options={systems.map((system) => system.name)}
-          getOptionLabel={(option) => option.toString()}
-          renderInput={(params) => <TextField {...params} label="Destination" />}
-          fullWidth
         />
       </FormGroupRow>
       <Button

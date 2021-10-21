@@ -36,6 +36,12 @@ theme = createTheme(theme, {
         icon: { color: theme.palette.secondary.light },
       },
     },
+    MuiAutocomplete: {
+      styleOverrides: {
+        popupIndicator: { color: theme.palette.secondary.light },
+        clearIndicator: { color: theme.palette.warning.dark },
+      },
+    },
     MuiOutlinedInput: {
       styleOverrides: {
         notchedOutline: {
@@ -85,7 +91,7 @@ theme = createTheme(theme, {
           backgroundColor: theme.palette.primary.dark,
         },
         containedSecondary: {
-          backgroundColor: theme.palette.secondary.main,
+          backgroundColor: theme.palette.secondary.light,
           color: theme.palette.primary.dark,
         },
       },
