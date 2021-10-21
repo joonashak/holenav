@@ -81,6 +81,33 @@ export class WormholeService {
     return wormhole;
   }
 
+  async updateWormhole(id: string, folder: Folder, update: Partial<Wormhole>): Promise<Wormhole> {
+    const oldWh = await this.whModel.findOne({ id, folder });
+    const updatedWh = await this.whModel.findOneAndUpdate({ id }, update, {
+      returnDocument: "after",
+    });
+
+    // Destination added.
+    if (!oldWh.destinationName && update.destinationName) {
+      return this.addReverseWormhole(updatedWh);
+    }
+
+    // Destination removed.
+    if (oldWh.destinationName && update.destinationName === null) {
+      return this.removeReverseWormhole(updatedWh);
+    }
+
+    // Destination updated.
+    if (oldWh.destinationName && update.destinationName) {
+      // TODO: mass&lifetime need to be updated to reverse side, too
+      await this.whModel.findByIdAndUpdate(updatedWh.reverse, {
+        systemName: update.destinationName,
+      });
+    }
+
+    return updatedWh;
+  }
+
   private async addReverseWormhole(wormhole: WormholeDocument): Promise<WormholeDocument> {
     const { systemName, destinationName, folder } = wormhole;
 
@@ -92,32 +119,15 @@ export class WormholeService {
       folder,
     });
 
-    const updatedWh = await this.whModel.findByIdAndUpdate(
-      wormhole._id,
-      { reverse },
-      { returnDocument: "after" },
-    );
-    return updatedWh;
+    return this.whModel.findByIdAndUpdate(wormhole._id, { reverse }, { returnDocument: "after" });
   }
 
-  async updateWormhole(id: string, folder: Folder, update: Partial<Wormhole>): Promise<Wormhole> {
-    const oldWh = await this.whModel.findOne({ id, folder });
-    let updatedWh = await this.whModel.findOneAndUpdate({ id }, update, {
-      returnDocument: "after",
-    });
-
-    // destos
-    // TODO: old:-, new:+         create rev    ✅
-    // TODO: old:+, new:-         delete rev
-    // TODO: old:+, new:+diff     update rev
-
-    // Destination added.
-    if (!oldWh.destinationName && update.destinationName) {
-      updatedWh = await this.addReverseWormhole(updatedWh);
-    }
-
-    // TODO: mass&lifetime need to be updated to reverse side, too
-
-    return updatedWh;
+  private async removeReverseWormhole(wormhole: WormholeDocument): Promise<WormholeDocument> {
+    await this.whModel.findByIdAndDelete(wormhole.reverse);
+    return this.whModel.findByIdAndUpdate(
+      wormhole._id,
+      { reverse: null },
+      { returnDocument: "after" },
+    );
   }
 }
