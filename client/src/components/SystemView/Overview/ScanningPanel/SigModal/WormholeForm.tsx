@@ -1,8 +1,9 @@
 import { useMutation } from "@apollo/client";
 import wormholes from "@eve-data/wormholes";
-import { Button } from "@mui/material";
+import { Autocomplete, Button, TextField } from "@mui/material";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import systems from "@eve-data/systems";
 import ControlledRadioGroup from "../../../../controls/ControlledRadioGroup";
 import ControlledSelect from "../../../../controls/Select/ControlledSelect";
 import ControlledTextField from "../../../../controls/ControlledTextField";
@@ -36,6 +37,7 @@ const WormholeForm = ({ eveId }: WormholeFormProps) => {
       life: "lt-24-hrs",
       mass: "stable",
       whType: "K162",
+      whTypeReverse: "",
     },
   });
   const { addWormhole, name: systemName } = useSystemData();
@@ -78,6 +80,20 @@ const WormholeForm = ({ eveId }: WormholeFormProps) => {
           control={control}
           label="Mass Status"
           options={massOptions}
+        />
+      </FormGroupRow>
+      <FormGroupRow>
+        <ControlledSelect
+          name="whTypeReverse"
+          control={control}
+          label="Wormhole Type (Farside)"
+          options={whTypeOptions}
+        />
+        <Autocomplete
+          options={systems.map((system) => system.name)}
+          getOptionLabel={(option) => option.toString()}
+          renderInput={(params) => <TextField {...params} label="Destination" />}
+          fullWidth
         />
       </FormGroupRow>
       <Button

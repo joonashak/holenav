@@ -18,7 +18,7 @@ type SigModalProps = {
 };
 
 export default ({ open, onClose }: SigModalProps) => {
-  const [type, setType] = useState<SigTypes>(SigTypes.DATA.toUpperCase() as SigTypes);
+  const [type, setType] = useState<SigTypes>(SigTypes.WORMHOLE.toUpperCase() as SigTypes);
   const [eveId, setEveId] = useState<string>("");
 
   const onTypeChange = ({ target }: SelectChangeEvent) => {
