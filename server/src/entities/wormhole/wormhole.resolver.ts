@@ -5,6 +5,7 @@ import Roles from "../../role/roles.enum";
 import { FolderDocument } from "../folder/folder.model";
 import AddWormholeArgs from "./dto/addWormhole.dto";
 import { ConnectionTree } from "./dto/connectionTree.dto";
+import UpdateWormholeArgs from "./dto/updateWormhole.dto";
 import { Wormhole } from "./wormhole.model";
 import { WormholeService } from "./wormhole.service";
 
@@ -37,6 +38,17 @@ export class WormholeResolver {
     @ActiveFolder() folder: FolderDocument,
   ): Promise<Wormhole> {
     const res = await this.whService.createWormhole({ ...args, folder });
+    return res;
+  }
+
+  @RequireFolderRole(Roles.WRITE)
+  @Mutation((returns) => Wormhole)
+  async updateWormhole(
+    @Args() args: UpdateWormholeArgs,
+    @ActiveFolder() folder: FolderDocument,
+  ): Promise<Wormhole> {
+    const { id, ...update } = args;
+    const res = await this.whService.updateWormhole(id, folder, update);
     return res;
   }
 }

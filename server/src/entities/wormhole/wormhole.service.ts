@@ -3,7 +3,7 @@ import { InjectModel } from "@nestjs/mongoose";
 import { Model, Types } from "mongoose";
 import { Folder, FolderDocument } from "../folder/folder.model";
 import { ConnectionTree, ConnectionTreeNode } from "./dto/connectionTree.dto";
-import { Wormhole } from "./wormhole.model";
+import { Wormhole, WormholeDocument } from "./wormhole.model";
 
 @Injectable()
 export class WormholeService {
@@ -72,20 +72,52 @@ export class WormholeService {
 
   async createWormhole(data: Wormhole): Promise<Wormhole> {
     let wormhole = await this.whModel.create(data);
-    const { systemName, destinationName, folder } = wormhole;
+    const { destinationName } = wormhole;
 
     if (destinationName) {
-      const reverse = await this.whModel.create({
-        name: "rev from " + systemName,
-        systemName: destinationName,
-        destinationName: systemName,
-        reverse: wormhole,
-        folder,
-      });
-
-      wormhole = await this.whModel.findByIdAndUpdate(wormhole._id, { reverse });
+      wormhole = await this.addReverseWormhole(wormhole);
     }
 
     return wormhole;
+  }
+
+  private async addReverseWormhole(wormhole: WormholeDocument): Promise<WormholeDocument> {
+    const { systemName, destinationName, folder } = wormhole;
+
+    const reverse = await this.whModel.create({
+      name: "rev from " + systemName,
+      systemName: destinationName,
+      destinationName: systemName,
+      reverse: wormhole,
+      folder,
+    });
+
+    const updatedWh = await this.whModel.findByIdAndUpdate(
+      wormhole._id,
+      { reverse },
+      { returnDocument: "after" },
+    );
+    return updatedWh;
+  }
+
+  async updateWormhole(id: string, folder: Folder, update: Partial<Wormhole>): Promise<Wormhole> {
+    const oldWh = await this.whModel.findOne({ id, folder });
+    let updatedWh = await this.whModel.findOneAndUpdate({ id }, update, {
+      returnDocument: "after",
+    });
+
+    // destos
+    // TODO: old:-, new:+         create rev    ✅
+    // TODO: old:+, new:-         delete rev
+    // TODO: old:+, new:+diff     update rev
+
+    // Destination added.
+    if (!oldWh.destinationName && update.destinationName) {
+      updatedWh = await this.addReverseWormhole(updatedWh);
+    }
+
+    // TODO: mass&lifetime need to be updated to reverse side, too
+
+    return updatedWh;
   }
 }

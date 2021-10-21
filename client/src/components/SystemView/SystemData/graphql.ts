@@ -37,7 +37,7 @@ export const ADD_SIGNATURE = gql`
 `;
 
 export const ADD_WORMHOLE = gql`
-  mutation AddWormhole($name: String!, $systemName: String!, $destinationName: String!) {
+  mutation AddWormhole($name: String!, $systemName: String!, $destinationName: String) {
     addWormhole(name: $name, systemName: $systemName, destinationName: $destinationName) {
       id
       eveId
