@@ -47,8 +47,8 @@ const WormholeForm = ({ eveId }: WormholeFormProps) => {
   const { setNotification } = useNotification();
 
   const onSubmit = (formData: any) => {
-    const { name } = formData;
-    const mutationData = { name, eveId, systemName };
+    const { name, destinationName } = formData;
+    const mutationData = { name, eveId, systemName, destinationName };
     addWhMutation({ variables: mutationData });
   };
 
