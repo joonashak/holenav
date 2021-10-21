@@ -57,7 +57,11 @@ const SigModal = ({ open, onClose, wormhole }: SigModalProps) => {
           />
           <TextField label="ID" value={eveId} onChange={onEveIdChange} fullWidth />
         </FormGroupRow>
-        {showWormholeForm ? <WormholeForm eveId={eveId} /> : <SigForm type={type} eveId={eveId} />}
+        {showWormholeForm ? (
+          <WormholeForm eveId={eveId} existing={wormhole} />
+        ) : (
+          <SigForm type={type} eveId={eveId} />
+        )}
       </DialogContent>
     </Dialog>
   );

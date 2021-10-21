@@ -10,8 +10,7 @@ import {
   TableCellProps,
   TableRowProps,
 } from "@mui/material";
-import SigTypes from "../../../../../enum/SigTypes";
-import useSystemData from "../../../SystemData/useSystemData";
+import useSystemData, { Signature, Wormhole } from "../../../SystemData/useSystemData";
 import EditSigButton from "./EditSigButton";
 
 const TableRow = ({ children }: TableRowProps) => (
@@ -28,9 +27,9 @@ const TableCell = ({ children }: TableCellProps) => (
 
 export default () => {
   const { signatures, wormholes } = useSystemData();
-  const allSigs = signatures.concat(
-    wormholes.map((wh) => ({ ...wh, type: wh.type || SigTypes.WORMHOLE }))
-  );
+  const allSigs = signatures.concat(wormholes);
+
+  const isWormhole = (sig: Signature | Wormhole): boolean => Object.keys(sig).includes("eol");
 
   return (
     <TableContainer component={Paper} sx={{ bgcolor: "primary.light" }}>
@@ -49,7 +48,7 @@ export default () => {
                 <TableCell component="th" scope="row">
                   {sig.eveId}
                 </TableCell>
-                <TableCell>{sig.type}</TableCell>
+                <TableCell>{sig.type || (isWormhole(sig) && "Wormhole")}</TableCell>
                 <TableCell>
                   <Box sx={{ display: "flex", justifyContent: "space-between" }}>
                     {sig.name}

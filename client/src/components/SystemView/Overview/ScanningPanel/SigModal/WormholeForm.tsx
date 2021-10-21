@@ -9,7 +9,7 @@ import ControlledSelect from "../../../../controls/Select/ControlledSelect";
 import ControlledTextField from "../../../../controls/ControlledTextField";
 import useNotification from "../../../../GlobalNotification/useNotification";
 import { ADD_WORMHOLE } from "../../../SystemData/graphql";
-import useSystemData from "../../../SystemData/useSystemData";
+import useSystemData, { Wormhole } from "../../../SystemData/useSystemData";
 import FormGroupRow from "../../../../controls/FormGroupRow";
 import RhfAutocomplete from "../../../../controls/RhfAutocomplete";
 
@@ -30,16 +30,18 @@ const whTypeOptions = [{ key: "wh-K162", value: "K162", label: "K162" }].concat(
 
 type WormholeFormProps = {
   eveId: string;
+  existing?: Wormhole;
 };
 
-const WormholeForm = ({ eveId }: WormholeFormProps) => {
+const WormholeForm = ({ eveId, existing }: WormholeFormProps) => {
   const { handleSubmit, control } = useForm({
     defaultValues: {
+      name: existing?.name || "",
       life: "lt-24-hrs",
       mass: "stable",
-      whType: "K162",
+      whType: existing?.type || "",
       whTypeReverse: "",
-      destinationName: null,
+      destinationName: existing?.destinationName || null,
     },
   });
   const { addWormhole, name: systemName } = useSystemData();
@@ -108,6 +110,10 @@ const WormholeForm = ({ eveId }: WormholeFormProps) => {
       </Button>
     </form>
   );
+};
+
+WormholeForm.defaultProps = {
+  existing: null,
 };
 
 export default WormholeForm;
