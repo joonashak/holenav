@@ -1,4 +1,5 @@
 import {
+  Box,
   Table,
   TableBody,
   TableContainer,
@@ -8,7 +9,10 @@ import {
   Paper,
   TableCellProps,
   TableRowProps,
+  IconButton,
 } from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
+import SigTypes from "../../../../../enum/SigTypes";
 import useSystemData from "../../../SystemData/useSystemData";
 
 const TableRow = ({ children }: TableRowProps) => (
@@ -25,7 +29,9 @@ const TableCell = ({ children }: TableCellProps) => (
 
 export default () => {
   const { signatures, wormholes } = useSystemData();
-  const allSigs = signatures.concat(wormholes);
+  const allSigs = signatures.concat(
+    wormholes.map((wh) => ({ ...wh, type: wh.type || SigTypes.WORMHOLE }))
+  );
 
   return (
     <TableContainer component={Paper} sx={{ bgcolor: "primary.light" }}>
@@ -45,7 +51,14 @@ export default () => {
                   {sig.eveId}
                 </TableCell>
                 <TableCell>{sig.type}</TableCell>
-                <TableCell>{sig.name}</TableCell>
+                <TableCell>
+                  <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                    {sig.name}
+                    <IconButton size="small" sx={{ pt: 0, pb: 0 }} aria-label="Edit Signature">
+                      <EditIcon fontSize="inherit" />
+                    </IconButton>
+                  </Box>
+                </TableCell>
               </TableRow>
             ))}
         </TableBody>
