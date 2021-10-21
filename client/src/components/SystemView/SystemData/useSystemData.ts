@@ -14,14 +14,14 @@ type SystemData = {
   addWormhole: (newWormhole: any) => void;
 };
 
-type Signature = {
+export type Signature = {
   id: string;
   eveId: string;
   name: string;
   type: string;
 };
 
-type Wormhole = Signature & {
+export type Wormhole = Signature & {
   eol: boolean;
 };
 

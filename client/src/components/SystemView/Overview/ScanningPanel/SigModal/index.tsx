@@ -5,6 +5,7 @@ import SigTypes from "../../../../../enum/SigTypes";
 import SigForm from "./SigForm";
 import WormholeForm from "./WormholeForm";
 import FormGroupRow from "../../../../controls/FormGroupRow";
+import { Wormhole } from "../../../SystemData/useSystemData";
 
 const typeOptions = Object.entries(SigTypes).map(([key, label]) => ({
   id: `sig-type-${key}`,
@@ -15,11 +16,13 @@ const typeOptions = Object.entries(SigTypes).map(([key, label]) => ({
 type SigModalProps = {
   open: boolean;
   onClose: (event: {}, reason: "backdropClick" | "escapeKeyDown") => void;
+  wormhole?: Wormhole;
 };
 
-export default ({ open, onClose }: SigModalProps) => {
-  const [type, setType] = useState<SigTypes>(SigTypes.DATA.toUpperCase() as SigTypes);
-  const [eveId, setEveId] = useState<string>("");
+const SigModal = ({ open, onClose, wormhole }: SigModalProps) => {
+  const defaultType = wormhole ? SigTypes.WORMHOLE : SigTypes.DATA;
+  const [type, setType] = useState<SigTypes>(defaultType.toUpperCase() as SigTypes);
+  const [eveId, setEveId] = useState<string>(wormhole?.eveId || "");
 
   const onTypeChange = ({ target }: SelectChangeEvent) => {
     setType(target.value as SigTypes);
@@ -59,3 +62,9 @@ export default ({ open, onClose }: SigModalProps) => {
     </Dialog>
   );
 };
+
+SigModal.defaultProps = {
+  wormhole: null,
+};
+
+export default SigModal;

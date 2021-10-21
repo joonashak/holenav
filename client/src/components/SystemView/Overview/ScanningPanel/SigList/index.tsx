@@ -9,11 +9,10 @@ import {
   Paper,
   TableCellProps,
   TableRowProps,
-  IconButton,
 } from "@mui/material";
-import EditIcon from "@mui/icons-material/Edit";
 import SigTypes from "../../../../../enum/SigTypes";
 import useSystemData from "../../../SystemData/useSystemData";
+import EditSigButton from "./EditSigButton";
 
 const TableRow = ({ children }: TableRowProps) => (
   <MuiTableRow sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>{children}</MuiTableRow>
@@ -54,9 +53,7 @@ export default () => {
                 <TableCell>
                   <Box sx={{ display: "flex", justifyContent: "space-between" }}>
                     {sig.name}
-                    <IconButton size="small" sx={{ pt: 0, pb: 0 }} aria-label="Edit Signature">
-                      <EditIcon fontSize="inherit" />
-                    </IconButton>
+                    <EditSigButton sig={sig} />
                   </Box>
                 </TableCell>
               </TableRow>
