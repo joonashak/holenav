@@ -71,6 +71,21 @@ export class WormholeService {
   }
 
   async createWormhole(data: Wormhole): Promise<Wormhole> {
-    return this.whModel.create(data);
+    let wormhole = await this.whModel.create(data);
+    const { systemName, destinationName, folder } = wormhole;
+
+    if (destinationName) {
+      const reverse = await this.whModel.create({
+        name: "rev from " + systemName,
+        systemName: destinationName,
+        destinationName: systemName,
+        reverse: wormhole,
+        folder,
+      });
+
+      wormhole = await this.whModel.findByIdAndUpdate(wormhole._id, { reverse });
+    }
+
+    return wormhole;
   }
 }

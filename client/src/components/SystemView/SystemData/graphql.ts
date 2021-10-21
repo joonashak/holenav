@@ -21,9 +21,6 @@ export const GET_SYSTEM_BY_NAME = gql`
       eol
       massStatus
       destinationName
-      reverse {
-        id
-      }
     }
   }
 `;

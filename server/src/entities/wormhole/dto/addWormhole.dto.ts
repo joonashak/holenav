@@ -7,4 +7,7 @@ export default class AddWormholeArgs {
 
   @Field()
   systemName: string;
+
+  @Field({ nullable: true })
+  destinationName?: string;
 }
