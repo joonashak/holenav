@@ -44,10 +44,10 @@ export class WormholeResolver {
   @RequireFolderRole(Roles.WRITE)
   @Mutation((returns) => Wormhole)
   async updateWormhole(
-    @Args() args: UpdateWormholeArgs,
+    @Args("input") input: UpdateWormholeArgs,
     @ActiveFolder() folder: FolderDocument,
   ): Promise<Wormhole> {
-    const { id, ...update } = args;
+    const { id, ...update } = input;
     const res = await this.whService.updateWormhole(id, folder, update);
     return res;
   }

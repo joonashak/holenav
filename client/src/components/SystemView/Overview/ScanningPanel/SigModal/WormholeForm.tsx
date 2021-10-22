@@ -1,14 +1,13 @@
 import { useMutation } from "@apollo/client";
 import wormholes from "@eve-data/wormholes";
 import { Button } from "@mui/material";
-import { useEffect } from "react";
-import { useForm } from "react-hook-form";
+import { FieldValues, useForm } from "react-hook-form";
 import systems from "@eve-data/systems";
 import ControlledRadioGroup from "../../../../controls/ControlledRadioGroup";
 import ControlledSelect from "../../../../controls/Select/ControlledSelect";
 import ControlledTextField from "../../../../controls/ControlledTextField";
 import useNotification from "../../../../GlobalNotification/useNotification";
-import { ADD_WORMHOLE } from "../../../SystemData/graphql";
+import { ADD_WORMHOLE, EDIT_WORMHOLE } from "../../../SystemData/graphql";
 import useSystemData, { Wormhole } from "../../../SystemData/useSystemData";
 import FormGroupRow from "../../../../controls/FormGroupRow";
 import RhfAutocomplete from "../../../../controls/RhfAutocomplete";
@@ -45,21 +44,35 @@ const WormholeForm = ({ eveId, existing }: WormholeFormProps) => {
     },
   });
   const { addWormhole, name: systemName } = useSystemData();
-  const [addWhMutation, { data, loading, error }] = useMutation(ADD_WORMHOLE);
+  const [addWhMutation] = useMutation(ADD_WORMHOLE);
+  const [updateWhMutation] = useMutation(EDIT_WORMHOLE);
   const { setNotification } = useNotification();
 
-  const onSubmit = (formData: any) => {
+  const onSubmitNew = async (formData: FieldValues) => {
     const { name, destinationName } = formData;
     const mutationData = { name, eveId, systemName, destinationName };
-    addWhMutation({ variables: mutationData });
-  };
+    const res = await addWhMutation({ variables: mutationData });
 
-  useEffect(() => {
-    if (data && !loading && !error) {
-      addWormhole(data.addWormhole);
+    if (res.data && !res.errors) {
+      addWormhole(res.data.addWormhole);
       setNotification("Wormhole added.", "success", true);
     }
-  }, [data, loading, error]);
+  };
+
+  const onSubmitEdit = async (formData: FieldValues) => {
+    const { name, destinationName } = formData;
+    const id = existing?.id;
+    const mutationData = { name, id, destinationName };
+    const res = await updateWhMutation({ variables: { input: mutationData } });
+
+    if (res.data && !res.errors) {
+      // TODO: Update context. (Or rather move query stuff to ctx hook...)
+      // addWormhole(res.data.addWormhole);
+      setNotification("Wormhole updated.", "success", true);
+    }
+  };
+
+  const onSubmit = existing ? onSubmitEdit : onSubmitNew;
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

@@ -47,3 +47,11 @@ export const ADD_WORMHOLE = gql`
     }
   }
 `;
+
+export const EDIT_WORMHOLE = gql`
+  mutation UpdateWormhole($input: UpdateWormholeArgs!) {
+    updateWormhole(input: $input) {
+      id
+    }
+  }
+`;
