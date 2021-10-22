@@ -55,8 +55,7 @@ export default (): SystemData => {
   };
 
   const updateWormhole = async (update: Wormhole): Promise<FetchResult> => {
-    const { id, name, destinationName } = update;
-    const res = await updateWhMutation({ variables: { input: { id, name, destinationName } } });
+    const res = await updateWhMutation({ variables: { input: update } });
     const { data, errors } = res;
 
     if (data && !errors) {

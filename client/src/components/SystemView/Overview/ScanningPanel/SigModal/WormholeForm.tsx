@@ -68,15 +68,16 @@ const WormholeForm = ({ eveId, existing }: WormholeFormProps) => {
   };
 
   const onSubmitEdit = async (formData: FieldValues) => {
-    const { name, destinationName, whType, eol } = formData;
     const id = existing?.id || "";
+    const { whType, life, mass, name, destinationName } = formData;
     const mutationData = {
-      name,
       id,
-      destinationName,
       eveId,
       type: whType,
-      eol: eol === "eol",
+      eol: life === "eol",
+      massStatus: mass,
+      name,
+      destinationName,
     };
     const res = await updateWormhole(mutationData);
 
