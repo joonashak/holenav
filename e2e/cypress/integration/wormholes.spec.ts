@@ -36,4 +36,13 @@ describe("Wormholes", () => {
 
     testWormholeProperties({ name });
   });
+
+  it("Can edit existing wormhole", () => {
+    cy.cs("edit-sig-Ikuchi").click();
+    cy.cs("textfield-name").clear().type("Ikuchiii");
+    cy.cs("wh-form-submit").click();
+    cy.contains("Wormhole updated.");
+
+    testWormholeProperties({ name: "Ikuchiii" });
+  });
 });
