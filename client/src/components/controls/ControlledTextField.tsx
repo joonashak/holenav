@@ -14,7 +14,7 @@ export default ({ name, control, label }: ControlledTextFieldProps) => {
       {...field}
       label={label}
       variant="outlined"
-      data-cy={`textfield-${name}`}
+      inputProps={{ "data-cy": `textfield-${name}` }}
       fullWidth
     />
   );

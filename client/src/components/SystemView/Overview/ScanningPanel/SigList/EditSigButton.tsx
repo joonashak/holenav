@@ -22,6 +22,7 @@ const EditSigButton = ({ sig }: EditSigButtonProps) => {
         sx={{ pt: 0, pb: 0 }}
         onClick={toggleModal}
         aria-label="Edit Signature"
+        data-cy={`edit-sig-${sig.name}`}
       >
         <EditIcon fontSize="inherit" />
       </IconButton>
