@@ -1,7 +1,7 @@
 import { Field, InputType } from "@nestjs/graphql";
 
 @InputType()
-export default class UpdateWormholeArgs {
+export default class UpdateWormholeInput {
   @Field()
   id: string;
 

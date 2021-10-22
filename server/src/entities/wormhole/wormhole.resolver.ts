@@ -3,9 +3,9 @@ import { ActiveFolder } from "../../auth/decorators/activeFolder.decorator";
 import { RequireFolderRole } from "../../auth/decorators/role.decorator";
 import Roles from "../../role/roles.enum";
 import { FolderDocument } from "../folder/folder.model";
-import AddWormholeArgs from "./dto/addWormhole.dto";
+import AddWormholeInput from "./dto/addWormhole.dto";
 import { ConnectionTree } from "./dto/connectionTree.dto";
-import UpdateWormholeArgs from "./dto/updateWormhole.dto";
+import UpdateWormholeInput from "./dto/updateWormhole.dto";
 import { Wormhole } from "./wormhole.model";
 import { WormholeService } from "./wormhole.service";
 
@@ -34,17 +34,17 @@ export class WormholeResolver {
   @RequireFolderRole(Roles.WRITE)
   @Mutation((returns) => Wormhole)
   async addWormhole(
-    @Args() args: AddWormholeArgs,
+    @Args("input") input: AddWormholeInput,
     @ActiveFolder() folder: FolderDocument,
   ): Promise<Wormhole> {
-    const res = await this.whService.createWormhole({ ...args, folder });
+    const res = await this.whService.createWormhole({ ...input, folder });
     return res;
   }
 
   @RequireFolderRole(Roles.WRITE)
   @Mutation((returns) => Wormhole)
   async updateWormhole(
-    @Args("input") input: UpdateWormholeArgs,
+    @Args("input") input: UpdateWormholeInput,
     @ActiveFolder() folder: FolderDocument,
   ): Promise<Wormhole> {
     const { id, ...update } = input;

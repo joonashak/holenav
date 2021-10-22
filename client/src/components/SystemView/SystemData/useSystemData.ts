@@ -41,7 +41,10 @@ export default (): SystemData => {
     }));
 
   const addWormhole = async (newWormhole: any): Promise<FetchResult> => {
-    const res = await addWhMutation({ variables: newWormhole });
+    const { id, name, systemName, destinationName } = newWormhole;
+    const res = await addWhMutation({
+      variables: { input: { id, name, systemName, destinationName } },
+    });
     const { data, errors } = res;
 
     if (data && !errors) {
