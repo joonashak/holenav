@@ -1,4 +1,3 @@
-import { useMutation } from "@apollo/client";
 import wormholes from "@eve-data/wormholes";
 import { Button } from "@mui/material";
 import { FieldValues, useForm } from "react-hook-form";
@@ -7,7 +6,6 @@ import ControlledRadioGroup from "../../../../controls/ControlledRadioGroup";
 import ControlledSelect from "../../../../controls/Select/ControlledSelect";
 import ControlledTextField from "../../../../controls/ControlledTextField";
 import useNotification from "../../../../GlobalNotification/useNotification";
-import { ADD_WORMHOLE } from "../../../SystemData/graphql";
 import useSystemData, { Wormhole } from "../../../SystemData/useSystemData";
 import FormGroupRow from "../../../../controls/FormGroupRow";
 import RhfAutocomplete from "../../../../controls/RhfAutocomplete";
@@ -44,16 +42,14 @@ const WormholeForm = ({ eveId, existing }: WormholeFormProps) => {
     },
   });
   const { addWormhole, updateWormhole, name: systemName } = useSystemData();
-  const [addWhMutation] = useMutation(ADD_WORMHOLE);
   const { setNotification } = useNotification();
 
   const onSubmitNew = async (formData: FieldValues) => {
     const { name, destinationName } = formData;
     const mutationData = { name, eveId, systemName, destinationName };
-    const res = await addWhMutation({ variables: mutationData });
+    const res = await addWormhole(mutationData);
 
     if (res.data && !res.errors) {
-      addWormhole(res.data.addWormhole);
       setNotification("Wormhole added.", "success", true);
     }
   };

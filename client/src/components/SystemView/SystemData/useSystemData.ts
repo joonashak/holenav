@@ -2,7 +2,7 @@ import { FetchResult, useMutation } from "@apollo/client";
 import { useContext } from "react";
 import { SystemDataContext } from ".";
 import SecurityClasses from "../../../enum/SecurityClasses";
-import { EDIT_WORMHOLE } from "./graphql";
+import { ADD_WORMHOLE, EDIT_WORMHOLE } from "./graphql";
 
 type SystemData = {
   id: string;
@@ -13,7 +13,7 @@ type SystemData = {
   signatures: Signature[];
   wormholes: Wormhole[];
   addSignature: (newSig: any) => void;
-  addWormhole: (newWormhole: any) => void;
+  addWormhole: (newWormhole: any) => Promise<FetchResult>;
   updateWormhole: (update: Wormhole) => Promise<FetchResult>;
 };
 
@@ -31,6 +31,7 @@ export type Wormhole = Signature & {
 
 export default (): SystemData => {
   const [state, setState] = useContext<any>(SystemDataContext);
+  const [addWhMutation] = useMutation(ADD_WORMHOLE);
   const [updateWhMutation] = useMutation(EDIT_WORMHOLE);
 
   const addSignature = (newSig: any) =>
@@ -39,11 +40,19 @@ export default (): SystemData => {
       signatures: signatures.concat(newSig),
     }));
 
-  const addWormhole = (newWormhole: any) =>
-    setState(({ wormholes, ...rest }: SystemData) => ({
-      ...rest,
-      wormholes: wormholes.concat(newWormhole),
-    }));
+  const addWormhole = async (newWormhole: any): Promise<FetchResult> => {
+    const res = await addWhMutation({ variables: newWormhole });
+    const { data, errors } = res;
+
+    if (data && !errors) {
+      setState(({ wormholes, ...rest }: SystemData) => ({
+        ...rest,
+        wormholes: wormholes.concat(data.addWormhole),
+      }));
+    }
+
+    return res;
+  };
 
   const updateWormhole = async (update: Wormhole): Promise<FetchResult> => {
     const { id, name, destinationName } = update;
@@ -51,9 +60,10 @@ export default (): SystemData => {
     const { data, errors } = res;
 
     if (data && !errors) {
+      const updatedWh = data.updateWormhole;
       setState(({ wormholes, ...rest }: SystemData) => ({
-        wormholes: wormholes.map((wh) => (wh.id === data.id ? data : wh)),
         ...rest,
+        wormholes: wormholes.map((wh) => (wh.id === updatedWh.id ? updatedWh : wh)),
       }));
     }
 
