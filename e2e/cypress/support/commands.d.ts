@@ -20,5 +20,13 @@ declare namespace Cypress {
      * @param id The number in a mock user's id (after `mock-`).
      */
     mockUser(id: number): Chainable<Element>;
+
+    /**
+     * Get MUI Autocomplete options.
+     *
+     * Works on its own but should be chained after cy.cs() or cy.get() if there are multiple
+     * autocompletes in the DOM.
+     */
+    getDropdownOptions(): Chainable<Element>;
   }
 }

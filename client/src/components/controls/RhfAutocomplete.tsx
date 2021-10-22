@@ -17,8 +17,11 @@ const RhfAutocomplete = ({ options, name, control }: RhfAutocompleteProps) => {
       onChange={(_, value) => field.onChange({ target: { value } })}
       options={options}
       getOptionLabel={getOptionLabel}
-      renderInput={(params) => <TextField {...params} label="Destination" />}
+      renderInput={(params) => (
+        <TextField {...params} label="Destination" data-cy={`autocomplete-${name}-input`} />
+      )}
       fullWidth
+      data-cy={`autocomplete-${name}`}
     />
   );
 

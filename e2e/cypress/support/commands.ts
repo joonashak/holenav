@@ -17,3 +17,9 @@ Cypress.Commands.add("mockUser", (id) => {
   cy.cs("mock-user-select").click();
   cy.cs(`mock-user-option-mock-${id}`).click();
 });
+
+Cypress.Commands.add("getDropdownOptions", () => {
+  return cy.get('.MuiAutocomplete-popper [role="listbox"] [role="option"]', {
+    timeout: 10000,
+  });
+});
