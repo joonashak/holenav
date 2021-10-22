@@ -1,14 +1,9 @@
 const testSystemUrl = "/system/Jita";
-const testWormhole = {
-  name: "Test WH",
-  type: "C140",
-  destinationName: "Hek",
-};
 
-const testWormholeProperties = (props: any) => {
+const testWormholeProperties = (props: any, url = testSystemUrl) => {
   const { name } = props;
-  cy.visit(testSystemUrl);
-  cy.contains(name);
+  cy.visit(url);
+  cy.get("#scanning-content").contains(name);
   cy.cs(`edit-sig-${name}`).click();
 
   cy.cs("textfield-name").should("have.value", name);
@@ -24,6 +19,12 @@ const testWormholeProperties = (props: any) => {
   });
 };
 
+const openWormholeForm = () => {
+  cy.cs("add-sig-button").click();
+  cy.cs("select-Signature Type").click();
+  cy.get("[data-value=WORMHOLE]").click();
+};
+
 describe("Wormholes", () => {
   before(() => {
     cy.resetDatabase();
@@ -35,10 +36,10 @@ describe("Wormholes", () => {
   });
 
   it("Can add new wormhole", () => {
-    const { name, type, destinationName } = testWormhole;
-    cy.cs("add-sig-button").click();
-    cy.cs("select-Signature Type").click();
-    cy.get("[data-value=WORMHOLE]").click();
+    const name = "Test WH";
+    const type = "C140";
+    const destinationName = "Hek";
+    openWormholeForm();
 
     cy.cs("textfield-name").type(name);
     cy.cs("select-whType").click();
@@ -63,5 +64,56 @@ describe("Wormholes", () => {
     cy.contains("Wormhole updated.");
 
     testWormholeProperties({ name: "Ikuchiii" });
+  });
+
+  it("Connection is correctly mapped", () => {
+    const name = "Connection Test";
+    const destinationName = "Hakonen";
+    openWormholeForm();
+
+    cy.cs("textfield-name").type(name);
+    cy.cs("autocomplete-destinationName").type(destinationName).type("{downarrow}{enter}");
+    cy.cs("wh-form-submit").click();
+    testWormholeProperties({ name, destinationName });
+    testWormholeProperties({ name: "rev from Jita", destinationName: "Jita" }, "/system/Hakonen");
+  });
+
+  it("Connection is correctly updated", () => {
+    const name = "Connection Test 2";
+    const destinationName = "Dodixie";
+    openWormholeForm();
+
+    cy.cs("textfield-name").type(name);
+    cy.cs("autocomplete-destinationName").type(destinationName).type("{downarrow}{enter}");
+    cy.cs("wh-form-submit").click();
+
+    cy.visit(testSystemUrl);
+    cy.cs("edit-sig-Connection Test 2").click();
+    cy.cs("autocomplete-destinationName").clear().type("Amarr").type("{downarrow}{enter}");
+    cy.cs("wh-form-submit").click();
+
+    testWormholeProperties({ name, destinationName: "Amarr" });
+    cy.visit("/system/Dodixie");
+    cy.get("#scanning-content").should("not.contain.text", "rev from Jita");
+    testWormholeProperties({ name: "rev from Jita", destinationName: "Jita" }, "/system/Amarr");
+  });
+
+  it("Connection is correctly removed", () => {
+    const name = "Connection Test 3";
+    const destinationName = "Perimeter";
+    openWormholeForm();
+
+    cy.cs("textfield-name").type(name);
+    cy.cs("autocomplete-destinationName").type(destinationName).type("{downarrow}{enter}");
+    cy.cs("wh-form-submit").click();
+
+    cy.visit(testSystemUrl);
+    cy.cs("edit-sig-Connection Test 3").click();
+    cy.cs("autocomplete-destinationName").clear();
+    cy.cs("wh-form-submit").click();
+
+    testWormholeProperties({ name, destinationName: "" });
+    cy.visit("/system/Perimeter");
+    cy.get("#scanning-content").should("not.contain.text", "rev from Jita");
   });
 });
