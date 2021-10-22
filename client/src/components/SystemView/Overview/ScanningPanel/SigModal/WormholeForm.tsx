@@ -7,7 +7,7 @@ import ControlledRadioGroup from "../../../../controls/ControlledRadioGroup";
 import ControlledSelect from "../../../../controls/Select/ControlledSelect";
 import ControlledTextField from "../../../../controls/ControlledTextField";
 import useNotification from "../../../../GlobalNotification/useNotification";
-import { ADD_WORMHOLE, EDIT_WORMHOLE } from "../../../SystemData/graphql";
+import { ADD_WORMHOLE } from "../../../SystemData/graphql";
 import useSystemData, { Wormhole } from "../../../SystemData/useSystemData";
 import FormGroupRow from "../../../../controls/FormGroupRow";
 import RhfAutocomplete from "../../../../controls/RhfAutocomplete";
@@ -43,9 +43,8 @@ const WormholeForm = ({ eveId, existing }: WormholeFormProps) => {
       destinationName: existing?.destinationName || null,
     },
   });
-  const { addWormhole, name: systemName } = useSystemData();
+  const { addWormhole, updateWormhole, name: systemName } = useSystemData();
   const [addWhMutation] = useMutation(ADD_WORMHOLE);
-  const [updateWhMutation] = useMutation(EDIT_WORMHOLE);
   const { setNotification } = useNotification();
 
   const onSubmitNew = async (formData: FieldValues) => {
@@ -60,14 +59,19 @@ const WormholeForm = ({ eveId, existing }: WormholeFormProps) => {
   };
 
   const onSubmitEdit = async (formData: FieldValues) => {
-    const { name, destinationName } = formData;
-    const id = existing?.id;
-    const mutationData = { name, id, destinationName };
-    const res = await updateWhMutation({ variables: { input: mutationData } });
+    const { name, destinationName, whType, eol } = formData;
+    const id = existing?.id || "";
+    const mutationData = {
+      name,
+      id,
+      destinationName,
+      eveId,
+      type: whType,
+      eol: eol === "eol",
+    };
+    const res = await updateWormhole(mutationData);
 
     if (res.data && !res.errors) {
-      // TODO: Update context. (Or rather move query stuff to ctx hook...)
-      // addWormhole(res.data.addWormhole);
       setNotification("Wormhole updated.", "success", true);
     }
   };
