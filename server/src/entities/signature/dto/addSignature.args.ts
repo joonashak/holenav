@@ -1,8 +1,8 @@
-import { ArgsType, Field } from "@nestjs/graphql";
+import { Field, InputType } from "@nestjs/graphql";
 import SigTypes from "../sigTypes.enum";
 
-@ArgsType()
-export default class AddSignatureArgs {
+@InputType()
+export default class AddSignatureInput {
   @Field()
   eveId: string;
 

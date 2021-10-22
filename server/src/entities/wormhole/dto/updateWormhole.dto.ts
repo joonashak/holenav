@@ -1,16 +1,8 @@
-import { Field, InputType } from "@nestjs/graphql";
+import { Field, InputType, PartialType } from "@nestjs/graphql";
+import AddWormholeInput from "./addWormhole.dto";
 
 @InputType()
-export default class UpdateWormholeInput {
+export default class UpdateWormholeInput extends PartialType(AddWormholeInput) {
   @Field()
   id: string;
-
-  @Field({ nullable: true })
-  name: string;
-
-  @Field({ nullable: true })
-  systemName: string;
-
-  @Field({ nullable: true })
-  destinationName?: string;
 }

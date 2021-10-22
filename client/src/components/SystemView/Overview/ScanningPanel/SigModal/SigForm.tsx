@@ -26,7 +26,7 @@ export default ({ type, eveId }: SigFormProps) => {
   const { setNotification } = useNotification();
 
   const onSubmit = (formData: any) => {
-    addSigMutation({ variables: { ...formData, type, eveId, systemId: id } });
+    addSigMutation({ variables: { input: { ...formData, type, eveId, systemId: id } } });
   };
 
   useEffect(() => {

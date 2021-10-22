@@ -26,8 +26,8 @@ export const GET_SYSTEM_BY_NAME = gql`
 `;
 
 export const ADD_SIGNATURE = gql`
-  mutation AddSig($systemId: String!, $type: SigTypes!, $eveId: String!, $name: String!) {
-    addSignature(systemId: $systemId, type: $type, eveId: $eveId, name: $name) {
+  mutation AddSig($input: AddSignatureInput!) {
+    addSignature(input: $input) {
       id
       name
       type
