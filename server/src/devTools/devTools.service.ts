@@ -10,6 +10,7 @@ import { FolderService } from "../entities/folder/folder.service";
 import { Signature } from "../entities/signature/signature.model";
 import { System } from "../entities/system/system.model";
 import { Wormhole } from "../entities/wormhole/wormhole.model";
+import { WormholeService } from "../entities/wormhole/wormhole.service";
 import { Role } from "../role/role.model";
 import { User } from "../user/user.model";
 import users from "./data/users";
@@ -31,6 +32,7 @@ export class DevToolsService {
     private dataMigrationService: DataMigrationService,
     private mockUserService: MockUserService,
     private folderService: FolderService,
+    private whService: WormholeService,
   ) {}
 
   /**
@@ -47,7 +49,7 @@ export class DevToolsService {
     await this.clearCollections();
 
     await this.mockUserService.mock();
-    await mockWormholes(this.whModel, this.folderService);
+    await mockWormholes(this.whModel, this.whService, this.folderService);
   }
 
   async getMockUsers() {
