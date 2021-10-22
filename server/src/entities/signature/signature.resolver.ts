@@ -1,5 +1,5 @@
 import { Args, Mutation, Resolver } from "@nestjs/graphql";
-import AddSignatureInput from "./dto/addSignature.args";
+import AddSignatureInput from "./dto/addSignature.dto";
 import { Signature } from "./signature.model";
 import { SignatureService } from "./signature.service";
 import SigTypes from "./sigTypes.enum";

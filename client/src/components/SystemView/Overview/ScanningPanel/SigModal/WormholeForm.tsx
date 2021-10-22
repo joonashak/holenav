@@ -15,10 +15,16 @@ const lifeOptions = [
   { key: "eol", value: "eol", label: "End of life" },
 ];
 
+enum MassStatus {
+  STABLE = "STABLE",
+  DESTAB = "DESTAB",
+  CRIT = "CRIT",
+}
+
 const massOptions = [
-  { key: "mass-stable", value: "stable", label: "Stable" },
-  { key: "mass-destab", value: "destab", label: "Destabilized" },
-  { key: "mass-crit", value: "crit", label: "Critical" },
+  { key: "mass-stable", value: MassStatus.STABLE, label: "Stable" },
+  { key: "mass-destab", value: MassStatus.DESTAB, label: "Destabilized" },
+  { key: "mass-crit", value: MassStatus.CRIT, label: "Critical" },
 ];
 
 const whTypeOptions = [{ key: "wh-K162", value: "K162", label: "K162" }].concat(
@@ -35,7 +41,7 @@ const WormholeForm = ({ eveId, existing }: WormholeFormProps) => {
     defaultValues: {
       name: existing?.name || "",
       life: "lt-24-hrs",
-      mass: "stable",
+      mass: MassStatus.STABLE,
       whType: existing?.type || "",
       whTypeReverse: "",
       destinationName: existing?.destinationName || null,
@@ -45,8 +51,15 @@ const WormholeForm = ({ eveId, existing }: WormholeFormProps) => {
   const { setNotification } = useNotification();
 
   const onSubmitNew = async (formData: FieldValues) => {
-    const { name, destinationName } = formData;
-    const mutationData = { name, eveId, systemName, destinationName };
+    const { whType, whTypeReverse, life, mass, ...data } = formData;
+    const mutationData = {
+      eveId,
+      systemName,
+      type: whType,
+      eol: life === "eol",
+      massStatus: mass,
+      ...data,
+    };
     const res = await addWormhole(mutationData);
 
     if (res.data && !res.errors) {
