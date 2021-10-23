@@ -4,6 +4,10 @@ export const openWormholeForm = (): void => {
   cy.get("[data-value=WORMHOLE]").click();
 };
 
+export const submitWormholeForm = (): void => {
+  cy.cs("wh-form-submit").click();
+};
+
 type TestableWormholeProps = {
   name: string;
   destinationName?: string;
@@ -30,3 +34,17 @@ export const testWormholeProperties = (props: TestableWormholeProps, url: string
   Object.keys(props).forEach((key) => wormholePropertyTests[key](props[key]));
   // TODO: Add farside wh type check.
 };
+
+const setFormValue = {
+  name: (name: string) => cy.cs("textfield-name").clear().type(name),
+  destinationName: (name: string) =>
+    cy.cs("autocomplete-destinationName").type(name).type("{downarrow}{enter}"),
+  type: (type: string) => {
+    cy.cs("select-whType").click();
+    cy.get(`[data-value=${type}]`).click();
+  },
+  eveId: (eveId: string) => cy.cs("textfield-eveId").clear().type(eveId),
+};
+
+export const setWormholeFormValues = (props: Partial<TestableWormholeProps>): void =>
+  Object.keys(props).forEach((key) => setFormValue[key](props[key]));
