@@ -72,6 +72,9 @@ theme = createTheme(theme, {
         root: {
           color: theme.palette.secondary.light,
           marginBottom: theme.spacing(1),
+          "&.Mui-focused": {
+            color: theme.palette.secondary.main,
+          },
         },
       },
     },
