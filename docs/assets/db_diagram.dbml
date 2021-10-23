@@ -9,6 +9,7 @@ Table users {
   tokens string[]
   roles roles[] [ref: < roles._id]
   activeFolder folders [ref: - folders._id]
+  settings userSettings
 }
 
 Table characters {
