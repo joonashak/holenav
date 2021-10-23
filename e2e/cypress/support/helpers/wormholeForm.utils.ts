@@ -13,6 +13,9 @@ type TestableWormholeProps = {
   destinationName?: string;
   type?: string;
   eveId?: string;
+  reverseType?: string;
+  eol?: "eol" | "lt-24-hrs";
+  mass?: "STABLE" | "DESTAB" | "CRIT";
 };
 
 const wormholePropertyTests = {
@@ -23,6 +26,10 @@ const wormholePropertyTests = {
     cy.get("[data-cy=select-whType] > div > input").should("have.value", type),
   eveId: (eveId: string) =>
     cy.get("[data-cy=textfield-eveId] > div > input").should("have.value", eveId),
+  reverseType: (type: string) =>
+    cy.get("[data-cy=select-whTypeReverse] > div > input").should("have.value", type),
+  eol: (eol: string) => cy.get(`[data-cy=checkbox-life-${eol}] > input`).should("be.checked"),
+  mass: (mass: string) => cy.get(`[data-cy=checkbox-mass-${mass}] > input`).should("be.checked"),
 };
 
 export const testWormholeProperties = (props: TestableWormholeProps, url: string): void => {
@@ -32,7 +39,6 @@ export const testWormholeProperties = (props: TestableWormholeProps, url: string
   cy.cs(`edit-sig-${name}`).click();
 
   Object.keys(props).forEach((key) => wormholePropertyTests[key](props[key]));
-  // TODO: Add farside wh type check.
 };
 
 const setFormValue = {
@@ -44,6 +50,8 @@ const setFormValue = {
     cy.get(`[data-value=${type}]`).click();
   },
   eveId: (eveId: string) => cy.cs("textfield-eveId").clear().type(eveId),
+  eol: (eol: string) => cy.cs(`checkbox-life-${eol}`).click(),
+  mass: (mass: string) => cy.cs(`checkbox-mass-${mass}`).click(),
 };
 
 export const setWormholeFormValues = (props: Partial<TestableWormholeProps>): void =>

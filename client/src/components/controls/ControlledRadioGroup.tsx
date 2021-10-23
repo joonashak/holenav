@@ -21,7 +21,12 @@ export default ({ options, name, control, label }: ControlledRadioGroupProps) =>
       <FormLabel component="legend">{label}</FormLabel>
       <RadioGroup aria-label={label} {...field}>
         {options.map(({ key, value, label: optLabel }) => (
-          <FormControlLabel value={value} key={key} label={optLabel} control={<Radio />} />
+          <FormControlLabel
+            value={value}
+            key={key}
+            label={optLabel}
+            control={<Radio data-cy={`checkbox-${name}-${value}`} />}
+          />
         ))}
       </RadioGroup>
     </FormControl>

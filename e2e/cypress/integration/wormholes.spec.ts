@@ -23,14 +23,16 @@ describe("Wormholes", () => {
       type: "C140",
       destinationName: "Hek",
       eveId: "ASD-123",
-    };
+      eol: "eol",
+      mass: "STABLE",
+    } as const;
 
     openWormholeForm();
     setWormholeFormValues(wh);
     submitWormholeForm();
     cy.contains("Wormhole added.");
 
-    testWormholeProperties(wh, testSystemUrl);
+    testWormholeProperties({ ...wh, reverseType: "K162" }, testSystemUrl);
   });
 
   it("Can edit existing wormhole", () => {
@@ -38,7 +40,8 @@ describe("Wormholes", () => {
       name: "Ikuchiii",
       type: "B274",
       eveId: "LOL-654",
-    };
+      mass: "DESTAB",
+    } as const;
 
     cy.cs("edit-sig-Ikuchi").click();
     setWormholeFormValues(wh);
@@ -67,12 +70,18 @@ describe("Wormholes", () => {
   });
 
   it("Connection is correctly updated", () => {
-    // TODO: Test for type reset (select K162) here after farside wormhole has been fixed.
     const wh = {
       name: "Connection Test 2",
       destinationName: "Dodixie",
       type: "K162",
     };
+
+    const update = {
+      destinationName: "Amarr",
+      eol: "eol",
+      mass: "CRIT",
+      type: "V753",
+    } as const;
 
     openWormholeForm();
     setWormholeFormValues(wh);
@@ -80,14 +89,25 @@ describe("Wormholes", () => {
 
     cy.visit(testSystemUrl);
     cy.cs("edit-sig-Connection Test 2").click();
-    setWormholeFormValues({ destinationName: "Amarr" });
+    setWormholeFormValues(update);
     submitWormholeForm();
 
-    testWormholeProperties({ ...wh, destinationName: "Amarr" }, testSystemUrl);
+    testWormholeProperties({ ...wh, ...update, reverseType: "K162" }, testSystemUrl);
 
     cy.visit("/system/Dodixie");
     cy.get("#scanning-content").should("not.contain.text", "rev from Jita");
-    testWormholeProperties({ name: "rev from Jita", destinationName: "Jita" }, "/system/Amarr");
+
+    testWormholeProperties(
+      {
+        name: "rev from Jita",
+        destinationName: "Jita",
+        type: "K162",
+        reverseType: "V753",
+        eol: "eol",
+        mass: "CRIT",
+      },
+      "/system/Amarr"
+    );
   });
 
   it("Connection is correctly removed", () => {
