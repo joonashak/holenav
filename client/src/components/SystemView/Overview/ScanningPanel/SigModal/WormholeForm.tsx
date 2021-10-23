@@ -9,17 +9,12 @@ import useNotification from "../../../../GlobalNotification/useNotification";
 import useSystemData, { Wormhole } from "../../../SystemData/useSystemData";
 import FormGroupRow from "../../../../controls/FormGroupRow";
 import RhfAutocomplete from "../../../../controls/RhfAutocomplete";
+import MassStatus from "../../../../../enum/MassStatus";
 
 const lifeOptions = [
   { key: "lt-24-hrs", value: "lt-24-hrs", label: "Less than 24 hrs" },
   { key: "eol", value: "eol", label: "End of life" },
 ];
-
-enum MassStatus {
-  STABLE = "STABLE",
-  DESTAB = "DESTAB",
-  CRIT = "CRIT",
-}
 
 const massOptions = [
   { key: "mass-stable", value: MassStatus.STABLE, label: "Stable" },
@@ -40,8 +35,8 @@ const WormholeForm = ({ eveId, existing }: WormholeFormProps) => {
   const { handleSubmit, control } = useForm({
     defaultValues: {
       name: existing?.name || "",
-      life: "lt-24-hrs",
-      mass: MassStatus.STABLE,
+      life: existing?.eol ? "eol" : "lt-24-hrs",
+      mass: existing?.massStatus || MassStatus.STABLE,
       whType: existing?.type || "",
       whTypeReverse: existing?.reverse?.type || "",
       destinationName: existing?.destinationName || null,

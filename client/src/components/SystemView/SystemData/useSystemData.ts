@@ -1,6 +1,7 @@
 import { FetchResult, useMutation } from "@apollo/client";
 import { useContext } from "react";
 import { SystemDataContext } from ".";
+import MassStatus from "../../../enum/MassStatus";
 import SecurityClasses from "../../../enum/SecurityClasses";
 import { ADD_WORMHOLE, EDIT_WORMHOLE } from "./graphql";
 
@@ -28,6 +29,7 @@ export type Wormhole = Signature & {
   eol: boolean;
   destinationName: string | null;
   reverse?: Wormhole;
+  massStatus: MassStatus;
 };
 
 export default (): SystemData => {
