@@ -43,7 +43,7 @@ const WormholeForm = ({ eveId, existing }: WormholeFormProps) => {
       life: "lt-24-hrs",
       mass: MassStatus.STABLE,
       whType: existing?.type || "",
-      whTypeReverse: "",
+      whTypeReverse: existing?.reverse?.type || "",
       destinationName: existing?.destinationName || null,
     },
   });

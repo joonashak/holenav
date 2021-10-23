@@ -67,7 +67,7 @@ export class WormholeService {
   }
 
   async getBySystem(systemName: string, folder: Folder): Promise<Wormhole[]> {
-    return this.whModel.find({ systemName, folder });
+    return this.whModel.find({ systemName, folder }).populate("reverse");
   }
 
   async createWormhole(data: Wormhole): Promise<Wormhole> {
