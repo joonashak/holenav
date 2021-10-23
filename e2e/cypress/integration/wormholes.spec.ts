@@ -1,39 +1,6 @@
+import { openWormholeForm, testWormholeProperties } from "../support/helpers/wormholeForm.utils";
+
 const testSystemUrl = "/system/Jita";
-
-const testWormholeProperties = (props: any, url = testSystemUrl) => {
-  const { name } = props;
-  cy.visit(url);
-  cy.get("#scanning-content").contains(name);
-  cy.cs(`edit-sig-${name}`).click();
-
-  cy.cs("textfield-name").should("have.value", name);
-
-  // Test optional properties.
-  Object.keys(props).forEach((key) => {
-    if (key === "destinationName") {
-      cy.get("[data-cy=autocomplete-destinationName-input] > div > input").should(
-        "have.value",
-        props[key]
-      );
-    }
-
-    if (key === "type") {
-      cy.get("[data-cy=select-whType] > div > input").should("have.value", props[key]);
-    }
-
-    if (key === "eveId") {
-      cy.get("[data-cy=textfield-eveId] > div > input").should("have.value", props[key]);
-    }
-
-    // TODO: Add farside wh type check.
-  });
-};
-
-const openWormholeForm = () => {
-  cy.cs("add-sig-button").click();
-  cy.cs("select-Signature Type").click();
-  cy.get("[data-value=WORMHOLE]").click();
-};
 
 describe("Wormholes", () => {
   before(() => {
@@ -66,7 +33,7 @@ describe("Wormholes", () => {
     cy.cs("wh-form-submit").click();
     cy.contains("Wormhole added.");
 
-    testWormholeProperties({ name, destinationName, type, eveId });
+    testWormholeProperties({ name, destinationName, type, eveId }, testSystemUrl);
   });
 
   it("Can edit existing wormhole", () => {
@@ -84,7 +51,7 @@ describe("Wormholes", () => {
     cy.cs("wh-form-submit").click();
     cy.contains("Wormhole updated.");
 
-    testWormholeProperties({ name, type, eveId });
+    testWormholeProperties({ name, type, eveId }, testSystemUrl);
   });
 
   it("Connection is correctly mapped", () => {
@@ -98,7 +65,7 @@ describe("Wormholes", () => {
     cy.get(`[data-value=${type}]`).click();
     cy.cs("autocomplete-destinationName").type(destinationName).type("{downarrow}{enter}");
     cy.cs("wh-form-submit").click();
-    testWormholeProperties({ name, destinationName });
+    testWormholeProperties({ name, destinationName }, testSystemUrl);
     testWormholeProperties(
       { name: "rev from Jita", destinationName: "Jita", type: "K162" },
       "/system/Hakonen"
@@ -123,7 +90,7 @@ describe("Wormholes", () => {
     cy.cs("autocomplete-destinationName").clear().type("Amarr").type("{downarrow}{enter}");
     cy.cs("wh-form-submit").click();
 
-    testWormholeProperties({ name, destinationName: "Amarr" });
+    testWormholeProperties({ name, destinationName: "Amarr" }, testSystemUrl);
     cy.visit("/system/Dodixie");
     cy.get("#scanning-content").should("not.contain.text", "rev from Jita");
     testWormholeProperties({ name: "rev from Jita", destinationName: "Jita" }, "/system/Amarr");
@@ -143,7 +110,7 @@ describe("Wormholes", () => {
     cy.cs("autocomplete-destinationName").clear();
     cy.cs("wh-form-submit").click();
 
-    testWormholeProperties({ name, destinationName: "" });
+    testWormholeProperties({ name, destinationName: "" }, testSystemUrl);
     cy.visit("/system/Perimeter");
     cy.get("#scanning-content").should("not.contain.text", "rev from Jita");
   });
