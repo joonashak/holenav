@@ -55,7 +55,13 @@ const SigModal = ({ open, onClose, wormhole }: SigModalProps) => {
             title="Signature Type"
             options={typeOptions}
           />
-          <TextField label="ID" value={eveId} onChange={onEveIdChange} fullWidth />
+          <TextField
+            label="ID"
+            value={eveId}
+            onChange={onEveIdChange}
+            data-cy="textfield-eveId"
+            fullWidth
+          />
         </FormGroupRow>
         {showWormholeForm ? (
           <WormholeForm eveId={eveId} existing={wormhole} />

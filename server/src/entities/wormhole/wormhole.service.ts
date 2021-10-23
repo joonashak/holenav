@@ -107,7 +107,7 @@ export class WormholeService {
 
   private async addReverseWormhole(wormhole: WormholeDocument): Promise<WormholeDocument> {
     const { systemName, destinationName, folder, type, eol, massStatus } = wormhole;
-    const reverseType = type !== "K162" && !type ? "K162" : null;
+    const reverseType = type !== "K162" && type ? "K162" : null;
 
     const reverse = await this.whModel.create({
       name: "rev from " + systemName,
