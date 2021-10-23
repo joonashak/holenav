@@ -37,7 +37,7 @@ export class WormholeResolver {
     @Args("input") input: AddWormholeInput,
     @ActiveFolder() folder: FolderDocument,
   ): Promise<Wormhole> {
-    const res = await this.whService.createWormhole({ ...input, folder });
+    const res = await this.whService.createWormhole(input, folder);
     return res;
   }
 

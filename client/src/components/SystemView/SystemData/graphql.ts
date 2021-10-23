@@ -42,11 +42,16 @@ export const ADD_SIGNATURE = gql`
 export const ADD_WORMHOLE = gql`
   mutation AddWormhole($input: AddWormholeInput!) {
     addWormhole(input: $input) {
+      name
       id
       eveId
-      name
       type
       eol
+      massStatus
+      destinationName
+      reverse {
+        type
+      }
     }
   }
 `;
@@ -61,6 +66,9 @@ export const EDIT_WORMHOLE = gql`
       eol
       massStatus
       destinationName
+      reverse {
+        type
+      }
     }
   }
 `;

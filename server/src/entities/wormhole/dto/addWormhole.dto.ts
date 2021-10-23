@@ -19,6 +19,9 @@ export default class AddWormholeInput {
   type: string;
 
   @Field()
+  reverseType: string;
+
+  @Field()
   eol: boolean;
 
   @Field((type) => MassStatus)
