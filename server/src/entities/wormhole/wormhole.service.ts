@@ -99,27 +99,40 @@ export class WormholeService {
 
     // Destination updated.
     if (oldWh.destinationName && update.destinationName) {
-      // TODO: mass&lifetime need to be updated to reverse side, too
-      await this.whModel.findByIdAndUpdate(updatedWh.reverse, {
-        systemName: update.destinationName,
-      });
+      await this.updateReverseWormhole(updatedWh);
     }
 
     return updatedWh;
   }
 
   private async addReverseWormhole(wormhole: WormholeDocument): Promise<WormholeDocument> {
-    const { systemName, destinationName, folder } = wormhole;
+    const { systemName, destinationName, folder, type, eol, massStatus } = wormhole;
+    const reverseType = type !== "K162" && !type ? "K162" : null;
 
     const reverse = await this.whModel.create({
       name: "rev from " + systemName,
       systemName: destinationName,
       destinationName: systemName,
       reverse: wormhole,
+      type: reverseType,
+      eol,
+      massStatus,
       folder,
     });
 
     return this.whModel.findByIdAndUpdate(wormhole._id, { reverse }, { returnDocument: "after" });
+  }
+
+  private async updateReverseWormhole(wormhole: WormholeDocument): Promise<void> {
+    const { destinationName, type, eol, massStatus, reverse } = wormhole;
+    const reverseType = type !== "K162" && !type ? "K162" : null;
+
+    await this.whModel.findByIdAndUpdate(reverse, {
+      systemName: destinationName,
+      type: reverseType,
+      eol,
+      massStatus,
+    });
   }
 
   private async removeReverseWormhole(wormhole: WormholeDocument): Promise<WormholeDocument> {
