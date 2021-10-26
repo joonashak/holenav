@@ -39,6 +39,17 @@ export const ADD_SIGNATURE = gql`
   }
 `;
 
+export const EDIT_SIGNATURE = gql`
+  mutation UpdateSignature($input: UpdateSignatureInput!) {
+    updateSignature(input: $input) {
+      id
+      name
+      type
+      eveId
+    }
+  }
+`;
+
 export const ADD_WORMHOLE = gql`
   mutation AddWormhole($input: AddWormholeInput!) {
     addWormhole(input: $input) {

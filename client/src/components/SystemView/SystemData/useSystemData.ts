@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { SystemDataContext } from ".";
 import MassStatus from "../../../enum/MassStatus";
 import SecurityClasses from "../../../enum/SecurityClasses";
-import { ADD_SIGNATURE, ADD_WORMHOLE, EDIT_WORMHOLE } from "./graphql";
+import { ADD_SIGNATURE, ADD_WORMHOLE, EDIT_SIGNATURE, EDIT_WORMHOLE } from "./graphql";
 
 type SystemData = {
   id: string;
@@ -14,6 +14,7 @@ type SystemData = {
   signatures: Signature[];
   wormholes: Wormhole[];
   addSignature: (newSig: any) => Promise<FetchResult>;
+  updateSignature: (update: Signature) => Promise<FetchResult>;
   addWormhole: (newWormhole: any) => Promise<FetchResult>;
   updateWormhole: (update: Wormhole) => Promise<FetchResult>;
 };
@@ -35,6 +36,7 @@ export type Wormhole = Signature & {
 export default (): SystemData => {
   const [state, setState] = useContext<any>(SystemDataContext);
   const [addSigMutation] = useMutation(ADD_SIGNATURE);
+  const [updateSigMutation] = useMutation(EDIT_SIGNATURE);
   const [addWhMutation] = useMutation(ADD_WORMHOLE);
   const [updateWhMutation] = useMutation(EDIT_WORMHOLE);
 
@@ -47,6 +49,21 @@ export default (): SystemData => {
       setState(({ signatures, ...rest }: SystemData) => ({
         ...rest,
         signatures: signatures.concat(data.addSignature),
+      }));
+    }
+
+    return res;
+  };
+
+  const updateSignature = async (update: Signature): Promise<FetchResult> => {
+    const res = await updateSigMutation({ variables: { input: update } });
+    const { data, errors } = res;
+
+    if (data && !errors) {
+      const updatedSig = data.updateSignature;
+      setState(({ signatures, ...rest }: SystemData) => ({
+        ...rest,
+        signatures: signatures.map((sig) => (sig.id === updatedSig.id ? updatedSig : sig)),
       }));
     }
 
@@ -85,6 +102,7 @@ export default (): SystemData => {
   return {
     ...state,
     addSignature,
+    updateSignature,
     addWormhole,
     updateWormhole,
   };

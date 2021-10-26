@@ -1,5 +1,5 @@
 import { Box, Button, FormGroup } from "@mui/material";
-import { useForm } from "react-hook-form";
+import { FieldValues, useForm } from "react-hook-form";
 import SigTypes from "../../../../../enum/SigTypes";
 import ControlledTextField from "../../../../controls/ControlledTextField";
 import useNotification from "../../../../GlobalNotification/useNotification";
@@ -13,16 +13,28 @@ type SigFormProps = {
 
 const SigForm = ({ type, eveId, existing }: SigFormProps) => {
   const { handleSubmit, control } = useForm({ defaultValues: { name: existing?.name || "" } });
-  const { addSignature } = useSystemData();
+  const { addSignature, updateSignature } = useSystemData();
   const { setNotification } = useNotification();
 
-  const onSubmit = async (formData: any) => {
+  const onSubmitNew = async (formData: any) => {
     const res = await addSignature({ ...formData, type, eveId });
 
     if (res.data && !res.errors) {
       setNotification("Signature added.", "success", true);
     }
   };
+
+  const onSubmitEdit = async (formData: FieldValues) => {
+    const id = existing?.id || "";
+    const { name } = formData;
+    const res = await updateSignature({ name, type, eveId, id });
+
+    if (res.data && !res.errors) {
+      setNotification("Signature updated.", "success", true);
+    }
+  };
+
+  const onSubmit = existing ? onSubmitEdit : onSubmitNew;
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
