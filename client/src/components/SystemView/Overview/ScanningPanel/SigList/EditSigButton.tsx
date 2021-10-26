@@ -14,6 +14,7 @@ const EditSigButton = ({ sig }: EditSigButtonProps) => {
 
   const isWormhole = Object.keys(sig).includes("eol");
   const wormhole = isWormhole ? (sig as Wormhole) : undefined;
+  const signature = !isWormhole ? sig : undefined;
 
   return (
     <>
@@ -26,7 +27,7 @@ const EditSigButton = ({ sig }: EditSigButtonProps) => {
       >
         <EditIcon fontSize="inherit" />
       </IconButton>
-      <SigModal open={modalOpen} onClose={toggleModal} wormhole={wormhole} />
+      <SigModal open={modalOpen} onClose={toggleModal} wormhole={wormhole} signature={signature} />
     </>
   );
 };

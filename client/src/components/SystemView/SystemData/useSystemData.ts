@@ -42,7 +42,6 @@ export default (): SystemData => {
     const input = { ...newSig, systemId: state.id };
     const res = await addSigMutation({ variables: { input } });
     const { data, errors } = res;
-    console.log(res);
 
     if (data && !errors) {
       setState(({ signatures, ...rest }: SystemData) => ({

@@ -3,21 +3,16 @@ import { useForm } from "react-hook-form";
 import SigTypes from "../../../../../enum/SigTypes";
 import ControlledTextField from "../../../../controls/ControlledTextField";
 import useNotification from "../../../../GlobalNotification/useNotification";
-import useSystemData from "../../../SystemData/useSystemData";
-
-const typeOptions = Object.entries(SigTypes).map(([key, label]) => ({
-  key: `sig-type-${key}`,
-  value: key,
-  label,
-}));
+import useSystemData, { Signature } from "../../../SystemData/useSystemData";
 
 type SigFormProps = {
   type: SigTypes;
   eveId: string;
+  existing?: Signature;
 };
 
-export default ({ type, eveId }: SigFormProps) => {
-  const { handleSubmit, control } = useForm({ defaultValues: { type: typeOptions[0].value } });
+const SigForm = ({ type, eveId, existing }: SigFormProps) => {
+  const { handleSubmit, control } = useForm({ defaultValues: { name: existing?.name || "" } });
   const { addSignature } = useSystemData();
   const { setNotification } = useNotification();
 
@@ -44,3 +39,9 @@ export default ({ type, eveId }: SigFormProps) => {
     </form>
   );
 };
+
+SigForm.defaultProps = {
+  existing: null,
+};
+
+export default SigForm;

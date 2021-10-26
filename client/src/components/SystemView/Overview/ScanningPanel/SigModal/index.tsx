@@ -21,9 +21,11 @@ type SigModalProps = {
 };
 
 const SigModal = ({ open, onClose, wormhole, signature }: SigModalProps) => {
-  const defaultType = wormhole ? SigTypes.WORMHOLE : SigTypes.DATA;
+  const existingType = wormhole ? SigTypes.WORMHOLE : signature?.type;
+  const defaultType = existingType || SigTypes.DATA;
   const [type, setType] = useState<SigTypes>(defaultType.toUpperCase() as SigTypes);
-  const [eveId, setEveId] = useState<string>(wormhole?.eveId || "");
+
+  const [eveId, setEveId] = useState<string>(wormhole?.eveId || signature?.eveId || "");
 
   const onTypeChange = ({ target }: SelectChangeEvent) => {
     setType(target.value as SigTypes);
@@ -69,7 +71,7 @@ const SigModal = ({ open, onClose, wormhole, signature }: SigModalProps) => {
         {showWormholeForm ? (
           <WormholeForm eveId={eveId} existing={wormhole} />
         ) : (
-          <SigForm type={type} eveId={eveId} />
+          <SigForm type={type} eveId={eveId} existing={signature} />
         )}
       </DialogContent>
     </Dialog>
