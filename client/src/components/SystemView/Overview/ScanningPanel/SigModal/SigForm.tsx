@@ -1,11 +1,8 @@
-import { useMutation } from "@apollo/client";
 import { Box, Button, FormGroup } from "@mui/material";
-import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import SigTypes from "../../../../../enum/SigTypes";
 import ControlledTextField from "../../../../controls/ControlledTextField";
 import useNotification from "../../../../GlobalNotification/useNotification";
-import { ADD_SIGNATURE } from "../../../SystemData/graphql";
 import useSystemData from "../../../SystemData/useSystemData";
 
 const typeOptions = Object.entries(SigTypes).map(([key, label]) => ({
@@ -21,20 +18,16 @@ type SigFormProps = {
 
 export default ({ type, eveId }: SigFormProps) => {
   const { handleSubmit, control } = useForm({ defaultValues: { type: typeOptions[0].value } });
-  const { addSignature, id } = useSystemData();
-  const [addSigMutation, { data, loading, error }] = useMutation(ADD_SIGNATURE);
+  const { addSignature } = useSystemData();
   const { setNotification } = useNotification();
 
-  const onSubmit = (formData: any) => {
-    addSigMutation({ variables: { input: { ...formData, type, eveId, systemId: id } } });
-  };
+  const onSubmit = async (formData: any) => {
+    const res = await addSignature({ ...formData, type, eveId });
 
-  useEffect(() => {
-    if (data && !loading && !error) {
-      addSignature(data.addSignature);
+    if (res.data && !res.errors) {
       setNotification("Signature added.", "success", true);
     }
-  }, [data, loading, error]);
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

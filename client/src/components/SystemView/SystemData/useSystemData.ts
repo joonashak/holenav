@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { SystemDataContext } from ".";
 import MassStatus from "../../../enum/MassStatus";
 import SecurityClasses from "../../../enum/SecurityClasses";
-import { ADD_WORMHOLE, EDIT_WORMHOLE } from "./graphql";
+import { ADD_SIGNATURE, ADD_WORMHOLE, EDIT_WORMHOLE } from "./graphql";
 
 type SystemData = {
   id: string;
@@ -13,7 +13,7 @@ type SystemData = {
   whClass: number | null;
   signatures: Signature[];
   wormholes: Wormhole[];
-  addSignature: (newSig: any) => void;
+  addSignature: (newSig: any) => Promise<FetchResult>;
   addWormhole: (newWormhole: any) => Promise<FetchResult>;
   updateWormhole: (update: Wormhole) => Promise<FetchResult>;
 };
@@ -34,14 +34,25 @@ export type Wormhole = Signature & {
 
 export default (): SystemData => {
   const [state, setState] = useContext<any>(SystemDataContext);
+  const [addSigMutation] = useMutation(ADD_SIGNATURE);
   const [addWhMutation] = useMutation(ADD_WORMHOLE);
   const [updateWhMutation] = useMutation(EDIT_WORMHOLE);
 
-  const addSignature = (newSig: any) =>
-    setState(({ signatures, ...rest }: SystemData) => ({
-      ...rest,
-      signatures: signatures.concat(newSig),
-    }));
+  const addSignature = async (newSig: any) => {
+    const input = { ...newSig, systemId: state.id };
+    const res = await addSigMutation({ variables: { input } });
+    const { data, errors } = res;
+    console.log(res);
+
+    if (data && !errors) {
+      setState(({ signatures, ...rest }: SystemData) => ({
+        ...rest,
+        signatures: signatures.concat(data.addSignature),
+      }));
+    }
+
+    return res;
+  };
 
   const addWormhole = async (newWormhole: any): Promise<FetchResult> => {
     const res = await addWhMutation({ variables: { input: newWormhole } });
