@@ -1,5 +1,10 @@
 import { Args, Mutation, Resolver } from "@nestjs/graphql";
+import { ActiveFolder } from "../../auth/decorators/activeFolder.decorator";
+import { RequireFolderRole } from "../../auth/decorators/role.decorator";
+import Roles from "../../role/roles.enum";
+import { Folder } from "../folder/folder.model";
 import AddSignatureInput from "./dto/addSignature.dto";
+import UpdateSignatureInput from "./dto/updateSignature.dto";
 import { Signature } from "./signature.model";
 import { SignatureService } from "./signature.service";
 import SigTypes from "./sigTypes.enum";
@@ -8,6 +13,7 @@ import SigTypes from "./sigTypes.enum";
 export class SignatureResolver {
   constructor(private sigService: SignatureService) {}
 
+  @RequireFolderRole(Roles.WRITE)
   @Mutation((returns) => Signature)
   async addSignature(@Args("input") input: AddSignatureInput): Promise<Signature> {
     if (input.type === SigTypes.WORMHOLE) {
@@ -17,5 +23,19 @@ export class SignatureResolver {
     const { systemId, ...signature } = input;
     const newSig = await this.sigService.createSignature(systemId, signature);
     return newSig;
+  }
+
+  @RequireFolderRole(Roles.READ)
+  @Mutation((returns) => Signature)
+  async updateSignature(
+    @Args("input") input: UpdateSignatureInput,
+    @ActiveFolder() folder: Folder,
+  ): Promise<Signature> {
+    if (input.type === SigTypes.WORMHOLE) {
+      throw new Error("Use updateWormhole mutation for wormhole signatures.");
+    }
+
+    const { id, ...update } = input;
+    return this.sigService.updateSignature(id, folder, update);
   }
 }

@@ -90,6 +90,10 @@ export class WormholeService {
     update: Partial<UpdateWormholeInput>,
   ): Promise<Wormhole> {
     const oldWh = await this.whModel.findOne({ id, folder });
+    if (!oldWh) {
+      throw new HttpException("User has no access to requested wormhole.", HttpStatus.FORBIDDEN);
+    }
+
     const [validType, validReverseType] = this.getValidWormholeTypes(
       update.type,
       update.reverseType,
