@@ -43,7 +43,7 @@ const SigForm = ({ type, eveId, existing }: SigFormProps) => {
           <ControlledTextField name="name" control={control} label="Name" />
         </FormGroup>
         <FormGroup>
-          <Button type="submit" variant="contained" color="secondary">
+          <Button type="submit" variant="contained" color="secondary" data-cy="sig-form-submit">
             Save Signature
           </Button>
         </FormGroup>
