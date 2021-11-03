@@ -42,7 +42,7 @@ export default () => {
             <TableHeadCell>Name</TableHeadCell>
           </TableRow>
         </TableHead>
-        <TableBody>
+        <TableBody data-cy="sig-list-body">
           {allSigs &&
             allSigs.map((sig) => (
               <TableRow key={sig.id}>

@@ -55,4 +55,22 @@ describe("Signatures", () => {
 
     testSignatureProperties(update, testSystemUrl);
   });
+
+  it("Can delete a signature", () => {
+    const sig = {
+      type: "DATA",
+      name: "Test Sig 3",
+      eveId: "ASD-111",
+    };
+
+    openSignatureForm();
+    setSignatureFormValues(sig);
+    submitSignatureForm();
+
+    cy.visit(testSystemUrl);
+    cy.cs("sig-list-body").should("contain.text", sig.name);
+    cy.cs("delete-sig-Test Sig 3").click();
+    cy.visit(testSystemUrl);
+    cy.cs("sig-list-body").should("not.contain.text", sig.name);
+  });
 });
