@@ -11,6 +11,7 @@ import {
   TableRowProps,
 } from "@mui/material";
 import useSystemData, { Signature, Wormhole } from "../../../SystemData/useSystemData";
+import DeleteSigButton from "./DeleteSigButton";
 import EditSigButton from "./EditSigButton";
 
 const TableRow = ({ children }: TableRowProps) => (
@@ -50,9 +51,14 @@ export default () => {
                 </TableCell>
                 <TableCell>{sig.type || (isWormhole(sig) && "Wormhole")}</TableCell>
                 <TableCell>
-                  <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                  <Box
+                    sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}
+                  >
                     {sig.name}
-                    <EditSigButton sig={sig} />
+                    <Box>
+                      <EditSigButton sig={sig} />
+                      <DeleteSigButton sig={sig} />
+                    </Box>
                   </Box>
                 </TableCell>
               </TableRow>
