@@ -7,6 +7,7 @@ import {
   ADD_SIGNATURE,
   ADD_WORMHOLE,
   DELETE_SIGNATURE,
+  DELETE_WORMHOLE,
   EDIT_SIGNATURE,
   EDIT_WORMHOLE,
 } from "./graphql";
@@ -24,6 +25,7 @@ type SystemData = {
   deleteSignature: (id: string) => Promise<void>;
   addWormhole: (newWormhole: any) => Promise<FetchResult>;
   updateWormhole: (update: Wormhole) => Promise<FetchResult>;
+  deleteWormhole: (id: string) => Promise<void>;
 };
 
 export type Signature = {
@@ -47,6 +49,7 @@ export default (): SystemData => {
   const [deleteSigMutation] = useMutation(DELETE_SIGNATURE);
   const [addWhMutation] = useMutation(ADD_WORMHOLE);
   const [updateWhMutation] = useMutation(EDIT_WORMHOLE);
+  const [deleteWhMutation] = useMutation(DELETE_WORMHOLE);
 
   const addSignature = async (newSig: any) => {
     const input = { ...newSig, systemId: state.id };
@@ -120,6 +123,19 @@ export default (): SystemData => {
     return res;
   };
 
+  const deleteWormhole = async (id: string): Promise<void> => {
+    const res = await deleteWhMutation({ variables: { id } });
+    const { data, errors } = res;
+
+    if (data && !errors) {
+      const deletedWh = data.deleteWormhole;
+      setState(({ wormholes, ...rest }: SystemData) => ({
+        ...rest,
+        wormholes: wormholes.filter((wh) => wh.id !== deletedWh.id),
+      }));
+    }
+  };
+
   return {
     ...state,
     addSignature,
@@ -127,5 +143,6 @@ export default (): SystemData => {
     deleteSignature,
     addWormhole,
     updateWormhole,
+    deleteWormhole,
   };
 };

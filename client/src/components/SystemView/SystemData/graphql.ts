@@ -91,3 +91,11 @@ export const EDIT_WORMHOLE = gql`
     }
   }
 `;
+
+export const DELETE_WORMHOLE = gql`
+  mutation DeleteWormhole($id: String!) {
+    deleteWormhole(id: $id) {
+      id
+    }
+  }
+`;
