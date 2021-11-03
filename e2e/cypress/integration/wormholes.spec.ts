@@ -51,6 +51,29 @@ describe("Wormholes", () => {
     testWormholeProperties(wh, testSystemUrl);
   });
 
+  it("Can delete a wormhole", () => {
+    const wh = {
+      name: "Deleting Test 1",
+      destinationName: "Juunigaishi",
+      type: "K162",
+      eveId: "JKA-293",
+    };
+
+    openWormholeForm();
+    setWormholeFormValues(wh);
+    submitWormholeForm();
+    testWormholeProperties(wh, testSystemUrl);
+
+    cy.visit(testSystemUrl);
+    cy.cs("sig-list-body").should("contain.text", wh.name);
+    cy.cs("delete-sig-Deleting Test 1").click();
+    cy.contains("Wormhole deleted.");
+    cy.visit(testSystemUrl);
+    cy.cs("sig-list-body").should("not.contain.text", wh.name);
+    cy.visit("/system/Juunigaishi");
+    cy.cs("sig-list-body").should("not.contain.text", "rev from jita");
+  });
+
   it("Connection is correctly mapped", () => {
     const wh = {
       name: "Connection Test 1",

@@ -16,10 +16,10 @@ const DeleteSigButton = ({ sig }: DeleteSigButtonProps) => {
   const onClick = async () => {
     if (isWormhole) {
       await deleteWormhole(sig.id);
-      setNotification("Wormhole deleted", "success");
+      setNotification("Wormhole deleted.", "success");
     } else {
       await deleteSignature(sig.id);
-      setNotification("Signature deleted", "success");
+      setNotification("Signature deleted.", "success");
     }
   };
 
