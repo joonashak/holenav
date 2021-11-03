@@ -33,4 +33,10 @@ export class SignatureResolver {
     const { id, ...update } = input;
     return this.sigService.updateSignature(id, update);
   }
+
+  @RequireFolderRole(Roles.WRITE)
+  @Mutation((returns) => Signature)
+  async deleteSignature(@Args("id") id: string): Promise<Signature> {
+    return this.sigService.deleteSignature(id);
+  }
 }
