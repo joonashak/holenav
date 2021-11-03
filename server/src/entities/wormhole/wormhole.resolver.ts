@@ -51,4 +51,10 @@ export class WormholeResolver {
     const res = await this.whService.updateWormhole(id, folder, update);
     return res;
   }
+
+  @RequireFolderRole(Roles.WRITE)
+  @Mutation((returns) => Wormhole)
+  async deleteWormhole(@Args("id") id: string): Promise<Wormhole> {
+    return this.whService.deleteWormhole(id);
+  }
 }

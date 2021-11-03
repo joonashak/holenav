@@ -123,6 +123,17 @@ export class WormholeService {
     return this.whModel.findById(updatedWh._id).populate("reverse");
   }
 
+  async deleteWormhole(id: string): Promise<Wormhole> {
+    const removed = await this.whModel.findOneAndDelete({ id }, { returnDocument: "before" });
+    const { reverse } = removed;
+
+    if (reverse) {
+      await this.whModel.findByIdAndDelete(reverse);
+    }
+
+    return removed;
+  }
+
   private async addReverseWormhole(
     wormhole: WormholeDocument,
     reverseType: string,
