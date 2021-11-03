@@ -3,7 +3,13 @@ import { useContext } from "react";
 import { SystemDataContext } from ".";
 import MassStatus from "../../../enum/MassStatus";
 import SecurityClasses from "../../../enum/SecurityClasses";
-import { ADD_SIGNATURE, ADD_WORMHOLE, EDIT_SIGNATURE, EDIT_WORMHOLE } from "./graphql";
+import {
+  ADD_SIGNATURE,
+  ADD_WORMHOLE,
+  DELETE_SIGNATURE,
+  EDIT_SIGNATURE,
+  EDIT_WORMHOLE,
+} from "./graphql";
 
 type SystemData = {
   id: string;
@@ -15,6 +21,7 @@ type SystemData = {
   wormholes: Wormhole[];
   addSignature: (newSig: any) => Promise<FetchResult>;
   updateSignature: (update: Signature) => Promise<FetchResult>;
+  deleteSignature: (id: string) => Promise<void>;
   addWormhole: (newWormhole: any) => Promise<FetchResult>;
   updateWormhole: (update: Wormhole) => Promise<FetchResult>;
 };
@@ -37,6 +44,7 @@ export default (): SystemData => {
   const [state, setState] = useContext<any>(SystemDataContext);
   const [addSigMutation] = useMutation(ADD_SIGNATURE);
   const [updateSigMutation] = useMutation(EDIT_SIGNATURE);
+  const [deleteSigMutation] = useMutation(DELETE_SIGNATURE);
   const [addWhMutation] = useMutation(ADD_WORMHOLE);
   const [updateWhMutation] = useMutation(EDIT_WORMHOLE);
 
@@ -68,6 +76,19 @@ export default (): SystemData => {
     }
 
     return res;
+  };
+
+  const deleteSignature = async (id: string): Promise<void> => {
+    const res = await deleteSigMutation({ variables: { id } });
+    const { data, errors } = res;
+
+    if (data && !errors) {
+      const deletedSig = data.deleteSignature;
+      setState(({ signatures, ...rest }: SystemData) => ({
+        ...rest,
+        signatures: signatures.filter((sig) => sig.id !== deletedSig.id),
+      }));
+    }
   };
 
   const addWormhole = async (newWormhole: any): Promise<FetchResult> => {
@@ -103,6 +124,7 @@ export default (): SystemData => {
     ...state,
     addSignature,
     updateSignature,
+    deleteSignature,
     addWormhole,
     updateWormhole,
   };

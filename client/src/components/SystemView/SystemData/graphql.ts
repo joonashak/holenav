@@ -50,6 +50,14 @@ export const EDIT_SIGNATURE = gql`
   }
 `;
 
+export const DELETE_SIGNATURE = gql`
+  mutation DeleteSignature($id: String!) {
+    deleteSignature(id: $id) {
+      id
+    }
+  }
+`;
+
 export const ADD_WORMHOLE = gql`
   mutation AddWormhole($input: AddWormholeInput!) {
     addWormhole(input: $input) {
