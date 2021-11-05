@@ -1,51 +1,38 @@
 import { gql } from "@apollo/client";
+import { SIGNATURE_FIELDS, WORMHOLE_FIELDS } from "./fragments";
 
 export const GET_SYSTEM_BY_NAME = gql`
+  ${SIGNATURE_FIELDS}
+  ${WORMHOLE_FIELDS}
   query System($name: String!) {
     getSystemByName(name: $name) {
       id
       name
       signatures {
-        id
-        name
-        type
-        eveId
+        ...SignatureFields
       }
     }
 
     getWormholesBySystem(name: $name) {
-      name
-      id
-      eveId
-      type
-      eol
-      massStatus
-      destinationName
-      reverse {
-        type
-      }
+      ...WormholeFields
     }
   }
 `;
 
 export const ADD_SIGNATURE = gql`
+  ${SIGNATURE_FIELDS}
   mutation AddSig($input: AddSignatureInput!) {
     addSignature(input: $input) {
-      id
-      name
-      type
-      eveId
+      ...SignatureFields
     }
   }
 `;
 
 export const EDIT_SIGNATURE = gql`
+  ${SIGNATURE_FIELDS}
   mutation UpdateSignature($input: UpdateSignatureInput!) {
     updateSignature(input: $input) {
-      id
-      name
-      type
-      eveId
+      ...SignatureFields
     }
   }
 `;
@@ -59,35 +46,19 @@ export const DELETE_SIGNATURE = gql`
 `;
 
 export const ADD_WORMHOLE = gql`
+  ${WORMHOLE_FIELDS}
   mutation AddWormhole($input: AddWormholeInput!) {
     addWormhole(input: $input) {
-      name
-      id
-      eveId
-      type
-      eol
-      massStatus
-      destinationName
-      reverse {
-        type
-      }
+      ...WormholeFields
     }
   }
 `;
 
 export const EDIT_WORMHOLE = gql`
+  ${WORMHOLE_FIELDS}
   mutation UpdateWormhole($input: UpdateWormholeInput!) {
     updateWormhole(input: $input) {
-      name
-      id
-      eveId
-      type
-      eol
-      massStatus
-      destinationName
-      reverse {
-        type
-      }
+      ...WormholeFields
     }
   }
 `;
