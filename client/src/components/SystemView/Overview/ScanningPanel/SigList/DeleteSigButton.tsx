@@ -45,7 +45,9 @@ const DeleteSigButton = ({ sig }: DeleteSigButtonProps) => {
         <DeleteIcon fontSize="inherit" />
       </IconButton>
       <Menu open={!!anchor} anchorEl={anchor} onClose={onClose}>
-        <MenuItem onClick={onConfirm}>Confirm</MenuItem>
+        <MenuItem onClick={onConfirm} data-cy="confirm-button">
+          Confirm
+        </MenuItem>
       </Menu>
     </>
   );
