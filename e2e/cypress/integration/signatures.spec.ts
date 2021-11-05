@@ -70,6 +70,7 @@ describe("Signatures", () => {
     cy.visit(testSystemUrl);
     cy.cs("sig-list-body").should("contain.text", sig.name);
     cy.cs("delete-sig-Test Sig 3").click();
+    cy.cs("confirm-button").click();
     cy.visit(testSystemUrl);
     cy.cs("sig-list-body").should("not.contain.text", sig.name);
   });
