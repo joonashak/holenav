@@ -4,16 +4,18 @@ These commands control the development environment. Run them in the project root
 
 ## Basic Commands
 
-### Start In Development Mode (Detached)
+### Start In Development Mode
 
 ```bash
 npm start
 ```
 
-### Start In Development Mode (With Logs)
+Starts the development and test containers in detached mode and shows backend and frontend logs.
+
+### Start In Development Mode (Detached)
 
 ```bash
-npm run start:logs
+npm run startd
 ```
 
 ### Stop
