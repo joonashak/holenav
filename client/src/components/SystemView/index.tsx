@@ -2,6 +2,7 @@ import Container from "./Container";
 import Map from "./Map";
 import MapData from "./Map/MapData";
 import Overview from "./Overview";
+import QuickControl from "./QuickControl";
 import SystemData from "./SystemData";
 
 interface SystemViewProps {
@@ -21,6 +22,7 @@ export default ({ match }: SystemViewProps) => {
         <Container>
           <Overview />
           <Map />
+          <QuickControl />
         </Container>
       </MapData>
     </SystemData>
