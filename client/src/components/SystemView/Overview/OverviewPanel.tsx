@@ -13,6 +13,7 @@ const OverviewPanel = ({ title, children, name, defaultExpanded }: OverviewPanel
   <Accordion
     defaultExpanded={defaultExpanded}
     disableGutters
+    square
     sx={{
       backgroundColor: "primary.main",
       color: "text.primary",
