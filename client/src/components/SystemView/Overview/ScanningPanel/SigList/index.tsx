@@ -22,8 +22,8 @@ const TableHeadCell = ({ children }: TableCellProps) => (
   <MuiTableCell sx={{ color: "secondary.light", fontSize: "0.95rem" }}>{children}</MuiTableCell>
 );
 
-const TableCell = ({ children }: TableCellProps) => (
-  <MuiTableCell sx={{ borderBottomColor: "primary.main" }}>{children}</MuiTableCell>
+const TableCell = ({ children, sx }: TableCellProps) => (
+  <MuiTableCell sx={{ borderBottomColor: "primary.main", ...sx }}>{children}</MuiTableCell>
 );
 
 export default () => {
@@ -50,7 +50,7 @@ export default () => {
                   {sig.eveId}
                 </TableCell>
                 <TableCell>{sig.type || (isWormhole(sig) && "Wormhole")}</TableCell>
-                <TableCell>
+                <TableCell sx={{ paddingTop: 0, paddingBottom: 0 }}>
                   <Box
                     sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}
                   >
