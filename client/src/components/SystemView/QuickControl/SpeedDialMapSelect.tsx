@@ -4,7 +4,6 @@ import MapIcon from "@mui/icons-material/Map";
 import useUserData from "../../UserData/useUserData";
 
 // TODO: Highlight selected map.
-// TODO: Fix speed dial button styling.
 
 const SpeedDialMapSelect = (props: SpeedDialActionProps) => {
   const anchorEl = useRef(null);

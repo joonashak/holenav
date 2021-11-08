@@ -1,26 +1,15 @@
-import {
-  SpeedDial,
-  SpeedDialAction as MuiSpeedDialAction,
-  SpeedDialActionProps,
-} from "@mui/material";
+import { SpeedDial, SpeedDialAction } from "@mui/material";
 import GroupIcon from "@mui/icons-material/Group";
 import SettingsIcon from "@mui/icons-material/Settings";
 import SpeedDialMapSelect from "./SpeedDialMapSelect";
 
-const SpeedDialAction = (props: SpeedDialActionProps) => (
-  <MuiSpeedDialAction
-    {...props}
-    FabProps={{
-      sx: {
-        bgcolor: "secondary.dark",
-        "&:hover": { bgcolor: "secondary.main" },
-      },
-    }}
-  />
-);
-
 const QuickControl = () => {
-  console.log("asd");
+  const actionFabProps = {
+    sx: {
+      bgcolor: "secondary.dark",
+      "&:hover": { bgcolor: "secondary.main" },
+    },
+  };
 
   return (
     <SpeedDial
@@ -36,8 +25,12 @@ const QuickControl = () => {
         },
       }}
     >
-      <SpeedDialAction icon={<GroupIcon />} tooltipTitle="Select Character" />
-      <SpeedDialMapSelect />
+      <SpeedDialAction
+        icon={<GroupIcon />}
+        tooltipTitle="Select Character"
+        FabProps={actionFabProps}
+      />
+      <SpeedDialMapSelect FabProps={actionFabProps} />
     </SpeedDial>
   );
 };
