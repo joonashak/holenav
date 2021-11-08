@@ -3,16 +3,17 @@ import { CurrentUser } from "../auth/decorators/user.decorator";
 import { User } from "./user.model";
 import { UserService } from "./user.service";
 import RequireAuth from "../auth/decorators/auth.decorator";
+import { UserSettingsService } from "./settings/userSettings.service";
 
 @Resolver()
 export class UserResolver {
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService, private userSettingsService: UserSettingsService) {}
 
   @RequireAuth()
   @Query((returns) => User)
   async whoami(@CurrentUser() user: User) {
     // ^ The name is all lowercase intentionally.. ;)
-    // Don't use the decorator's User object to avoid leaking sensitive data.
+    // Don't return the decorator's User object to avoid leaking sensitive data.
     const acualUser = await this.userService.findById(user.id);
     return acualUser;
   }
@@ -23,9 +24,6 @@ export class UserResolver {
     @Args("selectedMapId") selectedMapId: string,
     @CurrentUser() user: User,
   ): Promise<User> {
-    const { settings } = await this.userService.findById(user.id);
-    const selectedMap = settings.maps.find((map) => map.id === selectedMapId) || null;
-    const updatedUser = await this.userService.updateUserSettings(user.id, { selectedMap });
-    return updatedUser;
+    return this.userSettingsService.updateSelectedMap(selectedMapId, user);
   }
 }

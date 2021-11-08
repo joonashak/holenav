@@ -1,13 +1,11 @@
 import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
-import { Model, UpdateQuery } from "mongoose";
+import { Model } from "mongoose";
 import { Character } from "../entities/character/character.model";
 import { FolderService } from "../entities/folder/folder.service";
 import { RoleService } from "../role/role.service";
 import Roles from "../role/roles.enum";
 import { CreateUserDto } from "./dto/createUser.dto";
-import defaultUserSettings from "./settings/defaultUserSettings";
-import { UserSettings } from "./settings/userSettings.model";
 import { User, UserDocument } from "./user.model";
 
 @Injectable()
@@ -71,18 +69,5 @@ export class UserService {
    */
   async addToken(userId: string, newToken: string): Promise<void> {
     await this.userModel.findOneAndUpdate({ id: userId }, { $push: { tokens: newToken } });
-  }
-
-  async updateUserSettings(userId: string, update: Partial<UserSettings>): Promise<User> {
-    const user = await this.userModel.findOne({ id: userId });
-    const { id, settings } = user.toObject();
-    const updatedSettings = { ...settings, ...update };
-
-    const updatedUser = await this.userModel.findOneAndUpdate(
-      { id },
-      { settings: updatedSettings },
-      { new: true },
-    );
-    return updatedUser;
   }
 }
