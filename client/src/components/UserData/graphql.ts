@@ -1,5 +1,5 @@
-/* eslint-disable import/prefer-default-export */
 import { gql } from "@apollo/client";
+import { MAP_FIELDS } from "./fragments";
 
 export const GET_SYSTEM_DATA = gql`
   query SystemData {
@@ -25,13 +25,25 @@ export const GET_SYSTEM_DATA = gql`
 `;
 
 export const UPDATE_SELECTED_MAP = gql`
+  ${MAP_FIELDS}
   mutation UpdateSelectedMap($selectedMapId: String!) {
     updateSelectedMap(selectedMapId: $selectedMapId) {
       settings {
         selectedMap {
-          id
-          name
-          rootSystemName
+          ...MapFields
+        }
+      }
+    }
+  }
+`;
+
+export const ADD_SAVED_MAP = gql`
+  ${MAP_FIELDS}
+  mutation AddSavedMap($name: String!, $rootSystemName: String!) {
+    addSavedMap(name: $name, rootSystemName: $rootSystemName) {
+      settings {
+        maps {
+          ...MapFields
         }
       }
     }

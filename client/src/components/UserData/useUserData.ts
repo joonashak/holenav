@@ -1,11 +1,12 @@
-import { useMutation } from "@apollo/client";
+import { FetchResult, useMutation } from "@apollo/client";
 import { useContext } from "react";
 import { UserDataContext } from ".";
-import { UPDATE_SELECTED_MAP } from "./graphql";
-import { UserData } from "./types";
+import { ADD_SAVED_MAP, UPDATE_SELECTED_MAP } from "./graphql";
+import { SavedMap, UserData } from "./types";
 
 type UserDataHook = UserData & {
   setSelectedMap: (mapId: string) => void;
+  addSavedMap: (newMap: SavedMap) => Promise<FetchResult>;
 };
 
 export default (): UserDataHook => {
@@ -14,6 +15,7 @@ export default (): UserDataHook => {
   const { selectedMap, maps } = settings;
 
   const [updateSelectedMapMutation] = useMutation(UPDATE_SELECTED_MAP);
+  const [addSavedMapMutation] = useMutation(ADD_SAVED_MAP);
 
   const setSelectedMap = async (mapId: string) => {
     const newMap = settings.maps.find((m) => m.id === mapId);
@@ -27,6 +29,19 @@ export default (): UserDataHook => {
     }
   };
 
+  const addSavedMap = async (newMap: SavedMap): Promise<FetchResult> => {
+    const res = await addSavedMapMutation({ variables: newMap });
+
+    if (res.data && !res.errors) {
+      setState((prev: UserData) => ({
+        ...prev,
+        settings: { ...prev.settings, maps: res.data.addSavedMap.settings.maps },
+      }));
+    }
+
+    return res;
+  };
+
   return {
     ...state,
     settings: {
@@ -34,5 +49,6 @@ export default (): UserDataHook => {
       selectedMap: selectedMap || maps[0],
     },
     setSelectedMap,
+    addSavedMap,
   };
 };

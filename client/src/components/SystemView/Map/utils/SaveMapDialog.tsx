@@ -1,21 +1,34 @@
 import systems from "@eve-data/systems";
 import { Button, DialogContent, DialogProps, DialogTitle } from "@mui/material";
-import { useForm } from "react-hook-form";
+import { FieldValues, useForm } from "react-hook-form";
 import Dialog from "../../../common/Dialog";
 import ControlledTextField from "../../../controls/ControlledTextField";
 import FormGroupRow from "../../../controls/FormGroupRow";
 import RhfAutocomplete from "../../../controls/RhfAutocomplete";
+import useNotification from "../../../GlobalNotification/useNotification";
+import { SavedMap } from "../../../UserData/types";
+import useUserData from "../../../UserData/useUserData";
 import useSystemData from "../../SystemData/useSystemData";
 
 const SaveMapDialog = ({ open, onClose }: DialogProps) => {
+  const { setNotification } = useNotification();
+  const { addSavedMap } = useUserData();
   const { name: systemName } = useSystemData();
   const { handleSubmit, control } = useForm({ defaultValues: { rootSystemName: systemName } });
+
+  const submit = async (formData: FieldValues) => {
+    const res = await addSavedMap(formData as SavedMap);
+
+    if (res.data && !res.errors) {
+      setNotification("Map saved.", "success", true);
+    }
+  };
 
   return (
     <Dialog open={open} onClose={onClose}>
       <DialogTitle>Save Map</DialogTitle>
       <DialogContent>
-        <form>
+        <form onSubmit={handleSubmit(submit)}>
           <FormGroupRow>
             <ControlledTextField name="name" control={control} label="Name" />
             <RhfAutocomplete
