@@ -12,6 +12,12 @@ export class UserSettingsService {
     private userService: UserService,
   ) {}
 
+  /**
+   * Update user settings. Use this to ensure deep updates.
+   * @param userId Id of user to be updated.
+   * @param update Partial settings object containing fields to be updated.
+   * @returns Updated user object.
+   */
   private async updateUserSettings(userId: string, update: Partial<UserSettings>): Promise<User> {
     const user = await this.userModel.findOne({ id: userId });
     const { id, settings } = user.toObject();
@@ -25,10 +31,15 @@ export class UserSettingsService {
     return updatedUser;
   }
 
-  async updateSelectedMap(selectedMapId: string, user: User) {
+  async updateSelectedMap(selectedMapId: string, user: User): Promise<User> {
     const { settings } = await this.userService.findById(user.id);
     const selectedMap = settings.maps.find((map) => map.id === selectedMapId) || null;
-    const updatedUser = await this.updateUserSettings(user.id, { selectedMap });
-    return updatedUser;
+    return this.updateUserSettings(user.id, { selectedMap });
+  }
+
+  async createSavedMap(name: string, rootSystemName: string, user: User): Promise<User> {
+    const { settings } = await this.userService.findById(user.id);
+    const maps = settings.maps.concat({ name, rootSystemName });
+    return this.updateUserSettings(user.id, { maps });
   }
 }

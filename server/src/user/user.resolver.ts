@@ -26,4 +26,14 @@ export class UserResolver {
   ): Promise<User> {
     return this.userSettingsService.updateSelectedMap(selectedMapId, user);
   }
+
+  @RequireAuth()
+  @Mutation((returns) => User)
+  async addSavedMap(
+    @Args("name") name: string,
+    @Args("rootSystemName") rootSystemName: string,
+    @CurrentUser() user: User,
+  ): Promise<User> {
+    return this.userSettingsService.createSavedMap(name, rootSystemName, user);
+  }
 }
