@@ -12,12 +12,15 @@ import MapIcon from "@mui/icons-material/Map";
 import AddIcon from "@mui/icons-material/Add";
 import useUserData from "../../../UserData/useUserData";
 import MapMenuItem from "./MapMenuItem";
+import SaveMapDialog from "../../Map/utils/SaveMapDialog";
 
 const SpeedDialMapSelect = (props: SpeedDialActionProps) => {
   const anchorEl = useRef(null);
-  const [open, setOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
 
-  const toggleOpen = () => setOpen((prev) => !prev);
+  const toggleMenu = () => setMenuOpen((prev) => !prev);
+  const toggleDialog = () => setDialogOpen((prev) => !prev);
 
   const {
     setSelectedMap,
@@ -26,36 +29,37 @@ const SpeedDialMapSelect = (props: SpeedDialActionProps) => {
 
   const selectMap = (mapId: string) => {
     setSelectedMap(mapId);
-    toggleOpen();
+    toggleMenu();
   };
 
   return (
     <>
       <SpeedDialAction
         {...props}
-        onClick={toggleOpen}
+        onClick={toggleMenu}
         icon={<MapIcon ref={anchorEl} />}
         tooltipTitle="Select Map"
       />
       <Menu
-        open={open}
+        open={menuOpen}
         anchorEl={anchorEl.current}
         anchorOrigin={{ vertical: "top", horizontal: "left" }}
         transformOrigin={{ vertical: "top", horizontal: "left" }}
-        onClose={toggleOpen}
+        onClose={toggleMenu}
         MenuListProps={{ sx: { bgcolor: "primary.main" } }}
       >
         {maps.map((map) => (
           <MapMenuItem map={map} selectMap={selectMap} key={`quick-map-select-${map.id}`} />
         ))}
         <Divider />
-        <MenuItem>
+        <MenuItem onClick={toggleDialog}>
           <ListItemIcon>
             <AddIcon />
           </ListItemIcon>
           <ListItemText>New Map</ListItemText>
         </MenuItem>
       </Menu>
+      <SaveMapDialog open={dialogOpen} onClose={toggleDialog} />
     </>
   );
 };

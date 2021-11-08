@@ -6,7 +6,7 @@ import SigForm from "./SigForm";
 import WormholeForm from "./WormholeForm";
 import FormGroupRow from "../../../../controls/FormGroupRow";
 import { Signature, Wormhole } from "../../../SystemData/useSystemData";
-import Modal from "../../../../common/Dialog";
+import Dialog from "../../../../common/Dialog";
 
 const typeOptions = Object.entries(SigTypes).map(([key, label]) => ({
   id: `sig-type-${key}`,
@@ -41,7 +41,7 @@ const SigModal = ({ open, onClose, wormhole, signature }: SigModalProps) => {
   const modalTitle = editing ? "Edit Signature" : "Add Signature";
 
   return (
-    <Modal open={open} onClose={onClose}>
+    <Dialog open={open} onClose={onClose}>
       <DialogTitle>{modalTitle}</DialogTitle>
       <DialogContent>
         <FormGroupRow>
@@ -65,7 +65,7 @@ const SigModal = ({ open, onClose, wormhole, signature }: SigModalProps) => {
           <SigForm type={type} eveId={eveId} existing={signature} />
         )}
       </DialogContent>
-    </Modal>
+    </Dialog>
   );
 };
 
