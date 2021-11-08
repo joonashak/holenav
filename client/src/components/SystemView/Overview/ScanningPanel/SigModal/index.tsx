@@ -1,4 +1,4 @@
-import { Dialog, DialogContent, DialogTitle, SelectChangeEvent, TextField } from "@mui/material";
+import { DialogContent, DialogTitle, SelectChangeEvent, TextField } from "@mui/material";
 import { ChangeEvent, useState } from "react";
 import Select from "../../../../controls/Select";
 import SigTypes from "../../../../../enum/SigTypes";
@@ -6,6 +6,7 @@ import SigForm from "./SigForm";
 import WormholeForm from "./WormholeForm";
 import FormGroupRow from "../../../../controls/FormGroupRow";
 import { Signature, Wormhole } from "../../../SystemData/useSystemData";
+import Modal from "../../../../common/Dialog";
 
 const typeOptions = Object.entries(SigTypes).map(([key, label]) => ({
   id: `sig-type-${key}`,
@@ -40,17 +41,7 @@ const SigModal = ({ open, onClose, wormhole, signature }: SigModalProps) => {
   const modalTitle = editing ? "Edit Signature" : "Add Signature";
 
   return (
-    <Dialog
-      open={open}
-      onClose={onClose}
-      PaperProps={{
-        sx: {
-          width: "100vw",
-          ml: { xs: 0 },
-          mr: { xs: 0 },
-        },
-      }}
-    >
+    <Modal open={open} onClose={onClose}>
       <DialogTitle>{modalTitle}</DialogTitle>
       <DialogContent>
         <FormGroupRow>
@@ -74,7 +65,7 @@ const SigModal = ({ open, onClose, wormhole, signature }: SigModalProps) => {
           <SigForm type={type} eveId={eveId} existing={signature} />
         )}
       </DialogContent>
-    </Dialog>
+    </Modal>
   );
 };
 
