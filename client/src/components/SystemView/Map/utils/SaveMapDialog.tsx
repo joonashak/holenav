@@ -10,7 +10,11 @@ import { SavedMap } from "../../../UserData/types";
 import useUserData from "../../../UserData/useUserData";
 import useSystemData from "../../SystemData/useSystemData";
 
-const SaveMapDialog = ({ open, onClose }: DialogProps) => {
+type SaveMapDialogProps = DialogProps & {
+  onClose: () => void;
+};
+
+const SaveMapDialog = ({ open, onClose }: SaveMapDialogProps) => {
   const { setNotification } = useNotification();
   const { addSavedMap } = useUserData();
   const { name: systemName } = useSystemData();
@@ -21,6 +25,7 @@ const SaveMapDialog = ({ open, onClose }: DialogProps) => {
 
     if (res.data && !res.errors) {
       setNotification("Map saved.", "success", true);
+      onClose();
     }
   };
 
