@@ -42,4 +42,10 @@ export class UserSettingsService {
     const maps = settings.maps.concat({ name, rootSystemName });
     return this.updateUserSettings(user.id, { maps });
   }
+
+  async deleteSavedMap(mapId: string, user: User): Promise<User> {
+    const { settings } = await this.userService.findById(user.id);
+    const maps = settings.maps.filter((map) => map.id !== mapId);
+    return this.updateUserSettings(user.id, { maps });
+  }
 }

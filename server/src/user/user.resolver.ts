@@ -36,4 +36,10 @@ export class UserResolver {
   ): Promise<User> {
     return this.userSettingsService.createSavedMap(name, rootSystemName, user);
   }
+
+  @RequireAuth()
+  @Mutation((returns) => User)
+  async deleteSavedMap(@Args("mapId") mapId: string, @CurrentUser() user: User): Promise<User> {
+    return this.userSettingsService.deleteSavedMap(mapId, user);
+  }
 }
