@@ -17,7 +17,7 @@ import SaveMapDialog from "../../Map/utils/SaveMapDialog";
 const SpeedDialMapSelect = (props: SpeedDialActionProps) => {
   const anchorEl = useRef(null);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [dialogOpen, setDialogOpen] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(true);
 
   const toggleMenu = () => setMenuOpen((prev) => !prev);
   const toggleDialog = () => setDialogOpen((prev) => !prev);
