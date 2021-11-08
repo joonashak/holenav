@@ -49,3 +49,16 @@ export const ADD_SAVED_MAP = gql`
     }
   }
 `;
+
+export const DELETE_SAVED_MAP = gql`
+  ${MAP_FIELDS}
+  mutation DeleteSavedMap($mapId: String!) {
+    deleteSavedMap(mapId: $mapId) {
+      settings {
+        maps {
+          ...MapFields
+        }
+      }
+    }
+  }
+`;
