@@ -46,7 +46,7 @@ const SpeedDialMapSelect = (props: SpeedDialActionProps) => {
         anchorOrigin={{ vertical: "top", horizontal: "left" }}
         transformOrigin={{ vertical: "top", horizontal: "left" }}
         onClose={toggleMenu}
-        MenuListProps={{ sx: { bgcolor: "primary.main" } }}
+        MenuListProps={{ sx: { bgcolor: "primary.main" }, dense: true }}
       >
         {maps.map((map) => (
           <MapMenuItem map={map} selectMap={selectMap} key={`quick-map-select-${map.id}`} />
@@ -54,7 +54,7 @@ const SpeedDialMapSelect = (props: SpeedDialActionProps) => {
         <Divider />
         <MenuItem onClick={toggleDialog}>
           <ListItemIcon>
-            <AddIcon />
+            <AddIcon sx={{ color: "secondary.light" }} />
           </ListItemIcon>
           <ListItemText>New Map</ListItemText>
         </MenuItem>

@@ -1,6 +1,5 @@
 import { SyntheticEvent } from "react";
 import { IconButton, ListItemIcon, ListItemText, MenuItem } from "@mui/material";
-import RemoveIcon from "@mui/icons-material/Remove";
 import CheckIcon from "@mui/icons-material/Check";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { SavedMap } from "../../../UserData/types";
@@ -33,9 +32,15 @@ const MapMenuItem = ({ map, selectMap }: MapMenuItemProps) => {
 
   return (
     <MenuItem onClick={() => selectMap(id)}>
-      <ListItemIcon>{selected ? <CheckIcon /> : <RemoveIcon />}</ListItemIcon>
-      <ListItemText sx={{ marginRight: 2 }}>{name}</ListItemText>
-      <IconButton onClick={removeSavedMap}>
+      <ListItemIcon>
+        {selected ? <CheckIcon sx={{ color: "secondary.light" }} /> : null}
+      </ListItemIcon>
+      <ListItemText
+        sx={{ marginRight: 2, color: selected ? "secondary.light" : "primary.contrastText" }}
+      >
+        {name}
+      </ListItemText>
+      <IconButton onClick={removeSavedMap} size="small">
         <DeleteIcon />
       </IconButton>
     </MenuItem>
