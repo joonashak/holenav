@@ -13,8 +13,11 @@ import GroupIcon from "@mui/icons-material/Group";
 import AddIcon from "@mui/icons-material/Add";
 import { endpoints } from "../../../../config";
 import useAuth from "../../../../auth/useAuth";
+import useUserData from "../../../UserData/useUserData";
+import CharacterMenuItem from "./CharacterMenuItem";
 
 const SpeedDialCharacterSelect = (props: SpeedDialActionProps) => {
+  const { main, alts } = useUserData();
   const { token } = useAuth();
   const anchorEl = useRef(null);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -24,6 +27,10 @@ const SpeedDialCharacterSelect = (props: SpeedDialActionProps) => {
   const addCharacter = async () => {
     const { data } = await axios.get(endpoints.addCharacter, { headers: { accesstoken: token } });
     window.location.href = data;
+  };
+
+  const selectCharacter = (esiId: string) => {
+    console.log("Not implemented");
   };
 
   return (
@@ -42,6 +49,15 @@ const SpeedDialCharacterSelect = (props: SpeedDialActionProps) => {
         onClose={toggleMenu}
         MenuListProps={{ sx: { bgcolor: "primary.main" }, dense: true }}
       >
+        <CharacterMenuItem character={main} selectCharacter={selectCharacter} />
+        <Divider />
+        {alts.map((alt) => (
+          <CharacterMenuItem
+            character={alt}
+            selectCharacter={selectCharacter}
+            key={`quick-character-select-${alt.esiId}`}
+          />
+        ))}
         <Divider />
         <MenuItem onClick={addCharacter}>
           <ListItemIcon>
