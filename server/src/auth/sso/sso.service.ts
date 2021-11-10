@@ -17,9 +17,8 @@ export class SsoService {
   /**
    * Generate EVE SSO login page URL.
    */
-  async getClientLoginUrl() {
-    const { key } = await this.ssoSessionService.createSsoSession(SsoSessionTypes.LOGIN);
-
+  async getSsoLoginUrl(type: SsoSessionTypes) {
+    const { key } = await this.ssoSessionService.createSsoSession(type);
     const loginUrl = `${SsoUrl.Authorize}/?response_type=code&redirect_uri=${ssoCallbackUrl}&client_id=${ssoClientId}&state=${key}`;
     return encodeURI(loginUrl);
   }

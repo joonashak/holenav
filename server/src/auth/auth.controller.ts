@@ -12,19 +12,31 @@ import {
 import { Request, Response } from "express";
 import { getClientLoginCallbackUrl } from "../config";
 import { AuthService } from "./auth.service";
+import RequireAuth from "./decorators/auth.decorator";
 import { GetTokenDto } from "./dto/getToken.dto";
 import { SsoService } from "./sso/sso.service";
+import SsoSessionTypes from "./sso/ssoSession/ssoSessionTypes.enum";
 
 @Controller("auth")
 export class AuthController {
   constructor(private ssoService: SsoService, private authService: AuthService) {}
 
   /**
-   * Redirect client to EVE SSO login page.
+   * Redirect client to EVE SSO login page for logging in to Holenav.
    */
   @Get("login")
-  async login(@Res() response: Response) {
-    const ssoLoginUrl = await this.ssoService.getClientLoginUrl();
+  async login(@Res() response: Response): Promise<void> {
+    const ssoLoginUrl = await this.ssoService.getSsoLoginUrl(SsoSessionTypes.LOGIN);
+    response.redirect(ssoLoginUrl);
+  }
+
+  /**
+   * Redirect client to EVE SSO login page for adding a new character to existing user.
+   */
+  @RequireAuth()
+  @Get("addCharacter")
+  async addCharacter(@Res() response: Response): Promise<void> {
+    const ssoLoginUrl = await this.ssoService.getSsoLoginUrl(SsoSessionTypes.ADD_CHARACTER);
     response.redirect(ssoLoginUrl);
   }
 
