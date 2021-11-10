@@ -37,9 +37,9 @@ export class AuthController {
    */
   @RequireAuth()
   @Get("addCharacter")
-  async addCharacter(@Res() response: Response, @CurrentUser() user: User): Promise<void> {
+  async addCharacter(@CurrentUser() user: User): Promise<string> {
     const ssoLoginUrl = await this.ssoService.getSsoLoginUrl(SsoSessionTypes.ADD_CHARACTER, user);
-    response.redirect(ssoLoginUrl);
+    return ssoLoginUrl;
   }
 
   /**

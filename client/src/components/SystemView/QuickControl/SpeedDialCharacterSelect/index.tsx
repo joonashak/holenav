@@ -1,4 +1,5 @@
 import { useRef, useState } from "react";
+import axios from "axios";
 import {
   Divider,
   ListItemIcon,
@@ -10,15 +11,20 @@ import {
 } from "@mui/material";
 import GroupIcon from "@mui/icons-material/Group";
 import AddIcon from "@mui/icons-material/Add";
-import SaveMapDialog from "../../Map/utils/SaveMapDialog";
+import { endpoints } from "../../../../config";
+import useAuth from "../../../../auth/useAuth";
 
 const SpeedDialCharacterSelect = (props: SpeedDialActionProps) => {
+  const { token } = useAuth();
   const anchorEl = useRef(null);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [dialogOpen, setDialogOpen] = useState(false);
 
   const toggleMenu = () => setMenuOpen((prev) => !prev);
-  const toggleDialog = () => setDialogOpen((prev) => !prev);
+
+  const addCharacter = async () => {
+    const { data } = await axios.get(endpoints.addCharacter, { headers: { accesstoken: token } });
+    window.location.href = data;
+  };
 
   return (
     <>
@@ -37,14 +43,13 @@ const SpeedDialCharacterSelect = (props: SpeedDialActionProps) => {
         MenuListProps={{ sx: { bgcolor: "primary.main" }, dense: true }}
       >
         <Divider />
-        <MenuItem onClick={toggleDialog}>
+        <MenuItem onClick={addCharacter}>
           <ListItemIcon>
             <AddIcon sx={{ color: "secondary.light" }} />
           </ListItemIcon>
           <ListItemText>Add Character</ListItemText>
         </MenuItem>
       </Menu>
-      <SaveMapDialog open={dialogOpen} onClose={toggleDialog} />
     </>
   );
 };

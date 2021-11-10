@@ -6,6 +6,7 @@ export const endpoints = {
   graphQl: `${cmsUrl}/graphql`,
   getToken: `${cmsUrl}/auth/getToken`,
   login: `${cmsUrl}/auth/login`,
+  addCharacter: `${cmsUrl}/auth/addCharacter`,
   dev: {
     reset: `${cmsUrl}/dev/reset`,
     seed: `${cmsUrl}/dev/seed`,
