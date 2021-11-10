@@ -27,7 +27,8 @@ Table roles {
 }
 
 Table ssoSessions {
-  value string
+  key string
+  type SsoSessionTypes
   expiry Date
   ssoLoginSuccess boolean
   character characters [ref: - characters._id]
@@ -85,4 +86,9 @@ enum WhMass {
   STABLE
   DESTAB
   CRIT
+}
+
+enum SsoSessionTypes {
+  LOGIN
+  ADD_CHARACTER
 }

@@ -2,7 +2,6 @@ import { Field, ObjectType, registerEnumType } from "@nestjs/graphql";
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import mongoose from "mongoose";
 import { v4 as uuid } from "uuid";
-import { System } from "../system/system.model";
 import SigTypes from "./sigTypes.enum";
 
 export type SignatureDocument = Signature & mongoose.Document;

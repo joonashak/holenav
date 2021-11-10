@@ -4,6 +4,7 @@ import FormData from "form-data";
 import { ssoCallbackUrl, ssoClientId, ssoSecretKey } from "../../config";
 import { CharacterService } from "../../entities/character/character.service";
 import { SsoSessionService } from "./ssoSession/ssoSession.service";
+import SsoSessionTypes from "./ssoSession/ssoSessionTypes.enum";
 import { SsoUrl } from "./ssoUrl.enum";
 
 @Injectable()
@@ -17,7 +18,7 @@ export class SsoService {
    * Generate EVE SSO login page URL.
    */
   async getClientLoginUrl() {
-    const { key } = await this.ssoSessionService.createSsoSession();
+    const { key } = await this.ssoSessionService.createSsoSession(SsoSessionTypes.LOGIN);
 
     const loginUrl = `${SsoUrl.Authorize}/?response_type=code&redirect_uri=${ssoCallbackUrl}&client_id=${ssoClientId}&state=${key}`;
     return encodeURI(loginUrl);

@@ -1,9 +1,12 @@
-import { Field, ObjectType } from "@nestjs/graphql";
+import { Field, ObjectType, registerEnumType } from "@nestjs/graphql";
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import * as mongoose from "mongoose";
 import { Character } from "src/entities/character/character.model";
+import SsoSessionTypes from "./ssoSessionTypes.enum";
 
 export type SsoSessionDocument = SsoSession & mongoose.Document;
+
+registerEnumType(SsoSessionTypes, { name: "SsoSessionTypes" });
 
 @ObjectType()
 @Schema({ collection: "ssoSessions" })
@@ -11,6 +14,10 @@ export class SsoSession {
   @Field()
   @Prop({ unique: true })
   key: string;
+
+  @Field((type) => SsoSessionTypes)
+  @Prop()
+  type: SsoSessionTypes;
 
   @Field()
   @Prop()

@@ -5,6 +5,7 @@ import { Model } from "mongoose";
 import { Character } from "../../../entities/character/character.model";
 import { v4 as uuid } from "uuid";
 import { SsoSession, SsoSessionDocument } from "./ssoSession.model";
+import SsoSessionTypes from "./ssoSessionTypes.enum";
 
 @Injectable()
 export class SsoSessionService {
@@ -13,9 +14,10 @@ export class SsoSessionService {
   /**
    * Create new SSO state.
    */
-  async createSsoSession(): Promise<SsoSession> {
+  async createSsoSession(type: SsoSessionTypes): Promise<SsoSession> {
     return this.ssoSessionModel.create({
       key: uuid(),
+      type,
       expiry: dayjs().add(5, "minute"),
     });
   }
