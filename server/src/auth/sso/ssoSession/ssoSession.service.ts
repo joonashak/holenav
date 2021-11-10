@@ -27,15 +27,15 @@ export class SsoSessionService {
   /**
    * Remove given SSO state secret.
    */
-  async removeSsoSession(state: string) {
-    await this.ssoSessionModel.findOneAndRemove({ key: state });
+  async removeSsoSession(key: string) {
+    await this.ssoSessionModel.findOneAndRemove({ key });
   }
 
   /**
    * Verify given SSO state secret to be valid and not expired.
    */
   async verifySsoSession(key: string): Promise<SsoSession> {
-    const currentSession = await this.ssoSessionModel.findOne({ key });
+    const currentSession = await this.ssoSessionModel.findOne({ key }).populate("user");
 
     if (!currentSession) {
       throw new HttpException("SSO session not found.", HttpStatus.FORBIDDEN);
@@ -64,6 +64,10 @@ export class SsoSessionService {
    */
   async verifySsoLoginSuccess(key: string): Promise<SsoSession> {
     const ssoSession = await this.verifySsoSession(key);
+
+    if (ssoSession.type !== SsoSessionTypes.LOGIN) {
+      throw new HttpException("Invalid SSO login type.", HttpStatus.BAD_REQUEST);
+    }
 
     if (!ssoSession.ssoLoginSuccess) {
       throw new HttpException("SSO login failed.", HttpStatus.FORBIDDEN);

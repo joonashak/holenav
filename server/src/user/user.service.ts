@@ -22,6 +22,7 @@ export class UserService {
    * @returns Newly created user.
    */
   async create(user: CreateUserDto): Promise<User> {
+    // FIXME: If main character is supplied, check that the character is not listed as main/alt for any character.
     const folder = await this.folderService.getDefaultFolder();
     const role = await this.roleService.create({ role: Roles.WRITE, folder });
     const newUser = await this.userModel.create({ ...user, roles: role, activeFolder: folder });
@@ -75,6 +76,7 @@ export class UserService {
    * Add a new alt to a user.
    */
   async addAlt(alt: Character, userId: string): Promise<void> {
+    // FIXME: Check that the character is not listed as main/alt for any character.
     const user = await this.userModel.findOne({ id: userId });
     user.alts = user.alts.concat(alt);
     await user.save();

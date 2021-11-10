@@ -1,7 +1,13 @@
 import { Injectable } from "@nestjs/common";
 import axios from "axios";
 import FormData from "form-data";
-import { ssoCallbackUrl, ssoClientId, ssoSecretKey } from "../../config";
+import {
+  clientUrl,
+  getClientLoginCallbackUrl,
+  ssoCallbackUrl,
+  ssoClientId,
+  ssoSecretKey,
+} from "../../config";
 import { CharacterService } from "../../entities/character/character.service";
 import { User } from "../../user/user.model";
 import { UserService } from "../../user/user.service";
@@ -64,8 +70,10 @@ export class SsoService {
   /**
    * Get the SSO tokens using the authorization code supplied by the user, save
    * them and update the SSO state with the character's ID.
+   *
+   * Returns the URL to redirect the client to.
    */
-  async handleCallback(authorizationCode: string, state: string) {
+  async handleCallback(authorizationCode: string, state: string): Promise<string> {
     const session = await this.ssoSessionService.verifySsoSession(state);
 
     const { accessToken, refreshToken } = await this.getSsoTokens(authorizationCode);
@@ -82,6 +90,12 @@ export class SsoService {
 
     if (session.type === SsoSessionTypes.ADD_CHARACTER) {
       await this.userService.addAlt(character, session.user.id);
+      await this.ssoSessionService.removeSsoSession(session.key);
     }
+
+    const clientCallbackUrl =
+      session.type === SsoSessionTypes.LOGIN ? getClientLoginCallbackUrl(state) : clientUrl;
+
+    return clientCallbackUrl;
   }
 }

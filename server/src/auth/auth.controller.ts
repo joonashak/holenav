@@ -51,8 +51,7 @@ export class AuthController {
     @Query("state") state: string,
     @Res() response: Response,
   ) {
-    await this.ssoService.handleCallback(authorizationCode, state);
-    const clientCallbackUrl = getClientLoginCallbackUrl(state);
+    const clientCallbackUrl = await this.ssoService.handleCallback(authorizationCode, state);
     response.redirect(clientCallbackUrl);
   }
 
