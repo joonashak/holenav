@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { Character } from "../entities/character/character.model";
@@ -22,7 +22,10 @@ export class UserService {
    * @returns Newly created user.
    */
   async create(user: CreateUserDto): Promise<User> {
-    // FIXME: If main character is supplied, check that the character is not listed as main/alt for any character.
+    if (user.main) {
+      await this.ensureCharacterNotInUse(user.main);
+    }
+
     const folder = await this.folderService.getDefaultFolder();
     const role = await this.roleService.create({ role: Roles.WRITE, folder });
     const newUser = await this.userModel.create({ ...user, roles: role, activeFolder: folder });
@@ -76,9 +79,22 @@ export class UserService {
    * Add a new alt to a user.
    */
   async addAlt(alt: Character, userId: string): Promise<void> {
-    // FIXME: Check that the character is not listed as main/alt for any character.
+    this.ensureCharacterNotInUse(alt);
+
     const user = await this.userModel.findOne({ id: userId });
     user.alts = user.alts.concat(alt);
     await user.save();
+  }
+
+  /**
+   * Throws `HttpException` if given character is used anywhere.
+   */
+  private async ensureCharacterNotInUse(char: Character): Promise<void> {
+    const mains = await this.userModel.find({ main: char });
+    const alts = await this.userModel.find({ alts: char });
+
+    if (mains.length || alts.length) {
+      throw new HttpException("Character already in use.", HttpStatus.BAD_REQUEST);
+    }
   }
 }
