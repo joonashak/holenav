@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
-import { SsoState } from "../auth/sso/ssoState/ssoState.model";
+import { SsoSession } from "../auth/sso/ssoSession/ssoSession.model";
 import { DataMigration } from "../dataMigration/dataMigration.model";
 import { DataMigrationService } from "../dataMigration/dataMigration.service";
 import { Character } from "../entities/character/character.model";
@@ -25,7 +25,7 @@ export class DevToolsService {
     @InjectModel(Folder.name) private folderModel: Model<Folder>,
     @InjectModel(Role.name) private roleModel: Model<Role>,
     @InjectModel(Signature.name) private signatureModel: Model<Signature>,
-    @InjectModel(SsoState.name) private ssoStateModel: Model<SsoState>,
+    @InjectModel(SsoSession.name) private ssoSessionModel: Model<SsoSession>,
     @InjectModel(System.name) private systemModel: Model<System>,
     @InjectModel(User.name) private userModel: Model<User>,
     @InjectModel(Wormhole.name) private whModel: Model<Wormhole>,
@@ -62,7 +62,7 @@ export class DevToolsService {
     await this.folderModel.deleteMany({});
     await this.roleModel.deleteMany({});
     await this.signatureModel.deleteMany({});
-    await this.ssoStateModel.deleteMany({});
+    await this.ssoSessionModel.deleteMany({});
     await this.systemModel.deleteMany({});
     await this.userModel.deleteMany({});
 

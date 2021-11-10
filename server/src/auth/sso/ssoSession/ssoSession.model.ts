@@ -3,11 +3,11 @@ import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import * as mongoose from "mongoose";
 import { Character } from "src/entities/character/character.model";
 
-export type SsoStateDocument = SsoState & mongoose.Document;
+export type SsoSessionDocument = SsoSession & mongoose.Document;
 
 @ObjectType()
-@Schema({ collection: "ssoStates" })
-export class SsoState {
+@Schema({ collection: "ssoSessions" })
+export class SsoSession {
   @Field()
   @Prop({ unique: true })
   value: string;
@@ -25,4 +25,4 @@ export class SsoState {
   character: Character;
 }
 
-export const SsoStateSchema = SchemaFactory.createForClass(SsoState);
+export const SsoSessionSchema = SchemaFactory.createForClass(SsoSession);

@@ -3,13 +3,13 @@ import axios from "axios";
 import FormData from "form-data";
 import { ssoCallbackUrl, ssoClientId, ssoSecretKey } from "../../config";
 import { CharacterService } from "../../entities/character/character.service";
-import { SsoStateService } from "./ssoState/ssoState.service";
+import { SsoSessionService } from "./ssoSession/ssoSession.service";
 import { SsoUrl } from "./ssoUrl.enum";
 
 @Injectable()
 export class SsoService {
   constructor(
-    private ssoStateService: SsoStateService,
+    private ssoSessionService: SsoSessionService,
     private characterService: CharacterService,
   ) {}
 
@@ -17,7 +17,7 @@ export class SsoService {
    * Generate EVE SSO login page URL.
    */
   async getClientLoginUrl() {
-    const state = await this.ssoStateService.getSsoState();
+    const state = await this.ssoSessionService.getSsoState();
 
     const loginUrl = `${SsoUrl.Authorize}/?response_type=code&redirect_uri=${ssoCallbackUrl}&client_id=${ssoClientId}&state=${state}`;
     return encodeURI(loginUrl);
@@ -63,7 +63,7 @@ export class SsoService {
    * them and update the SSO state with the character's ID.
    */
   async handleCallback(authorizationCode: string, state: string) {
-    await this.ssoStateService.verifySsoState(state);
+    await this.ssoSessionService.verifySsoSession(state);
 
     const { accessToken, refreshToken } = await this.getSsoTokens(authorizationCode);
 
@@ -76,6 +76,6 @@ export class SsoService {
       refreshToken,
     });
 
-    await this.ssoStateService.setSsoLoginSuccess(state, character);
+    await this.ssoSessionService.setSsoLoginSuccess(state, character);
   }
 }

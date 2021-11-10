@@ -1,13 +1,13 @@
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import { UserService } from "../user/user.service";
-import { SsoStateService } from "./sso/ssoState/ssoState.service";
+import { SsoSessionService } from "./sso/ssoSession/ssoSession.service";
 
 @Injectable()
 export class AuthService {
   constructor(
     private jwtService: JwtService,
-    private ssoStateService: SsoStateService,
+    private ssoSessionService: SsoSessionService,
     private userService: UserService,
   ) {}
 
@@ -16,7 +16,9 @@ export class AuthService {
    */
   async login(state: string): Promise<string> {
     // Check SSO login state.
-    const { ssoLoginSuccess, character } = await this.ssoStateService.verifySsoLoginSuccess(state);
+    const { ssoLoginSuccess, character } = await this.ssoSessionService.verifySsoLoginSuccess(
+      state,
+    );
     if (!ssoLoginSuccess) {
       throw new Error("SSO login unsuccessful.");
     }

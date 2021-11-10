@@ -6,7 +6,7 @@ import { DataMigrationModule } from "../dataMigration/dataMigration.module";
 import { FolderModule } from "../entities/folder/folder.module";
 import { RoleModule } from "../role/role.module";
 import { SignatureModule } from "../entities/signature/signature.module";
-import { SsoStateModule } from "../auth/sso/ssoState/ssoState.module";
+import { SsoSessionModule } from "../auth/sso/ssoSession/ssoSession.module";
 import { MockUserService } from "./mockUser.service";
 import { devToolsEnabled } from "../config";
 import { WormholeModule } from "../entities/wormhole/wormhole.module";
@@ -19,7 +19,7 @@ const options = {
     FolderModule,
     RoleModule,
     SignatureModule,
-    SsoStateModule,
+    SsoSessionModule,
     WormholeModule,
   ],
   providers: [DevToolsService, MockUserService, WormholeService],

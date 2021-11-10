@@ -4,17 +4,17 @@ import dayjs from "dayjs";
 import { Model } from "mongoose";
 import { Character } from "../../../entities/character/character.model";
 import { v4 as uuid } from "uuid";
-import { SsoState, SsoStateDocument } from "./ssoState.model";
+import { SsoSession, SsoSessionDocument } from "./ssoSession.model";
 
 @Injectable()
-export class SsoStateService {
-  constructor(@InjectModel(SsoState.name) private ssoStateModel: Model<SsoStateDocument>) {}
+export class SsoSessionService {
+  constructor(@InjectModel(SsoSession.name) private ssoSessionModel: Model<SsoSessionDocument>) {}
 
   /**
    * Create new SSO state.
    */
   async getSsoState(): Promise<string> {
-    const { value } = await this.ssoStateModel.create({
+    const { value } = await this.ssoSessionModel.create({
       value: uuid(),
       expiry: dayjs().add(5, "minute"),
     });
@@ -25,18 +25,18 @@ export class SsoStateService {
   /**
    * Remove given SSO state secret.
    */
-  async removeSsoState(state: string) {
-    await this.ssoStateModel.findOneAndRemove({ value: state });
+  async removeSsoSession(state: string) {
+    await this.ssoSessionModel.findOneAndRemove({ value: state });
   }
 
   /**
    * Verify given SSO state secret to be valid and not expired.
    */
-  async verifySsoState(state: string): Promise<SsoState> {
-    const currentState = await this.ssoStateModel.findOne({ value: state });
+  async verifySsoSession(state: string): Promise<SsoSession> {
+    const currentState = await this.ssoSessionModel.findOne({ value: state });
 
     if (dayjs().isAfter(currentState.expiry)) {
-      await this.removeSsoState(state);
+      await this.removeSsoSession(state);
       throw new Error("SSO state expired.");
     }
 
@@ -47,8 +47,8 @@ export class SsoStateService {
    * Mark given (and valid) SSO state with a successful login.
    */
   async setSsoLoginSuccess(state: string, character: Character) {
-    await this.verifySsoState(state);
-    await this.ssoStateModel.findOneAndUpdate(
+    await this.verifySsoSession(state);
+    await this.ssoSessionModel.findOneAndUpdate(
       { value: state },
       { ssoLoginSuccess: true, character },
     );
@@ -59,9 +59,9 @@ export class SsoStateService {
    *
    * The given SSO state secret is always removed after this operation.
    */
-  async verifySsoLoginSuccess(state: string): Promise<SsoState> {
-    const ssoState = await this.verifySsoState(state);
-    await this.removeSsoState(state);
+  async verifySsoLoginSuccess(state: string): Promise<SsoSession> {
+    const ssoState = await this.verifySsoSession(state);
+    await this.removeSsoSession(state);
     return ssoState;
   }
 }

@@ -4,14 +4,14 @@ import { CharacterService } from "../entities/character/character.service";
 import { AuthController } from "./auth.controller";
 import { SsoService } from "./sso/sso.service";
 import { AuthService } from "./auth.service";
-import { SsoStateService } from "./sso/ssoState/ssoState.service";
 import { RoleService } from "../role/role.service";
 import { RoleModule } from "../role/role.module";
 import { CharacterModule } from "../entities/character/character.module";
-import { SsoStateModule } from "./sso/ssoState/ssoState.module";
 import { FolderService } from "../entities/folder/folder.service";
 import { FolderModule } from "../entities/folder/folder.module";
 import { jwtSecret } from "../config";
+import { SsoSessionModule } from "./sso/ssoSession/ssoSession.module";
+import { SsoSessionService } from "./sso/ssoSession/ssoSession.service";
 
 @Global()
 @Module({
@@ -23,12 +23,12 @@ import { jwtSecret } from "../config";
     }),
     RoleModule,
     CharacterModule,
-    SsoStateModule,
+    SsoSessionModule,
     FolderModule,
   ],
   providers: [
     SsoService,
-    SsoStateService,
+    SsoSessionService,
     CharacterService,
     AuthService,
     RoleService,
