@@ -21,7 +21,7 @@ export class AuthGuard implements CanActivate {
 
   async canActivate(context: ExecutionContext) {
     const gqlContext = GqlExecutionContext.create(context);
-    const request = gqlContext.getContext().req;
+    const request = gqlContext.getContext().req || context.switchToHttp().getRequest();
     let user: User;
 
     try {
@@ -60,6 +60,11 @@ export class AuthGuard implements CanActivate {
     }
 
     const user = await this.userService.findByIdWithTokens(uid);
+
+    if (!user.tokens.includes(headers.accesstoken)) {
+      throw new HttpException("Authentication failed.", HttpStatus.FORBIDDEN);
+    }
+
     return user;
   }
 }
