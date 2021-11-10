@@ -61,7 +61,7 @@ export class AuthGuard implements CanActivate {
 
     const user = await this.userService.findByIdWithTokens(uid);
 
-    if (!user.tokens.includes(headers.accesstoken)) {
+    if (!mocking && !user.tokens.includes(headers.accesstoken)) {
       throw new HttpException("Authentication failed.", HttpStatus.FORBIDDEN);
     }
 
