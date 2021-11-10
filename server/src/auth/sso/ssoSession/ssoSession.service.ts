@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import dayjs from "dayjs";
 import { Model } from "mongoose";
@@ -6,6 +6,7 @@ import { Character } from "../../../entities/character/character.model";
 import { v4 as uuid } from "uuid";
 import { SsoSession, SsoSessionDocument } from "./ssoSession.model";
 import SsoSessionTypes from "./ssoSessionTypes.enum";
+import { User } from "../../../user/user.model";
 
 @Injectable()
 export class SsoSessionService {
@@ -14,10 +15,11 @@ export class SsoSessionService {
   /**
    * Create new SSO state.
    */
-  async createSsoSession(type: SsoSessionTypes): Promise<SsoSession> {
+  async createSsoSession(type: SsoSessionTypes, user: User = null): Promise<SsoSession> {
     return this.ssoSessionModel.create({
       key: uuid(),
       type,
+      user,
       expiry: dayjs().add(5, "minute"),
     });
   }
@@ -35,9 +37,13 @@ export class SsoSessionService {
   async verifySsoSession(key: string): Promise<SsoSession> {
     const currentSession = await this.ssoSessionModel.findOne({ key });
 
+    if (!currentSession) {
+      throw new HttpException("SSO session not found.", HttpStatus.FORBIDDEN);
+    }
+
     if (dayjs().isAfter(currentSession.expiry)) {
       await this.removeSsoSession(key);
-      throw new Error("SSO state expired.");
+      throw new HttpException("SSO session expired.", HttpStatus.FORBIDDEN);
     }
 
     return currentSession;

@@ -11,8 +11,10 @@ import {
 } from "@nestjs/common";
 import { Request, Response } from "express";
 import { getClientLoginCallbackUrl } from "../config";
+import { User } from "../user/user.model";
 import { AuthService } from "./auth.service";
 import RequireAuth from "./decorators/auth.decorator";
+import { CurrentUser } from "./decorators/user.decorator";
 import { GetTokenDto } from "./dto/getToken.dto";
 import { SsoService } from "./sso/sso.service";
 import SsoSessionTypes from "./sso/ssoSession/ssoSessionTypes.enum";
@@ -35,8 +37,8 @@ export class AuthController {
    */
   @RequireAuth()
   @Get("addCharacter")
-  async addCharacter(@Res() response: Response): Promise<void> {
-    const ssoLoginUrl = await this.ssoService.getSsoLoginUrl(SsoSessionTypes.ADD_CHARACTER);
+  async addCharacter(@Res() response: Response, @CurrentUser() user: User): Promise<void> {
+    const ssoLoginUrl = await this.ssoService.getSsoLoginUrl(SsoSessionTypes.ADD_CHARACTER, user);
     response.redirect(ssoLoginUrl);
   }
 
