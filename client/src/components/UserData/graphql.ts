@@ -1,23 +1,27 @@
 import { gql } from "@apollo/client";
-import { MAP_FIELDS } from "./fragments";
+import { CHARACTER_FIELDS, MAP_FIELDS } from "./fragments";
 
 export const GET_SYSTEM_DATA = gql`
+  ${CHARACTER_FIELDS}
+  ${MAP_FIELDS}
   query SystemData {
     whoami {
       id
       activeFolder {
         id
       }
+      main {
+        ...CharacterFields
+      }
+      alts {
+        ...CharacterFields
+      }
       settings {
         maps {
-          id
-          name
-          rootSystemName
+          ...MapFields
         }
         selectedMap {
-          id
-          name
-          rootSystemName
+          ...MapFields
         }
       }
     }

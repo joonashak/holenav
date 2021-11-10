@@ -18,9 +18,9 @@ export default ({ children }: UserDataProviderProps) => {
   useEffect(() => {
     if (!loading && !error) {
       const {
-        whoami: { id, activeFolder, settings },
+        whoami: { activeFolder, ...rest },
       } = data;
-      setState((prev: any) => ({ ...prev, id, activeFolder: activeFolder.id, settings }));
+      setState((prev: any) => ({ ...prev, ...rest, activeFolder: activeFolder.id }));
       setActiveFolder(activeFolder.id);
     }
   }, [data]);

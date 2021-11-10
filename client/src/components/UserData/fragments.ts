@@ -7,3 +7,10 @@ export const MAP_FIELDS = gql`
     rootSystemName
   }
 `;
+
+export const CHARACTER_FIELDS = gql`
+  fragment CharacterFields on Character {
+    esiId
+    name
+  }
+`;
