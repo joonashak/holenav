@@ -4,6 +4,7 @@ import FormData from "form-data";
 import { ssoCallbackUrl, ssoClientId, ssoSecretKey } from "../../config";
 import { CharacterService } from "../../entities/character/character.service";
 import { User } from "../../user/user.model";
+import { UserService } from "../../user/user.service";
 import { SsoSessionService } from "./ssoSession/ssoSession.service";
 import SsoSessionTypes from "./ssoSession/ssoSessionTypes.enum";
 import { SsoUrl } from "./ssoUrl.enum";
@@ -13,6 +14,7 @@ export class SsoService {
   constructor(
     private ssoSessionService: SsoSessionService,
     private characterService: CharacterService,
+    private userService: UserService,
   ) {}
 
   /**
@@ -67,7 +69,6 @@ export class SsoService {
     const session = await this.ssoSessionService.verifySsoSession(state);
 
     const { accessToken, refreshToken } = await this.getSsoTokens(authorizationCode);
-
     const jwtData = await this.verifyAndDecodeToken(accessToken);
 
     const character = await this.characterService.upsert({
@@ -78,5 +79,9 @@ export class SsoService {
     });
 
     await this.ssoSessionService.setSsoLoginSuccess(state, character);
+
+    if (session.type === SsoSessionTypes.ADD_CHARACTER) {
+      await this.userService.addAlt(character, session.user.id);
+    }
   }
 }

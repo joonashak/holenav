@@ -25,6 +25,10 @@ export class User {
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: "Character", unique: true })
   main: Character;
 
+  @Field((type) => [Character])
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: "Character", unique: true })
+  alts: Character[];
+
   @Field((type) => [Role])
   @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Role" }] })
   roles: Role[];

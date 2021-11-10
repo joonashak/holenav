@@ -64,6 +64,11 @@ export class SsoSessionService {
    */
   async verifySsoLoginSuccess(key: string): Promise<SsoSession> {
     const ssoSession = await this.verifySsoSession(key);
+
+    if (!ssoSession.ssoLoginSuccess) {
+      throw new HttpException("SSO login failed.", HttpStatus.FORBIDDEN);
+    }
+
     await this.removeSsoSession(key);
     return ssoSession;
   }

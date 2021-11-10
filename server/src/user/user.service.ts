@@ -70,4 +70,13 @@ export class UserService {
   async addToken(userId: string, newToken: string): Promise<void> {
     await this.userModel.findOneAndUpdate({ id: userId }, { $push: { tokens: newToken } });
   }
+
+  /**
+   * Add a new alt to a user.
+   */
+  async addAlt(alt: Character, userId: string): Promise<void> {
+    const user = await this.userModel.findOne({ id: userId });
+    user.alts = user.alts.concat(alt);
+    await user.save();
+  }
 }
