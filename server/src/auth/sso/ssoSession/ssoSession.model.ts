@@ -10,7 +10,7 @@ export type SsoSessionDocument = SsoSession & mongoose.Document;
 export class SsoSession {
   @Field()
   @Prop({ unique: true })
-  value: string;
+  key: string;
 
   @Field()
   @Prop()

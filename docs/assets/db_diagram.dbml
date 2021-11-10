@@ -26,7 +26,7 @@ Table roles {
   folder folders[] [ref: > folders._id]
 }
 
-Table ssoStates {
+Table ssoSessions {
   value string
   expiry Date
   ssoLoginSuccess boolean

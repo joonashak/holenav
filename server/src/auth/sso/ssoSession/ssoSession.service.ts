@@ -13,45 +13,40 @@ export class SsoSessionService {
   /**
    * Create new SSO state.
    */
-  async getSsoState(): Promise<string> {
-    const { value } = await this.ssoSessionModel.create({
-      value: uuid(),
+  async createSsoSession(): Promise<SsoSession> {
+    return this.ssoSessionModel.create({
+      key: uuid(),
       expiry: dayjs().add(5, "minute"),
     });
-
-    return value;
   }
 
   /**
    * Remove given SSO state secret.
    */
   async removeSsoSession(state: string) {
-    await this.ssoSessionModel.findOneAndRemove({ value: state });
+    await this.ssoSessionModel.findOneAndRemove({ key: state });
   }
 
   /**
    * Verify given SSO state secret to be valid and not expired.
    */
-  async verifySsoSession(state: string): Promise<SsoSession> {
-    const currentState = await this.ssoSessionModel.findOne({ value: state });
+  async verifySsoSession(key: string): Promise<SsoSession> {
+    const currentSession = await this.ssoSessionModel.findOne({ key });
 
-    if (dayjs().isAfter(currentState.expiry)) {
-      await this.removeSsoSession(state);
+    if (dayjs().isAfter(currentSession.expiry)) {
+      await this.removeSsoSession(key);
       throw new Error("SSO state expired.");
     }
 
-    return currentState;
+    return currentSession;
   }
 
   /**
    * Mark given (and valid) SSO state with a successful login.
    */
-  async setSsoLoginSuccess(state: string, character: Character) {
-    await this.verifySsoSession(state);
-    await this.ssoSessionModel.findOneAndUpdate(
-      { value: state },
-      { ssoLoginSuccess: true, character },
-    );
+  async setSsoLoginSuccess(key: string, character: Character) {
+    await this.verifySsoSession(key);
+    await this.ssoSessionModel.findOneAndUpdate({ key }, { ssoLoginSuccess: true, character });
   }
 
   /**
@@ -59,9 +54,9 @@ export class SsoSessionService {
    *
    * The given SSO state secret is always removed after this operation.
    */
-  async verifySsoLoginSuccess(state: string): Promise<SsoSession> {
-    const ssoState = await this.verifySsoSession(state);
-    await this.removeSsoSession(state);
-    return ssoState;
+  async verifySsoLoginSuccess(key: string): Promise<SsoSession> {
+    const ssoSession = await this.verifySsoSession(key);
+    await this.removeSsoSession(key);
+    return ssoSession;
   }
 }
