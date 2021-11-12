@@ -6,6 +6,7 @@ export type LocalData = {
 
 export type LocalDataHook = LocalData & {
   setActiveCharacter: (esiId: string) => void;
+  setDefaultActiveCharacter: (esiId: string) => void;
 };
 
 export type LocalDataProviderProps = {

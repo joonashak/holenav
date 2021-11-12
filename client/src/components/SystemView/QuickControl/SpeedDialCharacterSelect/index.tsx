@@ -15,9 +15,11 @@ import { endpoints } from "../../../../config";
 import useAuth from "../../../../auth/useAuth";
 import useUserData from "../../../UserData/useUserData";
 import CharacterMenuItem from "./CharacterMenuItem";
+import useLocalData from "../../../LocalData/useLocalData";
 
 const SpeedDialCharacterSelect = (props: SpeedDialActionProps) => {
   const { main, alts } = useUserData();
+  const { setActiveCharacter } = useLocalData();
   const { token } = useAuth();
   const anchorEl = useRef(null);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -29,8 +31,9 @@ const SpeedDialCharacterSelect = (props: SpeedDialActionProps) => {
     window.location.href = data;
   };
 
-  const selectCharacter = (esiId: string) => {
-    console.log("Not implemented");
+  const selectCharacter = (esiId: string) => () => {
+    setActiveCharacter(esiId);
+    toggleMenu();
   };
 
   return (
@@ -49,12 +52,12 @@ const SpeedDialCharacterSelect = (props: SpeedDialActionProps) => {
         onClose={toggleMenu}
         MenuListProps={{ sx: { bgcolor: "primary.main" }, dense: true }}
       >
-        <CharacterMenuItem character={main} selectCharacter={selectCharacter} />
+        <CharacterMenuItem character={main} selectCharacter={selectCharacter(main.esiId)} />
         <Divider />
         {alts.map((alt) => (
           <CharacterMenuItem
             character={alt}
-            selectCharacter={selectCharacter}
+            selectCharacter={selectCharacter(alt.esiId)}
             key={`quick-character-select-${alt.esiId}`}
           />
         ))}

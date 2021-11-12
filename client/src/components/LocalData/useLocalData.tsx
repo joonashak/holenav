@@ -11,9 +11,16 @@ const useLocalData = (): LocalDataHook => {
     setState({ activeCharacter: esiId });
   };
 
+  const setDefaultActiveCharacter = async (esiId: string) => {
+    if (!state.activeCharacter) {
+      setActiveCharacter(esiId);
+    }
+  };
+
   return {
     ...state,
     setActiveCharacter,
+    setDefaultActiveCharacter,
   };
 };
 

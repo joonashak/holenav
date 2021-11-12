@@ -2,18 +2,20 @@ import { IconButton, ListItemIcon, ListItemText, MenuItem } from "@mui/material"
 import CheckIcon from "@mui/icons-material/Check";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Character } from "../../../UserData/types";
+import useLocalData from "../../../LocalData/useLocalData";
 
 type CharacterMenuItemProps = {
   character: Character;
-  selectCharacter: (esiId: string) => void;
+  selectCharacter: () => void;
 };
 
 const CharacterMenuItem = ({ character, selectCharacter }: CharacterMenuItemProps) => {
+  const { activeCharacter } = useLocalData();
   const { name, esiId } = character;
-  const selected = false;
+  const selected = activeCharacter === esiId;
 
   return (
-    <MenuItem onClick={() => selectCharacter(esiId)}>
+    <MenuItem onClick={selectCharacter}>
       <ListItemIcon>
         {selected ? <CheckIcon sx={{ color: "secondary.light" }} /> : null}
       </ListItemIcon>
