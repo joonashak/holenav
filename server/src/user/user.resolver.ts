@@ -42,4 +42,11 @@ export class UserResolver {
   async deleteSavedMap(@Args("mapId") mapId: string, @CurrentUser() user: User): Promise<User> {
     return this.userSettingsService.deleteSavedMap(mapId, user);
   }
+
+  @RequireAuth()
+  @Mutation((returns) => User)
+  async removeAlt(@Args("esiId") esiId: string, @CurrentUser() user: User): Promise<User> {
+    await this.userService.removeAlt(esiId, user.id);
+    return this.whoami(user);
+  }
 }

@@ -66,3 +66,14 @@ export const DELETE_SAVED_MAP = gql`
     }
   }
 `;
+
+export const REMOVE_ALT = gql`
+  ${CHARACTER_FIELDS}
+  mutation RemoveAlt($esiId: String!) {
+    removeAlt(esiId: $esiId) {
+      alts {
+        ...CharacterFields
+      }
+    }
+  }
+`;

@@ -53,7 +53,7 @@ const SpeedDialCharacterSelect = (props: SpeedDialActionProps) => {
         MenuListProps={{ sx: { bgcolor: "primary.main" }, dense: true }}
       >
         <CharacterMenuItem character={main} selectCharacter={selectCharacter(main.esiId)} />
-        <Divider />
+        {!!alts.length && <Divider />}
         {alts.map((alt) => (
           <CharacterMenuItem
             character={alt}

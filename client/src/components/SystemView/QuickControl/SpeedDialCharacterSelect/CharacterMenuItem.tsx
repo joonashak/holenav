@@ -1,8 +1,11 @@
+import { SyntheticEvent } from "react";
 import { IconButton, ListItemIcon, ListItemText, MenuItem } from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Character } from "../../../UserData/types";
 import useLocalData from "../../../LocalData/useLocalData";
+import useUserData from "../../../UserData/useUserData";
+import useNotification from "../../../GlobalNotification/useNotification";
 
 type CharacterMenuItemProps = {
   character: Character;
@@ -10,9 +13,25 @@ type CharacterMenuItemProps = {
 };
 
 const CharacterMenuItem = ({ character, selectCharacter }: CharacterMenuItemProps) => {
-  const { activeCharacter } = useLocalData();
+  const { setNotification } = useNotification();
+  const { activeCharacter, setActiveCharacter } = useLocalData();
+  const { main, removeAlt } = useUserData();
   const { name, esiId } = character;
   const selected = activeCharacter === esiId;
+  const isMain = esiId === main.esiId;
+
+  const remove = async (event: SyntheticEvent) => {
+    event.stopPropagation();
+
+    if (selected) {
+      setActiveCharacter(main.esiId);
+    }
+
+    const res = await removeAlt(esiId);
+    if (!res.errors) {
+      setNotification("Character removed.", "success", true);
+    }
+  };
 
   return (
     <MenuItem onClick={selectCharacter}>
@@ -24,9 +43,11 @@ const CharacterMenuItem = ({ character, selectCharacter }: CharacterMenuItemProp
       >
         {name}
       </ListItemText>
-      <IconButton size="small">
-        <DeleteIcon />
-      </IconButton>
+      {!isMain && (
+        <IconButton size="small" onClick={remove}>
+          <DeleteIcon />
+        </IconButton>
+      )}
     </MenuItem>
   );
 };

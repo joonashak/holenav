@@ -1,13 +1,14 @@
 import { FetchResult, useMutation } from "@apollo/client";
 import { useContext } from "react";
 import { UserDataContext } from ".";
-import { ADD_SAVED_MAP, UPDATE_SELECTED_MAP, DELETE_SAVED_MAP } from "./graphql";
+import { ADD_SAVED_MAP, UPDATE_SELECTED_MAP, DELETE_SAVED_MAP, REMOVE_ALT } from "./graphql";
 import { SavedMap, UserData } from "./types";
 
 type UserDataHook = UserData & {
   setSelectedMap: (mapId: string) => void;
   addSavedMap: (newMap: SavedMap) => Promise<FetchResult>;
   deleteSavedMap: (mapId: string) => Promise<FetchResult>;
+  removeAlt: (esiId: string) => Promise<FetchResult>;
 };
 
 export default (): UserDataHook => {
@@ -57,6 +58,18 @@ export default (): UserDataHook => {
     return res;
   };
 
+  const [removeAltMutation] = useMutation(REMOVE_ALT);
+
+  const removeAlt = async (esiId: string): Promise<FetchResult> => {
+    const res = await removeAltMutation({ variables: { esiId } });
+
+    if (res.data && !res.errors) {
+      setState((prev: UserData) => ({ ...prev, alts: res.data.removeAlt.alts }));
+    }
+
+    return res;
+  };
+
   return {
     ...state,
     settings: {
@@ -66,5 +79,6 @@ export default (): UserDataHook => {
     setSelectedMap,
     addSavedMap,
     deleteSavedMap,
+    removeAlt,
   };
 };
