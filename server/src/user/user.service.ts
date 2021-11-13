@@ -2,6 +2,7 @@ import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { Character } from "../entities/character/character.model";
+import { CharacterService } from "../entities/character/character.service";
 import { FolderService } from "../entities/folder/folder.service";
 import { RoleService } from "../role/role.service";
 import Roles from "../role/roles.enum";
@@ -14,6 +15,7 @@ export class UserService {
     @InjectModel(User.name) private userModel: Model<UserDocument>,
     private roleService: RoleService,
     private folderService: FolderService,
+    private characterService: CharacterService,
   ) {}
 
   /**
@@ -37,7 +39,7 @@ export class UserService {
    * @param id User id to search for.
    * @returns The found user or `undefined`.
    */
-  async findById(id: string): Promise<User> {
+  async findById(id: string): Promise<UserDocument> {
     const user = await this.userModel
       .findOne({ id })
       .populate(["roles", "activeFolder", "main", "alts"]);
@@ -86,6 +88,14 @@ export class UserService {
     const user = await this.userModel.findOne({ id: userId });
     user.alts = user.alts.concat(alt);
     await user.save();
+  }
+
+  async removeAlt(esiId: string, userId: string): Promise<void> {
+    const user = await this.findById(userId);
+    user.alts = user.alts.filter((alt) => alt.esiId !== esiId);
+    await user.save();
+
+    this.characterService.remove(esiId);
   }
 
   /**

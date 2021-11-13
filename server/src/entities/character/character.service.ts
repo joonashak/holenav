@@ -20,4 +20,8 @@ export class CharacterService {
     });
     return newCharacter;
   }
+
+  async remove(esiId: string): Promise<void> {
+    await this.characterModel.deleteOne({ esiId });
+  }
 }

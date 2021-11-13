@@ -11,6 +11,8 @@ import { RoleModule } from "../../role/role.module";
 import { FolderService } from "../folder/folder.service";
 import { FolderModule } from "../folder/folder.module";
 import { jwtSecret } from "../../config";
+import { CharacterService } from "../character/character.service";
+import { CharacterModule } from "../character/character.module";
 
 @Global()
 @Module({
@@ -22,8 +24,16 @@ import { jwtSecret } from "../../config";
     UserModule,
     RoleModule,
     FolderModule,
+    CharacterModule,
   ],
-  providers: [SystemService, SystemResolver, UserService, RoleService, FolderService],
+  providers: [
+    SystemService,
+    SystemResolver,
+    UserService,
+    RoleService,
+    FolderService,
+    CharacterService,
+  ],
   exports: [SystemService, MongooseModule],
 })
 export class SystemModule {}

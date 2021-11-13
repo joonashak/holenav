@@ -10,6 +10,8 @@ import { UserResolver } from "./user.resolver";
 import { JwtModule } from "@nestjs/jwt";
 import { jwtSecret } from "../config";
 import { UserSettingsService } from "./settings/userSettings.service";
+import { CharacterModule } from "../entities/character/character.module";
+import { CharacterService } from "../entities/character/character.service";
 
 @Global()
 @Module({
@@ -20,8 +22,16 @@ import { UserSettingsService } from "./settings/userSettings.service";
     }),
     FolderModule,
     RoleModule,
+    CharacterModule,
   ],
-  providers: [UserService, UserSettingsService, RoleService, FolderService, UserResolver],
+  providers: [
+    UserService,
+    UserSettingsService,
+    RoleService,
+    FolderService,
+    CharacterService,
+    UserResolver,
+  ],
   exports: [UserService, UserSettingsService, MongooseModule],
 })
 export class UserModule {}
