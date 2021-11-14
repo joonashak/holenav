@@ -29,6 +29,11 @@ const useLocalData = () => {
     state.merge({ authToken });
   };
 
+  const setMockUser = async (mockUser: string | null) => {
+    await mockUserStore.setMockUser(mockUser);
+    state.merge({ mockUser });
+  };
+
   return {
     get loadingLocalState() {
       return state.promised;
@@ -39,9 +44,13 @@ const useLocalData = () => {
     get authToken() {
       return state.authToken.get();
     },
+    get mockUser() {
+      return state.mockUser.get();
+    },
     setActiveCharacter,
     setDefaultActiveCharacter,
     setAuthToken,
+    setMockUser,
   };
 };
 

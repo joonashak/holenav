@@ -8,7 +8,7 @@ import {
 import { GqlExecutionContext } from "@nestjs/graphql";
 import { JwtService } from "@nestjs/jwt";
 import { devToolsEnabled } from "../../config";
-import users from "../../devTools/data/users";
+import mockUsers from "../../devTools/data/users";
 import { User } from "../../user/user.model";
 import { UserService } from "../../user/user.service";
 
@@ -47,17 +47,11 @@ export class AuthGuard implements CanActivate {
   }
 
   private async getUser(headers: any) {
-    const allowedMockUsers = users.map((user) => user.id);
-    const mocking =
-      devToolsEnabled && !!headers.mockuser && allowedMockUsers.includes(headers.mockuser);
-    let uid: string;
+    const allowedMockUsers = mockUsers.map((user) => user.id);
+    const { accesstoken } = headers;
 
-    if (mocking) {
-      uid = headers.mockuser;
-    } else {
-      const decoded: any = this.jwtService.decode(headers.accesstoken);
-      uid = decoded.uid;
-    }
+    const mocking = devToolsEnabled && allowedMockUsers.includes(headers.accesstoken);
+    const uid = mocking ? accesstoken : this.jwtService.decode(headers.accesstoken)["uid"];
 
     const user = await this.userService.findByIdWithTokens(uid);
 

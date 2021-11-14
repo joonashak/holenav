@@ -1,9 +1,9 @@
 import axios from "axios";
 import useLocalData from "../components/LocalData/useLocalData";
-import { endpoints } from "../config";
+import { devToolsEnabled, endpoints } from "../config";
 
 export default () => {
-  const { authToken, setAuthToken } = useLocalData();
+  const { authToken, mockUser, setAuthToken } = useLocalData();
 
   const fetchAndSaveToken = async (ssoState: string) => {
     const { data } = await axios.post(endpoints.getToken, {
@@ -13,7 +13,12 @@ export default () => {
   };
 
   return {
-    token: authToken,
+    get token() {
+      if (mockUser && devToolsEnabled) {
+        return mockUser;
+      }
+      return authToken;
+    },
     fetchAndSaveToken,
   };
 };

@@ -1,7 +1,6 @@
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
-import { createContext, ReactChild, useContext, useEffect, useState } from "react";
-import { devToolsEnabled, endpoints } from "../config";
-import mockUserStore from "../dev/mockUserStore";
+import { createContext, ReactChild, useContext, useState } from "react";
+import { endpoints } from "../config";
 import useAuth from "./useAuth";
 
 const ApolloContext = createContext([[], () => {}]);
@@ -13,27 +12,18 @@ type AuthenticatedApolloProps = {
 
 const AuthenticatedApolloProvider = ({ children }: AuthenticatedApolloProps) => {
   const { token } = useAuth();
-  const accessToken = token || "";
-  // Default values are strings because headers cannot have non-string values.
-  const [mockUser, setMockUser] = useState("none");
-  const [activeFolder, setActiveFolder] = useState<any>("none");
-
-  useEffect(() => {
-    (async () => {
-      const user = await mockUserStore.getMockUser();
-      setMockUser(user || "none");
-    })();
-  }, []);
+  // FIXME: Refactor activeFolder to user data state when migrating it to Hookstate.
+  const [activeFolder, setActiveFolder] = useState<any>("");
 
   // Prevent unauthorized request.
-  if (!token && !(devToolsEnabled && mockUser !== "none")) {
+  if (!token) {
     return null;
   }
 
   const apolloClient = new ApolloClient({
     uri: endpoints.graphQl,
     cache: new InMemoryCache(),
-    headers: { accessToken, mockUser, activeFolder },
+    headers: { accessToken: token, activeFolder },
   });
 
   return (

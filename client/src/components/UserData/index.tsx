@@ -13,6 +13,7 @@ interface UserDataProviderProps {
 
 export default ({ children }: UserDataProviderProps) => {
   const [state, setState] = useState<any>(null);
+  // FIXME: Refactor activeFolder to user data state when migrating this to Hookstate.
   const { setActiveFolder } = useAuthenticatedApollo();
   const { setDefaultActiveCharacter } = useLocalData();
   const { data, loading, error } = useQuery(GET_SYSTEM_DATA);

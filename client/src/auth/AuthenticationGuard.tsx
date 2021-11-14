@@ -1,11 +1,9 @@
-import { ReactChild, useEffect, useState } from "react";
+import { ReactElement } from "react";
 import { Redirect } from "react-router-dom";
-import { devToolsEnabled } from "../config";
-import mockUserStore from "../dev/mockUserStore";
 import useAuth from "./useAuth";
 
 type AuthenticationGuardProps = {
-  children: ReactChild;
+  children: ReactElement;
 };
 
 /**
@@ -13,22 +11,10 @@ type AuthenticationGuardProps = {
  */
 export default ({ children }: AuthenticationGuardProps) => {
   const { token } = useAuth();
-  const [redirect, setRedirect] = useState(false);
 
-  useEffect(() => {
-    (async () => {
-      const mockUser = await mockUserStore.getMockUser();
-      const mocking = devToolsEnabled && mockUser && mockUser !== "none";
-
-      if (!token && !mocking) {
-        setRedirect(true);
-      }
-    })();
-  }, [token]);
-
-  if (redirect) {
+  if (!token) {
     return <Redirect to="/login" />;
   }
 
-  return <>{children}</>;
+  return children;
 };
