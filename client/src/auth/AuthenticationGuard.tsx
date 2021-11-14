@@ -12,7 +12,7 @@ type AuthenticationGuardProps = {
  * Enforce authentication before rendering child components.
  */
 export default ({ children }: AuthenticationGuardProps) => {
-  const { token, pending } = useAuth();
+  const { token } = useAuth();
   const [redirect, setRedirect] = useState(false);
 
   useEffect(() => {
@@ -20,15 +20,11 @@ export default ({ children }: AuthenticationGuardProps) => {
       const mockUser = await mockUserStore.getMockUser();
       const mocking = devToolsEnabled && mockUser && mockUser !== "none";
 
-      if (!token && !pending && !mocking) {
+      if (!token && !mocking) {
         setRedirect(true);
       }
     })();
-  }, [token, pending]);
-
-  if (pending) {
-    return null;
-  }
+  }, [token]);
 
   if (redirect) {
     return <Redirect to="/login" />;

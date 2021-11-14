@@ -13,6 +13,7 @@ type AuthenticatedApolloProps = {
 
 const AuthenticatedApolloProvider = ({ children }: AuthenticatedApolloProps) => {
   const { token } = useAuth();
+  const accessToken = token || "";
   // Default values are strings because headers cannot have non-string values.
   const [mockUser, setMockUser] = useState("none");
   const [activeFolder, setActiveFolder] = useState<any>("none");
@@ -32,7 +33,7 @@ const AuthenticatedApolloProvider = ({ children }: AuthenticatedApolloProps) => 
   const apolloClient = new ApolloClient({
     uri: endpoints.graphQl,
     cache: new InMemoryCache(),
-    headers: { accessToken: token, mockUser, activeFolder },
+    headers: { accessToken, mockUser, activeFolder },
   });
 
   return (
