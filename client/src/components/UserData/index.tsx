@@ -1,7 +1,7 @@
 import { useQuery } from "@apollo/client";
 import { createContext, useState, ReactNode, useEffect } from "react";
 import useAuthenticatedApollo from "../../auth/useAuthenticatedApollo";
-import useLocalData from "../LocalData/useLocalData";
+import useLocalDataState from "../LocalData/useLocalDataState";
 import { GET_SYSTEM_DATA } from "./graphql";
 
 export const UserDataContext = createContext([[], () => {}]);
@@ -14,7 +14,7 @@ interface UserDataProviderProps {
 export default ({ children }: UserDataProviderProps) => {
   const [state, setState] = useState<any>(null);
   const { setActiveFolder } = useAuthenticatedApollo();
-  const { setDefaultActiveCharacter } = useLocalData();
+  const { setDefaultActiveCharacter } = useLocalDataState();
   const { data, loading, error } = useQuery(GET_SYSTEM_DATA);
 
   useEffect(() => {

@@ -15,11 +15,11 @@ import { endpoints } from "../../../../config";
 import useAuth from "../../../../auth/useAuth";
 import useUserData from "../../../UserData/useUserData";
 import CharacterMenuItem from "./CharacterMenuItem";
-import useLocalData from "../../../LocalData/useLocalData";
+import useLocalDataState from "../../../LocalData/useLocalDataState";
 
 const SpeedDialCharacterSelect = (props: SpeedDialActionProps) => {
   const { main, alts } = useUserData();
-  const { setActiveCharacter } = useLocalData();
+  const { setActiveCharacter } = useLocalDataState();
   const { token } = useAuth();
   const anchorEl = useRef(null);
   const [menuOpen, setMenuOpen] = useState(false);
