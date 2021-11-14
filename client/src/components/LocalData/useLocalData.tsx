@@ -1,14 +1,17 @@
-import { useContext } from "react";
-import { LocalDataContext } from ".";
+import { createState, useState } from "@hookstate/core";
 import activeCharacterStore from "./activeCharacterStore";
-import { LocalDataHook } from "./types";
 
-const useLocalData = (): LocalDataHook => {
-  const [state, setState] = useContext(LocalDataContext);
+const localState = createState(async () => {
+  const activeCharacter = await activeCharacterStore.getActiveCharacter();
+  return { activeCharacter };
+});
+
+const useLocalData = () => {
+  const state = useState(localState);
 
   const setActiveCharacter = async (esiId: string) => {
     await activeCharacterStore.setActiveCharacter(esiId);
-    setState({ activeCharacter: esiId });
+    state.merge({ activeCharacter: esiId });
   };
 
   const setDefaultActiveCharacter = async (esiId: string) => {
@@ -18,7 +21,9 @@ const useLocalData = (): LocalDataHook => {
   };
 
   return {
-    ...state,
+    get activeCharacter() {
+      return state.activeCharacter.get();
+    },
     setActiveCharacter,
     setDefaultActiveCharacter,
   };

@@ -5,7 +5,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { Character } from "../../../UserData/types";
 import useUserData from "../../../UserData/useUserData";
 import useNotification from "../../../GlobalNotification/useNotification";
-import useLocalDataState from "../../../LocalData/useLocalDataState";
+import useLocalData from "../../../LocalData/useLocalData";
 
 type CharacterMenuItemProps = {
   character: Character;
@@ -14,7 +14,7 @@ type CharacterMenuItemProps = {
 
 const CharacterMenuItem = ({ character, selectCharacter }: CharacterMenuItemProps) => {
   const { setNotification } = useNotification();
-  const { activeCharacter, setActiveCharacter } = useLocalDataState();
+  const { activeCharacter, setActiveCharacter } = useLocalData();
   const { main, removeAlt } = useUserData();
   const { name, esiId } = character;
   const selected = activeCharacter === esiId;
