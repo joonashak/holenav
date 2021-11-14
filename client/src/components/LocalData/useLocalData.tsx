@@ -1,7 +1,7 @@
 import { createState, useState } from "@hookstate/core";
-import tokenStore from "../../auth/tokenStore";
-import mockUserStore from "../../dev/mockUserStore";
-import activeCharacterStore from "./activeCharacterStore";
+import tokenStore from "./stores/tokenStore";
+import mockUserStore from "./stores/mockUserStore";
+import activeCharacterStore from "./stores/activeCharacterStore";
 
 const localState = createState(async () => {
   const activeCharacter = await activeCharacterStore.getActiveCharacter();
