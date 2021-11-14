@@ -19,7 +19,7 @@ const useLocalData = () => {
   };
 
   const setDefaultActiveCharacter = async (esiId: string) => {
-    if (!state.activeCharacter) {
+    if (!state.activeCharacter.value) {
       setActiveCharacter(esiId);
     }
   };
