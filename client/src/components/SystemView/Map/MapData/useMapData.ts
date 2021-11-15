@@ -1,11 +1,15 @@
-import { useContext } from "react";
-import { MapDataContext } from ".";
-import { MapData } from "./types";
+import { Downgraded, useState } from "@hookstate/core";
+import { mapState } from ".";
 
-export default (): MapData => {
-  const [state] = useContext<any>(MapDataContext);
+export default () => {
+  const state = useState(mapState);
 
   return {
-    ...state,
+    get connectionTree() {
+      return {
+        rootSystemName: state.connectionTree.nested("rootSystemName").get(),
+        children: state.connectionTree.nested("children").attach(Downgraded).get(),
+      };
+    },
   };
 };

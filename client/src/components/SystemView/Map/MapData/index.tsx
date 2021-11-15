@@ -1,36 +1,34 @@
 import { useQuery } from "@apollo/client";
-import { createContext, useState, ReactNode, useEffect } from "react";
+import { createState, useState } from "@hookstate/core";
+import { ReactElement } from "react";
 import useUserData from "../../../UserData/useUserData";
 import { GET_CONNECTION_TREE } from "./graphql";
+import { MapData as MapDataType } from "./types";
 
-export const MapDataContext = createContext([[], () => {}]);
-MapDataContext.displayName = "Map Data";
+export const mapState = createState<MapDataType>({
+  connectionTree: { rootSystemName: null, children: [] },
+});
 
 interface MapDataProviderProps {
-  children: ReactNode;
+  children: ReactElement;
 }
 
-export default ({ children }: MapDataProviderProps) => {
-  const {
-    settings: { selectedMap },
-  } = useUserData();
-  const [state, setState] = useState<any>(null);
+const MapData = ({ children }: MapDataProviderProps) => {
+  const state = useState(mapState);
+  const { settings } = useUserData();
+  const { selectedMap } = settings;
 
-  const { data, loading, error } = useQuery(GET_CONNECTION_TREE, {
+  const { loading, error } = useQuery(GET_CONNECTION_TREE, {
     variables: { rootSystem: selectedMap.rootSystemName },
+    onCompleted: (data) => state.merge({ connectionTree: data.getConnectionTree }),
   });
 
-  useEffect(() => {
-    if (!loading && !error) {
-      const { getConnectionTree } = data;
-      setState((prev: any) => ({ ...prev, connectionTree: getConnectionTree }));
-    }
-  }, [data]);
-
   // FIXME: Handle loading and errors properly.
-  if (!state) {
+  if (loading || error) {
     return null;
   }
 
-  return <MapDataContext.Provider value={[state, setState]}>{children}</MapDataContext.Provider>;
+  return children;
 };
+
+export default MapData;

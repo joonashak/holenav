@@ -5,6 +5,6 @@ export type MapData = {
 };
 
 export type ConnectionTree = {
-  rootSystemName: string;
+  rootSystemName: string | null;
   children: RawNodeDatum[];
 };

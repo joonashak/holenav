@@ -6,16 +6,19 @@ import useMapData from "./MapData/useMapData";
 import MapNode from "./MapNode";
 
 export default () => {
-  const {
-    connectionTree: { rootSystemName, children },
-  } = useMapData();
+  const { width } = useWindowDimensions();
+  const { connectionTree } = useMapData();
+  const { rootSystemName, children } = connectionTree;
+
+  if (!rootSystemName) {
+    return null;
+  }
+
   const data = { name: rootSystemName, children };
 
-  const { width } = useWindowDimensions();
   const x = width / 2 + 240;
 
   // FIXME: Hack to enable hooks in MapNode...
-  // eslint-disable-next-line
   const Node = (props: CustomNodeElementProps) => <MapNode {...props} />;
 
   return (
