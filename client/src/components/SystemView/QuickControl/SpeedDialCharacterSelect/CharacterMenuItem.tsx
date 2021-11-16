@@ -13,7 +13,7 @@ type CharacterMenuItemProps = {
 };
 
 const CharacterMenuItem = ({ character, selectCharacter }: CharacterMenuItemProps) => {
-  const { setNotification } = useNotification();
+  const { showSuccessNotification } = useNotification();
   const { activeCharacter, setActiveCharacter } = useLocalData();
   const { main, removeAlt } = useUserData();
   const { name, esiId } = character;
@@ -29,7 +29,7 @@ const CharacterMenuItem = ({ character, selectCharacter }: CharacterMenuItemProp
 
     const res = await removeAlt(esiId);
     if (!res.errors) {
-      setNotification("Character removed.", "success", true);
+      showSuccessNotification("Character removed.");
     }
   };
 

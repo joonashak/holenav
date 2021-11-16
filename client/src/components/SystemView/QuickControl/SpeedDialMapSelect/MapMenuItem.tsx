@@ -12,7 +12,7 @@ type MapMenuItemProps = {
 };
 
 const MapMenuItem = ({ map, selectMap }: MapMenuItemProps) => {
-  const { setNotification } = useNotification();
+  const { showSuccessNotification } = useNotification();
   const { id, name } = map;
   const {
     deleteSavedMap,
@@ -26,7 +26,7 @@ const MapMenuItem = ({ map, selectMap }: MapMenuItemProps) => {
     const res = await deleteSavedMap(map.id);
 
     if (!res.errors) {
-      setNotification("Map removed.", "success", true);
+      showSuccessNotification("Map removed.");
     }
   };
 

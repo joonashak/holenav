@@ -44,7 +44,7 @@ const WormholeForm = ({ eveId, existing }: WormholeFormProps) => {
     },
   });
   const { addWormhole, updateWormhole, name: systemName } = useSystemData();
-  const { setNotification } = useNotification();
+  const { showSuccessNotification } = useNotification();
 
   const onSubmitNew = async (formData: FieldValues) => {
     const { whType, whTypeReverse, life, mass, ...data } = formData;
@@ -60,7 +60,7 @@ const WormholeForm = ({ eveId, existing }: WormholeFormProps) => {
     const res = await addWormhole(mutationData);
 
     if (res.data && !res.errors) {
-      setNotification("Wormhole added.", "success", true);
+      showSuccessNotification("Wormhole added.");
     }
   };
 
@@ -80,7 +80,7 @@ const WormholeForm = ({ eveId, existing }: WormholeFormProps) => {
     const res = await updateWormhole(mutationData);
 
     if (res.data && !res.errors) {
-      setNotification("Wormhole updated.", "success", true);
+      showSuccessNotification("Wormhole updated.");
     }
   };
 

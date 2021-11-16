@@ -7,6 +7,11 @@ type NotificationState = {
   autoHide: boolean;
 };
 
+type NotificationOptions = {
+  type: AlertColor | undefined;
+  autoHide: boolean;
+};
+
 const defaultState = {
   type: undefined,
   message: null,
@@ -18,20 +23,66 @@ const notificationState = createState<NotificationState>(defaultState);
 export default () => {
   const state = useState(notificationState);
 
-  /**
-   * Display a global notification.
-   * @param {string} message Notification message shown to the user.
-   * @param {string} type One of Material-UI's Alert severity values (`error`, `warning`, `info` or
-   * `success`).
-   * @param {bool} autoHide Pass `true` to automatically hide the notification after a while.
-   */
-  const setNotification = (
-    message: string,
-    type: "error" | "warning" | "info" | "success",
-    autoHide = false
-  ) => state.set({ type, message, autoHide });
+  const setNotification = (message: string, options: NotificationOptions): void => {
+    state.set({ message, type: options.type, autoHide: options.autoHide });
+  };
 
-  const resetNotification = () => state.set(defaultState);
+  /**
+   * Hide current notification.
+   */
+  const resetNotification = (): void => state.set(defaultState);
+
+  /**
+   * Display a global success notification. Hides automatically after a while.
+   * @param message Message text.
+   * @param options Options object. Set `autoHide` to `false` to make the
+   * notification persistent.
+   */
+  const showSuccessNotification = (
+    message: string,
+    options: Partial<NotificationOptions> = {}
+  ): void => {
+    setNotification(message, { type: "success", autoHide: true, ...options });
+  };
+
+  /**
+   * Display a global info notification. Hides automatically after a while.
+   * @param message Message text.
+   * @param options Options object. Set `autoHide` to `false` to make the
+   * notification persistent.
+   */
+  const showInfoNotification = (
+    message: string,
+    options: Partial<NotificationOptions> = {}
+  ): void => {
+    setNotification(message, { type: "info", autoHide: true, ...options });
+  };
+
+  /**
+   * Display a global error notification.
+   * @param message Message text.
+   * @param options Options object. Set `autoHide` to `true` to make the
+   * notification hide itself automatically after a while.
+   */
+  const showErrorNotification = (
+    message: string,
+    options: Partial<NotificationOptions> = {}
+  ): void => {
+    setNotification(message, { type: "error", autoHide: false, ...options });
+  };
+
+  /**
+   * Display a global warning notification.
+   * @param message Message text.
+   * @param options Options object. Set `autoHide` to `true` to make the
+   * notification hide itself automatically after a while.
+   */
+  const showWarningNotification = (
+    message: string,
+    options: Partial<NotificationOptions> = {}
+  ): void => {
+    setNotification(message, { type: "warning", autoHide: false, ...options });
+  };
 
   return {
     get type() {
@@ -43,7 +94,10 @@ export default () => {
     get autoHide() {
       return state.autoHide.get();
     },
-    setNotification,
+    showSuccessNotification,
+    showErrorNotification,
+    showWarningNotification,
+    showInfoNotification,
     resetNotification,
   };
 };

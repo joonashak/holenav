@@ -12,7 +12,7 @@ type DeleteSigButtonProps = {
 const DeleteSigButton = ({ sig }: DeleteSigButtonProps) => {
   const [anchor, setAnchor] = useState<Element | null>(null);
   const { deleteSignature, deleteWormhole } = useSystemData();
-  const { setNotification } = useNotification();
+  const { showSuccessNotification } = useNotification();
   const isWormhole = Object.keys(sig).includes("eol");
 
   const onOpen = (event: MouseEvent<HTMLElement>) => {
@@ -26,10 +26,10 @@ const DeleteSigButton = ({ sig }: DeleteSigButtonProps) => {
   const onConfirm = async () => {
     if (isWormhole) {
       await deleteWormhole(sig.id);
-      setNotification("Wormhole deleted.", "success");
+      showSuccessNotification("Wormhole deleted.");
     } else {
       await deleteSignature(sig.id);
-      setNotification("Signature deleted.", "success");
+      showSuccessNotification("Signature deleted.");
     }
 
     onClose();

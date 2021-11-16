@@ -15,7 +15,7 @@ type SaveMapDialogProps = DialogProps & {
 };
 
 const SaveMapDialog = ({ open, onClose }: SaveMapDialogProps) => {
-  const { setNotification } = useNotification();
+  const { showSuccessNotification } = useNotification();
   const { addSavedMap } = useUserData();
   const { name: systemName } = useSystemData();
   const { handleSubmit, control } = useForm({ defaultValues: { rootSystemName: systemName } });
@@ -24,7 +24,7 @@ const SaveMapDialog = ({ open, onClose }: SaveMapDialogProps) => {
     const res = await addSavedMap(formData as SavedMap);
 
     if (res.data && !res.errors) {
-      setNotification("Map saved.", "success", true);
+      showSuccessNotification("Map saved.");
       onClose();
     }
   };

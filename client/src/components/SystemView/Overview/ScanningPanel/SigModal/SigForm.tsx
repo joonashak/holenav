@@ -15,13 +15,13 @@ type SigFormProps = {
 const SigForm = ({ type, eveId, existing }: SigFormProps) => {
   const { handleSubmit, control } = useForm({ defaultValues: { name: existing?.name || "" } });
   const { addSignature, updateSignature } = useSystemData();
-  const { setNotification } = useNotification();
+  const { showSuccessNotification } = useNotification();
 
   const onSubmitNew = async (formData: any) => {
     const res = await addSignature({ ...formData, type, eveId });
 
     if (res.data && !res.errors) {
-      setNotification("Signature added.", "success", true);
+      showSuccessNotification("Signature added.");
     }
   };
 
@@ -31,7 +31,7 @@ const SigForm = ({ type, eveId, existing }: SigFormProps) => {
     const res = await updateSignature({ name, type, eveId, id });
 
     if (res.data && !res.errors) {
-      setNotification("Signature updated.", "success", true);
+      showSuccessNotification("Signature updated.");
     }
   };
 
