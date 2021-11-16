@@ -1,31 +1,22 @@
-import React, { useContext, createContext, useState, ReactNode } from "react";
+import { createState, useState } from "@hookstate/core";
+import { AlertColor } from "@mui/material";
+
+type NotificationState = {
+  type: AlertColor | undefined;
+  message: string | null;
+  autoHide: boolean;
+};
 
 const defaultState = {
-  type: null,
+  type: undefined,
   message: null,
   autoHide: false,
 };
 
-const NotificationContext = createContext([[], () => {}]);
-
-type NotificationProviderProps = {
-  children: ReactNode;
-};
-
-const NotificationProvider = ({ children }: NotificationProviderProps) => {
-  const [state, setState] = useState<any>(defaultState);
-
-  return (
-    <NotificationContext.Provider value={[state, setState]}>
-      {children}
-    </NotificationContext.Provider>
-  );
-};
-
-export { NotificationProvider };
+const notificationState = createState<NotificationState>(defaultState);
 
 export default () => {
-  const [state, setState] = useContext<any>(NotificationContext);
+  const state = useState(notificationState);
 
   /**
    * Display a global notification.
@@ -38,16 +29,20 @@ export default () => {
     message: string,
     type: "error" | "warning" | "info" | "success",
     autoHide = false
-  ) => setState({ type, message, autoHide });
+  ) => state.set({ type, message, autoHide });
 
-  const resetNotification = () => setState(defaultState);
-
-  const { type, message, autoHide } = state;
+  const resetNotification = () => state.set(defaultState);
 
   return {
-    type,
-    message,
-    autoHide,
+    get type() {
+      return state.type.get();
+    },
+    get message() {
+      return state.message.get();
+    },
+    get autoHide() {
+      return state.autoHide.get();
+    },
     setNotification,
     resetNotification,
   };

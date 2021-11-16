@@ -1,6 +1,5 @@
 import { ThemeProvider } from "@mui/material";
 import GlobalNotification from "./components/GlobalNotification";
-import { NotificationProvider } from "./components/GlobalNotification/useNotification";
 import useLocalData from "./components/LocalData/useLocalData";
 import Router from "./components/Router";
 import ViewportContainer from "./components/ViewportContainer";
@@ -15,12 +14,10 @@ export default () => {
 
   return (
     <ThemeProvider theme={appTheme}>
-      <NotificationProvider>
-        <ViewportContainer>
-          <Router />
-          <GlobalNotification />
-        </ViewportContainer>
-      </NotificationProvider>
+      <ViewportContainer>
+        <Router />
+        <GlobalNotification />
+      </ViewportContainer>
     </ThemeProvider>
   );
 };
