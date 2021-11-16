@@ -1,8 +1,9 @@
 import { MouseEvent, useState } from "react";
 import { IconButton, Menu, MenuItem } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
-import useSystemData, { Signature, Wormhole } from "../../../SystemData/useSystemData";
+import useSystemData from "../../../SystemData/useSystemData";
 import useNotification from "../../../../GlobalNotification/useNotification";
+import { Signature, Wormhole } from "../../../SystemData/types";
 
 type DeleteSigButtonProps = {
   sig: Signature | Wormhole;

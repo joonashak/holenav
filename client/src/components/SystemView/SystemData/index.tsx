@@ -1,48 +1,52 @@
 import { useQuery } from "@apollo/client";
 import { findOneSystem } from "@eve-data/systems";
-import { createContext, useState, ReactNode, useEffect } from "react";
+import { createState, useState } from "@hookstate/core";
+import { useEffect, ReactElement } from "react";
+import SecurityClasses from "../../../enum/SecurityClasses";
 import { GET_SYSTEM_BY_NAME } from "./graphql";
+import { SystemState } from "./types";
 
-export const SystemDataContext = createContext([[], () => {}]);
-SystemDataContext.displayName = "System Data";
+export const systemState = createState<SystemState>({
+  id: "",
+  name: "",
+  securityClass: SecurityClasses.High,
+  securityStatus: 1,
+  whClass: null,
+  signatures: [],
+  wormholes: [],
+});
 
-interface SystemDataProviderProps {
-  children: ReactNode;
+type SystemDataProviderProps = {
+  children: ReactElement;
   name: string;
-}
+};
 
-export default ({ children, name }: SystemDataProviderProps) => {
-  const [state, setState] = useState<any>(null);
+const SystemData = ({ children, name }: SystemDataProviderProps) => {
+  const state = useState(systemState);
 
   // Static data.
   useEffect(() => {
     const { id, ...system } = findOneSystem({ name });
-    setState((prev: any) => ({ ...prev, eveId: id, ...system }));
+    const securityClass = system.securityClass as SecurityClasses;
+    state.merge({ ...system, securityClass });
   }, [name]);
 
   // System data from API.
-  const systemQuery = useQuery(GET_SYSTEM_BY_NAME, {
+  const { loading, error } = useQuery(GET_SYSTEM_BY_NAME, {
     variables: { name },
+    onCompleted: ({ getSystemByName, getWormholesBySystem }) => {
+      const { id, signatures } = getSystemByName;
+      const wormholes = getWormholesBySystem;
+      state.merge({ id, signatures, wormholes });
+    },
   });
 
-  useEffect(() => {
-    const { data, loading, error } = systemQuery;
-
-    if (!loading && !error) {
-      const {
-        getSystemByName: { id, signatures },
-        getWormholesBySystem: wormholes,
-      } = data;
-      setState((prev: any) => ({ ...prev, id, signatures, wormholes }));
-    }
-  }, [systemQuery]);
-
   // FIXME: Handle loading and errors properly.
-  if (!state || !Object.keys(state).includes("signatures")) {
+  if (loading || error) {
     return null;
   }
 
-  return (
-    <SystemDataContext.Provider value={[state, setState]}>{children}</SystemDataContext.Provider>
-  );
+  return children;
 };
+
+export default SystemData;

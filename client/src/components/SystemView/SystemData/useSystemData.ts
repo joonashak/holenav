@@ -1,8 +1,6 @@
 import { FetchResult, useMutation } from "@apollo/client";
-import { useContext } from "react";
-import { SystemDataContext } from ".";
-import MassStatus from "../../../enum/MassStatus";
-import SecurityClasses from "../../../enum/SecurityClasses";
+import { Downgraded, useState } from "@hookstate/core";
+import { systemState } from ".";
 import {
   ADD_SIGNATURE,
   ADD_WORMHOLE,
@@ -11,133 +9,97 @@ import {
   EDIT_SIGNATURE,
   EDIT_WORMHOLE,
 } from "./graphql";
+import { Signature, Wormhole } from "./types";
 
-type SystemData = {
-  id: string;
-  name: string;
-  securityClass: SecurityClasses;
-  securityStatus: number;
-  whClass: number | null;
-  signatures: Signature[];
-  wormholes: Wormhole[];
-  addSignature: (newSig: any) => Promise<FetchResult>;
-  updateSignature: (update: Signature) => Promise<FetchResult>;
-  deleteSignature: (id: string) => Promise<void>;
-  addWormhole: (newWormhole: any) => Promise<FetchResult>;
-  updateWormhole: (update: Wormhole) => Promise<FetchResult>;
-  deleteWormhole: (id: string) => Promise<void>;
-};
+export default () => {
+  const state = useState(systemState);
 
-export type Signature = {
-  id: string;
-  eveId: string;
-  name: string;
-  type: string;
-};
-
-export type Wormhole = Signature & {
-  eol: boolean;
-  destinationName: string | null;
-  reverse?: Wormhole;
-  massStatus: MassStatus;
-};
-
-export default (): SystemData => {
-  const [state, setState] = useContext<any>(SystemDataContext);
-  const [addSigMutation] = useMutation(ADD_SIGNATURE);
-  const [updateSigMutation] = useMutation(EDIT_SIGNATURE);
-  const [deleteSigMutation] = useMutation(DELETE_SIGNATURE);
-  const [addWhMutation] = useMutation(ADD_WORMHOLE);
-  const [updateWhMutation] = useMutation(EDIT_WORMHOLE);
-  const [deleteWhMutation] = useMutation(DELETE_WORMHOLE);
+  const [addSigMutation] = useMutation(ADD_SIGNATURE, {
+    onCompleted: (data) => {
+      state.signatures.set((sigs) => sigs.concat([data.addSignature]));
+    },
+  });
 
   const addSignature = async (newSig: any) => {
-    const input = { ...newSig, systemId: state.id };
-    const res = await addSigMutation({ variables: { input } });
-    const { data, errors } = res;
-
-    if (data && !errors) {
-      setState(({ signatures, ...rest }: SystemData) => ({
-        ...rest,
-        signatures: signatures.concat(data.addSignature),
-      }));
-    }
-
-    return res;
+    const input = { ...newSig, systemId: state.id.value };
+    return addSigMutation({ variables: { input } });
   };
 
-  const updateSignature = async (update: Signature): Promise<FetchResult> => {
-    const res = await updateSigMutation({ variables: { input: update } });
-    const { data, errors } = res;
-
-    if (data && !errors) {
+  const [updateSigMutation] = useMutation(EDIT_SIGNATURE, {
+    onCompleted: (data) => {
       const updatedSig = data.updateSignature;
-      setState(({ signatures, ...rest }: SystemData) => ({
-        ...rest,
-        signatures: signatures.map((sig) => (sig.id === updatedSig.id ? updatedSig : sig)),
-      }));
-    }
+      state.signatures.set((sigs) =>
+        sigs.map((sig) => (sig.id === updatedSig.id ? updatedSig : sig))
+      );
+    },
+  });
 
-    return res;
-  };
+  const updateSignature = async (update: Signature): Promise<FetchResult> =>
+    updateSigMutation({ variables: { input: update } });
+
+  const [deleteSigMutation] = useMutation(DELETE_SIGNATURE, {
+    onCompleted: (data) => {
+      const deletedSig = data.deleteSignature;
+      state.signatures.set((sigs) => sigs.filter((sig) => sig.id !== deletedSig.id));
+    },
+  });
 
   const deleteSignature = async (id: string): Promise<void> => {
-    const res = await deleteSigMutation({ variables: { id } });
-    const { data, errors } = res;
-
-    if (data && !errors) {
-      const deletedSig = data.deleteSignature;
-      setState(({ signatures, ...rest }: SystemData) => ({
-        ...rest,
-        signatures: signatures.filter((sig) => sig.id !== deletedSig.id),
-      }));
-    }
+    await deleteSigMutation({ variables: { id } });
   };
 
-  const addWormhole = async (newWormhole: any): Promise<FetchResult> => {
-    const res = await addWhMutation({ variables: { input: newWormhole } });
-    const { data, errors } = res;
+  const [addWhMutation] = useMutation(ADD_WORMHOLE, {
+    onCompleted: (data) => {
+      state.wormholes.set((whs) => whs.concat(data.addWormhole));
+    },
+  });
 
-    if (data && !errors) {
-      setState(({ wormholes, ...rest }: SystemData) => ({
-        ...rest,
-        wormholes: wormholes.concat(data.addWormhole),
-      }));
-    }
+  const addWormhole = async (newWormhole: any): Promise<FetchResult> =>
+    addWhMutation({ variables: { input: newWormhole } });
 
-    return res;
-  };
-
-  const updateWormhole = async (update: Wormhole): Promise<FetchResult> => {
-    const res = await updateWhMutation({ variables: { input: update } });
-    const { data, errors } = res;
-
-    if (data && !errors) {
+  const [updateWhMutation] = useMutation(EDIT_WORMHOLE, {
+    onCompleted: (data) => {
       const updatedWh = data.updateWormhole;
-      setState(({ wormholes, ...rest }: SystemData) => ({
-        ...rest,
-        wormholes: wormholes.map((wh) => (wh.id === updatedWh.id ? updatedWh : wh)),
-      }));
-    }
+      state.wormholes.set((whs) => whs.map((wh) => (wh.id === updatedWh.id ? updatedWh : wh)));
+    },
+  });
 
-    return res;
-  };
+  const updateWormhole = async (update: Wormhole): Promise<FetchResult> =>
+    updateWhMutation({ variables: { input: update } });
+
+  const [deleteWhMutation] = useMutation(DELETE_WORMHOLE, {
+    onCompleted: (data) => {
+      const deletedWh = data.deleteWormhole;
+      state.wormholes.set((whs) => whs.filter((wh) => wh.id !== deletedWh.id));
+    },
+  });
 
   const deleteWormhole = async (id: string): Promise<void> => {
-    const res = await deleteWhMutation({ variables: { id } });
-    const { data, errors } = res;
-
-    if (data && !errors) {
-      const deletedWh = data.deleteWormhole;
-      setState(({ wormholes, ...rest }: SystemData) => ({
-        ...rest,
-        wormholes: wormholes.filter((wh) => wh.id !== deletedWh.id),
-      }));
-    }
+    await deleteWhMutation({ variables: { id } });
   };
 
   return {
-    ...state,
+    get id() {
+      return state.id.get();
+    },
+    get name() {
+      return state.name.get();
+    },
+    get securityClass() {
+      return state.securityClass.get();
+    },
+    get securityStatus() {
+      return state.securityStatus.get();
+    },
+    get whClass() {
+      return state.whClass.get();
+    },
+    get signatures() {
+      return state.signatures.attach(Downgraded).get();
+    },
+    get wormholes() {
+      return state.wormholes.attach(Downgraded).get();
+    },
     addSignature,
     updateSignature,
     deleteSignature,

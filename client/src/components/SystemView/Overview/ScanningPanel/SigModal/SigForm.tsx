@@ -3,7 +3,8 @@ import { FieldValues, useForm } from "react-hook-form";
 import SigTypes from "../../../../../enum/SigTypes";
 import ControlledTextField from "../../../../controls/ControlledTextField";
 import useNotification from "../../../../GlobalNotification/useNotification";
-import useSystemData, { Signature } from "../../../SystemData/useSystemData";
+import useSystemData from "../../../SystemData/useSystemData";
+import { Signature } from "../../../SystemData/types";
 
 type SigFormProps = {
   type: SigTypes;

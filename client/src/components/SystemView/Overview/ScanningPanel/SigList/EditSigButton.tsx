@@ -2,7 +2,7 @@ import { IconButton } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import { useState } from "react";
 import SigModal from "../SigModal";
-import { Signature, Wormhole } from "../../../SystemData/useSystemData";
+import { Signature, Wormhole } from "../../../SystemData/types";
 
 type EditSigButtonProps = {
   sig: Signature | Wormhole;

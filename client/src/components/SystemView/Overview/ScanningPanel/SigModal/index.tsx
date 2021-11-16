@@ -5,7 +5,7 @@ import SigTypes from "../../../../../enum/SigTypes";
 import SigForm from "./SigForm";
 import WormholeForm from "./WormholeForm";
 import FormGroupRow from "../../../../controls/FormGroupRow";
-import { Signature, Wormhole } from "../../../SystemData/useSystemData";
+import { Signature, Wormhole } from "../../../SystemData/types";
 import Dialog from "../../../../common/Dialog";
 
 const typeOptions = Object.entries(SigTypes).map(([key, label]) => ({

@@ -10,7 +10,8 @@ import {
   TableCellProps,
   TableRowProps,
 } from "@mui/material";
-import useSystemData, { Signature, Wormhole } from "../../../SystemData/useSystemData";
+import { Signature, Wormhole } from "../../../SystemData/types";
+import useSystemData from "../../../SystemData/useSystemData";
 import DeleteSigButton from "./DeleteSigButton";
 import EditSigButton from "./EditSigButton";
 
