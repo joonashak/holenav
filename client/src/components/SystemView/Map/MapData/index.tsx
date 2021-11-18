@@ -19,7 +19,7 @@ const MapData = ({ children }: MapDataProviderProps) => {
   const { selectedMap } = settings;
 
   const { loading, error } = useQuery(GET_CONNECTION_TREE, {
-    variables: { rootSystem: selectedMap.rootSystemName },
+    variables: { rootSystem: selectedMap?.rootSystemName },
     onCompleted: (data) => state.merge({ connectionTree: data.getConnectionTree }),
   });
 

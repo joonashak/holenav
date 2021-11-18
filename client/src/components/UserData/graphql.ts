@@ -1,10 +1,10 @@
 import { gql } from "@apollo/client";
 import { CHARACTER_FIELDS, MAP_FIELDS } from "./fragments";
 
-export const GET_SYSTEM_DATA = gql`
+export const GET_USER_DATA = gql`
   ${CHARACTER_FIELDS}
   ${MAP_FIELDS}
-  query SystemData {
+  query UserData {
     whoami {
       id
       activeFolder {

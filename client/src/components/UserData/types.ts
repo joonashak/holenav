@@ -2,7 +2,7 @@ export type UserData = {
   id: string;
   activeFolder: string;
   settings: UserSettings;
-  main: Character;
+  main: Character | null;
   alts: Character[];
 };
 

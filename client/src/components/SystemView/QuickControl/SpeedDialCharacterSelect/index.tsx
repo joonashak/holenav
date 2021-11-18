@@ -36,6 +36,10 @@ const SpeedDialCharacterSelect = (props: SpeedDialActionProps) => {
     toggleMenu();
   };
 
+  if (!main) {
+    return null;
+  }
+
   return (
     <>
       <SpeedDialAction

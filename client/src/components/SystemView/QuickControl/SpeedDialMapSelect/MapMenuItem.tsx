@@ -19,7 +19,7 @@ const MapMenuItem = ({ map, selectMap }: MapMenuItemProps) => {
     settings: { selectedMap },
   } = useUserData();
 
-  const selected = map.id === selectedMap.id;
+  const selected = map.id === selectedMap?.id;
 
   const removeSavedMap = async (event: SyntheticEvent) => {
     event.stopPropagation();

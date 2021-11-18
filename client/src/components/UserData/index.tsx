@@ -1,39 +1,51 @@
 import { useQuery } from "@apollo/client";
-import { createContext, useState, ReactNode, useEffect } from "react";
+import { createState, useState } from "@hookstate/core";
+import { cloneDeep } from "lodash";
+import { ReactElement } from "react";
 import useAuthenticatedApollo from "../../auth/useAuthenticatedApollo";
 import useLocalData from "../LocalData/useLocalData";
-import { GET_SYSTEM_DATA } from "./graphql";
+import { GET_USER_DATA } from "./graphql";
+import { UserData } from "./types";
 
-export const UserDataContext = createContext([[], () => {}]);
-UserDataContext.displayName = "User Data";
+export const userState = createState<UserData>({
+  id: "",
+  activeFolder: "",
+  settings: {
+    selectedMap: {
+      id: "",
+      name: "",
+      rootSystemName: "",
+    },
+    maps: [],
+  },
+  main: null,
+  alts: [],
+});
 
 interface UserDataProviderProps {
-  children: ReactNode;
+  children: ReactElement;
 }
 
 export default ({ children }: UserDataProviderProps) => {
-  const [state, setState] = useState<any>(null);
+  const state = useState(userState);
   // FIXME: Refactor activeFolder to user data state when migrating this to Hookstate.
   const { setActiveFolder } = useAuthenticatedApollo();
   const { setDefaultActiveCharacter } = useLocalData();
-  const { data, loading, error } = useQuery(GET_SYSTEM_DATA);
 
-  useEffect(() => {
-    if (!loading && !error) {
-      const {
-        whoami: { activeFolder, main, ...rest },
-      } = data;
-
-      setState((prev: any) => ({ ...prev, ...rest, main, activeFolder: activeFolder.id }));
+  const { loading, error } = useQuery(GET_USER_DATA, {
+    onCompleted: (data) => {
+      const { whoami } = data;
+      const { activeFolder, main, ...rest } = cloneDeep(whoami);
+      state.merge({ main, activeFolder: activeFolder.id, ...rest });
       setActiveFolder(activeFolder.id);
       setDefaultActiveCharacter(main.esiId);
-    }
-  }, [data]);
+    },
+  });
 
   // FIXME: Handle loading and errors properly.
-  if (!data || !state) {
+  if (loading || error) {
     return null;
   }
 
-  return <UserDataContext.Provider value={[state, setState]}>{children}</UserDataContext.Provider>;
+  return children;
 };

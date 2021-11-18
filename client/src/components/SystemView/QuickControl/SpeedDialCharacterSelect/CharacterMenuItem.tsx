@@ -18,12 +18,12 @@ const CharacterMenuItem = ({ character, selectCharacter }: CharacterMenuItemProp
   const { main, removeAlt } = useUserData();
   const { name, esiId } = character;
   const selected = activeCharacter === esiId;
-  const isMain = esiId === main.esiId;
+  const isMain = esiId === main?.esiId;
 
   const remove = async (event: SyntheticEvent) => {
     event.stopPropagation();
 
-    if (selected) {
+    if (selected && main) {
       setActiveCharacter(main.esiId);
     }
 

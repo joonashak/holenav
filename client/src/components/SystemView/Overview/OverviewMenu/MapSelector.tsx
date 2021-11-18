@@ -13,6 +13,7 @@ export default () => {
   };
 
   const options = maps.map(({ id, name }) => ({ id, value: id, label: name }));
+  const value = selectedMap?.id || "";
 
-  return <Select title="Map" onChange={onChange} value={selectedMap.id} options={options} />;
+  return <Select title="Map" onChange={onChange} value={value} options={options} />;
 };
