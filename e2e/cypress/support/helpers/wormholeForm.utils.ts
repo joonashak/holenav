@@ -32,9 +32,16 @@ const wormholePropertyTests = {
   mass: (mass: string) => cy.get(`[data-cy=checkbox-mass-${mass}] > input`).should("be.checked"),
 };
 
-export const testWormholeProperties = (props: TestableWormholeProps, url: string): void => {
+export const testWormholeProperties = (
+  props: TestableWormholeProps,
+  url: string | null = null
+): void => {
   const { name } = props;
-  cy.visit(url);
+
+  if (url) {
+    cy.visit(url);
+  }
+
   cy.get("#scanning-content").contains(name);
   cy.cs(`edit-sig-${name}`).click();
 

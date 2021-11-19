@@ -10,9 +10,10 @@ type SigFormProps = {
   type: SigTypes;
   eveId: string;
   existing?: Signature;
+  onClose: () => void;
 };
 
-const SigForm = ({ type, eveId, existing }: SigFormProps) => {
+const SigForm = ({ type, eveId, existing, onClose }: SigFormProps) => {
   const { handleSubmit, control } = useForm({ defaultValues: { name: existing?.name || "" } });
   const { addSignature, updateSignature } = useSystemData();
   const { showSuccessNotification } = useNotification();
@@ -22,6 +23,7 @@ const SigForm = ({ type, eveId, existing }: SigFormProps) => {
 
     if (res.data && !res.errors) {
       showSuccessNotification("Signature added.");
+      onClose();
     }
   };
 
@@ -32,6 +34,7 @@ const SigForm = ({ type, eveId, existing }: SigFormProps) => {
 
     if (res.data && !res.errors) {
       showSuccessNotification("Signature updated.");
+      onClose();
     }
   };
 

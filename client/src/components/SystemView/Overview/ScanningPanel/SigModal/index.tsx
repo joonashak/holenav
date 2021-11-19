@@ -16,7 +16,7 @@ const typeOptions = Object.entries(SigTypes).map(([key, label]) => ({
 
 type SigModalProps = {
   open: boolean;
-  onClose: (event: {}, reason: "backdropClick" | "escapeKeyDown") => void;
+  onClose: () => void;
   wormhole?: Wormhole;
   signature?: Signature;
 };
@@ -60,9 +60,9 @@ const SigModal = ({ open, onClose, wormhole, signature }: SigModalProps) => {
           />
         </FormGroupRow>
         {showWormholeForm ? (
-          <WormholeForm eveId={eveId} existing={wormhole} />
+          <WormholeForm eveId={eveId} existing={wormhole} onClose={onClose} />
         ) : (
-          <SigForm type={type} eveId={eveId} existing={signature} />
+          <SigForm type={type} eveId={eveId} existing={signature} onClose={onClose} />
         )}
       </DialogContent>
     </Dialog>

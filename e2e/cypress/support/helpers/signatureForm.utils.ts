@@ -20,9 +20,16 @@ const signaturePropertyTests = {
     cy.get("[data-cy=textfield-eveId] > div > input").should("have.value", eveId),
 };
 
-export const testSignatureProperties = (props: TestableSignatureProps, url: string): void => {
+export const testSignatureProperties = (
+  props: TestableSignatureProps,
+  url: string | null = null
+): void => {
   const { name } = props;
-  cy.visit(url);
+
+  if (url) {
+    cy.visit(url);
+  }
+
   cy.get("#scanning-content").contains(name);
   cy.cs(`edit-sig-${name}`).click();
 

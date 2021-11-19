@@ -32,7 +32,7 @@ describe("Wormholes", () => {
     submitWormholeForm();
     cy.contains("Wormhole added.");
 
-    testWormholeProperties({ ...wh, reverseType: "K162" }, testSystemUrl);
+    testWormholeProperties({ ...wh, reverseType: "K162" });
   });
 
   it("Can edit existing wormhole", () => {
@@ -48,7 +48,7 @@ describe("Wormholes", () => {
     submitWormholeForm();
     cy.contains("Wormhole updated.");
 
-    testWormholeProperties(wh, testSystemUrl);
+    testWormholeProperties(wh);
   });
 
   it("Can delete a wormhole", () => {
@@ -62,7 +62,7 @@ describe("Wormholes", () => {
     openWormholeForm();
     setWormholeFormValues(wh);
     submitWormholeForm();
-    testWormholeProperties(wh, testSystemUrl);
+    testWormholeProperties(wh);
 
     cy.visit(testSystemUrl);
     cy.cs("sig-list-body").should("contain.text", wh.name);
@@ -86,7 +86,7 @@ describe("Wormholes", () => {
     setWormholeFormValues(wh);
 
     submitWormholeForm();
-    testWormholeProperties(wh, testSystemUrl);
+    testWormholeProperties(wh);
     testWormholeProperties(
       { name: "rev from Jita", destinationName: "Jita", type: "K162" },
       "/system/Hakonen"
@@ -116,7 +116,7 @@ describe("Wormholes", () => {
     setWormholeFormValues(update);
     submitWormholeForm();
 
-    testWormholeProperties({ ...wh, ...update, reverseType: "K162" }, testSystemUrl);
+    testWormholeProperties({ ...wh, ...update, reverseType: "K162" });
 
     cy.visit("/system/Dodixie");
     cy.get("#scanning-content").should("not.contain.text", "rev from Jita");
@@ -149,7 +149,7 @@ describe("Wormholes", () => {
     cy.cs("autocomplete-destinationName").clear();
     submitWormholeForm();
 
-    testWormholeProperties({ ...wh, destinationName: "" }, testSystemUrl);
+    testWormholeProperties({ ...wh, destinationName: "" });
 
     cy.visit("/system/Perimeter");
     cy.get("#scanning-content").should("not.contain.text", "rev from Jita");

@@ -30,9 +30,10 @@ const whTypeOptions = [{ key: "wh-K162", value: "K162", label: "K162" }].concat(
 type WormholeFormProps = {
   eveId: string;
   existing?: Wormhole;
+  onClose: () => void;
 };
 
-const WormholeForm = ({ eveId, existing }: WormholeFormProps) => {
+const WormholeForm = ({ eveId, existing, onClose }: WormholeFormProps) => {
   const { handleSubmit, control } = useForm({
     defaultValues: {
       name: existing?.name || "",
@@ -61,6 +62,7 @@ const WormholeForm = ({ eveId, existing }: WormholeFormProps) => {
 
     if (res.data && !res.errors) {
       showSuccessNotification("Wormhole added.");
+      onClose();
     }
   };
 
@@ -81,6 +83,7 @@ const WormholeForm = ({ eveId, existing }: WormholeFormProps) => {
 
     if (res.data && !res.errors) {
       showSuccessNotification("Wormhole updated.");
+      onClose();
     }
   };
 

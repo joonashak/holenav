@@ -28,7 +28,7 @@ describe("Signatures", () => {
     setSignatureFormValues(sig);
     submitSignatureForm();
 
-    testSignatureProperties(sig, testSystemUrl);
+    testSignatureProperties(sig);
   });
 
   it("Can edit a signature", () => {
@@ -53,7 +53,7 @@ describe("Signatures", () => {
     setSignatureFormValues(update);
     submitSignatureForm();
 
-    testSignatureProperties(update, testSystemUrl);
+    testSignatureProperties(update);
   });
 
   it("Can delete a signature", () => {
