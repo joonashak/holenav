@@ -1,19 +1,18 @@
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
-import { createContext, ReactChild, useContext, useState } from "react";
+import { createState, useState } from "@hookstate/core";
+import { ReactElement } from "react";
 import { endpoints } from "../config";
 import useAuth from "./useAuth";
 
-const ApolloContext = createContext([[], () => {}]);
-ApolloContext.displayName = "Apollo";
+const activeFolderState = createState<string>("");
 
 type AuthenticatedApolloProps = {
-  children: ReactChild;
+  children: ReactElement;
 };
 
 const AuthenticatedApolloProvider = ({ children }: AuthenticatedApolloProps) => {
   const { token } = useAuth();
-  // FIXME: Refactor activeFolder to user data state when migrating it to Hookstate.
-  const [activeFolder, setActiveFolder] = useState<any>("");
+  const { value: activeFolder } = useState(activeFolderState);
 
   // Prevent unauthorized request.
   if (!token) {
@@ -26,17 +25,20 @@ const AuthenticatedApolloProvider = ({ children }: AuthenticatedApolloProps) => 
     headers: { accessToken: token, activeFolder },
   });
 
-  return (
-    <ApolloContext.Provider value={[activeFolder, setActiveFolder]}>
-      <ApolloProvider client={apolloClient}>{children}</ApolloProvider>
-    </ApolloContext.Provider>
-  );
+  return <ApolloProvider client={apolloClient}>{children}</ApolloProvider>;
 };
 
 export { AuthenticatedApolloProvider };
 
 export default () => {
-  const [activeFolder, setActiveFolder] = useContext<any>(ApolloContext);
+  const activeFolder = useState(activeFolderState);
 
-  return { activeFolder, setActiveFolder };
+  const setActiveFolderForHeaders = (folderId: string) => {
+    // Equality check to prevent re-render loop.
+    if (activeFolder.value !== folderId) {
+      activeFolder.set(folderId);
+    }
+  };
+
+  return { setActiveFolderForHeaders };
 };

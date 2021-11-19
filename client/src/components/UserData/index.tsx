@@ -28,8 +28,7 @@ interface UserDataProviderProps {
 
 export default ({ children }: UserDataProviderProps) => {
   const state = useState(userState);
-  // FIXME: Refactor activeFolder to user data state when migrating this to Hookstate.
-  const { setActiveFolder } = useAuthenticatedApollo();
+  const { setActiveFolderForHeaders } = useAuthenticatedApollo();
   const { setDefaultActiveCharacter } = useLocalData();
 
   const { loading, error } = useQuery(GET_USER_DATA, {
@@ -37,7 +36,7 @@ export default ({ children }: UserDataProviderProps) => {
       const { whoami } = data;
       const { activeFolder, main, ...rest } = cloneDeep(whoami);
       state.merge({ main, activeFolder: activeFolder.id, ...rest });
-      setActiveFolder(activeFolder.id);
+      setActiveFolderForHeaders(activeFolder.id);
       setDefaultActiveCharacter(main.esiId);
     },
   });
