@@ -1,6 +1,6 @@
-import { Typography } from "@mui/material";
+import { Typography, TypographyProps } from "@mui/material";
 
-export default () => (
+export default ({ sx, ...props }: TypographyProps) => (
   <Typography
     sx={{
       fontFamily: "Gugi",
@@ -9,7 +9,9 @@ export default () => (
       "&:first-letter": {
         fontSize: "6.5rem",
       },
+      ...sx,
     }}
+    {...props}
   >
     Holenav
   </Typography>
