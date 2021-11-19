@@ -1,5 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
+import { UserDocument } from "../user/user.model";
 import { UserService } from "../user/user.service";
 import { SsoSessionService } from "./sso/ssoSession/ssoSession.service";
 
@@ -45,5 +46,14 @@ export class AuthService {
     } catch (error) {
       throw new HttpException("Bad token format.", HttpStatus.BAD_REQUEST);
     }
+  }
+
+  /**
+   * Removes the given `token` from given `user`.
+   */
+  async endSession(token: string, user: UserDocument): Promise<void> {
+    const userWithTokens = await this.userService.findByIdWithTokens(user.id);
+    userWithTokens.tokens = userWithTokens.tokens.filter((t) => t !== token);
+    await userWithTokens.save();
   }
 }

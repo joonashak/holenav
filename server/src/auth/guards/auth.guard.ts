@@ -39,6 +39,8 @@ export class AuthGuard implements CanActivate {
 
     // Add user data to request only after authorization to avoid mistakes.
     if (authorized) {
+      // DO NOT REMOVE THIS!
+      // Fetch the user again in a service if you really need to see the tokens.
       user.tokens = null;
       request.user = user;
     }

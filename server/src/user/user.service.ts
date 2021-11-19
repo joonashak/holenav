@@ -52,7 +52,7 @@ export class UserService {
    * @param id User id to search for.
    * @returns The found user or `undefined`.
    */
-  async findByIdWithTokens(id: string): Promise<User> {
+  async findByIdWithTokens(id: string): Promise<UserDocument> {
     const user = await this.userModel
       .findOne({ id })
       .select("+tokens")
