@@ -17,7 +17,7 @@ export default () => (
           <AuthenticatedApolloProvider>
             <UserData>
               <Switch>
-                <Route path="/:systemName" exact component={SystemView} />
+                <Route path="/system/:systemName" exact component={SystemView} />
               </Switch>
             </UserData>
           </AuthenticatedApolloProvider>
