@@ -24,7 +24,7 @@ const useLocalData = () => {
     }
   };
 
-  const setAuthToken = async (authToken: string) => {
+  const setAuthToken = async (authToken: string | null) => {
     await tokenStore.setToken(authToken);
     state.merge({ authToken });
   };

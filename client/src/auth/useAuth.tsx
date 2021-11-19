@@ -12,6 +12,11 @@ export default () => {
     await setAuthToken(data.accessToken);
   };
 
+  const logout = async () => {
+    await axios.get(endpoints.logout, { headers: { accesstoken: authToken } });
+    setAuthToken(null);
+  };
+
   return {
     get token() {
       if (mockUser && devToolsEnabled) {
@@ -20,5 +25,6 @@ export default () => {
       return authToken;
     },
     fetchAndSaveToken,
+    logout,
   };
 };

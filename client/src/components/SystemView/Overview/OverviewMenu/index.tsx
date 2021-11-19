@@ -1,4 +1,5 @@
 import { Container, Drawer, List, ListItem } from "@mui/material";
+import LogoutButton from "./LogoutButton";
 import MapSelector from "./MapSelector";
 
 type OverviewMenuProps = {
@@ -12,6 +13,9 @@ export default ({ open, toggle }: OverviewMenuProps) => (
       <List>
         <ListItem>
           <MapSelector />
+        </ListItem>
+        <ListItem>
+          <LogoutButton />
         </ListItem>
       </List>
     </Container>
