@@ -24,6 +24,9 @@ export default () => {
       }
       return authToken;
     },
+    get mocking() {
+      return mockUser && devToolsEnabled;
+    },
     fetchAndSaveToken,
     logout,
   };
