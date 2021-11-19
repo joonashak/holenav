@@ -1,5 +1,5 @@
 import { FetchResult, useMutation } from "@apollo/client";
-import { useState } from "@hookstate/core";
+import { Downgraded, useState } from "@hookstate/core";
 import { userState } from ".";
 import { ADD_SAVED_MAP, UPDATE_SELECTED_MAP, DELETE_SAVED_MAP, REMOVE_ALT } from "./graphql";
 import { SavedMap } from "./types";
@@ -65,7 +65,9 @@ const useUserData = () => {
       return state.alts.get();
     },
     get settings() {
-      return state.settings.get();
+      const maps = state.settings.maps.attach(Downgraded).get();
+      const selectedMap = state.settings.selectedMap.get() || maps[0];
+      return { maps, selectedMap };
     },
     setSelectedMap,
     addSavedMap,
