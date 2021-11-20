@@ -8,6 +8,9 @@ let theme = createTheme({
     text: {
       primary: "#fff",
     },
+    action: {
+      active: "red",
+    },
   },
 });
 
