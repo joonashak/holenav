@@ -18,8 +18,9 @@ const SigForm = ({ type, eveId, existing, onClose }: SigFormProps) => {
   const { addSignature, updateSignature } = useSystemData();
   const { showSuccessNotification } = useNotification();
 
-  const onSubmitNew = async (formData: any) => {
-    const res = await addSignature({ ...formData, type, eveId });
+  const onSubmitNew = async (formData: FieldValues) => {
+    const typeOrNull = type || null;
+    const res = await addSignature({ ...formData, type: typeOrNull, eveId });
 
     if (res.data && !res.errors) {
       showSuccessNotification("Signature added.");
@@ -29,8 +30,9 @@ const SigForm = ({ type, eveId, existing, onClose }: SigFormProps) => {
 
   const onSubmitEdit = async (formData: FieldValues) => {
     const id = existing?.id || "";
+    const typeOrNull = type || null;
     const { name } = formData;
-    const res = await updateSignature({ name, type, eveId, id });
+    const res = await updateSignature({ name, type: typeOrNull, eveId, id });
 
     if (res.data && !res.errors) {
       showSuccessNotification("Signature updated.");

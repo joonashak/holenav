@@ -6,8 +6,8 @@ export default class AddSignatureInput {
   @Field()
   eveId: string;
 
-  @Field((type) => SigTypes)
-  type: SigTypes;
+  @Field((type) => SigTypes, { nullable: true })
+  type: SigTypes | null;
 
   @Field()
   name: string;

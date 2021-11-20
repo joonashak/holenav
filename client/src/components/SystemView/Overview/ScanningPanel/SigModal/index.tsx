@@ -1,5 +1,5 @@
 import { DialogContent, DialogTitle, SelectChangeEvent, TextField } from "@mui/material";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, ReactElement, useState } from "react";
 import Select from "../../../../controls/Select";
 import SigTypes from "../../../../../enum/SigTypes";
 import SigForm from "./SigForm";
@@ -8,11 +8,17 @@ import FormGroupRow from "../../../../controls/FormGroupRow";
 import { Signature, Wormhole } from "../../../SystemData/types";
 import Dialog from "../../../../common/Dialog";
 
-const typeOptions = Object.entries(SigTypes).map(([key, label]) => ({
-  id: `sig-type-${key}`,
-  value: key,
-  label,
-}));
+let typeOptions: Array<{ id: string; value: string; label: string | ReactElement }> = [
+  { id: "sig-type-null", value: "", label: <em>Unknown</em> },
+];
+
+typeOptions = typeOptions.concat(
+  Object.entries(SigTypes).map(([key, label]) => ({
+    id: `sig-type-${key}`,
+    value: key,
+    label: label as string,
+  }))
+);
 
 type SigModalProps = {
   open: boolean;
@@ -23,7 +29,7 @@ type SigModalProps = {
 
 const SigModal = ({ open, onClose, wormhole, signature }: SigModalProps) => {
   const existingType = wormhole ? SigTypes.WORMHOLE : signature?.type;
-  const defaultType = existingType || SigTypes.DATA;
+  const defaultType = existingType || "";
   const [type, setType] = useState<SigTypes>(defaultType.toUpperCase() as SigTypes);
 
   const [eveId, setEveId] = useState<string>(wormhole?.eveId || signature?.eveId || "");

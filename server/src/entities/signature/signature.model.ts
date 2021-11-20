@@ -19,9 +19,9 @@ export class Signature {
   @Prop({ nullable: true })
   eveId?: string;
 
-  @Field((type) => SigTypes)
+  @Field((type) => SigTypes, { nullable: true })
   @Prop()
-  type: SigTypes;
+  type: SigTypes | null;
 
   @Field()
   @Prop()

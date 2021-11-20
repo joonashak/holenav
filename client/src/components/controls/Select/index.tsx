@@ -5,9 +5,10 @@ import {
   Select as MuiSelect,
   SelectChangeEvent,
 } from "@mui/material";
+import { ReactElement } from "react";
 
 type SelectProps = {
-  options: Array<{ id: string; value: string; label: string }>;
+  options: Array<{ id: string; value: string; label: string | ReactElement }>;
   onChange: (event: SelectChangeEvent) => void;
   value: string;
   title: string;
