@@ -44,6 +44,11 @@ export default () => {
         The same guidelines apply when using this instance of Holenav through EVE SSO login. Use
         only such characters that you do not mind leaking the information of.
       </Typography>
+      <Typography>
+        Feel free to use the <i>Seed Database</i> button to reset into the standard testing and
+        development dataset. If something is broken, it&apos;s worth a try, and you should probably
+        also reset the data after you are done testing.
+      </Typography>
     </Paper>
   );
 
