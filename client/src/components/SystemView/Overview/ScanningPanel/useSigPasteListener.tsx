@@ -35,8 +35,10 @@ const useSigPasteListener = () => {
   const getFormattedPasteData = (pasteEvent: ClipboardEvent): Array<PasteData> => {
     const input = pasteEvent.clipboardData?.getData("text") || "";
     const rows = input.split(/\r?\n/).filter((row) => row.length);
+    // eslint-disable-next-line
     console.log("rows", rows);
     const splitRows = rows.map((row) => row.split(/\t/));
+    // eslint-disable-next-line
     console.log("split rows", splitRows);
 
     const formattedData = splitRows.map((row) => {
