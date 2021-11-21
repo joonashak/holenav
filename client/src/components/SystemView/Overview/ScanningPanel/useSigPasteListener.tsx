@@ -5,9 +5,9 @@ import useSystemData from "../../SystemData/useSystemData";
 type PasteData = {
   eveId: string;
   type: SigTypes | null;
+  name: string;
 };
 
-// TODO: Handle site name also.
 const useSigPasteListener = () => {
   const { showWarningNotification } = useNotification();
   const {
@@ -35,7 +35,9 @@ const useSigPasteListener = () => {
   const getFormattedPasteData = (pasteEvent: ClipboardEvent): Array<PasteData> => {
     const input = pasteEvent.clipboardData?.getData("text") || "";
     const rows = input.split(/\r?\n/).filter((row) => row.length);
+    console.log("rows", rows);
     const splitRows = rows.map((row) => row.split(/\t/));
+    console.log("split rows", splitRows);
 
     const formattedData = splitRows.map((row) => {
       const eveId = row[0];
@@ -44,23 +46,29 @@ const useSigPasteListener = () => {
       }
 
       const type = findSigType(row[2]);
-      return { eveId, type };
+      const name = row[3];
+      return { eveId, type, name };
     });
 
     return formattedData;
   };
 
   const handlePastedSig = async (data: PasteData) => {
-    const { type, eveId } = data;
+    const { type, eveId, name } = data;
     const existingSig = signatures.find((sig) => sig.eveId === eveId);
 
     if (!existingSig) {
-      const input = { type: type?.toUpperCase(), eveId, name: "" };
+      const input = { type: type?.toUpperCase(), eveId, name };
       return addSignature(input);
     }
 
-    if (existingSig && !existingSig.type && type) {
-      return updateSignature({ ...existingSig, type: type.toUpperCase() });
+    // Only scenarios when an _update_ is performed based on paste data.
+    const sigExistsWihtoutTypeAndPasteHasType = existingSig && !existingSig.type && type;
+    const sigExistsWithoutNameAndPasteHasName = existingSig && !existingSig.name && name;
+
+    if (sigExistsWihtoutTypeAndPasteHasType || sigExistsWithoutNameAndPasteHasName) {
+      const { id } = existingSig;
+      return updateSignature({ id, eveId, name, type: type?.toUpperCase() || "" });
     }
 
     return Promise.resolve();
