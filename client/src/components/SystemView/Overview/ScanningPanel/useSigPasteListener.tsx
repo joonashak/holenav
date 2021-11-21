@@ -1,13 +1,25 @@
 import SigTypes from "../../../../enum/SigTypes";
 import useNotification from "../../../GlobalNotification/useNotification";
+import useSystemData from "../../SystemData/useSystemData";
 
 type PasteData = {
   eveId: string;
   type: SigTypes | null;
 };
 
+// TODO: Handle site name also.
 const useSigPasteListener = () => {
   const { showWarningNotification } = useNotification();
+  const {
+    signatures,
+    wormholes,
+    addSignature,
+    addWormhole,
+    updateSignature,
+    updateWormhole,
+    name: systemName,
+  } = useSystemData();
+  const allSigs = signatures.concat(wormholes);
 
   const findSigType = (typeString: string) => {
     if (typeString === "Data Site") {
@@ -24,7 +36,7 @@ const useSigPasteListener = () => {
 
   const getFormattedPasteData = (pasteEvent: ClipboardEvent): Array<PasteData> => {
     const input = pasteEvent.clipboardData?.getData("text") || "";
-    const rows = input.split(/\r?\n/);
+    const rows = input.split(/\r?\n/).filter((row) => row.length);
     const splitRows = rows.map((row) => row.split(/\t+/));
 
     const formattedData = splitRows.map((row) => {
@@ -40,7 +52,28 @@ const useSigPasteListener = () => {
     return formattedData;
   };
 
-  const sigPasteListener = (event: Event) => {
+  const handlePastedSig = async (data: PasteData) => {
+    const { type, eveId } = data;
+    const existingSigType = allSigs.find((sig) => sig.eveId === eveId)?.type || null;
+
+    if (!existingSigType) {
+      const input = { type: type?.toUpperCase(), eveId, name: "" };
+      const whFields = {
+        destinationName: null,
+        eol: false,
+        massStatus: "STABLE",
+        reverseType: "",
+        systemName,
+      };
+      return type === SigTypes.WORMHOLE
+        ? addWormhole({ ...input, ...whFields })
+        : addSignature(input);
+    }
+
+    return Promise.resolve();
+  };
+
+  const sigPasteListener = async (event: Event) => {
     let data: Array<PasteData> = [];
 
     try {
@@ -50,7 +83,7 @@ const useSigPasteListener = () => {
       return;
     }
 
-    console.log("data", data);
+    await Promise.all(data.map((sig) => handlePastedSig(sig)));
   };
 
   return {

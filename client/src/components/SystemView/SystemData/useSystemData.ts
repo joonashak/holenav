@@ -64,6 +64,7 @@ export default () => {
   });
 
   const addWormhole = async (newWormhole: any): Promise<FetchResult> => {
+    console.log(newWormhole);
     const existingSig = state.signatures
       .attach(Downgraded)
       .get()
