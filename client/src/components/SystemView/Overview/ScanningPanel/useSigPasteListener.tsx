@@ -16,7 +16,6 @@ const useSigPasteListener = () => {
     addSignature,
     addWormhole,
     updateSignature,
-    updateWormhole,
     name: systemName,
   } = useSystemData();
 
@@ -60,11 +59,15 @@ const useSigPasteListener = () => {
       return addSignature(input);
     }
 
+    if (existingSig && !existingSig.type && type) {
+      return updateSignature({ ...existingSig, type: type.toUpperCase() });
+    }
+
     return Promise.resolve();
   };
 
   const handlePastedWh = async (data: PasteData) => {
-    const { type, eveId } = data;
+    const { eveId } = data;
     const existingWh = wormholes.find((sig) => sig.eveId === eveId);
 
     if (!existingWh) {
