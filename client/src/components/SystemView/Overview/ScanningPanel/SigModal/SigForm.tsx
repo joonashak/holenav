@@ -1,49 +1,24 @@
 import { Box, Button, FormGroup } from "@mui/material";
-import { FieldValues, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import SigTypes from "../../../../../enum/SigTypes";
 import ControlledTextField from "../../../../controls/ControlledTextField";
-import useNotification from "../../../../GlobalNotification/useNotification";
-import useSystemData from "../../../SystemData/useSystemData";
 import { Signature } from "../../../SystemData/types";
+import useSigForm from "./useSigForm";
 
-type SigFormProps = {
+export type SigFormProps = {
   type: SigTypes;
   eveId: string;
   existing?: Signature;
   onClose: () => void;
 };
 
-const SigForm = ({ type, eveId, existing, onClose }: SigFormProps) => {
+const SigForm = (props: SigFormProps) => {
+  const { existing } = props;
   const { handleSubmit, control } = useForm({ defaultValues: { name: existing?.name || "" } });
-  const { addSignature, updateSignature } = useSystemData();
-  const { showSuccessNotification } = useNotification();
-
-  const onSubmitNew = async (formData: FieldValues) => {
-    const typeOrNull = type || null;
-    const res = await addSignature({ ...formData, type: typeOrNull, eveId });
-
-    if (res.data && !res.errors) {
-      showSuccessNotification("Signature added.");
-      onClose();
-    }
-  };
-
-  const onSubmitEdit = async (formData: FieldValues) => {
-    const id = existing?.id || "";
-    const typeOrNull = type || null;
-    const { name } = formData;
-    const res = await updateSignature({ name, type: typeOrNull, eveId, id });
-
-    if (res.data && !res.errors) {
-      showSuccessNotification("Signature updated.");
-      onClose();
-    }
-  };
-
-  const onSubmit = existing ? onSubmitEdit : onSubmitNew;
+  const { submitSigForm } = useSigForm(props);
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(submitSigForm)}>
       <Box sx={{ "& > *": { mt: 3, mb: 3 } }}>
         <FormGroup>
           <ControlledTextField name="name" control={control} label="Name" />
