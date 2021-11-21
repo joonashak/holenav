@@ -1,16 +1,15 @@
 import wormholes from "@eve-data/wormholes";
 import { Button } from "@mui/material";
-import { FieldValues, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import systems from "@eve-data/systems";
 import ControlledRadioGroup from "../../../../controls/ControlledRadioGroup";
 import ControlledSelect from "../../../../controls/Select/ControlledSelect";
 import ControlledTextField from "../../../../controls/ControlledTextField";
-import useNotification from "../../../../GlobalNotification/useNotification";
-import useSystemData from "../../../SystemData/useSystemData";
 import { Wormhole } from "../../../SystemData/types";
 import FormGroupRow from "../../../../controls/FormGroupRow";
 import RhfAutocomplete from "../../../../controls/RhfAutocomplete";
 import MassStatus from "../../../../../enum/MassStatus";
+import useWormholeForm from "./useWormholeForm";
 
 const lifeOptions = [
   { key: "lt-24-hrs", value: "lt-24-hrs", label: "Less than 24 hrs" },
@@ -27,13 +26,15 @@ const whTypeOptions = [{ key: "wh-K162", value: "K162", label: "K162" }].concat(
   wormholes.map(({ type }) => ({ key: `wh-${type}`, value: type, label: type }))
 );
 
-type WormholeFormProps = {
+export type WormholeFormProps = {
   eveId: string;
   existing?: Wormhole;
   onClose: () => void;
 };
 
-const WormholeForm = ({ eveId, existing, onClose }: WormholeFormProps) => {
+const WormholeForm = (props: WormholeFormProps) => {
+  const { existing } = props;
+  const { submitWormholeForm } = useWormholeForm(props);
   const { handleSubmit, control } = useForm({
     defaultValues: {
       name: existing?.name || "",
@@ -44,53 +45,9 @@ const WormholeForm = ({ eveId, existing, onClose }: WormholeFormProps) => {
       destinationName: existing?.destinationName || null,
     },
   });
-  const { addWormhole, updateWormhole, name: systemName } = useSystemData();
-  const { showSuccessNotification } = useNotification();
-
-  const onSubmitNew = async (formData: FieldValues) => {
-    const { whType, whTypeReverse, life, mass, ...data } = formData;
-    const mutationData = {
-      eveId,
-      systemName,
-      type: whType,
-      reverseType: whTypeReverse,
-      eol: life === "eol",
-      massStatus: mass,
-      ...data,
-    };
-    const res = await addWormhole(mutationData);
-
-    if (res.data && !res.errors) {
-      showSuccessNotification("Wormhole added.");
-      onClose();
-    }
-  };
-
-  const onSubmitEdit = async (formData: FieldValues) => {
-    const id = existing?.id || "";
-    const { whType, whTypeReverse, life, mass, name, destinationName } = formData;
-    const mutationData = {
-      id,
-      eveId,
-      type: whType,
-      reverseType: whTypeReverse,
-      eol: life === "eol",
-      massStatus: mass,
-      name,
-      destinationName,
-    };
-    const res = await updateWormhole(mutationData);
-
-    if (res.data && !res.errors) {
-      showSuccessNotification("Wormhole updated.");
-      onClose();
-    }
-  };
-
-  const onSubmit = existing ? onSubmitEdit : onSubmitNew;
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(submitWormholeForm)}>
       <FormGroupRow>
         <ControlledSelect
           name="whType"
