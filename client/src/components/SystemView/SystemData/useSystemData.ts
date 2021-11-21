@@ -21,6 +21,15 @@ export default () => {
   });
 
   const addSignature = async (newSig: any) => {
+    const existingWh = state.wormholes
+      .attach(Downgraded)
+      .get()
+      .find((wh) => wh.eveId === newSig.eveId);
+
+    if (newSig.eveId && existingWh) {
+      await deleteWormhole(existingWh.id);
+    }
+
     const input = { ...newSig, systemId: state.id.value };
     return addSigMutation({ variables: { input } });
   };
@@ -54,8 +63,18 @@ export default () => {
     },
   });
 
-  const addWormhole = async (newWormhole: any): Promise<FetchResult> =>
-    addWhMutation({ variables: { input: newWormhole } });
+  const addWormhole = async (newWormhole: any): Promise<FetchResult> => {
+    const existingSig = state.signatures
+      .attach(Downgraded)
+      .get()
+      .find((sig) => sig.eveId === newWormhole.eveId);
+
+    if (newWormhole.eveId && existingSig) {
+      await deleteSignature(existingSig.id);
+    }
+
+    return addWhMutation({ variables: { input: newWormhole } });
+  };
 
   const [updateWhMutation] = useMutation(EDIT_WORMHOLE, {
     onCompleted: (data) => {
