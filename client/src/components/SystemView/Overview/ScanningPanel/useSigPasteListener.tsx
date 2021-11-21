@@ -19,7 +19,6 @@ const useSigPasteListener = () => {
     updateWormhole,
     name: systemName,
   } = useSystemData();
-  const allSigs = signatures.concat(wormholes);
 
   const findSigType = (typeString: string) => {
     if (typeString === "Data Site") {
@@ -37,7 +36,7 @@ const useSigPasteListener = () => {
   const getFormattedPasteData = (pasteEvent: ClipboardEvent): Array<PasteData> => {
     const input = pasteEvent.clipboardData?.getData("text") || "";
     const rows = input.split(/\r?\n/).filter((row) => row.length);
-    const splitRows = rows.map((row) => row.split(/\t+/));
+    const splitRows = rows.map((row) => row.split(/\t/));
 
     const formattedData = splitRows.map((row) => {
       const eveId = row[0];
@@ -45,7 +44,7 @@ const useSigPasteListener = () => {
         throw new Error("Bad paste data detected. No changes were made.");
       }
 
-      const type = findSigType(row[1]);
+      const type = findSigType(row[2]);
       return { eveId, type };
     });
 
@@ -54,20 +53,32 @@ const useSigPasteListener = () => {
 
   const handlePastedSig = async (data: PasteData) => {
     const { type, eveId } = data;
-    const existingSigType = allSigs.find((sig) => sig.eveId === eveId)?.type || null;
+    const existingSig = signatures.find((sig) => sig.eveId === eveId);
 
-    if (!existingSigType) {
+    if (!existingSig) {
       const input = { type: type?.toUpperCase(), eveId, name: "" };
-      const whFields = {
+      return addSignature(input);
+    }
+
+    return Promise.resolve();
+  };
+
+  const handlePastedWh = async (data: PasteData) => {
+    const { type, eveId } = data;
+    const existingWh = wormholes.find((sig) => sig.eveId === eveId);
+
+    if (!existingWh) {
+      const input = {
+        eveId,
+        name: "",
+        type: "",
         destinationName: null,
         eol: false,
         massStatus: "STABLE",
         reverseType: "",
         systemName,
       };
-      return type === SigTypes.WORMHOLE
-        ? addWormhole({ ...input, ...whFields })
-        : addSignature(input);
+      return addWormhole(input);
     }
 
     return Promise.resolve();
@@ -83,7 +94,11 @@ const useSigPasteListener = () => {
       return;
     }
 
-    await Promise.all(data.map((sig) => handlePastedSig(sig)));
+    await Promise.all(
+      data.map((sig) =>
+        sig.type === SigTypes.WORMHOLE ? handlePastedWh(sig) : handlePastedSig(sig)
+      )
+    );
   };
 
   return {
