@@ -3,6 +3,7 @@ import { yellow } from "@mui/material/colors";
 import axios from "axios";
 import { endpoints } from "../../config";
 import MockUserSelect from "./MockUserSelect";
+import PollSettingSwitch from "./PollSettingSwitch";
 
 type DevToolsDrawerProps = {
   open: boolean;
@@ -36,6 +37,7 @@ export default ({ open, onClose }: DevToolsDrawerProps) => {
         },
       }}
     >
+      <PollSettingSwitch />
       <Button variant="contained" color="primary" onClick={reset}>
         Reset Database
       </Button>

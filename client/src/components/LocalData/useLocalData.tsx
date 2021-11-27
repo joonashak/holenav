@@ -2,12 +2,14 @@ import { createState, useState } from "@hookstate/core";
 import tokenStore from "./stores/tokenStore";
 import mockUserStore from "./stores/mockUserStore";
 import activeCharacterStore from "./stores/activeCharacterStore";
+import pollSettingStore from "./stores/pollSettingStore";
 
 const localState = createState(async () => {
   const activeCharacter = await activeCharacterStore.getActiveCharacter();
   const authToken = await tokenStore.getToken();
   const mockUser = await mockUserStore.getMockUser();
-  return { activeCharacter, authToken, mockUser };
+  const pollSetting = await pollSettingStore.getPollSetting();
+  return { activeCharacter, authToken, mockUser, pollSetting };
 });
 
 const useLocalData = () => {
@@ -34,6 +36,11 @@ const useLocalData = () => {
     state.merge({ mockUser });
   };
 
+  const setPollSetting = async (pollSetting: boolean) => {
+    await pollSettingStore.setPollSetting(pollSetting);
+    state.merge({ pollSetting });
+  };
+
   return {
     get loadingLocalState() {
       return state.promised;
@@ -47,10 +54,14 @@ const useLocalData = () => {
     get mockUser() {
       return state.mockUser.get();
     },
+    get pollSetting() {
+      return state.pollSetting.get();
+    },
     setActiveCharacter,
     setDefaultActiveCharacter,
     setAuthToken,
     setMockUser,
+    setPollSetting,
   };
 };
 
