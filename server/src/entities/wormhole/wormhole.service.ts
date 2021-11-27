@@ -16,8 +16,6 @@ export class WormholeService {
 
     const res = await this.whModel.aggregate([
       { $match: { systemName: rootSystemName, folder: Types.ObjectId(folder._id) } },
-      // Children are flattened so no need to do the recursive search for more than one wh.
-      { $limit: 1 },
       {
         $graphLookup: {
           from: "wormholes",
@@ -40,15 +38,31 @@ export class WormholeService {
     }
 
     console.time("Construct map tree");
-    const { children } = res[0];
-    const rootChildren = this.findChildren(children, rootSystemName);
-
+    const allChildren = this.findAllChildren(res);
+    const children = this.findChildren(allChildren, rootSystemName);
     console.timeEnd("Construct map tree");
 
     return {
       rootSystemName,
-      children: rootChildren,
+      children,
     };
+  }
+
+  /**
+   * Find all children in the graphLookup result.
+   * Accounts for the shape of the Mongo result. Specifically, it includes all child nodes in
+   * every top-level result object. Thus we want to get the children of only one top-level result,
+   * and only the top-level results, if none of them have children.
+   * @param aggregateResult Result from mongo's `$graphLookup` operation.
+   */
+  private findAllChildren(aggregateResult: any[]): Wormhole[] {
+    const deepChildren = aggregateResult.flatMap((res) => res.children);
+
+    if (!deepChildren.length) {
+      return aggregateResult;
+    }
+
+    return aggregateResult[0].children;
   }
 
   private findChildren(
