@@ -1,10 +1,8 @@
 import { Typography, Box, styled } from "@mui/material";
 import { CustomNodeElementProps } from "react-d3-tree/lib/types/common";
 
-// FIXME: Don't hack styles...
-// eslint-disable-next-line
-const Hack = (props: any) => <rect {...props} />;
-const MapNodeRect = styled(Hack)(({ theme }) => ({
+const Rect = (props: any) => <rect {...props} />;
+const MapNodeRect = styled(Rect)(({ theme }) => ({
   "&&": {
     stroke: theme.palette.primary.light,
     strokeWidth: 1,

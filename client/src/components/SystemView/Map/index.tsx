@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import Tree from "react-d3-tree";
-import { CustomNodeElementProps } from "react-d3-tree/lib/types/common";
+import { CustomNodeElementProps, RawNodeDatum } from "react-d3-tree/lib/types/common";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import useMapData from "./MapData/useMapData";
 import MapNode from "./MapNode";
@@ -8,17 +8,27 @@ import MapNode from "./MapNode";
 export default () => {
   const { width } = useWindowDimensions();
   const { connectionTree } = useMapData();
-  const { rootSystemName, children } = connectionTree;
+  const { rootSystemName, children: rootChildren } = connectionTree;
 
   if (!rootSystemName) {
     return null;
   }
 
-  const data = { name: rootSystemName, children };
+  const compareMapNodes = (a: RawNodeDatum, b: RawNodeDatum) => a.name.localeCompare(b.name);
+
+  const orderChildren = (children: RawNodeDatum[]): any[] =>
+    children
+      .map(({ children: subChildren, ...rest }) => ({
+        ...rest,
+        children: orderChildren(subChildren || []),
+      }))
+      .sort(compareMapNodes);
+
+  const data = { name: rootSystemName, children: orderChildren(rootChildren) };
 
   const x = width / 2 + 240;
 
-  // FIXME: Hack to enable hooks in MapNode...
+  // Hack to enable hooks in MapNode...
   const Node = (props: CustomNodeElementProps) => <MapNode {...props} />;
 
   return (
