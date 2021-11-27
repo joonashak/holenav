@@ -14,3 +14,5 @@ export const endpoints = {
     mockUsers: `${cmsUrl}/dev/mockUsers`,
   },
 };
+
+export const pollIntervalSec = 5;

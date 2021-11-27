@@ -3,7 +3,6 @@ import useLocalData from "../../components/LocalData/useLocalData";
 
 const PollSettingSwitch = () => {
   const { pollSetting, setPollSetting } = useLocalData();
-  console.log(pollSetting);
 
   const onChange = () => {
     setPollSetting(!pollSetting);
