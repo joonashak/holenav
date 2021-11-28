@@ -155,7 +155,7 @@ export class WormholeService {
     const { systemName, destinationName, folder, eol, massStatus } = wormhole;
 
     const reverse = await this.whModel.create({
-      name: "rev from " + systemName,
+      name: "",
       systemName: destinationName,
       destinationName: systemName,
       reverse: wormhole,
