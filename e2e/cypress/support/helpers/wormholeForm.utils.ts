@@ -42,7 +42,10 @@ export const testWormholeProperties = (
     cy.visit(url);
   }
 
-  cy.get("#scanning-content").contains(name);
+  if (name) {
+    cy.get("#scanning-content").contains(name);
+  }
+
   cy.cs(`edit-sig-${name}`).click();
 
   Object.keys(props).forEach((key) => wormholePropertyTests[key](props[key]));

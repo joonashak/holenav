@@ -71,8 +71,6 @@ describe("Wormholes", () => {
     cy.contains("Wormhole deleted.");
     cy.visit(testSystemUrl);
     cy.cs("sig-list-body").should("not.contain.text", wh.name);
-    cy.visit("/system/Juunigaishi");
-    cy.cs("sig-list-body").should("not.contain.text", "rev from jita");
   });
 
   it("Connection is correctly mapped", () => {
@@ -87,10 +85,7 @@ describe("Wormholes", () => {
 
     submitWormholeForm();
     testWormholeProperties(wh);
-    testWormholeProperties(
-      { name: "rev from Jita", destinationName: "Jita", type: "K162" },
-      "/system/Hakonen"
-    );
+    testWormholeProperties({ name: "", destinationName: "Jita", type: "K162" }, "/system/Hakonen");
   });
 
   it("Connection is correctly updated", () => {
@@ -119,11 +114,13 @@ describe("Wormholes", () => {
     testWormholeProperties({ ...wh, ...update, reverseType: "K162" });
 
     cy.visit("/system/Dodixie");
-    cy.get("#scanning-content").should("not.contain.text", "rev from Jita");
+    cy.get("#scanning-content").should("not.contain.text", "Wormhole");
+    cy.get("#scanning-content").should("not.contain.text", "K162");
+    cy.get("#scanning-content").should("not.contain.text", "V753");
 
     testWormholeProperties(
       {
-        name: "rev from Jita",
+        name: "",
         destinationName: "Jita",
         type: "K162",
         reverseType: "V753",
