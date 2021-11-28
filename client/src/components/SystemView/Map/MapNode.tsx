@@ -1,5 +1,6 @@
-import { Typography, Box, styled } from "@mui/material";
+import { Box, styled } from "@mui/material";
 import { CustomNodeElementProps } from "react-d3-tree/lib/types/common";
+import AppLink from "../../common/AppLink";
 
 const Rect = (props: any) => <rect {...props} />;
 const MapNodeRect = styled(Rect)(({ theme }) => ({
@@ -27,7 +28,7 @@ export default ({ nodeDatum }: CustomNodeElementProps) => {
             color: "white",
           }}
         >
-          <Typography>{name}</Typography>
+          <AppLink to={`/system/${name}`}>{name}</AppLink>
         </Box>
       </foreignObject>
     </>
