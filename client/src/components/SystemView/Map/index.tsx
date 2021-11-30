@@ -3,7 +3,7 @@ import Tree from "react-d3-tree";
 import { CustomNodeElementProps, RawNodeDatum } from "react-d3-tree/lib/types/common";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import useMapData from "./MapData/useMapData";
-import MapNode from "./MapNode";
+import MapNode, { MapNodeProps } from "./MapNode";
 
 export default () => {
   const { width } = useWindowDimensions();
@@ -29,7 +29,7 @@ export default () => {
   const x = width / 2 + 240;
 
   // Hack to enable hooks in MapNode...
-  const Node = (props: CustomNodeElementProps) => <MapNode {...props} />;
+  const Node = (props: any) => <MapNode {...props} />;
 
   return (
     <Box

@@ -1,4 +1,4 @@
-import { RawNodeDatum } from "react-d3-tree/lib/types/common";
+import { RawNodeDatum, TreeNodeDatum } from "react-d3-tree/lib/types/common";
 
 export type MapState = {
   connectionTree: ConnectionTree;
@@ -7,4 +7,8 @@ export type MapState = {
 export type ConnectionTree = {
   rootSystemName: string | null;
   children: RawNodeDatum[];
+};
+
+export type MapNodeDatum = TreeNodeDatum & {
+  type: string;
 };

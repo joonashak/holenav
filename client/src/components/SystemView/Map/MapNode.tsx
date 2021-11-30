@@ -1,6 +1,7 @@
-import { Box, styled } from "@mui/material";
+import { Box, styled, Typography } from "@mui/material";
 import { CustomNodeElementProps } from "react-d3-tree/lib/types/common";
 import AppLink from "../../common/AppLink";
+import { MapNodeDatum } from "./MapData/types";
 
 const Rect = (props: any) => <rect {...props} />;
 const MapNodeRect = styled(Rect)(({ theme }) => ({
@@ -11,8 +12,12 @@ const MapNodeRect = styled(Rect)(({ theme }) => ({
   },
 }));
 
-export default ({ nodeDatum }: CustomNodeElementProps) => {
-  const { name } = nodeDatum;
+export type MapNodeProps = CustomNodeElementProps & {
+  nodeDatum: MapNodeDatum;
+};
+
+const MapNode = ({ nodeDatum }: MapNodeProps) => {
+  const { name, type } = nodeDatum;
 
   return (
     <>
@@ -23,14 +28,18 @@ export default ({ nodeDatum }: CustomNodeElementProps) => {
             width: "100%",
             height: "100%",
             display: "flex",
+            flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
             color: "white",
           }}
         >
           <AppLink to={`/system/${name}`}>{name}</AppLink>
+          <Typography variant="caption">{type}</Typography>
         </Box>
       </foreignObject>
     </>
   );
 };
+
+export default MapNode;
