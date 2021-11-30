@@ -10,14 +10,8 @@ type PasteData = {
 
 const useSigPasteListener = () => {
   const { showWarningNotification } = useNotification();
-  const {
-    signatures,
-    wormholes,
-    addSignature,
-    addWormhole,
-    updateSignature,
-    name: systemName,
-  } = useSystemData();
+  const systemData = useSystemData();
+  const { addSignature, addWormhole, updateSignature, name: systemName } = systemData;
 
   const findSigType = (typeString: string) => {
     if (typeString === "Data Site") {
@@ -57,7 +51,7 @@ const useSigPasteListener = () => {
 
   const handlePastedSig = async (data: PasteData) => {
     const { type, eveId, name } = data;
-    const existingSig = signatures.find((sig) => sig.eveId === eveId);
+    const existingSig = systemData.signatures.find((sig) => sig.eveId === eveId);
 
     if (!existingSig) {
       const input = { type: type?.toUpperCase(), eveId, name };
@@ -78,7 +72,7 @@ const useSigPasteListener = () => {
 
   const handlePastedWh = async (data: PasteData) => {
     const { eveId } = data;
-    const existingWh = wormholes.find((sig) => sig.eveId === eveId);
+    const existingWh = systemData.wormholes.find((sig) => sig.eveId === eveId);
 
     if (!existingWh) {
       const input = {
