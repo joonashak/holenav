@@ -1,4 +1,5 @@
 import { Field, ObjectType } from "@nestjs/graphql";
+import MassStatus from "../massStatus.enum";
 
 @ObjectType()
 export class ConnectionTree {
@@ -13,6 +14,27 @@ export class ConnectionTree {
 export class ConnectionTreeNode {
   @Field()
   name: string;
+
+  @Field()
+  systemName: string;
+
+  @Field({ nullable: true })
+  destinationName: string | null;
+
+  @Field()
+  type: string;
+
+  // TODO: Reverse type needed for hole mass display.
+  /*
+  @Field()
+  reverseType: string;
+  */
+
+  @Field()
+  eol: boolean;
+
+  @Field((type) => MassStatus)
+  massStatus: MassStatus;
 
   @Field((type) => [ConnectionTreeNode])
   children: ConnectionTreeNode[];

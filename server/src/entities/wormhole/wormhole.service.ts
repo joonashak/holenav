@@ -67,15 +67,21 @@ export class WormholeService {
 
   private findChildren(
     allChildren: Wormhole[],
-    systemName: string,
+    system: string,
     parentName = "",
   ): ConnectionTreeNode[] {
     const rootChildren = allChildren
-      .filter((child) => child.systemName === systemName && child.destinationName !== parentName)
-      .map(({ name, destinationName, systemName }) => {
+      .filter((child) => child.systemName === system && child.destinationName !== parentName)
+      .map((wormhole) => {
+        const { name, destinationName, systemName, type, eol, massStatus } = wormhole;
         return {
           name,
-          children: this.findChildren(allChildren, destinationName, systemName),
+          destinationName,
+          systemName,
+          type,
+          eol,
+          massStatus,
+          children: this.findChildren(allChildren, destinationName, system),
         };
       });
 
