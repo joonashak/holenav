@@ -5,6 +5,7 @@ const NODE_FIELDS = gql`
     name
     type
     eol
+    massStatus
   }
 `;
 

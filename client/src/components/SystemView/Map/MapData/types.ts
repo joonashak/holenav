@@ -1,4 +1,5 @@
 import { RawNodeDatum, TreeLinkDatum, TreeNodeDatum } from "react-d3-tree/lib/types/common";
+import MassStatus from "../../../../enum/MassStatus";
 
 export type MapState = {
   connectionTree: ConnectionTree;
@@ -12,6 +13,7 @@ export type ConnectionTree = {
 export type MapNodeDatum = TreeNodeDatum & {
   type?: string;
   eol?: boolean;
+  massStatus?: MassStatus;
 };
 
 export type MapLinkDatum = TreeLinkDatum & {

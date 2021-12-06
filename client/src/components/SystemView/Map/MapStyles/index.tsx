@@ -22,6 +22,12 @@ const MapStyles = () => (
       [specificClassName(MapLinkClasses.EOL)]: {
         strokeDasharray: "10,10",
       },
+      [specificClassName(MapLinkClasses.DESTAB)]: {
+        stroke: theme.palette.warning.light,
+      },
+      [specificClassName(MapLinkClasses.CRIT)]: {
+        stroke: theme.palette.error.light,
+      },
     })}
   />
 );
