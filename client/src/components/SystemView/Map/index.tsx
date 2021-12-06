@@ -2,10 +2,10 @@ import { Box } from "@mui/material";
 import Tree from "react-d3-tree";
 import { RawNodeDatum } from "react-d3-tree/lib/types/common";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
-import { MapLinkDatum } from "./MapData/types";
 import useMapData from "./MapData/useMapData";
 import MapNode from "./MapNode";
 import MapStyles from "./MapStyles";
+import pathClassFunc from "./MapStyles/pathClassFunc";
 
 // Avoid rerendering map style definitions.
 const inputMapStyles = <MapStyles />;
@@ -53,13 +53,7 @@ export default () => {
         orientation="vertical"
         renderCustomNodeElement={Node}
         translate={{ x, y: 100 }}
-        pathClassFunc={(node: MapLinkDatum) => {
-          const classes = ["custom-link"];
-          if (node.target.data.eol) {
-            classes.push("path-eol");
-          }
-          return classes.join(" ");
-        }}
+        pathClassFunc={pathClassFunc}
       />
     </Box>
   );
