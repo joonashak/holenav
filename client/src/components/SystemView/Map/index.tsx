@@ -1,9 +1,9 @@
-import { Box } from "@mui/material";
+import { Box, GlobalStyles } from "@mui/material";
 import Tree from "react-d3-tree";
-import { CustomNodeElementProps, RawNodeDatum } from "react-d3-tree/lib/types/common";
+import { RawNodeDatum } from "react-d3-tree/lib/types/common";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import useMapData from "./MapData/useMapData";
-import MapNode, { MapNodeProps } from "./MapNode";
+import MapNode from "./MapNode";
 
 export default () => {
   const { width } = useWindowDimensions();
@@ -42,11 +42,19 @@ export default () => {
         height: "100vh",
       }}
     >
+      <GlobalStyles
+        styles={(theme: any) => ({
+          ".custom-link.custom-link": {
+            stroke: theme.palette.secondary.light,
+          },
+        })}
+      />
       <Tree
         data={data}
         orientation="vertical"
         renderCustomNodeElement={Node}
         translate={{ x, y: 100 }}
+        pathClassFunc={() => "custom-link"}
       />
     </Box>
   );
