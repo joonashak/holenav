@@ -1,18 +1,25 @@
 import { GlobalStyles } from "@mui/material";
+import MapLinkClasses from "./MapLinkClasses.enum";
 
 /**
- * Map CSS styles.
+ * Create CSS class specifier with high specificity to easily override react-d3-tree default
+ * styles.
+ */
+const specificClassName = (className: string) => `.${className}.${className}`;
+
+/**
+ * Map tree CSS styles.
  * This component should be hoisted to a static constant to avoid unnecessary rerendering.
  * See: https://mui.com/customization/how-to-customize/#5-global-css-override
  */
 const MapStyles = () => (
   <GlobalStyles
     styles={(theme: any) => ({
-      ".custom-link.custom-link": {
+      [specificClassName(MapLinkClasses.DEFAULT)]: {
         stroke: theme.palette.secondary.light,
         strokeWidth: 10,
       },
-      ".path-eol": {
+      [specificClassName(MapLinkClasses.EOL)]: {
         strokeDasharray: "10,10",
       },
     })}
