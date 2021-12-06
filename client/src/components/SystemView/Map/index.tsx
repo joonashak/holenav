@@ -52,7 +52,13 @@ export default () => {
         orientation="vertical"
         renderCustomNodeElement={Node}
         translate={{ x, y: 100 }}
-        pathClassFunc={() => "custom-link"}
+        pathClassFunc={(node: any) => {
+          const classes = ["custom-link"];
+          if (node.target.data.eol) {
+            classes.push("path-eol");
+          }
+          return classes.join(" ");
+        }}
       />
     </Box>
   );

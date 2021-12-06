@@ -11,6 +11,8 @@ const MapStyles = () => (
       ".custom-link.custom-link": {
         stroke: theme.palette.secondary.light,
         strokeWidth: 10,
+      },
+      ".path-eol": {
         strokeDasharray: "10,10",
       },
     })}
