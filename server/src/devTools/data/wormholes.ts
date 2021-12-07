@@ -90,7 +90,7 @@ export default [
   {
     name: "FLA DEF",
     eveId: "DEM-002",
-    destinationName: "Orfold",
+    destinationName: "Orfrold",
     systemName: "J104809",
     type: "C140",
     massStatus: MassStatus.DESTAB,
