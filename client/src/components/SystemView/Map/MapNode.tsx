@@ -26,7 +26,7 @@ const MapNode = ({ nodeDatum }: MapNodeProps) => {
 
   const ConnectionName = () =>
     destinationName ? (
-      <AppLink to={`/system/${destinationName}`}>{name}</AppLink>
+      <AppLink to={`/system/${destinationName}`}>{name || destinationName}</AppLink>
     ) : (
       <Typography>{name}</Typography>
     );
