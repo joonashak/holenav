@@ -1,6 +1,7 @@
 import { Box, styled, Typography } from "@mui/material";
 import { CustomNodeElementProps } from "react-d3-tree/lib/types/common";
 import AppLink from "../../common/AppLink";
+import useUserData from "../../UserData/useUserData";
 import { MapNodeDatum } from "./MapData/types";
 
 const Rect = (props: any) => <rect {...props} />;
@@ -17,7 +18,18 @@ export type MapNodeProps = CustomNodeElementProps & {
 };
 
 const MapNode = ({ nodeDatum }: MapNodeProps) => {
-  const { name, type } = nodeDatum;
+  const { name, type, destinationName } = nodeDatum;
+  const { settings } = useUserData();
+  const { selectedMap } = settings;
+
+  const RootNodeName = () => <AppLink to={`/system/${name}`}>{selectedMap.name}</AppLink>;
+
+  const ConnectionName = () =>
+    destinationName ? (
+      <AppLink to={`/system/${destinationName}`}>{name}</AppLink>
+    ) : (
+      <Typography>{name}</Typography>
+    );
 
   return (
     <>
@@ -34,7 +46,7 @@ const MapNode = ({ nodeDatum }: MapNodeProps) => {
             color: "white",
           }}
         >
-          <AppLink to={`/system/${name}`}>{name}</AppLink>
+          {nodeDatum.__rd3t.depth ? <ConnectionName /> : <RootNodeName />}
           <Typography variant="caption">{type}</Typography>
         </Box>
       </foreignObject>

@@ -15,6 +15,7 @@ export type MapNodeDatum = TreeNodeDatum & {
   reverseType?: string;
   eol?: boolean;
   massStatus?: MassStatus;
+  destinationName?: string;
 };
 
 export type MapLinkDatum = TreeLinkDatum & {

@@ -38,6 +38,7 @@
     "no-unused-vars": "off",
     "@typescript-eslint/no-unused-vars": ["warn"],
     "import/prefer-default-export": 0,
-    "react/jsx-props-no-spreading": 0
+    "react/jsx-props-no-spreading": 0,
+    "no-underscore-dangle": ["error", { "allow": ["__rd3t"] }]
   }
 }
