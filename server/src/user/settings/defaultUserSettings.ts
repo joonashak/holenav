@@ -4,8 +4,8 @@ const defaultUserSettings: UserSettings = {
   selectedMap: null,
   maps: [
     {
-      name: "Default Map",
-      rootSystemName: "Jita",
+      name: "Demo Chain",
+      rootSystemName: "J104809",
     },
     {
       name: "Another Map",

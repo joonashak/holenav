@@ -14,7 +14,7 @@ export default () => {
 
   const LoginOrApp = () =>
     loggedIn ? (
-      <GoToButton href="/system/Jita" sx={buttonSx}>
+      <GoToButton href="/system/J104809" sx={buttonSx}>
         Go To App
       </GoToButton>
     ) : (

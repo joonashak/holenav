@@ -16,12 +16,12 @@ export default async (
   for (const wh of whMockData) {
     await whService.createWormhole(
       {
-        ...wh,
         eveId: "",
         eol: false,
         massStatus: MassStatus.STABLE,
         type: "K162",
         reverseType: "",
+        ...wh,
       },
       folder,
     );

@@ -26,5 +26,5 @@ export default ({ match }: GetTokenProps) => {
     return null;
   }
 
-  return <Redirect to="/system/Jita" />;
+  return <Redirect to="/system/J104809" />;
 };
