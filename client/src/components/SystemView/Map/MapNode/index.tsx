@@ -6,6 +6,7 @@ import AppLink from "../../../common/AppLink";
 import useUserData from "../../../UserData/useUserData";
 import { MapNodeDatum } from "../MapData/types";
 import MapNodeRect from "./MapNodeRect";
+import WhTypeLabel from "./WhTypeLabel";
 
 export type MapNodeProps = CustomNodeElementProps & {
   nodeDatum: MapNodeDatum;
@@ -59,7 +60,7 @@ const MapNode = ({ nodeDatum }: MapNodeProps) => {
           }}
         >
           {isRootNode ? <RootNodeName /> : <ConnectionName />}
-          <Typography variant="caption">{type}</Typography>
+          <WhTypeLabel type={type} />
         </Box>
       </foreignObject>
     </>
