@@ -3,9 +3,12 @@ import { useState } from "react";
 
 type WhTypeLabelProps = {
   type: string | undefined;
+  wormholeId: string | undefined;
 };
 
-const WhTypeLabel = ({ type }: WhTypeLabelProps) => {
+// eslint-disable-next-line
+const WhTypeLabel = ({ type, wormholeId }: WhTypeLabelProps) => {
+  // eslint-disable-next-line
   const [modalOpen, setModalOpen] = useState(false);
 
   return <Typography variant="caption">{type}</Typography>;

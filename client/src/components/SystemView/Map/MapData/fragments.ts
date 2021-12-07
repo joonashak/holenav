@@ -3,6 +3,7 @@ import { gql } from "@apollo/client";
 const NODE_FIELDS = gql`
   fragment NodeFields on ConnectionTreeNode {
     name
+    wormholeId
     destinationName
     type
     reverseType

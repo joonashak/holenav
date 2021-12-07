@@ -16,6 +16,7 @@ export type MapNodeDatum = TreeNodeDatum & {
   eol?: boolean;
   massStatus?: MassStatus;
   destinationName?: string;
+  wormholeId?: string;
 };
 
 export type MapLinkDatum = TreeLinkDatum & {

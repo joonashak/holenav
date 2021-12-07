@@ -13,6 +13,9 @@ export class ConnectionTree {
 @ObjectType()
 export class ConnectionTreeNode {
   @Field()
+  wormholeId: string;
+
+  @Field()
   name: string;
 
   @Field()
