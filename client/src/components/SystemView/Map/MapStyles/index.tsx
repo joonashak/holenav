@@ -17,7 +17,6 @@ const MapStyles = () => (
     styles={(theme: any) => ({
       [specificClassName(MapLinkClasses.DEFAULT)]: {
         stroke: theme.palette.secondary.light,
-        strokeWidth: 10,
       },
       [specificClassName(MapLinkClasses.EOL)]: {
         strokeDasharray: "10,10",
@@ -27,6 +26,21 @@ const MapStyles = () => (
       },
       [specificClassName(MapLinkClasses.CRIT)]: {
         stroke: theme.palette.error.light,
+      },
+      [specificClassName(MapLinkClasses.XLARGE)]: {
+        strokeWidth: 16,
+      },
+      [specificClassName(MapLinkClasses.LARGE)]: {
+        strokeWidth: 10,
+      },
+      [specificClassName(MapLinkClasses.MEDIUM)]: {
+        strokeWidth: 4,
+      },
+      [specificClassName(MapLinkClasses.SMALL)]: {
+        strokeWidth: 1,
+      },
+      [specificClassName(MapLinkClasses.UNKNOWN_SIZE)]: {
+        strokeWidth: 1,
       },
     })}
   />

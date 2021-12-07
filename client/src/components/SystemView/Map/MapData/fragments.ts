@@ -4,6 +4,7 @@ const NODE_FIELDS = gql`
   fragment NodeFields on ConnectionTreeNode {
     name
     type
+    reverseType
     eol
     massStatus
   }

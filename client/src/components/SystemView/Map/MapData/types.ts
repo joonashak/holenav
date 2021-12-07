@@ -12,6 +12,7 @@ export type ConnectionTree = {
 
 export type MapNodeDatum = TreeNodeDatum & {
   type?: string;
+  reverseType?: string;
   eol?: boolean;
   massStatus?: MassStatus;
 };
