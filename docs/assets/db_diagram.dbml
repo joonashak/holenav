@@ -68,6 +68,7 @@ Table wormholes {
   systemName string
   destinationName string
   reverse wormholes [ref: - wormholes._id]
+  reverseType string
 }
 
 enum Roles {

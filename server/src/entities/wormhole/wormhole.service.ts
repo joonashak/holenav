@@ -73,12 +73,13 @@ export class WormholeService {
     const rootChildren = allChildren
       .filter((child) => child.systemName === system && child.destinationName !== parentName)
       .map((wormhole) => {
-        const { name, destinationName, systemName, type, eol, massStatus } = wormhole;
+        const { name, destinationName, systemName, type, reverseType, eol, massStatus } = wormhole;
         return {
           name,
           destinationName,
           systemName,
           type,
+          reverseType,
           eol,
           massStatus,
           children: this.findChildren(allChildren, destinationName, system),
@@ -94,7 +95,7 @@ export class WormholeService {
 
   async createWormhole(data: AddWormholeInput, folder: Folder): Promise<Wormhole> {
     const [type, reverseType] = this.getValidWormholeTypes(data.type, data.reverseType);
-    let wormhole = await this.whModel.create({ ...data, type, folder });
+    let wormhole = await this.whModel.create({ ...data, type, reverseType, folder });
     const { destinationName } = wormhole;
 
     if (destinationName) {
@@ -121,7 +122,7 @@ export class WormholeService {
 
     const updatedWh = await this.whModel.findOneAndUpdate(
       { id },
-      { ...update, type: validType },
+      { ...update, type: validType, reverseType: validReverseType },
       { returnDocument: "after" },
     );
 
@@ -158,7 +159,7 @@ export class WormholeService {
     wormhole: WormholeDocument,
     reverseType: string,
   ): Promise<WormholeDocument> {
-    const { systemName, destinationName, folder, eol, massStatus } = wormhole;
+    const { systemName, destinationName, folder, eol, massStatus, type } = wormhole;
 
     const reverse = await this.whModel.create({
       name: "",
@@ -166,6 +167,7 @@ export class WormholeService {
       destinationName: systemName,
       reverse: wormhole,
       type: reverseType,
+      reverseType: type,
       eol,
       massStatus,
       folder,
@@ -180,11 +182,12 @@ export class WormholeService {
     wormhole: WormholeDocument,
     reverseType: string,
   ): Promise<void> {
-    const { destinationName, eol, massStatus, reverse } = wormhole;
+    const { destinationName, eol, massStatus, reverse, type } = wormhole;
 
     await this.whModel.findByIdAndUpdate(reverse, {
       systemName: destinationName,
       type: reverseType,
+      reverseType: type,
       eol,
       massStatus,
     });

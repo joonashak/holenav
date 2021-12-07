@@ -24,11 +24,8 @@ export class ConnectionTreeNode {
   @Field()
   type: string;
 
-  // TODO: Reverse type needed for hole mass display.
-  /*
   @Field()
   reverseType: string;
-  */
 
   @Field()
   eol: boolean;

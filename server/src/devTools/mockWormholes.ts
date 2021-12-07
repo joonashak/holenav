@@ -19,7 +19,7 @@ export default async (
         eveId: "",
         eol: false,
         massStatus: MassStatus.STABLE,
-        type: "K162",
+        type: "",
         reverseType: "",
         ...wh,
       },

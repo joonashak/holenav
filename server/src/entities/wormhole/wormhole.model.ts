@@ -51,6 +51,10 @@ export class Wormhole {
   @Field((type) => Wormhole, { nullable: true })
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: "Wormhole", nullable: true })
   reverse?: Wormhole;
+
+  @Field()
+  @Prop()
+  reverseType: string;
 }
 
 export const WormholeSchema = SchemaFactory.createForClass(Wormhole);
