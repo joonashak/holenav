@@ -24,6 +24,7 @@ export class WormholeService {
           connectToField: "systemName",
           as: "children",
           depthField: "n",
+          restrictSearchWithMatch: { folder: Types.ObjectId(folder._id) },
         },
       },
     ]);
