@@ -1,6 +1,8 @@
 import { gql } from "@apollo/client";
+import { WORMHOLE_FIELDS } from "../../SystemData/fragments";
 
 const NODE_FIELDS = gql`
+  ${WORMHOLE_FIELDS}
   fragment NodeFields on ConnectionTreeNode {
     name
     wormholeId
@@ -9,6 +11,9 @@ const NODE_FIELDS = gql`
     reverseType
     eol
     massStatus
+    wormhole {
+      ...WormholeFields
+    }
   }
 `;
 

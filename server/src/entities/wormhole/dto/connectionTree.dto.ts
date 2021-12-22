@@ -1,5 +1,6 @@
 import { Field, ObjectType } from "@nestjs/graphql";
 import MassStatus from "../massStatus.enum";
+import { Wormhole } from "../wormhole.model";
 
 @ObjectType()
 export class ConnectionTree {
@@ -38,4 +39,7 @@ export class ConnectionTreeNode {
 
   @Field((type) => [ConnectionTreeNode])
   children: ConnectionTreeNode[];
+
+  @Field((type) => Wormhole)
+  wormhole: Wormhole;
 }

@@ -85,6 +85,7 @@ export class WormholeService {
           eol,
           massStatus,
           children: this.findChildren(allChildren, destinationName, system),
+          wormhole,
         };
       });
 

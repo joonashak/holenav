@@ -13,7 +13,7 @@ export type MapNodeProps = CustomNodeElementProps & {
 };
 
 const MapNode = ({ nodeDatum }: MapNodeProps) => {
-  const { name, type, destinationName } = nodeDatum;
+  const { name, type, destinationName, wormhole } = nodeDatum;
   const { settings } = useUserData();
   const { selectedMap } = settings;
   const isRootNode = nodeDatum.__rd3t.depth === 0;
@@ -60,7 +60,7 @@ const MapNode = ({ nodeDatum }: MapNodeProps) => {
           }}
         >
           {isRootNode ? <RootNodeName /> : <ConnectionName />}
-          <WhTypeLabel type={type} wormholeId={nodeDatum.wormholeId} />
+          <WhTypeLabel type={type} wormhole={wormhole} />
         </Box>
       </foreignObject>
     </>
