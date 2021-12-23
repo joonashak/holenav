@@ -42,7 +42,7 @@ export default ({ open, onClose }: DevToolsDrawerProps) => {
         Reset Database
       </Button>
       <Button variant="contained" color="primary" onClick={seed}>
-        Seed Database
+        Reset &amp; Seed Database
       </Button>
       <MockUserSelect />
     </Drawer>

@@ -24,7 +24,12 @@ export default () => {
 
   return (
     <FormControl>
-      <InputLabel id="mock-user-select-label">Mock User</InputLabel>
+      <InputLabel
+        id="mock-user-select-label"
+        sx={{ color: "primary.dark", "&:selected": { color: "red" } }}
+      >
+        Mock User
+      </InputLabel>
       <Select
         value={mockUser || nullString}
         label="Mock User"
