@@ -8,7 +8,6 @@ const NODE_FIELDS = gql`
     wormholeId
     destinationName
     type
-    reverseType
     eol
     massStatus
     wormhole {

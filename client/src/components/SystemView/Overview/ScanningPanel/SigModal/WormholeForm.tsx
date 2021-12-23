@@ -41,7 +41,7 @@ const WormholeForm = (props: WormholeFormProps) => {
       life: existing?.eol ? "eol" : "lt-24-hrs",
       mass: existing?.massStatus || MassStatus.STABLE,
       whType: existing?.type || "",
-      whTypeReverse: existing?.reverse?.type || "",
+      whReverseType: existing?.reverseType || "",
       destinationName: existing?.destinationName || null,
     },
   });
@@ -73,7 +73,7 @@ const WormholeForm = (props: WormholeFormProps) => {
       </FormGroupRow>
       <FormGroupRow>
         <ControlledSelect
-          name="whTypeReverse"
+          name="whReverseType"
           control={control}
           label="Wormhole Type (Farside)"
           options={whTypeOptions}

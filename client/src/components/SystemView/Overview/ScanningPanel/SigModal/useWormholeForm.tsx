@@ -9,12 +9,12 @@ const useWormholeForm = (props: WormholeFormProps) => {
   const { showSuccessNotification } = useNotification();
 
   const submitNew = async (formData: FieldValues) => {
-    const { whType, whTypeReverse, life, mass, ...data } = formData;
+    const { whType, whReverseType, life, mass, ...data } = formData;
     const mutationData = {
       eveId,
       systemName,
       type: whType,
-      reverseType: whTypeReverse,
+      reverseType: whReverseType,
       eol: life === "eol",
       massStatus: mass,
       ...data,
@@ -29,12 +29,12 @@ const useWormholeForm = (props: WormholeFormProps) => {
 
   const submitEdit = async (formData: FieldValues) => {
     const id = existing?.id || "";
-    const { whType, whTypeReverse, life, mass, name, destinationName } = formData;
+    const { whType, whReverseType, life, mass, name, destinationName } = formData;
     const mutationData = {
       id,
       eveId,
       type: whType,
-      reverseType: whTypeReverse,
+      reverseType: whReverseType,
       eol: life === "eol",
       massStatus: mass,
       name,

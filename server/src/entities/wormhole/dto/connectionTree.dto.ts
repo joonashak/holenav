@@ -29,9 +29,6 @@ export class ConnectionTreeNode {
   type: string;
 
   @Field()
-  reverseType: string;
-
-  @Field()
   eol: boolean;
 
   @Field((type) => MassStatus)

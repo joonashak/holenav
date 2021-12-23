@@ -18,8 +18,6 @@ export const WORMHOLE_FIELDS = gql`
     eol
     massStatus
     destinationName
-    reverse {
-      type
-    }
+    reverseType
   }
 `;

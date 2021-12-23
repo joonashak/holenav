@@ -27,7 +27,7 @@ const wormholePropertyTests = {
   eveId: (eveId: string) =>
     cy.get("[data-cy=textfield-eveId] > div > input").should("have.value", eveId),
   reverseType: (type: string) =>
-    cy.get("[data-cy=select-whTypeReverse] > div > input").should("have.value", type),
+    cy.get("[data-cy=select-whReverseType] > div > input").should("have.value", type),
   eol: (eol: string) => cy.get(`[data-cy=checkbox-life-${eol}] > input`).should("be.checked"),
   mass: (mass: string) => cy.get(`[data-cy=checkbox-mass-${mass}] > input`).should("be.checked"),
 };

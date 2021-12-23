@@ -21,6 +21,6 @@ export type Signature = {
 export type Wormhole = Signature & {
   eol: boolean;
   destinationName: string | null;
-  reverse?: Wormhole;
+  reverseType: string;
   massStatus: MassStatus;
 };
