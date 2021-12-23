@@ -5,11 +5,6 @@ const NODE_FIELDS = gql`
   ${WORMHOLE_FIELDS}
   fragment NodeFields on ConnectionTreeNode {
     name
-    wormholeId
-    destinationName
-    type
-    eol
-    massStatus
     wormhole {
       ...WormholeFields
     }

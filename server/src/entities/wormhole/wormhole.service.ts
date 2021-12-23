@@ -74,19 +74,11 @@ export class WormholeService {
     const rootChildren = allChildren
       .filter((child) => child.systemName === system && child.destinationName !== parentName)
       .map((wormhole) => {
-        const { id, name, destinationName, systemName, type, reverseType, eol, massStatus } =
-          wormhole;
+        const { name, destinationName } = wormhole;
         return {
           name,
-          wormholeId: id,
-          destinationName,
-          systemName,
-          type,
-          reverseType,
-          eol,
-          massStatus,
-          children: this.findChildren(allChildren, destinationName, system),
           wormhole,
+          children: this.findChildren(allChildren, destinationName, system),
         };
       });
 

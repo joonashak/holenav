@@ -13,8 +13,13 @@ export type MapNodeProps = CustomNodeElementProps & {
 };
 
 const MapNode = ({ nodeDatum }: MapNodeProps) => {
-  const { name, type, destinationName, wormhole } = nodeDatum;
   const { settings } = useUserData();
+  const { wormhole } = nodeDatum;
+
+  const name = wormhole?.name || "";
+  const type = wormhole?.type || "";
+  const destinationName = wormhole?.destinationName || "";
+
   const { selectedMap } = settings;
   const isRootNode = nodeDatum.__rd3t.depth === 0;
 

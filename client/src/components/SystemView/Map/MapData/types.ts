@@ -1,5 +1,4 @@
 import { RawNodeDatum, TreeLinkDatum, TreeNodeDatum } from "react-d3-tree/lib/types/common";
-import MassStatus from "../../../../enum/MassStatus";
 import { Wormhole } from "../../SystemData/types";
 
 export type MapState = {
@@ -12,12 +11,6 @@ export type ConnectionTree = {
 };
 
 export type MapNodeDatum = TreeNodeDatum & {
-  type?: string;
-  reverseType?: string;
-  eol?: boolean;
-  massStatus?: MassStatus;
-  destinationName?: string;
-  wormholeId?: string;
   wormhole?: Wormhole;
 };
 
