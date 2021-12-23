@@ -56,7 +56,7 @@ export default () => {
                     sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}
                   >
                     {sig.name}
-                    <Box>
+                    <Box sx={{ display: "flex", flexGrow: 1, justifyContent: "flex-end" }}>
                       <EditSigButton sig={sig} />
                       <DeleteSigButton sig={sig} />
                     </Box>
