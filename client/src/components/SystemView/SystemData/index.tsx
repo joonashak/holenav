@@ -12,6 +12,7 @@ export const systemState = createState<SystemState>({
   securityClass: SecurityClasses.High,
   securityStatus: 1,
   whClass: null,
+  effect: null,
   signatures: [],
   wormholes: [],
 });

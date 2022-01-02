@@ -113,6 +113,9 @@ export default () => {
     get whClass() {
       return state.whClass.get();
     },
+    get effect() {
+      return state.effect.get();
+    },
     get signatures() {
       return state.signatures.attach(Downgraded).get();
     },

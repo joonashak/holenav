@@ -3,7 +3,7 @@ import SecurityClasses from "../../../../enum/SecurityClasses";
 import useSystemData from "../../SystemData/useSystemData";
 
 export default () => {
-  const { securityClass, securityStatus, whClass } = useSystemData();
+  const { securityClass, securityStatus, whClass, effect } = useSystemData();
   const roundedSecStatus = securityStatus.toFixed(1);
 
   const classTextMap = {
@@ -13,5 +13,12 @@ export default () => {
     [SecurityClasses.Wormhole]: `Class ${whClass}`,
   };
 
-  return <Typography variant="h3">{classTextMap[securityClass]} - [add effect]</Typography>;
+  const effectString = effect ? ` - ${effect.name}` : null;
+
+  return (
+    <Typography variant="h3">
+      {classTextMap[securityClass]}
+      {effectString}
+    </Typography>
+  );
 };

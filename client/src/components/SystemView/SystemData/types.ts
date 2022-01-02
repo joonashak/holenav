@@ -1,3 +1,4 @@
+import { WormholeEffect } from "@eve-data/systems/lib/src/api/system.type";
 import MassStatus from "../../../enum/MassStatus";
 import SecurityClasses from "../../../enum/SecurityClasses";
 
@@ -7,6 +8,7 @@ export type SystemState = {
   securityClass: SecurityClasses;
   securityStatus: number;
   whClass: number | null;
+  effect: WormholeEffect | null;
   signatures: Signature[];
   wormholes: Wormhole[];
 };
