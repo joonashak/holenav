@@ -35,7 +35,7 @@ export default () => {
 
   return (
     <TableContainer component={Paper} sx={{ bgcolor: "primary.light" }}>
-      <Table aria-label="simple table" size="small">
+      <Table aria-label="Signature List" size="small">
         <TableHead sx={{ bgcolor: "primary.dark" }}>
           <TableRow>
             <TableHeadCell>ID</TableHeadCell>
