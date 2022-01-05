@@ -4,20 +4,15 @@ import {
   TableBody,
   TableContainer,
   TableHead,
-  TableRow as MuiTableRow,
   TableCell as MuiTableCell,
   Paper,
   TableCellProps,
-  TableRowProps,
 } from "@mui/material";
+import TableRow from "../../../../common/TableRow";
 import { Signature, Wormhole } from "../../../SystemData/types";
 import useSystemData from "../../../SystemData/useSystemData";
 import DeleteSigButton from "./DeleteSigButton";
 import EditSigButton from "./EditSigButton";
-
-const TableRow = ({ children }: TableRowProps) => (
-  <MuiTableRow sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>{children}</MuiTableRow>
-);
 
 const TableHeadCell = ({ children }: TableCellProps) => (
   <MuiTableCell sx={{ color: "secondary.light", fontSize: "0.95rem" }}>{children}</MuiTableCell>
@@ -37,7 +32,7 @@ export default () => {
     <TableContainer component={Paper} sx={{ bgcolor: "primary.light" }}>
       <Table aria-label="Signature List" size="small">
         <TableHead sx={{ bgcolor: "primary.dark" }}>
-          <TableRow>
+          <TableRow hideLastSeparator>
             <TableHeadCell>ID</TableHeadCell>
             <TableHeadCell>Type</TableHeadCell>
             <TableHeadCell>Name</TableHeadCell>
@@ -46,7 +41,7 @@ export default () => {
         <TableBody data-cy="sig-list-body">
           {allSigs &&
             allSigs.map((sig) => (
-              <TableRow key={sig.id}>
+              <TableRow hideLastSeparator key={sig.id}>
                 <TableCell component="th" scope="row">
                   {sig.eveId}
                 </TableCell>
