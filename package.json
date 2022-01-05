@@ -4,7 +4,7 @@
   "description": "New mapper for make benefit of the glorious EVE community. Currently in early prototyping.",
   "scripts": {
     "start": "npm run startd && npm run logs",
-    "startd": "docker-compose up -d",
+    "startd": "docker-compose up -d --build",
     "stop": "docker-compose down && docker-compose -f docker-compose-ci.yml down",
     "logs": "docker-compose logs -f server client",
     "logs:all": "docker-compose logs -f",
