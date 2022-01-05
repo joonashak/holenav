@@ -6,7 +6,7 @@
     "@apollo/client": "^3.4.5",
     "@emotion/react": "^11.5.0",
     "@emotion/styled": "^11.3.0",
-    "@eve-data/systems": "^2.1.0",
+    "@eve-data/systems": "^2.1.1",
     "@eve-data/wormholes": "^0.0.2",
     "@fontsource/gugi": "^4.5.0",
     "@hookstate/core": "^3.0.13",
