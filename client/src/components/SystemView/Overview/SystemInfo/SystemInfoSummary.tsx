@@ -15,7 +15,14 @@ export default () => {
   };
 
   const EffectLabel = () => (
-    <Tooltip title={<EffectInfoTable effect={effect} />}>
+    <Tooltip
+      title={<EffectInfoTable effect={effect} />}
+      componentsProps={{
+        tooltip: {
+          sx: { padding: 0, margin: 1 },
+        },
+      }}
+    >
       <span> - {effect && effect.name}</span>
     </Tooltip>
   );
