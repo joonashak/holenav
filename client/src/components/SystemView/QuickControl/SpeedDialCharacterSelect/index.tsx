@@ -27,7 +27,9 @@ const SpeedDialCharacterSelect = (props: SpeedDialActionProps) => {
   const toggleMenu = () => setMenuOpen((prev) => !prev);
 
   const addCharacter = async () => {
-    const { data } = await axios.get(endpoints.addCharacter, { headers: { accesstoken: token } });
+    const { data } = await axios.get(endpoints.addCharacter, {
+      headers: { accesstoken: token || "" },
+    });
     window.location.href = data;
   };
 

@@ -13,7 +13,7 @@ export default () => {
   };
 
   const logout = async () => {
-    await axios.get(endpoints.logout, { headers: { accesstoken: authToken } });
+    await axios.get(endpoints.logout, { headers: { accesstoken: authToken || "" } });
     setAuthToken(null);
   };
 

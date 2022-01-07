@@ -8,6 +8,7 @@ import { SystemState } from "./types";
 
 export const systemState = createState<SystemState>({
   id: "",
+  eveId: 0,
   name: "",
   securityClass: SecurityClasses.High,
   securityStatus: 1,
@@ -29,7 +30,7 @@ const SystemData = ({ children, name }: SystemDataProviderProps) => {
   useEffect(() => {
     const { id, ...system } = findOneSystem({ name });
     const securityClass = system.securityClass as SecurityClasses;
-    state.merge({ ...system, securityClass });
+    state.merge({ ...system, securityClass, eveId: id });
   }, [name]);
 
   // System data from API.

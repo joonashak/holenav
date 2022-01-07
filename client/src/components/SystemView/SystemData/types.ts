@@ -4,6 +4,7 @@ import SecurityClasses from "../../../enum/SecurityClasses";
 
 export type SystemState = {
   id: string;
+  eveId: number;
   name: string;
   securityClass: SecurityClasses;
   securityStatus: number;

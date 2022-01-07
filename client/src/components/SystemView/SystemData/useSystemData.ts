@@ -101,6 +101,9 @@ export default () => {
     get id() {
       return state.id.get();
     },
+    get eveId() {
+      return state.eveId.get();
+    },
     get name() {
       return state.name.get();
     },
