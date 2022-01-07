@@ -25,7 +25,9 @@ const DataChip = ({ label, value }: DataChipProps) => (
           justifyContent: "space-between",
         }}
       >
-        <Typography variant="body2">{label}</Typography>
+        <Typography variant="body2" sx={{ alignSelf: "center" }}>
+          {label}
+        </Typography>
         <Typography sx={{ fontWeight: 600 }}>{value}</Typography>
       </Box>
     }
