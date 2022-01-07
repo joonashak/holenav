@@ -6,12 +6,12 @@ import SystemActivityStats from "./SystemActivityStats";
 import SystemInfoTitle from "./SystemInfoTitle";
 
 export default () => {
-  const { effect } = useSystemData();
+  const { effect, whClass } = useSystemData();
 
   return (
     <OverviewPanel name="system-info" panelTitle={<SystemInfoTitle />} defaultExpanded>
       <Box sx={{ mx: 1 }}>
-        <SystemActivityStats />
+        {!whClass && <SystemActivityStats />}
         <EffectInfoTable effect={effect} />
       </Box>
     </OverviewPanel>
