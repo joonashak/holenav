@@ -3,7 +3,7 @@ import SecurityClasses from "../../../../enum/SecurityClasses";
 import useSystemData from "../../SystemData/useSystemData";
 import EffectInfoTable from "./EffectInfoTable";
 
-export default () => {
+const SystemInfoTitle = () => {
   const { securityClass, securityStatus, whClass, effect } = useSystemData();
   const roundedSecStatus = securityStatus.toFixed(1);
 
@@ -34,3 +34,5 @@ export default () => {
     </Typography>
   );
 };
+
+export default SystemInfoTitle;
