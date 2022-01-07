@@ -19,6 +19,9 @@ theme = createTheme(theme, {
   },
 
   typography: {
+    button: {
+      fontSize: "0.9rem",
+    },
     h2: {
       fontSize: "1.8rem",
       fontWeight: 400,
@@ -91,9 +94,6 @@ theme = createTheme(theme, {
     },
     MuiButton: {
       styleOverrides: {
-        root: {
-          fontSize: "0.9rem",
-        },
         containedPrimary: {
           backgroundColor: theme.palette.primary.dark,
         },
