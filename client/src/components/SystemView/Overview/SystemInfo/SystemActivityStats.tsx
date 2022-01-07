@@ -1,7 +1,42 @@
-import { Box, Paper, Typography } from "@mui/material";
+import { Box, BoxProps, Chip, Typography } from "@mui/material";
 import useEsiSystemJumps from "../../../../services/esi/useEsiSystemJumps";
 import useEsiSystemKills from "../../../../services/esi/useEsiSystemKills";
 import useSystemData from "../../SystemData/useSystemData";
+
+type DataChipProps = {
+  label: string;
+  value: number;
+};
+
+const DataChip = ({ label, value }: DataChipProps) => (
+  <Chip
+    sx={{
+      width: 0.45,
+      "& > span": { width: 1 },
+      bgcolor: "primary",
+      px: 2,
+      py: 3,
+    }}
+    label={
+      <Box
+        sx={{
+          display: "flex",
+          width: 1,
+          justifyContent: "space-between",
+        }}
+      >
+        <Typography variant="body2">{label}</Typography>
+        <Typography sx={{ fontWeight: 600 }}>{value}</Typography>
+      </Box>
+    }
+  />
+);
+
+const HBox = ({ children }: BoxProps) => (
+  <Box sx={{ display: "flex", justifyContent: "space-evenly", width: 1, my: "3px" }}>
+    {children}
+  </Box>
+);
 
 const SystemActivityStats = () => {
   const { eveId } = useSystemData();
@@ -9,29 +44,22 @@ const SystemActivityStats = () => {
   const { getKillsBySystem } = useEsiSystemKills();
   const { podKills, npcKills, shipKills } = getKillsBySystem(eveId);
 
-  const stats = [
-    { label: "Jumps", value: getJumpsBySystem(eveId) },
-    { label: "Ship Kills", value: shipKills },
-    { label: "NPC Kills", value: npcKills },
-    { label: "Pod Kills", value: podKills },
-  ];
-
   return (
-    <Paper>
-      <Typography variant="h6">Activity (Last Hour)</Typography>
-      <Box sx={{ display: "flex", flexWrap: "wrap" }}>
-        {stats.map(({ label, value }) => (
-          <Box key={`activity-stats-${label}`} sx={{ display: "flex" }}>
-            <Typography component="div" sx={{ minWidth: 100 }}>
-              {label}
-            </Typography>
-            <Typography component="div" sx={{ minWidth: 50, marginRight: 5, textAlign: "right" }}>
-              {value}
-            </Typography>
-          </Box>
-        ))}
+    <>
+      <Typography variant="h4" color="secondary.light">
+        Activity (Last Hour)
+      </Typography>
+      <Box sx={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between", my: 2 }}>
+        <HBox>
+          <DataChip label="Jumps" value={getJumpsBySystem(eveId)} />
+          <DataChip label="Ship Kills" value={shipKills} />
+        </HBox>
+        <HBox>
+          <DataChip label="NPC Kills" value={npcKills} />
+          <DataChip label="Pod Kills" value={podKills} />
+        </HBox>
       </Box>
-    </Paper>
+    </>
   );
 };
 

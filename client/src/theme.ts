@@ -28,6 +28,10 @@ theme = createTheme(theme, {
       fontSize: "1.3rem",
       fontWeight: 400,
     },
+    h4: {
+      fontSize: "1.1rem",
+      fontWeight: 400,
+    },
   },
 
   components: {
