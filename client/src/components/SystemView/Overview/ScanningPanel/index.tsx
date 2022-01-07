@@ -14,7 +14,7 @@ export default () => {
   }, []);
 
   return (
-    <OverviewPanel name="scanning" title={<ScanningTitle />} defaultExpanded>
+    <OverviewPanel name="scanning" panelTitle={<ScanningTitle />} defaultExpanded>
       <SigList />
       <AddSigButton />
     </OverviewPanel>

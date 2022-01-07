@@ -1,15 +1,13 @@
-import { Accordion, AccordionSummary, AccordionDetails } from "@mui/material";
+import { Accordion, AccordionSummary, AccordionDetails, AccordionProps } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { ReactNode } from "react";
 
-type OverviewPanelProps = {
-  title: ReactNode;
-  children: ReactNode;
+type OverviewPanelProps = AccordionProps & {
+  panelTitle: ReactNode;
   name: string;
-  defaultExpanded?: boolean;
 };
 
-const OverviewPanel = ({ title, children, name, defaultExpanded }: OverviewPanelProps) => (
+const OverviewPanel = ({ panelTitle, children, name, defaultExpanded, sx }: OverviewPanelProps) => (
   <Accordion
     defaultExpanded={defaultExpanded}
     disableGutters
@@ -17,6 +15,7 @@ const OverviewPanel = ({ title, children, name, defaultExpanded }: OverviewPanel
     sx={{
       backgroundColor: "primary.main",
       color: "text.primary",
+      ...sx,
     }}
   >
     <AccordionSummary
@@ -28,14 +27,10 @@ const OverviewPanel = ({ title, children, name, defaultExpanded }: OverviewPanel
         minHeight: 56,
       }}
     >
-      {title}
+      {panelTitle}
     </AccordionSummary>
     <AccordionDetails>{children}</AccordionDetails>
   </Accordion>
 );
-
-OverviewPanel.defaultProps = {
-  defaultExpanded: false,
-};
 
 export default OverviewPanel;

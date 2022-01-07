@@ -4,7 +4,7 @@ import OverviewPanel from "../OverviewPanel";
 export default () => (
   <OverviewPanel
     name="intel"
-    title={
+    panelTitle={
       <>
         <Typography variant="h3">Intel: 2 structures</Typography>
       </>
