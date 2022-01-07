@@ -1,6 +1,7 @@
 /* eslint-disable camelcase */
 
-export type EsiSystemJump = {
-  ship_jumps: number;
-  system_id: number;
+export type EsiSystemKills = {
+  npcKills: number;
+  podKills: number;
+  shipKills: number;
 };

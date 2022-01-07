@@ -1,15 +1,19 @@
 import { Box, Paper, Typography } from "@mui/material";
 import useEsiSystemJumps from "../../../../services/esi/useEsiSystemJumps";
+import useEsiSystemKills from "../../../../services/esi/useEsiSystemKills";
 import useSystemData from "../../SystemData/useSystemData";
 
 const SystemActivityStats = () => {
   const { eveId } = useSystemData();
   const { getJumpsBySystem } = useEsiSystemJumps();
+  const { getKillsBySystem } = useEsiSystemKills();
+  const { podKills, npcKills, shipKills } = getKillsBySystem(eveId);
 
   const stats = [
-    { label: "Pod Kills", value: 2 },
     { label: "Jumps", value: getJumpsBySystem(eveId) },
-    { label: "NPC Kills", value: 48 },
+    { label: "Ship Kills", value: shipKills },
+    { label: "NPC Kills", value: npcKills },
+    { label: "Pod Kills", value: podKills },
   ];
 
   return (
