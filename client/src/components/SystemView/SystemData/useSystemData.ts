@@ -133,6 +133,12 @@ export default () => {
     get wormholes() {
       return state.wormholes.attach(Downgraded).get();
     },
+    get region() {
+      return state.region.get();
+    },
+    get constellation() {
+      return state.constellation.get();
+    },
     changeSystem,
     addSignature,
     updateSignature,

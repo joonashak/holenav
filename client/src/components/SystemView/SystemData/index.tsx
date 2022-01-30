@@ -14,6 +14,8 @@ export const systemState = createState<SystemState>({
   effect: null,
   signatures: [],
   wormholes: [],
+  region: { id: 0, name: "" },
+  constellation: { id: 0, name: "" },
 });
 
 type SystemDataProviderProps = {
