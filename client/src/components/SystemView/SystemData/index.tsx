@@ -16,6 +16,7 @@ export const systemState = createState<SystemState>({
   wormholes: [],
   region: { id: 0, name: "" },
   constellation: { id: 0, name: "" },
+  staticConnections: [],
 });
 
 type SystemDataProviderProps = {

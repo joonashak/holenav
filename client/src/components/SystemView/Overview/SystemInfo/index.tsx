@@ -2,6 +2,7 @@ import { Box, Typography } from "@mui/material";
 import useSystemData from "../../SystemData/useSystemData";
 import OverviewPanel from "../OverviewPanel";
 import EffectInfoAccordion from "./EffectInfoAccordion";
+import StaticConnections from "./StaticConnections";
 import SystemActivityStats from "./SystemActivityStats";
 import SystemInfoTitle from "./SystemInfoTitle";
 
@@ -15,6 +16,7 @@ export default () => {
           {region.name} / {constellation.name}
         </Typography>
         {!whClass && <SystemActivityStats />}
+        {whClass && <StaticConnections />}
         {whClass && <EffectInfoAccordion />}
       </Box>
     </OverviewPanel>

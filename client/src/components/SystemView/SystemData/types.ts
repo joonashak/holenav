@@ -14,6 +14,7 @@ export type SystemState = {
   wormholes: Wormhole[];
   region: System["region"];
   constellation: System["constellation"];
+  staticConnections: System["staticConnections"];
 };
 
 export type Signature = {

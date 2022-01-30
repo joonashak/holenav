@@ -2,7 +2,7 @@ import { Box, Chip, Typography } from "@mui/material";
 
 type DataChipProps = {
   label: string;
-  value: number;
+  value: string | number;
 };
 
 const DataChip = ({ label, value }: DataChipProps) => (

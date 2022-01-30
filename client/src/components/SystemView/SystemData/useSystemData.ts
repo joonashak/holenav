@@ -139,6 +139,9 @@ export default () => {
     get constellation() {
       return state.constellation.get();
     },
+    get staticConnections() {
+      return state.staticConnections.attach(Downgraded).get();
+    },
     changeSystem,
     addSignature,
     updateSignature,
