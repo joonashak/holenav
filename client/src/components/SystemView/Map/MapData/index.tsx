@@ -19,9 +19,17 @@ const MapData = ({ children }: MapDataProviderProps) => {
   const { wormholes } = useSystemData();
   const { pollSetting } = useLocalData();
 
+  /*
   useEffect(() => {
     fetchConnectionTree();
+    console.log("Running: fetchConnectionTree() in MapData");
   }, [wormholes]);
+  */
+  useEffect(() => {
+    fetchConnectionTree();
+    console.log("Running: fetchConnectionTree() in MapData");
+    return () => console.log("Unmounting MapData");
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {

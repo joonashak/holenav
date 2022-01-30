@@ -1,11 +1,13 @@
 import { FieldValues } from "react-hook-form";
 import useNotification from "../../../../GlobalNotification/useNotification";
+import useMapData from "../../../Map/MapData/useMapData";
 import useSystemData from "../../../SystemData/useSystemData";
 import { WormholeFormProps } from "./WormholeForm";
 
 const useWormholeForm = (props: WormholeFormProps) => {
   const { eveId, existing, onClose } = props;
   const { addWormhole, updateWormhole, name: systemName } = useSystemData();
+  const { fetchConnectionTree } = useMapData();
   const { showSuccessNotification } = useNotification();
 
   const submitNew = async (formData: FieldValues) => {
@@ -22,6 +24,7 @@ const useWormholeForm = (props: WormholeFormProps) => {
     const res = await addWormhole(mutationData);
 
     if (res.data && !res.errors) {
+      fetchConnectionTree();
       showSuccessNotification("Wormhole added.");
       onClose();
     }
