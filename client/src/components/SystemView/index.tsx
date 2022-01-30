@@ -4,7 +4,7 @@ import Map from "./Map";
 import MapData from "./Map/MapData";
 import Overview from "./Overview";
 import QuickControl from "./QuickControl";
-import SystemData from "./SystemData";
+import useSystemData from "./SystemData/useSystemData";
 
 interface SystemViewProps {
   match: {
@@ -16,21 +16,26 @@ interface SystemViewProps {
 
 export default ({ match }: SystemViewProps) => {
   const { systemName } = match.params;
+  const { changeSystem } = useSystemData();
 
   useEffect(() => {
     console.log("Mounting SystemView");
     return () => console.log("Unmounting SystemView");
-  });
+  }, []);
+
+  useEffect(() => {
+    // FIXME: Overview does not update correctly. No more unnecessary re-mounting, though.
+    changeSystem({ variables: { name: systemName } });
+    console.log("Running changeSystem() in SystemView", systemName);
+  }, [systemName]);
 
   return (
-    <SystemData name={systemName}>
-      <MapData>
-        <Container>
-          <Overview />
-          <Map />
-          <QuickControl />
-        </Container>
-      </MapData>
-    </SystemData>
+    <MapData>
+      <Container>
+        <Overview />
+        <Map />
+        <QuickControl />
+      </Container>
+    </MapData>
   );
 };

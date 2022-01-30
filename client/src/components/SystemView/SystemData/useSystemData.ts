@@ -1,4 +1,4 @@
-import { FetchResult, useMutation } from "@apollo/client";
+import { FetchResult, useLazyQuery, useMutation } from "@apollo/client";
 import { Downgraded, useState } from "@hookstate/core";
 import { systemState } from ".";
 import {
@@ -8,11 +8,20 @@ import {
   DELETE_WORMHOLE,
   EDIT_SIGNATURE,
   EDIT_WORMHOLE,
+  GET_SYSTEM_BY_NAME,
 } from "./graphql";
 import { Signature, Wormhole } from "./types";
 
 export default () => {
   const state = useState(systemState);
+
+  const [changeSystem] = useLazyQuery(GET_SYSTEM_BY_NAME, {
+    onCompleted: ({ getSystemByName, getWormholesBySystem }) => {
+      const { id, signatures } = getSystemByName;
+      const wormholes = getWormholesBySystem;
+      state.merge({ id, signatures, wormholes });
+    },
+  });
 
   const [addSigMutation] = useMutation(ADD_SIGNATURE, {
     onCompleted: (data) => {
@@ -125,6 +134,7 @@ export default () => {
     get wormholes() {
       return state.wormholes.attach(Downgraded).get();
     },
+    changeSystem,
     addSignature,
     updateSignature,
     deleteSignature,

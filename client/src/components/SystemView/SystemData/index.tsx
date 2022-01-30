@@ -20,20 +20,25 @@ export const systemState = createState<SystemState>({
 
 type SystemDataProviderProps = {
   children: ReactElement;
-  name: string;
 };
 
-const SystemData = ({ children, name }: SystemDataProviderProps) => {
+const SystemData = ({ children }: SystemDataProviderProps) => {
   const state = useState(systemState);
+  const { name } = state.get();
 
   // Static data.
   useEffect(() => {
+    if (!name) {
+      return;
+    }
+
     const { id, ...system } = findOneSystem({ name });
     const securityClass = system.securityClass as SecurityClasses;
     state.merge({ ...system, securityClass, eveId: id });
   }, [name]);
 
   // System data from API.
+  /*
   const { loading, error } = useQuery(GET_SYSTEM_BY_NAME, {
     variables: { name },
     onCompleted: ({ getSystemByName, getWormholesBySystem }) => {
@@ -45,8 +50,12 @@ const SystemData = ({ children, name }: SystemDataProviderProps) => {
 
   // FIXME: Handle loading and errors properly.
   if (loading || error) {
+    console.log("Not rendering SystemData children");
+    console.log("loading", loading);
+    console.log("error", error);
     return null;
   }
+  */
 
   return children;
 };

@@ -7,6 +7,7 @@ import UserData from "./UserData";
 import DevTools from "../dev/DevTools";
 import FrontPage from "./FrontPage";
 import { devToolsEnabled } from "../config";
+import SystemData from "./SystemView/SystemData";
 
 export default () => (
   <BrowserRouter>
@@ -16,9 +17,11 @@ export default () => (
         <AuthenticationGuard>
           <AuthenticatedApolloProvider>
             <UserData>
-              <Switch>
-                <Route path="/system/:systemName" exact component={SystemView} />
-              </Switch>
+              <SystemData>
+                <Switch>
+                  <Route path="/system/:systemName" exact component={SystemView} />
+                </Switch>
+              </SystemData>
             </UserData>
           </AuthenticatedApolloProvider>
         </AuthenticationGuard>
