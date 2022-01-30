@@ -6,8 +6,8 @@
     "@apollo/client": "^3.4.5",
     "@emotion/react": "^11.5.0",
     "@emotion/styled": "^11.3.0",
-    "@eve-data/systems": "^2.1.1",
-    "@eve-data/wormholes": "^0.0.2",
+    "@eve-data/systems": "^3.1.0",
+    "@eve-data/wormholes": "^0.0.5",
     "@fontsource/gugi": "^4.5.0",
     "@hookstate/core": "^3.0.13",
     "@mui/icons-material": "^5.0.4",
@@ -30,7 +30,7 @@
     "react-dom": "^17.0.2",
     "react-hook-form": "^7.14.0",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "^4.0.3",
+    "react-scripts": "^5.0.0",
     "typescript": "^4.4.4",
     "web-vitals": "^1.1.2"
   },
@@ -39,6 +39,7 @@
     "@types/react-router-dom": "^5.1.8",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-config-prettier": "^8.3.0",
+    "eslint-config-react-app": "^7.0.0",
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-prettier": "^3.4.0",
     "prettier": "^2.3.2"
