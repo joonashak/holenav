@@ -1,9 +1,7 @@
-import { useQuery } from "@apollo/client";
 import { findOneSystem } from "@eve-data/systems";
 import { createState, useState } from "@hookstate/core";
 import { useEffect, ReactElement } from "react";
 import SecurityClasses from "../../../enum/SecurityClasses";
-import { GET_SYSTEM_BY_NAME } from "./graphql";
 import { SystemState } from "./types";
 
 export const systemState = createState<SystemState>({
@@ -36,26 +34,6 @@ const SystemData = ({ children }: SystemDataProviderProps) => {
     const securityClass = system.securityClass as SecurityClasses;
     state.merge({ ...system, securityClass, eveId: id });
   }, [name]);
-
-  // System data from API.
-  /*
-  const { loading, error } = useQuery(GET_SYSTEM_BY_NAME, {
-    variables: { name },
-    onCompleted: ({ getSystemByName, getWormholesBySystem }) => {
-      const { id, signatures } = getSystemByName;
-      const wormholes = getWormholesBySystem;
-      state.merge({ id, signatures, wormholes });
-    },
-  });
-
-  // FIXME: Handle loading and errors properly.
-  if (loading || error) {
-    console.log("Not rendering SystemData children");
-    console.log("loading", loading);
-    console.log("error", error);
-    return null;
-  }
-  */
 
   return children;
 };

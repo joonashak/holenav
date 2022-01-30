@@ -17,9 +17,8 @@ export default () => {
 
   const [changeSystem] = useLazyQuery(GET_SYSTEM_BY_NAME, {
     onCompleted: ({ getSystemByName, getWormholesBySystem }) => {
-      const { id, signatures } = getSystemByName;
       const wormholes = getWormholesBySystem;
-      state.merge({ id, signatures, wormholes });
+      state.merge({ ...getSystemByName, wormholes });
     },
   });
 

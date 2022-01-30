@@ -19,14 +19,7 @@ export default ({ match }: SystemViewProps) => {
   const { changeSystem } = useSystemData();
 
   useEffect(() => {
-    console.log("Mounting SystemView");
-    return () => console.log("Unmounting SystemView");
-  }, []);
-
-  useEffect(() => {
-    // FIXME: Overview does not update correctly. No more unnecessary re-mounting, though.
     changeSystem({ variables: { name: systemName } });
-    console.log("Running changeSystem() in SystemView", systemName);
   }, [systemName]);
 
   return (

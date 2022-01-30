@@ -1,5 +1,4 @@
 import { Box } from "@mui/material";
-import { useEffect } from "react";
 import Tree from "react-d3-tree";
 import { RawNodeDatum } from "react-d3-tree/lib/types/common";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
@@ -15,11 +14,6 @@ export default () => {
   const { width } = useWindowDimensions();
   const { connectionTree } = useMapData();
   const { rootSystemName, children: rootChildren } = connectionTree;
-
-  useEffect(() => {
-    console.log("Mounting Map");
-    return () => console.log("Unmounting Map");
-  }, []);
 
   if (!rootSystemName) {
     return null;
