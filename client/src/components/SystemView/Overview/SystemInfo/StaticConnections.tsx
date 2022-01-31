@@ -3,6 +3,14 @@ import { Box, BoxProps, Typography } from "@mui/material";
 import DataChip from "../../../common/DataChip";
 import useSystemData from "../../SystemData/useSystemData";
 
+const chipValueColors = {
+  HIGH: "secondary.main",
+  LOW: "warning.light",
+  NULL: "error.light",
+  TRIG: "error.main",
+  THERA: "error.main",
+};
+
 type WormholeChipProps = {
   whType: string;
 };
@@ -15,8 +23,12 @@ const WormholeChip = ({ whType }: WormholeChipProps) => {
 
   const { type, destination } = wormhole;
   const value = destination.type === "WH" ? `C${destination.whClass}` : destination.type;
+  const valueColor =
+    destination.type !== "WH" ? chipValueColors[destination.type] : "primary.contrastText";
 
-  return <DataChip label={type} value={value} />;
+  return (
+    <DataChip label={type} value={value} sx={{ width: 0.35 }} valueSx={{ color: valueColor }} />
+  );
 };
 
 const HBox = ({ children }: BoxProps) => (

@@ -23,12 +23,16 @@ const SystemActivityStats = () => {
       </Typography>
       <Box sx={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between", my: 2 }}>
         <HBox>
-          <DataChip label="Jumps" value={getJumpsBySystem(eveId)} />
-          <DataChip label="Ship Kills" value={shipKills} />
+          <DataChip
+            label="Jumps"
+            value={getJumpsBySystem(eveId)}
+            labelProps={{ variant: "body2" }}
+          />
+          <DataChip label="Ship Kills" value={shipKills} labelProps={{ variant: "body2" }} />
         </HBox>
         <HBox>
-          <DataChip label="NPC Kills" value={npcKills} />
-          <DataChip label="Pod Kills" value={podKills} />
+          <DataChip label="NPC Kills" value={npcKills} labelProps={{ variant: "body2" }} />
+          <DataChip label="Pod Kills" value={podKills} labelProps={{ variant: "body2" }} />
         </HBox>
       </Box>
     </>
