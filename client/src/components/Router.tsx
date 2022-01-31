@@ -8,6 +8,7 @@ import DevTools from "../dev/DevTools";
 import FrontPage from "./FrontPage";
 import { devToolsEnabled } from "../config";
 import SystemData from "./SystemView/SystemData";
+import SettingsView from "./SettingsView";
 
 export default () => (
   <BrowserRouter>
@@ -26,6 +27,7 @@ export default () => (
           </AuthenticatedApolloProvider>
         </AuthenticationGuard>
       </Route>
+      <Route path="/settings" component={SettingsView} />
       <Route path="*" component={FrontPage} />
     </Switch>
     {devToolsEnabled && <DevTools />}
