@@ -33,19 +33,19 @@ Each user has exactly one role that is not related to any folder – _the system
 
 Each role inherits the rights of previous roles.
 
-### `SOLDIER`
+### `USER`
 
 - Log in.
 - Edit personal settings.
 - Use mapper in the folders they have access to.
 
-### `CAPTAIN`
+### `MANAGER`
 
-- Manage all users with the `SOLDIER` role.
+- Manage all users with the `USER` role.
 
-### `DIRECTOR`
+### `ADMINISTRATOR`
 
-The highest level role. Can be used as a traditional "superuser" or granted to multiple users in more trusting communities. The last remaining `DIRECTOR` cannot revoke this role or delete their account. The first user to register is granted this role.
+The highest level role. Can be used as a traditional "superuser" or granted to multiple users in more trusting communities. The last remaining `ADMINISTRATOR` cannot revoke this role or delete their account. The first user to register is granted this role.
 
 - Manage app settings.
-- Manage all users. This includes other users with the `DIRECTOR` role, as well as granting and revoking the `DIRECTOR` role.
+- Manage all users. This includes other users with the `ADMINISTRATOR` role, as well as granting and revoking the `ADMINISTRATOR` role.

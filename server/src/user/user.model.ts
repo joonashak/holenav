@@ -1,4 +1,4 @@
-import { Field, ObjectType } from "@nestjs/graphql";
+import { Field, ObjectType, registerEnumType } from "@nestjs/graphql";
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import mongoose from "mongoose";
 import { v4 as uuid } from "uuid";
@@ -8,8 +8,11 @@ import { Role } from "../role/role.model";
 import { FolderRole, FolderRoleSchema } from "./folderRoles/folderRole.model";
 import defaultUserSettings from "./settings/defaultUserSettings";
 import { UserSettings, UserSettingsSchema } from "./settings/userSettings.model";
+import SystemRoles from "./systemRoles.enum";
 
 export type UserDocument = User & mongoose.Document;
+
+registerEnumType(SystemRoles, { name: "SystemRoles" });
 
 @ObjectType()
 @Schema()
@@ -45,6 +48,10 @@ export class User {
   @Field((type) => UserSettings)
   @Prop({ type: UserSettingsSchema, default: defaultUserSettings })
   settings: UserSettings;
+
+  @Field((type) => SystemRoles)
+  @Prop({ default: SystemRoles.USER })
+  systemRole: SystemRoles;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

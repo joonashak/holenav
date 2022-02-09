@@ -18,9 +18,7 @@ export class FolderRoleGuard implements CanActivate {
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const requiredRole = this.getRequiredRole(context);
-    console.log("requiredRole", requiredRole);
     const activeFolderRole = await this.getActiveFolderRole(context);
-    console.log("activeFolderRole", activeFolderRole);
     return requiredRole <= activeFolderRole;
   }
 
