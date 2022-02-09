@@ -1,6 +1,8 @@
 import { applyDecorators, SetMetadata, UseGuards } from "@nestjs/common";
 import Roles from "../../role/roles.enum";
+import FolderRoles from "../../user/folderRoles/folderRoles.enum";
 import { AuthGuard } from "../guards/auth.guard";
+import { FolderRoleGuard, requiredFolderRoleKey } from "../guards/folderRole.guard";
 import {
   requiredRoleLevelKey,
   requiredRoleTypeKey,
@@ -25,9 +27,5 @@ export const RequireSystemRole = (role: Roles) =>
  * Access token and active folder id must be passed in request headers.
  * @param role Minimum required role level.
  */
-export const RequireFolderRole = (role: Roles) =>
-  applyDecorators(
-    SetMetadata(requiredRoleLevelKey, role),
-    UseGuards(AuthGuard, RoleGuard),
-    SetMetadata(requiredRoleTypeKey, RequiredRoleTypes.FOLDER),
-  );
+export const RequireFolderRole = (role: FolderRoles) =>
+  applyDecorators(SetMetadata(requiredFolderRoleKey, role), UseGuards(AuthGuard, FolderRoleGuard));

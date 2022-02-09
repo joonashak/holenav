@@ -1,7 +1,7 @@
 import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
 import { ActiveFolder } from "../../auth/decorators/activeFolder.decorator";
 import { RequireFolderRole } from "../../auth/decorators/role.decorator";
-import Roles from "../../role/roles.enum";
+import FolderRoles from "../../user/folderRoles/folderRoles.enum";
 import { FolderDocument } from "../folder/folder.model";
 import AddWormholeInput from "./dto/addWormhole.dto";
 import { ConnectionTree } from "./dto/connectionTree.dto";
@@ -13,7 +13,7 @@ import { WormholeService } from "./wormhole.service";
 export class WormholeResolver {
   constructor(private whService: WormholeService) {}
 
-  @RequireFolderRole(Roles.READ)
+  @RequireFolderRole(FolderRoles.READ)
   @Query((returns) => ConnectionTree)
   async getConnectionTree(
     @Args("rootSystem") rootSystemName: string,
@@ -22,7 +22,7 @@ export class WormholeResolver {
     return this.whService.getConnectionTree(rootSystemName, activeFolder);
   }
 
-  @RequireFolderRole(Roles.READ)
+  @RequireFolderRole(FolderRoles.READ)
   @Query((returns) => [Wormhole])
   async getWormholesBySystem(
     @Args("name") systemName: string,
@@ -31,7 +31,7 @@ export class WormholeResolver {
     return this.whService.getBySystem(systemName, activeFolder);
   }
 
-  @RequireFolderRole(Roles.WRITE)
+  @RequireFolderRole(FolderRoles.WRITE)
   @Mutation((returns) => Wormhole)
   async addWormhole(
     @Args("input") input: AddWormholeInput,
@@ -41,7 +41,7 @@ export class WormholeResolver {
     return res;
   }
 
-  @RequireFolderRole(Roles.WRITE)
+  @RequireFolderRole(FolderRoles.WRITE)
   @Mutation((returns) => Wormhole)
   async updateWormhole(
     @Args("input") input: UpdateWormholeInput,
@@ -52,7 +52,7 @@ export class WormholeResolver {
     return res;
   }
 
-  @RequireFolderRole(Roles.WRITE)
+  @RequireFolderRole(FolderRoles.WRITE)
   @Mutation((returns) => Wormhole)
   async deleteWormhole(@Args("id") id: string): Promise<Wormhole> {
     return this.whService.deleteWormhole(id);

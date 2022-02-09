@@ -1,6 +1,6 @@
 import { Args, Mutation, Resolver } from "@nestjs/graphql";
 import { RequireFolderRole } from "../../auth/decorators/role.decorator";
-import Roles from "../../role/roles.enum";
+import FolderRoles from "../../user/folderRoles/folderRoles.enum";
 import AddSignatureInput from "./dto/addSignature.dto";
 import UpdateSignatureInput from "./dto/updateSignature.dto";
 import { Signature } from "./signature.model";
@@ -11,7 +11,7 @@ import SigTypes from "./sigTypes.enum";
 export class SignatureResolver {
   constructor(private sigService: SignatureService) {}
 
-  @RequireFolderRole(Roles.WRITE)
+  @RequireFolderRole(FolderRoles.WRITE)
   @Mutation((returns) => Signature)
   async addSignature(@Args("input") input: AddSignatureInput): Promise<Signature> {
     if (input.type === SigTypes.WORMHOLE) {
@@ -23,7 +23,7 @@ export class SignatureResolver {
     return newSig;
   }
 
-  @RequireFolderRole(Roles.WRITE)
+  @RequireFolderRole(FolderRoles.WRITE)
   @Mutation((returns) => Signature)
   async updateSignature(@Args("input") input: UpdateSignatureInput): Promise<Signature> {
     if (input.type === SigTypes.WORMHOLE) {
@@ -34,7 +34,7 @@ export class SignatureResolver {
     return this.sigService.updateSignature(id, update);
   }
 
-  @RequireFolderRole(Roles.WRITE)
+  @RequireFolderRole(FolderRoles.WRITE)
   @Mutation((returns) => Signature)
   async deleteSignature(@Args("id") id: string): Promise<Signature> {
     return this.sigService.deleteSignature(id);
