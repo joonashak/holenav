@@ -7,9 +7,10 @@ Table users {
   main characters [ref: - characters._id]
   alts characters[] [ref: < characters._id]
   tokens string[]
-  roles roles[] [ref: < roles._id]
+  folderRoles folderRoles[] [ref: < folderRoles._id]
   activeFolder folders [ref: - folders._id]
   settings userSettings
+  systemRole SystemRoles
 }
 
 Table characters {
@@ -20,10 +21,10 @@ Table characters {
   refreshToken string
 }
 
-Table roles {
+Table folderRoles {
   _id number
-  role Roles
-  folder folders[] [ref: > folders._id]
+  role FolderRoles
+  folder folders [ref: - folders._id]
 }
 
 Table ssoSessions {
@@ -71,7 +72,7 @@ Table wormholes {
   reverseType string
 }
 
-enum Roles {
+enum FolderRoles {
   READ
   WRITE
   MANAGE
@@ -92,4 +93,10 @@ enum WhMass {
 enum SsoSessionTypes {
   LOGIN
   ADD_CHARACTER
+}
+
+enum SystemRoles {
+  SOLDIER
+  CAPTAIN
+  DIRECTOR
 }

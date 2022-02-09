@@ -7,6 +7,7 @@ Modern open-source mapper for EVE Online's wormhole community. Currently in earl
 - [Command Reference](./docs/CommandReference.md)
 - [Configuration](./docs/Configuration.md)
 - [Database](./docs/Database.md)
+- [Roles](./docs/Roles.md)
 
 ## Development Environment
 
