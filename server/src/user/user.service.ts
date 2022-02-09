@@ -7,6 +7,7 @@ import { FolderService } from "../entities/folder/folder.service";
 import { RoleService } from "../role/role.service";
 import Roles from "../role/roles.enum";
 import { CreateUserDto } from "./dto/createUser.dto";
+import FolderRoles from "./folderRoles/folderRoles.enum";
 import { User, UserDocument } from "./user.model";
 
 @Injectable()
@@ -30,7 +31,12 @@ export class UserService {
 
     const folder = await this.folderService.getDefaultFolder();
     const role = await this.roleService.create({ role: Roles.WRITE, folder });
-    const newUser = await this.userModel.create({ ...user, roles: role, activeFolder: folder });
+    const newUser = await this.userModel.create({
+      ...user,
+      roles: role,
+      folderRoles: [{ role: FolderRoles.ADMIN, folder }],
+      activeFolder: folder,
+    });
     return newUser;
   }
 
