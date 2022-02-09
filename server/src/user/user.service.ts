@@ -34,7 +34,7 @@ export class UserService {
     const newUser = await this.userModel.create({
       ...user,
       roles: role,
-      folderRoles: [{ role: FolderRoles.ADMIN, folder }],
+      folderRoles: [{ role: FolderRoles.WRITE, folder }],
       activeFolder: folder,
     });
     return newUser;

@@ -20,10 +20,16 @@ export class MockUserService {
     const folder = await this.folderService.getDefaultFolder();
 
     for (const user of users) {
-      const { id, main, role } = user;
+      const { id, main, role, defaultFolderRole } = user;
       const newChar = await this.characterModel.create(main);
       const roles = [await this.roleService.create({ role, folder })];
-      await this.userModel.create({ main: newChar, id, roles, activeFolder: folder });
+      await this.userModel.create({
+        main: newChar,
+        id,
+        roles,
+        folderRoles: [{ role: defaultFolderRole, folder }],
+        activeFolder: folder,
+      });
     }
   }
 }
