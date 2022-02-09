@@ -39,7 +39,11 @@ services:
     restart: unless-stopped
     container_name: holenav-db
     volumes:
-      - ./mongo_data:/data/db
+      - type: volume
+        source: mongo-data
+        target: /data/db
+        volume:
+          nocopy: true
     ports:
       - 27017:27017
 
@@ -77,3 +81,6 @@ services:
       - REACT_APP_ENABLE_DEVTOOLS=true
     volumes:
       - ./client/src:/usr/src/app/src
+
+volumes:
+  mongo-data:

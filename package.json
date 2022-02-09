@@ -14,7 +14,8 @@
     "test:ci": "scripts/run-tests-ci.sh",
     "lint": "cd client && npm run lint && cd ../server && npm run lint && cd ../e2e && npm run lint",
     "setup": "cd client && npm ci && cd ../server && npm ci && cd ../e2e && npm ci",
-    "build": "docker-compose build"
+    "build": "docker-compose build",
+    "db:drop": "docker volume rm holenav_mongo-data"
   },
   "repository": {
     "type": "git",

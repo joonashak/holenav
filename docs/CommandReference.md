@@ -62,22 +62,10 @@ npm run test:open
 
 ## Database Management
 
-The database container (`holenav-db`) must be running before using these commands.
-
-### Dump Database
-
-```bash
-npm run db:dump
-```
-
 ### Drop Database
+
+Removes Mongo's Docker volume. Stop the app before running this.
 
 ```bash
 npm run db:drop
-```
-
-### Seed Database
-
-```bash
-npm run db:seed
 ```
