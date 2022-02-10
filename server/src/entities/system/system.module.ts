@@ -4,10 +4,8 @@ import { System, SystemSchema } from "./system.model";
 import { SystemService } from "./system.service";
 import { SystemResolver } from "./system.resolver";
 import { UserService } from "../../user/user.service";
-import { RoleService } from "../../role/role.service";
 import { JwtModule } from "@nestjs/jwt";
 import { UserModule } from "../../user/user.module";
-import { RoleModule } from "../../role/role.module";
 import { FolderService } from "../folder/folder.service";
 import { FolderModule } from "../folder/folder.module";
 import { jwtSecret } from "../../config";
@@ -22,18 +20,10 @@ import { CharacterModule } from "../character/character.module";
       secret: jwtSecret,
     }),
     UserModule,
-    RoleModule,
     FolderModule,
     CharacterModule,
   ],
-  providers: [
-    SystemService,
-    SystemResolver,
-    UserService,
-    RoleService,
-    FolderService,
-    CharacterService,
-  ],
+  providers: [SystemService, SystemResolver, UserService, FolderService, CharacterService],
   exports: [SystemService, MongooseModule],
 })
 export class SystemModule {}

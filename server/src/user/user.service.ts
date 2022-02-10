@@ -4,8 +4,6 @@ import { Model } from "mongoose";
 import { Character } from "../entities/character/character.model";
 import { CharacterService } from "../entities/character/character.service";
 import { FolderService } from "../entities/folder/folder.service";
-import { RoleService } from "../role/role.service";
-import Roles from "../role/roles.enum";
 import { CreateUserDto } from "./dto/createUser.dto";
 import FolderRoles from "./roles/folderRoles.enum";
 import { User, UserDocument } from "./user.model";
@@ -14,7 +12,6 @@ import { User, UserDocument } from "./user.model";
 export class UserService {
   constructor(
     @InjectModel(User.name) private userModel: Model<UserDocument>,
-    private roleService: RoleService,
     private folderService: FolderService,
     private characterService: CharacterService,
   ) {}
@@ -30,10 +27,8 @@ export class UserService {
     }
 
     const folder = await this.folderService.getDefaultFolder();
-    const role = await this.roleService.create({ role: Roles.WRITE, folder });
     const newUser = await this.userModel.create({
       ...user,
-      roles: role,
       folderRoles: [{ role: FolderRoles.WRITE, folder }],
       activeFolder: folder,
     });

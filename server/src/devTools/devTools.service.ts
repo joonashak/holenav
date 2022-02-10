@@ -11,7 +11,6 @@ import { Signature } from "../entities/signature/signature.model";
 import { System } from "../entities/system/system.model";
 import { Wormhole } from "../entities/wormhole/wormhole.model";
 import { WormholeService } from "../entities/wormhole/wormhole.service";
-import { Role } from "../role/role.model";
 import { User } from "../user/user.model";
 import users from "./data/users";
 import { MockUserService } from "./mockUser.service";
@@ -23,7 +22,6 @@ export class DevToolsService {
     @InjectModel(Character.name) private characterModel: Model<Character>,
     @InjectModel(DataMigration.name) private dataMigrationModel: Model<DataMigration>,
     @InjectModel(Folder.name) private folderModel: Model<Folder>,
-    @InjectModel(Role.name) private roleModel: Model<Role>,
     @InjectModel(Signature.name) private signatureModel: Model<Signature>,
     @InjectModel(SsoSession.name) private ssoSessionModel: Model<SsoSession>,
     @InjectModel(System.name) private systemModel: Model<System>,
@@ -54,13 +52,12 @@ export class DevToolsService {
 
   async getMockUsers() {
     // Do not read these from db to avoid potentially leaking actual user data!
-    return users.map(({ id, role, main: { name } }) => ({ id, role, name }));
+    return users.map(({ id, main: { name } }) => ({ id, name }));
   }
 
   private async clearCollections() {
     await this.characterModel.deleteMany({});
     await this.folderModel.deleteMany({});
-    await this.roleModel.deleteMany({});
     await this.signatureModel.deleteMany({});
     await this.ssoSessionModel.deleteMany({});
     await this.systemModel.deleteMany({});

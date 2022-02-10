@@ -4,7 +4,6 @@ import mongoose from "mongoose";
 import { v4 as uuid } from "uuid";
 import { Character } from "../entities/character/character.model";
 import { Folder } from "../entities/folder/folder.model";
-import { Role } from "../role/role.model";
 import { FolderRole, FolderRoleSchema } from "./roles/folderRole.model";
 import defaultUserSettings from "./settings/defaultUserSettings";
 import { UserSettings, UserSettingsSchema } from "./settings/userSettings.model";
@@ -32,10 +31,6 @@ export class User {
   @Field((type) => [Character])
   @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Character" }] })
   alts: Character[];
-
-  @Field((type) => [Role])
-  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Role" }] })
-  roles: Role[];
 
   @Field((type) => [FolderRole])
   @Prop({ type: [FolderRoleSchema] })

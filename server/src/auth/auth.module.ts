@@ -4,8 +4,6 @@ import { CharacterService } from "../entities/character/character.service";
 import { AuthController } from "./auth.controller";
 import { SsoService } from "./sso/sso.service";
 import { AuthService } from "./auth.service";
-import { RoleService } from "../role/role.service";
-import { RoleModule } from "../role/role.module";
 import { CharacterModule } from "../entities/character/character.module";
 import { FolderService } from "../entities/folder/folder.service";
 import { FolderModule } from "../entities/folder/folder.module";
@@ -21,19 +19,11 @@ import { SsoSessionService } from "./sso/ssoSession/ssoSession.service";
       secret: jwtSecret,
       signOptions: { expiresIn: "30d" },
     }),
-    RoleModule,
     CharacterModule,
     SsoSessionModule,
     FolderModule,
   ],
-  providers: [
-    SsoService,
-    SsoSessionService,
-    CharacterService,
-    AuthService,
-    RoleService,
-    FolderService,
-  ],
+  providers: [SsoService, SsoSessionService, CharacterService, AuthService, FolderService],
   exports: [JwtModule],
 })
 export class AuthModule {}
