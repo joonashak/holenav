@@ -1,6 +1,6 @@
 import { applyDecorators, SetMetadata, UseGuards } from "@nestjs/common";
 import Roles from "../../role/roles.enum";
-import FolderRoles from "../../user/folderRoles/folderRoles.enum";
+import FolderRoles from "../../user/roles/folderRoles.enum";
 import { AuthGuard } from "../guards/auth.guard";
 import { FolderRoleGuard, requiredFolderRoleKey } from "../guards/folderRole.guard";
 import {

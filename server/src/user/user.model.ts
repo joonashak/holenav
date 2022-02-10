@@ -5,10 +5,10 @@ import { v4 as uuid } from "uuid";
 import { Character } from "../entities/character/character.model";
 import { Folder } from "../entities/folder/folder.model";
 import { Role } from "../role/role.model";
-import { FolderRole, FolderRoleSchema } from "./folderRoles/folderRole.model";
+import { FolderRole, FolderRoleSchema } from "./roles/folderRole.model";
 import defaultUserSettings from "./settings/defaultUserSettings";
 import { UserSettings, UserSettingsSchema } from "./settings/userSettings.model";
-import SystemRoles from "./systemRoles.enum";
+import SystemRoles from "./roles/systemRoles.enum";
 
 export type UserDocument = User & mongoose.Document;
 

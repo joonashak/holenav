@@ -1,6 +1,6 @@
 import { Args, Mutation, Resolver } from "@nestjs/graphql";
 import { RequireFolderRole } from "../../auth/decorators/role.decorator";
-import FolderRoles from "../../user/folderRoles/folderRoles.enum";
+import FolderRoles from "../../user/roles/folderRoles.enum";
 import AddSignatureInput from "./dto/addSignature.dto";
 import UpdateSignatureInput from "./dto/updateSignature.dto";
 import { Signature } from "./signature.model";

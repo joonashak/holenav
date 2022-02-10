@@ -1,7 +1,7 @@
 import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
 import { ActiveFolder } from "../../auth/decorators/activeFolder.decorator";
 import { RequireFolderRole } from "../../auth/decorators/role.decorator";
-import FolderRoles from "../../user/folderRoles/folderRoles.enum";
+import FolderRoles from "../../user/roles/folderRoles.enum";
 import { FolderDocument } from "../folder/folder.model";
 import AddWormholeInput from "./dto/addWormhole.dto";
 import { ConnectionTree } from "./dto/connectionTree.dto";

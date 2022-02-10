@@ -7,7 +7,7 @@ import { FolderService } from "../entities/folder/folder.service";
 import { RoleService } from "../role/role.service";
 import Roles from "../role/roles.enum";
 import { CreateUserDto } from "./dto/createUser.dto";
-import FolderRoles from "./folderRoles/folderRoles.enum";
+import FolderRoles from "./roles/folderRoles.enum";
 import { User, UserDocument } from "./user.model";
 
 @Injectable()

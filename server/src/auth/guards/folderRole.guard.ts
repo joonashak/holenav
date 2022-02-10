@@ -8,7 +8,7 @@ import {
 import { Reflector } from "@nestjs/core";
 import { GqlExecutionContext } from "@nestjs/graphql";
 import { FolderService } from "../../entities/folder/folder.service";
-import FolderRoles from "../../user/folderRoles/folderRoles.enum";
+import FolderRoles from "../../user/roles/folderRoles.enum";
 
 export const requiredFolderRoleKey = "requiredFolderRole";
 
