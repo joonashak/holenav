@@ -6,6 +6,7 @@ import { CharacterService } from "../entities/character/character.service";
 import { FolderService } from "../entities/folder/folder.service";
 import { CreateUserDto } from "./dto/createUser.dto";
 import FolderRoles from "./roles/folderRoles.enum";
+import SystemRoles from "./roles/systemRoles.enum";
 import { User, UserDocument } from "./user.model";
 
 @Injectable()
@@ -27,11 +28,14 @@ export class UserService {
     }
 
     const folder = await this.folderService.getDefaultFolder();
+    const systemRole = await this.getNewUserSystemRole();
     const newUser = await this.userModel.create({
       ...user,
       folderRoles: [{ role: FolderRoles.WRITE, folder }],
       activeFolder: folder,
+      systemRole,
     });
+
     return newUser;
   }
 
@@ -109,5 +113,10 @@ export class UserService {
     if (mains.length || alts.length) {
       throw new HttpException("Character already in use.", HttpStatus.BAD_REQUEST);
     }
+  }
+
+  private async getNewUserSystemRole(): Promise<SystemRoles> {
+    const users = await this.userModel.find();
+    return users.length === 0 ? SystemRoles.ADMINISTRATOR : SystemRoles.USER;
   }
 }
