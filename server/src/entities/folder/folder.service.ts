@@ -1,10 +1,11 @@
 import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
-import { Model } from "mongoose";
+import mongoose, { Model } from "mongoose";
 import systemData from "@eve-data/systems";
 import { Folder, FolderDocument } from "./folder.model";
 import { SystemService } from "../system/system.service";
 import { devToolsEnabled } from "../../config";
+import { UserDocument } from "../../user/user.model";
 
 const defaultFolderName = "Default Folder";
 
@@ -48,5 +49,12 @@ export class FolderService {
 
   async getFolderById(id: string): Promise<FolderDocument> {
     return this.folderModel.findOne({ id });
+  }
+
+  async getAccessibleFolders(user: UserDocument): Promise<Folder[]> {
+    const folderIds = user.folderRoles
+      .filter(({ role }) => role)
+      .map(({ folder }) => mongoose.Types.ObjectId(folder as unknown as string));
+    return this.folderModel.find({ _id: { $in: folderIds } });
   }
 }
