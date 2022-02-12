@@ -1,35 +1,8 @@
-import {
-  Box,
-  Divider,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-  Typography,
-} from "@mui/material";
+import { Box, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
 import GroupIcon from "@mui/icons-material/Group";
 import SettingsIcon from "@mui/icons-material/Settings";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { ReactNode } from "react";
-
-type MenuDividerProps = {
-  children: ReactNode;
-};
-
-const MenuDivider = ({ children }: MenuDividerProps) => (
-  <Divider
-    sx={{
-      color: "secondary.light",
-      "&::before, &::after": {
-        borderColor: "secondary.dark",
-        zIndex: 0,
-      },
-    }}
-  >
-    <Typography variant="h3">{children}</Typography>
-  </Divider>
-);
+import MenuDivider from "./MenuDivider";
 
 const SettingsMenu = () => (
   <nav aria-label="Personal Settings Navigation Menu">
