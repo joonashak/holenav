@@ -1,14 +1,15 @@
 import { Box } from "@mui/material";
+import { Route, Switch } from "react-router-dom";
+import GeneralSettings from "./personal/GeneralSettings";
 import SettingsMenu from "./SettingsMenu";
 
-const SettingsView = () => {
-  console.log("asd");
-
-  return (
-    <Box sx={{ bgcolor: "primary.dark", minHeight: "100vh" }}>
-      <SettingsMenu />
-    </Box>
-  );
-};
+const SettingsView = () => (
+  <Box sx={{ bgcolor: "primary.dark", minHeight: "100vh" }}>
+    <SettingsMenu />
+    <Switch>
+      <Route path="*" component={GeneralSettings} />
+    </Switch>
+  </Box>
+);
 
 export default SettingsView;
