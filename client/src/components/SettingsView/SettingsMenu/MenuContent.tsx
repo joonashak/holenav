@@ -1,18 +1,31 @@
-import { Box, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
+import {
+  Box,
+  BoxProps,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  ListProps,
+} from "@mui/material";
 import GroupIcon from "@mui/icons-material/Group";
 import SettingsIcon from "@mui/icons-material/Settings";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import MenuDivider from "./MenuDivider";
 
-const MenuContent = () => (
+type MenuContentProps = {
+  sx?: BoxProps["sx"];
+  bottomListSx?: ListProps["sx"];
+};
+
+const MenuContent = ({ sx, bottomListSx }: MenuContentProps) => (
   <nav aria-label="Personal Settings Navigation Menu">
     <Box
       sx={{
         bgcolor: "primary.main",
         color: "primary.contrastText",
-        maxWidth: "20rem",
-        //height: "100vh",
         pt: 5,
+        ...sx,
       }}
     >
       <MenuDivider>Personal Settings</MenuDivider>
@@ -37,11 +50,11 @@ const MenuContent = () => (
           </ListItemButton>
         </ListItem>
       </List>
-      <List sx={{ position: "absolute", bottom: 0, bgcolor: "primary.light" }}>
+      <List sx={{ bgcolor: "primary.light", ...bottomListSx }}>
         <ListItem>
           <ListItemButton>
             <ListItemIcon>
-              <ArrowBackIcon color="secondary" />
+              <ArrowBackIcon sx={{ color: "primary.dark" }} />
             </ListItemIcon>
             <ListItemText primary="Back To App" />
           </ListItemButton>
@@ -50,5 +63,10 @@ const MenuContent = () => (
     </Box>
   </nav>
 );
+
+MenuContent.defaultProps = {
+  sx: {},
+  bottomListSx: {},
+};
 
 export default MenuContent;
