@@ -9,6 +9,8 @@ import {
   Typography,
 } from "@mui/material";
 import GroupIcon from "@mui/icons-material/Group";
+import SettingsIcon from "@mui/icons-material/Settings";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { ReactNode } from "react";
 
 type MenuDividerProps = {
@@ -45,9 +47,9 @@ const SettingsMenu = () => (
         <ListItem>
           <ListItemButton>
             <ListItemIcon>
-              <GroupIcon />
+              <SettingsIcon color="secondary" />
             </ListItemIcon>
-            <ListItemText primary="Folders" />
+            <ListItemText primary="General" />
           </ListItemButton>
         </ListItem>
       </List>
@@ -56,17 +58,17 @@ const SettingsMenu = () => (
         <ListItem>
           <ListItemButton>
             <ListItemIcon>
-              <GroupIcon />
+              <GroupIcon color="secondary" />
             </ListItemIcon>
             <ListItemText primary="Users" />
           </ListItemButton>
         </ListItem>
       </List>
-      <List sx={{ position: "absolute", bottom: 0 }}>
+      <List sx={{ position: "absolute", bottom: 0, bgcolor: "primary.light" }}>
         <ListItem>
           <ListItemButton>
             <ListItemIcon>
-              <GroupIcon />
+              <ArrowBackIcon color="secondary" />
             </ListItemIcon>
             <ListItemText primary="Back To App" />
           </ListItemButton>
