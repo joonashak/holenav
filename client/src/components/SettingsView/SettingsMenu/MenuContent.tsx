@@ -10,6 +10,8 @@ import {
 } from "@mui/material";
 import GroupIcon from "@mui/icons-material/Group";
 import SettingsIcon from "@mui/icons-material/Settings";
+import FolderOpenIcon from "@mui/icons-material/FolderOpen";
+import FolderSharedIcon from "@mui/icons-material/FolderShared";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import MenuDivider from "./MenuDivider";
 
@@ -36,6 +38,25 @@ const MenuContent = ({ sx, bottomListSx }: MenuContentProps) => (
               <SettingsIcon color="secondary" />
             </ListItemIcon>
             <ListItemText primary="General" />
+          </ListItemButton>
+        </ListItem>
+      </List>
+      <MenuDivider>Folder Settings</MenuDivider>
+      <List>
+        <ListItem>
+          <ListItemButton>
+            <ListItemIcon>
+              <FolderOpenIcon color="secondary" />
+            </ListItemIcon>
+            <ListItemText primary="Active Folder" />
+          </ListItemButton>
+        </ListItem>
+        <ListItem>
+          <ListItemButton>
+            <ListItemIcon>
+              <FolderSharedIcon color="secondary" />
+            </ListItemIcon>
+            <ListItemText primary="Folder Management" />
           </ListItemButton>
         </ListItem>
       </List>
