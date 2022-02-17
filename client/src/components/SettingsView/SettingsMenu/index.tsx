@@ -11,11 +11,12 @@ import {
 import MenuIcon from "@mui/icons-material/Menu";
 import MenuContent from "./MenuContent";
 import GoToButton from "../../common/GoToButton";
+import { menuWidthRem } from "..";
 
 const SidebarMenu = () => (
   <MenuContent
-    sx={{ height: "100vh", width: 0.3, maxWidth: "20rem" }}
-    bottomListSx={{ position: "absolute", bottom: 0, width: 0.3, maxWidth: "20rem" }}
+    sx={{ height: "100vh", width: `${menuWidthRem}rem`, position: "fixed" }}
+    bottomListSx={{ position: "fixed", bottom: 0, width: `${menuWidthRem}rem` }}
   />
 );
 
