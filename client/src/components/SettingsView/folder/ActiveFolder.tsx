@@ -1,16 +1,19 @@
 import PageTitle from "../../common/PageTitle";
+import Select from "../../controls/Select";
 import useUserData from "../../UserData/useUserData";
 import useSettingsData from "../SettingsData/useSettingsData";
 
 const ActiveFolder = () => {
   const { activeFolder } = useUserData();
   const { accessibleFolders } = useSettingsData();
-  console.log(accessibleFolders);
+
+  const options = accessibleFolders.map(({ id, name }) => ({ id, value: id, label: name }));
+  const onChange = () => {};
 
   return (
     <>
       <PageTitle>Active Folder</PageTitle>
-      {activeFolder}
+      <Select options={options} onChange={onChange} value={activeFolder} title="Active Folder" />
     </>
   );
 };

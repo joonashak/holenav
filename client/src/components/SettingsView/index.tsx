@@ -15,7 +15,7 @@ const SettingsView = () => (
   <SettingsData>
     <Box sx={{ bgcolor: "primary.dark", minHeight: "100vh" }}>
       <SettingsMenu />
-      <Box sx={{ ml: { xs: 2, md: `${menuWidthRem + 2}rem` }, pt: 2 }}>
+      <Box sx={{ ml: { xs: 2, md: `${menuWidthRem + 2}rem` }, mr: 2, pt: 2 }}>
         <Switch>
           <Route path={settingsRoutes.activeFolder} component={ActiveFolder} />
           <Route path="*" component={GeneralSettings} />
