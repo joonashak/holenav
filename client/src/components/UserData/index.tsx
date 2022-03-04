@@ -1,7 +1,7 @@
 import { useQuery } from "@apollo/client";
 import { createState, useState } from "@hookstate/core";
 import { cloneDeep } from "lodash";
-import { ReactElement } from "react";
+import { ReactElement, ReactNode } from "react";
 import useAuthenticatedApollo from "../../auth/useAuthenticatedApollo";
 import useLocalData from "../LocalData/useLocalData";
 import { GET_USER_DATA } from "./graphql";
@@ -23,7 +23,7 @@ export const userState = createState<UserData>({
 });
 
 interface UserDataProviderProps {
-  children: ReactElement;
+  children: ReactNode;
 }
 
 export default ({ children }: UserDataProviderProps) => {
@@ -46,5 +46,5 @@ export default ({ children }: UserDataProviderProps) => {
     return null;
   }
 
-  return children;
+  return children as ReactElement;
 };

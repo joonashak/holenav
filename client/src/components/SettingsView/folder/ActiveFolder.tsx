@@ -1,9 +1,15 @@
 import PageTitle from "../../common/PageTitle";
+import useUserData from "../../UserData/useUserData";
 
 const ActiveFolder = () => {
-  console.log("asd");
+  const { activeFolder } = useUserData();
 
-  return <PageTitle>Active Folder</PageTitle>;
+  return (
+    <>
+      <PageTitle>Active Folder</PageTitle>
+      {activeFolder}
+    </>
+  );
 };
 
 export default ActiveFolder;
