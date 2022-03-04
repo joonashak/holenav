@@ -12,6 +12,7 @@ const defaultUserSettings: UserSettings = {
       rootSystemName: "Amarr",
     },
   ],
+  activeFolder: null,
 };
 
 export default defaultUserSettings;
