@@ -25,7 +25,7 @@ const DrawerMenu = () => {
   const toggleMenu = () => setMenuOpen((prev) => !prev);
 
   return (
-    <AppBar>
+    <AppBar sx={{ position: "sticky" }}>
       <Toolbar>
         <IconButton aria-label="Open Settings Menu" onClick={toggleMenu} size="large" edge="start">
           <MenuIcon />
