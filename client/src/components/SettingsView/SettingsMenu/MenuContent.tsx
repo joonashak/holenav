@@ -7,7 +7,6 @@ import {
   ListItemIcon,
   ListItemText,
   ListProps,
-  SvgIcon,
 } from "@mui/material";
 import GroupIcon from "@mui/icons-material/Group";
 import SettingsIcon from "@mui/icons-material/Settings";
@@ -15,22 +14,7 @@ import FolderOpenIcon from "@mui/icons-material/FolderOpen";
 import FolderSharedIcon from "@mui/icons-material/FolderShared";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import MenuDivider from "./MenuDivider";
-
-type MenuItemProps = {
-  text: string;
-  Icon: typeof SvgIcon;
-};
-
-const MenuItem = ({ text, Icon }: MenuItemProps) => (
-  <ListItem>
-    <ListItemButton>
-      <ListItemIcon>
-        <Icon color="secondary" />
-      </ListItemIcon>
-      <ListItemText primary={text} />
-    </ListItemButton>
-  </ListItem>
-);
+import MenuItem from "./MenuItem";
 
 type MenuContentProps = {
   sx?: BoxProps["sx"];
