@@ -22,6 +22,10 @@ theme = createTheme(theme, {
     button: {
       fontSize: "0.9rem",
     },
+    h1: {
+      fontSize: "3rem",
+      color: theme.palette.secondary.light,
+    },
     h2: {
       fontSize: "1.8rem",
       fontWeight: 400,
