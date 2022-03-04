@@ -31,7 +31,7 @@ const DrawerMenu = () => {
           <MenuIcon />
         </IconButton>
         <Drawer anchor="top" open={menuOpen} onClose={toggleMenu}>
-          <MenuContent />
+          <MenuContent bottomListSx={{ display: "none" }} />
         </Drawer>
         <Typography variant="h6" sx={{ flexGrow: 1, pl: 1 }}>
           Settings
