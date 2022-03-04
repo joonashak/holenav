@@ -51,6 +51,11 @@ export class FolderService {
     return this.folderModel.findOne({ id });
   }
 
+  /**
+   * Get `Folder`s that `user` has any roles for.
+   * @param user Usually current user.
+   * @returns List of `Folder`s.
+   */
   async getAccessibleFolders(user: UserDocument): Promise<Folder[]> {
     const folderIds = user.folderRoles
       .filter(({ role }) => role)
