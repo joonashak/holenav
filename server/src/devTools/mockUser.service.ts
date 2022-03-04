@@ -24,7 +24,6 @@ export class MockUserService {
         main: newChar,
         id,
         folderRoles: [{ role: defaultFolderRole, folder }],
-        activeFolder: folder,
         systemRole,
       });
     }

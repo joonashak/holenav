@@ -9,7 +9,6 @@ import { UserData } from "./types";
 
 export const userState = createState<UserData>({
   id: "",
-  activeFolder: "",
   settings: {
     selectedMap: {
       id: "",
@@ -17,9 +16,14 @@ export const userState = createState<UserData>({
       rootSystemName: "",
     },
     maps: [],
+    activeFolder: {
+      id: "",
+      name: "",
+    },
   },
   main: null,
   alts: [],
+  accessibleFolders: [],
 });
 
 interface UserDataProviderProps {
@@ -33,9 +37,15 @@ export default ({ children }: UserDataProviderProps) => {
 
   const { loading, error } = useQuery(GET_USER_DATA, {
     onCompleted: (data) => {
-      const { whoami } = data;
-      const { activeFolder, main, ...rest } = cloneDeep(whoami);
-      state.merge({ main, activeFolder: activeFolder.id, ...rest });
+      const { whoami, getAccessibleFolders } = data;
+      const { main, settings, ...rest } = cloneDeep(whoami);
+      const activeFolder = settings.activeFolder || getAccessibleFolders[0];
+      state.merge({
+        main,
+        accessibleFolders: getAccessibleFolders,
+        settings,
+        ...rest,
+      });
       setActiveFolderForHeaders(activeFolder.id);
       setDefaultActiveCharacter(main.esiId);
     },

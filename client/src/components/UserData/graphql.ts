@@ -7,9 +7,6 @@ export const GET_USER_DATA = gql`
   query UserData {
     whoami {
       id
-      activeFolder {
-        id
-      }
       main {
         ...CharacterFields
       }
@@ -23,7 +20,16 @@ export const GET_USER_DATA = gql`
         selectedMap {
           ...MapFields
         }
+        activeFolder {
+          id
+          name
+        }
       }
+    }
+
+    getAccessibleFolders {
+      id
+      name
     }
   }
 `;

@@ -55,9 +55,6 @@ const useUserData = () => {
     get id() {
       return state.id.get();
     },
-    get activeFolder() {
-      return state.activeFolder.get();
-    },
     get main() {
       return state.main.get();
     },
