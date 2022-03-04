@@ -15,6 +15,7 @@ import FolderSharedIcon from "@mui/icons-material/FolderShared";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import MenuDivider from "./MenuDivider";
 import MenuItem from "./MenuItem";
+import { settingsRoutes } from "..";
 
 type MenuContentProps = {
   sx?: BoxProps["sx"];
@@ -37,7 +38,7 @@ const MenuContent = ({ sx, bottomListSx }: MenuContentProps) => (
       </List>
       <MenuDivider>Folder Settings</MenuDivider>
       <List>
-        <MenuItem text="Active Folder" Icon={FolderOpenIcon} />
+        <MenuItem text="Active Folder" Icon={FolderOpenIcon} href={settingsRoutes.activeFolder} />
         <MenuItem text="Folder Management" Icon={FolderSharedIcon} />
       </List>
       <MenuDivider>Admin Settings</MenuDivider>

@@ -5,6 +5,10 @@ import SettingsMenu from "./SettingsMenu";
 
 export const menuWidthRem = 20;
 
+export const settingsRoutes = {
+  activeFolder: "/settings/activeFolder",
+};
+
 const SettingsView = () => (
   <Box sx={{ bgcolor: "primary.dark", minHeight: "100vh" }}>
     <SettingsMenu />
