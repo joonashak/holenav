@@ -16,6 +16,8 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import MenuDivider from "./MenuDivider";
 import MenuItem from "./MenuItem";
 import { settingsRoutes } from "..";
+import SystemRoleGuard from "../../../auth/SystemRoleGuard";
+import SystemRoles from "../../../enum/SystemRoles";
 
 type MenuContentProps = {
   sx?: BoxProps["sx"];
@@ -39,12 +41,16 @@ const MenuContent = ({ sx, bottomListSx }: MenuContentProps) => (
       <MenuDivider>Folder Settings</MenuDivider>
       <List>
         <MenuItem text="Active Folder" Icon={FolderOpenIcon} href={settingsRoutes.activeFolder} />
-        <MenuItem text="Folder Management" Icon={FolderSharedIcon} />
+        <SystemRoleGuard minRole={SystemRoles.MANAGER}>
+          <MenuItem text="Folder Management" Icon={FolderSharedIcon} />
+        </SystemRoleGuard>
       </List>
-      <MenuDivider>Admin Settings</MenuDivider>
-      <List>
-        <MenuItem text="Users" Icon={GroupIcon} />
-      </List>
+      <SystemRoleGuard minRole={SystemRoles.ADMINISTRATOR}>
+        <MenuDivider>Admin Settings</MenuDivider>
+        <List>
+          <MenuItem text="Users" Icon={GroupIcon} />
+        </List>
+      </SystemRoleGuard>
       <List sx={{ bgcolor: "primary.light", ...bottomListSx }}>
         <ListItem>
           <ListItemButton>

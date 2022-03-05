@@ -7,6 +7,9 @@ type RoleGuardProps = {
   minRole: SystemRoles;
 };
 
+/**
+ * Render `children` only if current system role is at least `minRole`.
+ */
 const SystemRoleGuard = ({ children, minRole }: RoleGuardProps) => {
   const { systemRole } = useUserData();
 
