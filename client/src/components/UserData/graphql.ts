@@ -7,6 +7,7 @@ export const GET_USER_DATA = gql`
   query UserData {
     whoami {
       id
+      systemRole
       main {
         ...CharacterFields
       }

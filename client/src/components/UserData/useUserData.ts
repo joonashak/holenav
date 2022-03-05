@@ -1,6 +1,7 @@
 import { FetchResult, useMutation } from "@apollo/client";
 import { Downgraded, useState } from "@hookstate/core";
 import { userState } from ".";
+import SystemRoles from "../../enum/SystemRoles";
 import { ADD_SAVED_MAP, UPDATE_SELECTED_MAP, DELETE_SAVED_MAP, REMOVE_ALT } from "./graphql";
 import { SavedMap } from "./types";
 
@@ -65,6 +66,15 @@ const useUserData = () => {
       const maps = state.settings.maps.attach(Downgraded).get();
       const selectedMap = state.settings.selectedMap.get() || maps[0];
       return { maps, selectedMap };
+    },
+    get systemRole() {
+      const systemRole = state.systemRole.get();
+
+      if (!systemRole) {
+        return null;
+      }
+
+      return SystemRoles[systemRole] as unknown as SystemRoles;
     },
     setSelectedMap,
     addSavedMap,

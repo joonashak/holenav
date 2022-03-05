@@ -1,9 +1,12 @@
+import SystemRoles from "../../enum/SystemRoles";
+
 export type UserData = {
   id: string;
   settings: UserSettings;
   main: Character | null;
   alts: Character[];
   accessibleFolders: Folder[];
+  systemRole: SystemRoles | null;
 };
 
 export type UserSettings = {

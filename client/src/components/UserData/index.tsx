@@ -24,6 +24,7 @@ export const userState = createState<UserData>({
   main: null,
   alts: [],
   accessibleFolders: [],
+  systemRole: null,
 });
 
 interface UserDataProviderProps {
