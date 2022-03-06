@@ -39,6 +39,9 @@ theme = createTheme(theme, {
       fontSize: "1.1rem",
       fontWeight: 400,
     },
+    body1: {
+      color: theme.palette.primary.contrastText,
+    },
   },
 
   components: {

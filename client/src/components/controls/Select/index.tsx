@@ -7,10 +7,16 @@ import {
 } from "@mui/material";
 import { ReactElement } from "react";
 
+type SelectOption = {
+  id: string | number;
+  value: string | number;
+  label: string | ReactElement;
+};
+
 type SelectProps = {
-  options: Array<{ id: string; value: string; label: string | ReactElement }>;
+  options: SelectOption[];
   onChange: (event: SelectChangeEvent) => void;
-  value: string;
+  value: SelectOption["value"];
   title: string;
 };
 
@@ -21,7 +27,7 @@ const Select = ({ options, onChange, value, title }: SelectProps) => {
     <FormControl fullWidth>
       <InputLabel id={labelId}>{title}</InputLabel>
       <MuiSelect
-        value={value}
+        value={value.toString()}
         labelId={labelId}
         label={title}
         onChange={onChange}
