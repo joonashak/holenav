@@ -42,7 +42,11 @@ const MenuContent = ({ sx, bottomListSx }: MenuContentProps) => (
       <List>
         <MenuItem text="Active Folder" Icon={FolderOpenIcon} href={settingsRoutes.activeFolder} />
         <SystemRoleGuard minRole={SystemRoles.MANAGER}>
-          <MenuItem text="Folder Management" Icon={FolderSharedIcon} />
+          <MenuItem
+            text="Folder Management"
+            Icon={FolderSharedIcon}
+            href={settingsRoutes.folderManagement}
+          />
         </SystemRoleGuard>
       </List>
       <SystemRoleGuard minRole={SystemRoles.ADMINISTRATOR}>
