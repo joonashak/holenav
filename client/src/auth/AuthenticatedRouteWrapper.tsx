@@ -1,7 +1,7 @@
 import { Route, RouteProps } from "react-router-dom";
-import AuthenticationGuard from "../../../auth/AuthenticationGuard";
-import { AuthenticatedApolloProvider } from "../../../auth/useAuthenticatedApollo";
-import UserData from "../../UserData";
+import AuthenticationGuard from "./AuthenticationGuard";
+import { AuthenticatedApolloProvider } from "./useAuthenticatedApollo";
+import UserData from "../components/UserData";
 
 /**
  * Wrapper to include authentication components in a react-router-dom `Route` component.

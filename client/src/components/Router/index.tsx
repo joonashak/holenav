@@ -6,7 +6,7 @@ import FrontPage from "../FrontPage";
 import { devToolsEnabled } from "../../config";
 import SystemData from "../SystemView/SystemData";
 import SettingsView from "../SettingsView";
-import AuthenticatedRouteWrapper from "../SettingsView/folder/AuthenticatedRouteWrapper";
+import AuthenticatedRouteWrapper from "../../auth/AuthenticatedRouteWrapper";
 
 export default () => (
   <BrowserRouter>
