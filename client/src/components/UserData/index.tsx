@@ -1,7 +1,8 @@
-import { useQuery } from "@apollo/client";
+import { useLazyQuery } from "@apollo/client";
 import { createState, useState } from "@hookstate/core";
 import { cloneDeep } from "lodash";
-import { ReactElement, ReactNode } from "react";
+import { ReactElement, ReactNode, useEffect } from "react";
+import useAuth from "../../auth/useAuth";
 import useAuthenticatedApollo from "../../auth/useAuthenticatedApollo";
 import useLocalData from "../LocalData/useLocalData";
 import { GET_USER_DATA } from "./graphql";
@@ -33,10 +34,11 @@ interface UserDataProviderProps {
 
 export default ({ children }: UserDataProviderProps) => {
   const state = useState(userState);
+  const { token } = useAuth();
   const { setActiveFolderForHeaders } = useAuthenticatedApollo();
   const { setDefaultActiveCharacter } = useLocalData();
 
-  const { loading, error } = useQuery(GET_USER_DATA, {
+  const [userQuery] = useLazyQuery(GET_USER_DATA, {
     onCompleted: (data) => {
       const { whoami, getAccessibleFolders } = data;
       const { main, settings, ...rest } = cloneDeep(whoami);
@@ -52,10 +54,11 @@ export default ({ children }: UserDataProviderProps) => {
     },
   });
 
-  // FIXME: Handle loading and errors properly.
-  if (loading || error) {
-    return null;
-  }
+  useEffect(() => {
+    if (token) {
+      userQuery();
+    }
+  }, [token]);
 
   return children as ReactElement;
 };

@@ -4,6 +4,7 @@ import Map from "./Map";
 import MapData from "./Map/MapData";
 import Overview from "./Overview";
 import QuickControl from "./QuickControl";
+import SystemData from "./SystemData";
 import useSystemData from "./SystemData/useSystemData";
 
 interface SystemViewProps {
@@ -23,12 +24,14 @@ export default ({ match }: SystemViewProps) => {
   }, [systemName]);
 
   return (
-    <MapData>
-      <Container>
-        <Overview />
-        <Map />
-        <QuickControl />
-      </Container>
-    </MapData>
+    <SystemData>
+      <MapData>
+        <Container>
+          <Overview />
+          <Map />
+          <QuickControl />
+        </Container>
+      </MapData>
+    </SystemData>
   );
 };

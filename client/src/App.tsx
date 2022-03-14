@@ -1,7 +1,10 @@
 import { ThemeProvider } from "@mui/material";
+import { AuthenticatedApolloProvider } from "./auth/useAuthenticatedApollo";
 import GlobalNotification from "./components/GlobalNotification";
 import useLocalData from "./components/LocalData/useLocalData";
 import Router from "./components/Router";
+import SettingsData from "./components/SettingsView/SettingsData";
+import UserData from "./components/UserData";
 import ViewportContainer from "./components/ViewportContainer";
 import appTheme from "./theme";
 
@@ -14,10 +17,16 @@ export default () => {
 
   return (
     <ThemeProvider theme={appTheme}>
-      <ViewportContainer>
-        <Router />
-        <GlobalNotification />
-      </ViewportContainer>
+      <AuthenticatedApolloProvider>
+        <UserData>
+          <SettingsData>
+            <ViewportContainer>
+              <Router />
+              <GlobalNotification />
+            </ViewportContainer>
+          </SettingsData>
+        </UserData>
+      </AuthenticatedApolloProvider>
     </ThemeProvider>
   );
 };

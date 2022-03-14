@@ -38,6 +38,10 @@ const SystemData = ({ children }: SystemDataProviderProps) => {
     state.merge({ ...system, securityClass, eveId: id });
   }, [name]);
 
+  if (!name) {
+    return null;
+  }
+
   return children;
 };
 

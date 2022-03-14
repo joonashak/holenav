@@ -14,15 +14,10 @@ const AuthenticatedApolloProvider = ({ children }: AuthenticatedApolloProps) => 
   const { token } = useAuth();
   const { value: activeFolder } = useState(activeFolderState);
 
-  // Prevent unauthorized request.
-  if (!token) {
-    return null;
-  }
-
   const apolloClient = new ApolloClient({
     uri: endpoints.graphQl,
     cache: new InMemoryCache(),
-    headers: { accessToken: token, activeFolder },
+    headers: { accessToken: token || "", activeFolder },
   });
 
   return <ApolloProvider client={apolloClient}>{children}</ApolloProvider>;

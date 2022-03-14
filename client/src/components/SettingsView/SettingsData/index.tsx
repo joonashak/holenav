@@ -1,6 +1,7 @@
-import { useQuery } from "@apollo/client";
+import { useLazyQuery } from "@apollo/client";
 import { createState, useState } from "@hookstate/core";
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
+import useAuth from "../../../auth/useAuth";
 import { GET_ACCESSIBLE_FOLDERS } from "./graphql";
 import { Settings } from "./types";
 
@@ -14,16 +15,19 @@ type SettingsDataProps = {
 
 const SettingsData = ({ children }: SettingsDataProps) => {
   const state = useState(settingsState);
+  const { token } = useAuth();
 
-  const { loading, error } = useQuery(GET_ACCESSIBLE_FOLDERS, {
+  const [settingsQuery] = useLazyQuery(GET_ACCESSIBLE_FOLDERS, {
     onCompleted: (data) => {
       state.set({ accessibleFolders: data.getAccessibleFolders });
     },
   });
 
-  if (loading || error) {
-    return null;
-  }
+  useEffect(() => {
+    if (token) {
+      settingsQuery();
+    }
+  }, [token]);
 
   return <>{children}</>;
 };
