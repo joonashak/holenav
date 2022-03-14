@@ -5,14 +5,18 @@ import DevTools from "../../dev/DevTools";
 import FrontPage from "../FrontPage";
 import { devToolsEnabled } from "../../config";
 import SettingsView from "../SettingsView";
+import AuthenticatedRoute from "../../auth/AuthenticatedRoute";
 
-// FIXME: Refactor AuthenticationGuard -> AuthenticatedRoute to replace vanilla <Route> for per-route auth guarding.
 export default () => (
   <BrowserRouter>
     <Switch>
       <Route path="/login/:state" exact component={GetToken} />
-      <Route path="/system/:systemName" exact component={SystemView} />
-      <Route path="/settings" component={SettingsView} />
+      <AuthenticatedRoute path="/system/:systemName" exact>
+        <SystemView />
+      </AuthenticatedRoute>
+      <AuthenticatedRoute path="/settings">
+        <SettingsView />
+      </AuthenticatedRoute>
       <Route path="*" component={FrontPage} />
     </Switch>
     {devToolsEnabled && <DevTools />}
