@@ -1,6 +1,7 @@
 import { Typography } from "@mui/material";
 import PageTitle from "../../../common/PageTitle";
 import Select from "../../../controls/Select";
+import AddNewFolder from "./AddNewFolder";
 
 const FolderManagement = () => {
   const folders = [
@@ -11,6 +12,7 @@ const FolderManagement = () => {
   return (
     <>
       <PageTitle>Folder Management</PageTitle>
+      <AddNewFolder />
       <Typography>
         Select a folder to manage its properties and users&apos; access to it.
       </Typography>
