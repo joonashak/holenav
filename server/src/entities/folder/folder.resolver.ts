@@ -1,4 +1,4 @@
-import { Query, Resolver } from "@nestjs/graphql";
+import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
 import { RequireSystemRole } from "../../auth/decorators/role.decorator";
 import { CurrentUser } from "../../auth/decorators/user.decorator";
 import SystemRoles from "../../user/roles/systemRoles.enum";
@@ -14,5 +14,14 @@ export class FolderResolver {
   @Query((type) => [Folder])
   async getAccessibleFolders(@CurrentUser() user: UserDocument) {
     return this.folderService.getAccessibleFolders(user);
+  }
+
+  @RequireSystemRole(SystemRoles.MANAGER)
+  @Mutation((type) => Folder)
+  async createFolder(
+    @Args("name") name: string,
+    @CurrentUser() user: UserDocument,
+  ): Promise<Folder> {
+    return this.folderService.createFolderAndPermissions(name, user);
   }
 }

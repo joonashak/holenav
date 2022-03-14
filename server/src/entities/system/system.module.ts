@@ -5,12 +5,11 @@ import { SystemService } from "./system.service";
 import { SystemResolver } from "./system.resolver";
 import { UserService } from "../../user/user.service";
 import { JwtModule } from "@nestjs/jwt";
-import { UserModule } from "../../user/user.module";
 import { FolderService } from "../folder/folder.service";
-import { FolderModule } from "../folder/folder.module";
 import { jwtSecret } from "../../config";
 import { CharacterService } from "../character/character.service";
 import { CharacterModule } from "../character/character.module";
+import { UserModule } from "../../user/user.module";
 
 @Global()
 @Module({
@@ -19,11 +18,10 @@ import { CharacterModule } from "../character/character.module";
     JwtModule.register({
       secret: jwtSecret,
     }),
-    UserModule,
-    FolderModule,
     CharacterModule,
+    UserModule,
   ],
   providers: [SystemService, SystemResolver, UserService, FolderService, CharacterService],
-  exports: [SystemService, MongooseModule],
+  exports: [SystemService, MongooseModule, UserService],
 })
 export class SystemModule {}

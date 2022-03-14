@@ -1,6 +1,5 @@
 import { Global, Module } from "@nestjs/common";
 import { MongooseModule } from "@nestjs/mongoose";
-import { FolderModule } from "../entities/folder/folder.module";
 import { FolderService } from "../entities/folder/folder.service";
 import { User, UserSchema } from "./user.model";
 import { UserService } from "./user.service";
@@ -18,7 +17,6 @@ import { CharacterService } from "../entities/character/character.service";
     JwtModule.register({
       secret: jwtSecret,
     }),
-    FolderModule,
     CharacterModule,
   ],
   providers: [UserService, UserSettingsService, FolderService, CharacterService, UserResolver],

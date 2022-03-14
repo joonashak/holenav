@@ -5,6 +5,7 @@ import { Character } from "../entities/character/character.model";
 import { CharacterService } from "../entities/character/character.service";
 import { FolderService } from "../entities/folder/folder.service";
 import { CreateUserDto } from "./dto/createUser.dto";
+import { FolderRole } from "./roles/folderRole.model";
 import FolderRoles from "./roles/folderRoles.enum";
 import SystemRoles from "./roles/systemRoles.enum";
 import { User, UserDocument } from "./user.model";
@@ -115,5 +116,10 @@ export class UserService {
   private async getNewUserSystemRole(): Promise<SystemRoles> {
     const users = await this.userModel.find();
     return users.length === 0 ? SystemRoles.ADMINISTRATOR : SystemRoles.USER;
+  }
+
+  async addFolderRole(user: UserDocument, folderRole: FolderRole): Promise<void> {
+    user.folderRoles = user.folderRoles.concat(folderRole);
+    await user.save();
   }
 }

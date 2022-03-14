@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { forwardRef, Inject, Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import mongoose, { Model } from "mongoose";
 import systemData from "@eve-data/systems";
@@ -6,6 +6,8 @@ import { Folder, FolderDocument } from "./folder.model";
 import { SystemService } from "../system/system.service";
 import { devToolsEnabled } from "../../config";
 import { UserDocument } from "../../user/user.model";
+import { UserService } from "../../user/user.service";
+import FolderRoles from "../../user/roles/folderRoles.enum";
 
 const defaultFolderName = "Default Folder";
 
@@ -14,6 +16,8 @@ export class FolderService {
   constructor(
     @InjectModel(Folder.name) private folderModel: Model<FolderDocument>,
     private systemService: SystemService,
+    @Inject(forwardRef(() => UserService))
+    private userService: UserService,
   ) {}
 
   private async createFolderWithOptionalId(name: string, id: string = null) {
@@ -41,6 +45,18 @@ export class FolderService {
     }
 
     return this.createFolderWithOptionalId(defaultFolderName);
+  }
+
+  /**
+   * Create new folder and give the creator admin rights to it.
+   * @param name Folder name.
+   * @param user Creator of the folder.
+   * @returns The created folder.
+   */
+  async createFolderAndPermissions(name: string, user: UserDocument): Promise<Folder> {
+    const folder = await this.createFolder(name);
+    await this.userService.addFolderRole(user, { folder, role: FolderRoles.ADMIN });
+    return folder;
   }
 
   async getDefaultFolder(): Promise<Folder> {
