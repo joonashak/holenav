@@ -45,7 +45,9 @@ export class UserService {
    * @returns The found user or `undefined`.
    */
   async findById(id: string): Promise<UserDocument> {
-    const user = await this.userModel.findOne({ id }).populate(["roles", "main", "alts"]);
+    const user = await this.userModel
+      .findOne({ id })
+      .populate(["roles", "main", "alts", "folderRoles.folder"]);
     return user;
   }
 
