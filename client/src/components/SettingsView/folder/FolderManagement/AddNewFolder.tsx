@@ -1,12 +1,18 @@
 import { Box, Button, FormGroup } from "@mui/material";
-import { useForm } from "react-hook-form";
+import { FieldValues, useForm } from "react-hook-form";
 import ControlledTextField from "../../../controls/ControlledTextField";
+import useSettingsData from "../../SettingsData/useSettingsData";
 
 const AddNewFolder = () => {
   const { handleSubmit, control } = useForm();
+  const { createFolder } = useSettingsData();
+
+  const submit = async ({ name }: FieldValues) => {
+    await createFolder(name);
+  };
 
   return (
-    <form onSubmit={handleSubmit(() => {})}>
+    <form onSubmit={handleSubmit(submit)}>
       <Box
         sx={{
           display: "flex",
