@@ -8,6 +8,7 @@ import { devToolsEnabled } from "../../config";
 import { UserDocument } from "../../user/user.model";
 import { UserService } from "../../user/user.service";
 import FolderRoles from "../../user/roles/folderRoles.enum";
+import SystemRoles from "../../user/roles/systemRoles.enum";
 
 const defaultFolderName = "Default Folder";
 
@@ -69,10 +70,16 @@ export class FolderService {
 
   /**
    * Get `Folder`s that `user` has any roles for.
+   *
+   * Returns all folders for system admins.
    * @param user Usually current user.
    * @returns List of `Folder`s.
    */
   async getAccessibleFolders(user: UserDocument): Promise<Folder[]> {
+    if (user.systemRole === SystemRoles.ADMINISTRATOR) {
+      return this.folderModel.find({});
+    }
+
     const folderIds = user.folderRoles
       .filter(({ role }) => role)
       .map(({ folder }) => mongoose.Types.ObjectId(folder as unknown as string));
