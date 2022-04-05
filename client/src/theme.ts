@@ -45,6 +45,11 @@ theme = createTheme(theme, {
   },
 
   components: {
+    MuiCssBaseline: {
+      styleOverrides: {
+        body: { overflow: "hidden" },
+      },
+    },
     MuiSelect: {
       styleOverrides: {
         icon: { color: theme.palette.secondary.light },
