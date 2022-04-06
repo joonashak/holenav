@@ -1,23 +1,33 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import { TextField } from "@mui/material";
-import { Controller } from "react-hook-form";
+import { Control, useController, UseControllerProps } from "react-hook-form";
 
 type ControlledTextFieldProps = {
   name: string;
-  control: any;
+  control: Control<any, object>;
   label: string;
+  rules?: UseControllerProps["rules"];
 };
 
-export default ({ name, control, label }: ControlledTextFieldProps) => {
-  const Render = ({ field }: any) => (
+const ControlledTextField = ({ name, control, label, rules }: ControlledTextFieldProps) => {
+  const { field, fieldState } = useController({
+    name,
+    control,
+    rules,
+    defaultValue: "",
+  });
+  const { error } = fieldState;
+
+  return (
     <TextField
       {...field}
       label={label}
+      error={!!error}
+      helperText={error && error.message}
       variant="outlined"
       inputProps={{ "data-cy": `textfield-${name}` }}
       fullWidth
     />
   );
-
-  return <Controller name={name} control={control} render={Render} defaultValue="" />;
 };
+
+export default ControlledTextField;

@@ -22,7 +22,12 @@ const AddNewFolder = () => {
         }}
       >
         <FormGroup sx={{ flexGrow: 1, mr: { xs: 0, md: 2 } }}>
-          <ControlledTextField name="name" control={control} label="New Folder Name" />
+          <ControlledTextField
+            name="name"
+            control={control}
+            label="New Folder Name"
+            rules={{ required: "Folder must have a name." }}
+          />
         </FormGroup>
         <FormGroup>
           <Button type="submit" variant="contained" color="secondary" size="large">
