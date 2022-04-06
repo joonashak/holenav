@@ -30,4 +30,8 @@ const ControlledTextField = ({ name, control, label, rules }: ControlledTextFiel
   );
 };
 
+ControlledTextField.defaultProps = {
+  rules: {},
+};
+
 export default ControlledTextField;
