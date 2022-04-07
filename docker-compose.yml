@@ -17,6 +17,7 @@ services:
       - .env.development
     volumes:
       - ./server/src:/usr/src/app/src
+      - ./client/generated:/usr/src/app/generated
     depends_on:
       - db
 
@@ -33,6 +34,7 @@ services:
       - REACT_APP_ENABLE_DEVTOOLS=true
     volumes:
       - ./client/src:/usr/src/app/src
+      - ./client/generated:/usr/src/app/generated
 
   db:
     image: mongo:4.4-bionic

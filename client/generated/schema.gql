@@ -1,0 +1,169 @@
+type Folder {
+  id: String!
+  name: String!
+}
+
+type Signature {
+  id: String!
+  eveId: String!
+  type: SigTypes
+  name: String!
+}
+
+enum SigTypes {
+  DATA
+  RELIC
+  WORMHOLE
+}
+
+type System {
+  id: String!
+  name: String!
+  folder: Folder!
+  signatures: [Signature!]!
+}
+
+type Character {
+  name: String!
+  esiId: String!
+  accessToken: String
+  refreshToken: String
+}
+
+type FolderRole {
+  role: FolderRoles!
+  folder: Folder!
+}
+
+enum FolderRoles {
+  READ
+  WRITE
+  MANAGE
+  ADMIN
+}
+
+type SavedMap {
+  id: String!
+  name: String!
+  rootSystemName: String!
+}
+
+type UserSettings {
+  maps: [SavedMap!]!
+  selectedMap: SavedMap
+  activeFolder: Folder
+}
+
+type User {
+  id: String!
+  tokens: [String!]!
+  main: Character!
+  alts: [Character!]!
+  folderRoles: [FolderRole!]!
+  settings: UserSettings!
+  systemRole: SystemRoles!
+}
+
+enum SystemRoles {
+  USER
+  MANAGER
+  ADMINISTRATOR
+}
+
+type SanitizedUser {
+  id: String!
+  main: Character!
+}
+
+type Wormhole {
+  id: String!
+  eveId: String
+  name: String
+  type: String
+  eol: Boolean!
+  massStatus: MassStatus!
+  folder: Folder!
+  systemName: String!
+  destinationName: String
+  reverse: Wormhole
+  reverseType: String
+}
+
+enum MassStatus {
+  STABLE
+  DESTAB
+  CRIT
+}
+
+type ConnectionTree {
+  rootSystemName: String!
+  children: [ConnectionTreeNode!]!
+}
+
+type ConnectionTreeNode {
+  name: String!
+  children: [ConnectionTreeNode!]!
+  wormhole: Wormhole!
+}
+
+type Query {
+  getSystemByName(name: String!): System!
+  whoami: User!
+  getAllUsers: [SanitizedUser!]!
+  getAccessibleFolders: [Folder!]!
+  getManageableFolders: [Folder!]!
+  getConnectionTree(rootSystem: String!): ConnectionTree!
+  getWormholesBySystem(name: String!): [Wormhole!]!
+}
+
+type Mutation {
+  updateSelectedMap(selectedMapId: String!): User!
+  addSavedMap(rootSystemName: String!, name: String!): User!
+  deleteSavedMap(mapId: String!): User!
+  removeAlt(esiId: String!): User!
+  createFolder(name: String!): Folder!
+  addSignature(input: AddSignatureInput!): Signature!
+  updateSignature(input: UpdateSignatureInput!): Signature!
+  deleteSignature(id: String!): Signature!
+  addWormhole(input: AddWormholeInput!): Wormhole!
+  updateWormhole(input: UpdateWormholeInput!): Wormhole!
+  deleteWormhole(id: String!): Wormhole!
+}
+
+input AddSignatureInput {
+  eveId: String!
+  type: SigTypes
+  name: String!
+  systemId: String!
+}
+
+input UpdateSignatureInput {
+  eveId: String
+  type: SigTypes
+  name: String
+  systemId: String
+  id: String!
+}
+
+input AddWormholeInput {
+  name: String!
+  systemName: String!
+  destinationName: String
+  eveId: String!
+  type: String!
+  reverseType: String!
+  eol: Boolean!
+  massStatus: MassStatus!
+}
+
+input UpdateWormholeInput {
+  name: String
+  systemName: String
+  destinationName: String
+  eveId: String
+  type: String
+  reverseType: String
+  eol: Boolean
+  massStatus: MassStatus
+  id: String!
+}
