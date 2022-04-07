@@ -16,6 +16,12 @@ export class FolderResolver {
     return this.folderService.getAccessibleFolders(user);
   }
 
+  @RequireSystemRole(SystemRoles.USER)
+  @Query((type) => [Folder])
+  async getManageableFolders(@CurrentUser() user: UserDocument) {
+    return this.folderService.getManageableFolders(user);
+  }
+
   @RequireSystemRole(SystemRoles.MANAGER)
   @Mutation((type) => Folder)
   async createFolder(

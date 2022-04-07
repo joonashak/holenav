@@ -68,6 +68,17 @@ export class FolderService {
     return this.folderModel.findOne({ id });
   }
 
+  private async getFolderByRole(user: UserDocument, minRole: FolderRoles): Promise<Folder[]> {
+    if (user.systemRole === SystemRoles.ADMINISTRATOR) {
+      return this.folderModel.find({});
+    }
+
+    const folderIds = user.folderRoles
+      .filter(({ role }) => role >= minRole)
+      .map(({ folder }) => mongoose.Types.ObjectId(folder as unknown as string));
+    return this.folderModel.find({ _id: { $in: folderIds } });
+  }
+
   /**
    * Get `Folder`s that `user` has any roles for.
    *
@@ -76,13 +87,17 @@ export class FolderService {
    * @returns List of `Folder`s.
    */
   async getAccessibleFolders(user: UserDocument): Promise<Folder[]> {
-    if (user.systemRole === SystemRoles.ADMINISTRATOR) {
-      return this.folderModel.find({});
-    }
+    return this.getFolderByRole(user, FolderRoles.READ);
+  }
 
-    const folderIds = user.folderRoles
-      .filter(({ role }) => role)
-      .map(({ folder }) => mongoose.Types.ObjectId(folder as unknown as string));
-    return this.folderModel.find({ _id: { $in: folderIds } });
+  /**
+   * Get `Folder`s that `user` can manage.
+   *
+   * Returns all folders for system admins.
+   * @param user Usually current user.
+   * @returns List of `Folder`s.
+   */
+  async getManageableFolders(user: UserDocument): Promise<Folder[]> {
+    return this.getFolderByRole(user, FolderRoles.MANAGE);
   }
 }
