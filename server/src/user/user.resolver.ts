@@ -4,6 +4,9 @@ import { User } from "./user.model";
 import { UserService } from "./user.service";
 import RequireAuth from "../auth/decorators/auth.decorator";
 import { UserSettingsService } from "./settings/userSettings.service";
+import { RequireSystemRole } from "../auth/decorators/role.decorator";
+import SystemRoles from "./roles/systemRoles.enum";
+import { SanitizedUser } from "./dto/sanitizedUser.dto";
 
 @Resolver()
 export class UserResolver {
@@ -48,5 +51,11 @@ export class UserResolver {
   async removeAlt(@Args("esiId") esiId: string, @CurrentUser() user: User): Promise<User> {
     await this.userService.removeAlt(esiId, user.id);
     return this.whoami(user);
+  }
+
+  @RequireSystemRole(SystemRoles.MANAGER)
+  @Query((returns) => [SanitizedUser])
+  async getAllUsers(): Promise<SanitizedUser[]> {
+    return this.userService.findAllUsersSanitized();
   }
 }

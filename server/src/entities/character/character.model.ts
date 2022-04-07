@@ -16,11 +16,11 @@ export class Character {
   esiId: string;
 
   @Field({ nullable: true })
-  @Prop()
+  @Prop({ select: false })
   accessToken: string;
 
   @Field({ nullable: true })
-  @Prop()
+  @Prop({ select: false })
   refreshToken: string;
 }
 

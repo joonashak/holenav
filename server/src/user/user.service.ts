@@ -5,6 +5,7 @@ import { Character } from "../entities/character/character.model";
 import { CharacterService } from "../entities/character/character.service";
 import { FolderService } from "../entities/folder/folder.service";
 import { CreateUserDto } from "./dto/createUser.dto";
+import { SanitizedUser } from "./dto/sanitizedUser.dto";
 import { FolderRole } from "./roles/folderRole.model";
 import FolderRoles from "./roles/folderRoles.enum";
 import SystemRoles from "./roles/systemRoles.enum";
@@ -37,6 +38,17 @@ export class UserService {
     });
 
     return newUser;
+  }
+
+  /**
+   * Get all users but do not include private or sensitive fields.
+   *
+   * Designed to be safe for use in frontend for listing users etc. Fields such as
+   * settings and alts are removed.
+   * @returns List of users.
+   */
+  async findAllUsersSanitized(): Promise<SanitizedUser[]> {
+    return this.userModel.find().populate(["main"]).select(["id", "main"]);
   }
 
   /**
