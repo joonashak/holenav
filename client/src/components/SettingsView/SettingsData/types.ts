@@ -1,8 +1,5 @@
+import { Folder } from "../../../generated/graphqlOperations";
+
 export type Settings = {
   accessibleFolders: Folder[];
-};
-
-export type Folder = {
-  id: string;
-  name: string;
 };

@@ -1,0 +1,16 @@
+fragment FolderFields on Folder {
+  id
+  name
+}
+
+query SettingsData {
+  getAccessibleFolders {
+    ...FolderFields
+  }
+}
+
+mutation CreateFolder($name: String!) {
+  createFolder(name: $name) {
+    ...FolderFields
+  }
+}

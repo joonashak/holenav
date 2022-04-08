@@ -255,6 +255,24 @@ export type Wormhole = {
   type?: Maybe<Scalars["String"]>;
 };
 
+export type FolderFieldsFragment = { __typename?: "Folder"; id: string; name: string };
+
+export type SettingsDataQueryVariables = Exact<{ [key: string]: never }>;
+
+export type SettingsDataQuery = {
+  __typename?: "Query";
+  getAccessibleFolders: Array<{ __typename?: "Folder"; id: string; name: string }>;
+};
+
+export type CreateFolderMutationVariables = Exact<{
+  name: Scalars["String"];
+}>;
+
+export type CreateFolderMutation = {
+  __typename?: "Mutation";
+  createFolder: { __typename?: "Folder"; id: string; name: string };
+};
+
 export type UserDataQueryVariables = Exact<{ [key: string]: never }>;
 
 export type UserDataQuery = {
@@ -262,6 +280,92 @@ export type UserDataQuery = {
   whoami: { __typename?: "User"; id: string; systemRole: SystemRoles };
 };
 
+export const FolderFieldsFragmentDoc = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "FragmentDefinition",
+      name: { kind: "Name", value: "FolderFields" },
+      typeCondition: { kind: "NamedType", name: { kind: "Name", value: "Folder" } },
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          { kind: "Field", name: { kind: "Name", value: "id" } },
+          { kind: "Field", name: { kind: "Name", value: "name" } },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<FolderFieldsFragment, unknown>;
+export const SettingsDataDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "query",
+      name: { kind: "Name", value: "SettingsData" },
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "getAccessibleFolders" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "FragmentSpread", name: { kind: "Name", value: "FolderFields" } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    ...FolderFieldsFragmentDoc.definitions,
+  ],
+} as unknown as DocumentNode<SettingsDataQuery, SettingsDataQueryVariables>;
+export const CreateFolderDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "CreateFolder" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "name" } },
+          type: {
+            kind: "NonNullType",
+            type: { kind: "NamedType", name: { kind: "Name", value: "String" } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "createFolder" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "name" },
+                value: { kind: "Variable", name: { kind: "Name", value: "name" } },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "FragmentSpread", name: { kind: "Name", value: "FolderFields" } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    ...FolderFieldsFragmentDoc.definitions,
+  ],
+} as unknown as DocumentNode<CreateFolderMutation, CreateFolderMutationVariables>;
 export const UserDataDocument = {
   kind: "Document",
   definitions: [
