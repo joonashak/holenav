@@ -9,6 +9,7 @@
     "@eve-data/systems": "^3.1.0",
     "@eve-data/wormholes": "^0.0.5",
     "@fontsource/gugi": "^4.5.0",
+    "@graphql-typed-document-node/core": "^3.1.1",
     "@hookstate/core": "^3.0.13",
     "@mui/icons-material": "^5.0.4",
     "@mui/lab": "^5.0.0-alpha.51",
@@ -35,6 +36,10 @@
     "web-vitals": "^1.1.2"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "^2.6.2",
+    "@graphql-codegen/typed-document-node": "^2.2.8",
+    "@graphql-codegen/typescript": "^2.4.8",
+    "@graphql-codegen/typescript-operations": "^2.3.5",
     "@types/lodash": "^4.14.177",
     "@types/react-router-dom": "^5.1.8",
     "eslint-config-airbnb": "^18.2.1",
@@ -47,7 +52,10 @@
   "scripts": {
     "start": "ESLINT_NO_DEV_ERRORS=true FAST_REFRESH=false react-scripts start",
     "build": "react-scripts build",
-    "lint": "eslint src"
+    "lint": "eslint src",
+    "generate": "npm run generate:codegen && npm run generate:lintfix",
+    "generate:codegen": "graphql-codegen",
+    "generate:lintfix": "eslint src/generated/ --fix"
   },
   "eslintConfig": {
     "extends": [

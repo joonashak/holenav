@@ -69,3 +69,13 @@ Removes Mongo's Docker volume. Stop the app before running this.
 ```bash
 npm run db:drop
 ```
+
+## Code Generation
+
+### Generate GraphQL Operations
+
+Uses `graphql-codegen` to generate TypeScript GraphQL operations from `.graphql` documents in frontend. Backend must be running as schema is taken from the GraphQL endpoint.
+
+Run this command in the `client/` directory.
+
+`npm run generate`

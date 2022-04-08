@@ -1,0 +1,6 @@
+query UserData {
+  whoami {
+    id
+    systemRole
+  }
+}
