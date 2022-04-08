@@ -264,6 +264,13 @@ export type SettingsDataQuery = {
   getAccessibleFolders: Array<{ __typename?: "Folder"; id: string; name: string }>;
 };
 
+export type SettingsDataForManagerQueryVariables = Exact<{ [key: string]: never }>;
+
+export type SettingsDataForManagerQuery = {
+  __typename?: "Query";
+  getManageableFolders: Array<{ __typename?: "Folder"; id: string; name: string }>;
+};
+
 export type CreateFolderMutationVariables = Exact<{
   name: Scalars["String"];
 }>;
@@ -323,6 +330,32 @@ export const SettingsDataDocument = {
     ...FolderFieldsFragmentDoc.definitions,
   ],
 } as unknown as DocumentNode<SettingsDataQuery, SettingsDataQueryVariables>;
+export const SettingsDataForManagerDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "query",
+      name: { kind: "Name", value: "SettingsDataForManager" },
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "getManageableFolders" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "FragmentSpread", name: { kind: "Name", value: "FolderFields" } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    ...FolderFieldsFragmentDoc.definitions,
+  ],
+} as unknown as DocumentNode<SettingsDataForManagerQuery, SettingsDataForManagerQueryVariables>;
 export const CreateFolderDocument = {
   kind: "Document",
   definitions: [

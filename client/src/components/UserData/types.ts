@@ -1,4 +1,4 @@
-import SystemRoles from "../../enum/SystemRoles";
+import { SystemRoles } from "../../generated/graphqlOperations";
 
 export type UserData = {
   id: string;

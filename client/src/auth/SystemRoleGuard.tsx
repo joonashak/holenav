@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import useUserData from "../components/UserData/useUserData";
-import SystemRoles from "../enum/SystemRoles";
+import { SystemRoles } from "../generated/graphqlOperations";
+import { roleIsAtLeast } from "../utils/compareSystemRoles";
 
 type RoleGuardProps = {
   children: ReactNode;
@@ -17,7 +18,7 @@ const SystemRoleGuard = ({ children, minRole }: RoleGuardProps) => {
     return null;
   }
 
-  if (systemRole < minRole) {
+  if (!roleIsAtLeast(systemRole, minRole)) {
     return null;
   }
 

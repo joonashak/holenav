@@ -1,0 +1,24 @@
+import { SystemRoles } from "../generated/graphqlOperations";
+
+const systemRoleValues = {
+  [SystemRoles.User]: 1,
+  [SystemRoles.Manager]: 2,
+  [SystemRoles.Administrator]: 3,
+};
+
+/**
+ * Check that given role is at least manager.
+ * @param role System role.
+ * @returns `true` if role check passed.
+ */
+export const atLeastManager = (role: SystemRoles): boolean =>
+  systemRoleValues[role] >= systemRoleValues.MANAGER;
+
+/**
+ * Compare two roles (inclusive).
+ * @param role System role to check.
+ * @param minRole Lowest role to accept.
+ * @returns `true` if role check passed.
+ */
+export const roleIsAtLeast = (role: SystemRoles, minRole: SystemRoles): boolean =>
+  systemRoleValues[role] >= systemRoleValues[minRole];

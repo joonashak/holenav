@@ -60,5 +60,9 @@ export default ({ children }: UserDataProviderProps) => {
     }
   }, [token]);
 
+  if (!state.systemRole.get()) {
+    return null;
+  }
+
   return children as ReactElement;
 };

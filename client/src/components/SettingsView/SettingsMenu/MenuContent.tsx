@@ -17,7 +17,7 @@ import MenuDivider from "./MenuDivider";
 import MenuItem from "./MenuItem";
 import { settingsRoutes } from "..";
 import SystemRoleGuard from "../../../auth/SystemRoleGuard";
-import SystemRoles from "../../../enum/SystemRoles";
+import { SystemRoles } from "../../../generated/graphqlOperations";
 
 type MenuContentProps = {
   sx?: BoxProps["sx"];
@@ -41,7 +41,7 @@ const MenuContent = ({ sx, bottomListSx }: MenuContentProps) => (
       <MenuDivider>Folder Settings</MenuDivider>
       <List>
         <MenuItem text="Active Folder" Icon={FolderOpenIcon} href={settingsRoutes.activeFolder} />
-        <SystemRoleGuard minRole={SystemRoles.MANAGER}>
+        <SystemRoleGuard minRole={SystemRoles.Manager}>
           <MenuItem
             text="Folder Management"
             Icon={FolderSharedIcon}
@@ -49,7 +49,7 @@ const MenuContent = ({ sx, bottomListSx }: MenuContentProps) => (
           />
         </SystemRoleGuard>
       </List>
-      <SystemRoleGuard minRole={SystemRoles.ADMINISTRATOR}>
+      <SystemRoleGuard minRole={SystemRoles.Administrator}>
         <MenuDivider>Admin Settings</MenuDivider>
         <List>
           <MenuItem text="Users" Icon={GroupIcon} />

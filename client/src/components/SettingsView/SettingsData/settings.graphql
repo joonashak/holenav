@@ -9,6 +9,12 @@ query SettingsData {
   }
 }
 
+query SettingsDataForManager {
+  getManageableFolders {
+    ...FolderFields
+  }
+}
+
 mutation CreateFolder($name: String!) {
   createFolder(name: $name) {
     ...FolderFields
