@@ -3,7 +3,6 @@ import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { DataMigration } from "./dataMigration.model";
 import { FolderService } from "../entities/folder/folder.service";
-import { Signature, SignatureDocument } from "../entities/signature/signature.model";
 
 /**
  * Pretty crude hack to keep database contents up to date :sad_face:
