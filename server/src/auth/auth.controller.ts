@@ -14,7 +14,6 @@ import { User, UserDocument } from "../user/user.model";
 import { AuthService } from "./auth.service";
 import RequireAuth from "./decorators/auth.decorator";
 import { CurrentUser } from "./decorators/user.decorator";
-import { GetTokenDto } from "./dto/getToken.dto";
 import { SsoService } from "./sso/sso.service";
 import SsoSessionTypes from "./sso/ssoSession/ssoSessionTypes.enum";
 
@@ -22,6 +21,7 @@ import SsoSessionTypes from "./sso/ssoSession/ssoSessionTypes.enum";
 export class AuthController {
   constructor(private ssoService: SsoService, private authService: AuthService) {}
 
+  // FIXME: Remove.
   /**
    * Redirect client to EVE SSO login page for logging in to Holenav.
    */
@@ -31,6 +31,7 @@ export class AuthController {
     response.redirect(ssoLoginUrl);
   }
 
+  // FIXME: Remove.
   /**
    * Redirect client to EVE SSO login page for adding a new character to existing user.
    */
@@ -54,15 +55,17 @@ export class AuthController {
     response.redirect(clientCallbackUrl);
   }
 
+  // FIXME: Remove.
   /**
    * Callback for client to get Holenav's auth token.
    */
   @Post("getToken")
-  async getToken(@Body() { state }: GetTokenDto) {
+  async getToken(@Body() { state }: { state: string }) {
     const accessToken = await this.authService.login(state);
     return { accessToken };
   }
 
+  // FIXME: Remove.
   /**
    * Check if an authentication token is still valid.
    */
@@ -83,6 +86,7 @@ export class AuthController {
     return "Token OK.";
   }
 
+  // FIXME: Remove.
   @RequireAuth()
   @Get("logout")
   async logout(@Req() request: Request, @CurrentUser() user: UserDocument) {
