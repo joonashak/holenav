@@ -38,7 +38,7 @@ export default ({ children }: UserDataProviderProps) => {
   const { setActiveFolderForHeaders } = useAuthenticatedApollo();
   const { setDefaultActiveCharacter } = useLocalData();
 
-  const [userQuery] = useLazyQuery(GET_USER_DATA, {
+  const [userQuery, { loading }] = useLazyQuery(GET_USER_DATA, {
     onCompleted: (data) => {
       const { whoami, getAccessibleFolders } = data;
       const { main, settings, ...rest } = cloneDeep(whoami);
@@ -60,7 +60,7 @@ export default ({ children }: UserDataProviderProps) => {
     }
   }, [token]);
 
-  if (!state.systemRole.get()) {
+  if (loading) {
     return null;
   }
 
