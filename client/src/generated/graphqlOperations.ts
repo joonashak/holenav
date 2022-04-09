@@ -14,6 +14,11 @@ export type Scalars = {
   Float: number;
 };
 
+export type AccessTokenDto = {
+  __typename?: "AccessTokenDto";
+  accessToken: Scalars["String"];
+};
+
 export type AddSignatureInput = {
   eveId: Scalars["String"];
   name: Scalars["String"];
@@ -87,6 +92,7 @@ export type Mutation = {
   deleteSavedMap: User;
   deleteSignature: Signature;
   deleteWormhole: Wormhole;
+  getToken: AccessTokenDto;
   removeAlt: User;
   updateSelectedMap: User;
   updateSignature: Signature;
@@ -120,6 +126,10 @@ export type MutationDeleteSignatureArgs = {
 
 export type MutationDeleteWormholeArgs = {
   id: Scalars["String"];
+};
+
+export type MutationGetTokenArgs = {
+  state: Scalars["String"];
 };
 
 export type MutationRemoveAltArgs = {
@@ -255,6 +265,15 @@ export type Wormhole = {
   type?: Maybe<Scalars["String"]>;
 };
 
+export type GetTokenMutationVariables = Exact<{
+  state: Scalars["String"];
+}>;
+
+export type GetTokenMutation = {
+  __typename?: "Mutation";
+  getToken: { __typename?: "AccessTokenDto"; accessToken: string };
+};
+
 export type FolderFieldsFragment = { __typename?: "Folder"; id: string; name: string };
 
 export type SettingsDataQueryVariables = Exact<{ [key: string]: never }>;
@@ -304,6 +323,46 @@ export const FolderFieldsFragmentDoc = {
     },
   ],
 } as unknown as DocumentNode<FolderFieldsFragment, unknown>;
+export const GetTokenDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "GetToken" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "state" } },
+          type: {
+            kind: "NonNullType",
+            type: { kind: "NamedType", name: { kind: "Name", value: "String" } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "getToken" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "state" },
+                value: { kind: "Variable", name: { kind: "Name", value: "state" } },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [{ kind: "Field", name: { kind: "Name", value: "accessToken" } }],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<GetTokenMutation, GetTokenMutationVariables>;
 export const SettingsDataDocument = {
   kind: "Document",
   definitions: [

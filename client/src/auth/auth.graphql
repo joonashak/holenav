@@ -1,0 +1,5 @@
+mutation GetToken($state: String!) {
+  getToken(state: $state) {
+    accessToken
+  }
+}

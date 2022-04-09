@@ -5,13 +5,6 @@ import { devToolsEnabled, endpoints } from "../config";
 export default () => {
   const { authToken, mockUser, setAuthToken } = useLocalData();
 
-  const fetchAndSaveToken = async (ssoState: string) => {
-    const { data } = await axios.post(endpoints.getToken, {
-      state: ssoState,
-    });
-    await setAuthToken(data.accessToken);
-  };
-
   const logout = async () => {
     await axios.get(endpoints.logout, { headers: { accesstoken: authToken || "" } });
     setAuthToken(null);
@@ -27,7 +20,6 @@ export default () => {
     get mocking() {
       return mockUser && devToolsEnabled;
     },
-    fetchAndSaveToken,
     logout,
   };
 };

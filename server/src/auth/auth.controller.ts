@@ -1,14 +1,4 @@
-import {
-  Body,
-  Controller,
-  Get,
-  HttpException,
-  HttpStatus,
-  Post,
-  Query,
-  Req,
-  Res,
-} from "@nestjs/common";
+import { Controller, Get, HttpException, HttpStatus, Query, Req, Res } from "@nestjs/common";
 import { Request, Response } from "express";
 import { User, UserDocument } from "../user/user.model";
 import { AuthService } from "./auth.service";
@@ -53,16 +43,6 @@ export class AuthController {
   ) {
     const clientCallbackUrl = await this.ssoService.handleCallback(authorizationCode, state);
     response.redirect(clientCallbackUrl);
-  }
-
-  // FIXME: Remove.
-  /**
-   * Callback for client to get Holenav's auth token.
-   */
-  @Post("getToken")
-  async getToken(@Body() { state }: { state: string }) {
-    const accessToken = await this.authService.login(state);
-    return { accessToken };
   }
 
   // FIXME: Remove.

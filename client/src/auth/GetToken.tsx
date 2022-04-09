@@ -1,6 +1,8 @@
-import { useEffect, useState } from "react";
+import { useMutation } from "@apollo/client";
+import { useEffect } from "react";
 import { Redirect } from "react-router-dom";
-import useAuth from "./useAuth";
+import useLocalData from "../components/LocalData/useLocalData";
+import { GetTokenDocument } from "../generated/graphqlOperations";
 
 interface GetTokenProps {
   match: {
@@ -12,17 +14,20 @@ interface GetTokenProps {
 
 export default ({ match }: GetTokenProps) => {
   const { state } = match.params;
-  const [pending, setPending] = useState(true);
-  const { fetchAndSaveToken } = useAuth();
+  const { setAuthToken } = useLocalData();
+  const [fetchAndSaveToken, { loading, called }] = useMutation(GetTokenDocument, {
+    onCompleted: async ({ getToken }) => {
+      await setAuthToken(getToken.accessToken);
+    },
+  });
 
   useEffect(() => {
     (async () => {
-      await fetchAndSaveToken(state);
-      setPending(false);
+      fetchAndSaveToken({ variables: { state } });
     })();
   }, []);
 
-  if (pending) {
+  if (!called || loading) {
     return null;
   }
 
