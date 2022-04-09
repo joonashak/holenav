@@ -6,6 +6,7 @@ export const ssoClientId = process.env.SSO_CLIENT_ID;
 export const ssoSecretKey = process.env.SSO_SECRET_KEY;
 export const port = process.env.PORT || 3001;
 export const jwtSecret = process.env.JWT_SECRET;
+export const jwtLifetime = process.env.JWT_LIFETIME || "30d";
 export const devToolsEnabled = process.env.ENABLE_DEVTOOLS === "true";
 
 export const getClientLoginCallbackUrl = (state: string) => `${clientUrl}/login/${state}`;

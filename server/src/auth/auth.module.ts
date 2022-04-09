@@ -7,7 +7,7 @@ import { AuthService } from "./auth.service";
 import { CharacterModule } from "../entities/character/character.module";
 import { FolderService } from "../entities/folder/folder.service";
 import { FolderModule } from "../entities/folder/folder.module";
-import { jwtSecret } from "../config";
+import { jwtLifetime, jwtSecret } from "../config";
 import { SsoSessionModule } from "./sso/ssoSession/ssoSession.module";
 import { SsoSessionService } from "./sso/ssoSession/ssoSession.service";
 
@@ -17,7 +17,7 @@ import { SsoSessionService } from "./sso/ssoSession/ssoSession.service";
   imports: [
     JwtModule.register({
       secret: jwtSecret,
-      signOptions: { expiresIn: "30d" },
+      signOptions: { expiresIn: jwtLifetime },
     }),
     CharacterModule,
     SsoSessionModule,
