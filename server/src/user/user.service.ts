@@ -57,23 +57,7 @@ export class UserService {
    * @returns The found user or `undefined`.
    */
   async findById(id: string): Promise<UserDocument> {
-    const user = await this.userModel
-      .findOne({ id })
-      .populate(["roles", "main", "alts", "folderRoles.folder"]);
-    return user;
-  }
-
-  /**
-   * Find a user by ID (Holenav's internal `User.id`), include *SECRET* tokens
-   * in return value.
-   * @param id User id to search for.
-   * @returns The found user or `undefined`.
-   */
-  async findByIdWithTokens(id: string): Promise<UserDocument> {
-    const user = await this.userModel
-      .findOne({ id })
-      .select("+tokens")
-      .populate({ path: "roles", populate: { path: "folder" } });
+    const user = await this.userModel.findOne({ id }).populate(["roles", "main", "alts"]);
     return user;
   }
 
@@ -85,15 +69,6 @@ export class UserService {
   async findByCharacter(character: Character): Promise<User> {
     const user = await this.userModel.findOne({ main: character });
     return user;
-  }
-
-  /**
-   * Add a new token to a user's list of valid access tokens.
-   * @param userId User to be edited.
-   * @param newToken New token.
-   */
-  async addToken(userId: string, newToken: string): Promise<void> {
-    await this.userModel.findOneAndUpdate({ id: userId }, { $push: { tokens: newToken } });
   }
 
   /**

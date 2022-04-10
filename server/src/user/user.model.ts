@@ -19,10 +19,6 @@ export class User {
   @Prop({ default: uuid, unique: true })
   id: string;
 
-  @Field((type) => [String])
-  @Prop({ type: [String], select: false })
-  tokens: string[];
-
   @Field((type) => Character)
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: "Character", unique: true })
   main: Character;

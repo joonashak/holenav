@@ -1,6 +1,7 @@
 import { Injectable, Logger } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Cron } from "@nestjs/schedule";
+import { AuthenticationError } from "apollo-server-express";
 import { Model } from "mongoose";
 import ms from "ms";
 import { jwtLifetime } from "../../config";
@@ -20,6 +21,25 @@ export class SessionService {
 
   async findOneById(id: string): Promise<Session> {
     return this.sessionModel.findOne({ id }).populate("user");
+  }
+
+  /**
+   * Verify that there is a `Session` associated with given `sessionId` and it has not expired.
+   * @param sessionId ID of the session to verify.
+   * @returns Session object.
+   */
+  async verifySession(sessionId: string): Promise<Session> {
+    const session = await this.findOneById(sessionId);
+
+    if (!session) {
+      throw new AuthenticationError("Session was not found.");
+    }
+
+    if (session.expiresAt < new Date()) {
+      throw new AuthenticationError("Session has expired.");
+    }
+
+    return session;
   }
 
   @Cron("0 3 * * * *")

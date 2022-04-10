@@ -1,66 +1,50 @@
-import {
-  CanActivate,
-  ExecutionContext,
-  HttpException,
-  HttpStatus,
-  Injectable,
-} from "@nestjs/common";
+import { CanActivate, ExecutionContext, Injectable } from "@nestjs/common";
 import { GqlExecutionContext } from "@nestjs/graphql";
-import { JwtService } from "@nestjs/jwt";
-import { devToolsEnabled } from "../../config";
+import { AuthenticationError } from "apollo-server-express";
+import { devToolsEnabled, notProduction } from "../../config";
 import mockUsers from "../../devTools/data/users";
-import { User } from "../../user/user.model";
 import { UserService } from "../../user/user.service";
+import { AuthService } from "../auth.service";
+import { SessionService } from "../session/session.service";
 
 /**
  * Guard to require only token authentication.
  */
 @Injectable()
 export class AuthGuard implements CanActivate {
-  constructor(private userService: UserService, private jwtService: JwtService) {}
+  constructor(
+    private userService: UserService,
+    private authService: AuthService,
+    private sessionService: SessionService,
+  ) {}
 
   async canActivate(context: ExecutionContext) {
     const gqlContext = GqlExecutionContext.create(context);
-    const request = gqlContext.getContext().req || context.switchToHttp().getRequest();
-    let user: User;
+    const request = gqlContext.getContext().req;
+    const accessToken = request.headers.accesstoken || null;
 
-    try {
-      const accessToken = request.headers.accesstoken || null;
-      user = await this.getUser(request.headers);
-
-      if (!devToolsEnabled && !user.tokens.includes(accessToken)) {
-        throw true;
-      }
-    } catch {
-      throw new HttpException("Authentication failed.", HttpStatus.FORBIDDEN);
+    if (!accessToken) {
+      throw new AuthenticationError("Access token was not provided.");
     }
 
-    const authorized = !!user;
-
-    // Add user data to request only after authorization to avoid mistakes.
-    if (authorized) {
-      // DO NOT REMOVE THIS!
-      // Fetch the user again in a service if you really need to see the tokens.
-      user.tokens = null;
-      request.user = user;
+    if (this.usingMockUser(accessToken)) {
+      request.user = await this.userService.findById(accessToken);
+      return true;
     }
 
-    return authorized;
+    const { sessionId } = this.authService.verifyToken(accessToken);
+    const { user } = await this.sessionService.verifySession(sessionId);
+
+    if (!user) {
+      throw new AuthenticationError("Unknown authentication error.");
+    }
+
+    request.user = user;
+    return true;
   }
 
-  private async getUser(headers: any) {
-    const allowedMockUsers = mockUsers.map((user) => user.id);
-    const { accesstoken } = headers;
-
-    const mocking = devToolsEnabled && allowedMockUsers.includes(headers.accesstoken);
-    const uid = mocking ? accesstoken : this.jwtService.decode(headers.accesstoken)["uid"];
-
-    const user = await this.userService.findByIdWithTokens(uid);
-
-    if (!mocking && !user.tokens.includes(headers.accesstoken)) {
-      throw new HttpException("Authentication failed.", HttpStatus.FORBIDDEN);
-    }
-
-    return user;
+  private usingMockUser(accessToken: string): boolean {
+    const mockUserIds = mockUsers.map((user) => user.id);
+    return notProduction && devToolsEnabled && mockUserIds.includes(accessToken);
   }
 }

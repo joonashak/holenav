@@ -1,4 +1,5 @@
 export const nodeEnv = process.env.NODE_ENV;
+export const notProduction = nodeEnv !== "production";
 export const databaseUrl = process.env.DATABASE_URL;
 export const clientUrl = process.env.CLIENT_URL;
 export const ssoCallbackUrl = process.env.SSO_CALLBACK_URL;
