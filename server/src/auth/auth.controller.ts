@@ -1,4 +1,4 @@
-import { Controller, Get, HttpException, HttpStatus, Query, Req, Res } from "@nestjs/common";
+import { Controller, Get, Query, Req, Res } from "@nestjs/common";
 import { Request, Response } from "express";
 import { UserDocument } from "../user/user.model";
 import { AuthService } from "./auth.service";
@@ -21,27 +21,6 @@ export class AuthController {
   ) {
     const clientCallbackUrl = await this.ssoService.handleCallback(authorizationCode, state);
     response.redirect(clientCallbackUrl);
-  }
-
-  // FIXME: Remove.
-  /**
-   * Check if an authentication token is still valid.
-   */
-  @Get("validateToken")
-  async validateToken(@Req() request: Request) {
-    const { headers } = request;
-    const { accesstoken } = headers;
-
-    if (!accesstoken || typeof accesstoken === "object") {
-      throw new HttpException("Bad token format.", HttpStatus.BAD_REQUEST);
-    }
-
-    const valid = await this.authService.validateToken(accesstoken);
-    if (!valid) {
-      throw new HttpException("Token not valid.", HttpStatus.UNAUTHORIZED);
-    }
-
-    return "Token OK.";
   }
 
   // FIXME: Remove.

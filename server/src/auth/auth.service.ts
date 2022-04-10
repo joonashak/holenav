@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import { UserDocument } from "../user/user.model";
 import { UserService } from "../user/user.service";
@@ -36,16 +36,6 @@ export class AuthService {
     await this.userService.addToken(id, token);
 
     return token;
-  }
-
-  async validateToken(token: string): Promise<boolean> {
-    try {
-      const { uid }: any = this.jwtService.decode(token);
-      const { tokens } = await this.userService.findByIdWithTokens(uid);
-      return tokens.includes(token);
-    } catch (error) {
-      throw new HttpException("Bad token format.", HttpStatus.BAD_REQUEST);
-    }
   }
 
   /**
