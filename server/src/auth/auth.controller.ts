@@ -13,16 +13,6 @@ export class AuthController {
 
   // FIXME: Remove.
   /**
-   * Redirect client to EVE SSO login page for logging in to Holenav.
-   */
-  @Get("login")
-  async login(@Res() response: Response): Promise<void> {
-    const ssoLoginUrl = await this.ssoService.getSsoLoginUrl(SsoSessionTypes.LOGIN);
-    response.redirect(ssoLoginUrl);
-  }
-
-  // FIXME: Remove.
-  /**
    * Redirect client to EVE SSO login page for adding a new character to existing user.
    */
   @RequireAuth()

@@ -3,3 +3,9 @@ mutation GetToken($state: String!) {
     accessToken
   }
 }
+
+query StartSsoLogin {
+  startSsoLogin {
+    ssoLoginUrl
+  }
+}

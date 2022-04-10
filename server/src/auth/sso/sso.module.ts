@@ -6,7 +6,7 @@ import { SsoSessionModule } from "./ssoSession/ssoSession.module";
 
 @Module({
   imports: [SsoSessionModule, CharacterModule],
-  providers: [SsoResolver],
+  providers: [SsoService, SsoResolver],
   exports: [SsoService],
 })
 export class SsoModule {}

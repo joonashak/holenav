@@ -7,6 +7,7 @@ import { CharacterModule } from "../entities/character/character.module";
 import { jwtLifetime, jwtSecret } from "../config";
 import { SsoSessionModule } from "./sso/ssoSession/ssoSession.module";
 import AuthResolver from "./auth.resolver";
+import { SsoModule } from "./sso/sso.module";
 
 @Global()
 @Module({
@@ -17,6 +18,7 @@ import AuthResolver from "./auth.resolver";
       signOptions: { expiresIn: jwtLifetime },
     }),
     CharacterModule,
+    SsoModule,
     SsoSessionModule,
   ],
   providers: [SsoService, AuthService, AuthResolver],

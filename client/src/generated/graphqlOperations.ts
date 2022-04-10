@@ -150,12 +150,14 @@ export type MutationUpdateWormholeArgs = {
 
 export type Query = {
   __typename?: "Query";
+  addCharacter: StartSsoLoginDto;
   getAccessibleFolders: Array<Folder>;
   getAllUsers: Array<SanitizedUser>;
   getConnectionTree: ConnectionTree;
   getManageableFolders: Array<Folder>;
   getSystemByName: System;
   getWormholesBySystem: Array<Wormhole>;
+  startSsoLogin: StartSsoLoginDto;
   whoami: User;
 };
 
@@ -196,6 +198,11 @@ export type Signature = {
   id: Scalars["String"];
   name: Scalars["String"];
   type?: Maybe<SigTypes>;
+};
+
+export type StartSsoLoginDto = {
+  __typename?: "StartSsoLoginDto";
+  ssoLoginUrl: Scalars["String"];
 };
 
 export type System = {
@@ -272,6 +279,13 @@ export type GetTokenMutationVariables = Exact<{
 export type GetTokenMutation = {
   __typename?: "Mutation";
   getToken: { __typename?: "AccessTokenDto"; accessToken: string };
+};
+
+export type StartSsoLoginQueryVariables = Exact<{ [key: string]: never }>;
+
+export type StartSsoLoginQuery = {
+  __typename?: "Query";
+  startSsoLogin: { __typename?: "StartSsoLoginDto"; ssoLoginUrl: string };
 };
 
 export type FolderFieldsFragment = { __typename?: "Folder"; id: string; name: string };
@@ -363,6 +377,29 @@ export const GetTokenDocument = {
     },
   ],
 } as unknown as DocumentNode<GetTokenMutation, GetTokenMutationVariables>;
+export const StartSsoLoginDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "query",
+      name: { kind: "Name", value: "StartSsoLogin" },
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "startSsoLogin" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [{ kind: "Field", name: { kind: "Name", value: "ssoLoginUrl" } }],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<StartSsoLoginQuery, StartSsoLoginQueryVariables>;
 export const SettingsDataDocument = {
   kind: "Document",
   definitions: [
