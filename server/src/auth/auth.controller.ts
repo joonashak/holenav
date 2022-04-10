@@ -1,26 +1,14 @@
 import { Controller, Get, HttpException, HttpStatus, Query, Req, Res } from "@nestjs/common";
 import { Request, Response } from "express";
-import { User, UserDocument } from "../user/user.model";
+import { UserDocument } from "../user/user.model";
 import { AuthService } from "./auth.service";
 import RequireAuth from "./decorators/auth.decorator";
 import { CurrentUser } from "./decorators/user.decorator";
 import { SsoService } from "./sso/sso.service";
-import SsoSessionTypes from "./sso/ssoSession/ssoSessionTypes.enum";
 
 @Controller("auth")
 export class AuthController {
   constructor(private ssoService: SsoService, private authService: AuthService) {}
-
-  // FIXME: Remove.
-  /**
-   * Redirect client to EVE SSO login page for adding a new character to existing user.
-   */
-  @RequireAuth()
-  @Get("addCharacter")
-  async addCharacter(@CurrentUser() user: User): Promise<string> {
-    const ssoLoginUrl = await this.ssoService.getSsoLoginUrl(SsoSessionTypes.ADD_CHARACTER, user);
-    return ssoLoginUrl;
-  }
 
   /**
    * Handle callback after player has successfully logged in through EVE SSO.

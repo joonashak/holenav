@@ -288,6 +288,13 @@ export type StartSsoLoginQuery = {
   startSsoLogin: { __typename?: "StartSsoLoginDto"; ssoLoginUrl: string };
 };
 
+export type AddCharacterQueryVariables = Exact<{ [key: string]: never }>;
+
+export type AddCharacterQuery = {
+  __typename?: "Query";
+  addCharacter: { __typename?: "StartSsoLoginDto"; ssoLoginUrl: string };
+};
+
 export type FolderFieldsFragment = { __typename?: "Folder"; id: string; name: string };
 
 export type SettingsDataQueryVariables = Exact<{ [key: string]: never }>;
@@ -400,6 +407,29 @@ export const StartSsoLoginDocument = {
     },
   ],
 } as unknown as DocumentNode<StartSsoLoginQuery, StartSsoLoginQueryVariables>;
+export const AddCharacterDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "query",
+      name: { kind: "Name", value: "AddCharacter" },
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "addCharacter" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [{ kind: "Field", name: { kind: "Name", value: "ssoLoginUrl" } }],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<AddCharacterQuery, AddCharacterQueryVariables>;
 export const SettingsDataDocument = {
   kind: "Document",
   definitions: [

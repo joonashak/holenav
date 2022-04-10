@@ -10,8 +10,10 @@ export default (props: ButtonProps) => {
     },
   });
 
+  const onClick = () => ssoLoginQuery();
+
   return (
-    <Button onClick={() => ssoLoginQuery()} {...props}>
+    <Button onClick={onClick} {...props}>
       <img src={ssoLogo} alt="Log In With EVE Online" />
     </Button>
   );

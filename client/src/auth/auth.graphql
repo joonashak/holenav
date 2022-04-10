@@ -9,3 +9,9 @@ query StartSsoLogin {
     ssoLoginUrl
   }
 }
+
+query AddCharacter {
+  addCharacter {
+    ssoLoginUrl
+  }
+}

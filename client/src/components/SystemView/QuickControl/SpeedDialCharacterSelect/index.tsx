@@ -1,5 +1,4 @@
 import { useRef, useState } from "react";
-import axios from "axios";
 import {
   Divider,
   ListItemIcon,
@@ -11,27 +10,27 @@ import {
 } from "@mui/material";
 import GroupIcon from "@mui/icons-material/Group";
 import AddIcon from "@mui/icons-material/Add";
-import { endpoints } from "../../../../config";
-import useAuth from "../../../../auth/useAuth";
+import { useLazyQuery } from "@apollo/client";
 import useUserData from "../../../UserData/useUserData";
 import CharacterMenuItem from "./CharacterMenuItem";
 import useLocalData from "../../../LocalData/useLocalData";
+import { AddCharacterDocument } from "../../../../generated/graphqlOperations";
 
 const SpeedDialCharacterSelect = (props: SpeedDialActionProps) => {
   const { main, alts } = useUserData();
   const { setActiveCharacter } = useLocalData();
-  const { token } = useAuth();
   const anchorEl = useRef(null);
   const [menuOpen, setMenuOpen] = useState(false);
 
   const toggleMenu = () => setMenuOpen((prev) => !prev);
 
-  const addCharacter = async () => {
-    const { data } = await axios.get(endpoints.addCharacter, {
-      headers: { accesstoken: token || "" },
-    });
-    window.location.href = data;
-  };
+  const [ssoLoginQuery] = useLazyQuery(AddCharacterDocument, {
+    onCompleted: ({ addCharacter }) => {
+      window.location.href = addCharacter.ssoLoginUrl;
+    },
+  });
+
+  const addCharacter = () => ssoLoginQuery();
 
   const selectCharacter = (esiId: string) => () => {
     setActiveCharacter(esiId);
