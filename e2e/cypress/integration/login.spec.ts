@@ -4,7 +4,7 @@ describe("Login", () => {
   });
 
   it("Login page loads", () => {
-    cy.visit("/");
+    cy.visit("/")
     cy.contains("Holenav");
   });
 
