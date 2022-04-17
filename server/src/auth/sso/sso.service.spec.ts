@@ -14,7 +14,7 @@ import SsoSessionTypes from "./ssoSession/ssoSessionTypes.enum";
 
 const expectedCallbackUrl = `https://login.eveonline.com/v2/oauth/authorize/?response_type=code&redirect_uri=test-callback-url&client_id=test-sso-client-id&state=${testSsoSession.key}`;
 
-describe("AuthService", () => {
+describe("SsoService", () => {
   let userService: UserService;
   let ssoService: SsoService;
   let ssoSessionService: SsoSessionService;
