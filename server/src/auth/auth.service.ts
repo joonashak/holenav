@@ -25,7 +25,7 @@ export class AuthService {
     );
 
     if (!ssoLoginSuccess) {
-      throw new Error("SSO login unsuccessful.");
+      throw new AuthenticationError("SSO login unsuccessful.");
     }
 
     const user = await this.userService.findByCharacterOrCreateUser(character);
