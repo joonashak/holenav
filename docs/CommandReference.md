@@ -2,15 +2,27 @@
 
 These commands control the development environment. Run them in the project root.
 
+## Installation
+
+Install NPM packages locally in all sub-projects.
+
+Not strictly required as the containerized environment will function without installing the dependencies locally. However, for actual development this is necessary in order to use tools such as linting, have TypeScript resolve dependencies correctly, etc.
+
+```bash
+npm run setup
+```
+
 ## Basic Commands
 
+Control the containerized development environment. Requires `npm`, `docker` and `docker-compose` commands to be available on the host machine.
+
 ### Start In Development Mode
+
+Starts the development and test containers in detached mode and shows backend and frontend logs.
 
 ```bash
 npm start
 ```
-
-Starts the development and test containers in detached mode and shows backend and frontend logs.
 
 ### Start In Development Mode (Detached)
 
@@ -26,26 +38,52 @@ npm stop
 
 ### Attach To Logs
 
-App must already be running.
+App must be running.
 
 ```bash
 npm run logs
 ```
 
-## Testing
+## Linting
 
-Development environment must be running before using testing commands.
+Linting runs on the host machine, thus [NPM packages must be installed](#installation). Containers do not need to be up.
 
-### Run All Tests
+### Run linter
+
+Lints all sub-projects when run in repository root. Can also be run in sub-project folders `client`, `e2e` and `server`.
+
+```bash
+npm run lint
+```
+
+## Backend Unit Tests
+
+These tests run on the host machine and require [NPM packages to be installed](#installation). Containers do not need to be up.
+
+Execute in `server/` directory.
+
+Both commands can be appended with `-- PATTERN` to run only test files that match `PATTERN`, e.g., `npm run test:watch -- auth`.
+
+### Run Backend Unit Tests
 
 ```bash
 npm test
 ```
 
-### Run Only Linting
+### Watch Backend Unit Tests
 
 ```bash
-npm run lint
+npm run test:watch
+```
+
+## Containerized Tests
+
+Development environment containers must be running before using these testing commands.
+
+### Run All Tests
+
+```bash
+npm test
 ```
 
 ### Run Only End-to-End Tests (Cypress)
@@ -78,4 +116,6 @@ Uses `graphql-codegen` to generate TypeScript GraphQL operations from `.graphql`
 
 Run this command in the `client/` directory.
 
-`npm run generate`
+```bash
+npm run generate
+```
