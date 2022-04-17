@@ -4,7 +4,6 @@ import RequireAuth from "../decorators/auth.decorator";
 import { CurrentUser } from "../decorators/user.decorator";
 import StartSsoLoginDto from "../dto/startSsoLogin.dto";
 import { SsoService } from "./sso.service";
-import SsoSessionTypes from "./ssoSession/ssoSessionTypes.enum";
 
 @Resolver()
 export default class SsoResolver {
@@ -15,7 +14,7 @@ export default class SsoResolver {
    */
   @Query((returns) => StartSsoLoginDto)
   async startSsoLogin(): Promise<StartSsoLoginDto> {
-    const ssoLoginUrl = await this.ssoService.getSsoLoginUrl(SsoSessionTypes.LOGIN);
+    const ssoLoginUrl = await this.ssoService.getSsoLoginUrl();
     return { ssoLoginUrl };
   }
 
@@ -26,7 +25,7 @@ export default class SsoResolver {
   @RequireAuth()
   @Query((returns) => StartSsoLoginDto)
   async addCharacter(@CurrentUser() user: User): Promise<StartSsoLoginDto> {
-    const ssoLoginUrl = await this.ssoService.getSsoLoginUrl(SsoSessionTypes.ADD_CHARACTER, user);
+    const ssoLoginUrl = await this.ssoService.getSsoLoginUrl(user);
     return { ssoLoginUrl };
   }
 }

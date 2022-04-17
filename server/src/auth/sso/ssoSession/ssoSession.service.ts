@@ -15,10 +15,10 @@ export class SsoSessionService {
   /**
    * Create new SSO state.
    */
-  async createSsoSession(type: SsoSessionTypes, user: User = null): Promise<SsoSession> {
+  async createSsoSession(user: User): Promise<SsoSession> {
     return this.ssoSessionModel.create({
       key: uuid(),
-      type,
+      type: user ? SsoSessionTypes.ADD_CHARACTER : SsoSessionTypes.LOGIN,
       user,
       expiry: dayjs().add(5, "minute"),
     });
