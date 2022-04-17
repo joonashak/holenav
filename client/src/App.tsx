@@ -12,7 +12,7 @@ export default () => {
   const { loadingLocalState } = useLocalData();
 
   if (loadingLocalState) {
-    return null;
+    return null
   }
 
   return (

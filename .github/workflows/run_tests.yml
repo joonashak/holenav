@@ -6,8 +6,20 @@ on:
       - main
 
 jobs:
+  lint-client:
+    name: Lint (client)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 16.4
+      - name: Lint client
+        working-directory: client
+        run: npm run lint
+
   test:
-    name: Tests
+    name: Tests (OLD JOB)
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -16,10 +28,8 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 16.4
-      #- name: Run All Tests
-      #  run: npm run test:ci
-      - name: Lint (client)
-        run: cd client && npm run lint
+      - name: Run All Tests
+        run: npm run test:ci
       - uses: actions/upload-artifact@v2
         if: failure()
         with:
