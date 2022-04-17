@@ -9,61 +9,65 @@ jobs:
   lint-client:
     name: Lint (client)
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: client
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
           node-version: 16.4
       - name: Install dependencies
-        working-directory: client
         run: npm ci
       - name: Lint client
-        working-directory: client
         run: npm run lint
 
   lint-server:
     name: Lint (server)
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: server
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
           node-version: 16.4
       - name: Install dependencies
-        working-directory: server
         run: npm ci
       - name: Lint server
-        working-directory: server
         run: npm run lint
 
   lint-e2e:
     name: Lint (E2E tests)
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: e2e
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
           node-version: 16.4
       - name: Install dependencies
-        working-directory: e2e
         run: npm ci
       - name: Lint E2E tests
-        working-directory: e2e
         run: npm run lint
 
   test-server:
     name: Unit tests (server)
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: server
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
           node-version: 16.4
       - name: Install dependencies
-        working-directory: server
         run: npm ci
       - name: Run unit tests
-        working-directory: server
         run: npm test
 
   test-e2e:
