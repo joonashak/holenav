@@ -10,6 +10,9 @@ import { SsoService } from "./sso.service";
 import { SsoApiService } from "./ssoApi.service";
 import { SsoSessionService } from "./ssoSession/ssoSession.service";
 import { testSsoSession, testSsoTokens, testUser } from "../../testUtils/testData";
+import SsoSessionTypes from "./ssoSession/ssoSessionTypes.enum";
+
+const expectedCallbackUrl = `https://login.eveonline.com/v2/oauth/authorize/?response_type=code&redirect_uri=test-callback-url&client_id=test-sso-client-id&state=${testSsoSession.key}`;
 
 describe("AuthService", () => {
   let userService: UserService;
@@ -35,24 +38,20 @@ describe("AuthService", () => {
   });
 
   it("Initializes SSO login", async () => {
-    await expect(ssoService.getSsoLoginUrl()).resolves.toEqual(
-      `https://login.eveonline.com/v2/oauth/authorize/?response_type=code&redirect_uri=undefined&client_id=undefined&state=${testSsoSession.key}`,
-    );
+    await expect(ssoService.getSsoLoginUrl()).resolves.toEqual(expectedCallbackUrl);
     expect(ssoSessionService.createSsoSession).toBeCalledTimes(1);
     expect(ssoSessionService.createSsoSession).toBeCalledWith(null);
   });
 
   it("Initializes SSO login for adding an alt", async () => {
-    await expect(ssoService.getSsoLoginUrl(testUser)).resolves.toEqual(
-      `https://login.eveonline.com/v2/oauth/authorize/?response_type=code&redirect_uri=undefined&client_id=undefined&state=${testSsoSession.key}`,
-    );
+    await expect(ssoService.getSsoLoginUrl(testUser)).resolves.toEqual(expectedCallbackUrl);
     expect(ssoSessionService.createSsoSession).toBeCalledTimes(1);
     expect(ssoSessionService.createSsoSession).toBeCalledWith(testUser);
   });
 
   it("Handles SSO login callback correctly", async () => {
     await expect(ssoService.handleCallback("asd", testSsoSession.key)).resolves.toEqual(
-      `undefined/login/${testSsoSession.key}`,
+      `test-client-url/login/${testSsoSession.key}`,
     );
     expect(ssoSessionService.verifySsoSession).toBeCalledTimes(1);
     expect(ssoSessionService.verifySsoSession).toBeCalledWith(testSsoSession.key);
@@ -61,5 +60,24 @@ describe("AuthService", () => {
     expect(userService.addAlt).toBeCalledTimes(0);
     expect(ssoApiService.verifyAndDecodeSsoAccessToken).toBeCalledTimes(1);
     expect(ssoApiService.verifyAndDecodeSsoAccessToken).toBeCalledWith(testSsoTokens.accessToken);
+  });
+
+  it("Adds a character and deletes the SSO session when adding an alt instead of logging in", async () => {
+    jest
+      .spyOn(ssoSessionService, "verifySsoSession")
+      .mockResolvedValueOnce({ ...testSsoSession, type: SsoSessionTypes.ADD_CHARACTER });
+
+    await expect(ssoService.handleCallback("asd", testSsoSession.key)).resolves.toEqual(
+      "test-client-url",
+    );
+    expect(ssoSessionService.verifySsoSession).toBeCalledTimes(1);
+    expect(ssoSessionService.verifySsoSession).toBeCalledWith(testSsoSession.key);
+    expect(ssoSessionService.setSsoLoginSuccess).toBeCalledTimes(1);
+    expect(ssoSessionService.setSsoLoginSuccess).toBeCalledWith(testSsoSession.key, testUser.main);
+    expect(userService.addAlt).toBeCalledTimes(1);
+    expect(ssoApiService.verifyAndDecodeSsoAccessToken).toBeCalledTimes(1);
+    expect(ssoApiService.verifyAndDecodeSsoAccessToken).toBeCalledWith(testSsoTokens.accessToken);
+    expect(ssoSessionService.removeSsoSession).toBeCalledTimes(1);
+    expect(ssoSessionService.removeSsoSession).toBeCalledWith(testSsoSession.key);
   });
 });

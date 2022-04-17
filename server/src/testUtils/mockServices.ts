@@ -21,6 +21,7 @@ export const MockSsoSessionService = {
     verifySsoSession: fn(async () => testSsoSession),
     setSsoLoginSuccess: fn(),
     createSsoSession: fn(async () => testSsoSession),
+    removeSsoSession: fn(),
   }),
 };
 
