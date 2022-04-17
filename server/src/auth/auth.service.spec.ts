@@ -1,34 +1,16 @@
 import { JwtModule, JwtService } from "@nestjs/jwt";
 import { Test } from "@nestjs/testing";
 import { AuthenticationError } from "apollo-server-express";
-import { User } from "../user/user.model";
+import {
+  MockSessionService,
+  MockSsoSessionService,
+  MockUserService,
+} from "../testUtils/mockServices";
+import { testSsoSession, testUser } from "../testUtils/testData";
 import { UserService } from "../user/user.service";
 import { AuthService } from "./auth.service";
 import { SessionService } from "./session/session.service";
 import { SsoSessionService } from "./sso/ssoSession/ssoSession.service";
-
-const testUser: User = {
-  id: "asd",
-  alts: [],
-  folderRoles: [],
-  main: {
-    name: "test character",
-    esiId: "uske67ent",
-    accessToken: "j67j64m",
-    refreshToken: "g7i84nthg",
-  },
-  settings: null,
-  systemRole: null,
-};
-
-const testSsoLogin = {
-  ssoLoginSuccess: true,
-  key: "",
-  type: null,
-  character: testUser.main,
-  user: testUser,
-  expiry: null,
-};
 
 describe("AuthService", () => {
   let authService: AuthService;
@@ -37,7 +19,7 @@ describe("AuthService", () => {
   let ssoSessionService: SsoSessionService;
   let jwtService: JwtService;
 
-  beforeAll(async () => {
+  beforeEach(async () => {
     const module = await Test.createTestingModule({
       imports: [
         JwtModule.register({
@@ -45,28 +27,7 @@ describe("AuthService", () => {
           signOptions: { expiresIn: "30d" },
         }),
       ],
-      providers: [
-        AuthService,
-        {
-          provide: SsoSessionService,
-          useFactory: () => ({
-            create: jest.fn(),
-            verifySsoLoginSuccess: jest.fn(),
-          }),
-        },
-        {
-          provide: UserService,
-          useFactory: () => ({
-            findByCharacterOrCreateUser: jest.fn(),
-          }),
-        },
-        {
-          provide: SessionService,
-          useFactory: () => ({
-            create: jest.fn(),
-          }),
-        },
-      ],
+      providers: [AuthService, MockSsoSessionService, MockUserService, MockSessionService],
     }).compile();
 
     authService = module.get<AuthService>(AuthService);
@@ -77,12 +38,6 @@ describe("AuthService", () => {
   });
 
   it("Can login by using SSO state secret", async () => {
-    jest.spyOn(ssoSessionService, "verifySsoLoginSuccess").mockResolvedValueOnce(testSsoLogin);
-    jest.spyOn(userService, "findByCharacterOrCreateUser").mockResolvedValueOnce(testUser);
-    jest
-      .spyOn(sessionService, "create")
-      .mockResolvedValueOnce({ id: "aeg43", expiresAt: null, user: testUser });
-
     const token = await authService.login("asd");
     expect(jwtService.verify(token)).toBeTruthy();
 
@@ -97,7 +52,7 @@ describe("AuthService", () => {
   it("Throws on invalid SSO login", async () => {
     jest
       .spyOn(ssoSessionService, "verifySsoLoginSuccess")
-      .mockResolvedValueOnce({ ...testSsoLogin, ssoLoginSuccess: false });
+      .mockResolvedValueOnce({ ...testSsoSession, ssoLoginSuccess: false });
 
     await expect(authService.login("")).rejects.toThrowError(AuthenticationError);
   });
