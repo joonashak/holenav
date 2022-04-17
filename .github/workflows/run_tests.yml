@@ -21,6 +21,21 @@ jobs:
         working-directory: client
         run: npm run lint
 
+  lint-server:
+    name: Lint (server)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 16.4
+      - name: Install dependencies
+        working-directory: server
+        run: npm ci
+      - name: Lint server
+        working-directory: server
+        run: npm run lint
+
   test:
     name: Tests (OLD JOB)
     runs-on: ubuntu-latest
