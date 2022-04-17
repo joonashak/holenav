@@ -1,7 +1,7 @@
 import { Field, ObjectType, registerEnumType } from "@nestjs/graphql";
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import * as mongoose from "mongoose";
-import { Character } from "src/entities/character/character.model";
+import { Character } from "../../../entities/character/character.model";
 import { User } from "../../../user/user.model";
 import SsoSessionTypes from "./ssoSessionTypes.enum";
 

@@ -71,10 +71,10 @@ export class SsoService {
    * Get the SSO tokens using the authorization code supplied by the user, save
    * them and update the SSO state with the character's ID.
    *
-   * Returns the URL to redirect the client to.
+   * @returns URL to redirect the client to.
    */
   async handleCallback(authorizationCode: string, state: string): Promise<string> {
-    const session = await this.ssoSessionService.verifySsoSession(state);
+    const ssoSession = await this.ssoSessionService.verifySsoSession(state);
 
     const { accessToken, refreshToken } = await this.getSsoTokens(authorizationCode);
     const jwtData = await this.verifyAndDecodeToken(accessToken);
@@ -88,13 +88,13 @@ export class SsoService {
 
     await this.ssoSessionService.setSsoLoginSuccess(state, character);
 
-    if (session.type === SsoSessionTypes.ADD_CHARACTER) {
-      await this.userService.addAlt(character, session.user.id);
-      await this.ssoSessionService.removeSsoSession(session.key);
+    if (ssoSession.type === SsoSessionTypes.ADD_CHARACTER) {
+      await this.userService.addAlt(character, ssoSession.user.id);
+      await this.ssoSessionService.removeSsoSession(ssoSession.key);
     }
 
     const clientCallbackUrl =
-      session.type === SsoSessionTypes.LOGIN ? getClientLoginCallbackUrl(state) : clientUrl;
+      ssoSession.type === SsoSessionTypes.LOGIN ? getClientLoginCallbackUrl(state) : clientUrl;
 
     return clientCallbackUrl;
   }

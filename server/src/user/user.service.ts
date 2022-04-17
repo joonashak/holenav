@@ -24,7 +24,7 @@ export class UserService {
    * @param user User to be created.
    * @returns Newly created user.
    */
-  async create(user: CreateUserDto): Promise<User> {
+  async create(user: CreateUserDto): Promise<UserDocument> {
     if (user.main) {
       await this.ensureCharacterNotInUse(user.main);
     }
@@ -62,12 +62,20 @@ export class UserService {
   }
 
   /**
-   * Find a user by (main) character.
-   * @param character Character to search for.
-   * @returns The found user or `undefined`.
+   * Find a user by character or create new.
+   *
+   * Both mains and alts are searched over. If a match is not found, new user is
+   * create with the given character as its main.
+   * @param character Character to search for or use as the main if creating new user.
+   * @returns The found or created user.
    */
-  async findByCharacter(character: Character): Promise<User> {
-    const user = await this.userModel.findOne({ main: character });
+  async findByCharacterOrCreateUser(character: Character): Promise<User> {
+    let user = await this.userModel.findOne({ $or: [{ main: character }, { alts: character }] });
+
+    if (!user) {
+      user = await this.create({ main: character });
+    }
+
     return user;
   }
 

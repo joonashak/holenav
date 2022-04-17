@@ -20,20 +20,15 @@ export class AuthService {
    * Get JWT token for Holenav client-server auth given a valid SSO state secret.
    */
   async login(state: string): Promise<string> {
-    // Check SSO login state.
     const { ssoLoginSuccess, character } = await this.ssoSessionService.verifySsoLoginSuccess(
       state,
     );
+
     if (!ssoLoginSuccess) {
       throw new Error("SSO login unsuccessful.");
     }
 
-    // Create new user if character not found.
-    let user = await this.userService.findByCharacter(character);
-    if (!user) {
-      user = await this.userService.create({ main: character });
-    }
-
+    const user = await this.userService.findByCharacterOrCreateUser(character);
     return this.createAccessToken(user);
   }
 
