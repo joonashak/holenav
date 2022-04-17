@@ -4,8 +4,8 @@ describe("Login", () => {
   });
 
   it("Login page loads", () => {
-    cy.visit("/")
-    cy.contains("Holenav");
+    cy.visit("/");
+    cy.contains("Hölenav");
   });
 
   it("User mocking works", () => {
