@@ -1,11 +1,10 @@
 import { Controller, Get, Query, Res } from "@nestjs/common";
 import { Response } from "express";
-import { AuthService } from "./auth.service";
 import { SsoService } from "./sso/sso.service";
 
 @Controller("auth")
 export class AuthController {
-  constructor(private ssoService: SsoService, private authService: AuthService) {}
+  constructor(private ssoService: SsoService) {}
 
   /**
    * Handle callback after player has successfully logged in through EVE SSO.

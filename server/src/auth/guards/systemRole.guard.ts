@@ -7,14 +7,13 @@ import {
 } from "@nestjs/common";
 import { Reflector } from "@nestjs/core";
 import { GqlExecutionContext } from "@nestjs/graphql";
-import { FolderService } from "../../entities/folder/folder.service";
 import SystemRoles from "../../user/roles/systemRoles.enum";
 
 export const requiredSystemRoleKey = "requiredSystemRole";
 
 @Injectable()
 export class SystemRoleGuard implements CanActivate {
-  constructor(private reflector: Reflector, private folderService: FolderService) {}
+  constructor(private reflector: Reflector) {}
 
   canActivate(context: ExecutionContext): boolean {
     const requiredRole = this.getRequiredRole(context);
