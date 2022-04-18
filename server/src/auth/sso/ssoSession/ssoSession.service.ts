@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import dayjs from "dayjs";
 import { Model } from "mongoose";
@@ -67,11 +67,11 @@ export class SsoSessionService {
     const ssoSession = await this.verifySsoSession(key);
 
     if (ssoSession.type !== SsoSessionTypes.LOGIN) {
-      throw new HttpException("Invalid SSO login type.", HttpStatus.BAD_REQUEST);
+      throw new AuthenticationError("Invalid SSO login type.");
     }
 
     if (!ssoSession.ssoLoginSuccess) {
-      throw new HttpException("SSO login failed.", HttpStatus.FORBIDDEN);
+      throw new AuthenticationError("SSO login failed.");
     }
 
     await this.removeSsoSession(key);

@@ -11,6 +11,8 @@ import SsoSessionTypes from "./ssoSessionTypes.enum";
 describe("SsoSessionService", () => {
   let ssoSessionService: SsoSessionService;
   let ssoSessionModel: Model<SsoSession>;
+  let removeSsoSessionSpy: jest.SpyInstance;
+  let verifySsoSessionSpy: jest.SpyInstance;
 
   beforeEach(async () => {
     const module = await Test.createTestingModule({
@@ -22,6 +24,7 @@ describe("SsoSessionService", () => {
             create: jest.fn().mockResolvedValue(testSsoSession),
             findOne: jest.fn(() => ({ populate: () => testSsoSession })),
             findOneAndRemove: jest.fn(),
+            findOneAndUpdate: jest.fn(),
           }),
         },
       ],
@@ -29,6 +32,8 @@ describe("SsoSessionService", () => {
 
     ssoSessionService = module.get<SsoSessionService>(SsoSessionService);
     ssoSessionModel = module.get<Model<SsoSession>>(getModelToken(SsoSession.name));
+    removeSsoSessionSpy = jest.spyOn(ssoSessionService, "removeSsoSession");
+    verifySsoSessionSpy = jest.spyOn(ssoSessionService, "verifySsoSession");
   });
 
   describe("Create and remove", () => {
@@ -91,12 +96,68 @@ describe("SsoSessionService", () => {
           } as any),
       );
 
-      const removeSsoSessionSpy = jest.spyOn(ssoSessionService, "removeSsoSession");
       await expect(ssoSessionService.verifySsoSession(testSsoSession.key)).rejects.toThrowError(
         AuthenticationError,
       );
       expect(removeSsoSessionSpy).toBeCalledTimes(1);
       expect(removeSsoSessionSpy).toBeCalledWith(testSsoSession.key);
+    });
+  });
+
+  describe("SSO login status", () => {
+    it("Mark SSO login as successful", async () => {
+      await expect(
+        ssoSessionService.setSsoLoginSuccess(testSsoSession.key, testSsoSession.character),
+      ).resolves.not.toThrow();
+
+      expect(ssoSessionModel.findOneAndUpdate).toBeCalledTimes(1);
+      expect(ssoSessionModel.findOneAndUpdate).toBeCalledWith(
+        { key: testSsoSession.key },
+        { ssoLoginSuccess: true, character: testSsoSession.character },
+      );
+      expect(verifySsoSessionSpy).toBeCalledTimes(1);
+      expect(verifySsoSessionSpy).toBeCalledWith(testSsoSession.key);
+    });
+
+    it("Verify with successful login status", async () => {
+      const successulSsoSession = { ...testSsoSession, ssoLoginSuccess: true };
+      verifySsoSessionSpy = jest
+        .spyOn(ssoSessionService, "verifySsoSession")
+        .mockResolvedValueOnce(successulSsoSession);
+
+      await expect(ssoSessionService.verifySsoLoginSuccess(testSsoSession.key)).resolves.toEqual(
+        successulSsoSession,
+      );
+      expect(verifySsoSessionSpy).toBeCalledTimes(1);
+      expect(verifySsoSessionSpy).toBeCalledWith(successulSsoSession.key);
+      expect(removeSsoSessionSpy).toBeCalledTimes(1);
+      expect(removeSsoSessionSpy).toBeCalledWith(testSsoSession.key);
+    });
+
+    it("Reject with unsuccessful login status", async () => {
+      const unsuccessulSsoSession = { ...testSsoSession, ssoLoginSuccess: false };
+      jest
+        .spyOn(ssoSessionService, "verifySsoSession")
+        .mockResolvedValueOnce(unsuccessulSsoSession);
+
+      await expect(
+        ssoSessionService.verifySsoLoginSuccess(testSsoSession.key),
+      ).rejects.toThrowError(AuthenticationError);
+    });
+
+    it("Reject with wrong SSO session type", async () => {
+      const addCharacterSsoSession = {
+        ...testSsoSession,
+        ssoLoginSuccess: true,
+        type: SsoSessionTypes.ADD_CHARACTER,
+      };
+      jest
+        .spyOn(ssoSessionService, "verifySsoSession")
+        .mockResolvedValueOnce(addCharacterSsoSession);
+
+      await expect(
+        ssoSessionService.verifySsoLoginSuccess(testSsoSession.key),
+      ).rejects.toThrowError(AuthenticationError);
     });
   });
 });
