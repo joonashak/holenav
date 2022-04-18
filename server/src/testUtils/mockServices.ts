@@ -1,3 +1,4 @@
+import { AuthService } from "../auth/auth.service";
 import { SessionService } from "../auth/session/session.service";
 import { SsoApiService } from "../auth/sso/ssoApi.service";
 import { SsoSessionService } from "../auth/sso/ssoSession/ssoSession.service";
@@ -29,6 +30,7 @@ export const MockUserService = {
   provide: UserService,
   useFactory: () => ({
     findByCharacterOrCreateUser: fn(async () => testUser),
+    findById: fn(),
     addAlt: fn(),
   }),
 };
@@ -36,21 +38,29 @@ export const MockUserService = {
 export const MockCharacterService = {
   provide: CharacterService,
   useFactory: () => ({
-    upsert: jest.fn(async () => testUser.main),
+    upsert: fn(async () => testUser.main),
   }),
 };
 
 export const MockSsoApiService = {
   provide: SsoApiService,
   useFactory: () => ({
-    getSsoTokens: jest.fn(async () => testSsoTokens),
-    verifyAndDecodeSsoAccessToken: jest.fn(async () => testSsoAccessTokenPayload),
+    getSsoTokens: fn(async () => testSsoTokens),
+    verifyAndDecodeSsoAccessToken: fn(async () => testSsoAccessTokenPayload),
   }),
 };
 
 export const MockSessionService = {
   provide: SessionService,
   useFactory: () => ({
-    create: jest.fn(async () => testSession),
+    create: fn(async () => testSession),
+    verifySession: fn().mockResolvedValue(testSession),
+  }),
+};
+
+export const MockAuthService = {
+  provide: AuthService,
+  useFactory: () => ({
+    verifyToken: fn().mockReturnValue({ sessionId: testSession.id }),
   }),
 };
