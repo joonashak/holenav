@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import ms from "ms";
 import { Session } from "../auth/session/session.model";
 import { SsoSession } from "../auth/sso/ssoSession/ssoSession.model";
@@ -24,7 +25,7 @@ export const testSsoSession: SsoSession = {
   type: SsoSessionTypes.LOGIN,
   character: testUser.main,
   user: testUser,
-  expiry: null,
+  expiry: dayjs().add(5, "minute").toDate(),
 };
 
 export const testSession: Session = {

@@ -7,6 +7,7 @@ import { v4 as uuid } from "uuid";
 import { SsoSession, SsoSessionDocument } from "./ssoSession.model";
 import SsoSessionTypes from "./ssoSessionTypes.enum";
 import { User } from "../../../user/user.model";
+import { AuthenticationError } from "apollo-server-express";
 
 @Injectable()
 export class SsoSessionService {
@@ -38,12 +39,12 @@ export class SsoSessionService {
     const currentSession = await this.ssoSessionModel.findOne({ key }).populate("user");
 
     if (!currentSession) {
-      throw new HttpException("SSO session not found.", HttpStatus.FORBIDDEN);
+      throw new AuthenticationError("SSO session not found.");
     }
 
-    if (dayjs().isAfter(currentSession.expiry)) {
+    if (!currentSession.expiry || dayjs().isAfter(currentSession.expiry)) {
       await this.removeSsoSession(key);
-      throw new HttpException("SSO session expired.", HttpStatus.FORBIDDEN);
+      throw new AuthenticationError("SSO session expired.");
     }
 
     return currentSession;
