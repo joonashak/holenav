@@ -45,6 +45,7 @@ export class TokenAuthGuard implements CanActivate {
 
   private usingMockUser(accessToken: string): boolean {
     const mockUserIds = mockUsers.map((user) => user.id);
+    console.log("devToolsEnabled", devToolsEnabled);
     return notProduction && devToolsEnabled && mockUserIds.includes(accessToken);
   }
 }
