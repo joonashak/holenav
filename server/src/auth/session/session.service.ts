@@ -2,6 +2,7 @@ import { Injectable, Logger } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Cron } from "@nestjs/schedule";
 import { AuthenticationError } from "apollo-server-express";
+import dayjs from "dayjs";
 import { Model } from "mongoose";
 import ms from "ms";
 import { jwtLifetime } from "../../config";
@@ -15,7 +16,7 @@ export class SessionService {
   constructor(@InjectModel(Session.name) private sessionModel: Model<SessionDocument>) {}
 
   async create(user: User): Promise<Session> {
-    const expiresAt = new Date(Date.now() + ms(jwtLifetime));
+    const expiresAt = dayjs().add(ms(jwtLifetime), "ms").toDate();
     return this.sessionModel.create({ expiresAt, user });
   }
 
@@ -48,6 +49,7 @@ export class SessionService {
       expiresAt: { $lte: new Date() },
     });
 
+    /* istanbul ignore next */
     if (deletedCount) {
       this.logger.log(
         `Removed ${deletedCount} session${deletedCount === 1 ? "" : "s"} as expired.`,

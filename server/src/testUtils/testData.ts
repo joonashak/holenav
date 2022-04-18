@@ -1,5 +1,4 @@
 import dayjs from "dayjs";
-import ms from "ms";
 import { Session } from "../auth/session/session.model";
 import { SsoSession } from "../auth/sso/ssoSession/ssoSession.model";
 import SsoSessionTypes from "../auth/sso/ssoSession/ssoSessionTypes.enum";
@@ -30,7 +29,7 @@ export const testSsoSession: SsoSession = {
 
 export const testSession: Session = {
   id: "j0w98f",
-  expiresAt: new Date(Date.now() + ms("+30d")),
+  expiresAt: dayjs().add(30, "d").toDate(),
   user: testUser,
 };
 
