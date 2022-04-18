@@ -25,6 +25,7 @@ describe("SsoSessionService", () => {
             findOne: jest.fn(() => ({ populate: () => testSsoSession })),
             findOneAndRemove: jest.fn(),
             findOneAndUpdate: jest.fn(),
+            remove: jest.fn(),
           }),
         },
       ],
@@ -64,6 +65,12 @@ describe("SsoSessionService", () => {
     it("Remove SSO session", async () => {
       await expect(ssoSessionService.removeSsoSession(testSsoSession.key)).resolves.not.toThrow();
       expect(ssoSessionModel.findOneAndRemove).toBeCalledWith({ key: testSsoSession.key });
+    });
+
+    it("Remove expired sessions", async () => {
+      await expect(ssoSessionService.removeExpiredSsoSessions()).resolves.not.toThrow();
+      const query: any = jest.spyOn(ssoSessionModel, "remove").mock.calls[0][0];
+      expect(dayjs(query.expiry.$lte).isSame(dayjs(), "s")).toBe(true);
     });
   });
 

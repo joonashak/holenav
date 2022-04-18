@@ -8,6 +8,7 @@ import { SsoSession, SsoSessionDocument } from "./ssoSession.model";
 import SsoSessionTypes from "./ssoSessionTypes.enum";
 import { User } from "../../../user/user.model";
 import { AuthenticationError } from "apollo-server-express";
+import { Cron } from "@nestjs/schedule";
 
 @Injectable()
 export class SsoSessionService {
@@ -76,5 +77,12 @@ export class SsoSessionService {
 
     await this.removeSsoSession(key);
     return ssoSession;
+  }
+
+  @Cron("0 4 * * * *")
+  async removeExpiredSsoSessions(): Promise<void> {
+    await this.ssoSessionModel.remove({
+      expiry: { $lte: new Date() },
+    });
   }
 }
