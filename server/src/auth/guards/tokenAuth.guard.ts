@@ -11,7 +11,7 @@ import { SessionService } from "../session/session.service";
  * Guard to require only token authentication.
  */
 @Injectable()
-export class AuthGuard implements CanActivate {
+export class TokenAuthGuard implements CanActivate {
   constructor(
     private userService: UserService,
     private authService: AuthService,
