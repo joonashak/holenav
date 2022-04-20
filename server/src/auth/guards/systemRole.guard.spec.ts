@@ -1,24 +1,20 @@
-import { ExecutionContext, InternalServerErrorException } from "@nestjs/common";
+import { InternalServerErrorException } from "@nestjs/common";
 import { Test } from "@nestjs/testing";
-import { createMock } from "@golevelup/ts-jest";
 import { Reflector } from "@nestjs/core";
 import { requiredSystemRoleKey, SystemRoleGuard } from "./systemRole.guard";
 import SystemRoles from "../../user/roles/systemRoles.enum";
 import { testUser } from "../../testUtils/testData";
 import { AuthenticationError } from "apollo-server-express";
-
-const createContextWithRequest = (req: any): ExecutionContext => {
-  const args: any = [{}, {}, { req }, {}];
-  const context = createMock<ExecutionContext>({
-    getArgs: () => args,
-    getType: () => "graphql",
-  });
-  return context;
-};
+import { mockContextWithUser } from "../../testUtils/mockContext";
 
 describe("SystemRolehGuard", () => {
   let systemRoleGuard: SystemRoleGuard;
   let reflector: Reflector;
+
+  const assertReflectorCall = () => {
+    expect(reflector.get).toBeCalledTimes(1);
+    expect(reflector.get).toBeCalledWith(requiredSystemRoleKey, {});
+  };
 
   beforeEach(async () => {
     const module = await Test.createTestingModule({
@@ -39,66 +35,62 @@ describe("SystemRolehGuard", () => {
 
   describe("Accept", () => {
     it("Equal role", async () => {
-      const context = createContextWithRequest({
-        user: { ...testUser, systemRole: SystemRoles.USER },
+      const context = mockContextWithUser({
+        ...testUser,
+        systemRole: SystemRoles.USER,
       });
       jest.spyOn(reflector, "get").mockReturnValueOnce(SystemRoles.USER);
       expect(systemRoleGuard.canActivate(context)).toBe(true);
-      expect(reflector.get).toBeCalledTimes(1);
-      expect(reflector.get).toBeCalledWith(requiredSystemRoleKey, {});
+      assertReflectorCall();
     });
 
     it("Higher role", async () => {
-      const context = createContextWithRequest({
-        user: { ...testUser, systemRole: SystemRoles.MANAGER },
+      const context = mockContextWithUser({
+        ...testUser,
+        systemRole: SystemRoles.MANAGER,
       });
       jest.spyOn(reflector, "get").mockReturnValueOnce(SystemRoles.USER);
       expect(systemRoleGuard.canActivate(context)).toBe(true);
-      expect(reflector.get).toBeCalledTimes(1);
-      expect(reflector.get).toBeCalledWith(requiredSystemRoleKey, {});
+      assertReflectorCall();
     });
   });
 
   describe("Reject", () => {
     it("Lower role", async () => {
-      const context = createContextWithRequest({
-        user: { ...testUser, systemRole: SystemRoles.MANAGER },
+      const context = mockContextWithUser({
+        ...testUser,
+        systemRole: SystemRoles.MANAGER,
       });
       jest.spyOn(reflector, "get").mockReturnValueOnce(SystemRoles.ADMINISTRATOR);
       expect(systemRoleGuard.canActivate(context)).toBe(false);
-      expect(reflector.get).toBeCalledTimes(1);
-      expect(reflector.get).toBeCalledWith(requiredSystemRoleKey, {});
+      assertReflectorCall();
     });
 
     it("Invalid system role", async () => {
-      const context = createContextWithRequest({ user: { ...testUser, systemRole: 5 } });
+      const context = mockContextWithUser({ ...testUser, systemRole: 5 });
       jest.spyOn(reflector, "get").mockReturnValueOnce(SystemRoles.USER);
       expect(() => systemRoleGuard.canActivate(context)).toThrow(AuthenticationError);
-      expect(reflector.get).toBeCalledTimes(1);
-      expect(reflector.get).toBeCalledWith(requiredSystemRoleKey, {});
+      assertReflectorCall();
     });
 
     it("Role is missing from request metadata", async () => {
-      const context = createContextWithRequest({ user: testUser });
+      const context = mockContextWithUser(testUser);
       expect(() => systemRoleGuard.canActivate(context)).toThrow(InternalServerErrorException);
-      expect(reflector.get).toBeCalledTimes(1);
-      expect(reflector.get).toBeCalledWith(requiredSystemRoleKey, {});
+      assertReflectorCall();
     });
 
     it("User is missing from request metadata", async () => {
-      const context = createContextWithRequest({ user: undefined });
+      const context = mockContextWithUser(undefined);
       jest.spyOn(reflector, "get").mockReturnValueOnce(SystemRoles.USER);
       expect(() => systemRoleGuard.canActivate(context)).toThrow();
-      expect(reflector.get).toBeCalledTimes(1);
-      expect(reflector.get).toBeCalledWith(requiredSystemRoleKey, {});
+      assertReflectorCall();
     });
 
     it("User is missing system role", async () => {
-      const context = createContextWithRequest({ user: { ...testUser, systemRole: null } });
+      const context = mockContextWithUser({ ...testUser, systemRole: null });
       jest.spyOn(reflector, "get").mockReturnValueOnce(SystemRoles.USER);
       expect(() => systemRoleGuard.canActivate(context)).toThrow(AuthenticationError);
-      expect(reflector.get).toBeCalledTimes(1);
-      expect(reflector.get).toBeCalledWith(requiredSystemRoleKey, {});
+      assertReflectorCall();
     });
   });
 });
