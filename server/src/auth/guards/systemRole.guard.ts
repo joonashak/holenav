@@ -1,12 +1,12 @@
 import {
   CanActivate,
   ExecutionContext,
-  HttpException,
-  HttpStatus,
   Injectable,
+  InternalServerErrorException,
 } from "@nestjs/common";
 import { Reflector } from "@nestjs/core";
 import { GqlExecutionContext } from "@nestjs/graphql";
+import { AuthenticationError } from "apollo-server-express";
 import SystemRoles from "../../user/roles/systemRoles.enum";
 
 export const requiredSystemRoleKey = "requiredSystemRole";
@@ -28,10 +28,7 @@ export class SystemRoleGuard implements CanActivate {
     );
 
     if (!requiredRole) {
-      throw new HttpException(
-        "Required system role not configured.",
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
+      throw new InternalServerErrorException("Required system role not configured.");
     }
 
     return requiredRole;
@@ -43,7 +40,7 @@ export class SystemRoleGuard implements CanActivate {
     const { systemRole } = user;
 
     if (!Object.values(SystemRoles).includes(systemRole as SystemRoles)) {
-      throw new HttpException("Invalid system role.", HttpStatus.INTERNAL_SERVER_ERROR);
+      throw new AuthenticationError("Invalid system role.");
     }
 
     return systemRole;

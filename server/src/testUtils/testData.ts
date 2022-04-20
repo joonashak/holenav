@@ -2,6 +2,7 @@ import dayjs from "dayjs";
 import { Session } from "../auth/session/session.model";
 import { SsoSession } from "../auth/sso/ssoSession/ssoSession.model";
 import SsoSessionTypes from "../auth/sso/ssoSession/ssoSessionTypes.enum";
+import SystemRoles from "../user/roles/systemRoles.enum";
 import { User } from "../user/user.model";
 
 export const testUser: User = {
@@ -15,7 +16,7 @@ export const testUser: User = {
     refreshToken: "g7i84nthg",
   },
   settings: null,
-  systemRole: null,
+  systemRole: SystemRoles.USER,
 };
 
 export const testSsoSession: SsoSession = {
