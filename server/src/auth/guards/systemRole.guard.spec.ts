@@ -7,7 +7,7 @@ import { testUser } from "../../testUtils/testData";
 import { AuthenticationError } from "apollo-server-express";
 import { mockContextWithUser } from "../../testUtils/mockContext";
 
-describe("SystemRolehGuard", () => {
+describe("SystemRoleGuard", () => {
   let systemRoleGuard: SystemRoleGuard;
   let reflector: Reflector;
 
@@ -73,7 +73,7 @@ describe("SystemRolehGuard", () => {
       assertReflectorCall();
     });
 
-    it("Role is missing from request metadata", async () => {
+    it("Required role is missing from request metadata", async () => {
       const context = mockContextWithUser(testUser);
       expect(() => systemRoleGuard.canActivate(context)).toThrow(InternalServerErrorException);
       assertReflectorCall();

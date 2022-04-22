@@ -1,9 +1,11 @@
 import {
+  BadRequestException,
   CanActivate,
   ExecutionContext,
   HttpException,
   HttpStatus,
   Injectable,
+  InternalServerErrorException,
 } from "@nestjs/common";
 import { Reflector } from "@nestjs/core";
 import { GqlExecutionContext } from "@nestjs/graphql";
@@ -28,10 +30,7 @@ export class FolderRoleGuard implements CanActivate {
       context.getHandler(),
     );
     if (!requiredRole) {
-      throw new HttpException(
-        "Required folder role not configured.",
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
+      throw new InternalServerErrorException("Required folder role not configured.");
     }
 
     return requiredRole;
@@ -43,15 +42,12 @@ export class FolderRoleGuard implements CanActivate {
 
     const activeFolderId = request.headers.activefolder;
     if (!activeFolderId) {
-      throw new HttpException(
-        "Active folder's ID must be passed in headers.",
-        HttpStatus.BAD_REQUEST,
-      );
+      throw new BadRequestException("Active folder's ID must be passed in headers.");
     }
 
     const activeFolder = await this.folderService.getFolderById(activeFolderId);
     if (!activeFolder) {
-      throw new HttpException("Active folder not found.", HttpStatus.BAD_REQUEST);
+      throw new BadRequestException("Active folder not found.");
     }
 
     request.activeFolder = activeFolder;

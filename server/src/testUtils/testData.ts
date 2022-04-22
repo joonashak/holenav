@@ -2,13 +2,20 @@ import dayjs from "dayjs";
 import { Session } from "../auth/session/session.model";
 import { SsoSession } from "../auth/sso/ssoSession/ssoSession.model";
 import SsoSessionTypes from "../auth/sso/ssoSession/ssoSessionTypes.enum";
+import { Folder } from "../entities/folder/folder.model";
+import FolderRoles from "../user/roles/folderRoles.enum";
 import SystemRoles from "../user/roles/systemRoles.enum";
 import { User } from "../user/user.model";
+
+export const testFolder: Folder = {
+  id: "test-folder",
+  name: "Test Folder",
+};
 
 export const testUser: User = {
   id: "asd",
   alts: [],
-  folderRoles: [],
+  folderRoles: [{ folder: testFolder.id as any, role: FolderRoles.READ }],
   main: {
     name: "test character",
     esiId: "uske67ent",

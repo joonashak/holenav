@@ -3,8 +3,10 @@ import { SessionService } from "../auth/session/session.service";
 import { SsoApiService } from "../auth/sso/ssoApi.service";
 import { SsoSessionService } from "../auth/sso/ssoSession/ssoSession.service";
 import { CharacterService } from "../entities/character/character.service";
+import { FolderService } from "../entities/folder/folder.service";
 import { UserService } from "../user/user.service";
 import {
+  testFolder,
   testSession,
   testSsoAccessTokenPayload,
   testSsoSession,
@@ -62,5 +64,12 @@ export const MockAuthService = {
   provide: AuthService,
   useFactory: () => ({
     verifyToken: fn().mockReturnValue({ sessionId: testSession.id }),
+  }),
+};
+
+export const MockFolderService = {
+  provide: FolderService,
+  useFactory: () => ({
+    getFolderById: fn().mockResolvedValue({ ...testFolder, _id: testFolder.id }),
   }),
 };
