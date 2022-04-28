@@ -86,3 +86,5 @@ jobs:
           path: |
             e2e/cypress/videos
             e2e/cypress/screenshots
+      - name: Debug
+        run: docker-compose -f docker-compose-ci.yml logs server-ci
