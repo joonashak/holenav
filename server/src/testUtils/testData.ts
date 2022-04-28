@@ -1,3 +1,4 @@
+import { hashSync } from "bcrypt";
 import dayjs from "dayjs";
 import { Session } from "../auth/session/session.model";
 import { SsoSession } from "../auth/sso/ssoSession/ssoSession.model";
@@ -12,6 +13,9 @@ export const testFolder: Folder = {
   name: "Test Folder",
 };
 
+export const testUserPassword = "test-user-pwd";
+export const testUserPasswordHash = hashSync(testUserPassword, 12);
+
 export const testUser: User = {
   id: "asd",
   alts: [],
@@ -24,6 +28,7 @@ export const testUser: User = {
   },
   settings: null,
   systemRole: SystemRoles.USER,
+  username: "test-user",
 };
 
 export const testSsoSession: SsoSession = {

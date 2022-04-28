@@ -80,6 +80,17 @@ export class UserService {
   }
 
   /**
+   * Find a user by username and include password hash.
+   *
+   * For use in authentication only.
+   * @param username Username to search for.
+   * @returns User or null if not found.
+   */
+  async findByUsernameWithPasswordHash(username: string): Promise<User> {
+    return this.userModel.findOne({ username }).select("+passwordHash");
+  }
+
+  /**
    * Add a new alt to a user.
    */
   async addAlt(alt: Character, userId: string): Promise<void> {

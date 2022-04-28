@@ -18,7 +18,7 @@ module.exports = {
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/no-explicit-any": "off",
     // Don't error for resolver decorator type annotations:
-    "@typescript-eslint/no-unused-vars": ["error", { argsIgnorePattern: "type|returns|of" }],
+    "@typescript-eslint/no-unused-vars": ["error", { argsIgnorePattern: "type|returns|of|unused" }],
     "prettier/prettier": [
       "error",
       {

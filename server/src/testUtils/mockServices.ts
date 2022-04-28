@@ -12,6 +12,7 @@ import {
   testSsoSession,
   testSsoTokens,
   testUser,
+  testUserPasswordHash,
 } from "./testData";
 
 const { fn } = jest;
@@ -34,6 +35,10 @@ export const MockUserService = {
     findByCharacterOrCreateUser: fn(async () => testUser),
     findById: fn(),
     addAlt: fn(),
+    findByUsernameWithPasswordHash: fn().mockResolvedValue({
+      ...testUser,
+      passwordHash: testUserPasswordHash,
+    }),
   }),
 };
 
@@ -64,6 +69,7 @@ export const MockAuthService = {
   provide: AuthService,
   useFactory: () => ({
     verifyToken: fn().mockReturnValue({ sessionId: testSession.id }),
+    validateUserCredentials: jest.fn().mockResolvedValue(testUser),
   }),
 };
 

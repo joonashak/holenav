@@ -38,6 +38,14 @@ export class User {
   @Field((type) => SystemRoles)
   @Prop({ default: SystemRoles.USER })
   systemRole: SystemRoles;
+
+  @Field()
+  @Prop({ unique: true, select: false })
+  username?: string;
+
+  @Field()
+  @Prop({ select: false })
+  passwordHash?: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

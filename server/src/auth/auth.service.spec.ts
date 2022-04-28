@@ -6,7 +6,7 @@ import {
   MockSsoSessionService,
   MockUserService,
 } from "../testUtils/mockServices";
-import { testSsoSession, testUser } from "../testUtils/testData";
+import { testSsoSession, testUser, testUserPassword } from "../testUtils/testData";
 import { UserService } from "../user/user.service";
 import { AuthService } from "./auth.service";
 import { SessionService } from "./session/session.service";
@@ -37,40 +37,83 @@ describe("AuthService", () => {
     jwtService = module.get<JwtService>(JwtService);
   });
 
-  it("Can login by using SSO state secret", async () => {
-    const token = await authService.login("asd");
-    expect(jwtService.verify(token)).toBeTruthy();
+  describe("SSO login", () => {
+    it("Can login by using SSO state secret", async () => {
+      const token = await authService.validateSsoLogin("asd");
+      expect(jwtService.verify(token)).toBeTruthy();
 
-    expect(ssoSessionService.verifySsoLoginSuccess).toBeCalledTimes(1);
-    expect(ssoSessionService.verifySsoLoginSuccess).toBeCalledWith("asd");
-    expect(userService.findByCharacterOrCreateUser).toBeCalledTimes(1);
-    expect(userService.findByCharacterOrCreateUser).toBeCalledWith(testUser.main);
-    expect(sessionService.create).toBeCalledTimes(1);
-    expect(sessionService.create).toBeCalledWith(testUser);
+      expect(ssoSessionService.verifySsoLoginSuccess).toBeCalledTimes(1);
+      expect(ssoSessionService.verifySsoLoginSuccess).toBeCalledWith("asd");
+      expect(userService.findByCharacterOrCreateUser).toBeCalledTimes(1);
+      expect(userService.findByCharacterOrCreateUser).toBeCalledWith(testUser.main);
+      expect(sessionService.create).toBeCalledTimes(1);
+      expect(sessionService.create).toBeCalledWith(testUser);
+    });
+
+    it("Throws on invalid SSO login", async () => {
+      jest
+        .spyOn(ssoSessionService, "verifySsoLoginSuccess")
+        .mockResolvedValueOnce({ ...testSsoSession, ssoLoginSuccess: false });
+
+      await expect(authService.validateSsoLogin("")).rejects.toThrowError(AuthenticationError);
+    });
   });
 
-  it("Throws on invalid SSO login", async () => {
-    jest
-      .spyOn(ssoSessionService, "verifySsoLoginSuccess")
-      .mockResolvedValueOnce({ ...testSsoSession, ssoLoginSuccess: false });
+  describe("Token authentication", () => {
+    it("Accepts a valid token", () => {
+      const sessionId = "jfasd8f";
+      const testToken = jwtService.sign({ sessionId });
+      expect(authService.verifyToken(testToken).sessionId).toEqual(sessionId);
+    });
 
-    await expect(authService.login("")).rejects.toThrowError(AuthenticationError);
+    it("Rejects an invalid token", () => {
+      const sessionId = "jfasd8f";
+      const testToken = jwtService.sign({ sessionId }).concat("a");
+      expect(() => authService.verifyToken(testToken)).toThrowError(AuthenticationError);
+    });
+
+    it("Rejects a valid token with an invalid payload", () => {
+      const testToken = jwtService.sign({});
+      expect(() => authService.verifyToken(testToken)).toThrowError(AuthenticationError);
+    });
+
+    it("Creates valid JWT tokens", async () => {
+      jest.spyOn(sessionService, "create").mockResolvedValueOnce({
+        id: "123",
+        expiresAt: new Date(),
+        user: testUser,
+      });
+
+      const accessToken = await authService.createAccessToken(testUser);
+
+      expect(() => jwtService.verify(accessToken)).not.toThrow();
+
+      const payload = jwtService.decode(accessToken);
+      expect(payload).toHaveProperty("sessionId", "123");
+      expect(payload).toHaveProperty("exp");
+      expect(payload).toHaveProperty("iat");
+    });
   });
 
-  it("Accepts a valid token", () => {
-    const sessionId = "jfasd8f";
-    const testToken = jwtService.sign({ sessionId });
-    expect(authService.verifyToken(testToken).sessionId).toEqual(sessionId);
-  });
+  describe("Local authentication", () => {
+    it("Validate legit user correctly", async () => {
+      await expect(
+        authService.validateUserCredentials(testUser.username, testUserPassword),
+      ).resolves.toStrictEqual(testUser);
+      expect(userService.findByUsernameWithPasswordHash).toBeCalledWith(testUser.username);
+      expect(userService.findByUsernameWithPasswordHash).toBeCalledTimes(1);
+    });
 
-  it("Rejects an invalid token", () => {
-    const sessionId = "jfasd8f";
-    const testToken = jwtService.sign({ sessionId }).concat("a");
-    expect(() => authService.verifyToken(testToken)).toThrowError(AuthenticationError);
-  });
+    it("Invalidate unknown user", async () => {
+      jest.spyOn(userService, "findByUsernameWithPasswordHash").mockResolvedValueOnce(null);
+      await expect(authService.validateUserCredentials("", testUserPassword)).resolves.toBeNull();
+    });
 
-  it("Rejects a valid token with an invalid payload", () => {
-    const testToken = jwtService.sign({});
-    expect(() => authService.verifyToken(testToken)).toThrowError(AuthenticationError);
+    it("Invalidate wrong password", async () => {
+      await expect(authService.validateUserCredentials(testUser.username, "")).resolves.toBeNull();
+      await expect(
+        authService.validateUserCredentials(testUser.username, testUserPassword.slice(1)),
+      ).resolves.toBeNull();
+    });
   });
 });

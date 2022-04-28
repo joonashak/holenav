@@ -1,6 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import { AuthenticationError } from "apollo-server-express";
+import { compare } from "bcrypt";
 import { User } from "../user/user.model";
 import { UserService } from "../user/user.service";
 import { SessionService } from "./session/session.service";
@@ -17,9 +18,11 @@ export class AuthService {
   ) {}
 
   /**
-   * Get JWT token for Holenav client-server auth given a valid SSO state secret.
+   * Get JWT token for token authentication given a valid SSO state secret.
+   * @param state SSO state secret used to secure the SSO authentication flow.
+   * @returns JWT token to be saved on the client.
    */
-  async login(state: string): Promise<string> {
+  async validateSsoLogin(state: string): Promise<string> {
     const { ssoLoginSuccess, character } = await this.ssoSessionService.verifySsoLoginSuccess(
       state,
     );
@@ -30,6 +33,24 @@ export class AuthService {
 
     const user = await this.userService.findByCharacterOrCreateUser(character);
     return this.createAccessToken(user);
+  }
+
+  /**
+   * Validate user credentials for local login.
+   * @param username Username.
+   * @param password Password.
+   * @returns User whose valid credentials were supplied or `null` if not successful.
+   */
+  async validateUserCredentials(username: string, password: string): Promise<User | null> {
+    const user = await this.userService.findByUsernameWithPasswordHash(username);
+
+    if (user && (await compare(password, user.passwordHash))) {
+      /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
+      const { passwordHash, ...result } = user;
+      return result;
+    }
+
+    return null;
   }
 
   /**
@@ -53,8 +74,14 @@ export class AuthService {
     return payload;
   }
 
-  private async createAccessToken(user: User): Promise<string> {
+  /**
+   * Create new session and get a corresponding JWT token.
+   * @param user User to link to session.
+   * @returns JWT token to be saved on the client.
+   */
+  async createAccessToken(user: User): Promise<string> {
     const session = await this.sessionService.create(user);
-    return this.jwtService.sign({ sessionId: session.id });
+    const payload: JwtPayload = { sessionId: session.id };
+    return this.jwtService.sign(payload);
   }
 }
