@@ -88,3 +88,4 @@ jobs:
             e2e/cypress/screenshots
       - name: Debug
         run: docker-compose -f docker-compose-ci.yml logs server-ci
+        if: failure()
