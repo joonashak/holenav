@@ -40,7 +40,7 @@ export class User {
   systemRole: SystemRoles;
 
   @Field()
-  @Prop({ unique: true, select: false })
+  @Prop({ select: false })
   username?: string;
 
   @Field()
