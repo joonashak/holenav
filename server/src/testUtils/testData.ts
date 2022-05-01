@@ -14,7 +14,10 @@ export const testFolder: Folder = {
 };
 
 export const testUserPassword = "test-user-pwd";
-export const testUserPasswordHash = hashSync(testUserPassword, 12);
+export const testUserCredentials = {
+  username: "test-user",
+  passwordHash: hashSync(testUserPassword, 12),
+};
 
 export const testUser: User = {
   id: "asd",
@@ -28,7 +31,6 @@ export const testUser: User = {
   },
   settings: null,
   systemRole: SystemRoles.USER,
-  username: "test-user",
 };
 
 export const testSsoSession: SsoSession = {

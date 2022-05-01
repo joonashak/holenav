@@ -42,11 +42,16 @@ export class AuthService {
    * @returns User whose valid credentials were supplied or `null` if not successful.
    */
   async validateUserCredentials(username: string, password: string): Promise<User | null> {
-    const user = await this.userService.findByUsernameWithPasswordHash(username);
+    const user = await this.userService.findWithCredentials(username);
+    if (!user) {
+      return null;
+    }
 
-    if (user && (await compare(password, user.passwordHash))) {
+    const { passwordHash } = user.credentials;
+
+    if (user && (await compare(password, passwordHash))) {
       /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
-      const { passwordHash, ...result } = user;
+      const { credentials, ...result } = user;
       return result;
     }
 

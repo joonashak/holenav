@@ -86,8 +86,8 @@ export class UserService {
    * @param username Username to search for.
    * @returns User or null if not found.
    */
-  async findByUsernameWithPasswordHash(username: string): Promise<User> {
-    return this.userModel.findOne({ username }).select("+passwordHash");
+  async findWithCredentials(username: string): Promise<User> {
+    return this.userModel.findOne({ "credentials.username": username }).select("+credentials");
   }
 
   /**

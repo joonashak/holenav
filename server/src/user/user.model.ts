@@ -7,6 +7,7 @@ import { FolderRole, FolderRoleSchema } from "./roles/folderRole.model";
 import defaultUserSettings from "./settings/defaultUserSettings";
 import { UserSettings, UserSettingsSchema } from "./settings/userSettings.model";
 import SystemRoles from "./roles/systemRoles.enum";
+import { Credentials } from "./credentials/credentials.model";
 
 export type UserDocument = User & mongoose.Document;
 
@@ -39,13 +40,9 @@ export class User {
   @Prop({ default: SystemRoles.USER })
   systemRole: SystemRoles;
 
-  @Field()
-  @Prop({ select: false })
-  username?: string;
-
-  @Field()
-  @Prop({ select: false })
-  passwordHash?: string;
+  @Field((type) => Credentials)
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: "Credentials", unique: true })
+  credentials?: Credentials;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

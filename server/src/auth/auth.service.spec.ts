@@ -6,7 +6,12 @@ import {
   MockSsoSessionService,
   MockUserService,
 } from "../testUtils/mockServices";
-import { testSsoSession, testUser, testUserPassword } from "../testUtils/testData";
+import {
+  testSsoSession,
+  testUser,
+  testUserCredentials,
+  testUserPassword,
+} from "../testUtils/testData";
 import { UserService } from "../user/user.service";
 import { AuthService } from "./auth.service";
 import { SessionService } from "./session/session.service";
@@ -98,21 +103,26 @@ describe("AuthService", () => {
   describe("Local authentication", () => {
     it("Validate legit user correctly", async () => {
       await expect(
-        authService.validateUserCredentials(testUser.username, testUserPassword),
+        authService.validateUserCredentials(testUserCredentials.username, testUserPassword),
       ).resolves.toStrictEqual(testUser);
-      expect(userService.findByUsernameWithPasswordHash).toBeCalledWith(testUser.username);
-      expect(userService.findByUsernameWithPasswordHash).toBeCalledTimes(1);
+      expect(userService.findWithCredentials).toBeCalledWith(testUserCredentials.username);
+      expect(userService.findWithCredentials).toBeCalledTimes(1);
     });
 
     it("Invalidate unknown user", async () => {
-      jest.spyOn(userService, "findByUsernameWithPasswordHash").mockResolvedValueOnce(null);
+      jest.spyOn(userService, "findWithCredentials").mockResolvedValueOnce(null);
       await expect(authService.validateUserCredentials("", testUserPassword)).resolves.toBeNull();
     });
 
     it("Invalidate wrong password", async () => {
-      await expect(authService.validateUserCredentials(testUser.username, "")).resolves.toBeNull();
       await expect(
-        authService.validateUserCredentials(testUser.username, testUserPassword.slice(1)),
+        authService.validateUserCredentials(testUserCredentials.username, ""),
+      ).resolves.toBeNull();
+      await expect(
+        authService.validateUserCredentials(
+          testUserCredentials.username,
+          testUserPassword.slice(1),
+        ),
       ).resolves.toBeNull();
     });
   });

@@ -12,7 +12,7 @@ import {
   testSsoSession,
   testSsoTokens,
   testUser,
-  testUserPasswordHash,
+  testUserCredentials,
 } from "./testData";
 
 const { fn } = jest;
@@ -35,9 +35,9 @@ export const MockUserService = {
     findByCharacterOrCreateUser: fn(async () => testUser),
     findById: fn(),
     addAlt: fn(),
-    findByUsernameWithPasswordHash: fn().mockResolvedValue({
+    findWithCredentials: fn().mockResolvedValue({
       ...testUser,
-      passwordHash: testUserPasswordHash,
+      credentials: testUserCredentials,
     }),
   }),
 };
