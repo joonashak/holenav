@@ -4,6 +4,7 @@ import { Model } from "mongoose";
 import { Character } from "../entities/character/character.model";
 import { CharacterService } from "../entities/character/character.service";
 import { FolderService } from "../entities/folder/folder.service";
+import { Credentials, CredentialsDocument } from "./credentials/credentials.model";
 import { CreateUserDto } from "./dto/createUser.dto";
 import { SanitizedUser } from "./dto/sanitizedUser.dto";
 import { FolderRole } from "./roles/folderRole.model";
@@ -15,6 +16,7 @@ import { User, UserDocument } from "./user.model";
 export class UserService {
   constructor(
     @InjectModel(User.name) private userModel: Model<UserDocument>,
+    @InjectModel(Credentials.name) private credentialsModel: Model<CredentialsDocument>,
     private folderService: FolderService,
     private characterService: CharacterService,
   ) {}
@@ -87,7 +89,8 @@ export class UserService {
    * @returns User or null if not found.
    */
   async findWithCredentials(username: string): Promise<User> {
-    return this.userModel.findOne({ "credentials.username": username }).select("+credentials");
+    const credentials = await this.credentialsModel.findOne({ username });
+    return this.userModel.findOne({ credentials }).populate("credentials");
   }
 
   /**

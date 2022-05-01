@@ -307,6 +307,16 @@ export type AddCharacterQuery = {
   addCharacter: { __typename?: "StartSsoLoginDto"; ssoLoginUrl: string };
 };
 
+export type LoginMutationVariables = Exact<{
+  username: Scalars["String"];
+  password: Scalars["String"];
+}>;
+
+export type LoginMutation = {
+  __typename?: "Mutation";
+  login: { __typename?: "AccessTokenDto"; accessToken: string };
+};
+
 export type FolderFieldsFragment = { __typename?: "Folder"; id: string; name: string };
 
 export type SettingsDataQueryVariables = Exact<{ [key: string]: never }>;
@@ -442,6 +452,59 @@ export const AddCharacterDocument = {
     },
   ],
 } as unknown as DocumentNode<AddCharacterQuery, AddCharacterQueryVariables>;
+export const LoginDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "Login" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "username" } },
+          type: {
+            kind: "NonNullType",
+            type: { kind: "NamedType", name: { kind: "Name", value: "String" } },
+          },
+        },
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "password" } },
+          type: {
+            kind: "NonNullType",
+            type: { kind: "NamedType", name: { kind: "Name", value: "String" } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "login" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "username" },
+                value: { kind: "Variable", name: { kind: "Name", value: "username" } },
+              },
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "password" },
+                value: { kind: "Variable", name: { kind: "Name", value: "password" } },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [{ kind: "Field", name: { kind: "Name", value: "accessToken" } }],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<LoginMutation, LoginMutationVariables>;
 export const SettingsDataDocument = {
   kind: "Document",
   definitions: [
