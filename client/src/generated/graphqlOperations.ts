@@ -58,6 +58,12 @@ export type ConnectionTreeNode = {
   wormhole: Wormhole;
 };
 
+export type Credentials = {
+  __typename?: "Credentials";
+  passwordHash: Scalars["String"];
+  username: Scalars["String"];
+};
+
 export type Folder = {
   __typename?: "Folder";
   id: Scalars["String"];
@@ -93,6 +99,7 @@ export type Mutation = {
   deleteSignature: Signature;
   deleteWormhole: Wormhole;
   getToken: AccessTokenDto;
+  login: AccessTokenDto;
   removeAlt: User;
   updateSelectedMap: User;
   updateSignature: Signature;
@@ -130,6 +137,11 @@ export type MutationDeleteWormholeArgs = {
 
 export type MutationGetTokenArgs = {
   state: Scalars["String"];
+};
+
+export type MutationLoginArgs = {
+  password: Scalars["String"];
+  username: Scalars["String"];
 };
 
 export type MutationRemoveAltArgs = {
@@ -242,12 +254,12 @@ export type UpdateWormholeInput = {
 export type User = {
   __typename?: "User";
   alts: Array<Character>;
+  credentials: Credentials;
   folderRoles: Array<FolderRole>;
   id: Scalars["String"];
   main: Character;
   settings: UserSettings;
   systemRole: SystemRoles;
-  tokens: Array<Scalars["String"]>;
 };
 
 export type UserSettings = {

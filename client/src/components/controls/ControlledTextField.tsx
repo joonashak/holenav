@@ -1,4 +1,4 @@
-import { TextField } from "@mui/material";
+import { BaseTextFieldProps, TextField } from "@mui/material";
 import { Control, useController, UseControllerProps } from "react-hook-form";
 
 type ControlledTextFieldProps = {
@@ -6,9 +6,10 @@ type ControlledTextFieldProps = {
   control: Control<any, object>;
   label: string;
   rules?: UseControllerProps["rules"];
+  type?: BaseTextFieldProps["type"];
 };
 
-const ControlledTextField = ({ name, control, label, rules }: ControlledTextFieldProps) => {
+const ControlledTextField = ({ name, control, label, rules, type }: ControlledTextFieldProps) => {
   const { field, fieldState } = useController({
     name,
     control,
@@ -25,6 +26,7 @@ const ControlledTextField = ({ name, control, label, rules }: ControlledTextFiel
       helperText={error && error.message}
       variant="outlined"
       inputProps={{ "data-cy": `textfield-${name}` }}
+      type={type}
       fullWidth
     />
   );
@@ -32,6 +34,7 @@ const ControlledTextField = ({ name, control, label, rules }: ControlledTextFiel
 
 ControlledTextField.defaultProps = {
   rules: {},
+  type: "text",
 };
 
 export default ControlledTextField;

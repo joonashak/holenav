@@ -1,16 +1,17 @@
-import { AppBar, Container, Link, Paper, Toolbar, Typography } from "@mui/material";
+import { AppBar, Box, Container, Link, Paper, Toolbar, Typography } from "@mui/material";
 import { yellow } from "@mui/material/colors";
 import { devToolsEnabled } from "../config";
 import AppTitle from "./common/AppTitle";
 import GoToButton from "./common/GoToButton";
 import LoginButton from "./common/LoginButton";
 import useLocalData from "./LocalData/useLocalData";
+import LocalLogin from "./LocalLogin";
 
 export default () => {
   const { authToken, mockUser } = useLocalData();
   const loggedIn = authToken || mockUser;
 
-  const buttonSx = { marginBottom: { xs: 3, md: 0 } };
+  const buttonSx = { mb: { xs: 3, md: 1 }, pl: 0, pr: 0 };
 
   const LoginOrApp = () =>
     loggedIn ? (
@@ -18,7 +19,10 @@ export default () => {
         Go To App
       </GoToButton>
     ) : (
-      <LoginButton sx={buttonSx} />
+      <Box sx={{ display: "flex", flexDirection: "column" }}>
+        <LoginButton sx={buttonSx} />
+        <LocalLogin />
+      </Box>
     );
 
   const DevToolsNotice = () => (
@@ -37,7 +41,7 @@ export default () => {
         You can access the development toolbar using the wrench icon in the right bottom corner.
         This allows, e.g., trying out Holenav without having an EVE Online account. Please note that
         the user mocking feature allows anyone to mock the admin user and thus access other
-        user&apos;s data. You should take care not to enter any data that might jeopardize your
+        users&apos; data. You should take care not to enter any data that might jeopardize your
         in-game operational security.
       </Typography>
       <Typography color="primary.dark">
