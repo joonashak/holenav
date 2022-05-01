@@ -1,3 +1,4 @@
+import { hashSync } from "bcrypt";
 import FolderRoles from "../../user/roles/folderRoles.enum";
 import SystemRoles from "../../user/roles/systemRoles.enum";
 
@@ -12,6 +13,10 @@ export default [
       accessToken: "mock access token",
       refreshToken: "mock refresh token",
     },
+    credentials: {
+      username: "mock-user-1",
+      passwordHash: hashSync("mock-password-1", 12),
+    },
   },
   {
     id: "mock-2",
@@ -22,6 +27,10 @@ export default [
       esiId: "234",
       accessToken: "mock access token",
       refreshToken: "mock refresh token",
+    },
+    credentials: {
+      username: "mock-user-2",
+      passwordHash: hashSync("mock-password-2", 12),
     },
   },
   {
@@ -34,6 +43,10 @@ export default [
       accessToken: "mock access token",
       refreshToken: "mock refresh token",
     },
+    credentials: {
+      username: "mock-user-3",
+      passwordHash: hashSync("mock-password-3", 12),
+    },
   },
   {
     id: "mock-4",
@@ -44,6 +57,10 @@ export default [
       esiId: "456",
       accessToken: "mock access token",
       refreshToken: "mock refresh token",
+    },
+    credentials: {
+      username: "mock-user-4",
+      passwordHash: hashSync("mock-password-4", 12),
     },
   },
 ];

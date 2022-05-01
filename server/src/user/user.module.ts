@@ -9,11 +9,15 @@ import { jwtSecret } from "../config";
 import { UserSettingsService } from "./settings/userSettings.service";
 import { CharacterModule } from "../entities/character/character.module";
 import { CharacterService } from "../entities/character/character.service";
+import { Credentials, CredentialsSchema } from "./credentials/credentials.model";
 
 @Global()
 @Module({
   imports: [
-    MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
+    MongooseModule.forFeature([
+      { name: User.name, schema: UserSchema },
+      { name: Credentials.name, schema: CredentialsSchema },
+    ]),
     JwtModule.register({
       secret: jwtSecret,
     }),

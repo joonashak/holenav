@@ -11,6 +11,7 @@ import { Signature } from "../entities/signature/signature.model";
 import { System } from "../entities/system/system.model";
 import { Wormhole } from "../entities/wormhole/wormhole.model";
 import { WormholeService } from "../entities/wormhole/wormhole.service";
+import { Credentials } from "../user/credentials/credentials.model";
 import { User } from "../user/user.model";
 import users from "./data/users";
 import { MockUserService } from "./mockUser.service";
@@ -27,6 +28,7 @@ export class DevToolsService {
     @InjectModel(System.name) private systemModel: Model<System>,
     @InjectModel(User.name) private userModel: Model<User>,
     @InjectModel(Wormhole.name) private whModel: Model<Wormhole>,
+    @InjectModel(Credentials.name) private credentialsModel: Model<Credentials>,
     private dataMigrationService: DataMigrationService,
     private mockUserService: MockUserService,
     private folderService: FolderService,
@@ -62,6 +64,7 @@ export class DevToolsService {
     await this.ssoSessionModel.deleteMany({});
     await this.systemModel.deleteMany({});
     await this.userModel.deleteMany({});
+    await this.credentialsModel.deleteMany({});
 
     // Capped collection must be updated instead of cleared.
     await this.dataMigrationModel.create({ version: 0 });
