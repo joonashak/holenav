@@ -24,7 +24,13 @@ export default () => {
     >
       <AppBar position="static">
         <Toolbar>
-          <IconButton edge="start" aria-label="Open Menu" onClick={toggleMenu} size="large">
+          <IconButton
+            edge="start"
+            aria-label="Open Menu"
+            onClick={toggleMenu}
+            size="large"
+            data-cy="open-main-menu"
+          >
             <MenuIcon />
           </IconButton>
           <OverviewMenu open={menuOpen} toggle={toggleMenu} />

@@ -35,7 +35,7 @@ const LocalLogin = () => {
 
   return (
     <>
-      <Button variant="contained" color="secondary" onClick={toggleOpen}>
+      <Button variant="contained" color="secondary" onClick={toggleOpen} data-cy="open-local-login">
         Login with Holenav
       </Button>
       <Dialog open={open} onClose={toggleOpen}>
