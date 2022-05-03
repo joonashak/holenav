@@ -1,6 +1,6 @@
-import { useMutation } from "@apollo/client";
 import { Downgraded, useState } from "@hookstate/core";
 import { settingsState } from ".";
+import useAuthenticatedMutation from "../../../auth/useAuthenticatedMutation";
 import { CreateFolderDocument } from "../../../generated/graphqlOperations";
 import useNotification from "../../GlobalNotification/useNotification";
 
@@ -8,7 +8,7 @@ const useSettingsData = () => {
   const state = useState(settingsState);
   const { showSuccessNotification, showErrorNotification } = useNotification();
 
-  const [createFolderMutation] = useMutation(CreateFolderDocument, {
+  const [createFolderMutation] = useAuthenticatedMutation(CreateFolderDocument, {
     onCompleted: ({ createFolder }) => {
       state.accessibleFolders.set((folders) => folders.concat([createFolder]));
       showSuccessNotification("Folder created.");

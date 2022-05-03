@@ -10,11 +10,11 @@ import {
 } from "@mui/material";
 import GroupIcon from "@mui/icons-material/Group";
 import AddIcon from "@mui/icons-material/Add";
-import { useLazyQuery } from "@apollo/client";
 import useUserData from "../../../UserData/useUserData";
 import CharacterMenuItem from "./CharacterMenuItem";
 import useLocalData from "../../../LocalData/useLocalData";
 import { AddCharacterDocument } from "../../../../generated/graphqlOperations";
+import useLazyAuthenticatedQuery from "../../../../auth/useLazyAuthenticatedQuery";
 
 const SpeedDialCharacterSelect = (props: SpeedDialActionProps) => {
   const { main, alts } = useUserData();
@@ -24,7 +24,7 @@ const SpeedDialCharacterSelect = (props: SpeedDialActionProps) => {
 
   const toggleMenu = () => setMenuOpen((prev) => !prev);
 
-  const [ssoLoginQuery] = useLazyQuery(AddCharacterDocument, {
+  const [ssoLoginQuery] = useLazyAuthenticatedQuery(AddCharacterDocument, {
     onCompleted: ({ addCharacter }) => {
       window.location.href = addCharacter.ssoLoginUrl;
     },

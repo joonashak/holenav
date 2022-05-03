@@ -1,9 +1,9 @@
-import { useLazyQuery } from "@apollo/client";
 import { createState, useState } from "@hookstate/core";
 import { cloneDeep } from "lodash";
 import { ReactElement, ReactNode, useEffect } from "react";
 import useAuth from "../../auth/useAuth";
 import useAuthenticatedApollo from "../../auth/useAuthenticatedApollo";
+import useLazyAuthenticatedQuery from "../../auth/useLazyAuthenticatedQuery";
 import useLocalData from "../LocalData/useLocalData";
 import { GET_USER_DATA } from "./graphql";
 import { UserData } from "./types";
@@ -38,7 +38,7 @@ export default ({ children }: UserDataProviderProps) => {
   const { setActiveFolderForHeaders } = useAuthenticatedApollo();
   const { setDefaultActiveCharacter } = useLocalData();
 
-  const [userQuery, { loading }] = useLazyQuery(GET_USER_DATA, {
+  const [userQuery, { loading }] = useLazyAuthenticatedQuery(GET_USER_DATA, {
     onCompleted: (data) => {
       const { whoami, getAccessibleFolders } = data;
       const { main, settings, ...rest } = cloneDeep(whoami);

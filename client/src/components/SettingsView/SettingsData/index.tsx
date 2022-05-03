@@ -1,7 +1,7 @@
-import { useLazyQuery } from "@apollo/client";
 import { createState, useState } from "@hookstate/core";
 import { ReactNode, useEffect } from "react";
 import useAuth from "../../../auth/useAuth";
+import useLazyAuthenticatedQuery from "../../../auth/useLazyAuthenticatedQuery";
 import {
   SettingsDataDocument,
   SettingsDataForManagerDocument,
@@ -24,13 +24,13 @@ const SettingsData = ({ children }: SettingsDataProps) => {
   const { systemRole } = useUserData();
   const { token } = useAuth();
 
-  const [settingsQuery] = useLazyQuery(SettingsDataDocument, {
+  const [settingsQuery] = useLazyAuthenticatedQuery(SettingsDataDocument, {
     onCompleted: (data) => {
       state.merge({ accessibleFolders: data.getAccessibleFolders });
     },
   });
 
-  const [settingsForManagerQuery] = useLazyQuery(SettingsDataForManagerDocument, {
+  const [settingsForManagerQuery] = useLazyAuthenticatedQuery(SettingsDataForManagerDocument, {
     onCompleted: (data) => {
       state.merge({ manageableFolders: data.getManageableFolders });
     },

@@ -1,13 +1,14 @@
-import { FetchResult, useMutation } from "@apollo/client";
+import { FetchResult } from "@apollo/client";
 import { Downgraded, useState } from "@hookstate/core";
 import { userState } from ".";
+import useAuthenticatedMutation from "../../auth/useAuthenticatedMutation";
 import { ADD_SAVED_MAP, UPDATE_SELECTED_MAP, DELETE_SAVED_MAP, REMOVE_ALT } from "./graphql";
 import { SavedMap } from "./types";
 
 const useUserData = () => {
   const state = useState(userState);
 
-  const [updateSelectedMapMutation] = useMutation(UPDATE_SELECTED_MAP, {
+  const [updateSelectedMapMutation] = useAuthenticatedMutation(UPDATE_SELECTED_MAP, {
     onCompleted: (data) => {
       const { id, name, rootSystemName } = data.updateSelectedMap.settings.selectedMap;
       state.settings.selectedMap.set({ id, name, rootSystemName });
@@ -22,7 +23,7 @@ const useUserData = () => {
     }
   };
 
-  const [addSavedMapMutation] = useMutation(ADD_SAVED_MAP, {
+  const [addSavedMapMutation] = useAuthenticatedMutation(ADD_SAVED_MAP, {
     onCompleted: (data) => {
       const { maps } = data.addSavedMap.settings;
       state.settings.maps.set(maps);
@@ -32,7 +33,7 @@ const useUserData = () => {
   const addSavedMap = async (newMap: SavedMap): Promise<FetchResult> =>
     addSavedMapMutation({ variables: newMap });
 
-  const [deleteSavedMapMutation] = useMutation(DELETE_SAVED_MAP, {
+  const [deleteSavedMapMutation] = useAuthenticatedMutation(DELETE_SAVED_MAP, {
     onCompleted: (data) => {
       const { maps } = data.deleteSavedMap.settings;
       state.settings.maps.set(maps);
@@ -42,7 +43,7 @@ const useUserData = () => {
   const deleteSavedMap = async (mapId: string): Promise<FetchResult> =>
     deleteSavedMapMutation({ variables: { mapId } });
 
-  const [removeAltMutation] = useMutation(REMOVE_ALT, {
+  const [removeAltMutation] = useAuthenticatedMutation(REMOVE_ALT, {
     onCompleted: (data) => {
       state.alts.set(data.removeAlt.alts);
     },

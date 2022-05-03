@@ -1,6 +1,8 @@
-import { FetchResult, useLazyQuery, useMutation } from "@apollo/client";
+import { FetchResult } from "@apollo/client";
 import { Downgraded, useState } from "@hookstate/core";
 import { systemState } from ".";
+import useAuthenticatedMutation from "../../../auth/useAuthenticatedMutation";
+import useLazyAuthenticatedQuery from "../../../auth/useLazyAuthenticatedQuery";
 import {
   ADD_SIGNATURE,
   ADD_WORMHOLE,
@@ -15,14 +17,14 @@ import { Signature, Wormhole } from "./types";
 export default () => {
   const state = useState(systemState);
 
-  const [changeSystem] = useLazyQuery(GET_SYSTEM_BY_NAME, {
+  const [changeSystem] = useLazyAuthenticatedQuery(GET_SYSTEM_BY_NAME, {
     onCompleted: ({ getSystemByName, getWormholesBySystem }) => {
       const wormholes = getWormholesBySystem;
       state.merge({ ...getSystemByName, wormholes });
     },
   });
 
-  const [addSigMutation] = useMutation(ADD_SIGNATURE, {
+  const [addSigMutation] = useAuthenticatedMutation(ADD_SIGNATURE, {
     onCompleted: (data) => {
       state.signatures.set((sigs) => sigs.concat([data.addSignature]));
     },
@@ -42,7 +44,7 @@ export default () => {
     return addSigMutation({ variables: { input } });
   };
 
-  const [updateSigMutation] = useMutation(EDIT_SIGNATURE, {
+  const [updateSigMutation] = useAuthenticatedMutation(EDIT_SIGNATURE, {
     onCompleted: (data) => {
       const updatedSig = data.updateSignature;
       state.signatures.set((sigs) =>
@@ -54,7 +56,7 @@ export default () => {
   const updateSignature = async (update: Signature): Promise<FetchResult> =>
     updateSigMutation({ variables: { input: update } });
 
-  const [deleteSigMutation] = useMutation(DELETE_SIGNATURE, {
+  const [deleteSigMutation] = useAuthenticatedMutation(DELETE_SIGNATURE, {
     onCompleted: (data) => {
       const deletedSig = data.deleteSignature;
       state.signatures.set((sigs) => sigs.filter((sig) => sig.id !== deletedSig.id));
@@ -65,7 +67,7 @@ export default () => {
     await deleteSigMutation({ variables: { id } });
   };
 
-  const [addWhMutation] = useMutation(ADD_WORMHOLE, {
+  const [addWhMutation] = useAuthenticatedMutation(ADD_WORMHOLE, {
     onCompleted: (data) => {
       state.wormholes.set((whs) => whs.concat(data.addWormhole));
     },
@@ -84,7 +86,7 @@ export default () => {
     return addWhMutation({ variables: { input: newWormhole } });
   };
 
-  const [updateWhMutation] = useMutation(EDIT_WORMHOLE, {
+  const [updateWhMutation] = useAuthenticatedMutation(EDIT_WORMHOLE, {
     onCompleted: (data) => {
       const updatedWh = data.updateWormhole;
       state.wormholes.set((whs) => whs.map((wh) => (wh.id === updatedWh.id ? updatedWh : wh)));
@@ -94,7 +96,7 @@ export default () => {
   const updateWormhole = async (update: Wormhole): Promise<FetchResult> =>
     updateWhMutation({ variables: { input: update } });
 
-  const [deleteWhMutation] = useMutation(DELETE_WORMHOLE, {
+  const [deleteWhMutation] = useAuthenticatedMutation(DELETE_WORMHOLE, {
     onCompleted: (data) => {
       const deletedWh = data.deleteWormhole;
       state.wormholes.set((whs) => whs.filter((wh) => wh.id !== deletedWh.id));
