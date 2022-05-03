@@ -124,6 +124,17 @@ theme = createTheme(theme, {
         },
       },
     },
+    MuiInputBase: {
+      styleOverrides: {
+        input: {
+          // Remove Chrome's stupid autofill highlighting.
+          "&:-webkit-autofill": {
+            transitionDelay: "9999s",
+            transitionProperty: "background-color, color",
+          },
+        },
+      },
+    },
   },
 });
 

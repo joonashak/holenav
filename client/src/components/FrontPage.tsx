@@ -11,16 +11,14 @@ export default () => {
   const { authToken, mockUser } = useLocalData();
   const loggedIn = authToken || mockUser;
 
-  const buttonSx = { mb: { xs: 3, md: 1 }, pl: 0, pr: 0 };
-
   const LoginOrApp = () =>
     loggedIn ? (
-      <GoToButton href="/system/J104809" sx={buttonSx}>
+      <GoToButton href="/system/J104809" sx={{ mb: { xs: 3, md: 0 } }}>
         Go To App
       </GoToButton>
     ) : (
       <Box sx={{ display: "flex", flexDirection: "column" }}>
-        <LoginButton sx={buttonSx} />
+        <LoginButton sx={{ mb: { xs: 3, md: 1 }, pl: 0, pr: 0 }} />
         <LocalLogin />
       </Box>
     );

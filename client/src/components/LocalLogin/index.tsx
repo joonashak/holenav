@@ -1,18 +1,21 @@
 import { useMutation } from "@apollo/client";
 import { Button, DialogContent, DialogTitle } from "@mui/material";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { FieldValues, useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 import { LoginDocument } from "../../generated/graphqlOperations";
 import Dialog from "../common/Dialog";
 import ControlledTextField from "../controls/ControlledTextField";
 import FormGroupRow from "../controls/FormGroupRow";
+import useNotification from "../GlobalNotification/useNotification";
 import useLocalData from "../LocalData/useLocalData";
 
 const LocalLogin = () => {
   const history = useHistory();
   const { setAuthToken } = useLocalData();
   const { control, handleSubmit } = useForm();
+  const { showErrorNotification } = useNotification();
+
   const [open, setOpen] = useState(false);
   const toggleOpen = () => setOpen((prev) => !prev);
 
@@ -21,10 +24,13 @@ const LocalLogin = () => {
       await setAuthToken(login.accessToken);
       history.push("/system/J104809");
     },
+    onError: () => {
+      showErrorNotification("Login failed.");
+    },
   });
 
-  const onSubmit = async () => {
-    await loginMutation({ variables: { username: "mock-user-1", password: "mock-password-1" } });
+  const onSubmit = async ({ username, password }: FieldValues) => {
+    await loginMutation({ variables: { username, password } });
   };
 
   return (
