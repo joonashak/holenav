@@ -24,6 +24,10 @@ export class SessionService {
     return this.sessionModel.findOne({ id }).populate("user");
   }
 
+  async deleteSession(id: string): Promise<void> {
+    await this.sessionModel.deleteOne({ id });
+  }
+
   /**
    * Verify that there is a `Session` associated with given `sessionId` and it has not expired.
    * @param sessionId ID of the session to verify.

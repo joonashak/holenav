@@ -1,6 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
+import { Session } from "../auth/session/session.model";
 import { SsoSession } from "../auth/sso/ssoSession/ssoSession.model";
 import { DataMigration } from "../dataMigration/dataMigration.model";
 import { DataMigrationService } from "../dataMigration/dataMigration.service";
@@ -29,6 +30,7 @@ export class DevToolsService {
     @InjectModel(User.name) private userModel: Model<User>,
     @InjectModel(Wormhole.name) private whModel: Model<Wormhole>,
     @InjectModel(Credentials.name) private credentialsModel: Model<Credentials>,
+    @InjectModel(Session.name) private sessionModel: Model<Session>,
     private dataMigrationService: DataMigrationService,
     private mockUserService: MockUserService,
     private folderService: FolderService,
@@ -65,6 +67,7 @@ export class DevToolsService {
     await this.systemModel.deleteMany({});
     await this.userModel.deleteMany({});
     await this.credentialsModel.deleteMany({});
+    await this.sessionModel.deleteMany({});
 
     // Capped collection must be updated instead of cleared.
     await this.dataMigrationModel.create({ version: 0 });

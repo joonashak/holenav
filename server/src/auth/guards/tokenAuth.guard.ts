@@ -33,13 +33,15 @@ export class TokenAuthGuard implements CanActivate {
     }
 
     const { sessionId } = this.authService.verifyToken(accessToken);
-    const { user } = await this.sessionService.verifySession(sessionId);
+    const session = await this.sessionService.verifySession(sessionId);
+    const { user } = session;
 
     if (!user) {
       throw new AuthenticationError("Unknown authentication error.");
     }
 
     request.user = user;
+    request.session = session;
     return true;
   }
 

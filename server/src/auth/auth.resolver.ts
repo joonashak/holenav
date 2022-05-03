@@ -2,9 +2,13 @@ import { UseGuards } from "@nestjs/common";
 import { Args, Mutation, Resolver } from "@nestjs/graphql";
 import { User } from "../user/user.model";
 import { AuthService } from "./auth.service";
+import { CurrentSession } from "./decorators/session.decorator";
 import { CurrentUser } from "./decorators/user.decorator";
 import AccessTokenDto from "./dto/accessToken.dto";
+import LogoutDto from "./dto/logout.dto";
 import { LoginGuard } from "./guards/login.guard";
+import { TokenAuthGuard } from "./guards/tokenAuth.guard";
+import { Session } from "./session/session.model";
 
 @Resolver()
 export default class AuthResolver {
@@ -28,5 +32,12 @@ export default class AuthResolver {
   ): Promise<AccessTokenDto> {
     const accessToken = await this.authService.createAccessToken(user);
     return { accessToken };
+  }
+
+  @UseGuards(TokenAuthGuard)
+  @Mutation((returns) => LogoutDto)
+  async logout(@CurrentSession() session: Session): Promise<LogoutDto> {
+    await this.authService.logout(session);
+    return { loggedOut: true };
   }
 }

@@ -4,6 +4,7 @@ import { AuthenticationError } from "apollo-server-express";
 import { compare } from "bcrypt";
 import { User } from "../user/user.model";
 import { UserService } from "../user/user.service";
+import { Session } from "./session/session.model";
 import { SessionService } from "./session/session.service";
 import { SsoSessionService } from "./sso/ssoSession/ssoSession.service";
 import { JwtPayload } from "./types";
@@ -88,5 +89,9 @@ export class AuthService {
     const session = await this.sessionService.create(user);
     const payload: JwtPayload = { sessionId: session.id };
     return this.jwtService.sign(payload);
+  }
+
+  async logout(session: Session): Promise<void> {
+    await this.sessionService.deleteSession(session.id);
   }
 }
