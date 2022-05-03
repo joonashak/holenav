@@ -83,6 +83,11 @@ export enum FolderRoles {
   Write = "WRITE",
 }
 
+export type LogoutDto = {
+  __typename?: "LogoutDto";
+  loggedOut: Scalars["Boolean"];
+};
+
 export enum MassStatus {
   Crit = "CRIT",
   Destab = "DESTAB",
@@ -100,6 +105,7 @@ export type Mutation = {
   deleteWormhole: Wormhole;
   getToken: AccessTokenDto;
   login: AccessTokenDto;
+  logout: LogoutDto;
   removeAlt: User;
   updateSelectedMap: User;
   updateSignature: Signature;
@@ -317,6 +323,13 @@ export type LoginMutation = {
   login: { __typename?: "AccessTokenDto"; accessToken: string };
 };
 
+export type LogoutMutationVariables = Exact<{ [key: string]: never }>;
+
+export type LogoutMutation = {
+  __typename?: "Mutation";
+  logout: { __typename?: "LogoutDto"; loggedOut: boolean };
+};
+
 export type FolderFieldsFragment = { __typename?: "Folder"; id: string; name: string };
 
 export type SettingsDataQueryVariables = Exact<{ [key: string]: never }>;
@@ -505,6 +518,29 @@ export const LoginDocument = {
     },
   ],
 } as unknown as DocumentNode<LoginMutation, LoginMutationVariables>;
+export const LogoutDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "Logout" },
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "logout" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [{ kind: "Field", name: { kind: "Name", value: "loggedOut" } }],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<LogoutMutation, LogoutMutationVariables>;
 export const SettingsDataDocument = {
   kind: "Document",
   definitions: [

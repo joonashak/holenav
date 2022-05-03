@@ -1,14 +1,8 @@
-import axios from "axios";
 import useLocalData from "../components/LocalData/useLocalData";
-import { devToolsEnabled, endpoints } from "../config";
+import { devToolsEnabled } from "../config";
 
 export default () => {
-  const { authToken, mockUser, setAuthToken } = useLocalData();
-
-  const logout = async () => {
-    await axios.get(endpoints.logout, { headers: { accesstoken: authToken || "" } });
-    setAuthToken(null);
-  };
+  const { authToken, mockUser } = useLocalData();
 
   return {
     get token() {
@@ -20,6 +14,5 @@ export default () => {
     get mocking() {
       return mockUser && devToolsEnabled;
     },
-    logout,
   };
 };

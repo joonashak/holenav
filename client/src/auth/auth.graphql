@@ -21,3 +21,9 @@ mutation Login($username: String!, $password: String!) {
     accessToken
   }
 }
+
+mutation Logout {
+  logout {
+    loggedOut
+  }
+}

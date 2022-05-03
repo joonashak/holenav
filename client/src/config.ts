@@ -2,11 +2,8 @@ export const cmsUrl = process.env.REACT_APP_CMS_URL;
 
 export const devToolsEnabled = process.env.REACT_APP_ENABLE_DEVTOOLS === "true";
 
-// FIXME: Remove unnecessary endpoints after auth refactor.
 export const endpoints = {
   graphQl: `${cmsUrl}/graphql`,
-  login: `${cmsUrl}/auth/login`,
-  logout: `${cmsUrl}/auth/logout`,
   dev: {
     reset: `${cmsUrl}/dev/reset`,
     seed: `${cmsUrl}/dev/seed`,
