@@ -2,10 +2,10 @@ import { createState, useState } from "@hookstate/core";
 import { cloneDeep } from "lodash";
 import { ReactElement, ReactNode, useEffect } from "react";
 import useAuth from "../../auth/useAuth";
-import useAuthenticatedApollo from "../../auth/useAuthenticatedApollo";
 import useLazyAuthenticatedQuery from "../../auth/useLazyAuthenticatedQuery";
 import useLocalData from "../LocalData/useLocalData";
 import { GET_USER_DATA } from "./graphql";
+import useUserSettings from "./settings/useUserSettings";
 import { UserData } from "./types";
 
 export const userState = createState<UserData>({
@@ -35,7 +35,7 @@ interface UserDataProviderProps {
 export default ({ children }: UserDataProviderProps) => {
   const state = useState(userState);
   const { token } = useAuth();
-  const { setActiveFolderForHeaders } = useAuthenticatedApollo();
+  const { setActiveFolder } = useUserSettings();
   const { setDefaultActiveCharacter } = useLocalData();
 
   const [userQuery, { loading }] = useLazyAuthenticatedQuery(GET_USER_DATA, {
@@ -49,7 +49,7 @@ export default ({ children }: UserDataProviderProps) => {
         settings,
         ...rest,
       });
-      setActiveFolderForHeaders(activeFolder.id);
+      setActiveFolder(activeFolder);
       setDefaultActiveCharacter(main.esiId);
     },
   });
