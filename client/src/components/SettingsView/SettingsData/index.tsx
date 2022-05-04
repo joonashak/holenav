@@ -1,7 +1,6 @@
 import { createState, useState } from "@hookstate/core";
-import { ReactNode, useEffect } from "react";
-import useAuth from "../../../auth/useAuth";
-import useLazyAuthenticatedQuery from "../../../auth/useLazyAuthenticatedQuery";
+import { ReactNode } from "react";
+import useAuthenticatedQuery from "../../../auth/useAuthenticatedQuery";
 import {
   SettingsDataDocument,
   SettingsDataForManagerDocument,
@@ -22,31 +21,19 @@ type SettingsDataProps = {
 const SettingsData = ({ children }: SettingsDataProps) => {
   const state = useState(settingsState);
   const { systemRole } = useUserData();
-  const { token } = useAuth();
 
-  const [settingsQuery] = useLazyAuthenticatedQuery(SettingsDataDocument, {
+  useAuthenticatedQuery(SettingsDataDocument, {
     onCompleted: (data) => {
       state.merge({ accessibleFolders: data.getAccessibleFolders });
     },
   });
 
-  const [settingsForManagerQuery] = useLazyAuthenticatedQuery(SettingsDataForManagerDocument, {
+  useAuthenticatedQuery(SettingsDataForManagerDocument, {
     onCompleted: (data) => {
       state.merge({ manageableFolders: data.getManageableFolders });
     },
+    skip: !atLeastManager(systemRole),
   });
-
-  useEffect(() => {
-    if (!token) {
-      return;
-    }
-
-    settingsQuery();
-
-    if (systemRole && atLeastManager(systemRole)) {
-      settingsForManagerQuery();
-    }
-  }, [token]);
 
   return <>{children}</>;
 };

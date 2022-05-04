@@ -11,8 +11,12 @@ const systemRoleValues = {
  * @param role System role.
  * @returns `true` if role check passed.
  */
-export const atLeastManager = (role: SystemRoles): boolean =>
-  systemRoleValues[role] >= systemRoleValues.MANAGER;
+export const atLeastManager = (role: SystemRoles | null): boolean => {
+  if (!role) {
+    return false;
+  }
+  return systemRoleValues[role] >= systemRoleValues.MANAGER;
+};
 
 /**
  * Compare two roles (inclusive).
