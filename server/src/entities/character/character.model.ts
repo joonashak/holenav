@@ -28,4 +28,4 @@ export class Character {
   isMain: boolean;
 }
 
-export const CharacterSchema = SchemaFactory.createForClass(Character);
+export const CharacterSchema = SchemaFactory.createForClass(Character).index({ name: "text" });

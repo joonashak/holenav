@@ -30,4 +30,9 @@ export class CharacterService {
     main.isMain = true;
     return await main.save();
   }
+
+  async searchByMain(search: string): Promise<Character[]> {
+    // FIXME: Paginate this properly.
+    return this.characterModel.find({ name: { $regex: RegExp(search, "i") } }).limit(10);
+  }
 }
