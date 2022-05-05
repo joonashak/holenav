@@ -27,9 +27,7 @@ export class UserService {
    * @returns Newly created user.
    */
   async create(user: CreateUserDto): Promise<UserDocument> {
-    if (user.main) {
-      await this.ensureCharacterNotInUse(user.main);
-    }
+    await this.ensureCharacterNotInUse(user.main);
 
     const folder = await this.folderService.getDefaultFolder();
     const systemRole = await this.getNewUserSystemRole();
@@ -97,7 +95,7 @@ export class UserService {
    * Add a new alt to a user.
    */
   async addAlt(alt: Character, userId: string): Promise<void> {
-    this.ensureCharacterNotInUse(alt);
+    await this.ensureCharacterNotInUse(alt);
 
     const user = await this.userModel.findOne({ id: userId });
     user.alts = user.alts.concat(alt);
