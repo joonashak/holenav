@@ -22,6 +22,10 @@ export class Character {
   @Field({ nullable: true })
   @Prop({ select: false })
   refreshToken: string;
+
+  @Field()
+  @Prop({ default: false })
+  isMain: boolean;
 }
 
 export const CharacterSchema = SchemaFactory.createForClass(Character);

@@ -28,6 +28,7 @@ export class UserService {
    */
   async create(user: CreateUserDto): Promise<UserDocument> {
     await this.ensureCharacterNotInUse(user.main);
+    await this.characterService.makeMain(user.main);
 
     const folder = await this.folderService.getDefaultFolder();
     const systemRole = await this.getNewUserSystemRole();
@@ -74,6 +75,7 @@ export class UserService {
 
     if (!user) {
       user = await this.create({ main: character });
+      user = await this.findById(user.id);
     }
 
     return user;

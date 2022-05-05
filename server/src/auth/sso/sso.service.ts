@@ -43,6 +43,7 @@ export class SsoService {
       esiId: jwtData.CharacterID,
       accessToken,
       refreshToken,
+      isMain: false,
     });
 
     await this.ssoSessionService.setSsoLoginSuccess(state, character);

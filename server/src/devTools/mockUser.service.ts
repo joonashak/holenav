@@ -21,7 +21,7 @@ export class MockUserService {
 
     for (const user of users) {
       const { id, main, defaultFolderRole, systemRole } = user;
-      const newChar = await this.characterModel.create(main);
+      const newChar = await this.characterModel.create({ ...main, isMain: true });
       const credentials = await this.credentialsModel.create(user.credentials);
       await this.userModel.create({
         main: newChar,

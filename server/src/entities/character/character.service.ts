@@ -12,7 +12,7 @@ export class CharacterService {
    * @param data Character to be upserted.
    * @returns New or updated character.
    */
-  async upsert(data: Character): Promise<Character> {
+  async upsert(data: Partial<Character>): Promise<Character> {
     const { esiId, ...rest } = data;
     const newCharacter = await this.characterModel.findOneAndUpdate({ esiId }, rest, {
       upsert: true,
@@ -23,5 +23,11 @@ export class CharacterService {
 
   async remove(esiId: string): Promise<void> {
     await this.characterModel.deleteOne({ esiId });
+  }
+
+  async makeMain(character: Character): Promise<Character> {
+    const main = await this.characterModel.findOne(character);
+    main.isMain = true;
+    return await main.save();
   }
 }

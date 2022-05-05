@@ -28,6 +28,7 @@ export const testUser: User = {
     esiId: "uske67ent",
     accessToken: "j67j64m",
     refreshToken: "g7i84nthg",
+    isMain: true,
   },
   settings: null,
   systemRole: SystemRoles.USER,
