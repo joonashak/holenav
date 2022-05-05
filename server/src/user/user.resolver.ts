@@ -7,6 +7,7 @@ import { UserSettingsService } from "./settings/userSettings.service";
 import { RequireSystemRole } from "../auth/decorators/role.decorator";
 import SystemRoles from "./roles/systemRoles.enum";
 import { SanitizedUser } from "./dto/sanitizedUser.dto";
+import AddFolderRoleInput from "./dto/addFolderRole.dto";
 
 @Resolver()
 export class UserResolver {
@@ -57,5 +58,11 @@ export class UserResolver {
   @Query((returns) => [SanitizedUser])
   async getAllUsers(): Promise<SanitizedUser[]> {
     return this.userService.findAllUsersSanitized();
+  }
+
+  @RequireSystemRole(SystemRoles.MANAGER)
+  @Mutation((returns) => SanitizedUser)
+  async addFolderRole(@Args("input") input: AddFolderRoleInput): Promise<User> {
+    return this.userService.addFolderRoleById(input.userId, input.folderId, input.role);
   }
 }

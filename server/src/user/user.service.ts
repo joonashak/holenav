@@ -129,8 +129,16 @@ export class UserService {
     return users.length === 0 ? SystemRoles.ADMINISTRATOR : SystemRoles.USER;
   }
 
-  async addFolderRole(user: UserDocument, folderRole: FolderRole): Promise<void> {
-    user.folderRoles = user.folderRoles.concat(folderRole);
-    await user.save();
+  async addFolderRole(user: User, folderRole: FolderRole): Promise<User> {
+    // FIXME: Check for user's rights to manage the target folder.
+    // FIXME: Account for existing roles.
+    const { id } = user;
+    return await this.userModel.findOneAndUpdate({ id }, { $push: { folderRoles: folderRole } });
+  }
+
+  async addFolderRoleById(userId: string, folderId: string, role: FolderRoles): Promise<User> {
+    const user = await this.findById(userId);
+    const folder = await this.folderService.getFolderById(folderId);
+    return await this.addFolderRole(user, { folder, role });
   }
 }
