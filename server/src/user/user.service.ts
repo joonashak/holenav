@@ -62,6 +62,15 @@ export class UserService {
     return user;
   }
 
+  findByCharacter(character: Character): Promise<User> {
+    return this.userModel.findOne({ $or: [{ main: character }, { alts: character }] }).exec();
+  }
+
+  async findByEsiId(esiId: string): Promise<User> {
+    const character = await this.characterService.findByEsiId(esiId);
+    return this.findByCharacter(character);
+  }
+
   /**
    * Find a user by character or create new.
    *
@@ -71,7 +80,7 @@ export class UserService {
    * @returns The found or created user.
    */
   async findByCharacterOrCreateUser(character: Character): Promise<User> {
-    let user = await this.userModel.findOne({ $or: [{ main: character }, { alts: character }] });
+    let user = await this.findByCharacter(character);
 
     if (!user) {
       user = await this.create({ main: character });
@@ -136,8 +145,12 @@ export class UserService {
     return await this.userModel.findOneAndUpdate({ id }, { $push: { folderRoles: folderRole } });
   }
 
-  async addFolderRoleById(userId: string, folderId: string, role: FolderRoles): Promise<User> {
-    const user = await this.findById(userId);
+  async addFolderRoleByEsiId(
+    userEsiId: string,
+    folderId: string,
+    role: FolderRoles,
+  ): Promise<User> {
+    const user = await this.findById(userEsiId);
     const folder = await this.folderService.getFolderById(folderId);
     return await this.addFolderRole(user, { folder, role });
   }

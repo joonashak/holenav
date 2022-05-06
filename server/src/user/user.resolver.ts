@@ -63,6 +63,7 @@ export class UserResolver {
   @RequireSystemRole(SystemRoles.MANAGER)
   @Mutation((returns) => SanitizedUser)
   async addFolderRole(@Args("input") input: AddFolderRoleInput): Promise<User> {
-    return this.userService.addFolderRoleById(input.userId, input.folderId, input.role);
+    const { userEsiId, folderId, role } = input;
+    return this.userService.addFolderRoleByEsiId(userEsiId, folderId, role);
   }
 }

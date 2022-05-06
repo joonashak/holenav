@@ -7,6 +7,10 @@ import { Character, CharacterDocument } from "./character.model";
 export class CharacterService {
   constructor(@InjectModel(Character.name) private characterModel: Model<CharacterDocument>) {}
 
+  async findByEsiId(esiId: string): Promise<Character> {
+    return this.characterModel.findOne({ esiId });
+  }
+
   /**
    * Upsert character into DB.
    * @param data Character to be upserted.

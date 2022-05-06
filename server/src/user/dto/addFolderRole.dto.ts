@@ -4,7 +4,7 @@ import FolderRoles from "../roles/folderRoles.enum";
 @InputType()
 export default class AddFolderRoleInput {
   @Field()
-  userId: string;
+  userEsiId: string;
 
   @Field()
   folderId: string;
