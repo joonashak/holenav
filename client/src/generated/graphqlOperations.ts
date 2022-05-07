@@ -19,6 +19,12 @@ export type AccessTokenDto = {
   accessToken: Scalars["String"];
 };
 
+export type AddFolderRoleInput = {
+  folderId: Scalars["String"];
+  role: FolderRoles;
+  userEsiId: Scalars["String"];
+};
+
 export type AddSignatureInput = {
   eveId: Scalars["String"];
   name: Scalars["String"];
@@ -41,6 +47,7 @@ export type Character = {
   __typename?: "Character";
   accessToken?: Maybe<Scalars["String"]>;
   esiId: Scalars["String"];
+  isMain: Scalars["Boolean"];
   name: Scalars["String"];
   refreshToken?: Maybe<Scalars["String"]>;
 };
@@ -96,6 +103,7 @@ export enum MassStatus {
 
 export type Mutation = {
   __typename?: "Mutation";
+  addFolderRole: SanitizedUser;
   addSavedMap: User;
   addSignature: Signature;
   addWormhole: Wormhole;
@@ -110,6 +118,10 @@ export type Mutation = {
   updateSelectedMap: User;
   updateSignature: Signature;
   updateWormhole: Wormhole;
+};
+
+export type MutationAddFolderRoleArgs = {
+  input: AddFolderRoleInput;
 };
 
 export type MutationAddSavedMapArgs = {
@@ -175,6 +187,7 @@ export type Query = {
   getManageableFolders: Array<Folder>;
   getSystemByName: System;
   getWormholesBySystem: Array<Wormhole>;
+  searchCharactersByMain: Array<Character>;
   startSsoLogin: StartSsoLoginDto;
   whoami: User;
 };
@@ -189,6 +202,10 @@ export type QueryGetSystemByNameArgs = {
 
 export type QueryGetWormholesBySystemArgs = {
   name: Scalars["String"];
+};
+
+export type QuerySearchCharactersByMainArgs = {
+  search: Scalars["String"];
 };
 
 export type SanitizedUser = {
@@ -353,6 +370,15 @@ export type CreateFolderMutationVariables = Exact<{
 export type CreateFolderMutation = {
   __typename?: "Mutation";
   createFolder: { __typename?: "Folder"; id: string; name: string };
+};
+
+export type SearchCharactersByMainQueryVariables = Exact<{
+  search: Scalars["String"];
+}>;
+
+export type SearchCharactersByMainQuery = {
+  __typename?: "Query";
+  searchCharactersByMain: Array<{ __typename?: "Character"; name: string; esiId: string }>;
 };
 
 export type UserDataQueryVariables = Exact<{ [key: string]: never }>;
@@ -636,6 +662,49 @@ export const CreateFolderDocument = {
     ...FolderFieldsFragmentDoc.definitions,
   ],
 } as unknown as DocumentNode<CreateFolderMutation, CreateFolderMutationVariables>;
+export const SearchCharactersByMainDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "query",
+      name: { kind: "Name", value: "SearchCharactersByMain" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "search" } },
+          type: {
+            kind: "NonNullType",
+            type: { kind: "NamedType", name: { kind: "Name", value: "String" } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "searchCharactersByMain" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "search" },
+                value: { kind: "Variable", name: { kind: "Name", value: "search" } },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "name" } },
+                { kind: "Field", name: { kind: "Name", value: "esiId" } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<SearchCharactersByMainQuery, SearchCharactersByMainQueryVariables>;
 export const UserDataDocument = {
   kind: "Document",
   definitions: [

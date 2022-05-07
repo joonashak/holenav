@@ -1,0 +1,6 @@
+query SearchCharactersByMain($search: String!) {
+  searchCharactersByMain(search: $search) {
+    name
+    esiId
+  }
+}
