@@ -1,6 +1,8 @@
-import { Autocomplete, TextField } from "@mui/material";
+import { useState } from "@hookstate/core";
+import { Autocomplete, CircularProgress, TextField } from "@mui/material";
 import { useDebounce } from "@react-hook/debounce";
-import { useEffect, useState } from "react";
+import { useEffect, useState as useReactState } from "react";
+import { manageFolderState } from ".";
 import useLazyAuthenticatedQuery from "../../../../../auth/useLazyAuthenticatedQuery";
 import {
   Character,
@@ -8,30 +10,25 @@ import {
 } from "../../../../../generated/graphqlOperations";
 
 const CharacterSearch = () => {
-  const [options, setOptions] = useState([]);
-  const [open, setOpen] = useState(false);
+  const { selectedCharacter } = useState(manageFolderState);
+  const [options, setOptions] = useReactState<Character[]>([]);
+  const [open, setOpen] = useReactState(false);
   const toggleOpen = () => setOpen((prev) => !prev);
 
-  const [value, setValue] = useDebounce("", 200);
+  const [debouncedValue, setDebouncedValue] = useDebounce("", 200);
 
-  const [searchQuery, { data }] = useLazyAuthenticatedQuery(SearchCharactersByMainDocument);
-
-  useEffect(() => {
-    if (!value) {
-      return;
-    }
-
-    console.log("value", value);
-    searchQuery({ variables: { search: value } });
-  }, [value]);
+  const [searchQuery, { loading }] = useLazyAuthenticatedQuery(SearchCharactersByMainDocument, {
+    onCompleted: ({ searchCharactersByMain }) => {
+      setOptions(searchCharactersByMain);
+    },
+  });
 
   useEffect(() => {
-    if (!data) {
+    if (!debouncedValue) {
       return;
     }
-
-    setOptions(data.searchCharactersByMain.map(({ name }: Character) => name));
-  }, [data]);
+    searchQuery({ variables: { search: debouncedValue } });
+  }, [debouncedValue]);
 
   return (
     <Autocomplete
@@ -39,12 +36,24 @@ const CharacterSearch = () => {
       onOpen={toggleOpen}
       onClose={toggleOpen}
       options={options}
+      getOptionLabel={({ name }) => name}
+      isOptionEqualToValue={(opt, val) => opt.esiId === val.esiId}
+      onChange={(_, character) => selectedCharacter.set(character)}
+      onInputChange={(_, value) => setDebouncedValue(value)}
+      loading={loading}
       renderInput={(params) => (
         <TextField
           {...params}
-          label="asd"
-          onChange={(event) => setValue(event.target.value)}
-          InputProps={{ ...params.InputProps, endAdornment: <>{params.InputProps.endAdornment}</> }}
+          label="Select Character"
+          InputProps={{
+            ...params.InputProps,
+            endAdornment: (
+              <>
+                {loading ? <CircularProgress color="inherit" size={20} /> : null}
+                {params.InputProps.endAdornment}
+              </>
+            ),
+          }}
         />
       )}
     />
