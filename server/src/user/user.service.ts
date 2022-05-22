@@ -62,7 +62,7 @@ export class UserService {
     return user;
   }
 
-  findByCharacter(character: Character): Promise<User> {
+  async findByCharacter(character: Character): Promise<User> {
     return this.userModel.findOne({ $or: [{ main: character }, { alts: character }] }).exec();
   }
 
@@ -150,7 +150,7 @@ export class UserService {
     folderId: string,
     role: FolderRoles,
   ): Promise<User> {
-    const user = await this.findById(userEsiId);
+    const user = await this.findByEsiId(userEsiId);
     const folder = await this.folderService.getFolderById(folderId);
     return await this.addFolderRole(user, { folder, role });
   }

@@ -372,6 +372,15 @@ export type CreateFolderMutation = {
   createFolder: { __typename?: "Folder"; id: string; name: string };
 };
 
+export type AddFolderRoleMutationVariables = Exact<{
+  input: AddFolderRoleInput;
+}>;
+
+export type AddFolderRoleMutation = {
+  __typename?: "Mutation";
+  addFolderRole: { __typename?: "SanitizedUser"; id: string };
+};
+
 export type SearchCharactersByMainQueryVariables = Exact<{
   search: Scalars["String"];
 }>;
@@ -662,6 +671,46 @@ export const CreateFolderDocument = {
     ...FolderFieldsFragmentDoc.definitions,
   ],
 } as unknown as DocumentNode<CreateFolderMutation, CreateFolderMutationVariables>;
+export const AddFolderRoleDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "AddFolderRole" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "input" } },
+          type: {
+            kind: "NonNullType",
+            type: { kind: "NamedType", name: { kind: "Name", value: "AddFolderRoleInput" } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "addFolderRole" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "input" },
+                value: { kind: "Variable", name: { kind: "Name", value: "input" } },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [{ kind: "Field", name: { kind: "Name", value: "id" } }],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<AddFolderRoleMutation, AddFolderRoleMutationVariables>;
 export const SearchCharactersByMainDocument = {
   kind: "Document",
   definitions: [

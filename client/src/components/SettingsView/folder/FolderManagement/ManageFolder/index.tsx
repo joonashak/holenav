@@ -1,6 +1,11 @@
 import { createState, useState } from "@hookstate/core";
-import { Stack } from "@mui/material";
-import { Character, FolderRoles } from "../../../../../generated/graphqlOperations";
+import { Button, Stack } from "@mui/material";
+import useAuthenticatedMutation from "../../../../../auth/useAuthenticatedMutation";
+import {
+  AddFolderRoleDocument,
+  Character,
+  FolderRoles,
+} from "../../../../../generated/graphqlOperations";
 import Select from "../../../../controls/Select";
 import useSettingsData from "../../../SettingsData/useSettingsData";
 import CharacterSearch from "./CharacterSearch";
@@ -18,14 +23,28 @@ export const manageFolderState = createState<ManageFolderState>({
 });
 
 const ManageFolder = () => {
-  const { selectedFolder, selectedRole } = useState(manageFolderState);
+  const { selectedFolder, selectedRole, selectedCharacter } = useState(manageFolderState);
   const { manageableFolders } = useSettingsData();
+  const [addFolderRoleMutation] = useAuthenticatedMutation(AddFolderRoleDocument);
+
   const folderOptions = manageableFolders.map(({ id, name }) => ({ id, value: id, label: name }));
   const roleOptions = Object.keys(FolderRoles).map((role) => ({
     id: `role-${role}`,
-    value: role,
+    value: FolderRoles[role as keyof typeof FolderRoles],
     label: role,
   }));
+
+  const onSubmit = () => {
+    addFolderRoleMutation({
+      variables: {
+        input: {
+          userEsiId: selectedCharacter.value?.esiId,
+          folderId: selectedFolder.value,
+          role: selectedRole.value,
+        },
+      },
+    });
+  };
 
   return (
     <Stack spacing={2}>
@@ -42,6 +61,9 @@ const ManageFolder = () => {
         title="Select Role"
         value={selectedRole.value}
       />
+      <Button color="secondary" variant="contained" onClick={onSubmit}>
+        Add Role
+      </Button>
     </Stack>
   );
 };

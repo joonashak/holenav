@@ -20,3 +20,9 @@ mutation CreateFolder($name: String!) {
     ...FolderFields
   }
 }
+
+mutation AddFolderRole($input: AddFolderRoleInput!) {
+  addFolderRole(input: $input) {
+    id
+  }
+}
