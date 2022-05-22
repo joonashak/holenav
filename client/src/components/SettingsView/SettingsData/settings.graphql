@@ -26,3 +26,9 @@ mutation AddFolderRole($input: AddFolderRoleInput!) {
     id
   }
 }
+
+mutation ChangeActiveFolder($folderId: String!) {
+  changeActiveFolder(folderId: $folderId) {
+    id
+  }
+}

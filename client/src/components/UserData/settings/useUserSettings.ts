@@ -1,11 +1,15 @@
 import { Downgraded, useState } from "@hookstate/core";
 import { userState } from "..";
-import { Folder } from "../../../generated/graphqlOperations";
+import useAuthenticatedMutation from "../../../auth/useAuthenticatedMutation";
+import { ChangeActiveFolderDocument, Folder } from "../../../generated/graphqlOperations";
 
 const useUserSettings = () => {
   const state = useState(userState);
 
-  const setActiveFolder = (folder: Folder) => {
+  const [changeActiveFolderMutation] = useAuthenticatedMutation(ChangeActiveFolderDocument);
+
+  const setActiveFolder = async (folder: Folder) => {
+    await changeActiveFolderMutation({ variables: { folderId: folder.id } });
     state.settings.activeFolder.set(folder);
   };
 

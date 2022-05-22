@@ -107,6 +107,7 @@ export type Mutation = {
   addSavedMap: User;
   addSignature: Signature;
   addWormhole: Wormhole;
+  changeActiveFolder: SanitizedUser;
   createFolder: Folder;
   deleteSavedMap: User;
   deleteSignature: Signature;
@@ -135,6 +136,10 @@ export type MutationAddSignatureArgs = {
 
 export type MutationAddWormholeArgs = {
   input: AddWormholeInput;
+};
+
+export type MutationChangeActiveFolderArgs = {
+  folderId: Scalars["String"];
 };
 
 export type MutationCreateFolderArgs = {
@@ -379,6 +384,15 @@ export type AddFolderRoleMutationVariables = Exact<{
 export type AddFolderRoleMutation = {
   __typename?: "Mutation";
   addFolderRole: { __typename?: "SanitizedUser"; id: string };
+};
+
+export type ChangeActiveFolderMutationVariables = Exact<{
+  folderId: Scalars["String"];
+}>;
+
+export type ChangeActiveFolderMutation = {
+  __typename?: "Mutation";
+  changeActiveFolder: { __typename?: "SanitizedUser"; id: string };
 };
 
 export type SearchCharactersByMainQueryVariables = Exact<{
@@ -711,6 +725,46 @@ export const AddFolderRoleDocument = {
     },
   ],
 } as unknown as DocumentNode<AddFolderRoleMutation, AddFolderRoleMutationVariables>;
+export const ChangeActiveFolderDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "ChangeActiveFolder" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "folderId" } },
+          type: {
+            kind: "NonNullType",
+            type: { kind: "NamedType", name: { kind: "Name", value: "String" } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "changeActiveFolder" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "folderId" },
+                value: { kind: "Variable", name: { kind: "Name", value: "folderId" } },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [{ kind: "Field", name: { kind: "Name", value: "id" } }],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<ChangeActiveFolderMutation, ChangeActiveFolderMutationVariables>;
 export const SearchCharactersByMainDocument = {
   kind: "Document",
   definitions: [

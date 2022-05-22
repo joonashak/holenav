@@ -5,7 +5,6 @@ import useAuth from "../../auth/useAuth";
 import useLazyAuthenticatedQuery from "../../auth/useLazyAuthenticatedQuery";
 import useLocalData from "../LocalData/useLocalData";
 import { GET_USER_DATA } from "./graphql";
-import useUserSettings from "./settings/useUserSettings";
 import { UserData } from "./types";
 
 export const userState = createState<UserData>({
@@ -35,21 +34,18 @@ interface UserDataProviderProps {
 export default ({ children }: UserDataProviderProps) => {
   const state = useState(userState);
   const { token } = useAuth();
-  const { setActiveFolder } = useUserSettings();
   const { setDefaultActiveCharacter } = useLocalData();
 
   const [userQuery, { loading }] = useLazyAuthenticatedQuery(GET_USER_DATA, {
     onCompleted: (data) => {
       const { whoami, getAccessibleFolders } = data;
       const { main, settings, ...rest } = cloneDeep(whoami);
-      const activeFolder = settings.activeFolder || getAccessibleFolders[0];
       state.merge({
         main,
         accessibleFolders: getAccessibleFolders,
         settings,
         ...rest,
       });
-      setActiveFolder(activeFolder);
       setDefaultActiveCharacter(main.esiId);
     },
   });

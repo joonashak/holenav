@@ -70,7 +70,7 @@ export class UserResolver {
   @RequireAuth()
   @Mutation((returns) => SanitizedUser)
   async changeActiveFolder(
-    @Args("activeFolder") folderId: string,
+    @Args("folderId") folderId: string,
     @CurrentUser() user: User,
   ): Promise<User> {
     return this.userSettingsService.changeActiveFolder(folderId, user);
