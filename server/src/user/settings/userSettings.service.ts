@@ -1,6 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
+import { FolderService } from "../../entities/folder/folder.service";
 import { User, UserDocument } from "../user.model";
 import { UserService } from "../user.service";
 import { UserSettings } from "./userSettings.model";
@@ -10,6 +11,7 @@ export class UserSettingsService {
   constructor(
     @InjectModel(User.name) private userModel: Model<UserDocument>,
     private userService: UserService,
+    private folderService: FolderService,
   ) {}
 
   /**
@@ -47,5 +49,11 @@ export class UserSettingsService {
     const { settings } = await this.userService.findById(user.id);
     const maps = settings.maps.filter((map) => map.id !== mapId);
     return this.updateUserSettings(user.id, { maps });
+  }
+
+  async changeActiveFolder(folderId: string, user: User): Promise<User> {
+    // FIXME: Check for roles.
+    const activeFolder = await this.folderService.getFolderById(folderId);
+    return this.updateUserSettings(user.id, { activeFolder });
   }
 }

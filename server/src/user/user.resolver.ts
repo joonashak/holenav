@@ -66,4 +66,13 @@ export class UserResolver {
     const { userEsiId, folderId, role } = input;
     return this.userService.addFolderRoleByEsiId(userEsiId, folderId, role);
   }
+
+  @RequireAuth()
+  @Mutation((returns) => SanitizedUser)
+  async changeActiveFolder(
+    @Args("activeFolder") folderId: string,
+    @CurrentUser() user: User,
+  ): Promise<User> {
+    return this.userSettingsService.changeActiveFolder(folderId, user);
+  }
 }
