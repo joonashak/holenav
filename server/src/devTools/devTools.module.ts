@@ -6,7 +6,7 @@ import { DataMigrationModule } from "../dataMigration/dataMigration.module";
 import { FolderModule } from "../entities/folder/folder.module";
 import { SignatureModule } from "../entities/signature/signature.module";
 import { SsoSessionModule } from "../auth/sso/ssoSession/ssoSession.module";
-import { MockUserService } from "./mockUser.service";
+import { MockUserService } from "./mockDataServices/mockUser.service";
 import { devToolsEnabled } from "../config";
 import { WormholeModule } from "../entities/wormhole/wormhole.module";
 import { WormholeService } from "../entities/wormhole/wormhole.service";

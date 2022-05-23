@@ -15,8 +15,8 @@ import { WormholeService } from "../entities/wormhole/wormhole.service";
 import { Credentials } from "../user/credentials/credentials.model";
 import { User } from "../user/user.model";
 import users from "./data/users";
-import { MockUserService } from "./mockUser.service";
-import mockWormholes from "./mockWormholes";
+import { MockUserService } from "./mockDataServices/mockUser.service";
+import mockWormholes from "./mockDataServices/mockWormholes";
 
 @Injectable()
 export class DevToolsService {
