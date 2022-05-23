@@ -13,7 +13,7 @@ export class DataMigrationService implements OnApplicationBootstrap {
 
   // Add new migrations here and they will be applied on next launch.
   private readonly migrations = {
-    1: () => this.createDefaultFolder(),
+    // 1: () => this.createDefaultFolder(),
   };
 
   constructor(
@@ -52,6 +52,10 @@ export class DataMigrationService implements OnApplicationBootstrap {
     }
   }
 
+  // FIXME: Remove this.
+  /**
+   * @deprecated
+   */
   async createDefaultFolder() {
     await this.folderService.createDefaultFolder();
   }

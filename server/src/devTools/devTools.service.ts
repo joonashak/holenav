@@ -15,6 +15,7 @@ import { WormholeService } from "../entities/wormhole/wormhole.service";
 import { Credentials } from "../user/credentials/credentials.model";
 import { User } from "../user/user.model";
 import users from "./data/users";
+import { MockFolderService } from "./mockDataServices/mockFolder.service";
 import { MockUserService } from "./mockDataServices/mockUser.service";
 import mockWormholes from "./mockDataServices/mockWormholes";
 
@@ -33,6 +34,7 @@ export class DevToolsService {
     @InjectModel(Session.name) private sessionModel: Model<Session>,
     private dataMigrationService: DataMigrationService,
     private mockUserService: MockUserService,
+    private mockFolderService: MockFolderService,
     private folderService: FolderService,
     private whService: WormholeService,
   ) {}
@@ -50,6 +52,7 @@ export class DevToolsService {
   async seedDatabase() {
     await this.clearCollections();
 
+    await this.mockFolderService.mock();
     await this.mockUserService.mock();
     await mockWormholes(this.whModel, this.whService, this.folderService);
   }

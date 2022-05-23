@@ -21,7 +21,7 @@ export class FolderService {
     private userService: UserService,
   ) {}
 
-  private async createFolderWithOptionalId(name: string, id: string = null) {
+  async createFolderWithOptionalId(name: string, id: string = null) {
     const folder = id
       ? await this.folderModel.create({ name, id })
       : await this.folderModel.create({ name });

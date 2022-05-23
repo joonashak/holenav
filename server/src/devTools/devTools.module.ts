@@ -11,6 +11,7 @@ import { devToolsEnabled } from "../config";
 import { WormholeModule } from "../entities/wormhole/wormhole.module";
 import { WormholeService } from "../entities/wormhole/wormhole.service";
 import { SessionModule } from "../auth/session/session.module";
+import { MockFolderService } from "./mockDataServices/mockFolder.service";
 
 const options = {
   imports: [
@@ -22,7 +23,7 @@ const options = {
     WormholeModule,
     SessionModule,
   ],
-  providers: [DevToolsService, MockUserService, WormholeService],
+  providers: [DevToolsService, MockUserService, MockFolderService, WormholeService],
   controllers: [DevToolsController],
 };
 
