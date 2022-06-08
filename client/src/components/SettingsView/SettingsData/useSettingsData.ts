@@ -11,6 +11,7 @@ const useSettingsData = () => {
   const [createFolderMutation] = useAuthenticatedMutation(CreateFolderDocument, {
     onCompleted: ({ createFolder }) => {
       state.accessibleFolders.set((folders) => folders.concat([createFolder]));
+      state.manageableFolders.set((folders) => folders.concat([createFolder]));
       showSuccessNotification("Folder created.");
     },
     onError: () => showErrorNotification("Could not create new folder."),
