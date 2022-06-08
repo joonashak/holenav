@@ -7,6 +7,7 @@ import {
   FolderRoles,
 } from "../../../../../generated/graphqlOperations";
 import Select from "../../../../controls/Select";
+import useNotification from "../../../../GlobalNotification/useNotification";
 import useSettingsData from "../../../SettingsData/useSettingsData";
 import CharacterSearch from "./CharacterSearch";
 
@@ -26,6 +27,7 @@ const ManageFolder = () => {
   const { selectedFolder, selectedRole, selectedCharacter } = useState(manageFolderState);
   const { manageableFolders } = useSettingsData();
   const [addFolderRoleMutation] = useAuthenticatedMutation(AddFolderRoleDocument);
+  const { showSuccessNotification } = useNotification();
 
   const folderOptions = manageableFolders.map(({ id, name }) => ({ id, value: id, label: name }));
   const roleOptions = Object.keys(FolderRoles).map((role) => ({
@@ -34,8 +36,8 @@ const ManageFolder = () => {
     label: role,
   }));
 
-  const onSubmit = () => {
-    addFolderRoleMutation({
+  const onSubmit = async () => {
+    await addFolderRoleMutation({
       variables: {
         input: {
           userEsiId: selectedCharacter.value?.esiId,
@@ -44,6 +46,7 @@ const ManageFolder = () => {
         },
       },
     });
+    showSuccessNotification("Role added.");
   };
 
   return (

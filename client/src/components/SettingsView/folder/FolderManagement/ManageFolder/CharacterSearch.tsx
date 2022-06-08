@@ -45,6 +45,7 @@ const CharacterSearch = () => {
         <TextField
           {...params}
           label="Select Character"
+          data-cy="character-search-textfield"
           InputProps={{
             ...params.InputProps,
             endAdornment: (
