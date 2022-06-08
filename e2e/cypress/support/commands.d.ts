@@ -22,6 +22,21 @@ declare namespace Cypress {
     mockUser(id: number): Chainable<Element>;
 
     /**
+     * Mock normal user.
+     */
+    mockNormalUser(): Chainable<Element>;
+
+    /**
+     * Mock manager.
+     */
+    mockManager(): Chainable<Element>;
+
+    /**
+     * Mock admin.
+     */
+    mockAdmin(): Chainable<Element>;
+
+    /**
      * Get MUI Autocomplete options.
      *
      * Works on its own but should be chained after cy.cs() or cy.get() if there are multiple

@@ -10,7 +10,7 @@ const testSystemUrl = "/system/Jita";
 describe("Signatures", () => {
   before(() => {
     cy.resetDatabase();
-    cy.mockUser(2);
+    cy.mockNormalUser();
   });
 
   beforeEach(() => {
