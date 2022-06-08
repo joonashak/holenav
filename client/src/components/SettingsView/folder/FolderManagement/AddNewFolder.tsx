@@ -30,7 +30,13 @@ const AddNewFolder = () => {
           />
         </FormGroup>
         <FormGroup>
-          <Button type="submit" variant="contained" color="secondary" size="large">
+          <Button
+            type="submit"
+            variant="contained"
+            color="secondary"
+            size="large"
+            data-cy="add-new-folder-button"
+          >
             Add New Folder
           </Button>
         </FormGroup>
