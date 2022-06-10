@@ -119,3 +119,13 @@ Run this command in the `client/` directory.
 ```bash
 npm run generate
 ```
+
+## Documentation
+
+### Run Documentation Dev Server
+
+Docs will be available at [http://localhost:8080](http://localhost:8080) when this command is running.
+
+```bash
+npm run docs
+```
