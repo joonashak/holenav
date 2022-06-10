@@ -1,14 +1,48 @@
-name: Publish documentation
+name: Release new version
 
 on:
-  push:
-    branches:
-      - main
-  # release:
-  #   types: [released]
+  release:
+    types: [released]
 
 jobs:
-  publish:
+  publish-server:
+    name: Publish backend container
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Login to GHCR
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build server image and push it to GHCR
+        uses: docker/build-push-action@v2
+        with:
+          context: ./server
+          file: ./server/Dockerfile.production
+          platforms: linux/amd64
+          push: true
+          tags: ghcr.io/${{ github.actor }}/holenav-server:staging
+
+  deploy-client:
+    name: Deploy frontend to staging
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Deploy frontend to Vercel
+        uses: amondnet/vercel-action@v19
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          alias-domains: |
+            ${{ secrets.STAGING_DOMAIN }}
+          working-directory: ./client
+
+  publish-docs:
     name: Publish documentation
     runs-on: ubuntu-latest
     steps:
@@ -18,9 +52,8 @@ jobs:
         uses: amondnet/vercel-action@v19
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }} 
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
           alias-domains: |
             ${{ secrets.DOCUMENTATION_DOMAIN }}
           working-directory: ./docs
-    
