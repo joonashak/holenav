@@ -50,7 +50,12 @@ module.exports = {
         title: "Developing",
         path: "/developing",
         sidebarDepth: 2,
-        children: ["/developing/development-environment","/developing/command-reference"],
+        children: [
+          "/developing/development-environment",
+          "/developing/command-reference",
+          "/developing/database",
+          "/developing/roles",
+        ],
       },
     ],
   },

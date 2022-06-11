@@ -1,6 +1,8 @@
 # Roles
 
-> This is currently a working document for developing the roles system.
+:::tip
+This is currently a working document for developing the roles system.
+:::
 
 Holenav combines roles and folders to implement access control.
 
