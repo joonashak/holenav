@@ -1,6 +1,6 @@
 {
   "name": "holenav",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "New mapper for make benefit of the glorious EVE community. Currently in early prototyping.",
   "scripts": {
     "start": "npm run startd && npm run logs",
