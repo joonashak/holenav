@@ -16,7 +16,8 @@
     "setup": "cd client && npm ci && cd ../server && npm ci && cd ../e2e && npm ci && cd ../docs && npm ci",
     "build": "docker-compose build",
     "db:drop": "docker volume rm holenav_mongo-data",
-    "docs": "cd docs && npm run dev"
+    "docs": "cd docs && npm run dev",
+    "version": "scripts/version_sub_projects.sh $npm_package_version"
   },
   "repository": {
     "type": "git",
