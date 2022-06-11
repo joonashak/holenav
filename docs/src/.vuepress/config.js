@@ -39,7 +39,20 @@ module.exports = {
         link: "/developing/",
       },
     ],
-    sidebar: ["/introduction", "/hosting/", "/developing/"],
+    sidebar: [
+      "/introduction",
+      {
+        title: "Hosting",
+        path: "/hosting",
+        children: [""],
+      },
+      {
+        title: "Developing",
+        path: "/developing",
+        sidebarDepth: 2,
+        children: ["/developing/command-reference"],
+      },
+    ],
   },
 
   /**
