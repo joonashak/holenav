@@ -24,7 +24,9 @@ jobs:
           file: ./server/Dockerfile.production
           platforms: linux/amd64
           push: true
-          tags: ghcr.io/${{ github.actor }}/holenav-server:${{ github.ref_name }}
+          tags: |
+            ghcr.io/${{ github.actor }}/holenav-server:${{ github.ref_name }}
+            ghcr.io/${{ github.actor }}/holenav-server:latest
 
   publish-docs:
     name: Publish documentation
