@@ -19,6 +19,7 @@ function update_sub_project_version {
   dir="${project_root}/${project_name}"
 
   cd $dir
+  echo -n "${project_name}: "
 
   # Don't commit, just bump to given version.
   npm version --git-tag-version false $new_version

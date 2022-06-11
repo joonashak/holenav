@@ -17,7 +17,8 @@
     "build": "docker-compose build",
     "db:drop": "docker volume rm holenav_mongo-data",
     "docs": "cd docs && npm run dev",
-    "version": "scripts/version_sub_projects.sh $npm_package_version"
+    "version": "scripts/version_sub_projects.sh $npm_package_version",
+    "postversion": "git push && git push --tags"
   },
   "repository": {
     "type": "git",
