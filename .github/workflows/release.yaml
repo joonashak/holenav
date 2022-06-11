@@ -6,7 +6,7 @@ on:
 
 jobs:
   publish-server:
-    name: Publish backend container
+    name: Publish backend image
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -24,7 +24,7 @@ jobs:
           file: ./server/Dockerfile.production
           platforms: linux/amd64
           push: true
-          tags: ghcr.io/${{ github.actor }}/holenav-server:staging
+          tags: ghcr.io/${{ github.actor }}/holenav-server:${{ github.ref_name }}
 
   publish-docs:
     name: Publish documentation
