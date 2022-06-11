@@ -9,6 +9,8 @@
 projects=(
   "client"
   "docs"
+  "e2e"
+  "server"
 )
 
 new_version=$1
