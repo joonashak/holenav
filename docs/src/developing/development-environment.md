@@ -1,6 +1,10 @@
-# Configuration
+# Development Environment
 
-## Development Environment
+## System Requirements
+
+TBA.
+
+## Configuration
 
 The development environment can be used with Docker without configuration. (However, SSO login will not be available.)
 
@@ -14,6 +18,10 @@ If you want to use EVE SSO for authentication, you need to create application cr
 | `SSO_CLIENT_ID`    | EVE SSO application client ID.    |
 | `SSO_SECRET_KEY`   | EVE SSO application secret key.   |
 
-## Production
+:::danger
+Make sure not to commit your environment variable files to source control!
+:::
 
-TBD.
+## Usage
+
+TBA.
