@@ -1,0 +1,23 @@
+name: Just testing
+
+on: push
+
+jobs:
+  testing:
+    name: Test version parsing
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Parse semver number
+        id: semver
+        run: |
+          PACKAGE_VERSION=$(cat package.json | jq '.version' | tr -d '"')
+          echo "::set-output name=major::$(echo $IN | cut -d "." -f 1)"
+          echo "::set-output name=minor::$(echo $IN | cut -d "." -f 2)"
+          echo "::set-output name=patch::$(echo $IN | cut -d "." -f 3)"
+      - name: Assert
+        run: |
+          echo "major: ${{ steps.semver.outputs.major }}"
+          echo "minor: ${{ steps.semver.outputs.minor }}"
+          echo "patch: ${{ steps.semver.outputs.patch }}"
