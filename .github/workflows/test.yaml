@@ -13,12 +13,15 @@ jobs:
         id: semver
         run: |
           PACKAGE_VERSION=$(cat package.json | jq '.version' | tr -d '"')
-          echo "package version: $PACKAGE_VERSION"
           echo "::set-output name=major::$(echo $PACKAGE_VERSION | cut -d "." -f 1)"
           echo "::set-output name=minor::$(echo $PACKAGE_VERSION | cut -d "." -f 2)"
           echo "::set-output name=patch::$(echo $PACKAGE_VERSION | cut -d "." -f 3)"
+      - name: Compose semver tags
+        id: tags
+        run: |
+          echo "::set-output name:major::v${{ steps.semver.outputs.major }}"
+          echo "::set-output name:minor::v${{ steps.semver.outputs.major }}.${{ steps.semver.outputs.minor }}"
       - name: Assert
         run: |
-          echo "major: ${{ steps.semver.outputs.major }}"
-          echo "minor: ${{ steps.semver.outputs.minor }}"
-          echo "patch: ${{ steps.semver.outputs.patch }}"
+          echo "major: ${{ steps.tags.outputs.major }}"
+          echo "minor: ${{ steps.tags.outputs.minor }}"
