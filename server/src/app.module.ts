@@ -4,12 +4,12 @@ import { MongooseModule } from "@nestjs/mongoose";
 import { SystemModule } from "./entities/system/system.module";
 import { AuthModule } from "./auth/auth.module";
 import { CharacterModule } from "./entities/character/character.module";
-import { DataMigrationModule } from "./dataMigration/dataMigration.module";
 import { FolderModule } from "./entities/folder/folder.module";
 import { SignatureModule } from "./entities/signature/signature.module";
 import { DevToolsModule } from "./devTools/devTools.module";
 import { clientUrl, databaseUrl } from "./config";
 import { WormholeModule } from "./entities/wormhole/wormhole.module";
+import { BootstrapModule } from "./bootstrap/bootstrap.module";
 
 @Module({
   imports: [
@@ -20,10 +20,10 @@ import { WormholeModule } from "./entities/wormhole/wormhole.module";
       debug: false,
       cors: { origin: clientUrl },
     }),
+    BootstrapModule,
     SystemModule,
     AuthModule,
     CharacterModule,
-    DataMigrationModule,
     FolderModule,
     SignatureModule,
     DevToolsModule,

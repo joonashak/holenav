@@ -2,7 +2,6 @@ import { Module } from "@nestjs/common";
 import { DevToolsService } from "./devTools.service";
 import { DevToolsController } from "./devTools.controller";
 import { CharacterModule } from "../entities/character/character.module";
-import { DataMigrationModule } from "../dataMigration/dataMigration.module";
 import { FolderModule } from "../entities/folder/folder.module";
 import { SignatureModule } from "../entities/signature/signature.module";
 import { SsoSessionModule } from "../auth/sso/ssoSession/ssoSession.module";
@@ -16,7 +15,6 @@ import { MockFolderService } from "./mockDataServices/mockFolder.service";
 const options = {
   imports: [
     CharacterModule,
-    DataMigrationModule,
     FolderModule,
     SignatureModule,
     SsoSessionModule,

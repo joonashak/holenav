@@ -3,8 +3,6 @@ import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { Session } from "../auth/session/session.model";
 import { SsoSession } from "../auth/sso/ssoSession/ssoSession.model";
-import { DataMigration } from "../dataMigration/dataMigration.model";
-import { DataMigrationService } from "../dataMigration/dataMigration.service";
 import { Character } from "../entities/character/character.model";
 import { Folder } from "../entities/folder/folder.model";
 import { FolderService } from "../entities/folder/folder.service";
@@ -23,7 +21,6 @@ import mockWormholes from "./mockDataServices/mockWormholes";
 export class DevToolsService {
   constructor(
     @InjectModel(Character.name) private characterModel: Model<Character>,
-    @InjectModel(DataMigration.name) private dataMigrationModel: Model<DataMigration>,
     @InjectModel(Folder.name) private folderModel: Model<Folder>,
     @InjectModel(Signature.name) private signatureModel: Model<Signature>,
     @InjectModel(SsoSession.name) private ssoSessionModel: Model<SsoSession>,
@@ -32,7 +29,6 @@ export class DevToolsService {
     @InjectModel(Wormhole.name) private whModel: Model<Wormhole>,
     @InjectModel(Credentials.name) private credentialsModel: Model<Credentials>,
     @InjectModel(Session.name) private sessionModel: Model<Session>,
-    private dataMigrationService: DataMigrationService,
     private mockUserService: MockUserService,
     private mockFolderService: MockFolderService,
     private folderService: FolderService,
@@ -71,10 +67,5 @@ export class DevToolsService {
     await this.userModel.deleteMany({});
     await this.credentialsModel.deleteMany({});
     await this.sessionModel.deleteMany({});
-
-    // Capped collection must be updated instead of cleared.
-    await this.dataMigrationModel.create({ version: 0 });
-
-    await this.dataMigrationService.migrate();
   }
 }
