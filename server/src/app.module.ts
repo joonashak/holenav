@@ -10,6 +10,7 @@ import { DevToolsModule } from "./dev-tools/dev-tools.module";
 import { clientUrl, databaseUrl } from "./config";
 import { WormholeModule } from "./entities/wormhole/wormhole.module";
 import { BootstrapModule } from "./bootstrap/bootstrap.module";
+import { AppDataModule } from "./entities/app-data/app-data.module";
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { BootstrapModule } from "./bootstrap/bootstrap.module";
       debug: false,
       cors: { origin: clientUrl },
     }),
+    AppDataModule,
     BootstrapModule,
     SystemModule,
     AuthModule,
