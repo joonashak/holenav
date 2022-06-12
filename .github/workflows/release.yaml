@@ -11,6 +11,18 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Parse semver number
+        id: semver
+        run: |
+          PACKAGE_VERSION=$(cat package.json | jq '.version' | tr -d '"')
+          echo "::set-output name=major::$(echo $PACKAGE_VERSION | cut -d "." -f 1)"
+          echo "::set-output name=minor::$(echo $PACKAGE_VERSION | cut -d "." -f 2)"
+          echo "::set-output name=patch::$(echo $PACKAGE_VERSION | cut -d "." -f 3)"
+      - name: Compose semver tags
+        id: tags
+        run: |
+          echo "::set-output name=major::v${{ steps.semver.outputs.major }}"
+          echo "::set-output name=minor::v${{ steps.semver.outputs.major }}.${{ steps.semver.outputs.minor }}"
       - name: Login to GHCR
         uses: docker/login-action@v1
         with:
@@ -26,6 +38,8 @@ jobs:
           push: true
           tags: |
             ghcr.io/${{ github.actor }}/holenav-server:${{ github.ref_name }}
+            ghcr.io/${{ github.actor }}/holenav-server:${{ steps.tags.outputs.major }}
+            ghcr.io/${{ github.actor }}/holenav-server:${{ steps.tags.outputs.minor }}
             ghcr.io/${{ github.actor }}/holenav-server:latest
 
   publish-docs:
