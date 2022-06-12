@@ -19,8 +19,8 @@ jobs:
       - name: Compose semver tags
         id: tags
         run: |
-          echo "::set-output name:major::v${{ steps.semver.outputs.major }}"
-          echo "::set-output name:minor::v${{ steps.semver.outputs.major }}.${{ steps.semver.outputs.minor }}"
+          echo "::set-output name=major::v${{ steps.semver.outputs.major }}"
+          echo "::set-output name=minor::v${{ steps.semver.outputs.major }}.${{ steps.semver.outputs.minor }}"
       - name: Assert
         run: |
           echo "major: ${{ steps.tags.outputs.major }}"
