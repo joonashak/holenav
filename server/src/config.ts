@@ -1,3 +1,4 @@
+// TODO: Refactor these to capital case.
 export const nodeEnv = process.env.NODE_ENV;
 export const notProduction = nodeEnv !== "production";
 export const databaseUrl = process.env.DATABASE_URL;
@@ -9,5 +10,6 @@ export const port = process.env.PORT || 3001;
 export const jwtSecret = process.env.JWT_SECRET;
 export const jwtLifetime = process.env.JWT_LIFETIME || "30d";
 export const devToolsEnabled = process.env.ENABLE_DEVTOOLS === "true";
+export const APP_VERSION = process.env.npm_package_version;
 
 export const getClientLoginCallbackUrl = (state: string) => `${clientUrl}/login/${state}`;

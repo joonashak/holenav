@@ -8,11 +8,21 @@ export class AppDataService {
   constructor(@InjectModel(AppData.name) private appDataModel: Model<AppDataDocument>) {}
 
   async getAppData(): Promise<AppData> {
-    return this.appDataModel.findOne();
+    const appData = await this.appDataModel.findOne();
+
+    if (!appData) {
+      return this.initialize();
+    }
+
+    return appData;
   }
 
   async updateAppData(update: Partial<AppData>) {
     const current = await this.getAppData();
-    return await this.appDataModel.create({ ...current, ...update });
+    return this.appDataModel.create({ ...current, ...update });
+  }
+
+  private async initialize(): Promise<AppData> {
+    return this.appDataModel.create({ appVersion: "" });
   }
 }

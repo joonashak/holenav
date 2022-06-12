@@ -9,7 +9,7 @@ export type AppDataDocument = AppData & Document;
 export class AppData {
   @Field()
   @Prop()
-  serverVersion: string;
+  appVersion: string;
 }
 
 export const AppDataSchema = SchemaFactory.createForClass(AppData);
