@@ -1,7 +1,9 @@
 name: Run test suite
 
 on:
-  push
+  push:
+    branches-ignore:
+      - update-docs
 
 jobs:
   lint-client:
