@@ -5,17 +5,17 @@ import {
   MockSessionService,
   MockSsoSessionService,
   MockUserService,
-} from "../testUtils/mockServices";
+} from "../test-utils/mock-services";
 import {
   testSsoSession,
   testUser,
   testUserCredentials,
   testUserPassword,
-} from "../testUtils/testData";
+} from "../test-utils/test-data";
 import { UserService } from "../user/user.service";
 import { AuthService } from "./auth.service";
 import { SessionService } from "./session/session.service";
-import { SsoSessionService } from "./sso/ssoSession/ssoSession.service";
+import { SsoSessionService } from "./sso/sso-session/sso-session.service";
 
 describe("AuthService", () => {
   let authService: AuthService;

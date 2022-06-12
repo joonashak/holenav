@@ -5,7 +5,7 @@ import { SsoService } from "./sso/sso.service";
 import { AuthService } from "./auth.service";
 import { CharacterModule } from "../entities/character/character.module";
 import { jwtLifetime, jwtSecret } from "../config";
-import { SsoSessionModule } from "./sso/ssoSession/ssoSession.module";
+import { SsoSessionModule } from "./sso/sso-session/sso-session.module";
 import AuthResolver from "./auth.resolver";
 import { SsoModule } from "./sso/sso.module";
 import { SessionModule } from "./session/session.module";

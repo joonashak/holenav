@@ -3,10 +3,10 @@ import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import mongoose from "mongoose";
 import { v4 as uuid } from "uuid";
 import { Character } from "../entities/character/character.model";
-import { FolderRole, FolderRoleSchema } from "./roles/folderRole.model";
-import defaultUserSettings from "./settings/defaultUserSettings";
-import { UserSettings, UserSettingsSchema } from "./settings/userSettings.model";
-import SystemRoles from "./roles/systemRoles.enum";
+import { FolderRole, FolderRoleSchema } from "./roles/folder-role.model";
+import defaultUserSettings from "./settings/default-user-settings";
+import { UserSettings, UserSettingsSchema } from "./settings/user-settings.model";
+import SystemRoles from "./roles/system-roles.enum";
 import { Credentials } from "./credentials/credentials.model";
 
 export type UserDocument = User & mongoose.Document;

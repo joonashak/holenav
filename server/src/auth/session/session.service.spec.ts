@@ -5,7 +5,7 @@ import dayjs from "dayjs";
 import { Model } from "mongoose";
 import ms from "ms";
 import { jwtLifetime } from "../../config";
-import { testSession, testUser } from "../../testUtils/testData";
+import { testSession, testUser } from "../../test-utils/test-data";
 import { Session } from "./session.model";
 import { SessionService } from "./session.service";
 

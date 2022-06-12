@@ -6,7 +6,7 @@ import { User } from "../user/user.model";
 import { UserService } from "../user/user.service";
 import { Session } from "./session/session.model";
 import { SessionService } from "./session/session.service";
-import { SsoSessionService } from "./sso/ssoSession/ssoSession.service";
+import { SsoSessionService } from "./sso/sso-session/sso-session.service";
 import { JwtPayload } from "./types";
 
 @Injectable()

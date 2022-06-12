@@ -7,8 +7,8 @@ import { SystemService } from "../system/system.service";
 import { devToolsEnabled } from "../../config";
 import { UserDocument } from "../../user/user.model";
 import { UserService } from "../../user/user.service";
-import FolderRoles from "../../user/roles/folderRoles.enum";
-import SystemRoles from "../../user/roles/systemRoles.enum";
+import FolderRoles from "../../user/roles/folder-roles.enum";
+import SystemRoles from "../../user/roles/system-roles.enum";
 
 const defaultFolderName = "Default Folder";
 

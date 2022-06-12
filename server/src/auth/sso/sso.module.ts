@@ -2,8 +2,8 @@ import { Module } from "@nestjs/common";
 import { CharacterModule } from "../../entities/character/character.module";
 import SsoResolver from "./sso.resolver";
 import { SsoService } from "./sso.service";
-import { SsoApiService } from "./ssoApi.service";
-import { SsoSessionModule } from "./ssoSession/ssoSession.module";
+import { SsoApiService } from "./sso-api.service";
+import { SsoSessionModule } from "./sso-session/sso-session.module";
 
 @Module({
   imports: [SsoSessionModule, CharacterModule],

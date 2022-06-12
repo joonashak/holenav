@@ -3,10 +3,10 @@ import { clientUrl, getClientLoginCallbackUrl, ssoCallbackUrl, ssoClientId } fro
 import { CharacterService } from "../../entities/character/character.service";
 import { User } from "../../user/user.model";
 import { UserService } from "../../user/user.service";
-import { SsoApiService } from "./ssoApi.service";
-import { SsoSessionService } from "./ssoSession/ssoSession.service";
-import SsoSessionTypes from "./ssoSession/ssoSessionTypes.enum";
-import { SsoUrl } from "./ssoUrl.enum";
+import { SsoApiService } from "./sso-api.service";
+import { SsoSessionService } from "./sso-session/sso-session.service";
+import SsoSessionTypes from "./sso-session/sso-session-types.enum";
+import { SsoUrl } from "./sso-url.enum";
 
 @Injectable()
 export class SsoService {

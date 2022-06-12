@@ -2,7 +2,7 @@ import { Query, Resolver } from "@nestjs/graphql";
 import { User } from "../../user/user.model";
 import RequireAuth from "../decorators/auth.decorator";
 import { CurrentUser } from "../decorators/user.decorator";
-import StartSsoLoginDto from "../dto/startSsoLogin.dto";
+import StartSsoLoginDto from "../dto/start-sso-login.dto";
 import { SsoService } from "./sso.service";
 
 @Resolver()

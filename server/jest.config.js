@@ -8,7 +8,7 @@ const config = {
   collectCoverageFrom: ["**/{(*.service),(*.guard)}.(t|j)s"],
   coverageDirectory: "../coverage",
   testEnvironment: "node",
-  setupFiles: ["<rootDir>/../test/testEnv.ts"],
+  setupFiles: ["<rootDir>/../test/test-env.ts"],
 };
 
 module.exports = config;

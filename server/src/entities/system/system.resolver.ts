@@ -1,7 +1,7 @@
 import { Args, Query, Resolver } from "@nestjs/graphql";
-import { ActiveFolder } from "../../auth/decorators/activeFolder.decorator";
+import { ActiveFolder } from "../../auth/decorators/active-folder.decorator";
 import { RequireFolderRole } from "../../auth/decorators/role.decorator";
-import FolderRoles from "../../user/roles/folderRoles.enum";
+import FolderRoles from "../../user/roles/folder-roles.enum";
 import { FolderDocument } from "../folder/folder.model";
 import { System } from "./system.model";
 import { SystemService } from "./system.service";

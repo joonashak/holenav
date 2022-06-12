@@ -3,11 +3,11 @@ import { CurrentUser } from "../auth/decorators/user.decorator";
 import { User } from "./user.model";
 import { UserService } from "./user.service";
 import RequireAuth from "../auth/decorators/auth.decorator";
-import { UserSettingsService } from "./settings/userSettings.service";
+import { UserSettingsService } from "./settings/user-settings.service";
 import { RequireSystemRole } from "../auth/decorators/role.decorator";
-import SystemRoles from "./roles/systemRoles.enum";
-import { SanitizedUser } from "./dto/sanitizedUser.dto";
-import AddFolderRoleInput from "./dto/addFolderRole.dto";
+import SystemRoles from "./roles/system-roles.enum";
+import { SanitizedUser } from "./dto/sanitized-user.dto";
+import AddFolderRoleInput from "./dto/add-folder-role.dto";
 
 @Resolver()
 export class UserResolver {

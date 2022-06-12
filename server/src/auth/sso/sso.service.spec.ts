@@ -4,13 +4,13 @@ import {
   MockSsoApiService,
   MockSsoSessionService,
   MockUserService,
-} from "../../testUtils/mockServices";
+} from "../../test-utils/mock-services";
 import { UserService } from "../../user/user.service";
 import { SsoService } from "./sso.service";
-import { SsoApiService } from "./ssoApi.service";
-import { SsoSessionService } from "./ssoSession/ssoSession.service";
-import { testSsoSession, testSsoTokens, testUser } from "../../testUtils/testData";
-import SsoSessionTypes from "./ssoSession/ssoSessionTypes.enum";
+import { SsoApiService } from "./sso-api.service";
+import { SsoSessionService } from "./sso-session/sso-session.service";
+import { testSsoSession, testSsoTokens, testUser } from "../../test-utils/test-data";
+import SsoSessionTypes from "./sso-session/sso-session-types.enum";
 
 const expectedCallbackUrl = `https://login.eveonline.com/v2/oauth/authorize/?response_type=code&redirect_uri=test-callback-url&client_id=test-sso-client-id&state=${testSsoSession.key}`;
 

@@ -8,7 +8,7 @@ import { LoginGuard } from "./login.guard";
 import { GraphQLExecutionContext } from "@nestjs/graphql";
 import { AuthenticationError } from "apollo-server-express";
 import { jwtLifetime, jwtSecret } from "../../config";
-import { MockAuthService, MockSessionService } from "../../testUtils/mockServices";
+import { MockAuthService, MockSessionService } from "../../test-utils/mock-services";
 
 const createContextWithGqlArgs = (gqlArgs: any): ExecutionContext => {
   const gqlContext = createMock<GraphQLExecutionContext>();

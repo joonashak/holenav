@@ -1,6 +1,6 @@
 import { Args, Query, Resolver } from "@nestjs/graphql";
 import { RequireSystemRole } from "../../auth/decorators/role.decorator";
-import SystemRoles from "../../user/roles/systemRoles.enum";
+import SystemRoles from "../../user/roles/system-roles.enum";
 import { Character } from "./character.model";
 import { CharacterService } from "./character.service";
 

@@ -5,11 +5,11 @@ import { Character } from "../entities/character/character.model";
 import { CharacterService } from "../entities/character/character.service";
 import { FolderService } from "../entities/folder/folder.service";
 import { Credentials, CredentialsDocument } from "./credentials/credentials.model";
-import { CreateUserDto } from "./dto/createUser.dto";
-import { SanitizedUser } from "./dto/sanitizedUser.dto";
-import { FolderRole } from "./roles/folderRole.model";
-import FolderRoles from "./roles/folderRoles.enum";
-import SystemRoles from "./roles/systemRoles.enum";
+import { CreateUserDto } from "./dto/create-user.dto";
+import { SanitizedUser } from "./dto/sanitized-user.dto";
+import { FolderRole } from "./roles/folder-role.model";
+import FolderRoles from "./roles/folder-roles.enum";
+import SystemRoles from "./roles/system-roles.enum";
 import { User, UserDocument } from "./user.model";
 
 @Injectable()

@@ -1,11 +1,11 @@
 import { Args, Mutation, Resolver } from "@nestjs/graphql";
 import { RequireFolderRole } from "../../auth/decorators/role.decorator";
-import FolderRoles from "../../user/roles/folderRoles.enum";
-import AddSignatureInput from "./dto/addSignature.dto";
-import UpdateSignatureInput from "./dto/updateSignature.dto";
+import FolderRoles from "../../user/roles/folder-roles.enum";
+import AddSignatureInput from "./dto/add-signature.dto";
+import UpdateSignatureInput from "./dto/update-signature.dto";
 import { Signature } from "./signature.model";
 import { SignatureService } from "./signature.service";
-import SigTypes from "./sigTypes.enum";
+import SigTypes from "./sig-types.enum";
 
 @Resolver()
 export class SignatureResolver {

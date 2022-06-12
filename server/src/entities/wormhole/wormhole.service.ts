@@ -2,9 +2,9 @@ import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model, Types } from "mongoose";
 import { Folder, FolderDocument } from "../folder/folder.model";
-import AddWormholeInput from "./dto/addWormhole.dto";
-import { ConnectionTree, ConnectionTreeNode } from "./dto/connectionTree.dto";
-import UpdateWormholeInput from "./dto/updateWormhole.dto";
+import AddWormholeInput from "./dto/add-wormhole.dto";
+import { ConnectionTree, ConnectionTreeNode } from "./dto/connection-tree.dto";
+import UpdateWormholeInput from "./dto/update-wormhole.dto";
 import { Wormhole, WormholeDocument } from "./wormhole.model";
 
 @Injectable()

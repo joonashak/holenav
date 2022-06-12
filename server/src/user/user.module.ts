@@ -6,7 +6,7 @@ import { UserService } from "./user.service";
 import { UserResolver } from "./user.resolver";
 import { JwtModule } from "@nestjs/jwt";
 import { jwtSecret } from "../config";
-import { UserSettingsService } from "./settings/userSettings.service";
+import { UserSettingsService } from "./settings/user-settings.service";
 import { CharacterModule } from "../entities/character/character.module";
 import { CharacterService } from "../entities/character/character.service";
 import { Credentials, CredentialsSchema } from "./credentials/credentials.model";

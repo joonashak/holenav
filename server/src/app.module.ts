@@ -6,7 +6,7 @@ import { AuthModule } from "./auth/auth.module";
 import { CharacterModule } from "./entities/character/character.module";
 import { FolderModule } from "./entities/folder/folder.module";
 import { SignatureModule } from "./entities/signature/signature.module";
-import { DevToolsModule } from "./devTools/devTools.module";
+import { DevToolsModule } from "./dev-tools/dev-tools.module";
 import { clientUrl, databaseUrl } from "./config";
 import { WormholeModule } from "./entities/wormhole/wormhole.module";
 import { BootstrapModule } from "./bootstrap/bootstrap.module";
