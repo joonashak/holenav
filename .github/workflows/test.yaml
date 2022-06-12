@@ -14,9 +14,9 @@ jobs:
         run: |
           PACKAGE_VERSION=$(cat package.json | jq '.version' | tr -d '"')
           echo "package version: $PACKAGE_VERSION"
-          echo "::set-output name=major::$(echo $IN | cut -d "." -f 1)"
-          echo "::set-output name=minor::$(echo $IN | cut -d "." -f 2)"
-          echo "::set-output name=patch::$(echo $IN | cut -d "." -f 3)"
+          echo "::set-output name=major::$(echo $PACKAGE_VERSION | cut -d "." -f 1)"
+          echo "::set-output name=minor::$(echo $PACKAGE_VERSION | cut -d "." -f 2)"
+          echo "::set-output name=patch::$(echo $PACKAGE_VERSION | cut -d "." -f 3)"
       - name: Assert
         run: |
           echo "major: ${{ steps.semver.outputs.major }}"
