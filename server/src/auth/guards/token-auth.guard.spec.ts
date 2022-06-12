@@ -4,7 +4,11 @@ import { SessionService } from "../session/session.service";
 import { TokenAuthGuard } from "./token-auth.guard";
 import { UserService } from "../../user/user.service";
 import { AuthService } from "../auth.service";
-import { MockAuthService, MockSessionService, MockUserService } from "../../test-utils/mock-services";
+import {
+  MockAuthService,
+  MockSessionService,
+  MockUserService,
+} from "../../test-utils/mock-services";
 import { testSession } from "../../test-utils/test-data";
 import mockUsers from "../../dev-tools/data/users";
 import { mockContextWithHeaders } from "../../test-utils/mock-context";
