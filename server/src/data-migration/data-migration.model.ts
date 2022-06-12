@@ -5,7 +5,7 @@ import { Document } from "mongoose";
 export type DataMigrationDocument = DataMigration & Document;
 
 @ObjectType()
-@Schema({ collection: "dataMigration", capped: { size: 124, max: 1 } })
+@Schema({ collection: "data-migration", capped: { size: 124, max: 1 } })
 export class DataMigration {
   @Field()
   @Prop()

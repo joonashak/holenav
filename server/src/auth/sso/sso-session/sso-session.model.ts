@@ -15,7 +15,7 @@ registerEnumType(SsoSessionTypes, { name: "SsoSessionTypes" });
  * SSO server (EVE/CCP).
  */
 @ObjectType()
-@Schema({ collection: "ssoSessions" })
+@Schema({ collection: "sso-sessions" })
 export class SsoSession {
   @Field()
   @Prop({ unique: true })
