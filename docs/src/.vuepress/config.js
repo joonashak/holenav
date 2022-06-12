@@ -44,7 +44,15 @@ module.exports = {
       {
         title: "Hosting",
         path: "/hosting",
-        children: ["/hosting/requirements"],
+        sidebarDepth: 2,
+        children: [
+          "/hosting/requirements",
+          {
+            title: "Guides",
+            path: "/hosting/guides",
+            children: ["/hosting/guides/guide-vps-cdn-cd"],
+          },
+        ],
       },
       {
         title: "Developing",
