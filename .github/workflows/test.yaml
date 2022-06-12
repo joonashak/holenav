@@ -13,6 +13,7 @@ jobs:
         id: semver
         run: |
           PACKAGE_VERSION=$(cat package.json | jq '.version' | tr -d '"')
+          echo "package version: $PACKAGE_VERSION"
           echo "::set-output name=major::$(echo $IN | cut -d "." -f 1)"
           echo "::set-output name=minor::$(echo $IN | cut -d "." -f 2)"
           echo "::set-output name=patch::$(echo $IN | cut -d "." -f 3)"
