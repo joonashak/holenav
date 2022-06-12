@@ -2,8 +2,6 @@
 
 These commands control the development environment. Run them in the project root.
 
-[[toc]]
-
 ## Installation
 
 ### Install NPM Packages

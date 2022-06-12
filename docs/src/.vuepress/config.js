@@ -44,7 +44,7 @@ module.exports = {
       {
         title: "Hosting",
         path: "/hosting",
-        children: [""],
+        children: ["/hosting/requirements"],
       },
       {
         title: "Developing",
