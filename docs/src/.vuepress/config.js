@@ -1,5 +1,5 @@
 module.exports = {
-  title: "Holenav Documentation",
+  title: "Holenav Documentation [WIP]",
   description:
     "Holenav is an open-source wormhole mapper for EVE Online players.",
   dest: "build",
@@ -47,6 +47,7 @@ module.exports = {
         sidebarDepth: 2,
         children: [
           "/hosting/requirements",
+          "/hosting/updates",
           {
             title: "Guides",
             path: "/hosting/guides",
