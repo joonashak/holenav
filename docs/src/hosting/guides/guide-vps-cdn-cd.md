@@ -19,6 +19,7 @@ Required services to host Holenav as per this guide:
 - CDN (Content Delivery Network) access to deploy the frontend. ([Vercel](https://vercel.com/), if you want to use the exact same GitHub action as in this guide.)
 - GitHub account.
 - Domain.
+- EVE Online SSO.
 
 Most of these services can be used for free for moderate amounts of traffic – a proper VPS service might be hard to find for free.
 
@@ -52,6 +53,10 @@ This guide uses `holenav.com` as an example domain. Replace it with your own. Cr
 
 With this DNS setup, backend URL would be `api.holenav.com` and frontend URL just `holenav.com`. If you are not using Vercel, find out from your CDN provider what kind of a DNS record you need to make.
 
+## Register for SSO
+
+TBA.
+
 ## Configure Frontend Deployment
 
 The frontend is implemented as a React app that is served to users via CDN. In this setup, frontend deployment is triggered by the backend after it has been successfully updated. The backend makes a request to a GitHub webhook dispatching a workflow that deploys the frontend.
@@ -72,9 +77,17 @@ The backend is hosted on a standard Ubuntu VPS instance using Docker and the `ho
 
 MongoDB is required when setting up the backend, so make sure to set that up before continuing. If you are using MongoDB Atlas, the free service tier is of type _Shared Cluster_ and _M0 Sandbox_.
 
-### Create `docker-compose.yml`
+To setup the backend, you need to create three configuration files:
 
-TBA.
+- `docker-compose.yml`
+- `server.production.env`
+- `Caddyfile`
+
+### Configure Holenav Server
+
+Create a new file called `docker-compose.yml`. Use `/holenav` as the directory or make sure to update the configuration if you used another location.
+
+#### `docker-compose.yml`
 
 ```yaml
 version: "3.7"
@@ -98,14 +111,58 @@ services:
       - "443:443"
       - "80:80"
     volumes:
-      - /root/staging/caddy/data:/data
-      - /root/staging/caddy/config:/config
-      - /root/staging/caddy/Caddyfile:/etc/caddy/Caddyfile
+      - /holenav/caddy/data:/data
+      - /holenav/caddy/config:/config
+      - /holenav/caddy/Caddyfile:/etc/caddy/Caddyfile
       - /usr/local/share/ca-certificates:/data/caddy/pki/authorities/local
     restart: unless-stopped
     logging:
       driver: "local"
 ```
+
+Then create another file called `server.production.env` in the same location. Use the following environment variables to populate it and replace the values with your own.
+
+#### `server.production.env`
+
+```bash
+NODE_ENV=production
+PORT=3001
+DATABASE_URL=
+CLIENT_URL=https://holenav.com
+SSO_CALLBACK_URL=https://api.holenav.com/auth/callback
+SSO_CLIENT_ID=
+SSO_SECRET_KEY=
+JWT_SECRET=
+CLIENT_CD_TOKEN=
+CLIENT_CD_OWNER=
+CLIENT_CD_REPO=
+CLIENT_CD_WORKFLOW_ID=deploy_client.yaml
+```
+
+### Configure Caddy
+
+Caddy will act as a proxy server between the `server` service and the internet, providing automatic SSL certificates. This enables HTTPS, without which virtually all modern browsers will refuse to make requests to the backend.
+
+:::tip
+If you are using another way to enable HTTPS (commonly offered by VPS providers), you can skip this step. Just make sure to also remove the `proxy` service defined in `docker-compose.yml`.
+:::
+
+Create a new file called `Caddyfile` at `/holenav/caddy`. Insert the following configuration into the file, replacing `holenav.com` with your own domain.
+
+#### `Caddyfile`
+
+```
+{
+}
+
+https://api.holenav.com {
+  reverse_proxy server:3001
+}
+```
+
+:::tip
+Docker Compose services can be accessed with the service names from within their own network. This is why Caddy can reach the backend simply at `server:3001`.
+:::
 
 ## Update Backend Automatically
 
