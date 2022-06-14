@@ -10,7 +10,7 @@ import { DevToolsModule } from "./dev-tools/dev-tools.module";
 import { CLIENT_URL, DATABASE_URL } from "./config";
 import { WormholeModule } from "./entities/wormhole/wormhole.module";
 import { BootstrapModule } from "./bootstrap/bootstrap.module";
-import { AppDataModule } from "./entities/app-data/app-data.module";
+import { AppDataModule } from "./app-data/app-data.module";
 
 @Module({
   imports: [

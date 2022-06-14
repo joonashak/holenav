@@ -8,7 +8,7 @@ import {
   CLIENT_CD_TOKEN,
   CLIENT_CD_WORKFLOW_ID,
 } from "../config";
-import { AppDataService } from "../entities/app-data/app-data.service";
+import { AppDataService } from "../app-data/app-data.service";
 
 @Injectable()
 export class BootstrapService implements OnApplicationBootstrap {
