@@ -7,7 +7,7 @@ import { SessionService } from "../session/session.service";
 import { LoginGuard } from "./login.guard";
 import { GraphQLExecutionContext } from "@nestjs/graphql";
 import { AuthenticationError } from "apollo-server-express";
-import { jwtLifetime, jwtSecret } from "../../config";
+import { JWT_LIFETIME, JWT_SECRET } from "../../config";
 import { MockAuthService, MockSessionService } from "../../test-utils/mock-services";
 
 const createContextWithGqlArgs = (gqlArgs: any): ExecutionContext => {
@@ -28,8 +28,8 @@ describe("LoginGuard", () => {
     const module = await Test.createTestingModule({
       imports: [
         JwtModule.register({
-          secret: jwtSecret,
-          signOptions: { expiresIn: jwtLifetime },
+          secret: JWT_SECRET,
+          signOptions: { expiresIn: JWT_LIFETIME },
         }),
       ],
       providers: [SessionService, MockAuthService, MockSessionService],

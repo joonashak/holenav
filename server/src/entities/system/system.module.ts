@@ -6,7 +6,7 @@ import { SystemResolver } from "./system.resolver";
 import { UserService } from "../../user/user.service";
 import { JwtModule } from "@nestjs/jwt";
 import { FolderService } from "../folder/folder.service";
-import { jwtSecret } from "../../config";
+import { JWT_SECRET } from "../../config";
 import { CharacterService } from "../character/character.service";
 import { CharacterModule } from "../character/character.module";
 import { UserModule } from "../../user/user.module";
@@ -16,7 +16,7 @@ import { UserModule } from "../../user/user.module";
   imports: [
     MongooseModule.forFeature([{ name: System.name, schema: SystemSchema }]),
     JwtModule.register({
-      secret: jwtSecret,
+      secret: JWT_SECRET,
     }),
     CharacterModule,
     UserModule,

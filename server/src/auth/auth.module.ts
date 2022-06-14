@@ -4,7 +4,7 @@ import { AuthController } from "./auth.controller";
 import { SsoService } from "./sso/sso.service";
 import { AuthService } from "./auth.service";
 import { CharacterModule } from "../entities/character/character.module";
-import { jwtLifetime, jwtSecret } from "../config";
+import { JWT_LIFETIME, JWT_SECRET } from "../config";
 import { SsoSessionModule } from "./sso/sso-session/sso-session.module";
 import AuthResolver from "./auth.resolver";
 import { SsoModule } from "./sso/sso.module";
@@ -16,8 +16,8 @@ import { SessionService } from "./session/session.service";
   controllers: [AuthController],
   imports: [
     JwtModule.register({
-      secret: jwtSecret,
-      signOptions: { expiresIn: jwtLifetime },
+      secret: JWT_SECRET,
+      signOptions: { expiresIn: JWT_LIFETIME },
     }),
     CharacterModule,
     SsoModule,

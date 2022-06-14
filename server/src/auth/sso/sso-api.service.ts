@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import axios from "axios";
 import FormData from "form-data";
-import { ssoClientId, ssoSecretKey } from "../../config";
+import { SSO_CLIENT_ID, SSO_SECRET_KEY } from "../../config";
 import { SsoUrl } from "./sso-url.enum";
 
 @Injectable()
@@ -15,7 +15,7 @@ export class SsoApiService {
     formData.append("code", authorizationCode);
 
     const res = await axios.post(SsoUrl.Token, formData, {
-      auth: { username: ssoClientId, password: ssoSecretKey },
+      auth: { username: SSO_CLIENT_ID, password: SSO_SECRET_KEY },
       headers: { "Content-Type": `multipart/form-data; boundary=${formData.getBoundary()}` },
     });
 

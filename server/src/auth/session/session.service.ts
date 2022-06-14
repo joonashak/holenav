@@ -5,7 +5,7 @@ import { AuthenticationError } from "apollo-server-express";
 import dayjs from "dayjs";
 import { Model } from "mongoose";
 import ms from "ms";
-import { jwtLifetime } from "../../config";
+import { JWT_LIFETIME } from "../../config";
 import { User } from "../../user/user.model";
 import { Session, SessionDocument } from "./session.model";
 
@@ -16,7 +16,7 @@ export class SessionService {
   constructor(@InjectModel(Session.name) private sessionModel: Model<SessionDocument>) {}
 
   async create(user: User): Promise<Session> {
-    const expiresAt = dayjs().add(ms(jwtLifetime), "ms").toDate();
+    const expiresAt = dayjs().add(ms(JWT_LIFETIME), "ms").toDate();
     return this.sessionModel.create({ expiresAt, user });
   }
 

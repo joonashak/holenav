@@ -1,5 +1,10 @@
 import { Injectable } from "@nestjs/common";
-import { clientUrl, getClientLoginCallbackUrl, ssoCallbackUrl, ssoClientId } from "../../config";
+import {
+  CLIENT_URL,
+  getClientLoginCallbackUrl,
+  SSO_CALLBACK_URL,
+  SSO_CLIENT_ID,
+} from "../../config";
 import { CharacterService } from "../../entities/character/character.service";
 import { User } from "../../user/user.model";
 import { UserService } from "../../user/user.service";
@@ -22,7 +27,7 @@ export class SsoService {
    */
   async getSsoLoginUrl(user: User = null) {
     const { key } = await this.ssoSessionService.createSsoSession(user);
-    const loginUrl = `${SsoUrl.Authorize}/?response_type=code&redirect_uri=${ssoCallbackUrl}&client_id=${ssoClientId}&state=${key}`;
+    const loginUrl = `${SsoUrl.Authorize}/?response_type=code&redirect_uri=${SSO_CALLBACK_URL}&client_id=${SSO_CLIENT_ID}&state=${key}`;
     return encodeURI(loginUrl);
   }
 
@@ -54,7 +59,7 @@ export class SsoService {
     }
 
     const clientCallbackUrl =
-      ssoSession.type === SsoSessionTypes.LOGIN ? getClientLoginCallbackUrl(state) : clientUrl;
+      ssoSession.type === SsoSessionTypes.LOGIN ? getClientLoginCallbackUrl(state) : CLIENT_URL;
 
     return clientCallbackUrl;
   }

@@ -4,7 +4,7 @@ import { AuthenticationError } from "apollo-server-express";
 import dayjs from "dayjs";
 import { Model } from "mongoose";
 import ms from "ms";
-import { jwtLifetime } from "../../config";
+import { JWT_LIFETIME } from "../../config";
 import { testSession, testUser } from "../../test-utils/test-data";
 import { Session } from "./session.model";
 import { SessionService } from "./session.service";
@@ -36,7 +36,7 @@ describe("SessionService", () => {
     await expect(sessionService.create(testUser)).resolves.toEqual(testSession);
     expect(sessionModel.create).toBeCalledTimes(1);
     const { expiresAt }: any = jest.spyOn(sessionModel, "create").mock.calls[0][0];
-    const expectedExpiry = dayjs().add(ms(jwtLifetime), "ms");
+    const expectedExpiry = dayjs().add(ms(JWT_LIFETIME), "ms");
     expect(dayjs(expiresAt).isSame(expectedExpiry, "minute")).toBe(true);
   });
 

@@ -4,7 +4,7 @@ import mongoose, { Model } from "mongoose";
 import systemData from "@eve-data/systems";
 import { Folder, FolderDocument } from "./folder.model";
 import { SystemService } from "../system/system.service";
-import { devToolsEnabled } from "../../config";
+import { ENABLE_DEVTOOLS } from "../../config";
 import { UserDocument } from "../../user/user.model";
 import { UserService } from "../../user/user.service";
 import FolderRoles from "../../user/roles/folder-roles.enum";
@@ -41,7 +41,7 @@ export class FolderService {
   }
 
   async createDefaultFolder(): Promise<Folder> {
-    if (devToolsEnabled) {
+    if (ENABLE_DEVTOOLS) {
       return this.createFolderWithOptionalId(defaultFolderName, "default");
     }
 

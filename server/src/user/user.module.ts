@@ -5,7 +5,7 @@ import { User, UserSchema } from "./user.model";
 import { UserService } from "./user.service";
 import { UserResolver } from "./user.resolver";
 import { JwtModule } from "@nestjs/jwt";
-import { jwtSecret } from "../config";
+import { JWT_SECRET } from "../config";
 import { UserSettingsService } from "./settings/user-settings.service";
 import { CharacterModule } from "../entities/character/character.module";
 import { CharacterService } from "../entities/character/character.service";
@@ -19,7 +19,7 @@ import { Credentials, CredentialsSchema } from "./credentials/credentials.model"
       { name: Credentials.name, schema: CredentialsSchema },
     ]),
     JwtModule.register({
-      secret: jwtSecret,
+      secret: JWT_SECRET,
     }),
     CharacterModule,
   ],

@@ -1,7 +1,7 @@
 import { CanActivate, ExecutionContext, Injectable } from "@nestjs/common";
 import { GqlExecutionContext } from "@nestjs/graphql";
 import { AuthenticationError } from "apollo-server-express";
-import { devToolsEnabled, notProduction } from "../../config";
+import { ENABLE_DEVTOOLS, NOT_PRODUCTION } from "../../config";
 import mockUsers from "../../dev-tools/data/users";
 import { UserService } from "../../user/user.service";
 import { AuthService } from "../auth.service";
@@ -47,6 +47,6 @@ export class TokenAuthGuard implements CanActivate {
 
   private usingMockUser(accessToken: string): boolean {
     const mockUserIds = mockUsers.map((user) => user.id);
-    return notProduction && devToolsEnabled && mockUserIds.includes(accessToken);
+    return NOT_PRODUCTION && ENABLE_DEVTOOLS && mockUserIds.includes(accessToken);
   }
 }
