@@ -30,11 +30,11 @@ export class UserService {
     await this.ensureCharacterNotInUse(user.main);
     await this.characterService.makeMain(user.main);
 
-    const folder = await this.folderService.getDefaultFolder();
+    const folder = await this.folderService.createFolder({ name: "My Folder", personal: true });
     const systemRole = await this.getNewUserSystemRole();
     const newUser = await this.userModel.create({
       ...user,
-      folderRoles: [{ role: FolderRoles.WRITE, folder }],
+      folderRoles: [{ role: FolderRoles.ADMIN, folder }],
       systemRole,
     });
 

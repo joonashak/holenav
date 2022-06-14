@@ -17,11 +17,6 @@ export class FolderService {
     private userService: UserService,
   ) {}
 
-  /**
-   * Create new folder and populate it with star systems.
-   * @param name Folder name.
-   * @returns The created folder.
-   */
   async createFolder(folder: Partial<FolderDocument>): Promise<Folder> {
     return this.folderModel.create(folder);
   }
