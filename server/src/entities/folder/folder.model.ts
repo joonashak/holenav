@@ -15,6 +15,10 @@ export class Folder {
   @Field()
   @Prop({ unique: true })
   name: string;
+
+  @Field()
+  @Prop({ default: false })
+  personal?: boolean;
 }
 
 export const FolderSchema = SchemaFactory.createForClass(Folder);

@@ -18,29 +18,21 @@ export class FolderService {
     private userService: UserService,
   ) {}
 
-  async createFolderWithOptionalId(name: string, id: string = null) {
-    const folder = id
-      ? await this.folderModel.create({ name, id })
-      : await this.folderModel.create({ name });
-
-    return folder;
-  }
-
   /**
    * Create new folder and populate it with star systems.
    * @param name Folder name.
    * @returns The created folder.
    */
-  async createFolder(name: string): Promise<Folder> {
-    return this.createFolderWithOptionalId(name);
+  async createFolder(folder: Partial<FolderDocument>): Promise<Folder> {
+    return this.folderModel.create(folder);
   }
 
   async createDefaultFolder(): Promise<Folder> {
     if (ENABLE_DEVTOOLS) {
-      return this.createFolderWithOptionalId(defaultFolderName, "default");
+      return this.createFolder({ name: defaultFolderName, id: "default" });
     }
 
-    return this.createFolderWithOptionalId(defaultFolderName);
+    return this.createFolder({ name: defaultFolderName });
   }
 
   /**
@@ -50,7 +42,7 @@ export class FolderService {
    * @returns The created folder.
    */
   async createFolderAndPermissions(name: string, user: UserDocument): Promise<Folder> {
-    const folder = await this.createFolder(name);
+    const folder = await this.createFolder({ name });
     await this.userService.addFolderRole(user, { folder, role: FolderRoles.ADMIN });
     return folder;
   }
