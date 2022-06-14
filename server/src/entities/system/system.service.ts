@@ -9,26 +9,19 @@ import { System, SystemDocument } from "./system.model";
 export class SystemService {
   constructor(@InjectModel(System.name) private systemModel: Model<SystemDocument>) {}
 
-  async getById(id: string): Promise<System> {
-    const system = await this.systemModel.findOne({ id });
+  async getByName(name: string, folder: FolderDocument): Promise<System> {
+    const system = await this.systemModel.findOne({ name, folder }).populate("signatures");
+
+    if (!system) {
+      await this.systemModel.create({ name, folder });
+      return this.getByName(name, folder);
+    }
+
     return system;
   }
 
-  async getByName(name: string, folder: FolderDocument): Promise<System> {
-    const system = await this.systemModel.findOne({ name, folder }).populate("signatures");
-    return { ...system.toObject() };
-  }
-
-  async bulkSave(systems: Partial<System>[]) {
-    const ops = systems.map((system) => ({
-      insertOne: {
-        document: system,
-      },
-    }));
-
-    return this.systemModel.bulkWrite(ops);
-  }
-
+  // FIXME: This will probably have to be changed to use name+folder combination instead of id
+  // because we cannot create a missing system without the system name.
   async appendToSignatures(systemId: string, signature: Signature) {
     await this.systemModel.findOneAndUpdate({ id: systemId }, { $push: { signatures: signature } });
   }

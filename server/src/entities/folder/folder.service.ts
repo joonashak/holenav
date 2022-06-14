@@ -1,9 +1,7 @@
 import { forwardRef, Inject, Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import mongoose, { Model } from "mongoose";
-import systemData from "@eve-data/systems";
 import { Folder, FolderDocument } from "./folder.model";
-import { SystemService } from "../system/system.service";
 import { ENABLE_DEVTOOLS } from "../../config";
 import { UserDocument } from "../../user/user.model";
 import { UserService } from "../../user/user.service";
@@ -16,7 +14,6 @@ const defaultFolderName = "Default Folder";
 export class FolderService {
   constructor(
     @InjectModel(Folder.name) private folderModel: Model<FolderDocument>,
-    private systemService: SystemService,
     @Inject(forwardRef(() => UserService))
     private userService: UserService,
   ) {}
@@ -26,8 +23,6 @@ export class FolderService {
       ? await this.folderModel.create({ name, id })
       : await this.folderModel.create({ name });
 
-    const newSystems = systemData.map(({ name }) => ({ name, folder }));
-    await this.systemService.bulkSave(newSystems);
     return folder;
   }
 
