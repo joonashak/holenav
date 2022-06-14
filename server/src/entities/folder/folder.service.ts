@@ -2,7 +2,6 @@ import { forwardRef, Inject, Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import mongoose, { Model } from "mongoose";
 import { Folder, FolderDocument } from "./folder.model";
-import { ENABLE_DEVTOOLS } from "../../config";
 import { UserDocument } from "../../user/user.model";
 import { UserService } from "../../user/user.service";
 import FolderRoles from "../../user/roles/folder-roles.enum";
@@ -25,14 +24,6 @@ export class FolderService {
    */
   async createFolder(folder: Partial<FolderDocument>): Promise<Folder> {
     return this.folderModel.create(folder);
-  }
-
-  async createDefaultFolder(): Promise<Folder> {
-    if (ENABLE_DEVTOOLS) {
-      return this.createFolder({ name: defaultFolderName, id: "default" });
-    }
-
-    return this.createFolder({ name: defaultFolderName });
   }
 
   /**

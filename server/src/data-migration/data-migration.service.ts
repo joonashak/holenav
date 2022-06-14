@@ -51,12 +51,4 @@ export class DataMigrationService implements OnApplicationBootstrap {
       await this.updateVersion(Number(version));
     }
   }
-
-  // FIXME: Remove this.
-  /**
-   * @deprecated
-   */
-  async createDefaultFolder() {
-    await this.folderService.createDefaultFolder();
-  }
 }
