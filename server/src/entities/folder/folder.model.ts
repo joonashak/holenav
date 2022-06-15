@@ -13,7 +13,7 @@ export class Folder {
   id: string;
 
   @Field()
-  @Prop({ unique: true })
+  @Prop()
   name: string;
 
   @Field()
