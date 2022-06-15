@@ -4,6 +4,7 @@ import { Model } from "mongoose";
 import { Character } from "../../entities/character/character.model";
 import { FolderService } from "../../entities/folder/folder.service";
 import { Credentials } from "../../user/credentials/credentials.model";
+import defaultUserSettings from "../../user/settings/default-user-settings";
 import { User } from "../../user/user.model";
 import users from "../data/users";
 
@@ -17,7 +18,7 @@ export class MockUserService {
   ) {}
 
   async mock() {
-    const folder = await this.folderService.getDefaultFolder();
+    const defaultFolder = await this.folderService.getDefaultFolder();
 
     for (const user of users) {
       const { id, main, defaultFolderRole, systemRole } = user;
@@ -26,9 +27,10 @@ export class MockUserService {
       await this.userModel.create({
         main: newChar,
         id,
-        folderRoles: [{ role: defaultFolderRole, folder }],
         systemRole,
         credentials,
+        folderRoles: [{ role: defaultFolderRole, folder: defaultFolder }],
+        settings: { ...defaultUserSettings, activeFolder: defaultFolder },
       });
     }
   }
