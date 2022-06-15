@@ -23,6 +23,6 @@ export class AppDataService {
   }
 
   private async initialize(): Promise<AppData> {
-    return this.appDataModel.create({ appVersion: "" });
+    return this.appDataModel.create({});
   }
 }

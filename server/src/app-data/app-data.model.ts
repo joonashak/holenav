@@ -8,8 +8,12 @@ export type AppDataDocument = AppData & Document;
 @Schema({ collection: "app-data", capped: { size: 4096, max: 1 } })
 export class AppData {
   @Field()
-  @Prop()
+  @Prop({ default: "" })
   appVersion: string;
+
+  @Field()
+  @Prop({ default: "" })
+  motd: string;
 }
 
 export const AppDataSchema = SchemaFactory.createForClass(AppData);
