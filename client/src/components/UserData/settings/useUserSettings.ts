@@ -13,11 +13,17 @@ const useUserSettings = () => {
     state.settings.activeFolder.set(folder);
   };
 
+  const getActiveFolder = (): Folder =>
+    state.settings.activeFolder.get() ||
+    state.accessibleFolders
+      .attach(Downgraded)
+      .get()
+      .find((folder) => folder.personal) ||
+    state.accessibleFolders.attach(Downgraded).get()[0];
+
   return {
     get activeFolder() {
-      return (
-        state.settings.activeFolder.get() || state.accessibleFolders.attach(Downgraded).get()[0]
-      );
+      return getActiveFolder();
     },
     setActiveFolder,
   };

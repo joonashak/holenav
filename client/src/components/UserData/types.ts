@@ -1,4 +1,4 @@
-import { SystemRoles } from "../../generated/graphqlOperations";
+import { Folder, SystemRoles } from "../../generated/graphqlOperations";
 
 export type UserData = {
   id: string;
@@ -23,10 +23,5 @@ export type SavedMap = {
 
 export type Character = {
   esiId: string;
-  name: string;
-};
-
-export type Folder = {
-  id: string;
   name: string;
 };

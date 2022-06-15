@@ -19,6 +19,7 @@ export const userState = createState<UserData>({
     activeFolder: {
       id: "",
       name: "",
+      personal: false,
     },
   },
   main: null,

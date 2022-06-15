@@ -75,6 +75,7 @@ export type Folder = {
   __typename?: "Folder";
   id: Scalars["String"];
   name: Scalars["String"];
+  personal: Scalars["Boolean"];
 };
 
 export type FolderRole = {
