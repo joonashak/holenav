@@ -6,6 +6,7 @@ import LoginButton from "../common/LoginButton";
 import useLocalData from "../LocalData/useLocalData";
 import LocalLogin from "../LocalLogin";
 import DevToolsNotice from "./DevToolsNotice";
+import Motd from "./Motd";
 
 export default () => {
   const { authToken, mockUser } = useLocalData();
@@ -49,6 +50,7 @@ export default () => {
             .
           </Typography>
         </Paper>
+        <Motd />
         {devToolsEnabled && <DevToolsNotice />}
       </Container>
     </>

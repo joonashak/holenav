@@ -43,6 +43,12 @@ export type AddWormholeInput = {
   type: Scalars["String"];
 };
 
+export type AppData = {
+  __typename?: "AppData";
+  appVersion: Scalars["String"];
+  motd: Scalars["String"];
+};
+
 export type Character = {
   __typename?: "Character";
   accessToken?: Maybe<Scalars["String"]>;
@@ -117,6 +123,7 @@ export type Mutation = {
   login: AccessTokenDto;
   logout: LogoutDto;
   removeAlt: User;
+  updateMotd: AppData;
   updateSelectedMap: User;
   updateSignature: Signature;
   updateWormhole: Wormhole;
@@ -172,6 +179,10 @@ export type MutationRemoveAltArgs = {
   esiId: Scalars["String"];
 };
 
+export type MutationUpdateMotdArgs = {
+  name: Scalars["String"];
+};
+
 export type MutationUpdateSelectedMapArgs = {
   selectedMapId: Scalars["String"];
 };
@@ -184,6 +195,11 @@ export type MutationUpdateWormholeArgs = {
   input: UpdateWormholeInput;
 };
 
+export type PublicAppData = {
+  __typename?: "PublicAppData";
+  motd: Scalars["String"];
+};
+
 export type Query = {
   __typename?: "Query";
   addCharacter: StartSsoLoginDto;
@@ -191,6 +207,7 @@ export type Query = {
   getAllUsers: Array<SanitizedUser>;
   getConnectionTree: ConnectionTree;
   getManageableFolders: Array<Folder>;
+  getPublicAppData: PublicAppData;
   getSystemByName: System;
   getWormholesBySystem: Array<Wormhole>;
   searchCharactersByMain: Array<Character>;
@@ -351,6 +368,13 @@ export type LogoutMutationVariables = Exact<{ [key: string]: never }>;
 export type LogoutMutation = {
   __typename?: "Mutation";
   logout: { __typename?: "LogoutDto"; loggedOut: boolean };
+};
+
+export type GetPublicAppDataQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetPublicAppDataQuery = {
+  __typename?: "Query";
+  getPublicAppData: { __typename?: "PublicAppData"; motd: string };
 };
 
 export type FolderFieldsFragment = { __typename?: "Folder"; id: string; name: string };
@@ -591,6 +615,29 @@ export const LogoutDocument = {
     },
   ],
 } as unknown as DocumentNode<LogoutMutation, LogoutMutationVariables>;
+export const GetPublicAppDataDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "query",
+      name: { kind: "Name", value: "GetPublicAppData" },
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "getPublicAppData" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [{ kind: "Field", name: { kind: "Name", value: "motd" } }],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<GetPublicAppDataQuery, GetPublicAppDataQueryVariables>;
 export const SettingsDataDocument = {
   kind: "Document",
   definitions: [
