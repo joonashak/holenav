@@ -1,14 +1,22 @@
 import { useQuery } from "@apollo/client";
+import { createState, useState } from "@hookstate/core";
 import { Paper, Typography } from "@mui/material";
 import { GetPublicAppDataDocument } from "../../../generated/graphqlOperations";
 import useUserData from "../../UserData/useUserData";
 import MotdEditor from "./MotdEditor";
 
+export const motdState = createState("");
+
 const Motd = () => {
   const { systemRole } = useUserData();
-  const { data, loading } = useQuery(GetPublicAppDataDocument);
+  const state = useState(motdState);
+  const { loading } = useQuery(GetPublicAppDataDocument, {
+    onCompleted: (data) => {
+      state.set(data.getPublicAppData.motd);
+    },
+  });
 
-  if (!data || loading || !data.getPublicAppData.motd) {
+  if (!state.value || loading) {
     return null;
   }
 
@@ -24,7 +32,7 @@ const Motd = () => {
       }}
     >
       <Typography variant="h3">Message of the Day</Typography>
-      <Typography>{data.getPublicAppData.motd}</Typography>
+      <Typography>{state.value}</Typography>
       <MotdEditor />
     </Paper>
   );

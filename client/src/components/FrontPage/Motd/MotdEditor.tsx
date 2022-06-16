@@ -1,23 +1,25 @@
-import { useQuery } from "@apollo/client";
+import { useState } from "@hookstate/core";
 import { Button } from "@mui/material";
 import { FieldValues, useForm } from "react-hook-form";
+import { motdState } from ".";
 import useAuthenticatedMutation from "../../../auth/useAuthenticatedMutation";
-import { GetPublicAppDataDocument, UpdateMotdDocument } from "../../../generated/graphqlOperations";
+import { UpdateMotdDocument } from "../../../generated/graphqlOperations";
 import ControlledTextField from "../../controls/ControlledTextField";
 import FormGroupRow from "../../controls/FormGroupRow";
 import useNotification from "../../GlobalNotification/useNotification";
 
 const MotdEditor = () => {
+  const state = useState(motdState);
   const { showSuccessNotification } = useNotification();
-  const { data } = useQuery(GetPublicAppDataDocument);
   const { handleSubmit, control } = useForm({
     defaultValues: {
-      motd: data?.getPublicAppData.motd || "",
+      motd: state.value,
     },
   });
 
   const [updateMotd] = useAuthenticatedMutation(UpdateMotdDocument, {
-    onCompleted: () => {
+    onCompleted: (data) => {
+      state.set(data.updateMotd.motd);
       showSuccessNotification("MOTD updated.");
     },
   });
