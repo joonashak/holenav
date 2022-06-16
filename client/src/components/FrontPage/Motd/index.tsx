@@ -1,7 +1,9 @@
 import { useQuery } from "@apollo/client";
 import { createState, useState } from "@hookstate/core";
-import { Paper, Typography } from "@mui/material";
-import { GetPublicAppDataDocument } from "../../../generated/graphqlOperations";
+import { Box, IconButton, Paper, Typography } from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
+import { useState as useReactState } from "react";
+import { GetPublicAppDataDocument, SystemRoles } from "../../../generated/graphqlOperations";
 import useUserData from "../../UserData/useUserData";
 import MotdEditor from "./MotdEditor";
 
@@ -9,6 +11,8 @@ export const motdState = createState("");
 
 const Motd = () => {
   const { systemRole } = useUserData();
+  const [editOpen, setEditOpen] = useReactState(false);
+  const toggleEditOpen = () => setEditOpen((prev) => !prev);
   const state = useState(motdState);
   const { loading } = useQuery(GetPublicAppDataDocument, {
     onCompleted: (data) => {
@@ -31,9 +35,26 @@ const Motd = () => {
         "&&>*": { marginBottom: 2 },
       }}
     >
-      <Typography variant="h3">Message of the Day</Typography>
-      <Typography>{state.value}</Typography>
-      <MotdEditor />
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <Typography variant="h3">Message of the Day</Typography>
+        {systemRole === SystemRoles.Administrator && (
+          <IconButton
+            aria-label="Edit MOTD"
+            size="small"
+            color="secondary"
+            onClick={toggleEditOpen}
+          >
+            <EditIcon fontSize="inherit" />
+          </IconButton>
+        )}
+      </Box>
+      {!editOpen ? <Typography>{state.value}</Typography> : <MotdEditor />}
     </Paper>
   );
 };
