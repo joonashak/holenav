@@ -1,5 +1,0 @@
-query GetPublicAppData {
-  getPublicAppData {
-    motd
-  }
-}

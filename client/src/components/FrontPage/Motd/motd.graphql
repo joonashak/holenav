@@ -1,0 +1,11 @@
+query GetPublicAppData {
+  getPublicAppData {
+    motd
+  }
+}
+
+mutation UpdateMotd($motd: String!) {
+  updateMotd(motd: $motd) {
+    motd
+  }
+}

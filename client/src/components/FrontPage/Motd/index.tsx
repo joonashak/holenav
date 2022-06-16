@@ -1,8 +1,11 @@
 import { useQuery } from "@apollo/client";
 import { Paper, Typography } from "@mui/material";
-import { GetPublicAppDataDocument } from "../../generated/graphqlOperations";
+import { GetPublicAppDataDocument } from "../../../generated/graphqlOperations";
+import useUserData from "../../UserData/useUserData";
+import MotdEditor from "./MotdEditor";
 
 const Motd = () => {
+  const { systemRole } = useUserData();
   const { data, loading } = useQuery(GetPublicAppDataDocument);
 
   if (!data || loading || !data.getPublicAppData.motd) {
@@ -22,6 +25,7 @@ const Motd = () => {
     >
       <Typography variant="h3">Message of the Day</Typography>
       <Typography>{data.getPublicAppData.motd}</Typography>
+      <MotdEditor />
     </Paper>
   );
 };

@@ -180,7 +180,7 @@ export type MutationRemoveAltArgs = {
 };
 
 export type MutationUpdateMotdArgs = {
-  name: Scalars["String"];
+  motd: Scalars["String"];
 };
 
 export type MutationUpdateSelectedMapArgs = {
@@ -375,6 +375,15 @@ export type GetPublicAppDataQueryVariables = Exact<{ [key: string]: never }>;
 export type GetPublicAppDataQuery = {
   __typename?: "Query";
   getPublicAppData: { __typename?: "PublicAppData"; motd: string };
+};
+
+export type UpdateMotdMutationVariables = Exact<{
+  motd: Scalars["String"];
+}>;
+
+export type UpdateMotdMutation = {
+  __typename?: "Mutation";
+  updateMotd: { __typename?: "AppData"; motd: string };
 };
 
 export type FolderFieldsFragment = { __typename?: "Folder"; id: string; name: string };
@@ -638,6 +647,46 @@ export const GetPublicAppDataDocument = {
     },
   ],
 } as unknown as DocumentNode<GetPublicAppDataQuery, GetPublicAppDataQueryVariables>;
+export const UpdateMotdDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "UpdateMotd" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "motd" } },
+          type: {
+            kind: "NonNullType",
+            type: { kind: "NamedType", name: { kind: "Name", value: "String" } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "updateMotd" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "motd" },
+                value: { kind: "Variable", name: { kind: "Name", value: "motd" } },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [{ kind: "Field", name: { kind: "Name", value: "motd" } }],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<UpdateMotdMutation, UpdateMotdMutationVariables>;
 export const SettingsDataDocument = {
   kind: "Document",
   definitions: [

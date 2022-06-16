@@ -16,7 +16,7 @@ export class AppDataResolver {
 
   @RequireSystemRole(SystemRoles.ADMINISTRATOR)
   @Mutation((returns) => AppData)
-  async updateMotd(@Args("name") motd: string) {
+  async updateMotd(@Args("motd") motd: string) {
     return this.appDataService.updateAppData({ motd });
   }
 }
