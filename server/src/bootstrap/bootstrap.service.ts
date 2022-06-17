@@ -55,7 +55,10 @@ export class BootstrapService implements OnApplicationBootstrap {
       owner: CLIENT_CD_OWNER,
       repo: CLIENT_CD_REPO,
       workflow_id: CLIENT_CD_WORKFLOW_ID,
-      ref: `v${APP_VERSION}`,
+      ref: "main",
+      input: {
+        version: `v${APP_VERSION}`,
+      },
     };
 
     try {
