@@ -1,5 +1,5 @@
 import { useState } from "@hookstate/core";
-import { Button } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import { FieldValues, useForm } from "react-hook-form";
 import { motdState } from ".";
 import useAuthenticatedMutation from "../../../auth/useAuthenticatedMutation";
@@ -30,8 +30,13 @@ const MotdEditor = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
+      <FormGroupRow fullWidth>
+        <ControlledTextField name="motd" control={control} label="MOTD" multiline minRows={3} />
+      </FormGroupRow>
       <FormGroupRow>
-        <ControlledTextField name="motd" control={control} label="MOTD" />
+        <Typography sx={{ color: "secondary.light", fontStyle: "italic" }}>
+          MOTD is public. You can use Markdown.
+        </Typography>
         <Button
           type="submit"
           variant="contained"
