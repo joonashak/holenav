@@ -9,7 +9,7 @@ export const PORT = process.env.PORT || 3001;
 export const JWT_SECRET = process.env.JWT_SECRET;
 export const JWT_LIFETIME = process.env.JWT_LIFETIME || "30d";
 export const ENABLE_DEVTOOLS = process.env.ENABLE_DEVTOOLS === "true";
-export const APP_VERSION = process.env.npm_package_version;
+export const APP_VERSION = process.env.npm_package_version || process.env.APP_VERSION;
 export const CLIENT_CD_TOKEN = process.env.CLIENT_CD_TOKEN;
 export const CLIENT_CD_OWNER = process.env.CLIENT_CD_OWNER;
 export const CLIENT_CD_REPO = process.env.CLIENT_CD_REPO;
