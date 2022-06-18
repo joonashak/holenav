@@ -10,6 +10,8 @@ COPY . .
 # Build and clean up.
 ARG NODE_ENV=production
 ENV NODE_ENV=${NODE_ENV}
+ARG APP_VERSION
+ENV APP_VERSION=${APP_VERSION}
 RUN npm run build
 RUN npm prune --production
 
