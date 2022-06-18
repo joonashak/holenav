@@ -24,6 +24,7 @@ export const GET_USER_DATA = gql`
         activeFolder {
           id
           name
+          personal
         }
       }
     }
@@ -31,6 +32,7 @@ export const GET_USER_DATA = gql`
     getAccessibleFolders {
       id
       name
+      personal
     }
   }
 `;
