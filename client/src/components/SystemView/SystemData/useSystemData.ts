@@ -3,7 +3,7 @@ import { Downgraded, useState } from "@hookstate/core";
 import { systemState } from ".";
 import useAuthenticatedMutation from "../../../auth/useAuthenticatedMutation";
 import useLazyAuthenticatedQuery from "../../../auth/useLazyAuthenticatedQuery";
-import { Signature, UpdateWormholeInput, Wormhole } from "../../../generated/graphqlOperations";
+import { Signature, UpdateWormholeInput } from "../../../generated/graphqlOperations";
 import {
   ADD_SIGNATURE,
   ADD_WORMHOLE,

@@ -57,7 +57,11 @@ const SigModal = ({ open, onClose, wormhole, signature }: SigModalProps) => {
             title="Signature Type"
             options={typeOptions}
           />
-          <EveIdField value={eveId} onChange={onEveIdChange} />
+          <EveIdField
+            value={eveId}
+            onChange={onEveIdChange}
+            existingId={signature?.id || wormhole?.id || null}
+          />
         </FormGroupRow>
         {showWormholeForm ? (
           <WormholeForm eveId={eveId} existing={wormhole} onClose={onClose} />
