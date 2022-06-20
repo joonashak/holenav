@@ -1,4 +1,4 @@
-import { DialogContent, DialogTitle, SelectChangeEvent, TextField } from "@mui/material";
+import { DialogContent, DialogTitle, SelectChangeEvent } from "@mui/material";
 import { ChangeEvent, ReactElement, useState } from "react";
 import Select from "../../../../controls/Select";
 import SigTypes from "../../../../../enum/SigTypes";
@@ -7,6 +7,7 @@ import WormholeForm from "./WormholeForm";
 import FormGroupRow from "../../../../controls/FormGroupRow";
 import { Signature, Wormhole } from "../../../SystemData/types";
 import Dialog from "../../../../common/Dialog";
+import EveIdField from "./EveIdField";
 
 let typeOptions: Array<{ id: string; value: string; label: string | ReactElement }> = [
   { id: "sig-type-null", value: "", label: <em>Unknown</em> },
@@ -57,13 +58,7 @@ const SigModal = ({ open, onClose, wormhole, signature }: SigModalProps) => {
             title="Signature Type"
             options={typeOptions}
           />
-          <TextField
-            label="ID"
-            value={eveId}
-            onChange={onEveIdChange}
-            data-cy="textfield-eveId"
-            fullWidth
-          />
+          <EveIdField value={eveId} onChange={onEveIdChange} />
         </FormGroupRow>
         {showWormholeForm ? (
           <WormholeForm eveId={eveId} existing={wormhole} onClose={onClose} />
