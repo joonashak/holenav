@@ -13,6 +13,7 @@ import TableRow from "../../../../common/TableRow";
 import useSystemData from "../../../SystemData/useSystemData";
 import DeleteSigButton from "./DeleteSigButton";
 import EditSigButton from "./EditSigButton";
+import SigContextMenu from "./SigContextMenu";
 
 const TableHeadCell = ({ children }: TableCellProps) => (
   <MuiTableCell sx={{ color: "secondary.light", fontSize: "0.95rem" }}>{children}</MuiTableCell>
@@ -40,14 +41,18 @@ export default () => {
         <TableBody data-cy="sig-list-body">
           {allSigs &&
             allSigs.map((sig) => (
-              <TableRow hideLastSeparator key={sig.id}>
+              <SigContextMenu key={sig.id}>
                 <TableCell component="th" scope="row">
                   {sig.eveId}
                 </TableCell>
                 <TableCell>{sig.type || (isWormhole(sig as Wormhole) && "Wormhole")}</TableCell>
                 <TableCell sx={{ paddingTop: 0, paddingBottom: 0 }}>
                   <Box
-                    sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}
+                    sx={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                    }}
                   >
                     {sig.name}
                     <Box sx={{ display: "flex", flexGrow: 1, justifyContent: "flex-end" }}>
@@ -56,7 +61,7 @@ export default () => {
                     </Box>
                   </Box>
                 </TableCell>
-              </TableRow>
+              </SigContextMenu>
             ))}
         </TableBody>
       </Table>
