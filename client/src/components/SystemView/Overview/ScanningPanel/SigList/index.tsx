@@ -23,8 +23,7 @@ const TableCell = ({ children, sx }: TableCellProps) => (
 );
 
 export default () => {
-  const { signatures, wormholes } = useSystemData();
-  const allSigs = signatures.concat(wormholes);
+  const { allSigs } = useSystemData();
 
   const isWormhole = (sig: Signature | Wormhole): boolean => Object.keys(sig).includes("eol");
 

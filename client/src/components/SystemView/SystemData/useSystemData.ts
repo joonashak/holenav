@@ -107,6 +107,12 @@ export default () => {
     await deleteWhMutation({ variables: { id } });
   };
 
+  const getAllSigs = () => {
+    const signatures = state.signatures.attach(Downgraded).get();
+    const wormholes = state.wormholes.attach(Downgraded).get();
+    return signatures.concat(wormholes);
+  };
+
   return {
     get id() {
       return state.id.get();
@@ -134,6 +140,9 @@ export default () => {
     },
     get wormholes() {
       return state.wormholes.attach(Downgraded).get();
+    },
+    get allSigs() {
+      return getAllSigs();
     },
     get region() {
       return state.region.get();
