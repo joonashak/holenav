@@ -2,13 +2,17 @@
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { MouseEvent, ReactNode, useState } from "react";
+import { Signature } from "../../../../../generated/graphqlOperations";
 import TableRow from "../../../../common/TableRow";
+import useSystemData from "../../../SystemData/useSystemData";
 
 type SigContextMenuProps = {
   children: ReactNode;
+  signature: Signature;
 };
 
-const SigContextMenu = ({ children }: SigContextMenuProps) => {
+const SigContextMenu = ({ children, signature }: SigContextMenuProps) => {
+  const { deleteSignature, wormholes, updateWormhole } = useSystemData();
   const [contextMenu, setContextMenu] = useState<{
     mouseX: number;
     mouseY: number;
@@ -33,6 +37,19 @@ const SigContextMenu = ({ children }: SigContextMenuProps) => {
     setContextMenu(null);
   };
 
+  const holesWithoutIds = wormholes.filter((wh) => !wh.eveId);
+  const returnConnectionWithoutId = holesWithoutIds.length === 1 ? holesWithoutIds[0] : null;
+
+  const markSigAsReturnWormhole = async () => {
+    if (!returnConnectionWithoutId) {
+      handleClose();
+      return;
+    }
+    await deleteSignature(signature.id);
+    await updateWormhole({ eveId: signature.eveId, id: returnConnectionWithoutId.id });
+    handleClose();
+  };
+
   return (
     <TableRow
       hideLastSeparator
@@ -48,7 +65,9 @@ const SigContextMenu = ({ children }: SigContextMenuProps) => {
           contextMenu !== null ? { top: contextMenu.mouseY, left: contextMenu.mouseX } : undefined
         }
       >
-        <MenuItem onClick={handleClose}>Mark as Return Wormhole</MenuItem>
+        <MenuItem onClick={markSigAsReturnWormhole} disabled={!returnConnectionWithoutId}>
+          Mark {signature.eveId} as Return Wormhole
+        </MenuItem>
       </Menu>
     </TableRow>
   );

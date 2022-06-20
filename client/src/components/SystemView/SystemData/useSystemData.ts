@@ -63,7 +63,20 @@ export default () => {
     },
   });
 
+  /**
+   * Delete signature. Also handles wormholes.
+   */
   const deleteSignature = async (id: string): Promise<void> => {
+    const isWormhole = state.wormholes
+      .attach(Downgraded)
+      .get()
+      .find((wh) => wh.id === id);
+
+    if (isWormhole) {
+      await deleteWormhole(id);
+      return;
+    }
+
     await deleteSigMutation({ variables: { id } });
   };
 

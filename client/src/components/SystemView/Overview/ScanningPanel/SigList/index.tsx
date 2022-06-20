@@ -41,7 +41,7 @@ export default () => {
         <TableBody data-cy="sig-list-body">
           {allSigs &&
             allSigs.map((sig) => (
-              <SigContextMenu key={sig.id}>
+              <SigContextMenu key={sig.id} signature={sig}>
                 <TableCell component="th" scope="row">
                   {sig.eveId}
                 </TableCell>
