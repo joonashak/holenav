@@ -35,7 +35,7 @@ services:
       - ./client/src:/usr/src/app/src
 
   db:
-    image: mongo:4.4-bionic
+    image: mongo:5.0-focal
     restart: unless-stopped
     container_name: holenav-db
     volumes:

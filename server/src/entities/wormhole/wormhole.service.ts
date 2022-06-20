@@ -52,18 +52,19 @@ export class WormholeService {
   /**
    * Find all children in the graphLookup result.
    * Accounts for the shape of the Mongo result. Specifically, it includes all child nodes in
-   * every top-level result object. Thus we want to get the children of only one top-level result,
-   * and only the top-level results, if none of them have children.
+   * every top-level result object if that top-level object has children. Thus we want to get
+   * the children of only one top-level result, and only the top-level results, if none of them
+   * have children.
    * @param aggregateResult Result from mongo's `$graphLookup` operation.
    */
   private findAllChildren(aggregateResult: any[]): Wormhole[] {
-    const deepChildren = aggregateResult.flatMap((res) => res.children);
+    const allChildren = aggregateResult.find((res) => res.children.length);
 
-    if (!deepChildren.length) {
+    if (!allChildren) {
       return aggregateResult;
     }
 
-    return aggregateResult[0].children;
+    return allChildren.children;
   }
 
   private findChildren(
