@@ -3,7 +3,7 @@ import { IconButton, Menu, MenuItem } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import useSystemData from "../../../SystemData/useSystemData";
 import useNotification from "../../../../GlobalNotification/useNotification";
-import { Signature, Wormhole } from "../../../SystemData/types";
+import { Signature, Wormhole } from "../../../../../generated/graphqlOperations";
 
 type DeleteSigButtonProps = {
   sig: Signature | Wormhole;

@@ -1,5 +1,5 @@
 import wormholes from "@eve-data/wormholes";
-import MassStatus from "../../../../enum/MassStatus";
+import { MassStatus } from "../../../../generated/graphqlOperations";
 import { MapLinkDatum } from "../MapData/types";
 import MapLinkClasses from "./MapLinkClasses.enum";
 
@@ -47,9 +47,9 @@ const pathClassFunc = (link: MapLinkDatum) => {
     classes.push(MapLinkClasses.EOL);
   }
 
-  if (massStatus === MassStatus.DESTAB) {
+  if (massStatus === MassStatus.Destab) {
     classes.push(MapLinkClasses.DESTAB);
-  } else if (massStatus === MassStatus.CRIT) {
+  } else if (massStatus === MassStatus.Crit) {
     classes.push(MapLinkClasses.CRIT);
   }
 

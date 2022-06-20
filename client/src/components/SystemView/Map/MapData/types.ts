@@ -1,5 +1,5 @@
 import { RawNodeDatum, TreeLinkDatum, TreeNodeDatum } from "react-d3-tree/lib/types/common";
-import { Wormhole } from "../../SystemData/types";
+import { Wormhole } from "../../../../generated/graphqlOperations";
 
 export type MapState = {
   connectionTree: ConnectionTree;

@@ -1,6 +1,6 @@
 import { System, WormholeEffect } from "@eve-data/systems/lib/src/api/system.type";
-import MassStatus from "../../../enum/MassStatus";
 import SecurityClasses from "../../../enum/SecurityClasses";
+import { Signature, Wormhole } from "../../../generated/graphqlOperations";
 
 export type SystemState = {
   id: string;
@@ -15,18 +15,4 @@ export type SystemState = {
   region: System["region"];
   constellation: System["constellation"];
   staticConnections: System["staticConnections"];
-};
-
-export type Signature = {
-  id: string;
-  eveId: string;
-  name: string;
-  type: string;
-};
-
-export type Wormhole = Signature & {
-  eol: boolean;
-  destinationName: string | null;
-  reverseType: string;
-  massStatus: MassStatus;
 };

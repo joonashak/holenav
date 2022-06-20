@@ -1,8 +1,7 @@
 import { Box, Button, FormGroup } from "@mui/material";
 import { useForm } from "react-hook-form";
-import SigTypes from "../../../../../enum/SigTypes";
+import { Signature, SigTypes } from "../../../../../generated/graphqlOperations";
 import ControlledTextField from "../../../../controls/ControlledTextField";
-import { Signature } from "../../../SystemData/types";
 import useSigForm from "./useSigForm";
 
 export type SigFormProps = {

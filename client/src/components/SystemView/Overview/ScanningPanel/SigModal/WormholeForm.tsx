@@ -5,11 +5,10 @@ import systems from "@eve-data/systems";
 import ControlledRadioGroup from "../../../../controls/ControlledRadioGroup";
 import ControlledSelect from "../../../../controls/Select/ControlledSelect";
 import ControlledTextField from "../../../../controls/ControlledTextField";
-import { Wormhole } from "../../../SystemData/types";
 import FormGroupRow from "../../../../controls/FormGroupRow";
 import RhfAutocomplete from "../../../../controls/RhfAutocomplete";
-import MassStatus from "../../../../../enum/MassStatus";
 import useWormholeForm from "./useWormholeForm";
+import { MassStatus, Wormhole } from "../../../../../generated/graphqlOperations";
 
 const lifeOptions = [
   { key: "lt-24-hrs", value: "lt-24-hrs", label: "Less than 24 hrs" },
@@ -17,9 +16,9 @@ const lifeOptions = [
 ];
 
 const massOptions = [
-  { key: "mass-stable", value: MassStatus.STABLE, label: "Stable" },
-  { key: "mass-destab", value: MassStatus.DESTAB, label: "Destabilized" },
-  { key: "mass-crit", value: MassStatus.CRIT, label: "Critical" },
+  { key: "mass-stable", value: MassStatus.Stable, label: "Stable" },
+  { key: "mass-destab", value: MassStatus.Destab, label: "Destabilized" },
+  { key: "mass-crit", value: MassStatus.Crit, label: "Critical" },
 ];
 
 const whTypeOptions = [{ key: "wh-K162", value: "K162", label: "K162" }].concat(
@@ -39,7 +38,7 @@ const WormholeForm = (props: WormholeFormProps) => {
     defaultValues: {
       name: existing?.name || "",
       life: existing?.eol ? "eol" : "lt-24-hrs",
-      mass: existing?.massStatus || MassStatus.STABLE,
+      mass: existing?.massStatus || MassStatus.Stable,
       whType: existing?.type || "",
       whReverseType: existing?.reverseType || "",
       destinationName: existing?.destinationName || null,

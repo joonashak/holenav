@@ -1,4 +1,4 @@
-import SigTypes from "../../../../enum/SigTypes";
+import { SigTypes } from "../../../../generated/graphqlOperations";
 import useNotification from "../../../GlobalNotification/useNotification";
 import useSystemData from "../../SystemData/useSystemData";
 
@@ -15,13 +15,13 @@ const useSigPasteListener = () => {
 
   const findSigType = (typeString: string) => {
     if (typeString === "Data Site") {
-      return SigTypes.DATA;
+      return SigTypes.Data;
     }
     if (typeString === "Relic Site") {
-      return SigTypes.RELIC;
+      return SigTypes.Relic;
     }
     if (typeString.match(/Wormhole/)) {
-      return SigTypes.WORMHOLE;
+      return SigTypes.Wormhole;
     }
     return null;
   };
@@ -64,7 +64,7 @@ const useSigPasteListener = () => {
 
     if (sigExistsWihtoutTypeAndPasteHasType || sigExistsWithoutNameAndPasteHasName) {
       const { id } = existingSig;
-      return updateSignature({ id, eveId, name, type: type?.toUpperCase() || "" });
+      return updateSignature({ id, eveId, name, type });
     }
 
     return Promise.resolve();
@@ -103,7 +103,7 @@ const useSigPasteListener = () => {
 
     await Promise.all(
       data.map((sig) =>
-        sig.type === SigTypes.WORMHOLE ? handlePastedWh(sig) : handlePastedSig(sig)
+        sig.type === SigTypes.Wormhole ? handlePastedWh(sig) : handlePastedSig(sig)
       )
     );
   };

@@ -3,6 +3,7 @@ import { Downgraded, useState } from "@hookstate/core";
 import { systemState } from ".";
 import useAuthenticatedMutation from "../../../auth/useAuthenticatedMutation";
 import useLazyAuthenticatedQuery from "../../../auth/useLazyAuthenticatedQuery";
+import { Signature, UpdateWormholeInput, Wormhole } from "../../../generated/graphqlOperations";
 import {
   ADD_SIGNATURE,
   ADD_WORMHOLE,
@@ -12,7 +13,6 @@ import {
   EDIT_WORMHOLE,
   GET_SYSTEM_BY_NAME,
 } from "./graphql";
-import { Signature, Wormhole } from "./types";
 
 export default () => {
   const state = useState(systemState);
@@ -93,7 +93,7 @@ export default () => {
     },
   });
 
-  const updateWormhole = async (update: Wormhole): Promise<FetchResult> =>
+  const updateWormhole = async (update: UpdateWormholeInput): Promise<FetchResult> =>
     updateWhMutation({ variables: { input: update } });
 
   const [deleteWhMutation] = useAuthenticatedMutation(DELETE_WORMHOLE, {
@@ -110,7 +110,7 @@ export default () => {
   const getAllSigs = () => {
     const signatures = state.signatures.attach(Downgraded).get();
     const wormholes = state.wormholes.attach(Downgraded).get();
-    return signatures.concat(wormholes);
+    return signatures.concat(wormholes as Signature[]);
   };
 
   return {

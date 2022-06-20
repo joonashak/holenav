@@ -2,7 +2,7 @@ import { IconButton } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import { useState } from "react";
 import SigModal from "../SigModal";
-import { Signature, Wormhole } from "../../../SystemData/types";
+import { Signature, Wormhole } from "../../../../../generated/graphqlOperations";
 
 type EditSigButtonProps = {
   sig: Signature | Wormhole;
@@ -14,7 +14,7 @@ const EditSigButton = ({ sig }: EditSigButtonProps) => {
 
   const isWormhole = Object.keys(sig).includes("eol");
   const wormhole = isWormhole ? (sig as Wormhole) : undefined;
-  const signature = !isWormhole ? sig : undefined;
+  const signature = !isWormhole ? (sig as Signature) : undefined;
 
   return (
     <>

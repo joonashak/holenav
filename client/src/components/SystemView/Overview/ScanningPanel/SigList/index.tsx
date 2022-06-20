@@ -8,8 +8,8 @@ import {
   Paper,
   TableCellProps,
 } from "@mui/material";
+import { Wormhole } from "../../../../../generated/graphqlOperations";
 import TableRow from "../../../../common/TableRow";
-import { Signature, Wormhole } from "../../../SystemData/types";
 import useSystemData from "../../../SystemData/useSystemData";
 import DeleteSigButton from "./DeleteSigButton";
 import EditSigButton from "./EditSigButton";
@@ -25,7 +25,7 @@ const TableCell = ({ children, sx }: TableCellProps) => (
 export default () => {
   const { allSigs } = useSystemData();
 
-  const isWormhole = (sig: Signature | Wormhole): boolean => Object.keys(sig).includes("eol");
+  const isWormhole = (sig: Wormhole): boolean => Object.keys(sig).includes("eol");
 
   return (
     <TableContainer component={Paper} sx={{ bgcolor: "primary.light" }}>
@@ -44,14 +44,14 @@ export default () => {
                 <TableCell component="th" scope="row">
                   {sig.eveId}
                 </TableCell>
-                <TableCell>{sig.type || (isWormhole(sig) && "Wormhole")}</TableCell>
+                <TableCell>{sig.type || (isWormhole(sig as Wormhole) && "Wormhole")}</TableCell>
                 <TableCell sx={{ paddingTop: 0, paddingBottom: 0 }}>
                   <Box
                     sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}
                   >
                     {sig.name}
                     <Box sx={{ display: "flex", flexGrow: 1, justifyContent: "flex-end" }}>
-                      <EditSigButton sig={sig} />
+                      <EditSigButton sig={sig as Wormhole} />
                       <DeleteSigButton sig={sig} />
                     </Box>
                   </Box>
