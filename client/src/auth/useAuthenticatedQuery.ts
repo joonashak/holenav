@@ -1,19 +1,9 @@
 import { QueryHookOptions, useQuery } from "@apollo/client";
 import { DocumentNode } from "graphql";
-import useAuth from "./useAuth";
+import useApolloOptions from "./useApolloOptions";
 
-const useAuthenticatedQuery = (query: DocumentNode, options?: QueryHookOptions) => {
-  const { token } = useAuth();
-
-  const optionsWithAuth = {
-    ...options,
-    context: {
-      headers: {
-        accesstoken: token,
-        activefolder: "default",
-      },
-    },
-  };
+const useAuthenticatedQuery = (query: DocumentNode, options: QueryHookOptions = {}) => {
+  const optionsWithAuth = useApolloOptions(options);
 
   return useQuery(query, optionsWithAuth);
 };

@@ -1,22 +1,9 @@
 import { MutationHookOptions, useMutation } from "@apollo/client";
-import { useState } from "@hookstate/core";
 import { DocumentNode } from "graphql";
-import { userState } from "../components/UserData";
-import useAuth from "./useAuth";
+import useApolloOptions from "./useApolloOptions";
 
-const useAuthenticatedMutation = (query: DocumentNode, options?: MutationHookOptions) => {
-  const { token } = useAuth();
-  const { settings } = useState(userState);
-
-  const optionsWithAuth = {
-    ...options,
-    context: {
-      headers: {
-        accesstoken: token,
-        activefolder: settings.activeFolder.get().id || "default",
-      },
-    },
-  };
+const useAuthenticatedMutation = (query: DocumentNode, options: MutationHookOptions = {}) => {
+  const optionsWithAuth = useApolloOptions(options);
 
   return useMutation(query, optionsWithAuth);
 };

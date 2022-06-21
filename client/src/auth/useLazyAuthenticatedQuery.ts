@@ -1,21 +1,9 @@
 import { QueryHookOptions, useLazyQuery } from "@apollo/client";
 import { DocumentNode } from "graphql";
-import useUserSettings from "../components/UserData/settings/useUserSettings";
-import useAuth from "./useAuth";
+import useApolloOptions from "./useApolloOptions";
 
-const useLazyAuthenticatedQuery = (query: DocumentNode, options?: QueryHookOptions) => {
-  const { token } = useAuth();
-  const { activeFolder } = useUserSettings();
-
-  const optionsWithAuth = {
-    ...options,
-    context: {
-      headers: {
-        accesstoken: token,
-        activefolder: activeFolder.id,
-      },
-    },
-  };
+const useLazyAuthenticatedQuery = (query: DocumentNode, options: QueryHookOptions = {}) => {
+  const optionsWithAuth = useApolloOptions(options);
 
   return useLazyQuery(query, optionsWithAuth);
 };
