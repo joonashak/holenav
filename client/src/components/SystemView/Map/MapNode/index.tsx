@@ -4,6 +4,7 @@ import { Box, Typography } from "@mui/material";
 import { CustomNodeElementProps } from "react-d3-tree/lib/types/common";
 import AppLink from "../../../common/AppLink";
 import useUserData from "../../../UserData/useUserData";
+import useSystemData from "../../SystemData/useSystemData";
 import { MapNodeDatum } from "../MapData/types";
 import MapNodeRect from "./MapNodeRect";
 import WhTypeLabel from "./WhTypeLabel";
@@ -15,6 +16,7 @@ export type MapNodeProps = CustomNodeElementProps & {
 const MapNode = ({ nodeDatum }: MapNodeProps) => {
   const { settings } = useUserData();
   const { wormhole } = nodeDatum;
+  const { name: selectedSystemName } = useSystemData();
 
   const name = wormhole?.name || "";
   const type = wormhole?.type || "";
@@ -22,6 +24,9 @@ const MapNode = ({ nodeDatum }: MapNodeProps) => {
 
   const { selectedMap } = settings;
   const isRootNode = nodeDatum.__rd3t.depth === 0;
+  const isSelectedSystem =
+    destinationName === selectedSystemName ||
+    (isRootNode && selectedSystemName === selectedMap.rootSystemName);
 
   let destination: System | null = null;
 
@@ -46,6 +51,19 @@ const MapNode = ({ nodeDatum }: MapNodeProps) => {
 
   return (
     <>
+      {isSelectedSystem && (
+        <rect
+          width={106}
+          height={76}
+          x={-53}
+          y={-38}
+          rx={13}
+          style={{
+            stroke: "#676767",
+            strokeWidth: 10,
+          }}
+        />
+      )}
       <MapNodeRect
         width={100}
         height={70}
