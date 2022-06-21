@@ -1,6 +1,6 @@
 {
   "name": "holenav-e2e-tests",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "scripts": {
     "start": "cypress open",
     "test": "cypress run",
