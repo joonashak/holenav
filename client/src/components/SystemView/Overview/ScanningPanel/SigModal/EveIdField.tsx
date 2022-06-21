@@ -12,9 +12,11 @@ const EveIdField = ({ value, onChange, existingId }: EveIdFieldProps) => {
   const { allSigs, deleteSignature } = useSystemData();
   const allSigsButExisting = allSigs.filter((sig) => sig.id !== existingId);
   const duplicate = allSigsButExisting.find((sig) => sig.eveId === value);
+  // Don't count empty EVE ID's as duplicates:
+  const isDuplicate = !!(value && duplicate);
 
   const deleteDuplicate = async () => {
-    if (duplicate) {
+    if (isDuplicate) {
       await deleteSignature(duplicate.id);
     }
   };
@@ -24,9 +26,9 @@ const EveIdField = ({ value, onChange, existingId }: EveIdFieldProps) => {
       label="ID"
       value={value}
       onChange={onChange}
-      error={!!duplicate}
+      error={isDuplicate}
       helperText={
-        duplicate && (
+        isDuplicate && (
           <FormHelperText>
             Duplicate ID.
             <Button color="error" variant="contained" onClick={deleteDuplicate}>
