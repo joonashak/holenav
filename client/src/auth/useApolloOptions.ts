@@ -29,12 +29,8 @@ const useApolloOptions = <T extends HookOptions>(options: T): T => {
         activefolder: settings.activeFolder.get().id || "default",
       },
     },
-    onError: async (error: ApolloError) => {
-      await handleAuthError(error);
-      if (options.onError) {
-        options.onError(error);
-      }
-    },
+    onError: async (error: ApolloError) =>
+      options.onError ? options.onError(error) : handleAuthError(error),
   };
 
   return optionsWithAuth;

@@ -26,6 +26,7 @@ const SettingsData = ({ children }: SettingsDataProps) => {
     onCompleted: (data) => {
       state.merge({ accessibleFolders: data.getAccessibleFolders });
     },
+    onError: () => {},
   });
 
   useAuthenticatedQuery(SettingsDataForManagerDocument, {
