@@ -1,5 +1,6 @@
-import { MutationHookOptions, QueryHookOptions } from "@apollo/client";
+import { ApolloError, MutationHookOptions, QueryHookOptions } from "@apollo/client";
 import { useState } from "@hookstate/core";
+import useLocalData from "../components/LocalData/useLocalData";
 import { userState } from "../components/UserData";
 import useAuth from "./useAuth";
 
@@ -8,6 +9,17 @@ type HookOptions = MutationHookOptions | QueryHookOptions;
 const useApolloOptions = <T extends HookOptions>(options: T): T => {
   const { token } = useAuth();
   const { settings } = useState(userState);
+  const { setAuthToken } = useLocalData();
+
+  const handleAuthError = async (error: ApolloError) => {
+    const isAuthError = !!error.graphQLErrors.find(
+      (e) => e?.extensions?.code === "UNAUTHENTICATED"
+    );
+
+    if (isAuthError) {
+      await setAuthToken(null);
+    }
+  };
 
   const optionsWithAuth = {
     ...options,
@@ -16,6 +28,12 @@ const useApolloOptions = <T extends HookOptions>(options: T): T => {
         accesstoken: token,
         activefolder: settings.activeFolder.get().id || "default",
       },
+    },
+    onError: async (error: ApolloError) => {
+      await handleAuthError(error);
+      if (options.onError) {
+        options.onError(error);
+      }
     },
   };
 
