@@ -1,6 +1,6 @@
-import { SigTypes } from "../../../../../generated/graphqlOperations";
 import useNotification from "../../../../GlobalNotification/useNotification";
 import useSystemData from "../../../SystemData/useSystemData";
+import createSigPasteBatch, { SigPasteBatch } from "./sigPasteBatch";
 import parsePaste, { PastedSig } from "./sigPasteParser";
 
 const useSigPasteListener = () => {
@@ -29,43 +29,20 @@ const useSigPasteListener = () => {
     return Promise.resolve();
   };
 
-  const handlePastedWh = async (data: PastedSig) => {
-    const { eveId } = data;
-    const existingWh = systemData.wormholes.find((sig) => sig.eveId === eveId);
-
-    if (!existingWh) {
-      const input = {
-        eveId,
-        name: "",
-        type: "",
-        destinationName: null,
-        eol: false,
-        massStatus: "STABLE",
-        reverseType: "",
-        systemName,
-      };
-      return addWormhole(input);
-    }
-
-    return Promise.resolve();
-  };
-
   const sigPasteListener = async (event: Event) => {
-    let data: Array<PastedSig> = [];
+    let batch: SigPasteBatch;
 
     try {
       const asd = parsePaste(event as ClipboardEvent);
       console.log(asd);
+      batch = createSigPasteBatch(asd, systemData.signatures, systemData.wormholes, systemName);
+      console.log(batch);
     } catch (error: any) {
       showWarningNotification(error.message, { autoHide: true });
       return;
     }
 
-    await Promise.all(
-      data.map((sig) =>
-        sig.type === SigTypes.Wormhole ? handlePastedWh(sig) : handlePastedSig(sig)
-      )
-    );
+    await Promise.all(batch.wormholeAdd.map((wh) => addWormhole(wh)));
   };
 
   return {

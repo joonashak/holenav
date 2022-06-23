@@ -12,14 +12,14 @@ export type SigPasteEvent = {
 };
 
 const findSigType = (typeString: string) => {
-  const asd = {
+  const sigTypeMap = {
     "Data Site": SigTypes.Data,
     "Relic Site": SigTypes.Relic,
     "Gas Site": SigTypes.Gas,
   };
 
-  if (Object.keys(asd).includes(typeString)) {
-    return asd[typeString as keyof typeof asd];
+  if (Object.keys(sigTypeMap).includes(typeString)) {
+    return sigTypeMap[typeString as keyof typeof sigTypeMap];
   }
 
   if (typeString.match(/Wormhole/)) {
