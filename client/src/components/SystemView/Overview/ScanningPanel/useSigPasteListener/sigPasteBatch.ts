@@ -26,6 +26,23 @@ const createSignatureAddReducer =
     return addableSignatures;
   };
 
+const createSignatureUpdateReducer =
+  (signatures: Signature[]) => (sigUpdates: Signature[], sig: PastedSig) => {
+    const { type, eveId, name } = sig;
+    const existingSig = signatures.find((s) => s.eveId === eveId);
+
+    // Only scenarios when an update is performed based on paste data.
+    const sigExistsWihtoutTypeAndPasteHasType = existingSig && !existingSig.type && type;
+    const sigExistsWithoutNameAndPasteHasName = existingSig && !existingSig.name && name;
+
+    if (sigExistsWihtoutTypeAndPasteHasType || sigExistsWithoutNameAndPasteHasName) {
+      const { id } = existingSig;
+      return sigUpdates.concat({ id, eveId, name, type });
+    }
+
+    return sigUpdates;
+  };
+
 const createWormholeAddReducer =
   (wormholes: Wormhole[], systemName: string) =>
   (addableWormholes: AddWormholeInput[], sig: PastedSig) => {
@@ -59,7 +76,7 @@ const createSigPasteBatch = (
   systemName: string
 ): SigPasteBatch => ({
   signatureAdd: paste.pastedSigs.reduce(createSignatureAddReducer(existingSignatures), []),
-  signatureUpdate: [],
+  signatureUpdate: paste.pastedSigs.reduce(createSignatureUpdateReducer(existingSignatures), []),
   wormholeAdd: paste.pastedWormholes.reduce(
     createWormholeAddReducer(existingWormholes, systemName),
     []
