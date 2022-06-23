@@ -1,58 +1,14 @@
-import { SigTypes } from "../../../../generated/graphqlOperations";
-import useNotification from "../../../GlobalNotification/useNotification";
-import useSystemData from "../../SystemData/useSystemData";
-
-type PasteData = {
-  eveId: string;
-  type: SigTypes | null;
-  name: string;
-};
+import { SigTypes } from "../../../../../generated/graphqlOperations";
+import useNotification from "../../../../GlobalNotification/useNotification";
+import useSystemData from "../../../SystemData/useSystemData";
+import parsePaste, { SigPasteItem } from "./sigPasteParser";
 
 const useSigPasteListener = () => {
   const { showWarningNotification } = useNotification();
   const systemData = useSystemData();
   const { addSignature, addWormhole, updateSignature, name: systemName } = systemData;
 
-  const findSigType = (typeString: string) => {
-    if (typeString === "Data Site") {
-      return SigTypes.Data;
-    }
-    if (typeString === "Relic Site") {
-      return SigTypes.Relic;
-    }
-    if (typeString === "Gas Site") {
-      return SigTypes.Gas;
-    }
-    if (typeString.match(/Wormhole/)) {
-      return SigTypes.Wormhole;
-    }
-    return null;
-  };
-
-  const getFormattedPasteData = (pasteEvent: ClipboardEvent): Array<PasteData> => {
-    const input = pasteEvent.clipboardData?.getData("text") || "";
-    const rows = input.split(/\r?\n/).filter((row) => row.length);
-    // eslint-disable-next-line
-    console.log("rows", rows);
-    const splitRows = rows.map((row) => row.split(/\t/));
-    // eslint-disable-next-line
-    console.log("split rows", splitRows);
-
-    const formattedData = splitRows.map((row) => {
-      const eveId = row[0];
-      if (!eveId.match(/^[A-Z]{3}-\d{3}$/)) {
-        throw new Error("Bad paste data detected. No changes were made.");
-      }
-
-      const type = findSigType(row[2]);
-      const name = row[3];
-      return { eveId, type, name };
-    });
-
-    return formattedData;
-  };
-
-  const handlePastedSig = async (data: PasteData) => {
+  const handlePastedSig = async (data: SigPasteItem) => {
     const { type, eveId, name } = data;
     const existingSig = systemData.signatures.find((sig) => sig.eveId === eveId);
 
@@ -73,7 +29,7 @@ const useSigPasteListener = () => {
     return Promise.resolve();
   };
 
-  const handlePastedWh = async (data: PasteData) => {
+  const handlePastedWh = async (data: SigPasteItem) => {
     const { eveId } = data;
     const existingWh = systemData.wormholes.find((sig) => sig.eveId === eveId);
 
@@ -95,10 +51,10 @@ const useSigPasteListener = () => {
   };
 
   const sigPasteListener = async (event: Event) => {
-    let data: Array<PasteData> = [];
+    let data: Array<SigPasteItem> = [];
 
     try {
-      data = getFormattedPasteData(event as ClipboardEvent);
+      data = parsePaste(event as ClipboardEvent);
     } catch (error: any) {
       showWarningNotification(error.message, { autoHide: true });
       return;
