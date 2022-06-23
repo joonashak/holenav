@@ -1,14 +1,14 @@
 import { SigTypes } from "../../../../../generated/graphqlOperations";
 import useNotification from "../../../../GlobalNotification/useNotification";
 import useSystemData from "../../../SystemData/useSystemData";
-import parsePaste, { SigPasteItem } from "./sigPasteParser";
+import parsePaste, { PastedSig } from "./sigPasteParser";
 
 const useSigPasteListener = () => {
   const { showWarningNotification } = useNotification();
   const systemData = useSystemData();
   const { addSignature, addWormhole, updateSignature, name: systemName } = systemData;
 
-  const handlePastedSig = async (data: SigPasteItem) => {
+  const handlePastedSig = async (data: PastedSig) => {
     const { type, eveId, name } = data;
     const existingSig = systemData.signatures.find((sig) => sig.eveId === eveId);
 
@@ -29,7 +29,7 @@ const useSigPasteListener = () => {
     return Promise.resolve();
   };
 
-  const handlePastedWh = async (data: SigPasteItem) => {
+  const handlePastedWh = async (data: PastedSig) => {
     const { eveId } = data;
     const existingWh = systemData.wormholes.find((sig) => sig.eveId === eveId);
 
@@ -51,10 +51,11 @@ const useSigPasteListener = () => {
   };
 
   const sigPasteListener = async (event: Event) => {
-    let data: Array<SigPasteItem> = [];
+    let data: Array<PastedSig> = [];
 
     try {
-      data = parsePaste(event as ClipboardEvent);
+      const asd = parsePaste(event as ClipboardEvent);
+      console.log(asd);
     } catch (error: any) {
       showWarningNotification(error.message, { autoHide: true });
       return;

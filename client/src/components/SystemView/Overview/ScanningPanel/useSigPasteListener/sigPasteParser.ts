@@ -1,9 +1,14 @@
 import { SigTypes } from "../../../../../generated/graphqlOperations";
 
-export type SigPasteItem = {
+export type PastedSig = {
   eveId: string;
   type: SigTypes | null;
   name: string;
+};
+
+export type SigPasteEvent = {
+  pastedSigs: PastedSig[];
+  pastedWormholes: PastedSig[];
 };
 
 const findSigType = (typeString: string) => {
@@ -30,7 +35,7 @@ const getPasteDataMatrix = (pasteEvent: ClipboardEvent): string[][] => {
   return rows.map((row) => row.split(/\t/));
 };
 
-const formatPasteRow = (row: string[]) => {
+const formatPasteRow = (row: string[]): PastedSig => {
   const eveId = row[0];
 
   if (!eveId.match(/^[A-Z]{3}-\d{3}$/)) {
@@ -42,10 +47,12 @@ const formatPasteRow = (row: string[]) => {
   return { eveId, type, name };
 };
 
-const parsePaste = (pasteEvent: ClipboardEvent): Array<SigPasteItem> => {
+const parsePaste = (pasteEvent: ClipboardEvent): SigPasteEvent => {
   const pasteMatrix = getPasteDataMatrix(pasteEvent);
   const formattedData = pasteMatrix.map(formatPasteRow);
-  return formattedData;
+  const pastedSigs = formattedData.filter((sig) => sig.type !== SigTypes.Wormhole);
+  const pastedWormholes = formattedData.filter((sig) => sig.type === SigTypes.Wormhole);
+  return { pastedSigs, pastedWormholes };
 };
 
 export default parsePaste;
