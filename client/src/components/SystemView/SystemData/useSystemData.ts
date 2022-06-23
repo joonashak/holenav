@@ -14,6 +14,8 @@ import {
   GET_SYSTEM_BY_NAME,
 } from "./graphql";
 
+export type AddSignatureHookInput = Omit<Signature, "id" | "systemId" | "name">;
+
 export default () => {
   const state = useState(systemState);
 
@@ -30,7 +32,7 @@ export default () => {
     },
   });
 
-  const addSignature = async (newSig: any) => {
+  const addSignature = async (newSig: AddSignatureHookInput) => {
     const existingWh = state.wormholes
       .attach(Downgraded)
       .get()

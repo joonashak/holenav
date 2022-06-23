@@ -14,7 +14,7 @@ const useSigPasteListener = () => {
 
     if (!existingSig) {
       const input = { type: type?.toUpperCase(), eveId, name };
-      return addSignature(input);
+      // return addSignature(input);
     }
 
     // Only scenarios when an _update_ is performed based on paste data.
@@ -42,6 +42,8 @@ const useSigPasteListener = () => {
       return;
     }
 
+    // TODO: Create batch mutations for these.
+    await Promise.all(batch.signatureAdd.map((sig) => addSignature(sig)));
     await Promise.all(batch.wormholeAdd.map((wh) => addWormhole(wh)));
   };
 
