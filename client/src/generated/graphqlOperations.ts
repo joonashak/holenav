@@ -246,6 +246,7 @@ export type SavedMap = {
 
 export enum SigTypes {
   Data = "DATA",
+  Gas = "GAS",
   Relic = "RELIC",
   Wormhole = "WORMHOLE",
 }

@@ -20,6 +20,9 @@ const useSigPasteListener = () => {
     if (typeString === "Relic Site") {
       return SigTypes.Relic;
     }
+    if (typeString === "Gas Site") {
+      return SigTypes.Gas;
+    }
     if (typeString.match(/Wormhole/)) {
       return SigTypes.Wormhole;
     }
