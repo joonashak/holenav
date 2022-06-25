@@ -3,6 +3,15 @@ import SigTypes from "../sig-types.enum";
 
 @InputType()
 export default class AddSignatureInput {
+  @Field((type) => [SignatureInput])
+  signatures: SignatureInput[];
+
+  @Field()
+  systemId: string;
+}
+
+@InputType()
+class SignatureInput {
   @Field()
   eveId: string;
 
@@ -11,7 +20,4 @@ export default class AddSignatureInput {
 
   @Field()
   name: string;
-
-  @Field()
-  systemId: string;
 }

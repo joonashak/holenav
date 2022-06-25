@@ -22,7 +22,9 @@ export class SystemService {
 
   // FIXME: This will probably have to be changed to use name+folder combination instead of id
   // because we cannot create a missing system without the system name.
-  async appendToSignatures(systemId: string, signature: Signature) {
-    await this.systemModel.findOneAndUpdate({ id: systemId }, { $push: { signatures: signature } });
+  // EDIT: On the other hand, probably only wormholes need to be added without the system document
+  // being already initialized...
+  async appendToSignatures(systemId: string, signatures: Signature[]) {
+    await this.systemModel.findOneAndUpdate({ id: systemId }, { $push: { signatures } });
   }
 }

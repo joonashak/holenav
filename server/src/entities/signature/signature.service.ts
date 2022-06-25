@@ -12,10 +12,10 @@ export class SignatureService {
     private systemService: SystemService,
   ) {}
 
-  async createSignature(systemId: string, signature: Signature): Promise<Signature> {
-    const newSig = await this.sigModel.create(signature);
-    await this.systemService.appendToSignatures(systemId, newSig);
-    return newSig;
+  async createSignatures(systemId: string, signatures: Signature[]): Promise<Signature[]> {
+    const newSigs = await this.sigModel.create(signatures);
+    await this.systemService.appendToSignatures(systemId, newSigs);
+    return newSigs;
   }
 
   async updateSignature(id: string, update: Partial<UpdateSignatureInput>): Promise<Signature> {
