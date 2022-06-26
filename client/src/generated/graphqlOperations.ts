@@ -26,10 +26,8 @@ export type AddFolderRoleInput = {
 };
 
 export type AddSignatureInput = {
-  eveId: Scalars["String"];
-  name: Scalars["String"];
+  signatures: Array<SignatureInput>;
   systemId: Scalars["String"];
-  type?: InputMaybe<SigTypes>;
 };
 
 export type AddWormholeInput = {
@@ -259,6 +257,12 @@ export type Signature = {
   type?: Maybe<SigTypes>;
 };
 
+export type SignatureInput = {
+  eveId: Scalars["String"];
+  name: Scalars["String"];
+  type?: InputMaybe<SigTypes>;
+};
+
 export type StartSsoLoginDto = {
   __typename?: "StartSsoLoginDto";
   ssoLoginUrl: Scalars["String"];
@@ -279,9 +283,10 @@ export enum SystemRoles {
 }
 
 export type UpdateSignatureInput = {
-  eveId?: InputMaybe<Scalars["String"]>;
+  eveId: Scalars["String"];
   id: Scalars["String"];
-  name?: InputMaybe<Scalars["String"]>;
+  name: Scalars["String"];
+  signatures?: InputMaybe<Array<SignatureInput>>;
   systemId?: InputMaybe<Scalars["String"]>;
   type?: InputMaybe<SigTypes>;
 };
@@ -439,6 +444,29 @@ export type SearchCharactersByMainQuery = {
   searchCharactersByMain: Array<{ __typename?: "Character"; name: string; esiId: string }>;
 };
 
+export type SignatureFieldsFragment = {
+  __typename?: "Signature";
+  id: string;
+  name: string;
+  type?: SigTypes | null;
+  eveId: string;
+};
+
+export type AddSignatureMutationVariables = Exact<{
+  input: AddSignatureInput;
+}>;
+
+export type AddSignatureMutation = {
+  __typename?: "Mutation";
+  addSignature: {
+    __typename?: "Signature";
+    id: string;
+    name: string;
+    type?: SigTypes | null;
+    eveId: string;
+  };
+};
+
 export type UserDataQueryVariables = Exact<{ [key: string]: never }>;
 
 export type UserDataQuery = {
@@ -463,6 +491,25 @@ export const FolderFieldsFragmentDoc = {
     },
   ],
 } as unknown as DocumentNode<FolderFieldsFragment, unknown>;
+export const SignatureFieldsFragmentDoc = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "FragmentDefinition",
+      name: { kind: "Name", value: "SignatureFields" },
+      typeCondition: { kind: "NamedType", name: { kind: "Name", value: "Signature" } },
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          { kind: "Field", name: { kind: "Name", value: "id" } },
+          { kind: "Field", name: { kind: "Name", value: "name" } },
+          { kind: "Field", name: { kind: "Name", value: "type" } },
+          { kind: "Field", name: { kind: "Name", value: "eveId" } },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<SignatureFieldsFragment, unknown>;
 export const GetTokenDocument = {
   kind: "Document",
   definitions: [
@@ -906,6 +953,49 @@ export const SearchCharactersByMainDocument = {
     },
   ],
 } as unknown as DocumentNode<SearchCharactersByMainQuery, SearchCharactersByMainQueryVariables>;
+export const AddSignatureDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "AddSignature" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "input" } },
+          type: {
+            kind: "NonNullType",
+            type: { kind: "NamedType", name: { kind: "Name", value: "AddSignatureInput" } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "addSignature" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "input" },
+                value: { kind: "Variable", name: { kind: "Name", value: "input" } },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "FragmentSpread", name: { kind: "Name", value: "SignatureFields" } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    ...SignatureFieldsFragmentDoc.definitions,
+  ],
+} as unknown as DocumentNode<AddSignatureMutation, AddSignatureMutationVariables>;
 export const UserDataDocument = {
   kind: "Document",
   definitions: [

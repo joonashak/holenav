@@ -1,0 +1,12 @@
+fragment SignatureFields on Signature {
+  id
+  name
+  type
+  eveId
+}
+
+mutation AddSignature($input: AddSignatureInput!) {
+  addSignature(input: $input) {
+    ...SignatureFields
+  }
+}

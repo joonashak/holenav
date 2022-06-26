@@ -12,7 +12,7 @@ export class SignatureResolver {
   constructor(private sigService: SignatureService) {}
 
   @RequireFolderRole(FolderRoles.WRITE)
-  @Mutation((returns) => Signature)
+  @Mutation((returns) => [Signature])
   async addSignature(@Args("input") input: AddSignatureInput): Promise<Signature[]> {
     const includesWormholes = input.signatures.find((sig) => sig.type === SigTypes.WORMHOLE);
     if (includesWormholes) {
@@ -21,6 +21,7 @@ export class SignatureResolver {
 
     const { systemId, signatures } = input;
     const newSig = await this.sigService.createSignatures(systemId, signatures);
+    console.log(newSig);
     return newSig;
   }
 

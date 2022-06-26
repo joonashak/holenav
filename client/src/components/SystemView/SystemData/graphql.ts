@@ -19,15 +19,6 @@ export const GET_SYSTEM_BY_NAME = gql`
   }
 `;
 
-export const ADD_SIGNATURE = gql`
-  ${SIGNATURE_FIELDS}
-  mutation AddSig($input: AddSignatureInput!) {
-    addSignature(input: $input) {
-      ...SignatureFields
-    }
-  }
-`;
-
 export const EDIT_SIGNATURE = gql`
   ${SIGNATURE_FIELDS}
   mutation UpdateSignature($input: UpdateSignatureInput!) {

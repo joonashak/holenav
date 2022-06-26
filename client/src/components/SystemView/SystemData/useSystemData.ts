@@ -3,9 +3,12 @@ import { Downgraded, useState } from "@hookstate/core";
 import { systemState } from ".";
 import useAuthenticatedMutation from "../../../auth/useAuthenticatedMutation";
 import useLazyAuthenticatedQuery from "../../../auth/useLazyAuthenticatedQuery";
-import { Signature, UpdateWormholeInput } from "../../../generated/graphqlOperations";
 import {
-  ADD_SIGNATURE,
+  AddSignatureDocument,
+  Signature,
+  UpdateWormholeInput,
+} from "../../../generated/graphqlOperations";
+import {
   ADD_WORMHOLE,
   DELETE_SIGNATURE,
   DELETE_WORMHOLE,
@@ -26,9 +29,9 @@ export default () => {
     },
   });
 
-  const [addSigMutation] = useAuthenticatedMutation(ADD_SIGNATURE, {
+  const [addSigMutation] = useAuthenticatedMutation(AddSignatureDocument, {
     onCompleted: (data) => {
-      state.signatures.set((sigs) => sigs.concat([data.addSignature]));
+      state.signatures.set((sigs) => sigs.concat(data.addSignature));
     },
   });
 
@@ -42,7 +45,7 @@ export default () => {
       await deleteWormhole(existingWh.id);
     }
 
-    const input = { ...newSig, systemId: state.id.value };
+    const input = { signatures: [newSig], systemId: state.id.value };
     return addSigMutation({ variables: { input } });
   };
 
