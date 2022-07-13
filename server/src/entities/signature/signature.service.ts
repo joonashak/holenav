@@ -22,6 +22,12 @@ export class SignatureService {
     return this.sigModel.findOneAndUpdate({ id }, update, { returnDocument: "after" });
   }
 
+  async updateSignatures(sigUpdates: UpdateSignatureInput[]): Promise<Signature[]> {
+    return Promise.all(
+      sigUpdates.map(async ({ id, ...update }) => this.updateSignature(id, update)),
+    );
+  }
+
   async deleteSignature(id: string): Promise<Signature> {
     return this.sigModel.findOneAndDelete({ id });
   }

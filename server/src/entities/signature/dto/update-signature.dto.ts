@@ -1,9 +1,8 @@
-import { Field, InputType, PartialType } from "@nestjs/graphql";
+import { Field, InputType } from "@nestjs/graphql";
 import SigTypes from "../sig-types.enum";
-import AddSignatureInput from "./add-signature.dto";
 
 @InputType()
-export default class UpdateSignatureInput extends PartialType(AddSignatureInput) {
+export default class UpdateSignatureInput {
   @Field()
   id: string;
 
@@ -15,4 +14,10 @@ export default class UpdateSignatureInput extends PartialType(AddSignatureInput)
 
   @Field()
   name: string;
+}
+
+@InputType()
+export class UpdateSignatureBatch {
+  @Field((type) => [UpdateSignatureInput])
+  signatures: UpdateSignatureInput[];
 }
