@@ -13,17 +13,14 @@ export default async (
   await whModel.deleteMany({});
   const folder = await folderService.getDefaultFolder();
 
-  for (const wh of whMockData) {
-    await whService.createWormhole(
-      {
-        eveId: "",
-        eol: false,
-        massStatus: MassStatus.STABLE,
-        type: "",
-        reverseType: "",
-        ...wh,
-      },
-      folder,
-    );
-  }
+  const wormholesToCreate = whMockData.map((wh) => ({
+    eveId: "",
+    eol: false,
+    massStatus: MassStatus.STABLE,
+    type: "",
+    reverseType: "",
+    ...wh,
+  }));
+
+  await whService.createWormholes(wormholesToCreate, folder);
 };

@@ -1,8 +1,9 @@
-import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
+import { ForbiddenError, UserInputError } from "apollo-server-express";
 import { Model } from "mongoose";
 import { Folder } from "../folder/folder.model";
-import AddWormholeInput from "./dto/add-wormhole.dto";
+import { WormholeInput } from "./dto/add-wormhole.dto";
 import UpdateWormholeInput from "./dto/update-wormhole.dto";
 import { Wormhole, WormholeDocument } from "./wormhole.model";
 
@@ -14,16 +15,12 @@ export class WormholeService {
     return this.whModel.find({ systemName, folder }).populate("reverse");
   }
 
-  async createWormhole(data: AddWormholeInput, folder: Folder): Promise<Wormhole> {
-    const [type, reverseType] = this.getValidWormholeTypes(data.type, data.reverseType);
-    let wormhole = await this.whModel.create({ ...data, type, reverseType, folder });
-    const { destinationName } = wormhole;
-
-    if (destinationName) {
-      wormhole = await this.addReverseWormhole(wormhole, reverseType);
-    }
-
-    return wormhole;
+  async createWormholes(wormholes: WormholeInput[], folder: Folder): Promise<Wormhole[]> {
+    const wormholesWithTypes = this.addTypesToWormholes(wormholes);
+    const wormholesToCreate = wormholesWithTypes.map((wh) => ({ ...wh, folder }));
+    const newWormholes = await this.whModel.create(wormholesToCreate);
+    const wormholesWithReverses = await this.addReverseWormholes(newWormholes);
+    return wormholesWithReverses;
   }
 
   async updateWormhole(
@@ -33,7 +30,7 @@ export class WormholeService {
   ): Promise<Wormhole> {
     const oldWh = await this.whModel.findOne({ id, folder });
     if (!oldWh) {
-      throw new HttpException("User has no access to requested wormhole.", HttpStatus.FORBIDDEN);
+      throw new ForbiddenError("User has no access to requested wormhole.");
     }
 
     const [validType, validReverseType] = this.getValidWormholeTypes(
@@ -49,7 +46,7 @@ export class WormholeService {
 
     // Destination added.
     if (!oldWh.destinationName && update.destinationName) {
-      return this.addReverseWormhole(updatedWh, validReverseType);
+      return this.addReverseWormhole(updatedWh);
     }
 
     // Destination removed.
@@ -76,10 +73,7 @@ export class WormholeService {
     return removed;
   }
 
-  private async addReverseWormhole(
-    wormhole: WormholeDocument,
-    reverseType: string,
-  ): Promise<WormholeDocument> {
+  private async addReverseWormhole(wormhole: WormholeDocument): Promise<WormholeDocument> {
     const { systemName, destinationName, folder, eol, massStatus, type } = wormhole;
 
     const reverse = await this.whModel.create({
@@ -87,7 +81,7 @@ export class WormholeService {
       systemName: destinationName,
       destinationName: systemName,
       reverse: wormhole,
-      type: reverseType,
+      type: wormhole.reverseType,
       reverseType: type,
       eol,
       massStatus,
@@ -97,6 +91,17 @@ export class WormholeService {
     return this.whModel
       .findByIdAndUpdate(wormhole._id, { reverse }, { returnDocument: "after" })
       .populate("reverse");
+  }
+
+  private async addReverseWormholes(wormholes: WormholeDocument[]): Promise<Wormhole[]> {
+    const updatedWormholes = wormholes.map(async (wh) => {
+      if (!wh.destinationName) {
+        return wh;
+      }
+      return this.addReverseWormhole(wh);
+    });
+
+    return Promise.all(updatedWormholes);
   }
 
   private async updateReverseWormhole(
@@ -132,10 +137,7 @@ export class WormholeService {
     }
 
     if (type === reverseType) {
-      throw new HttpException(
-        "Wormhole cannot have the same type on both sides.",
-        HttpStatus.BAD_REQUEST,
-      );
+      throw new UserInputError("Wormhole cannot have the same type on both sides.");
     }
 
     if (type === "K162" || reverseType === "K162") {
@@ -143,5 +145,14 @@ export class WormholeService {
     }
 
     return type ? [type, "K162"] : ["K162", reverseType];
+  }
+
+  private addTypesToWormholes(wormholes: WormholeInput[]): WormholeInput[] {
+    const wormholesWithTypes = wormholes.map((wh) => {
+      const [type, reverseType] = this.getValidWormholeTypes(wh.type, wh.reverseType);
+      return { ...wh, type, reverseType };
+    });
+
+    return wormholesWithTypes;
   }
 }

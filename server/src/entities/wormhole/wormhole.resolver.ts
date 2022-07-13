@@ -4,7 +4,7 @@ import { RequireFolderRole } from "../../auth/decorators/role.decorator";
 import FolderRoles from "../../user/roles/folder-roles.enum";
 import { FolderDocument } from "../folder/folder.model";
 import { ConnectionTreeService } from "./connection-tree.service";
-import AddWormholeInput from "./dto/add-wormhole.dto";
+import { AddWormholeInput } from "./dto/add-wormhole.dto";
 import { ConnectionTree } from "./dto/connection-tree.dto";
 import UpdateWormholeInput from "./dto/update-wormhole.dto";
 import { Wormhole } from "./wormhole.model";
@@ -40,8 +40,8 @@ export class WormholeResolver {
   async addWormhole(
     @Args("input") input: AddWormholeInput,
     @ActiveFolder() folder: FolderDocument,
-  ): Promise<Wormhole> {
-    const res = await this.whService.createWormhole(input, folder);
+  ): Promise<Wormhole[]> {
+    const res = await this.whService.createWormholes(input.wormholes, folder);
     return res;
   }
 

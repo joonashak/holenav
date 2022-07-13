@@ -2,7 +2,13 @@ import { Field, InputType } from "@nestjs/graphql";
 import MassStatus from "../mass-status.enum";
 
 @InputType()
-export default class AddWormholeInput {
+export class AddWormholeInput {
+  @Field((type) => [WormholeInput])
+  wormholes: WormholeInput[];
+}
+
+@InputType()
+export class WormholeInput {
   @Field()
   name: string;
 
