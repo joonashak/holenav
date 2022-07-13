@@ -3,6 +3,7 @@ import { ActiveFolder } from "../../auth/decorators/active-folder.decorator";
 import { RequireFolderRole } from "../../auth/decorators/role.decorator";
 import FolderRoles from "../../user/roles/folder-roles.enum";
 import { FolderDocument } from "../folder/folder.model";
+import { ConnectionTreeService } from "./connection-tree.service";
 import AddWormholeInput from "./dto/add-wormhole.dto";
 import { ConnectionTree } from "./dto/connection-tree.dto";
 import UpdateWormholeInput from "./dto/update-wormhole.dto";
@@ -11,7 +12,10 @@ import { WormholeService } from "./wormhole.service";
 
 @Resolver()
 export class WormholeResolver {
-  constructor(private whService: WormholeService) {}
+  constructor(
+    private whService: WormholeService,
+    private connectionTreeService: ConnectionTreeService,
+  ) {}
 
   @RequireFolderRole(FolderRoles.READ)
   @Query((returns) => ConnectionTree)
@@ -19,7 +23,7 @@ export class WormholeResolver {
     @Args("rootSystem") rootSystemName: string,
     @ActiveFolder() activeFolder: FolderDocument,
   ): Promise<ConnectionTree> {
-    return this.whService.getConnectionTree(rootSystemName, activeFolder);
+    return this.connectionTreeService.getConnectionTree(rootSystemName, activeFolder);
   }
 
   @RequireFolderRole(FolderRoles.READ)

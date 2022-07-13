@@ -5,6 +5,7 @@ import { WormholeService } from "./wormhole.service";
 import { WormholeResolver } from "./wormhole.resolver";
 import { FolderService } from "../folder/folder.service";
 import { FolderModule } from "../folder/folder.module";
+import { ConnectionTreeService } from "./connection-tree.service";
 
 @Module({
   imports: [
@@ -12,6 +13,6 @@ import { FolderModule } from "../folder/folder.module";
     FolderModule,
   ],
   exports: [MongooseModule],
-  providers: [WormholeService, WormholeResolver, FolderService],
+  providers: [WormholeService, WormholeResolver, FolderService, ConnectionTreeService],
 })
 export class WormholeModule {}
