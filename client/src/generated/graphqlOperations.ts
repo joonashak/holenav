@@ -31,14 +31,7 @@ export type AddSignatureInput = {
 };
 
 export type AddWormholeInput = {
-  destinationName?: InputMaybe<Scalars["String"]>;
-  eol: Scalars["Boolean"];
-  eveId: Scalars["String"];
-  massStatus: MassStatus;
-  name: Scalars["String"];
-  reverseType: Scalars["String"];
-  systemName: Scalars["String"];
-  type: Scalars["String"];
+  wormholes: Array<WormholeInput>;
 };
 
 export type AppData = {
@@ -110,8 +103,8 @@ export type Mutation = {
   __typename?: "Mutation";
   addFolderRole: SanitizedUser;
   addSavedMap: User;
-  addSignature: Signature;
-  addWormhole: Wormhole;
+  addSignatures: Array<Signature>;
+  addWormholes: Array<Wormhole>;
   changeActiveFolder: SanitizedUser;
   createFolder: Folder;
   deleteSavedMap: User;
@@ -136,11 +129,11 @@ export type MutationAddSavedMapArgs = {
   rootSystemName: Scalars["String"];
 };
 
-export type MutationAddSignatureArgs = {
+export type MutationAddSignaturesArgs = {
   input: AddSignatureInput;
 };
 
-export type MutationAddWormholeArgs = {
+export type MutationAddWormholesArgs = {
   input: AddWormholeInput;
 };
 
@@ -336,6 +329,17 @@ export type Wormhole = {
   type?: Maybe<Scalars["String"]>;
 };
 
+export type WormholeInput = {
+  destinationName?: InputMaybe<Scalars["String"]>;
+  eol: Scalars["Boolean"];
+  eveId: Scalars["String"];
+  massStatus: MassStatus;
+  name: Scalars["String"];
+  reverseType: Scalars["String"];
+  systemName: Scalars["String"];
+  type: Scalars["String"];
+};
+
 export type GetTokenMutationVariables = Exact<{
   state: Scalars["String"];
 }>;
@@ -458,13 +462,44 @@ export type AddSignatureMutationVariables = Exact<{
 
 export type AddSignatureMutation = {
   __typename?: "Mutation";
-  addSignature: {
+  addSignatures: Array<{
     __typename?: "Signature";
     id: string;
     name: string;
     type?: SigTypes | null;
     eveId: string;
-  };
+  }>;
+};
+
+export type WormholeFieldsFragment = {
+  __typename?: "Wormhole";
+  name?: string | null;
+  id: string;
+  eveId?: string | null;
+  type?: string | null;
+  eol: boolean;
+  massStatus: MassStatus;
+  destinationName?: string | null;
+  reverseType?: string | null;
+};
+
+export type AddWormholeMutationVariables = Exact<{
+  input: AddWormholeInput;
+}>;
+
+export type AddWormholeMutation = {
+  __typename?: "Mutation";
+  addWormholes: Array<{
+    __typename?: "Wormhole";
+    name?: string | null;
+    id: string;
+    eveId?: string | null;
+    type?: string | null;
+    eol: boolean;
+    massStatus: MassStatus;
+    destinationName?: string | null;
+    reverseType?: string | null;
+  }>;
 };
 
 export type UserDataQueryVariables = Exact<{ [key: string]: never }>;
@@ -510,6 +545,29 @@ export const SignatureFieldsFragmentDoc = {
     },
   ],
 } as unknown as DocumentNode<SignatureFieldsFragment, unknown>;
+export const WormholeFieldsFragmentDoc = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "FragmentDefinition",
+      name: { kind: "Name", value: "WormholeFields" },
+      typeCondition: { kind: "NamedType", name: { kind: "Name", value: "Wormhole" } },
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          { kind: "Field", name: { kind: "Name", value: "name" } },
+          { kind: "Field", name: { kind: "Name", value: "id" } },
+          { kind: "Field", name: { kind: "Name", value: "eveId" } },
+          { kind: "Field", name: { kind: "Name", value: "type" } },
+          { kind: "Field", name: { kind: "Name", value: "eol" } },
+          { kind: "Field", name: { kind: "Name", value: "massStatus" } },
+          { kind: "Field", name: { kind: "Name", value: "destinationName" } },
+          { kind: "Field", name: { kind: "Name", value: "reverseType" } },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<WormholeFieldsFragment, unknown>;
 export const GetTokenDocument = {
   kind: "Document",
   definitions: [
@@ -975,7 +1033,7 @@ export const AddSignatureDocument = {
         selections: [
           {
             kind: "Field",
-            name: { kind: "Name", value: "addSignature" },
+            name: { kind: "Name", value: "addSignatures" },
             arguments: [
               {
                 kind: "Argument",
@@ -996,6 +1054,49 @@ export const AddSignatureDocument = {
     ...SignatureFieldsFragmentDoc.definitions,
   ],
 } as unknown as DocumentNode<AddSignatureMutation, AddSignatureMutationVariables>;
+export const AddWormholeDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "AddWormhole" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "input" } },
+          type: {
+            kind: "NonNullType",
+            type: { kind: "NamedType", name: { kind: "Name", value: "AddWormholeInput" } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "addWormholes" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "input" },
+                value: { kind: "Variable", name: { kind: "Name", value: "input" } },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "FragmentSpread", name: { kind: "Name", value: "WormholeFields" } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    ...WormholeFieldsFragmentDoc.definitions,
+  ],
+} as unknown as DocumentNode<AddWormholeMutation, AddWormholeMutationVariables>;
 export const UserDataDocument = {
   kind: "Document",
   definitions: [

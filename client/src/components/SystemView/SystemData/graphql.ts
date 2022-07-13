@@ -36,15 +36,6 @@ export const DELETE_SIGNATURE = gql`
   }
 `;
 
-export const ADD_WORMHOLE = gql`
-  ${WORMHOLE_FIELDS}
-  mutation AddWormhole($input: AddWormholeInput!) {
-    addWormhole(input: $input) {
-      ...WormholeFields
-    }
-  }
-`;
-
 export const EDIT_WORMHOLE = gql`
   ${WORMHOLE_FIELDS}
   mutation UpdateWormhole($input: UpdateWormholeInput!) {

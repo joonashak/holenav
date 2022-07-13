@@ -36,8 +36,8 @@ export class WormholeResolver {
   }
 
   @RequireFolderRole(FolderRoles.WRITE)
-  @Mutation((returns) => Wormhole)
-  async addWormhole(
+  @Mutation((returns) => [Wormhole])
+  async addWormholes(
     @Args("input") input: AddWormholeInput,
     @ActiveFolder() folder: FolderDocument,
   ): Promise<Wormhole[]> {

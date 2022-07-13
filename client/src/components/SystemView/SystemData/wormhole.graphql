@@ -1,0 +1,16 @@
+fragment WormholeFields on Wormhole {
+  name
+  id
+  eveId
+  type
+  eol
+  massStatus
+  destinationName
+  reverseType
+}
+
+mutation AddWormhole($input: AddWormholeInput!) {
+  addWormholes(input: $input) {
+    ...WormholeFields
+  }
+}

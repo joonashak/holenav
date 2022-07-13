@@ -6,7 +6,7 @@ fragment SignatureFields on Signature {
 }
 
 mutation AddSignature($input: AddSignatureInput!) {
-  addSignature(input: $input) {
+  addSignatures(input: $input) {
     ...SignatureFields
   }
 }

@@ -1,8 +1,8 @@
 import {
-  AddWormholeInput,
   MassStatus,
   Signature,
   Wormhole,
+  WormholeInput,
 } from "../../../../../generated/graphqlOperations";
 import { AddSignatureHookInput } from "../../../SystemData/useSystemData";
 import { PastedSig, SigPasteEvent } from "./sigPasteParser";
@@ -10,7 +10,7 @@ import { PastedSig, SigPasteEvent } from "./sigPasteParser";
 export type SigPasteBatch = {
   signatureAdd: AddSignatureHookInput[];
   signatureUpdate: Signature[];
-  wormholeAdd: AddWormholeInput[];
+  wormholeAdd: WormholeInput[];
 };
 
 const createSignatureAddReducer =
@@ -45,14 +45,14 @@ const createSignatureUpdateReducer =
 
 const createWormholeAddReducer =
   (wormholes: Wormhole[], systemName: string) =>
-  (addableWormholes: AddWormholeInput[], sig: PastedSig) => {
+  (addableWormholes: WormholeInput[], sig: PastedSig) => {
     const { eveId } = sig;
     const existingWh = wormholes.find((wh) => wh.eveId === eveId);
 
     // We are conservative when it comes to wormholes to not mess up the map; do nothing if EVE ID exists.
     if (!existingWh) {
       // FIXME: Nuke this mess.
-      const newWormhole: AddWormholeInput = {
+      const newWormhole: WormholeInput = {
         eveId,
         name: "",
         type: "",

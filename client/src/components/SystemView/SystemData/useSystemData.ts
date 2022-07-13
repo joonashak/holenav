@@ -5,11 +5,11 @@ import useAuthenticatedMutation from "../../../auth/useAuthenticatedMutation";
 import useLazyAuthenticatedQuery from "../../../auth/useLazyAuthenticatedQuery";
 import {
   AddSignatureDocument,
+  AddWormholeDocument,
   Signature,
   UpdateWormholeInput,
 } from "../../../generated/graphqlOperations";
 import {
-  ADD_WORMHOLE,
   DELETE_SIGNATURE,
   DELETE_WORMHOLE,
   EDIT_SIGNATURE,
@@ -31,7 +31,7 @@ export default () => {
 
   const [addSigMutation] = useAuthenticatedMutation(AddSignatureDocument, {
     onCompleted: (data) => {
-      state.signatures.set((sigs) => sigs.concat(data.addSignature));
+      state.signatures.set((sigs) => sigs.concat(data.addSignatures));
     },
   });
 
@@ -85,9 +85,9 @@ export default () => {
     await deleteSigMutation({ variables: { id } });
   };
 
-  const [addWhMutation] = useAuthenticatedMutation(ADD_WORMHOLE, {
+  const [addWhMutation] = useAuthenticatedMutation(AddWormholeDocument, {
     onCompleted: (data) => {
-      state.wormholes.set((whs) => whs.concat(data.addWormhole));
+      state.wormholes.set((whs) => whs.concat(data.addWormholes));
     },
   });
 
@@ -101,7 +101,7 @@ export default () => {
       await deleteSignature(existingSig.id);
     }
 
-    return addWhMutation({ variables: { input: newWormhole } });
+    return addWhMutation({ variables: { input: { wormholes: [newWormhole] } } });
   };
 
   const [updateWhMutation] = useAuthenticatedMutation(EDIT_WORMHOLE, {

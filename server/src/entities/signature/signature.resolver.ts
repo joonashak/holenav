@@ -13,7 +13,7 @@ export class SignatureResolver {
 
   @RequireFolderRole(FolderRoles.WRITE)
   @Mutation((returns) => [Signature])
-  async addSignature(@Args("input") input: AddSignatureInput): Promise<Signature[]> {
+  async addSignatures(@Args("input") input: AddSignatureInput): Promise<Signature[]> {
     const includesWormholes = input.signatures.find((sig) => sig.type === SigTypes.WORMHOLE);
     if (includesWormholes) {
       throw new Error("Use addWormhole mutation for wormhole signatures.");
@@ -21,7 +21,6 @@ export class SignatureResolver {
 
     const { systemId, signatures } = input;
     const newSig = await this.sigService.createSignatures(systemId, signatures);
-    console.log(newSig);
     return newSig;
   }
 
