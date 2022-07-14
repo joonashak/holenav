@@ -1,15 +1,19 @@
-import { Injectable } from "@nestjs/common";
+import { forwardRef, Inject, Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { ForbiddenError, UserInputError } from "apollo-server-express";
 import { Model } from "mongoose";
 import { Folder } from "../folder/folder.model";
+import { SignatureService } from "../signature/signature.service";
 import { WormholeInput } from "./dto/add-wormhole.dto";
 import UpdateWormholeInput from "./dto/update-wormhole.dto";
 import { Wormhole, WormholeDocument } from "./wormhole.model";
 
 @Injectable()
 export class WormholeService {
-  constructor(@InjectModel(Wormhole.name) private whModel: Model<Wormhole>) {}
+  constructor(
+    @InjectModel(Wormhole.name) private whModel: Model<Wormhole>,
+    @Inject(forwardRef(() => SignatureService)) private signatureService: SignatureService,
+  ) {}
 
   async getBySystem(systemName: string, folder: Folder): Promise<Wormhole[]> {
     return this.whModel.find({ systemName, folder }).populate("reverse");

@@ -1,7 +1,8 @@
-import { Injectable } from "@nestjs/common";
+import { forwardRef, Inject, Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { SystemService } from "../system/system.service";
+import { WormholeService } from "../wormhole/wormhole.service";
 import UpdateSignatureInput from "./dto/update-signature.dto";
 import { Signature, SignatureDocument } from "./signature.model";
 
@@ -10,6 +11,7 @@ export class SignatureService {
   constructor(
     @InjectModel(Signature.name) private sigModel: Model<SignatureDocument>,
     private systemService: SystemService,
+    @Inject(forwardRef(() => WormholeService)) private wormholeService: WormholeService,
   ) {}
 
   async createSignatures(systemId: string, signatures: Signature[]): Promise<Signature[]> {

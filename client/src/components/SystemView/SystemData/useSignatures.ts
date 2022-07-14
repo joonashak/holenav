@@ -15,9 +15,13 @@ const useSignatures = () => {
 
   /**
    * Get all signatures and wormholes in current system.
-   * @returns Sigs and wormholes casted to `Signature`.
+   *
+   * This method is provided for convenience. When working with Wormhole-specific properties,
+   * you should use `useWormholes` hook instead of casting some members of this method's
+   * return value.
+   * @returns Sigs and wormholes cast to `Signature`.
    */
-  const getAllSigs = () => {
+  const getAllSigs = (): Signature[] => {
     const signatures = state.signatures.attach(Downgraded).get();
     const wormholes = state.wormholes.attach(Downgraded).get();
     return signatures.concat(wormholes as Signature[]);

@@ -13,8 +13,7 @@ const defaultFolderName = "Default Folder";
 export class FolderService {
   constructor(
     @InjectModel(Folder.name) private folderModel: Model<FolderDocument>,
-    @Inject(forwardRef(() => UserService))
-    private userService: UserService,
+    @Inject(forwardRef(() => UserService)) private userService: UserService,
   ) {}
 
   async createFolder(folder: Partial<FolderDocument>): Promise<Folder> {
