@@ -1,11 +1,11 @@
 import { FieldValues } from "react-hook-form";
 import useNotification from "../../../../GlobalNotification/useNotification";
-import useSystemData from "../../../SystemData/useSystemData";
+import useSignatures from "../../../SystemData/useSignatures";
 import { SigFormProps } from "./SigForm";
 
 const useSigForm = (props: SigFormProps) => {
   const { type, eveId, existing, onClose } = props;
-  const { addSignature, updateSignature } = useSystemData();
+  const { addSignature, updateSignature } = useSignatures();
   const { showSuccessNotification } = useNotification();
 
   const submitNew = async (formData: FieldValues) => {

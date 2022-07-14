@@ -1,24 +1,22 @@
 import useNotification from "../../../../GlobalNotification/useNotification";
+import useSignatures from "../../../SystemData/useSignatures";
 import useSystemData from "../../../SystemData/useSystemData";
+import useWormholes from "../../../SystemData/useWormholes";
 import createSigPasteBatch, { SigPasteBatch } from "./sigPasteBatch";
 import parsePaste from "./sigPasteParser";
 
 const useSigPasteListener = () => {
   const { showWarningNotification } = useNotification();
-  const systemData = useSystemData();
-  const { addSignature, addWormhole, updateSignature, name: systemName } = systemData;
+  const { name: systemName } = useSystemData();
+  const { signatures, addSignature, updateSignature } = useSignatures();
+  const { wormholes, addWormhole } = useWormholes();
 
   const sigPasteListener = async (event: Event) => {
     let batch: SigPasteBatch;
 
     try {
       const pasteEvent = parsePaste(event as ClipboardEvent);
-      batch = createSigPasteBatch(
-        pasteEvent,
-        systemData.signatures,
-        systemData.wormholes,
-        systemName
-      );
+      batch = createSigPasteBatch(pasteEvent, signatures, wormholes, systemName);
     } catch (error: any) {
       showWarningNotification(error.message, { autoHide: true });
       return;

@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import { Wormhole } from "../../../../../generated/graphqlOperations";
 import TableRow from "../../../../common/TableRow";
-import useSystemData from "../../../SystemData/useSystemData";
+import useSignatures from "../../../SystemData/useSignatures";
 import DeleteSigButton from "./DeleteSigButton";
 import EditSigButton from "./EditSigButton";
 import SigContextMenu from "./SigContextMenu";
@@ -24,7 +24,7 @@ const TableCell = ({ children, sx }: TableCellProps) => (
 );
 
 export default () => {
-  const { allSigs } = useSystemData();
+  const { allSigs } = useSignatures();
 
   const isWormhole = (sig: Wormhole): boolean => Object.keys(sig).includes("eol");
 

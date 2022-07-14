@@ -4,7 +4,8 @@ import MenuItem from "@mui/material/MenuItem";
 import { MouseEvent, ReactNode, useState } from "react";
 import { Signature } from "../../../../../generated/graphqlOperations";
 import TableRow from "../../../../common/TableRow";
-import useSystemData from "../../../SystemData/useSystemData";
+import useSignatures from "../../../SystemData/useSignatures";
+import useWormholes from "../../../SystemData/useWormholes";
 
 type SigContextMenuProps = {
   children: ReactNode;
@@ -12,7 +13,8 @@ type SigContextMenuProps = {
 };
 
 const SigContextMenu = ({ children, signature }: SigContextMenuProps) => {
-  const { deleteSignature, wormholes, updateWormhole } = useSystemData();
+  const { deleteSignature } = useSignatures();
+  const { wormholes, updateWormhole } = useWormholes();
   const [contextMenu, setContextMenu] = useState<{
     mouseX: number;
     mouseY: number;

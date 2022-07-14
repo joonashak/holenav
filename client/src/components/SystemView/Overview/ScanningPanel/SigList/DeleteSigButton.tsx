@@ -1,9 +1,10 @@
 import { MouseEvent, useState } from "react";
 import { IconButton, Menu, MenuItem } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
-import useSystemData from "../../../SystemData/useSystemData";
 import useNotification from "../../../../GlobalNotification/useNotification";
 import { Signature, Wormhole } from "../../../../../generated/graphqlOperations";
+import useSignatures from "../../../SystemData/useSignatures";
+import useWormholes from "../../../SystemData/useWormholes";
 
 type DeleteSigButtonProps = {
   sig: Signature | Wormhole;
@@ -11,7 +12,8 @@ type DeleteSigButtonProps = {
 
 const DeleteSigButton = ({ sig }: DeleteSigButtonProps) => {
   const [anchor, setAnchor] = useState<Element | null>(null);
-  const { deleteSignature, deleteWormhole } = useSystemData();
+  const { deleteSignature } = useSignatures();
+  const { deleteWormhole } = useWormholes();
   const { showSuccessNotification } = useNotification();
   const isWormhole = Object.keys(sig).includes("eol");
 

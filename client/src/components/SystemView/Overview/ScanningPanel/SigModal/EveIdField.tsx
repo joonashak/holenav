@@ -1,6 +1,6 @@
 import { Button, FormHelperText, TextField } from "@mui/material";
 import { ChangeEventHandler } from "react";
-import useSystemData from "../../../SystemData/useSystemData";
+import useSignatures from "../../../SystemData/useSignatures";
 
 type EveIdFieldProps = {
   value: string;
@@ -9,7 +9,7 @@ type EveIdFieldProps = {
 };
 
 const EveIdField = ({ value, onChange, existingId }: EveIdFieldProps) => {
-  const { allSigs, deleteSignature } = useSystemData();
+  const { allSigs, deleteSignature } = useSignatures();
   const allSigsButExisting = allSigs.filter((sig) => sig.id !== existingId);
   const duplicate = allSigsButExisting.find((sig) => sig.eveId === value);
   // Don't count empty EVE ID's as duplicates:

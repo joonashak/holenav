@@ -2,7 +2,7 @@ import { createState } from "@hookstate/core";
 import { ReactElement, useEffect } from "react";
 import { devToolsEnabled, pollIntervalSec } from "../../../../config";
 import useLocalData from "../../../LocalData/useLocalData";
-import useSystemData from "../../SystemData/useSystemData";
+import useWormholes from "../../SystemData/useWormholes";
 import { MapState } from "./types";
 import useMapData from "./useMapData";
 
@@ -16,7 +16,7 @@ interface MapDataProviderProps {
 
 const MapData = ({ children }: MapDataProviderProps) => {
   const { fetchConnectionTree } = useMapData();
-  const { wormholes } = useSystemData();
+  const { wormholes } = useWormholes();
   const { pollSetting } = useLocalData();
 
   useEffect(() => {

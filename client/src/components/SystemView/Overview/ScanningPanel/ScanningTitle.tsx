@@ -1,8 +1,8 @@
 import { Box, Chip, Typography } from "@mui/material";
-import useSystemData from "../../SystemData/useSystemData";
+import useSignatures from "../../SystemData/useSignatures";
 
 export default () => {
-  const { allSigs } = useSystemData();
+  const { allSigs } = useSignatures();
 
   return (
     <Box
