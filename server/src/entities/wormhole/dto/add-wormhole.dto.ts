@@ -1,5 +1,7 @@
-import { Field, InputType } from "@nestjs/graphql";
+import { Field, InputType, ObjectType } from "@nestjs/graphql";
+import { Signature } from "../../signature/signature.model";
 import MassStatus from "../mass-status.enum";
+import { Wormhole } from "../wormhole.model";
 
 @InputType()
 export class AddWormholeInput {
@@ -32,4 +34,13 @@ export class WormholeInput {
 
   @Field((type) => MassStatus)
   massStatus: MassStatus;
+}
+
+@ObjectType()
+export class AddWormholeResult {
+  @Field((type) => [Wormhole])
+  addedWormholes: Wormhole[];
+
+  @Field((type) => [Signature])
+  removedSignatures: Signature[];
 }
