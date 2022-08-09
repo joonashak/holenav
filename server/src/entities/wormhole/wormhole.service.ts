@@ -3,7 +3,6 @@ import { InjectModel } from "@nestjs/mongoose";
 import { ForbiddenError, UserInputError } from "apollo-server-express";
 import { Model } from "mongoose";
 import { Folder } from "../folder/folder.model";
-import { Signature } from "../signature/signature.model";
 import { SignatureService } from "../signature/signature.service";
 import { WormholeInput } from "./dto/add-wormhole.dto";
 import UpdateWormholeInput from "./dto/update-wormhole.dto";
@@ -20,13 +19,20 @@ export class WormholeService {
     return this.whModel.find({ systemName, folder }).populate("reverse");
   }
 
+  /**
+   * Create new wormholes.
+   *
+   * If sigs with duplicate IDs are found in the same system and folder, they are removed and
+   * replaced with the given wormholes.
+   * @returns Created wormholes.
+   */
   async createWormholes(wormholes: WormholeInput[], folder: Folder): Promise<Wormhole[]> {
     const wormholesWithTypes = this.addTypesToWormholes(wormholes);
     const wormholesToCreate = wormholesWithTypes.map((wh) => ({ ...wh, folder }));
     const newWormholes = await this.whModel.create(wormholesToCreate);
     const wormholesWithReverses = await this.addReverseWormholes(newWormholes);
 
-    await this.removeDuplicateSignatures(wormholesWithReverses);
+    await this.signatureService.removeDuplicateSignatures(wormholesWithReverses);
 
     return wormholesWithReverses;
   }
@@ -162,17 +168,5 @@ export class WormholeService {
     });
 
     return wormholesWithTypes;
-  }
-
-  /**
-   * Remove signatures that have a duplicate ID with any wormhole passed in args.
-   */
-  private async removeDuplicateSignatures(wormholes: Wormhole[]): Promise<Signature[]> {
-    const whEveIds = wormholes.map((wh) => wh.eveId).filter((id) => !!id);
-    return this.signatureService.deleteManySignaturesByEveId(
-      whEveIds,
-      wormholes[0].systemName,
-      wormholes[0].folder,
-    );
   }
 }

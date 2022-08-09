@@ -3,6 +3,7 @@ import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { Folder } from "../folder/folder.model";
 import { SystemService } from "../system/system.service";
+import { Wormhole } from "../wormhole/wormhole.model";
 import { WormholeService } from "../wormhole/wormhole.service";
 import UpdateSignatureInput from "./dto/update-signature.dto";
 import { Signature, SignatureDocument } from "./signature.model";
@@ -47,5 +48,14 @@ export class SignatureService {
     const deleted = await this.sigModel.find(filter);
     await this.sigModel.deleteMany(filter);
     return deleted;
+  }
+
+  /**
+   * Remove signatures that have a duplicate ID with any given wormhole. Only affects sigs in
+   * the current system and folder.
+   */
+  async removeDuplicateSignatures(wormholes: Wormhole[]): Promise<Signature[]> {
+    const whEveIds = wormholes.map((wh) => wh.eveId).filter((id) => !!id);
+    return this.deleteManySignaturesByEveId(whEveIds, wormholes[0].systemName, wormholes[0].folder);
   }
 }
