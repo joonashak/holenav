@@ -2,86 +2,114 @@ Project holenav_server {
   database_type: "MongoDB"
 }
 
-Table users {
+Table User {
+  _id number
   id uuid
-  main characters [ref: - characters._id]
-  alts characters[] [ref: < characters._id]
-  tokens string[]
-  folderRoles folderRoles[] [ref: < folderRoles._id]
-  activeFolder folders [ref: - folders._id]
-  settings userSettings
-  systemRole SystemRoles
+  main Character [ref: - Character._id]
+  alts Character[] [ref: < Character._id]
+  FolderRole FolderRole[] [ref: < FolderRole._id]
+  settings UserSettings [ref: - UserSettings._id]
+  systemRole SystemRole
+  credentials Credentials [ref: - Credentials._id]
 }
 
-Table characters {
+Table Credentials {
+  _id number
+  username string
+  passwordHash string
+}
+
+Table Character {
   _id number
   name string
   esiId string
   accessToken string
   refreshToken string
+  isMain boolean
 }
 
-Table folderRoles {
+Table FolderRole {
   _id number
-  role FolderRoles
-  folder folders [ref: - folders._id]
+  role FolderRole
+  folder Folder [ref: - Folder._id]
 }
 
-Table ssoSessions {
+Table SsoSession {
   key string
-  type SsoSessionTypes
+  type SsoSessionType
   expiry Date
   ssoLoginSuccess boolean
-  character characters [ref: - characters._id]
+  character Character [ref: - Character._id]
+  user User [ref: < User._id]
 }
 
-Table folders {
+Table Folder {
   _id number
   id uuid
   name string
+  personal boolean
 }
 
-Table systems {
+Table System {
   _id number
   id uuid
   name string
-  folder folders [ref: > folders._id]
-  signatures signatures[] [ref: < signatures._id]
+  folder Folder [ref: > Folder._id]
 }
 
-Table signatures {
-  _id number
-  id uuid
-  eveId string
-  type SigTypes
-  name string
-}
-
-Table wormholes {
+Table Signature {
   _id number
   id uuid
   eveId string
   name string
-  type string
+  type SigType
+  wormholeType string
   eol boolean
   massStatus WhMass
-  folder folders [ref: > folders._id]
+  folder Folder [ref: > Folder._id]
   systemName string
   destinationName string
-  reverse wormholes [ref: - wormholes._id]
+  reverse Signature [ref: - Signature._id]
   reverseType string
 }
 
-enum FolderRoles {
+Table Session {
+  id uuid
+  expiresAt Date
+  user User [ref: > User._id]
+}
+
+Table UserSettings {
+  _id number
+  maps SavedMap [ref: < SavedMap._id]
+  selectedMap SavedMap [ref: - SavedMap._id]
+  activeFolder Folder
+}
+
+Table SavedMap {
+  _id number
+  id uuid
+  name string
+  rootSystemName string
+}
+
+Table AppData {
+  appVersion string
+  motd string
+}
+
+enum FolderRole {
   READ
   WRITE
   MANAGE
   ADMIN
 }
 
-enum SigTypes {
+enum SigType {
   DATA
   RELIC
+  GAS
+  WORMHOLE
 }
 
 enum WhMass {
@@ -90,12 +118,12 @@ enum WhMass {
   CRIT
 }
 
-enum SsoSessionTypes {
+enum SsoSessionType {
   LOGIN
   ADD_CHARACTER
 }
 
-enum SystemRoles {
+enum SystemRole {
   SOLDIER
   CAPTAIN
   DIRECTOR
