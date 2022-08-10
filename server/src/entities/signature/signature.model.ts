@@ -2,11 +2,11 @@ import { Field, ObjectType, registerEnumType } from "@nestjs/graphql";
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import mongoose from "mongoose";
 import { v4 as uuid } from "uuid";
-import SigTypes from "./sig-types.enum";
+import SigType from "./sig-type.enum";
 
 export type SignatureDocument = Signature & mongoose.Document;
 
-registerEnumType(SigTypes, { name: "SigTypes" });
+registerEnumType(SigType, { name: "SigTypes" });
 
 @ObjectType()
 @Schema()
@@ -19,9 +19,9 @@ export class Signature {
   @Prop({ nullable: true })
   eveId?: string;
 
-  @Field((type) => SigTypes, { nullable: true })
+  @Field((type) => SigType, { nullable: true })
   @Prop()
-  type: SigTypes | null;
+  type: SigType | null;
 
   @Field()
   @Prop()

@@ -1,7 +1,7 @@
 import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
 import { ActiveFolder } from "../../auth/decorators/active-folder.decorator";
 import { RequireFolderRole } from "../../auth/decorators/role.decorator";
-import FolderRoles from "../../user/roles/folder-roles.enum";
+import FolderRole from "../../user/roles/folder-role.enum";
 import { FolderDocument } from "../folder/folder.model";
 import { ConnectionTreeService } from "./connection-tree.service";
 import { AddWormholeInput } from "./dto/add-wormhole.dto";
@@ -17,7 +17,7 @@ export class WormholeResolver {
     private connectionTreeService: ConnectionTreeService,
   ) {}
 
-  @RequireFolderRole(FolderRoles.READ)
+  @RequireFolderRole(FolderRole.READ)
   @Query((returns) => ConnectionTree)
   async getConnectionTree(
     @Args("rootSystem") rootSystemName: string,
@@ -26,7 +26,7 @@ export class WormholeResolver {
     return this.connectionTreeService.getConnectionTree(rootSystemName, activeFolder);
   }
 
-  @RequireFolderRole(FolderRoles.READ)
+  @RequireFolderRole(FolderRole.READ)
   @Query((returns) => [Wormhole])
   async getWormholesBySystem(
     @Args("name") systemName: string,
@@ -35,7 +35,7 @@ export class WormholeResolver {
     return this.whService.getBySystem(systemName, activeFolder);
   }
 
-  @RequireFolderRole(FolderRoles.WRITE)
+  @RequireFolderRole(FolderRole.WRITE)
   @Mutation((returns) => [Wormhole])
   async addWormholes(
     @Args("input") input: AddWormholeInput,
@@ -45,7 +45,7 @@ export class WormholeResolver {
     return res;
   }
 
-  @RequireFolderRole(FolderRoles.WRITE)
+  @RequireFolderRole(FolderRole.WRITE)
   @Mutation((returns) => Wormhole)
   async updateWormhole(
     @Args("input") input: UpdateWormholeInput,
@@ -56,7 +56,7 @@ export class WormholeResolver {
     return res;
   }
 
-  @RequireFolderRole(FolderRoles.WRITE)
+  @RequireFolderRole(FolderRole.WRITE)
   @Mutation((returns) => Wormhole)
   async deleteWormhole(@Args("id") id: string): Promise<Wormhole> {
     return this.whService.deleteWormhole(id);

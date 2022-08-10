@@ -7,9 +7,9 @@ import { FolderService } from "../entities/folder/folder.service";
 import { Credentials, CredentialsDocument } from "./credentials/credentials.model";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { SanitizedUser } from "./dto/sanitized-user.dto";
-import { FolderRole } from "./roles/folder-role.model";
-import FolderRoles from "./roles/folder-roles.enum";
-import SystemRoles from "./roles/system-roles.enum";
+import { FolderRole as FolderRoleModel } from "./roles/folder-role.model";
+import FolderRole from "./roles/folder-role.enum";
+import SystemRole from "./roles/system-role.enum";
 import { User, UserDocument } from "./user.model";
 
 @Injectable()
@@ -34,7 +34,7 @@ export class UserService {
     const systemRole = await this.getNewUserSystemRole();
     const newUser = await this.userModel.create({
       ...user,
-      folderRoles: [{ role: FolderRoles.ADMIN, folder }],
+      folderRoles: [{ role: FolderRole.ADMIN, folder }],
       systemRole,
     });
 
@@ -135,23 +135,19 @@ export class UserService {
     }
   }
 
-  private async getNewUserSystemRole(): Promise<SystemRoles> {
+  private async getNewUserSystemRole(): Promise<SystemRole> {
     const users = await this.userModel.find();
-    return users.length === 0 ? SystemRoles.ADMINISTRATOR : SystemRoles.USER;
+    return users.length === 0 ? SystemRole.ADMINISTRATOR : SystemRole.USER;
   }
 
-  async addFolderRole(user: User, folderRole: FolderRole): Promise<User> {
+  async addFolderRole(user: User, folderRole: FolderRoleModel): Promise<User> {
     // FIXME: Check for user's rights to manage the target folder.
     // FIXME: Account for existing roles.
     const { id } = user;
     return await this.userModel.findOneAndUpdate({ id }, { $push: { folderRoles: folderRole } });
   }
 
-  async addFolderRoleByEsiId(
-    userEsiId: string,
-    folderId: string,
-    role: FolderRoles,
-  ): Promise<User> {
+  async addFolderRoleByEsiId(userEsiId: string, folderId: string, role: FolderRole): Promise<User> {
     const user = await this.findByEsiId(userEsiId);
     const folder = await this.folderService.getFolderById(folderId);
     return await this.addFolderRole(user, { folder, role });

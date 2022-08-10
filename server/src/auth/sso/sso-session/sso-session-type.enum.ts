@@ -1,6 +1,6 @@
-enum SsoSessionTypes {
+enum SsoSessionType {
   LOGIN = "LOGIN",
   ADD_CHARACTER = "ADD_CHARACTER",
 }
 
-export default SsoSessionTypes;
+export default SsoSessionType;

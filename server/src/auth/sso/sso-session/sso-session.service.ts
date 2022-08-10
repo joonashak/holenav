@@ -5,7 +5,7 @@ import { Model } from "mongoose";
 import { Character } from "../../../entities/character/character.model";
 import { v4 as uuid } from "uuid";
 import { SsoSession, SsoSessionDocument } from "./sso-session.model";
-import SsoSessionTypes from "./sso-session-types.enum";
+import SsoSessionType from "./sso-session-type.enum";
 import { User } from "../../../user/user.model";
 import { AuthenticationError } from "apollo-server-express";
 import { Cron } from "@nestjs/schedule";
@@ -20,7 +20,7 @@ export class SsoSessionService {
   async createSsoSession(user: User): Promise<SsoSession> {
     return this.ssoSessionModel.create({
       key: uuid(),
-      type: user ? SsoSessionTypes.ADD_CHARACTER : SsoSessionTypes.LOGIN,
+      type: user ? SsoSessionType.ADD_CHARACTER : SsoSessionType.LOGIN,
       user,
       expiry: dayjs().add(5, "minute"),
     });
@@ -67,7 +67,7 @@ export class SsoSessionService {
   async verifySsoLoginSuccess(key: string): Promise<SsoSession> {
     const ssoSession = await this.verifySsoSession(key);
 
-    if (ssoSession.type !== SsoSessionTypes.LOGIN) {
+    if (ssoSession.type !== SsoSessionType.LOGIN) {
       throw new AuthenticationError("Invalid SSO login type.");
     }
 

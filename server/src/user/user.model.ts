@@ -6,12 +6,12 @@ import { Character } from "../entities/character/character.model";
 import { FolderRole, FolderRoleSchema } from "./roles/folder-role.model";
 import defaultUserSettings from "./settings/default-user-settings";
 import { UserSettings, UserSettingsSchema } from "./settings/user-settings.model";
-import SystemRoles from "./roles/system-roles.enum";
+import SystemRole from "./roles/system-role.enum";
 import { Credentials } from "./credentials/credentials.model";
 
 export type UserDocument = User & mongoose.Document;
 
-registerEnumType(SystemRoles, { name: "SystemRoles" });
+registerEnumType(SystemRole, { name: "SystemRoles" });
 
 @ObjectType()
 @Schema()
@@ -36,9 +36,9 @@ export class User {
   @Prop({ type: UserSettingsSchema, default: defaultUserSettings })
   settings: UserSettings;
 
-  @Field((type) => SystemRoles)
-  @Prop({ default: SystemRoles.USER })
-  systemRole: SystemRoles;
+  @Field((type) => SystemRole)
+  @Prop({ default: SystemRole.USER })
+  systemRole: SystemRole;
 
   @Field((type) => Credentials)
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: "Credentials", unique: true })

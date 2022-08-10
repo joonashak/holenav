@@ -1,12 +1,12 @@
 import { hashSync } from "bcrypt";
-import FolderRoles from "../../user/roles/folder-roles.enum";
-import SystemRoles from "../../user/roles/system-roles.enum";
+import FolderRole from "../../user/roles/folder-role.enum";
+import SystemRole from "../../user/roles/system-role.enum";
 
 export default [
   {
     id: "mock-1",
-    defaultFolderRole: FolderRoles.READ,
-    systemRole: SystemRoles.USER,
+    defaultFolderRole: FolderRole.READ,
+    systemRole: SystemRole.USER,
     main: {
       name: "Char 1 (read)",
       esiId: "123",
@@ -20,8 +20,8 @@ export default [
   },
   {
     id: "mock-2",
-    defaultFolderRole: FolderRoles.WRITE,
-    systemRole: SystemRoles.USER,
+    defaultFolderRole: FolderRole.WRITE,
+    systemRole: SystemRole.USER,
     main: {
       name: "Char 2 (write)",
       esiId: "234",
@@ -35,8 +35,8 @@ export default [
   },
   {
     id: "mock-3",
-    defaultFolderRole: FolderRoles.MANAGE,
-    systemRole: SystemRoles.MANAGER,
+    defaultFolderRole: FolderRole.MANAGE,
+    systemRole: SystemRole.MANAGER,
     main: {
       name: "Char 3 (manage)",
       esiId: "345",
@@ -50,8 +50,8 @@ export default [
   },
   {
     id: "mock-4",
-    defaultFolderRole: FolderRoles.ADMIN,
-    systemRole: SystemRoles.ADMINISTRATOR,
+    defaultFolderRole: FolderRole.ADMIN,
+    systemRole: SystemRole.ADMINISTRATOR,
     main: {
       name: "Char 4 (admin)",
       esiId: "456",

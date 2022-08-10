@@ -1,8 +1,8 @@
-enum SigTypes {
+enum SigType {
   DATA = "DATA",
   RELIC = "RELIC",
   GAS = "GAS",
   WORMHOLE = "WH",
 }
 
-export default SigTypes;
+export default SigType;

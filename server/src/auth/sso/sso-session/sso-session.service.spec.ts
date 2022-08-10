@@ -6,7 +6,7 @@ import { Model } from "mongoose";
 import { testSsoSession, testUser } from "../../../test-utils/test-data";
 import { SsoSession } from "./sso-session.model";
 import { SsoSessionService } from "./sso-session.service";
-import SsoSessionTypes from "./sso-session-types.enum";
+import SsoSessionType from "./sso-session-type.enum";
 
 describe("SsoSessionService", () => {
   let ssoSessionService: SsoSessionService;
@@ -44,7 +44,7 @@ describe("SsoSessionService", () => {
 
       const call: any = jest.spyOn(ssoSessionModel, "create").mock.calls[0][0];
       expect(Object.keys(call)).toEqual(["key", "type", "user", "expiry"]);
-      expect(call.type).toEqual(SsoSessionTypes.LOGIN);
+      expect(call.type).toEqual(SsoSessionType.LOGIN);
       expect(call.user).toBeNull();
       expect(new Date(call.expiry) > new Date()).toBeTruthy();
       expect(new Date(call.expiry) <= dayjs().add(5, "minute").toDate()).toBeTruthy();
@@ -56,7 +56,7 @@ describe("SsoSessionService", () => {
 
       const call: any = jest.spyOn(ssoSessionModel, "create").mock.calls[0][0];
       expect(Object.keys(call)).toEqual(["key", "type", "user", "expiry"]);
-      expect(call.type).toEqual(SsoSessionTypes.ADD_CHARACTER);
+      expect(call.type).toEqual(SsoSessionType.ADD_CHARACTER);
       expect(call.user).toEqual(testUser);
       expect(new Date(call.expiry) > new Date()).toBeTruthy();
       expect(new Date(call.expiry) <= dayjs().add(5, "minute").toDate()).toBeTruthy();
@@ -156,7 +156,7 @@ describe("SsoSessionService", () => {
       const addCharacterSsoSession = {
         ...testSsoSession,
         ssoLoginSuccess: true,
-        type: SsoSessionTypes.ADD_CHARACTER,
+        type: SsoSessionType.ADD_CHARACTER,
       };
       jest
         .spyOn(ssoSessionService, "verifySsoSession")

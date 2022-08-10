@@ -1,5 +1,5 @@
 import { Field, InputType } from "@nestjs/graphql";
-import SigTypes from "../sig-types.enum";
+import SigType from "../sig-type.enum";
 
 @InputType()
 export default class AddSignatureInput {
@@ -15,8 +15,8 @@ class SignatureInput {
   @Field()
   eveId: string;
 
-  @Field((type) => SigTypes, { nullable: true })
-  type: SigTypes | null;
+  @Field((type) => SigType, { nullable: true })
+  type: SigType | null;
 
   @Field()
   name: string;

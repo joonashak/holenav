@@ -1,6 +1,6 @@
 import { createMock } from "@golevelup/ts-jest";
 import { ExecutionContext } from "@nestjs/common";
-import FolderRoles from "../user/roles/folder-roles.enum";
+import FolderRole from "../user/roles/folder-role.enum";
 import { User } from "../user/user.model";
 import { testFolder, testUser } from "./test-data";
 
@@ -20,7 +20,7 @@ export const mockContextWithHeaders = (headers: any): ExecutionContext =>
   mockContextWithRequest({ headers });
 
 export const mockContextWithTestFolderRole = (
-  role: FolderRoles,
+  role: FolderRole,
   headers: any = { activefolder: testFolder.id },
 ): ExecutionContext =>
   mockContextWithRequest({

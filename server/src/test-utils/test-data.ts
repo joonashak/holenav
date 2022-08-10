@@ -2,10 +2,10 @@ import { hashSync } from "bcrypt";
 import dayjs from "dayjs";
 import { Session } from "../auth/session/session.model";
 import { SsoSession } from "../auth/sso/sso-session/sso-session.model";
-import SsoSessionTypes from "../auth/sso/sso-session/sso-session-types.enum";
+import SsoSessionType from "../auth/sso/sso-session/sso-session-type.enum";
 import { Folder } from "../entities/folder/folder.model";
-import FolderRoles from "../user/roles/folder-roles.enum";
-import SystemRoles from "../user/roles/system-roles.enum";
+import FolderRole from "../user/roles/folder-role.enum";
+import SystemRole from "../user/roles/system-role.enum";
 import { User } from "../user/user.model";
 
 export const testFolder: Folder = {
@@ -22,7 +22,7 @@ export const testUserCredentials = {
 export const testUser: User = {
   id: "asd",
   alts: [],
-  folderRoles: [{ folder: testFolder.id as any, role: FolderRoles.READ }],
+  folderRoles: [{ folder: testFolder.id as any, role: FolderRole.READ }],
   main: {
     name: "test character",
     esiId: "uske67ent",
@@ -31,13 +31,13 @@ export const testUser: User = {
     isMain: true,
   },
   settings: null,
-  systemRole: SystemRoles.USER,
+  systemRole: SystemRole.USER,
 };
 
 export const testSsoSession: SsoSession = {
   ssoLoginSuccess: false,
   key: "joas8",
-  type: SsoSessionTypes.LOGIN,
+  type: SsoSessionType.LOGIN,
   character: testUser.main,
   user: testUser,
   expiry: dayjs().add(5, "minute").toDate(),

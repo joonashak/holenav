@@ -5,7 +5,7 @@ import { UserService } from "./user.service";
 import RequireAuth from "../auth/decorators/auth.decorator";
 import { UserSettingsService } from "./settings/user-settings.service";
 import { RequireSystemRole } from "../auth/decorators/role.decorator";
-import SystemRoles from "./roles/system-roles.enum";
+import SystemRole from "./roles/system-role.enum";
 import { SanitizedUser } from "./dto/sanitized-user.dto";
 import AddFolderRoleInput from "./dto/add-folder-role.dto";
 
@@ -54,13 +54,13 @@ export class UserResolver {
     return this.whoami(user);
   }
 
-  @RequireSystemRole(SystemRoles.MANAGER)
+  @RequireSystemRole(SystemRole.MANAGER)
   @Query((returns) => [SanitizedUser])
   async getAllUsers(): Promise<SanitizedUser[]> {
     return this.userService.findAllUsersSanitized();
   }
 
-  @RequireSystemRole(SystemRoles.MANAGER)
+  @RequireSystemRole(SystemRole.MANAGER)
   @Mutation((returns) => SanitizedUser)
   async addFolderRole(@Args("input") input: AddFolderRoleInput): Promise<User> {
     const { userEsiId, folderId, role } = input;

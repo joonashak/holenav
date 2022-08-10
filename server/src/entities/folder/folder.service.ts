@@ -4,8 +4,8 @@ import mongoose, { Model } from "mongoose";
 import { Folder, FolderDocument } from "./folder.model";
 import { UserDocument } from "../../user/user.model";
 import { UserService } from "../../user/user.service";
-import FolderRoles from "../../user/roles/folder-roles.enum";
-import SystemRoles from "../../user/roles/system-roles.enum";
+import FolderRole from "../../user/roles/folder-role.enum";
+import SystemRole from "../../user/roles/system-role.enum";
 
 const defaultFolderName = "Default Folder";
 
@@ -28,7 +28,7 @@ export class FolderService {
    */
   async createFolderAndPermissions(name: string, user: UserDocument): Promise<Folder> {
     const folder = await this.createFolder({ name });
-    await this.userService.addFolderRole(user, { folder, role: FolderRoles.ADMIN });
+    await this.userService.addFolderRole(user, { folder, role: FolderRole.ADMIN });
     return folder;
   }
 
@@ -40,8 +40,8 @@ export class FolderService {
     return this.folderModel.findOne({ id });
   }
 
-  private async getFolderByRole(user: UserDocument, minRole: FolderRoles): Promise<Folder[]> {
-    if (user.systemRole === SystemRoles.ADMINISTRATOR) {
+  private async getFolderByRole(user: UserDocument, minRole: FolderRole): Promise<Folder[]> {
+    if (user.systemRole === SystemRole.ADMINISTRATOR) {
       return this.folderModel.find({});
     }
 
@@ -59,7 +59,7 @@ export class FolderService {
    * @returns List of `Folder`s.
    */
   async getAccessibleFolders(user: UserDocument): Promise<Folder[]> {
-    return this.getFolderByRole(user, FolderRoles.READ);
+    return this.getFolderByRole(user, FolderRole.READ);
   }
 
   /**
@@ -70,6 +70,6 @@ export class FolderService {
    * @returns List of `Folder`s.
    */
   async getManageableFolders(user: UserDocument): Promise<Folder[]> {
-    return this.getFolderByRole(user, FolderRoles.MANAGE);
+    return this.getFolderByRole(user, FolderRole.MANAGE);
   }
 }

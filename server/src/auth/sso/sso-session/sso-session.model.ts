@@ -3,11 +3,11 @@ import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import * as mongoose from "mongoose";
 import { Character } from "../../../entities/character/character.model";
 import { User } from "../../../user/user.model";
-import SsoSessionTypes from "./sso-session-types.enum";
+import SsoSessionType from "./sso-session-type.enum";
 
 export type SsoSessionDocument = SsoSession & mongoose.Document;
 
-registerEnumType(SsoSessionTypes, { name: "SsoSessionTypes" });
+registerEnumType(SsoSessionType, { name: "SsoSessionTypes" });
 
 /**
  * SSO Session implements a verifiable state between the client and server
@@ -21,9 +21,9 @@ export class SsoSession {
   @Prop({ unique: true })
   key: string;
 
-  @Field((type) => SsoSessionTypes)
+  @Field((type) => SsoSessionType)
   @Prop()
-  type: SsoSessionTypes;
+  type: SsoSessionType;
 
   @Field()
   @Prop()

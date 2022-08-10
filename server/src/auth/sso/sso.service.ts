@@ -10,7 +10,7 @@ import { User } from "../../user/user.model";
 import { UserService } from "../../user/user.service";
 import { SsoApiService } from "./sso-api.service";
 import { SsoSessionService } from "./sso-session/sso-session.service";
-import SsoSessionTypes from "./sso-session/sso-session-types.enum";
+import SsoSessionType from "./sso-session/sso-session-type.enum";
 import { SsoUrl } from "./sso-url.enum";
 
 @Injectable()
@@ -53,13 +53,13 @@ export class SsoService {
 
     await this.ssoSessionService.setSsoLoginSuccess(state, character);
 
-    if (ssoSession.type === SsoSessionTypes.ADD_CHARACTER) {
+    if (ssoSession.type === SsoSessionType.ADD_CHARACTER) {
       await this.userService.addAlt(character, ssoSession.user.id);
       await this.ssoSessionService.removeSsoSession(ssoSession.key);
     }
 
     const clientCallbackUrl =
-      ssoSession.type === SsoSessionTypes.LOGIN ? getClientLoginCallbackUrl(state) : CLIENT_URL;
+      ssoSession.type === SsoSessionType.LOGIN ? getClientLoginCallbackUrl(state) : CLIENT_URL;
 
     return clientCallbackUrl;
   }

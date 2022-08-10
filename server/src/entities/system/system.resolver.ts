@@ -1,7 +1,7 @@
 import { Args, Query, Resolver } from "@nestjs/graphql";
 import { ActiveFolder } from "../../auth/decorators/active-folder.decorator";
 import { RequireFolderRole } from "../../auth/decorators/role.decorator";
-import FolderRoles from "../../user/roles/folder-roles.enum";
+import FolderRole from "../../user/roles/folder-role.enum";
 import { FolderDocument } from "../folder/folder.model";
 import { System } from "./system.model";
 import { SystemService } from "./system.service";
@@ -10,7 +10,7 @@ import { SystemService } from "./system.service";
 export class SystemResolver {
   constructor(private systemService: SystemService) {}
 
-  @RequireFolderRole(FolderRoles.READ)
+  @RequireFolderRole(FolderRole.READ)
   @Query((returns) => System)
   async getSystemByName(@Args("name") name: string, @ActiveFolder() activeFolder: FolderDocument) {
     const res = await this.systemService.getByName(name, activeFolder);

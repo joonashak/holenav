@@ -1,6 +1,6 @@
 import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
 import { RequireSystemRole } from "../auth/decorators/role.decorator";
-import SystemRoles from "../user/roles/system-roles.enum";
+import SystemRole from "../user/roles/system-role.enum";
 import { AppData } from "./app-data.model";
 import { AppDataService } from "./app-data.service";
 import { PublicAppData } from "./dto/public-app-data.dto";
@@ -14,7 +14,7 @@ export class AppDataResolver {
     return this.appDataService.getAppData();
   }
 
-  @RequireSystemRole(SystemRoles.ADMINISTRATOR)
+  @RequireSystemRole(SystemRole.ADMINISTRATOR)
   @Mutation((returns) => AppData)
   async updateMotd(@Args("motd") motd: string) {
     return this.appDataService.updateAppData({ motd });

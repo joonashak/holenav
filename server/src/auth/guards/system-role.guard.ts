@@ -7,7 +7,7 @@ import {
 import { Reflector } from "@nestjs/core";
 import { GqlExecutionContext } from "@nestjs/graphql";
 import { AuthenticationError } from "apollo-server-express";
-import SystemRoles from "../../user/roles/system-roles.enum";
+import SystemRole from "../../user/roles/system-role.enum";
 
 export const requiredSystemRoleKey = "requiredSystemRole";
 
@@ -21,8 +21,8 @@ export class SystemRoleGuard implements CanActivate {
     return requiredRole <= userSystemRole;
   }
 
-  private getRequiredRole(context: ExecutionContext): SystemRoles {
-    const requiredRole = this.reflector.get<SystemRoles>(
+  private getRequiredRole(context: ExecutionContext): SystemRole {
+    const requiredRole = this.reflector.get<SystemRole>(
       requiredSystemRoleKey,
       context.getHandler(),
     );
@@ -34,12 +34,12 @@ export class SystemRoleGuard implements CanActivate {
     return requiredRole;
   }
 
-  private getSystemRole(context: ExecutionContext): SystemRoles {
+  private getSystemRole(context: ExecutionContext): SystemRole {
     const gqlContext = GqlExecutionContext.create(context);
     const { user } = gqlContext.getContext().req;
     const { systemRole } = user;
 
-    if (!Object.values(SystemRoles).includes(systemRole as SystemRoles)) {
+    if (!Object.values(SystemRole).includes(systemRole as SystemRole)) {
       throw new AuthenticationError("Invalid system role.");
     }
 

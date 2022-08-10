@@ -10,7 +10,7 @@ import { SsoService } from "./sso.service";
 import { SsoApiService } from "./sso-api.service";
 import { SsoSessionService } from "./sso-session/sso-session.service";
 import { testSsoSession, testSsoTokens, testUser } from "../../test-utils/test-data";
-import SsoSessionTypes from "./sso-session/sso-session-types.enum";
+import SsoSessionType from "./sso-session/sso-session-type.enum";
 
 const expectedCallbackUrl = `https://login.eveonline.com/v2/oauth/authorize/?response_type=code&redirect_uri=test-callback-url&client_id=test-sso-client-id&state=${testSsoSession.key}`;
 
@@ -65,7 +65,7 @@ describe("SsoService", () => {
   it("Adds a character and deletes the SSO session when adding an alt instead of logging in", async () => {
     jest
       .spyOn(ssoSessionService, "verifySsoSession")
-      .mockResolvedValueOnce({ ...testSsoSession, type: SsoSessionTypes.ADD_CHARACTER });
+      .mockResolvedValueOnce({ ...testSsoSession, type: SsoSessionType.ADD_CHARACTER });
 
     await expect(ssoService.handleCallback("asd", testSsoSession.key)).resolves.toEqual(
       "test-client-url",
