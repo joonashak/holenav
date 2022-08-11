@@ -18,7 +18,6 @@ export class SignatureService {
 
   async createSignatures(systemId: string, signatures: Signature[]): Promise<Signature[]> {
     const newSigs = await this.sigModel.create(signatures);
-    await this.systemService.appendToSignatures(systemId, newSigs);
     return newSigs;
   }
 

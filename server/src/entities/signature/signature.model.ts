@@ -9,6 +9,7 @@ import SigType from "./sig-type.enum";
 export type SignatureDocument = Signature & mongoose.Document;
 
 registerEnumType(SigType, { name: "SigType" });
+registerEnumType(MassStatus, { name: "MassStatus" });
 
 @ObjectType()
 @Schema()
