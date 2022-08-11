@@ -1,4 +1,5 @@
 enum SigType {
+  UNKNOWN = "UNKNOWN",
   DATA = "DATA",
   RELIC = "RELIC",
   GAS = "GAS",
