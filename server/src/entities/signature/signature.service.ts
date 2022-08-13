@@ -131,6 +131,10 @@ export class SignatureService {
    * the reference to the given Signature.
    */
   private async addReverseWormhole(signature: SignatureDocument): Promise<SignatureDocument> {
+    if (signature.type !== SigType.WORMHOLE) {
+      return signature;
+    }
+
     const reverse = await this.sigModel.create({
       ...this.flipWormhole(signature),
       reverse: signature,
@@ -142,14 +146,7 @@ export class SignatureService {
   }
 
   private async addReverseWormholes(signatures: SignatureDocument[]): Promise<Signature[]> {
-    const updatedSigs = signatures.map(async (sig) => {
-      if (sig.type !== SigType.WORMHOLE || !sig.destinationName) {
-        return sig;
-      }
-      return this.addReverseWormhole(sig);
-    });
-
-    return Promise.all(updatedSigs);
+    return Promise.all(signatures.map(this.addReverseWormhole));
   }
 
   /**
