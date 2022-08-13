@@ -21,7 +21,6 @@ export class SignatureService {
     return sigsWithReverses;
   }
 
-  // FIXME:
   async updateSignatures(sigUpdates: Signature[]): Promise<Signature[]> {
     const ids = sigUpdates.map((sig) => sig.id);
     const oldSigs = await this.sigModel.find({ $id: { in: ids } });
@@ -58,10 +57,8 @@ export class SignatureService {
     return deleted;
   }
 
-  // FIXME:
   private async updateSignature(update: Signature, old: SignatureDocument): Promise<Signature> {
     // TODO: Refactor: signature utils isWormhole()
-    // sig -> wh: add rev if exists
     if (old.type !== SigType.WORMHOLE && update.type === SigType.WORMHOLE) {
       const sigWithWhTypes = this.addWhTypes(update);
       const updatedSig = await this.sigModel.findOneAndUpdate(
@@ -74,8 +71,7 @@ export class SignatureService {
       return this.addReverseWormhole(updatedSig);
     }
 
-    // wh -> sig: remove rev if exists
-    if (old.type === SigType.WORMHOLE && update.type !== SigType.WORMHOLE && old.reverse) {
+    if (old.type === SigType.WORMHOLE && update.type !== SigType.WORMHOLE) {
       await this.sigModel.findByIdAndDelete(old.reverse);
       return this.sigModel.findOneAndUpdate(
         { id: update.id },
@@ -83,13 +79,12 @@ export class SignatureService {
         { returnDocument: "after" },
       );
     }
-    // wh -> wh: update rev if exists
+
     if (old.type === SigType.WORMHOLE && update.type === SigType.WORMHOLE) {
-      // ARE THE FIRST TWO THE SAME CASES AS THE ABOVE TWO???
-      // ACUALLY JUST CREATE REVERSE OBJECT ALWAYS AND JUST SYNC IT.
-      // rev n -> rev y: add rev
-      // rev y -> rev n: del rev
-      // rev y -> rev y: sync
+      const updatedSig = await this.sigModel.findOneAndUpdate({ id: update.id }, update, {
+        returnDocument: "after",
+      });
+      await this.syncReverseWormhole(updatedSig);
     }
 
     return this.sigModel.findOneAndUpdate({ id: update.id }, update, { returnDocument: "after" });
@@ -172,5 +167,23 @@ export class SignatureService {
       massStatus,
       folder,
     };
+  }
+
+  private syncReverseWormhole(update: SignatureDocument): Promise<SignatureDocument> {
+    const { destinationName, systemName, reverseType, wormholeType, eol, massStatus, reverse } =
+      update;
+
+    const reverseWhUpdate = {
+      systemName: destinationName,
+      destinationName: systemName,
+      wormholeType: reverseType,
+      reverseType: wormholeType,
+      eol,
+      massStatus,
+    };
+
+    return this.sigModel
+      .findByIdAndUpdate(reverse, reverseWhUpdate, { returnDocument: "after" })
+      .exec();
   }
 }
