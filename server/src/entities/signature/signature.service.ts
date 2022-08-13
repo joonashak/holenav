@@ -5,6 +5,7 @@ import { Model } from "mongoose";
 import { Folder } from "../folder/folder.model";
 import SigType from "./sig-type.enum";
 import { Signature, SignatureDocument } from "./signature.model";
+import { isWormhole } from "./signature.utils";
 
 @Injectable()
 export class SignatureService {
@@ -52,8 +53,7 @@ export class SignatureService {
   }
 
   private async updateSignature(update: Signature, old: SignatureDocument): Promise<Signature> {
-    // TODO: Refactor: signature utils isWormhole()
-    if (old.type !== SigType.WORMHOLE && update.type === SigType.WORMHOLE) {
+    if (!isWormhole(old) && isWormhole(update)) {
       const sigWithWhTypes = this.addWhTypes(update);
       const updatedSig = await this.sigModel.findOneAndUpdate(
         { id: sigWithWhTypes.id },
@@ -65,7 +65,7 @@ export class SignatureService {
       return this.addReverseWormhole(updatedSig);
     }
 
-    if (old.type === SigType.WORMHOLE && update.type !== SigType.WORMHOLE) {
+    if (isWormhole(old) && !isWormhole(update)) {
       await this.sigModel.findByIdAndDelete(old.reverse);
       return this.sigModel.findOneAndUpdate(
         { id: update.id },
@@ -74,7 +74,7 @@ export class SignatureService {
       );
     }
 
-    if (old.type === SigType.WORMHOLE && update.type === SigType.WORMHOLE) {
+    if (isWormhole(old) && isWormhole(update)) {
       const updatedSig = await this.sigModel.findOneAndUpdate({ id: update.id }, update, {
         returnDocument: "after",
       });
