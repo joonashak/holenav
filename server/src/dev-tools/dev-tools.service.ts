@@ -5,17 +5,14 @@ import { Session } from "../auth/session/session.model";
 import { SsoSession } from "../auth/sso/sso-session/sso-session.model";
 import { Character } from "../entities/character/character.model";
 import { Folder } from "../entities/folder/folder.model";
-import { FolderService } from "../entities/folder/folder.service";
 import { Signature } from "../entities/signature/signature.model";
 import { System } from "../entities/system/system.model";
-import { Wormhole } from "../entities/wormhole/wormhole.model";
-import { WormholeService } from "../entities/wormhole/wormhole.service";
 import { Credentials } from "../user/credentials/credentials.model";
 import { User } from "../user/user.model";
 import users from "./data/users";
 import { MockFolderService } from "./mock-data-services/mock-folder.service";
 import { MockUserService } from "./mock-data-services/mock-user.service";
-import mockWormholes from "./mock-data-services/mock-wormholes";
+import { MockWormholeService } from "./mock-data-services/mock-wormholes";
 
 @Injectable()
 export class DevToolsService {
@@ -26,13 +23,11 @@ export class DevToolsService {
     @InjectModel(SsoSession.name) private ssoSessionModel: Model<SsoSession>,
     @InjectModel(System.name) private systemModel: Model<System>,
     @InjectModel(User.name) private userModel: Model<User>,
-    @InjectModel(Wormhole.name) private whModel: Model<Wormhole>,
     @InjectModel(Credentials.name) private credentialsModel: Model<Credentials>,
     @InjectModel(Session.name) private sessionModel: Model<Session>,
     private mockUserService: MockUserService,
     private mockFolderService: MockFolderService,
-    private folderService: FolderService,
-    private whService: WormholeService,
+    private mockWhService: MockWormholeService,
   ) {}
 
   /**
@@ -50,7 +45,7 @@ export class DevToolsService {
 
     await this.mockFolderService.mock();
     await this.mockUserService.mock();
-    await mockWormholes(this.whModel, this.whService, this.folderService);
+    await this.mockWhService.mock();
   }
 
   async getMockUsers() {
