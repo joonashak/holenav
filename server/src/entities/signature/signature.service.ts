@@ -15,7 +15,7 @@ export class SignatureService {
   }
 
   async createSignatures(signatures: Signature[]): Promise<Signature[]> {
-    const sigsWithWhTypes = signatures.map(this.addWhTypes);
+    const sigsWithWhTypes = signatures.map((sig) => this.addWhTypes(sig));
     const newSigs = await this.sigModel.create(sigsWithWhTypes);
     const sigsWithReverses = await this.addReverseWormholes(newSigs);
     return sigsWithReverses;
@@ -141,7 +141,7 @@ export class SignatureService {
   }
 
   private async addReverseWormholes(signatures: SignatureDocument[]): Promise<Signature[]> {
-    return Promise.all(signatures.map(this.addReverseWormhole));
+    return Promise.all(signatures.map((sig) => this.addReverseWormhole(sig)));
   }
 
   /**
