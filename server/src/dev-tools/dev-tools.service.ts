@@ -12,7 +12,7 @@ import { User } from "../user/user.model";
 import users from "./data/users";
 import { MockFolderService } from "./mock-data-services/mock-folder.service";
 import { MockUserService } from "./mock-data-services/mock-user.service";
-import { MockWormholeService } from "./mock-data-services/mock-wormholes";
+import { MockWormholeService } from "./mock-data-services/mock-wormholes.service";
 
 @Injectable()
 export class DevToolsService {

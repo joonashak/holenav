@@ -8,9 +8,9 @@ import { SsoSessionModule } from "../auth/sso/sso-session/sso-session.module";
 import { MockUserService } from "./mock-data-services/mock-user.service";
 import { ENABLE_DEVTOOLS } from "../config";
 import { WormholeModule } from "../entities/wormhole/wormhole.module";
-import { WormholeService } from "../entities/wormhole/wormhole.service";
 import { SessionModule } from "../auth/session/session.module";
 import { MockFolderService } from "./mock-data-services/mock-folder.service";
+import { MockWormholeService } from "./mock-data-services/mock-wormholes.service";
 
 const options = {
   imports: [
@@ -21,7 +21,7 @@ const options = {
     WormholeModule,
     SessionModule,
   ],
-  providers: [DevToolsService, MockUserService, MockFolderService, WormholeService],
+  providers: [DevToolsService, MockUserService, MockFolderService, MockWormholeService],
   controllers: [DevToolsController],
 };
 
