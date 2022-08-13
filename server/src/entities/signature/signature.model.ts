@@ -1,4 +1,4 @@
-import { Field, ObjectType, registerEnumType } from "@nestjs/graphql";
+import { Field, InputType, ObjectType, registerEnumType } from "@nestjs/graphql";
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import mongoose from "mongoose";
 import { v4 as uuid } from "uuid";
@@ -11,9 +11,12 @@ export type SignatureDocument = Signature & mongoose.Document;
 registerEnumType(SigType, { name: "SigType" });
 registerEnumType(MassStatus, { name: "MassStatus" });
 
+// This split is done because a reference to another @InputType class with
+// duplicate field names breaks the GraphQL type system.
+@InputType()
 @ObjectType()
 @Schema()
-export class Signature {
+export class SignatureWithoutRefs {
   @Field()
   @Prop({ default: uuid, unique: true })
   id?: string;
@@ -30,10 +33,6 @@ export class Signature {
   @Prop()
   name: string;
 
-  @Field((type) => Folder)
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: "Folder" })
-  folder: Folder;
-
   @Field()
   @Prop()
   systemName: string;
@@ -46,11 +45,11 @@ export class Signature {
   @Prop()
   wormholeType?: string;
 
-  @Field()
+  @Field({ nullable: true })
   @Prop({ default: false })
   eol?: boolean;
 
-  @Field((type) => MassStatus)
+  @Field((type) => MassStatus, { nullable: true })
   @Prop({ default: MassStatus.STABLE })
   massStatus?: MassStatus;
 
@@ -58,13 +57,25 @@ export class Signature {
   @Prop()
   destinationName?: string;
 
-  @Field((type) => Signature, { nullable: true })
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: "Signature", nullable: true })
-  reverse?: Signature;
-
   @Field({ nullable: true })
   @Prop()
   reverseType?: string;
+}
+
+@ObjectType()
+@Schema()
+export class Signature extends SignatureWithoutRefs {
+  @Field((type) => Folder)
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: "Folder" })
+  folder: Folder;
+
+  /*
+    Wormhole-only props:
+  */
+
+  @Field((type) => Signature, { nullable: true })
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: "Signature", nullable: true })
+  reverse?: Signature;
 }
 
 export const SignatureSchema = SchemaFactory.createForClass(Signature);
