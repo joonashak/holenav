@@ -159,7 +159,8 @@ export class SignatureService {
     return {
       type: SigType.WORMHOLE,
       name: "",
-      systemName: destinationName,
+      eveId: "",
+      systemName: destinationName || "",
       destinationName: systemName,
       wormholeType: reverseType,
       reverseType: wormholeType,
