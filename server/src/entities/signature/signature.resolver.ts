@@ -3,6 +3,7 @@ import { RequireFolderRole } from "../../auth/decorators/role.decorator";
 import FolderRole from "../../user/roles/folder-role.enum";
 import { ActiveFolderService } from "../folder/active-folder.service";
 import { AddSignaturesInput } from "./dto/add-signature.dto";
+import { DeleteSignaturesInput, DeleteSignaturesOutput } from "./dto/delete-signatures.dto";
 import { UpdateSignaturesInput } from "./dto/update-signature.dto";
 import { Signature } from "./signature.model";
 import { SignatureService } from "./signature.service";
@@ -29,8 +30,11 @@ export class SignatureResolver {
   }
 
   @RequireFolderRole(FolderRole.WRITE)
-  @Mutation((returns) => Signature)
-  async deleteSignature(@Args("id") id: string): Promise<Signature> {
-    return this.sigService.deleteSignature(id);
+  @Mutation((returns) => DeleteSignaturesOutput)
+  async deleteSignatures(
+    @Args("input") input: DeleteSignaturesInput,
+  ): Promise<DeleteSignaturesOutput> {
+    const signatures = await this.sigService.deleteSignatures(input.ids);
+    return { signatures };
   }
 }

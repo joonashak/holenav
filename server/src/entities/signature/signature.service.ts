@@ -35,26 +35,20 @@ export class SignatureService {
     );
   }
 
-  // FIXME:
-  async deleteSignature(id: string): Promise<Signature> {
-    // FIXME: Remove reverse wormholes.
-    return this.sigModel.findOneAndDelete({ id });
-  }
+  /**
+   * Delete signatures and their possible reverse wormholes by ID.
+   * @param ids IDs of the Signatures to delete.
+   * @returns Deleted Signatures (not including possible deleted reverse wormholes).
+   */
+  async deleteSignatures(ids: string[]): Promise<Signature[]> {
+    const sigs = await this.sigModel.find({ id: { $in: ids } }).populate("reverse");
+    const deletableIds = sigs.reduce(
+      (res, sig) => (sig.reverse ? res.concat(sig.reverse.id) : res),
+      ids,
+    );
 
-  // FIXME:
-  async deleteManySignaturesByEveId(
-    eveIds: string[],
-    systemName: string,
-    folder: Folder,
-  ): Promise<Signature[]> {
-    // FIXME: Remove reverse wormholes.
-    const filter = {
-      $and: [{ eveId: { $in: eveIds } }, { systemName }, { folder }],
-    };
-
-    const deleted = await this.sigModel.find(filter);
-    await this.sigModel.deleteMany(filter);
-    return deleted;
+    await this.sigModel.deleteMany({ id: { $in: deletableIds } });
+    return sigs;
   }
 
   private async updateSignature(update: Signature, old: SignatureDocument): Promise<Signature> {
