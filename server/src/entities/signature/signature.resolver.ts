@@ -2,10 +2,9 @@ import { Args, Mutation, Resolver } from "@nestjs/graphql";
 import { RequireFolderRole } from "../../auth/decorators/role.decorator";
 import FolderRole from "../../user/roles/folder-role.enum";
 import { ActiveFolderService } from "../folder/active-folder.service";
-import { AddSignaturesInput } from "./dto/add-signature.dto";
+import { AddSignaturesInput, AddSignaturesOutput } from "./dto/add-signatures.dto";
 import { DeleteSignaturesInput, DeleteSignaturesOutput } from "./dto/delete-signatures.dto";
-import { UpdateSignaturesInput } from "./dto/update-signature.dto";
-import { Signature } from "./signature.model";
+import { UpdateSignatureOutput, UpdateSignaturesInput } from "./dto/update-signatures.dto";
 import { SignatureService } from "./signature.service";
 
 @Resolver()
@@ -16,17 +15,21 @@ export class SignatureResolver {
   ) {}
 
   @RequireFolderRole(FolderRole.WRITE)
-  @Mutation((returns) => [Signature])
-  async addSignatures(@Args("input") input: AddSignaturesInput): Promise<Signature[]> {
+  @Mutation((returns) => [AddSignaturesOutput])
+  async addSignatures(@Args("input") input: AddSignaturesInput): Promise<AddSignaturesOutput> {
     const sigs = this.activeFolderService.populateWithActiveFolder(input.signatures);
-    return this.sigService.createSignatures(sigs);
+    const signatures = await this.sigService.createSignatures(sigs);
+    return { signatures };
   }
 
   @RequireFolderRole(FolderRole.WRITE)
-  @Mutation((returns) => [Signature])
-  async updateSignatures(@Args("input") input: UpdateSignaturesInput): Promise<Signature[]> {
+  @Mutation((returns) => [UpdateSignatureOutput])
+  async updateSignatures(
+    @Args("input") input: UpdateSignaturesInput,
+  ): Promise<UpdateSignatureOutput> {
     const sigs = this.activeFolderService.populateWithActiveFolder(input.signatures);
-    return this.sigService.updateSignatures(sigs);
+    const signatures = await this.sigService.updateSignatures(sigs);
+    return { signatures };
   }
 
   @RequireFolderRole(FolderRole.WRITE)
