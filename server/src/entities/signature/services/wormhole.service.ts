@@ -14,21 +14,21 @@ export class WormholeService {
    * K162 if possible. Throws upon invalid type input.
    * @returns An array of length 2 containing the valid types in respective order.
    */
-  getValidWormholeTypes(type: string, reverseType: string): Array<string> {
+  getValidWormholeTypes(wormholeType: string, reverseType: string): Array<string> {
     // TODO: Validate type against system class.
-    if (!type && !reverseType) {
+    if (!wormholeType && !reverseType) {
       return [null, null];
     }
 
-    if (type === reverseType) {
+    if (wormholeType === reverseType) {
       throw new UserInputError("Wormhole cannot have the same type on both sides.");
     }
 
-    if (type === "K162" || reverseType === "K162") {
-      return [type, reverseType];
+    if (wormholeType === "K162" || reverseType === "K162") {
+      return [wormholeType, reverseType];
     }
 
-    return type ? [type, "K162"] : ["K162", reverseType];
+    return wormholeType ? [wormholeType, "K162"] : ["K162", reverseType];
   }
 
   addWhTypes(sig: Signature): Signature {
@@ -36,7 +36,10 @@ export class WormholeService {
       return sig;
     }
 
-    const [wormholeType, reverseType] = this.getValidWormholeTypes(sig.type, sig.reverseType);
+    const [wormholeType, reverseType] = this.getValidWormholeTypes(
+      sig.wormholeType,
+      sig.reverseType,
+    );
     return { ...sig, wormholeType, reverseType };
   }
 
