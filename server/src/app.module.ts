@@ -8,7 +8,6 @@ import { FolderModule } from "./entities/folder/folder.module";
 import { SignatureModule } from "./entities/signature/signature.module";
 import { DevToolsModule } from "./dev-tools/dev-tools.module";
 import { CLIENT_URL, DATABASE_URL } from "./config";
-import { WormholeModule } from "./entities/wormhole/wormhole.module";
 import { BootstrapModule } from "./bootstrap/bootstrap.module";
 import { AppDataModule } from "./app-data/app-data.module";
 
@@ -29,7 +28,6 @@ import { AppDataModule } from "./app-data/app-data.module";
     FolderModule,
     SignatureModule,
     DevToolsModule,
-    WormholeModule,
   ],
 })
 export class AppModule {}
