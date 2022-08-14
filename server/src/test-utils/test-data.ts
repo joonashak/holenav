@@ -74,6 +74,7 @@ export const testWormhole: Signature = {
   eol: false,
   massStatus: MassStatus.STABLE,
   eveId: "",
+  destinationName: "",
 };
 
 export const testWormholeWithReverse: Signature = {

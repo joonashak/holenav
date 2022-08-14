@@ -24,7 +24,10 @@ describe("WormholeService", () => {
           provide: getModelToken(Signature.name),
           useFactory: () => ({
             create: jest.fn().mockImplementation((sig) => sig),
-            findByIdAndUpdate: jest.fn(() => ({ populate: () => testWormholeWithReverse })),
+            findByIdAndUpdate: jest.fn(() => ({
+              populate: () => testWormholeWithReverse,
+              exec: () => testWormholeWithReverse,
+            })),
           }),
         },
       ],
@@ -94,6 +97,21 @@ describe("WormholeService", () => {
         testWormholeWithReverse,
         testWormholeWithReverse,
       ]);
+    });
+
+    it("Syncs existing reverse wormhole", async () => {
+      const update = {
+        systemName: "",
+        destinationName: testWormholeWithReverse.systemName,
+        wormholeType: testWormholeWithReverse.reverseType,
+        reverseType: testWormholeWithReverse.wormholeType,
+        eol: testWormholeWithReverse.reverse.eol,
+        massStatus: testWormholeWithReverse.reverse.massStatus,
+      };
+      await wormholeService.syncReverseWormhole(testWormholeWithReverse as SignatureDocument);
+      expect(sigModel.findByIdAndUpdate).toBeCalledWith(testWormholeWithReverse.reverse, update, {
+        returnDocument: "after",
+      });
     });
   });
 });
