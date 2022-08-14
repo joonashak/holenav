@@ -2,10 +2,10 @@ import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { FolderService } from "../../entities/folder/folder.service";
-import SigType from "../../entities/signature/sig-type.enum";
+import SigType from "../../entities/signature/enums/sig-type.enum";
 import { Signature } from "../../entities/signature/signature.model";
-import { SignatureService } from "../../entities/signature/signature.service";
-import MassStatus from "../../entities/wormhole/mass-status.enum";
+import { SignatureService } from "../../entities/signature/services/signature.service";
+import MassStatus from "../../entities/signature/enums/mass-status.enum";
 import whMockData from "../data/wormholes";
 
 @Injectable()

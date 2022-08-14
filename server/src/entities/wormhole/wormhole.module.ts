@@ -5,8 +5,8 @@ import { WormholeService } from "./wormhole.service";
 import { WormholeResolver } from "./wormhole.resolver";
 import { FolderService } from "../folder/folder.service";
 import { FolderModule } from "../folder/folder.module";
-import { ConnectionTreeService } from "./connection-tree.service";
-import { SignatureService } from "../signature/signature.service";
+import { ConnectionTreeService } from "../signature/services/connection-tree.service";
+import { SignatureService } from "../signature/services/signature.service";
 import { SignatureModule } from "../signature/signature.module";
 
 @Module({

@@ -1,18 +1,18 @@
 import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model, Types } from "mongoose";
-import { FolderDocument } from "../folder/folder.model";
-import { ConnectionTree, ConnectionTreeNode } from "./dto/connection-tree.dto";
-import { Wormhole } from "./wormhole.model";
+import { FolderDocument } from "../../folder/folder.model";
+import { ConnectionTree, ConnectionTreeNode } from "../dto/connection-tree.dto";
+import { Signature } from "../signature.model";
 
 @Injectable()
 export class ConnectionTreeService {
-  constructor(@InjectModel(Wormhole.name) private whModel: Model<Wormhole>) {}
+  constructor(@InjectModel(Signature.name) private sigModel: Model<Signature>) {}
 
   async getConnectionTree(rootSystemName: string, folder: FolderDocument): Promise<ConnectionTree> {
     console.time("Wormhole graphlookup");
 
-    const res = await this.whModel.aggregate([
+    const res = await this.sigModel.aggregate([
       { $match: { systemName: rootSystemName, folder: Types.ObjectId(folder._id) } },
       {
         $graphLookup: {
@@ -55,7 +55,7 @@ export class ConnectionTreeService {
    * have children.
    * @param aggregateResult Result from mongo's `$graphLookup` operation.
    */
-  private findAllChildren(aggregateResult: any[]): Wormhole[] {
+  private findAllChildren(aggregateResult: any[]): Signature[] {
     const allChildren = aggregateResult.find((res) => res.children.length);
 
     if (!allChildren) {
@@ -66,7 +66,7 @@ export class ConnectionTreeService {
   }
 
   private findChildren(
-    allChildren: Wormhole[],
+    allChildren: Signature[],
     system: string,
     parentName = "",
   ): ConnectionTreeNode[] {

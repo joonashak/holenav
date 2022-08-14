@@ -3,7 +3,7 @@ import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import mongoose from "mongoose";
 import { v4 as uuid } from "uuid";
 import { Folder } from "../folder/folder.model";
-import MassStatus from "./mass-status.enum";
+import MassStatus from "../signature/enums/mass-status.enum";
 
 export type WormholeDocument = Wormhole & mongoose.Document;
 

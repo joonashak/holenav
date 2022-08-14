@@ -1,17 +1,22 @@
-import { Args, Mutation, Resolver } from "@nestjs/graphql";
+import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
+import { ActiveFolder } from "../../auth/decorators/active-folder.decorator";
 import { RequireFolderRole } from "../../auth/decorators/role.decorator";
 import FolderRole from "../../user/roles/folder-role.enum";
 import { ActiveFolderService } from "../folder/active-folder.service";
+import { FolderDocument } from "../folder/folder.model";
 import { AddSignaturesInput, AddSignaturesOutput } from "./dto/add-signatures.dto";
+import { ConnectionTree } from "./dto/connection-tree.dto";
 import { DeleteSignaturesInput, DeleteSignaturesOutput } from "./dto/delete-signatures.dto";
 import { UpdateSignatureOutput, UpdateSignaturesInput } from "./dto/update-signatures.dto";
-import { SignatureService } from "./signature.service";
+import { ConnectionTreeService } from "./services/connection-tree.service";
+import { SignatureService } from "./services/signature.service";
 
 @Resolver()
 export class SignatureResolver {
   constructor(
     private sigService: SignatureService,
     private activeFolderService: ActiveFolderService,
+    private connectionTreeService: ConnectionTreeService,
   ) {}
 
   @RequireFolderRole(FolderRole.WRITE)
@@ -39,5 +44,14 @@ export class SignatureResolver {
   ): Promise<DeleteSignaturesOutput> {
     const signatures = await this.sigService.deleteSignatures(input.ids);
     return { signatures };
+  }
+
+  @RequireFolderRole(FolderRole.READ)
+  @Query((returns) => ConnectionTree)
+  async getConnectionTree(
+    @Args("rootSystem") rootSystemName: string,
+    @ActiveFolder() activeFolder: FolderDocument,
+  ): Promise<ConnectionTree> {
+    return this.connectionTreeService.getConnectionTree(rootSystemName, activeFolder);
   }
 }

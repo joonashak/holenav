@@ -1,6 +1,6 @@
 import { Field, InputType, ObjectType } from "@nestjs/graphql";
 import { Signature } from "../../signature/signature.model";
-import MassStatus from "../mass-status.enum";
+import MassStatus from "../../signature/enums/mass-status.enum";
 import { Wormhole } from "../wormhole.model";
 
 @InputType()

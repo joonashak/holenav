@@ -1,5 +1,5 @@
 import { Field, ObjectType } from "@nestjs/graphql";
-import { Wormhole } from "../wormhole.model";
+import { Signature } from "../signature.model";
 
 @ObjectType()
 export class ConnectionTree {
@@ -18,6 +18,6 @@ export class ConnectionTreeNode {
   @Field((type) => [ConnectionTreeNode])
   children: ConnectionTreeNode[];
 
-  @Field((type) => Wormhole)
-  wormhole: Wormhole;
+  @Field((type) => Signature)
+  wormhole: Signature;
 }

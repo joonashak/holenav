@@ -3,8 +3,8 @@ import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import mongoose from "mongoose";
 import { v4 as uuid } from "uuid";
 import { Folder } from "../folder/folder.model";
-import MassStatus from "../wormhole/mass-status.enum";
-import SigType from "./sig-type.enum";
+import MassStatus from "./enums/mass-status.enum";
+import SigType from "./enums/sig-type.enum";
 
 export type SignatureDocument = Signature & mongoose.Document;
 
