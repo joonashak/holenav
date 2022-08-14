@@ -9,6 +9,7 @@ import SystemRole from "../user/roles/system-role.enum";
 import { User } from "../user/user.model";
 import { Signature } from "../entities/signature/signature.model";
 import SigType from "../entities/signature/enums/sig-type.enum";
+import MassStatus from "../entities/signature/enums/mass-status.enum";
 
 export const testFolder: Folder = {
   id: "test-folder",
@@ -70,4 +71,19 @@ export const testWormhole: Signature = {
   type: SigType.WORMHOLE,
   name: "Test Wormhole",
   systemName: "Amarr",
+  eol: false,
+  massStatus: MassStatus.STABLE,
+  eveId: "",
+};
+
+export const testWormholeWithReverse: Signature = {
+  ...testWormhole,
+  reverse: {
+    ...testWormhole,
+    wormholeType: testWormhole.reverseType,
+    reverseType: testWormhole.wormholeType,
+    destinationName: testWormhole.systemName,
+    systemName: "",
+    name: "",
+  },
 };

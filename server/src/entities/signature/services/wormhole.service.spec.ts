@@ -1,12 +1,20 @@
 import { getModelToken } from "@nestjs/mongoose";
 import { Test } from "@nestjs/testing";
 import { UserInputError } from "apollo-server-express";
-import { testUnknownSig, testWormhole } from "../../../test-utils/test-data";
-import { Signature } from "../signature.model";
+import { Model } from "mongoose";
+import {
+  testUnknownSig,
+  testWormhole,
+  testWormholeWithReverse,
+} from "../../../test-utils/test-data";
+import { Signature, SignatureDocument } from "../signature.model";
 import { WormholeService } from "./wormhole.service";
+
+const testDoc = testWormhole as SignatureDocument;
 
 describe("WormholeService", () => {
   let wormholeService: WormholeService;
+  let sigModel: Model<Signature>;
 
   beforeEach(async () => {
     const module = await Test.createTestingModule({
@@ -14,12 +22,16 @@ describe("WormholeService", () => {
         WormholeService,
         {
           provide: getModelToken(Signature.name),
-          useFactory: () => ({}),
+          useFactory: () => ({
+            create: jest.fn().mockImplementation((sig) => sig),
+            findByIdAndUpdate: jest.fn(() => ({ populate: () => testWormholeWithReverse })),
+          }),
         },
       ],
     }).compile();
 
     wormholeService = module.get<WormholeService>(WormholeService);
+    sigModel = module.get<Model<Signature>>(getModelToken(Signature.name));
   });
 
   describe("Wormhole type inference", () => {
@@ -55,6 +67,33 @@ describe("WormholeService", () => {
     it("Does not allow same type on both sides", () => {
       const wh = { ...testWormhole, wormholeType: "C140", reverseType: "C140" };
       expect(() => wormholeService.addWhTypes(wh)).toThrow(UserInputError);
+    });
+  });
+
+  describe("Reverse wormhole operations", () => {
+    it("Passes non-wormhole sigs through", async () => {
+      await expect(
+        wormholeService.addReverseWormhole(testUnknownSig as SignatureDocument),
+      ).resolves.toEqual(testUnknownSig);
+    });
+
+    it("Adds reverse wormhole", async () => {
+      await expect(wormholeService.addReverseWormhole(testDoc)).resolves.toEqual(
+        testWormholeWithReverse,
+      );
+      expect(sigModel.create).toBeCalledTimes(1);
+      expect(sigModel.create).toBeCalledWith({
+        ...testWormholeWithReverse.reverse,
+        reverse: testWormhole,
+      });
+      expect(sigModel.findByIdAndUpdate).toBeCalledTimes(1);
+    });
+
+    it("Adds reverse wormholes to a list", async () => {
+      await expect(wormholeService.addReverseWormholes([testDoc, testDoc])).resolves.toEqual([
+        testWormholeWithReverse,
+        testWormholeWithReverse,
+      ]);
     });
   });
 });
