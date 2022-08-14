@@ -7,20 +7,12 @@ import { SignatureModule } from "../entities/signature/signature.module";
 import { SsoSessionModule } from "../auth/sso/sso-session/sso-session.module";
 import { MockUserService } from "./mock-data-services/mock-user.service";
 import { ENABLE_DEVTOOLS } from "../config";
-import { WormholeModule } from "../entities/wormhole/wormhole.module";
 import { SessionModule } from "../auth/session/session.module";
 import { MockFolderService } from "./mock-data-services/mock-folder.service";
 import { MockWormholeService } from "./mock-data-services/mock-wormholes.service";
 
 const options = {
-  imports: [
-    CharacterModule,
-    FolderModule,
-    SignatureModule,
-    SsoSessionModule,
-    WormholeModule,
-    SessionModule,
-  ],
+  imports: [CharacterModule, FolderModule, SignatureModule, SsoSessionModule, SessionModule],
   providers: [DevToolsService, MockUserService, MockFolderService, MockWormholeService],
   controllers: [DevToolsController],
 };
