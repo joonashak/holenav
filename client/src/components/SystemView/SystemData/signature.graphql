@@ -5,8 +5,10 @@ fragment SignatureFields on Signature {
   eveId
 }
 
-mutation AddSignature($input: AddSignatureInput!) {
+mutation AddSignature($input: AddSignaturesInput!) {
   addSignatures(input: $input) {
-    ...SignatureFields
+    signatures {
+      ...SignatureFields
+    }
   }
 }

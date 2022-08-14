@@ -1,16 +1,17 @@
 import { FieldValues } from "react-hook-form";
+import { Signature } from "../../../../../generated/graphqlOperations";
 import useNotification from "../../../../GlobalNotification/useNotification";
 import useMapData from "../../../Map/MapData/useMapData";
+import useSignatures from "../../../SystemData/useSignatures";
 import useSystemData from "../../../SystemData/useSystemData";
-import useWormholes from "../../../SystemData/useWormholes";
 import { WormholeFormProps } from "./WormholeForm";
 
 const useWormholeForm = (props: WormholeFormProps) => {
   const { eveId, existing, onClose } = props;
   const { name: systemName } = useSystemData();
-  const { addWormhole, updateWormhole } = useWormholes();
   const { fetchConnectionTree } = useMapData();
   const { showSuccessNotification } = useNotification();
+  const { addSignature, updateSignature } = useSignatures();
 
   const submitNew = async (formData: FieldValues) => {
     const { whType, whReverseType, life, mass, ...data } = formData;
@@ -23,7 +24,8 @@ const useWormholeForm = (props: WormholeFormProps) => {
       massStatus: mass,
       ...data,
     };
-    const res = await addWormhole(mutationData);
+    // FIXME:
+    const res = await addSignature(mutationData as Signature);
 
     if (res.data && !res.errors) {
       fetchConnectionTree();
@@ -45,7 +47,8 @@ const useWormholeForm = (props: WormholeFormProps) => {
       name,
       destinationName,
     };
-    const res = await updateWormhole(mutationData);
+    // FIXME:
+    const res = await updateSignature(mutationData as Signature);
 
     if (res.data && !res.errors) {
       showSuccessNotification("Wormhole updated.");

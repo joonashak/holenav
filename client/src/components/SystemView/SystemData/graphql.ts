@@ -1,20 +1,18 @@
 import { gql } from "@apollo/client";
-import { SIGNATURE_FIELDS, WORMHOLE_FIELDS } from "./fragments";
+import { SIGNATURE_FIELDS } from "./fragments";
+
+// FIXME: Move these into signature.graphql to take advantage of code generation.
 
 export const GET_SYSTEM_BY_NAME = gql`
   ${SIGNATURE_FIELDS}
-  ${WORMHOLE_FIELDS}
   query System($name: String!) {
     getSystemByName(name: $name) {
       id
       name
-      signatures {
-        ...SignatureFields
-      }
     }
 
-    getWormholesBySystem(name: $name) {
-      ...WormholeFields
+    getSignaturesBySystem(systemName: $name) {
+      ...SignatureFields
     }
   }
 `;
@@ -31,23 +29,6 @@ export const EDIT_SIGNATURE = gql`
 export const DELETE_SIGNATURE = gql`
   mutation DeleteSignature($id: String!) {
     deleteSignature(id: $id) {
-      id
-    }
-  }
-`;
-
-export const EDIT_WORMHOLE = gql`
-  ${WORMHOLE_FIELDS}
-  mutation UpdateWormhole($input: UpdateWormholeInput!) {
-    updateWormhole(input: $input) {
-      ...WormholeFields
-    }
-  }
-`;
-
-export const DELETE_WORMHOLE = gql`
-  mutation DeleteWormhole($id: String!) {
-    deleteWormhole(id: $id) {
       id
     }
   }

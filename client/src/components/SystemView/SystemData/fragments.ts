@@ -6,18 +6,10 @@ export const SIGNATURE_FIELDS = gql`
     name
     type
     eveId
-  }
-`;
-
-export const WORMHOLE_FIELDS = gql`
-  fragment WormholeFields on Wormhole {
-    name
-    id
-    eveId
-    type
     eol
     massStatus
     destinationName
+    wormholeType
     reverseType
   }
 `;

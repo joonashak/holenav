@@ -4,14 +4,12 @@ import { systemState } from ".";
 import useAuthenticatedMutation from "../../../auth/useAuthenticatedMutation";
 import { AddSignatureDocument, Signature } from "../../../generated/graphqlOperations";
 import { DELETE_SIGNATURE, EDIT_SIGNATURE } from "./graphql";
-import useWormholes from "./useWormholes";
 
 // FIXME: This is probably wrong. At least name is used thus should not be omitted..?
 type AddSignatureHookInput = Omit<Signature, "id" | "systemId" | "name">;
 
 const useSignatures = () => {
   const state = useState(systemState);
-  const { deleteWormhole } = useWormholes();
 
   /**
    * Get all signatures and wormholes in current system.
@@ -34,16 +32,6 @@ const useSignatures = () => {
   });
 
   const addSignature = async (newSig: AddSignatureHookInput) => {
-    const existingWh = state.wormholes
-      .attach(Downgraded)
-      .get()
-      .find((wh) => wh.eveId === newSig.eveId);
-
-    // FIXME: Remove this hack that makes changing type between sig/wh work.
-    if (newSig.eveId && existingWh) {
-      await deleteWormhole(existingWh.id);
-    }
-
     const input = { signatures: [newSig], systemId: state.id.value };
     return addSigMutation({ variables: { input } });
   };
@@ -71,16 +59,6 @@ const useSignatures = () => {
    * Delete signature. Also handles wormholes.
    */
   const deleteSignature = async (id: string): Promise<void> => {
-    const isWormhole = state.wormholes
-      .attach(Downgraded)
-      .get()
-      .find((wh) => wh.id === id);
-
-    if (isWormhole) {
-      await deleteWormhole(id);
-      return;
-    }
-
     await deleteSigMutation({ variables: { id } });
   };
 

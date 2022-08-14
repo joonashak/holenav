@@ -2,7 +2,7 @@ import { createState } from "@hookstate/core";
 import { ReactElement, useEffect } from "react";
 import { devToolsEnabled, pollIntervalSec } from "../../../../config";
 import useLocalData from "../../../LocalData/useLocalData";
-import useWormholes from "../../SystemData/useWormholes";
+import useSignatures from "../../SystemData/useSignatures";
 import { MapState } from "./types";
 import useMapData from "./useMapData";
 
@@ -16,12 +16,12 @@ interface MapDataProviderProps {
 
 const MapData = ({ children }: MapDataProviderProps) => {
   const { fetchConnectionTree } = useMapData();
-  const { wormholes } = useWormholes();
+  const { signatures } = useSignatures();
   const { pollSetting } = useLocalData();
 
   useEffect(() => {
     fetchConnectionTree();
-  }, [wormholes]);
+  }, [signatures]);
 
   useEffect(() => {
     const interval = setInterval(() => {

@@ -25,13 +25,13 @@ export type AddFolderRoleInput = {
   userEsiId: Scalars["String"];
 };
 
-export type AddSignatureInput = {
+export type AddSignaturesInput = {
   signatures: Array<SignatureInput>;
-  systemId: Scalars["String"];
 };
 
-export type AddWormholeInput = {
-  wormholes: Array<WormholeInput>;
+export type AddSignaturesOutput = {
+  __typename?: "AddSignaturesOutput";
+  signatures: Array<Signature>;
 };
 
 export type AppData = {
@@ -59,13 +59,22 @@ export type ConnectionTreeNode = {
   __typename?: "ConnectionTreeNode";
   children: Array<ConnectionTreeNode>;
   name: Scalars["String"];
-  wormhole: Wormhole;
+  wormhole: Signature;
 };
 
 export type Credentials = {
   __typename?: "Credentials";
   passwordHash: Scalars["String"];
   username: Scalars["String"];
+};
+
+export type DeleteSignaturesInput = {
+  ids: Array<Scalars["String"]>;
+};
+
+export type DeleteSignaturesOutput = {
+  __typename?: "DeleteSignaturesOutput";
+  signatures: Array<Signature>;
 };
 
 export type Folder = {
@@ -88,6 +97,11 @@ export enum FolderRoles {
   Write = "WRITE",
 }
 
+export type GetSignaturesOutput = {
+  __typename?: "GetSignaturesOutput";
+  signatures: Array<Signature>;
+};
+
 export type LogoutDto = {
   __typename?: "LogoutDto";
   loggedOut: Scalars["Boolean"];
@@ -103,21 +117,18 @@ export type Mutation = {
   __typename?: "Mutation";
   addFolderRole: SanitizedUser;
   addSavedMap: User;
-  addSignatures: Array<Signature>;
-  addWormholes: Array<Wormhole>;
+  addSignatures: AddSignaturesOutput;
   changeActiveFolder: SanitizedUser;
   createFolder: Folder;
   deleteSavedMap: User;
-  deleteSignature: Signature;
-  deleteWormhole: Wormhole;
+  deleteSignatures: DeleteSignaturesOutput;
   getToken: AccessTokenDto;
   login: AccessTokenDto;
   logout: LogoutDto;
   removeAlt: User;
   updateMotd: AppData;
   updateSelectedMap: User;
-  updateSignature: Signature;
-  updateWormhole: Wormhole;
+  updateSignatures: UpdateSignatureOutput;
 };
 
 export type MutationAddFolderRoleArgs = {
@@ -130,11 +141,7 @@ export type MutationAddSavedMapArgs = {
 };
 
 export type MutationAddSignaturesArgs = {
-  input: AddSignatureInput;
-};
-
-export type MutationAddWormholesArgs = {
-  input: AddWormholeInput;
+  input: AddSignaturesInput;
 };
 
 export type MutationChangeActiveFolderArgs = {
@@ -149,12 +156,8 @@ export type MutationDeleteSavedMapArgs = {
   mapId: Scalars["String"];
 };
 
-export type MutationDeleteSignatureArgs = {
-  id: Scalars["String"];
-};
-
-export type MutationDeleteWormholeArgs = {
-  id: Scalars["String"];
+export type MutationDeleteSignaturesArgs = {
+  input: DeleteSignaturesInput;
 };
 
 export type MutationGetTokenArgs = {
@@ -178,12 +181,8 @@ export type MutationUpdateSelectedMapArgs = {
   selectedMapId: Scalars["String"];
 };
 
-export type MutationUpdateSignatureArgs = {
-  input: UpdateSignatureInput;
-};
-
-export type MutationUpdateWormholeArgs = {
-  input: UpdateWormholeInput;
+export type MutationUpdateSignaturesArgs = {
+  input: UpdateSignaturesInput;
 };
 
 export type PublicAppData = {
@@ -199,8 +198,8 @@ export type Query = {
   getConnectionTree: ConnectionTree;
   getManageableFolders: Array<Folder>;
   getPublicAppData: PublicAppData;
+  getSignaturesBySystem: GetSignaturesOutput;
   getSystemByName: System;
-  getWormholesBySystem: Array<Wormhole>;
   searchCharactersByMain: Array<Character>;
   startSsoLogin: StartSsoLoginDto;
   whoami: User;
@@ -210,11 +209,11 @@ export type QueryGetConnectionTreeArgs = {
   rootSystem: Scalars["String"];
 };
 
-export type QueryGetSystemByNameArgs = {
-  name: Scalars["String"];
+export type QueryGetSignaturesBySystemArgs = {
+  systemName: Scalars["String"];
 };
 
-export type QueryGetWormholesBySystemArgs = {
+export type QueryGetSystemByNameArgs = {
   name: Scalars["String"];
 };
 
@@ -235,25 +234,53 @@ export type SavedMap = {
   rootSystemName: Scalars["String"];
 };
 
-export enum SigTypes {
+export enum SigType {
   Data = "DATA",
   Gas = "GAS",
   Relic = "RELIC",
+  Unknown = "UNKNOWN",
   Wormhole = "WORMHOLE",
 }
 
 export type Signature = {
   __typename?: "Signature";
+  destinationName?: Maybe<Scalars["String"]>;
+  eol?: Maybe<Scalars["Boolean"]>;
   eveId: Scalars["String"];
+  folder: Folder;
   id: Scalars["String"];
+  massStatus?: Maybe<MassStatus>;
   name: Scalars["String"];
-  type?: Maybe<SigTypes>;
+  reverse?: Maybe<Signature>;
+  reverseType?: Maybe<Scalars["String"]>;
+  systemName: Scalars["String"];
+  type: SigType;
+  wormholeType?: Maybe<Scalars["String"]>;
 };
 
 export type SignatureInput = {
+  destinationName?: InputMaybe<Scalars["String"]>;
+  eol?: InputMaybe<Scalars["Boolean"]>;
   eveId: Scalars["String"];
+  massStatus?: InputMaybe<MassStatus>;
   name: Scalars["String"];
-  type?: InputMaybe<SigTypes>;
+  reverseType?: InputMaybe<Scalars["String"]>;
+  systemName: Scalars["String"];
+  type: SigType;
+  wormholeType?: InputMaybe<Scalars["String"]>;
+};
+
+export type SignatureWithoutRefs = {
+  destinationName?: InputMaybe<Scalars["String"]>;
+  eol?: InputMaybe<Scalars["Boolean"]>;
+  eveId: Scalars["String"];
+  id: Scalars["String"];
+  massStatus?: InputMaybe<MassStatus>;
+  name: Scalars["String"];
+  reverseType?: InputMaybe<Scalars["String"]>;
+  systemName: Scalars["String"];
+  type: SigType;
+  wormholeType?: InputMaybe<Scalars["String"]>;
 };
 
 export type StartSsoLoginDto = {
@@ -266,7 +293,6 @@ export type System = {
   folder: Folder;
   id: Scalars["String"];
   name: Scalars["String"];
-  signatures: Array<Signature>;
 };
 
 export enum SystemRoles {
@@ -275,25 +301,13 @@ export enum SystemRoles {
   User = "USER",
 }
 
-export type UpdateSignatureInput = {
-  eveId: Scalars["String"];
-  id: Scalars["String"];
-  name: Scalars["String"];
-  signatures?: InputMaybe<Array<SignatureInput>>;
-  systemId?: InputMaybe<Scalars["String"]>;
-  type?: InputMaybe<SigTypes>;
+export type UpdateSignatureOutput = {
+  __typename?: "UpdateSignatureOutput";
+  signatures: Array<Signature>;
 };
 
-export type UpdateWormholeInput = {
-  destinationName?: InputMaybe<Scalars["String"]>;
-  eol?: InputMaybe<Scalars["Boolean"]>;
-  eveId?: InputMaybe<Scalars["String"]>;
-  id: Scalars["String"];
-  massStatus?: InputMaybe<MassStatus>;
-  name?: InputMaybe<Scalars["String"]>;
-  reverseType?: InputMaybe<Scalars["String"]>;
-  systemName?: InputMaybe<Scalars["String"]>;
-  type?: InputMaybe<Scalars["String"]>;
+export type UpdateSignaturesInput = {
+  signatures: Array<SignatureWithoutRefs>;
 };
 
 export type User = {
@@ -312,32 +326,6 @@ export type UserSettings = {
   activeFolder?: Maybe<Folder>;
   maps: Array<SavedMap>;
   selectedMap?: Maybe<SavedMap>;
-};
-
-export type Wormhole = {
-  __typename?: "Wormhole";
-  destinationName?: Maybe<Scalars["String"]>;
-  eol: Scalars["Boolean"];
-  eveId?: Maybe<Scalars["String"]>;
-  folder: Folder;
-  id: Scalars["String"];
-  massStatus: MassStatus;
-  name?: Maybe<Scalars["String"]>;
-  reverse?: Maybe<Wormhole>;
-  reverseType?: Maybe<Scalars["String"]>;
-  systemName: Scalars["String"];
-  type?: Maybe<Scalars["String"]>;
-};
-
-export type WormholeInput = {
-  destinationName?: InputMaybe<Scalars["String"]>;
-  eol: Scalars["Boolean"];
-  eveId: Scalars["String"];
-  massStatus: MassStatus;
-  name: Scalars["String"];
-  reverseType: Scalars["String"];
-  systemName: Scalars["String"];
-  type: Scalars["String"];
 };
 
 export type GetTokenMutationVariables = Exact<{
@@ -452,54 +440,26 @@ export type SignatureFieldsFragment = {
   __typename?: "Signature";
   id: string;
   name: string;
-  type?: SigTypes | null;
+  type: SigType;
   eveId: string;
 };
 
 export type AddSignatureMutationVariables = Exact<{
-  input: AddSignatureInput;
+  input: AddSignaturesInput;
 }>;
 
 export type AddSignatureMutation = {
   __typename?: "Mutation";
-  addSignatures: Array<{
-    __typename?: "Signature";
-    id: string;
-    name: string;
-    type?: SigTypes | null;
-    eveId: string;
-  }>;
-};
-
-export type WormholeFieldsFragment = {
-  __typename?: "Wormhole";
-  name?: string | null;
-  id: string;
-  eveId?: string | null;
-  type?: string | null;
-  eol: boolean;
-  massStatus: MassStatus;
-  destinationName?: string | null;
-  reverseType?: string | null;
-};
-
-export type AddWormholeMutationVariables = Exact<{
-  input: AddWormholeInput;
-}>;
-
-export type AddWormholeMutation = {
-  __typename?: "Mutation";
-  addWormholes: Array<{
-    __typename?: "Wormhole";
-    name?: string | null;
-    id: string;
-    eveId?: string | null;
-    type?: string | null;
-    eol: boolean;
-    massStatus: MassStatus;
-    destinationName?: string | null;
-    reverseType?: string | null;
-  }>;
+  addSignatures: {
+    __typename?: "AddSignaturesOutput";
+    signatures: Array<{
+      __typename?: "Signature";
+      id: string;
+      name: string;
+      type: SigType;
+      eveId: string;
+    }>;
+  };
 };
 
 export type UserDataQueryVariables = Exact<{ [key: string]: never }>;
@@ -545,29 +505,6 @@ export const SignatureFieldsFragmentDoc = {
     },
   ],
 } as unknown as DocumentNode<SignatureFieldsFragment, unknown>;
-export const WormholeFieldsFragmentDoc = {
-  kind: "Document",
-  definitions: [
-    {
-      kind: "FragmentDefinition",
-      name: { kind: "Name", value: "WormholeFields" },
-      typeCondition: { kind: "NamedType", name: { kind: "Name", value: "Wormhole" } },
-      selectionSet: {
-        kind: "SelectionSet",
-        selections: [
-          { kind: "Field", name: { kind: "Name", value: "name" } },
-          { kind: "Field", name: { kind: "Name", value: "id" } },
-          { kind: "Field", name: { kind: "Name", value: "eveId" } },
-          { kind: "Field", name: { kind: "Name", value: "type" } },
-          { kind: "Field", name: { kind: "Name", value: "eol" } },
-          { kind: "Field", name: { kind: "Name", value: "massStatus" } },
-          { kind: "Field", name: { kind: "Name", value: "destinationName" } },
-          { kind: "Field", name: { kind: "Name", value: "reverseType" } },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<WormholeFieldsFragment, unknown>;
 export const GetTokenDocument = {
   kind: "Document",
   definitions: [
@@ -1024,7 +961,7 @@ export const AddSignatureDocument = {
           variable: { kind: "Variable", name: { kind: "Name", value: "input" } },
           type: {
             kind: "NonNullType",
-            type: { kind: "NamedType", name: { kind: "Name", value: "AddSignatureInput" } },
+            type: { kind: "NamedType", name: { kind: "Name", value: "AddSignaturesInput" } },
           },
         },
       ],
@@ -1044,7 +981,16 @@ export const AddSignatureDocument = {
             selectionSet: {
               kind: "SelectionSet",
               selections: [
-                { kind: "FragmentSpread", name: { kind: "Name", value: "SignatureFields" } },
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "signatures" },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      { kind: "FragmentSpread", name: { kind: "Name", value: "SignatureFields" } },
+                    ],
+                  },
+                },
               ],
             },
           },
@@ -1054,49 +1000,6 @@ export const AddSignatureDocument = {
     ...SignatureFieldsFragmentDoc.definitions,
   ],
 } as unknown as DocumentNode<AddSignatureMutation, AddSignatureMutationVariables>;
-export const AddWormholeDocument = {
-  kind: "Document",
-  definitions: [
-    {
-      kind: "OperationDefinition",
-      operation: "mutation",
-      name: { kind: "Name", value: "AddWormhole" },
-      variableDefinitions: [
-        {
-          kind: "VariableDefinition",
-          variable: { kind: "Variable", name: { kind: "Name", value: "input" } },
-          type: {
-            kind: "NonNullType",
-            type: { kind: "NamedType", name: { kind: "Name", value: "AddWormholeInput" } },
-          },
-        },
-      ],
-      selectionSet: {
-        kind: "SelectionSet",
-        selections: [
-          {
-            kind: "Field",
-            name: { kind: "Name", value: "addWormholes" },
-            arguments: [
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "input" },
-                value: { kind: "Variable", name: { kind: "Name", value: "input" } },
-              },
-            ],
-            selectionSet: {
-              kind: "SelectionSet",
-              selections: [
-                { kind: "FragmentSpread", name: { kind: "Name", value: "WormholeFields" } },
-              ],
-            },
-          },
-        ],
-      },
-    },
-    ...WormholeFieldsFragmentDoc.definitions,
-  ],
-} as unknown as DocumentNode<AddWormholeMutation, AddWormholeMutationVariables>;
 export const UserDataDocument = {
   kind: "Document",
   definitions: [
