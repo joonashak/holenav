@@ -7,6 +7,8 @@ import { Folder } from "../entities/folder/folder.model";
 import FolderRole from "../user/roles/folder-role.enum";
 import SystemRole from "../user/roles/system-role.enum";
 import { User } from "../user/user.model";
+import { Signature } from "../entities/signature/signature.model";
+import SigType from "../entities/signature/enums/sig-type.enum";
 
 export const testFolder: Folder = {
   id: "test-folder",
@@ -54,4 +56,18 @@ export const testSsoTokens = { accessToken: "99wejf", refreshToken: "djw0e" };
 export const testSsoAccessTokenPayload = {
   CharacterName: "test name",
   CharacterId: "test-id",
+};
+
+export const testUnknownSig: Signature = {
+  folder: testFolder,
+  type: SigType.UNKNOWN,
+  name: "Test Unknown Sig",
+  systemName: "Jita",
+};
+
+export const testWormhole: Signature = {
+  folder: testFolder,
+  type: SigType.WORMHOLE,
+  name: "Test Wormhole",
+  systemName: "Amarr",
 };
