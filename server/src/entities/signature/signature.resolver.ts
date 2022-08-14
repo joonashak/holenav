@@ -3,10 +3,11 @@ import { ActiveFolder } from "../../auth/decorators/active-folder.decorator";
 import { RequireFolderRole } from "../../auth/decorators/role.decorator";
 import FolderRole from "../../user/roles/folder-role.enum";
 import { ActiveFolderService } from "../folder/active-folder.service";
-import { FolderDocument } from "../folder/folder.model";
+import { Folder, FolderDocument } from "../folder/folder.model";
 import { AddSignaturesInput, AddSignaturesOutput } from "./dto/add-signatures.dto";
 import { ConnectionTree } from "./dto/connection-tree.dto";
 import { DeleteSignaturesInput, DeleteSignaturesOutput } from "./dto/delete-signatures.dto";
+import { GetSignaturesOutput } from "./dto/get-signatures.dto";
 import { UpdateSignatureOutput, UpdateSignaturesInput } from "./dto/update-signatures.dto";
 import { ConnectionTreeService } from "./services/connection-tree.service";
 import { SignatureService } from "./services/signature.service";
@@ -19,8 +20,18 @@ export class SignatureResolver {
     private connectionTreeService: ConnectionTreeService,
   ) {}
 
+  @RequireFolderRole(FolderRole.READ)
+  @Query((returns) => GetSignaturesOutput)
+  async getSignaturesBySystem(
+    @Args("systemName") systemName: string,
+    @ActiveFolder() activeFolder: Folder,
+  ): Promise<GetSignaturesOutput> {
+    const signatures = await this.sigService.getBySystem(systemName, activeFolder);
+    return { signatures };
+  }
+
   @RequireFolderRole(FolderRole.WRITE)
-  @Mutation((returns) => [AddSignaturesOutput])
+  @Mutation((returns) => AddSignaturesOutput)
   async addSignatures(@Args("input") input: AddSignaturesInput): Promise<AddSignaturesOutput> {
     const sigs = this.activeFolderService.populateWithActiveFolder(input.signatures);
     const signatures = await this.sigService.createSignatures(sigs);
@@ -28,7 +39,7 @@ export class SignatureResolver {
   }
 
   @RequireFolderRole(FolderRole.WRITE)
-  @Mutation((returns) => [UpdateSignatureOutput])
+  @Mutation((returns) => UpdateSignatureOutput)
   async updateSignatures(
     @Args("input") input: UpdateSignaturesInput,
   ): Promise<UpdateSignatureOutput> {
