@@ -27,7 +27,7 @@ export class SignatureService {
 
   async updateSignatures(sigUpdates: SignatureUpdate[]): Promise<Signature[]> {
     const ids = sigUpdates.map((sig) => sig.id);
-    const oldSigs = await this.sigModel.find({ $id: { in: ids } });
+    const oldSigs = await this.sigModel.find({ id: { $in: ids } });
 
     return Promise.all(
       sigUpdates.map(async (update) =>

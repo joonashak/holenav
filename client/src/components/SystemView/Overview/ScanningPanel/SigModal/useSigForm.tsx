@@ -5,12 +5,12 @@ import { SigFormProps } from "./SigForm";
 
 const useSigForm = (props: SigFormProps) => {
   const { type, eveId, existing, onClose } = props;
-  const { addSignatures: addSignature, updateSignature } = useSignatures();
+  const { addSignatures, updateSignatures } = useSignatures();
   const { showSuccessNotification } = useNotification();
 
   const submitNew = async (formData: FieldValues) => {
     const name = formData.name || "";
-    const res = await addSignature([{ ...formData, type, eveId, name }]);
+    const res = await addSignatures([{ ...formData, type, eveId, name }]);
 
     if (res.data && !res.errors) {
       showSuccessNotification("Signature added.");
@@ -21,7 +21,7 @@ const useSigForm = (props: SigFormProps) => {
   const submitEdit = async (formData: FieldValues) => {
     const id = existing?.id || "";
     const { name } = formData;
-    const res = await updateSignature({ name, type, eveId, id });
+    const res = await updateSignatures([{ name, type, eveId, id }]);
 
     if (res.data && !res.errors) {
       showSuccessNotification("Signature updated.");

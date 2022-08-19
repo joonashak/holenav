@@ -11,7 +11,7 @@ const useWormholeForm = (props: WormholeFormProps) => {
   const { name: systemName } = useSystemData();
   const { fetchConnectionTree } = useMapData();
   const { showSuccessNotification } = useNotification();
-  const { addSignatures: addSignature, updateSignature } = useSignatures();
+  const { addSignatures, updateSignatures } = useSignatures();
 
   const submitNew = async (formData: FieldValues) => {
     const { whType, whReverseType, life, mass, ...data } = formData;
@@ -24,8 +24,8 @@ const useWormholeForm = (props: WormholeFormProps) => {
       massStatus: mass,
       ...data,
     };
-    // FIXME:
-    const res = await addSignature([mutationData as Signature]);
+
+    const res = await addSignatures([mutationData as Signature]);
 
     if (res.data && !res.errors) {
       fetchConnectionTree();
@@ -47,8 +47,8 @@ const useWormholeForm = (props: WormholeFormProps) => {
       name,
       destinationName,
     };
-    // FIXME:
-    const res = await updateSignature(mutationData as Signature);
+
+    const res = await updateSignatures([mutationData as Signature]);
 
     if (res.data && !res.errors) {
       showSuccessNotification("Wormhole updated.");

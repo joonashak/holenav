@@ -38,8 +38,8 @@ const useSignatures = () => {
     },
   });
 
-  const updateSignature = async (update: SignatureUpdate): Promise<FetchResult> =>
-    updateSigsMutation({ variables: { input: update } });
+  const updateSignatures = async (signatures: SignatureUpdate[]): Promise<FetchResult> =>
+    updateSigsMutation({ variables: { input: { signatures } } });
 
   const [deleteSigsMutation] = useAuthenticatedMutation(DeleteSignaturesDocument, {
     onCompleted: (data) => {
@@ -48,9 +48,6 @@ const useSignatures = () => {
     },
   });
 
-  /**
-   * Delete signature. Also handles wormholes.
-   */
   const deleteSignatures = async (ids: string[]): Promise<void> => {
     await deleteSigsMutation({ variables: { input: { ids } } });
   };
@@ -60,7 +57,7 @@ const useSignatures = () => {
       return state.signatures.attach(Downgraded).get();
     },
     addSignatures,
-    updateSignature,
+    updateSignatures,
     deleteSignatures,
   };
 };
