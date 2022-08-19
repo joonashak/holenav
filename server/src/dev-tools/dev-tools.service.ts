@@ -35,6 +35,8 @@ export class DevToolsService {
    */
   async resetDatabase() {
     await this.clearCollections();
+    await this.mockFolderService.mock();
+    await this.mockUserService.mock();
   }
 
   /**

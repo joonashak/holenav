@@ -1,5 +1,5 @@
 import { DialogContent, DialogTitle, SelectChangeEvent } from "@mui/material";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import Select from "../../../../controls/Select";
 import SigForm from "./SigForm";
 import WormholeForm from "./WormholeForm";
@@ -22,11 +22,18 @@ type SigModalProps = {
   signature?: Signature;
 };
 
-const SigModal = ({ open, onClose, signature }: SigModalProps) => {
-  const defaultType = signature?.type || "";
-  const [type, setType] = useState<SigType>(defaultType.toUpperCase() as SigType);
+const SigModal = ({ open, onClose: onCloseSuper, signature }: SigModalProps) => {
+  const defaultType = signature?.type || SigType.Unknown;
+  const [type, setType] = useState(defaultType);
+  const defaultEveId = signature?.eveId || "";
+  const [eveId, setEveId] = useState(defaultEveId);
 
-  const [eveId, setEveId] = useState<string>(signature?.eveId || "");
+  const onClose = () => {
+    // Reset top-level form values when closed.
+    setType(defaultType);
+    setEveId(defaultEveId);
+    onCloseSuper();
+  };
 
   const onTypeChange = ({ target }: SelectChangeEvent) => {
     setType(target.value as SigType);
