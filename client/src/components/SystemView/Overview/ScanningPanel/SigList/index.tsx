@@ -8,7 +8,6 @@ import {
   Paper,
   TableCellProps,
 } from "@mui/material";
-import { SigType } from "../../../../../generated/graphqlOperations";
 import TableRow from "../../../../common/TableRow";
 import useSignatures from "../../../SystemData/useSignatures";
 import DeleteSigButton from "./DeleteSigButton";
