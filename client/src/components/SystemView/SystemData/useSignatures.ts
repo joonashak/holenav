@@ -4,10 +4,11 @@ import { systemState } from ".";
 import useAuthenticatedMutation from "../../../auth/useAuthenticatedMutation";
 import {
   AddSignatureDocument,
+  DeleteSignatureDocument,
   Signature,
   SignatureUpdate,
+  UpdateSignatureDocument,
 } from "../../../generated/graphqlOperations";
-import { DELETE_SIGNATURE, EDIT_SIGNATURE } from "./graphql";
 
 export type AddSignatureHookInput = Omit<Signature, "id" | "folder" | "systemName">;
 
@@ -25,7 +26,7 @@ const useSignatures = () => {
     return addSigMutation({ variables: { input } });
   };
 
-  const [updateSigMutation] = useAuthenticatedMutation(EDIT_SIGNATURE, {
+  const [updateSigMutation] = useAuthenticatedMutation(UpdateSignatureDocument, {
     onCompleted: (data) => {
       const updatedSig = data.updateSignature;
       state.signatures.set((sigs) =>
@@ -37,7 +38,7 @@ const useSignatures = () => {
   const updateSignature = async (update: SignatureUpdate): Promise<FetchResult> =>
     updateSigMutation({ variables: { input: update } });
 
-  const [deleteSigMutation] = useAuthenticatedMutation(DELETE_SIGNATURE, {
+  const [deleteSigMutation] = useAuthenticatedMutation(DeleteSignatureDocument, {
     onCompleted: (data) => {
       const deletedSig = data.deleteSignature;
       state.signatures.set((sigs) => sigs.filter((sig) => sig.id !== deletedSig.id));

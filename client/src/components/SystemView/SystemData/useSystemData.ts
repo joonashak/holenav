@@ -1,12 +1,12 @@
 import { Downgraded, useState } from "@hookstate/core";
 import { systemState } from ".";
 import useLazyAuthenticatedQuery from "../../../auth/useLazyAuthenticatedQuery";
-import { GET_SYSTEM_BY_NAME } from "./graphql";
+import { SystemDocument } from "../../../generated/graphqlOperations";
 
 export default () => {
   const state = useState(systemState);
 
-  const [changeSystem] = useLazyAuthenticatedQuery(GET_SYSTEM_BY_NAME, {
+  const [changeSystem] = useLazyAuthenticatedQuery(SystemDocument, {
     onCompleted: ({ getSystemByName, getWormholesBySystem }) => {
       const wormholes = getWormholesBySystem;
       state.merge({ ...getSystemByName, wormholes });
