@@ -2,8 +2,9 @@
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { MouseEvent, ReactNode, useState } from "react";
-import { Signature } from "../../../../../generated/graphqlOperations";
+import { Signature, SigType } from "../../../../../generated/graphqlOperations";
 import TableRow from "../../../../common/TableRow";
+import useNotification from "../../../../GlobalNotification/useNotification";
 import useSignatures from "../../../SystemData/useSignatures";
 
 type SigContextMenuProps = {
@@ -12,9 +13,9 @@ type SigContextMenuProps = {
 };
 
 const SigContextMenu = ({ children, signature }: SigContextMenuProps) => {
-  const { deleteSignatures: deleteSignature } = useSignatures();
-  // FIXME:
-  // const { wormholes, updateWormhole } = useWormholes();
+  const { signatures, updateSignatures, deleteSignatures } = useSignatures();
+  const { showErrorNotification } = useNotification();
+
   const [contextMenu, setContextMenu] = useState<{
     mouseX: number;
     mouseY: number;
@@ -39,20 +40,23 @@ const SigContextMenu = ({ children, signature }: SigContextMenuProps) => {
     setContextMenu(null);
   };
 
-  /* FIXME:
-  const holesWithoutIds = wormholes.filter((wh) => !wh.eveId);
+  const holesWithoutIds = signatures.filter((sig) => sig.type === SigType.Wormhole && !sig.eveId);
   const returnConnectionWithoutId = holesWithoutIds.length === 1 ? holesWithoutIds[0] : null;
+
+  const enabled = returnConnectionWithoutId && signature.eveId && !signature.wormholeType;
 
   const markSigAsReturnWormhole = async () => {
     if (!returnConnectionWithoutId) {
+      showErrorNotification("Could not figure out what signature to link.");
       handleClose();
       return;
     }
-    await deleteSignature(signature.id);
-    await updateWormhole({ eveId: signature.eveId, id: returnConnectionWithoutId.id });
+    await deleteSignatures([signature.id]);
+    await updateSignatures([
+      { eveId: signature.eveId, id: returnConnectionWithoutId.id, type: SigType.Wormhole },
+    ]);
     handleClose();
   };
-  */
 
   return (
     <TableRow
@@ -69,11 +73,9 @@ const SigContextMenu = ({ children, signature }: SigContextMenuProps) => {
           contextMenu !== null ? { top: contextMenu.mouseY, left: contextMenu.mouseX } : undefined
         }
       >
-        {/* FIXME:
-        <MenuItem onClick={markSigAsReturnWormhole} disabled={!returnConnectionWithoutId}>
+        <MenuItem onClick={markSigAsReturnWormhole} disabled={!enabled}>
           Mark {signature.eveId} as Return Wormhole
         </MenuItem>
-      */}
       </Menu>
     </TableRow>
   );
