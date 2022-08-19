@@ -3,6 +3,22 @@ fragment SignatureFields on Signature {
   name
   type
   eveId
+  eol
+  massStatus
+  destinationName
+  wormholeType
+  reverseType
+}
+
+query System($name: String!) {
+  getSystemByName(name: $name) {
+    id
+    name
+  }
+
+  getSignaturesBySystem(systemName: $name) {
+    ...SignatureFields
+  }
 }
 
 mutation AddSignature($input: AddSignaturesInput!) {
@@ -10,5 +26,17 @@ mutation AddSignature($input: AddSignaturesInput!) {
     signatures {
       ...SignatureFields
     }
+  }
+}
+
+mutation UpdateSignature($input: UpdateSignaturesInput!) {
+  updateSignatures(input: $input) {
+    ...SignatureFields
+  }
+}
+
+mutation DeleteSignature($input: DeleteSignaturesInput!) {
+  deleteSignatures(input: $input) {
+    ...SignatureFields
   }
 }

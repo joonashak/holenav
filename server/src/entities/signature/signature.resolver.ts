@@ -6,11 +6,11 @@ import { ActiveFolderService } from "../folder/active-folder.service";
 import { Folder, FolderDocument } from "../folder/folder.model";
 import { AddSignaturesInput, AddSignaturesOutput } from "./dto/add-signatures.dto";
 import { ConnectionTree } from "./dto/connection-tree.dto";
-import { DeleteSignaturesInput, DeleteSignaturesOutput } from "./dto/delete-signatures.dto";
-import { GetSignaturesOutput } from "./dto/get-signatures.dto";
-import { UpdateSignatureOutput, UpdateSignaturesInput } from "./dto/update-signatures.dto";
+import { DeleteSignaturesInput } from "./dto/delete-signatures.dto";
+import { UpdateSignaturesInput } from "./dto/update-signatures.dto";
 import { ConnectionTreeService } from "./services/connection-tree.service";
 import { SignatureService } from "./services/signature.service";
+import { Signature } from "./signature.model";
 
 @Resolver()
 export class SignatureResolver {
@@ -21,13 +21,13 @@ export class SignatureResolver {
   ) {}
 
   @RequireFolderRole(FolderRole.READ)
-  @Query((returns) => GetSignaturesOutput)
+  @Query((returns) => [Signature])
   async getSignaturesBySystem(
     @Args("systemName") systemName: string,
     @ActiveFolder() activeFolder: Folder,
-  ): Promise<GetSignaturesOutput> {
+  ): Promise<Signature[]> {
     const signatures = await this.sigService.getBySystem(systemName, activeFolder);
-    return { signatures };
+    return signatures;
   }
 
   @RequireFolderRole(FolderRole.WRITE)
@@ -39,22 +39,18 @@ export class SignatureResolver {
   }
 
   @RequireFolderRole(FolderRole.WRITE)
-  @Mutation((returns) => UpdateSignatureOutput)
-  async updateSignatures(
-    @Args("input") input: UpdateSignaturesInput,
-  ): Promise<UpdateSignatureOutput> {
+  @Mutation((returns) => [Signature])
+  async updateSignatures(@Args("input") input: UpdateSignaturesInput): Promise<Signature[]> {
     const sigs = this.activeFolderService.populateWithActiveFolder(input.signatures);
     const signatures = await this.sigService.updateSignatures(sigs);
-    return { signatures };
+    return signatures;
   }
 
   @RequireFolderRole(FolderRole.WRITE)
-  @Mutation((returns) => DeleteSignaturesOutput)
-  async deleteSignatures(
-    @Args("input") input: DeleteSignaturesInput,
-  ): Promise<DeleteSignaturesOutput> {
+  @Mutation((returns) => [Signature])
+  async deleteSignatures(@Args("input") input: DeleteSignaturesInput): Promise<Signature[]> {
     const signatures = await this.sigService.deleteSignatures(input.ids);
-    return { signatures };
+    return signatures;
   }
 
   @RequireFolderRole(FolderRole.READ)

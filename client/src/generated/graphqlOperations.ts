@@ -72,11 +72,6 @@ export type DeleteSignaturesInput = {
   ids: Array<Scalars["String"]>;
 };
 
-export type DeleteSignaturesOutput = {
-  __typename?: "DeleteSignaturesOutput";
-  signatures: Array<Signature>;
-};
-
 export type Folder = {
   __typename?: "Folder";
   id: Scalars["String"];
@@ -97,11 +92,6 @@ export enum FolderRoles {
   Write = "WRITE",
 }
 
-export type GetSignaturesOutput = {
-  __typename?: "GetSignaturesOutput";
-  signatures: Array<Signature>;
-};
-
 export type LogoutDto = {
   __typename?: "LogoutDto";
   loggedOut: Scalars["Boolean"];
@@ -121,14 +111,14 @@ export type Mutation = {
   changeActiveFolder: SanitizedUser;
   createFolder: Folder;
   deleteSavedMap: User;
-  deleteSignatures: DeleteSignaturesOutput;
+  deleteSignatures: Array<Signature>;
   getToken: AccessTokenDto;
   login: AccessTokenDto;
   logout: LogoutDto;
   removeAlt: User;
   updateMotd: AppData;
   updateSelectedMap: User;
-  updateSignatures: UpdateSignatureOutput;
+  updateSignatures: Array<Signature>;
 };
 
 export type MutationAddFolderRoleArgs = {
@@ -198,7 +188,7 @@ export type Query = {
   getConnectionTree: ConnectionTree;
   getManageableFolders: Array<Folder>;
   getPublicAppData: PublicAppData;
-  getSignaturesBySystem: GetSignaturesOutput;
+  getSignaturesBySystem: Array<Signature>;
   getSystemByName: System;
   searchCharactersByMain: Array<Character>;
   startSsoLogin: StartSsoLoginDto;
@@ -300,11 +290,6 @@ export enum SystemRoles {
   Manager = "MANAGER",
   User = "USER",
 }
-
-export type UpdateSignatureOutput = {
-  __typename?: "UpdateSignatureOutput";
-  signatures: Array<Signature>;
-};
 
 export type UpdateSignaturesInput = {
   signatures: Array<SignatureUpdate>;
@@ -442,6 +427,32 @@ export type SignatureFieldsFragment = {
   name: string;
   type: SigType;
   eveId: string;
+  eol?: boolean | null;
+  massStatus?: MassStatus | null;
+  destinationName?: string | null;
+  wormholeType?: string | null;
+  reverseType?: string | null;
+};
+
+export type SystemQueryVariables = Exact<{
+  name: Scalars["String"];
+}>;
+
+export type SystemQuery = {
+  __typename?: "Query";
+  getSystemByName: { __typename?: "System"; id: string; name: string };
+  getSignaturesBySystem: Array<{
+    __typename?: "Signature";
+    id: string;
+    name: string;
+    type: SigType;
+    eveId: string;
+    eol?: boolean | null;
+    massStatus?: MassStatus | null;
+    destinationName?: string | null;
+    wormholeType?: string | null;
+    reverseType?: string | null;
+  }>;
 };
 
 export type AddSignatureMutationVariables = Exact<{
@@ -458,8 +469,53 @@ export type AddSignatureMutation = {
       name: string;
       type: SigType;
       eveId: string;
+      eol?: boolean | null;
+      massStatus?: MassStatus | null;
+      destinationName?: string | null;
+      wormholeType?: string | null;
+      reverseType?: string | null;
     }>;
   };
+};
+
+export type UpdateSignatureMutationVariables = Exact<{
+  input: UpdateSignaturesInput;
+}>;
+
+export type UpdateSignatureMutation = {
+  __typename?: "Mutation";
+  updateSignatures: Array<{
+    __typename?: "Signature";
+    id: string;
+    name: string;
+    type: SigType;
+    eveId: string;
+    eol?: boolean | null;
+    massStatus?: MassStatus | null;
+    destinationName?: string | null;
+    wormholeType?: string | null;
+    reverseType?: string | null;
+  }>;
+};
+
+export type DeleteSignatureMutationVariables = Exact<{
+  input: DeleteSignaturesInput;
+}>;
+
+export type DeleteSignatureMutation = {
+  __typename?: "Mutation";
+  deleteSignatures: Array<{
+    __typename?: "Signature";
+    id: string;
+    name: string;
+    type: SigType;
+    eveId: string;
+    eol?: boolean | null;
+    massStatus?: MassStatus | null;
+    destinationName?: string | null;
+    wormholeType?: string | null;
+    reverseType?: string | null;
+  }>;
 };
 
 export type UserDataQueryVariables = Exact<{ [key: string]: never }>;
@@ -500,6 +556,11 @@ export const SignatureFieldsFragmentDoc = {
           { kind: "Field", name: { kind: "Name", value: "name" } },
           { kind: "Field", name: { kind: "Name", value: "type" } },
           { kind: "Field", name: { kind: "Name", value: "eveId" } },
+          { kind: "Field", name: { kind: "Name", value: "eol" } },
+          { kind: "Field", name: { kind: "Name", value: "massStatus" } },
+          { kind: "Field", name: { kind: "Name", value: "destinationName" } },
+          { kind: "Field", name: { kind: "Name", value: "wormholeType" } },
+          { kind: "Field", name: { kind: "Name", value: "reverseType" } },
         ],
       },
     },
@@ -948,6 +1009,67 @@ export const SearchCharactersByMainDocument = {
     },
   ],
 } as unknown as DocumentNode<SearchCharactersByMainQuery, SearchCharactersByMainQueryVariables>;
+export const SystemDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "query",
+      name: { kind: "Name", value: "System" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "name" } },
+          type: {
+            kind: "NonNullType",
+            type: { kind: "NamedType", name: { kind: "Name", value: "String" } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "getSystemByName" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "name" },
+                value: { kind: "Variable", name: { kind: "Name", value: "name" } },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "id" } },
+                { kind: "Field", name: { kind: "Name", value: "name" } },
+              ],
+            },
+          },
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "getSignaturesBySystem" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "systemName" },
+                value: { kind: "Variable", name: { kind: "Name", value: "name" } },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "FragmentSpread", name: { kind: "Name", value: "SignatureFields" } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    ...SignatureFieldsFragmentDoc.definitions,
+  ],
+} as unknown as DocumentNode<SystemQuery, SystemQueryVariables>;
 export const AddSignatureDocument = {
   kind: "Document",
   definitions: [
@@ -1000,6 +1122,92 @@ export const AddSignatureDocument = {
     ...SignatureFieldsFragmentDoc.definitions,
   ],
 } as unknown as DocumentNode<AddSignatureMutation, AddSignatureMutationVariables>;
+export const UpdateSignatureDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "UpdateSignature" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "input" } },
+          type: {
+            kind: "NonNullType",
+            type: { kind: "NamedType", name: { kind: "Name", value: "UpdateSignaturesInput" } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "updateSignatures" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "input" },
+                value: { kind: "Variable", name: { kind: "Name", value: "input" } },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "FragmentSpread", name: { kind: "Name", value: "SignatureFields" } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    ...SignatureFieldsFragmentDoc.definitions,
+  ],
+} as unknown as DocumentNode<UpdateSignatureMutation, UpdateSignatureMutationVariables>;
+export const DeleteSignatureDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "DeleteSignature" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "input" } },
+          type: {
+            kind: "NonNullType",
+            type: { kind: "NamedType", name: { kind: "Name", value: "DeleteSignaturesInput" } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "deleteSignatures" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "input" },
+                value: { kind: "Variable", name: { kind: "Name", value: "input" } },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "FragmentSpread", name: { kind: "Name", value: "SignatureFields" } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    ...SignatureFieldsFragmentDoc.definitions,
+  ],
+} as unknown as DocumentNode<DeleteSignatureMutation, DeleteSignatureMutationVariables>;
 export const UserDataDocument = {
   kind: "Document",
   definitions: [
