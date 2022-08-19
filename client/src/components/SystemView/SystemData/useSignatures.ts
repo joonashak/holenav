@@ -15,7 +15,7 @@ export type AddSignatureHookInput = Omit<Signature, "id" | "folder" | "systemNam
 const useSignatures = () => {
   const state = useState(systemState);
 
-  const [addSigMutation] = useAuthenticatedMutation(AddSignaturesDocument, {
+  const [addSigsMutation] = useAuthenticatedMutation(AddSignaturesDocument, {
     onCompleted: (data) => {
       state.signatures.set((sigs) => sigs.concat(data.addSignatures));
     },
@@ -26,10 +26,10 @@ const useSignatures = () => {
       ...sig,
       systemName: state.name.get(),
     }));
-    return addSigMutation({ variables: { input: { signatures } } });
+    return addSigsMutation({ variables: { input: { signatures } } });
   };
 
-  const [updateSigMutation] = useAuthenticatedMutation(UpdateSignaturesDocument, {
+  const [updateSigsMutation] = useAuthenticatedMutation(UpdateSignaturesDocument, {
     onCompleted: (data) => {
       const updatedSig = data.updateSignature;
       state.signatures.set((sigs) =>
@@ -39,20 +39,20 @@ const useSignatures = () => {
   });
 
   const updateSignature = async (update: SignatureUpdate): Promise<FetchResult> =>
-    updateSigMutation({ variables: { input: update } });
+    updateSigsMutation({ variables: { input: update } });
 
-  const [deleteSigMutation] = useAuthenticatedMutation(DeleteSignaturesDocument, {
+  const [deleteSigsMutation] = useAuthenticatedMutation(DeleteSignaturesDocument, {
     onCompleted: (data) => {
-      const deletedSig = data.deleteSignature;
-      state.signatures.set((sigs) => sigs.filter((sig) => sig.id !== deletedSig.id));
+      const deletedIds = data.deleteSignatures.map((sig: Signature) => sig.id);
+      state.signatures.set((sigs) => sigs.filter((sig) => !deletedIds.includes(sig.id)));
     },
   });
 
   /**
    * Delete signature. Also handles wormholes.
    */
-  const deleteSignature = async (id: string): Promise<void> => {
-    await deleteSigMutation({ variables: { id } });
+  const deleteSignatures = async (ids: string[]): Promise<void> => {
+    await deleteSigsMutation({ variables: { input: { ids } } });
   };
 
   return {
@@ -61,7 +61,7 @@ const useSignatures = () => {
     },
     addSignatures,
     updateSignature,
-    deleteSignature,
+    deleteSignatures,
   };
 };
 

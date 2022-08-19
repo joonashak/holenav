@@ -12,7 +12,7 @@ type SigContextMenuProps = {
 };
 
 const SigContextMenu = ({ children, signature }: SigContextMenuProps) => {
-  const { deleteSignature } = useSignatures();
+  const { deleteSignatures: deleteSignature } = useSignatures();
   // FIXME:
   // const { wormholes, updateWormhole } = useWormholes();
   const [contextMenu, setContextMenu] = useState<{

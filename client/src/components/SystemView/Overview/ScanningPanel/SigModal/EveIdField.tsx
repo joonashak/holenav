@@ -9,7 +9,7 @@ type EveIdFieldProps = {
 };
 
 const EveIdField = ({ value, onChange, existingId }: EveIdFieldProps) => {
-  const { signatures, deleteSignature } = useSignatures();
+  const { signatures, deleteSignatures } = useSignatures();
   const allSigsButExisting = signatures.filter((sig) => sig.id !== existingId);
   const duplicate = allSigsButExisting.find((sig) => sig.eveId === value);
   // Don't count empty EVE ID's as duplicates:
@@ -17,7 +17,7 @@ const EveIdField = ({ value, onChange, existingId }: EveIdFieldProps) => {
 
   const deleteDuplicate = async () => {
     if (isDuplicate) {
-      await deleteSignature(duplicate.id);
+      await deleteSignatures([duplicate.id]);
     }
   };
 
