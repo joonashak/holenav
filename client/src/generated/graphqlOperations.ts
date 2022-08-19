@@ -416,6 +416,679 @@ export type SearchCharactersByMainQuery = {
   searchCharactersByMain: Array<{ __typename?: "Character"; name: string; esiId: string }>;
 };
 
+export type ConnectionTreeQueryVariables = Exact<{
+  rootSystem: Scalars["String"];
+}>;
+
+export type ConnectionTreeQuery = {
+  __typename?: "Query";
+  getConnectionTree: {
+    __typename?: "ConnectionTree";
+    rootSystemName: string;
+    children: Array<{
+      __typename?: "ConnectionTreeNode";
+      name: string;
+      children: Array<{
+        __typename?: "ConnectionTreeNode";
+        name: string;
+        children: Array<{
+          __typename?: "ConnectionTreeNode";
+          name: string;
+          children: Array<{
+            __typename?: "ConnectionTreeNode";
+            name: string;
+            children: Array<{
+              __typename?: "ConnectionTreeNode";
+              name: string;
+              children: Array<{
+                __typename?: "ConnectionTreeNode";
+                name: string;
+                children: Array<{
+                  __typename?: "ConnectionTreeNode";
+                  name: string;
+                  children: Array<{
+                    __typename?: "ConnectionTreeNode";
+                    name: string;
+                    children: Array<{
+                      __typename?: "ConnectionTreeNode";
+                      name: string;
+                      children: Array<{
+                        __typename?: "ConnectionTreeNode";
+                        name: string;
+                        children: Array<{
+                          __typename?: "ConnectionTreeNode";
+                          name: string;
+                          children: Array<{
+                            __typename?: "ConnectionTreeNode";
+                            name: string;
+                            children: Array<{
+                              __typename?: "ConnectionTreeNode";
+                              name: string;
+                              children: Array<{
+                                __typename?: "ConnectionTreeNode";
+                                name: string;
+                                children: Array<{
+                                  __typename?: "ConnectionTreeNode";
+                                  name: string;
+                                  children: Array<{
+                                    __typename?: "ConnectionTreeNode";
+                                    name: string;
+                                    children: Array<{
+                                      __typename?: "ConnectionTreeNode";
+                                      name: string;
+                                      children: Array<{
+                                        __typename?: "ConnectionTreeNode";
+                                        name: string;
+                                        children: Array<{
+                                          __typename?: "ConnectionTreeNode";
+                                          name: string;
+                                          children: Array<{
+                                            __typename?: "ConnectionTreeNode";
+                                            name: string;
+                                            wormhole: {
+                                              __typename?: "Signature";
+                                              id: string;
+                                              name: string;
+                                              type: SigType;
+                                              eveId: string;
+                                              eol?: boolean | null;
+                                              massStatus?: MassStatus | null;
+                                              destinationName?: string | null;
+                                              wormholeType?: string | null;
+                                              reverseType?: string | null;
+                                            };
+                                          }>;
+                                          wormhole: {
+                                            __typename?: "Signature";
+                                            id: string;
+                                            name: string;
+                                            type: SigType;
+                                            eveId: string;
+                                            eol?: boolean | null;
+                                            massStatus?: MassStatus | null;
+                                            destinationName?: string | null;
+                                            wormholeType?: string | null;
+                                            reverseType?: string | null;
+                                          };
+                                        }>;
+                                        wormhole: {
+                                          __typename?: "Signature";
+                                          id: string;
+                                          name: string;
+                                          type: SigType;
+                                          eveId: string;
+                                          eol?: boolean | null;
+                                          massStatus?: MassStatus | null;
+                                          destinationName?: string | null;
+                                          wormholeType?: string | null;
+                                          reverseType?: string | null;
+                                        };
+                                      }>;
+                                      wormhole: {
+                                        __typename?: "Signature";
+                                        id: string;
+                                        name: string;
+                                        type: SigType;
+                                        eveId: string;
+                                        eol?: boolean | null;
+                                        massStatus?: MassStatus | null;
+                                        destinationName?: string | null;
+                                        wormholeType?: string | null;
+                                        reverseType?: string | null;
+                                      };
+                                    }>;
+                                    wormhole: {
+                                      __typename?: "Signature";
+                                      id: string;
+                                      name: string;
+                                      type: SigType;
+                                      eveId: string;
+                                      eol?: boolean | null;
+                                      massStatus?: MassStatus | null;
+                                      destinationName?: string | null;
+                                      wormholeType?: string | null;
+                                      reverseType?: string | null;
+                                    };
+                                  }>;
+                                  wormhole: {
+                                    __typename?: "Signature";
+                                    id: string;
+                                    name: string;
+                                    type: SigType;
+                                    eveId: string;
+                                    eol?: boolean | null;
+                                    massStatus?: MassStatus | null;
+                                    destinationName?: string | null;
+                                    wormholeType?: string | null;
+                                    reverseType?: string | null;
+                                  };
+                                }>;
+                                wormhole: {
+                                  __typename?: "Signature";
+                                  id: string;
+                                  name: string;
+                                  type: SigType;
+                                  eveId: string;
+                                  eol?: boolean | null;
+                                  massStatus?: MassStatus | null;
+                                  destinationName?: string | null;
+                                  wormholeType?: string | null;
+                                  reverseType?: string | null;
+                                };
+                              }>;
+                              wormhole: {
+                                __typename?: "Signature";
+                                id: string;
+                                name: string;
+                                type: SigType;
+                                eveId: string;
+                                eol?: boolean | null;
+                                massStatus?: MassStatus | null;
+                                destinationName?: string | null;
+                                wormholeType?: string | null;
+                                reverseType?: string | null;
+                              };
+                            }>;
+                            wormhole: {
+                              __typename?: "Signature";
+                              id: string;
+                              name: string;
+                              type: SigType;
+                              eveId: string;
+                              eol?: boolean | null;
+                              massStatus?: MassStatus | null;
+                              destinationName?: string | null;
+                              wormholeType?: string | null;
+                              reverseType?: string | null;
+                            };
+                          }>;
+                          wormhole: {
+                            __typename?: "Signature";
+                            id: string;
+                            name: string;
+                            type: SigType;
+                            eveId: string;
+                            eol?: boolean | null;
+                            massStatus?: MassStatus | null;
+                            destinationName?: string | null;
+                            wormholeType?: string | null;
+                            reverseType?: string | null;
+                          };
+                        }>;
+                        wormhole: {
+                          __typename?: "Signature";
+                          id: string;
+                          name: string;
+                          type: SigType;
+                          eveId: string;
+                          eol?: boolean | null;
+                          massStatus?: MassStatus | null;
+                          destinationName?: string | null;
+                          wormholeType?: string | null;
+                          reverseType?: string | null;
+                        };
+                      }>;
+                      wormhole: {
+                        __typename?: "Signature";
+                        id: string;
+                        name: string;
+                        type: SigType;
+                        eveId: string;
+                        eol?: boolean | null;
+                        massStatus?: MassStatus | null;
+                        destinationName?: string | null;
+                        wormholeType?: string | null;
+                        reverseType?: string | null;
+                      };
+                    }>;
+                    wormhole: {
+                      __typename?: "Signature";
+                      id: string;
+                      name: string;
+                      type: SigType;
+                      eveId: string;
+                      eol?: boolean | null;
+                      massStatus?: MassStatus | null;
+                      destinationName?: string | null;
+                      wormholeType?: string | null;
+                      reverseType?: string | null;
+                    };
+                  }>;
+                  wormhole: {
+                    __typename?: "Signature";
+                    id: string;
+                    name: string;
+                    type: SigType;
+                    eveId: string;
+                    eol?: boolean | null;
+                    massStatus?: MassStatus | null;
+                    destinationName?: string | null;
+                    wormholeType?: string | null;
+                    reverseType?: string | null;
+                  };
+                }>;
+                wormhole: {
+                  __typename?: "Signature";
+                  id: string;
+                  name: string;
+                  type: SigType;
+                  eveId: string;
+                  eol?: boolean | null;
+                  massStatus?: MassStatus | null;
+                  destinationName?: string | null;
+                  wormholeType?: string | null;
+                  reverseType?: string | null;
+                };
+              }>;
+              wormhole: {
+                __typename?: "Signature";
+                id: string;
+                name: string;
+                type: SigType;
+                eveId: string;
+                eol?: boolean | null;
+                massStatus?: MassStatus | null;
+                destinationName?: string | null;
+                wormholeType?: string | null;
+                reverseType?: string | null;
+              };
+            }>;
+            wormhole: {
+              __typename?: "Signature";
+              id: string;
+              name: string;
+              type: SigType;
+              eveId: string;
+              eol?: boolean | null;
+              massStatus?: MassStatus | null;
+              destinationName?: string | null;
+              wormholeType?: string | null;
+              reverseType?: string | null;
+            };
+          }>;
+          wormhole: {
+            __typename?: "Signature";
+            id: string;
+            name: string;
+            type: SigType;
+            eveId: string;
+            eol?: boolean | null;
+            massStatus?: MassStatus | null;
+            destinationName?: string | null;
+            wormholeType?: string | null;
+            reverseType?: string | null;
+          };
+        }>;
+        wormhole: {
+          __typename?: "Signature";
+          id: string;
+          name: string;
+          type: SigType;
+          eveId: string;
+          eol?: boolean | null;
+          massStatus?: MassStatus | null;
+          destinationName?: string | null;
+          wormholeType?: string | null;
+          reverseType?: string | null;
+        };
+      }>;
+      wormhole: {
+        __typename?: "Signature";
+        id: string;
+        name: string;
+        type: SigType;
+        eveId: string;
+        eol?: boolean | null;
+        massStatus?: MassStatus | null;
+        destinationName?: string | null;
+        wormholeType?: string | null;
+        reverseType?: string | null;
+      };
+    }>;
+  };
+};
+
+export type NodeFieldsFragment = {
+  __typename?: "ConnectionTreeNode";
+  name: string;
+  wormhole: {
+    __typename?: "Signature";
+    id: string;
+    name: string;
+    type: SigType;
+    eveId: string;
+    eol?: boolean | null;
+    massStatus?: MassStatus | null;
+    destinationName?: string | null;
+    wormholeType?: string | null;
+    reverseType?: string | null;
+  };
+};
+
+export type RecursiveConnectionTreeFragment = {
+  __typename?: "ConnectionTree";
+  children: Array<{
+    __typename?: "ConnectionTreeNode";
+    name: string;
+    children: Array<{
+      __typename?: "ConnectionTreeNode";
+      name: string;
+      children: Array<{
+        __typename?: "ConnectionTreeNode";
+        name: string;
+        children: Array<{
+          __typename?: "ConnectionTreeNode";
+          name: string;
+          children: Array<{
+            __typename?: "ConnectionTreeNode";
+            name: string;
+            children: Array<{
+              __typename?: "ConnectionTreeNode";
+              name: string;
+              children: Array<{
+                __typename?: "ConnectionTreeNode";
+                name: string;
+                children: Array<{
+                  __typename?: "ConnectionTreeNode";
+                  name: string;
+                  children: Array<{
+                    __typename?: "ConnectionTreeNode";
+                    name: string;
+                    children: Array<{
+                      __typename?: "ConnectionTreeNode";
+                      name: string;
+                      children: Array<{
+                        __typename?: "ConnectionTreeNode";
+                        name: string;
+                        children: Array<{
+                          __typename?: "ConnectionTreeNode";
+                          name: string;
+                          children: Array<{
+                            __typename?: "ConnectionTreeNode";
+                            name: string;
+                            children: Array<{
+                              __typename?: "ConnectionTreeNode";
+                              name: string;
+                              children: Array<{
+                                __typename?: "ConnectionTreeNode";
+                                name: string;
+                                children: Array<{
+                                  __typename?: "ConnectionTreeNode";
+                                  name: string;
+                                  children: Array<{
+                                    __typename?: "ConnectionTreeNode";
+                                    name: string;
+                                    children: Array<{
+                                      __typename?: "ConnectionTreeNode";
+                                      name: string;
+                                      children: Array<{
+                                        __typename?: "ConnectionTreeNode";
+                                        name: string;
+                                        children: Array<{
+                                          __typename?: "ConnectionTreeNode";
+                                          name: string;
+                                          wormhole: {
+                                            __typename?: "Signature";
+                                            id: string;
+                                            name: string;
+                                            type: SigType;
+                                            eveId: string;
+                                            eol?: boolean | null;
+                                            massStatus?: MassStatus | null;
+                                            destinationName?: string | null;
+                                            wormholeType?: string | null;
+                                            reverseType?: string | null;
+                                          };
+                                        }>;
+                                        wormhole: {
+                                          __typename?: "Signature";
+                                          id: string;
+                                          name: string;
+                                          type: SigType;
+                                          eveId: string;
+                                          eol?: boolean | null;
+                                          massStatus?: MassStatus | null;
+                                          destinationName?: string | null;
+                                          wormholeType?: string | null;
+                                          reverseType?: string | null;
+                                        };
+                                      }>;
+                                      wormhole: {
+                                        __typename?: "Signature";
+                                        id: string;
+                                        name: string;
+                                        type: SigType;
+                                        eveId: string;
+                                        eol?: boolean | null;
+                                        massStatus?: MassStatus | null;
+                                        destinationName?: string | null;
+                                        wormholeType?: string | null;
+                                        reverseType?: string | null;
+                                      };
+                                    }>;
+                                    wormhole: {
+                                      __typename?: "Signature";
+                                      id: string;
+                                      name: string;
+                                      type: SigType;
+                                      eveId: string;
+                                      eol?: boolean | null;
+                                      massStatus?: MassStatus | null;
+                                      destinationName?: string | null;
+                                      wormholeType?: string | null;
+                                      reverseType?: string | null;
+                                    };
+                                  }>;
+                                  wormhole: {
+                                    __typename?: "Signature";
+                                    id: string;
+                                    name: string;
+                                    type: SigType;
+                                    eveId: string;
+                                    eol?: boolean | null;
+                                    massStatus?: MassStatus | null;
+                                    destinationName?: string | null;
+                                    wormholeType?: string | null;
+                                    reverseType?: string | null;
+                                  };
+                                }>;
+                                wormhole: {
+                                  __typename?: "Signature";
+                                  id: string;
+                                  name: string;
+                                  type: SigType;
+                                  eveId: string;
+                                  eol?: boolean | null;
+                                  massStatus?: MassStatus | null;
+                                  destinationName?: string | null;
+                                  wormholeType?: string | null;
+                                  reverseType?: string | null;
+                                };
+                              }>;
+                              wormhole: {
+                                __typename?: "Signature";
+                                id: string;
+                                name: string;
+                                type: SigType;
+                                eveId: string;
+                                eol?: boolean | null;
+                                massStatus?: MassStatus | null;
+                                destinationName?: string | null;
+                                wormholeType?: string | null;
+                                reverseType?: string | null;
+                              };
+                            }>;
+                            wormhole: {
+                              __typename?: "Signature";
+                              id: string;
+                              name: string;
+                              type: SigType;
+                              eveId: string;
+                              eol?: boolean | null;
+                              massStatus?: MassStatus | null;
+                              destinationName?: string | null;
+                              wormholeType?: string | null;
+                              reverseType?: string | null;
+                            };
+                          }>;
+                          wormhole: {
+                            __typename?: "Signature";
+                            id: string;
+                            name: string;
+                            type: SigType;
+                            eveId: string;
+                            eol?: boolean | null;
+                            massStatus?: MassStatus | null;
+                            destinationName?: string | null;
+                            wormholeType?: string | null;
+                            reverseType?: string | null;
+                          };
+                        }>;
+                        wormhole: {
+                          __typename?: "Signature";
+                          id: string;
+                          name: string;
+                          type: SigType;
+                          eveId: string;
+                          eol?: boolean | null;
+                          massStatus?: MassStatus | null;
+                          destinationName?: string | null;
+                          wormholeType?: string | null;
+                          reverseType?: string | null;
+                        };
+                      }>;
+                      wormhole: {
+                        __typename?: "Signature";
+                        id: string;
+                        name: string;
+                        type: SigType;
+                        eveId: string;
+                        eol?: boolean | null;
+                        massStatus?: MassStatus | null;
+                        destinationName?: string | null;
+                        wormholeType?: string | null;
+                        reverseType?: string | null;
+                      };
+                    }>;
+                    wormhole: {
+                      __typename?: "Signature";
+                      id: string;
+                      name: string;
+                      type: SigType;
+                      eveId: string;
+                      eol?: boolean | null;
+                      massStatus?: MassStatus | null;
+                      destinationName?: string | null;
+                      wormholeType?: string | null;
+                      reverseType?: string | null;
+                    };
+                  }>;
+                  wormhole: {
+                    __typename?: "Signature";
+                    id: string;
+                    name: string;
+                    type: SigType;
+                    eveId: string;
+                    eol?: boolean | null;
+                    massStatus?: MassStatus | null;
+                    destinationName?: string | null;
+                    wormholeType?: string | null;
+                    reverseType?: string | null;
+                  };
+                }>;
+                wormhole: {
+                  __typename?: "Signature";
+                  id: string;
+                  name: string;
+                  type: SigType;
+                  eveId: string;
+                  eol?: boolean | null;
+                  massStatus?: MassStatus | null;
+                  destinationName?: string | null;
+                  wormholeType?: string | null;
+                  reverseType?: string | null;
+                };
+              }>;
+              wormhole: {
+                __typename?: "Signature";
+                id: string;
+                name: string;
+                type: SigType;
+                eveId: string;
+                eol?: boolean | null;
+                massStatus?: MassStatus | null;
+                destinationName?: string | null;
+                wormholeType?: string | null;
+                reverseType?: string | null;
+              };
+            }>;
+            wormhole: {
+              __typename?: "Signature";
+              id: string;
+              name: string;
+              type: SigType;
+              eveId: string;
+              eol?: boolean | null;
+              massStatus?: MassStatus | null;
+              destinationName?: string | null;
+              wormholeType?: string | null;
+              reverseType?: string | null;
+            };
+          }>;
+          wormhole: {
+            __typename?: "Signature";
+            id: string;
+            name: string;
+            type: SigType;
+            eveId: string;
+            eol?: boolean | null;
+            massStatus?: MassStatus | null;
+            destinationName?: string | null;
+            wormholeType?: string | null;
+            reverseType?: string | null;
+          };
+        }>;
+        wormhole: {
+          __typename?: "Signature";
+          id: string;
+          name: string;
+          type: SigType;
+          eveId: string;
+          eol?: boolean | null;
+          massStatus?: MassStatus | null;
+          destinationName?: string | null;
+          wormholeType?: string | null;
+          reverseType?: string | null;
+        };
+      }>;
+      wormhole: {
+        __typename?: "Signature";
+        id: string;
+        name: string;
+        type: SigType;
+        eveId: string;
+        eol?: boolean | null;
+        massStatus?: MassStatus | null;
+        destinationName?: string | null;
+        wormholeType?: string | null;
+        reverseType?: string | null;
+      };
+    }>;
+    wormhole: {
+      __typename?: "Signature";
+      id: string;
+      name: string;
+      type: SigType;
+      eveId: string;
+      eol?: boolean | null;
+      massStatus?: MassStatus | null;
+      destinationName?: string | null;
+      wormholeType?: string | null;
+      reverseType?: string | null;
+    };
+  }>;
+};
+
 export type SignatureFieldsFragment = {
   __typename?: "Signature";
   id: string;
@@ -558,6 +1231,406 @@ export const SignatureFieldsFragmentDoc = {
     },
   ],
 } as unknown as DocumentNode<SignatureFieldsFragment, unknown>;
+export const NodeFieldsFragmentDoc = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "FragmentDefinition",
+      name: { kind: "Name", value: "NodeFields" },
+      typeCondition: { kind: "NamedType", name: { kind: "Name", value: "ConnectionTreeNode" } },
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          { kind: "Field", name: { kind: "Name", value: "name" } },
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "wormhole" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "FragmentSpread", name: { kind: "Name", value: "SignatureFields" } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    ...SignatureFieldsFragmentDoc.definitions,
+  ],
+} as unknown as DocumentNode<NodeFieldsFragment, unknown>;
+export const RecursiveConnectionTreeFragmentDoc = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "FragmentDefinition",
+      name: { kind: "Name", value: "RecursiveConnectionTree" },
+      typeCondition: { kind: "NamedType", name: { kind: "Name", value: "ConnectionTree" } },
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "children" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "FragmentSpread", name: { kind: "Name", value: "NodeFields" } },
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "children" },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      { kind: "FragmentSpread", name: { kind: "Name", value: "NodeFields" } },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "children" },
+                        selectionSet: {
+                          kind: "SelectionSet",
+                          selections: [
+                            { kind: "FragmentSpread", name: { kind: "Name", value: "NodeFields" } },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "children" },
+                              selectionSet: {
+                                kind: "SelectionSet",
+                                selections: [
+                                  {
+                                    kind: "FragmentSpread",
+                                    name: { kind: "Name", value: "NodeFields" },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "children" },
+                                    selectionSet: {
+                                      kind: "SelectionSet",
+                                      selections: [
+                                        {
+                                          kind: "FragmentSpread",
+                                          name: { kind: "Name", value: "NodeFields" },
+                                        },
+                                        {
+                                          kind: "Field",
+                                          name: { kind: "Name", value: "children" },
+                                          selectionSet: {
+                                            kind: "SelectionSet",
+                                            selections: [
+                                              {
+                                                kind: "FragmentSpread",
+                                                name: { kind: "Name", value: "NodeFields" },
+                                              },
+                                              {
+                                                kind: "Field",
+                                                name: { kind: "Name", value: "children" },
+                                                selectionSet: {
+                                                  kind: "SelectionSet",
+                                                  selections: [
+                                                    {
+                                                      kind: "FragmentSpread",
+                                                      name: { kind: "Name", value: "NodeFields" },
+                                                    },
+                                                    {
+                                                      kind: "Field",
+                                                      name: { kind: "Name", value: "children" },
+                                                      selectionSet: {
+                                                        kind: "SelectionSet",
+                                                        selections: [
+                                                          {
+                                                            kind: "FragmentSpread",
+                                                            name: {
+                                                              kind: "Name",
+                                                              value: "NodeFields",
+                                                            },
+                                                          },
+                                                          {
+                                                            kind: "Field",
+                                                            name: {
+                                                              kind: "Name",
+                                                              value: "children",
+                                                            },
+                                                            selectionSet: {
+                                                              kind: "SelectionSet",
+                                                              selections: [
+                                                                {
+                                                                  kind: "FragmentSpread",
+                                                                  name: {
+                                                                    kind: "Name",
+                                                                    value: "NodeFields",
+                                                                  },
+                                                                },
+                                                                {
+                                                                  kind: "Field",
+                                                                  name: {
+                                                                    kind: "Name",
+                                                                    value: "children",
+                                                                  },
+                                                                  selectionSet: {
+                                                                    kind: "SelectionSet",
+                                                                    selections: [
+                                                                      {
+                                                                        kind: "FragmentSpread",
+                                                                        name: {
+                                                                          kind: "Name",
+                                                                          value: "NodeFields",
+                                                                        },
+                                                                      },
+                                                                      {
+                                                                        kind: "Field",
+                                                                        name: {
+                                                                          kind: "Name",
+                                                                          value: "children",
+                                                                        },
+                                                                        selectionSet: {
+                                                                          kind: "SelectionSet",
+                                                                          selections: [
+                                                                            {
+                                                                              kind: "FragmentSpread",
+                                                                              name: {
+                                                                                kind: "Name",
+                                                                                value: "NodeFields",
+                                                                              },
+                                                                            },
+                                                                            {
+                                                                              kind: "Field",
+                                                                              name: {
+                                                                                kind: "Name",
+                                                                                value: "children",
+                                                                              },
+                                                                              selectionSet: {
+                                                                                kind: "SelectionSet",
+                                                                                selections: [
+                                                                                  {
+                                                                                    kind: "FragmentSpread",
+                                                                                    name: {
+                                                                                      kind: "Name",
+                                                                                      value:
+                                                                                        "NodeFields",
+                                                                                    },
+                                                                                  },
+                                                                                  {
+                                                                                    kind: "Field",
+                                                                                    name: {
+                                                                                      kind: "Name",
+                                                                                      value:
+                                                                                        "children",
+                                                                                    },
+                                                                                    selectionSet: {
+                                                                                      kind: "SelectionSet",
+                                                                                      selections: [
+                                                                                        {
+                                                                                          kind: "FragmentSpread",
+                                                                                          name: {
+                                                                                            kind: "Name",
+                                                                                            value:
+                                                                                              "NodeFields",
+                                                                                          },
+                                                                                        },
+                                                                                        {
+                                                                                          kind: "Field",
+                                                                                          name: {
+                                                                                            kind: "Name",
+                                                                                            value:
+                                                                                              "children",
+                                                                                          },
+                                                                                          selectionSet:
+                                                                                            {
+                                                                                              kind: "SelectionSet",
+                                                                                              selections:
+                                                                                                [
+                                                                                                  {
+                                                                                                    kind: "FragmentSpread",
+                                                                                                    name: {
+                                                                                                      kind: "Name",
+                                                                                                      value:
+                                                                                                        "NodeFields",
+                                                                                                    },
+                                                                                                  },
+                                                                                                  {
+                                                                                                    kind: "Field",
+                                                                                                    name: {
+                                                                                                      kind: "Name",
+                                                                                                      value:
+                                                                                                        "children",
+                                                                                                    },
+                                                                                                    selectionSet:
+                                                                                                      {
+                                                                                                        kind: "SelectionSet",
+                                                                                                        selections:
+                                                                                                          [
+                                                                                                            {
+                                                                                                              kind: "FragmentSpread",
+                                                                                                              name: {
+                                                                                                                kind: "Name",
+                                                                                                                value:
+                                                                                                                  "NodeFields",
+                                                                                                              },
+                                                                                                            },
+                                                                                                            {
+                                                                                                              kind: "Field",
+                                                                                                              name: {
+                                                                                                                kind: "Name",
+                                                                                                                value:
+                                                                                                                  "children",
+                                                                                                              },
+                                                                                                              selectionSet:
+                                                                                                                {
+                                                                                                                  kind: "SelectionSet",
+                                                                                                                  selections:
+                                                                                                                    [
+                                                                                                                      {
+                                                                                                                        kind: "FragmentSpread",
+                                                                                                                        name: {
+                                                                                                                          kind: "Name",
+                                                                                                                          value:
+                                                                                                                            "NodeFields",
+                                                                                                                        },
+                                                                                                                      },
+                                                                                                                      {
+                                                                                                                        kind: "Field",
+                                                                                                                        name: {
+                                                                                                                          kind: "Name",
+                                                                                                                          value:
+                                                                                                                            "children",
+                                                                                                                        },
+                                                                                                                        selectionSet:
+                                                                                                                          {
+                                                                                                                            kind: "SelectionSet",
+                                                                                                                            selections:
+                                                                                                                              [
+                                                                                                                                {
+                                                                                                                                  kind: "FragmentSpread",
+                                                                                                                                  name: {
+                                                                                                                                    kind: "Name",
+                                                                                                                                    value:
+                                                                                                                                      "NodeFields",
+                                                                                                                                  },
+                                                                                                                                },
+                                                                                                                                {
+                                                                                                                                  kind: "Field",
+                                                                                                                                  name: {
+                                                                                                                                    kind: "Name",
+                                                                                                                                    value:
+                                                                                                                                      "children",
+                                                                                                                                  },
+                                                                                                                                  selectionSet:
+                                                                                                                                    {
+                                                                                                                                      kind: "SelectionSet",
+                                                                                                                                      selections:
+                                                                                                                                        [
+                                                                                                                                          {
+                                                                                                                                            kind: "FragmentSpread",
+                                                                                                                                            name: {
+                                                                                                                                              kind: "Name",
+                                                                                                                                              value:
+                                                                                                                                                "NodeFields",
+                                                                                                                                            },
+                                                                                                                                          },
+                                                                                                                                          {
+                                                                                                                                            kind: "Field",
+                                                                                                                                            name: {
+                                                                                                                                              kind: "Name",
+                                                                                                                                              value:
+                                                                                                                                                "children",
+                                                                                                                                            },
+                                                                                                                                            selectionSet:
+                                                                                                                                              {
+                                                                                                                                                kind: "SelectionSet",
+                                                                                                                                                selections:
+                                                                                                                                                  [
+                                                                                                                                                    {
+                                                                                                                                                      kind: "FragmentSpread",
+                                                                                                                                                      name: {
+                                                                                                                                                        kind: "Name",
+                                                                                                                                                        value:
+                                                                                                                                                          "NodeFields",
+                                                                                                                                                      },
+                                                                                                                                                    },
+                                                                                                                                                    {
+                                                                                                                                                      kind: "Field",
+                                                                                                                                                      name: {
+                                                                                                                                                        kind: "Name",
+                                                                                                                                                        value:
+                                                                                                                                                          "children",
+                                                                                                                                                      },
+                                                                                                                                                      selectionSet:
+                                                                                                                                                        {
+                                                                                                                                                          kind: "SelectionSet",
+                                                                                                                                                          selections:
+                                                                                                                                                            [
+                                                                                                                                                              {
+                                                                                                                                                                kind: "FragmentSpread",
+                                                                                                                                                                name: {
+                                                                                                                                                                  kind: "Name",
+                                                                                                                                                                  value:
+                                                                                                                                                                    "NodeFields",
+                                                                                                                                                                },
+                                                                                                                                                              },
+                                                                                                                                                            ],
+                                                                                                                                                        },
+                                                                                                                                                    },
+                                                                                                                                                  ],
+                                                                                                                                              },
+                                                                                                                                          },
+                                                                                                                                        ],
+                                                                                                                                    },
+                                                                                                                                },
+                                                                                                                              ],
+                                                                                                                          },
+                                                                                                                      },
+                                                                                                                    ],
+                                                                                                                },
+                                                                                                            },
+                                                                                                          ],
+                                                                                                      },
+                                                                                                  },
+                                                                                                ],
+                                                                                            },
+                                                                                        },
+                                                                                      ],
+                                                                                    },
+                                                                                  },
+                                                                                ],
+                                                                              },
+                                                                            },
+                                                                          ],
+                                                                        },
+                                                                      },
+                                                                    ],
+                                                                  },
+                                                                },
+                                                              ],
+                                                            },
+                                                          },
+                                                        ],
+                                                      },
+                                                    },
+                                                  ],
+                                                },
+                                              },
+                                            ],
+                                          },
+                                        },
+                                      ],
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                          ],
+                        },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    ...NodeFieldsFragmentDoc.definitions,
+  ],
+} as unknown as DocumentNode<RecursiveConnectionTreeFragment, unknown>;
 export const GetTokenDocument = {
   kind: "Document",
   definitions: [
@@ -1001,6 +2074,53 @@ export const SearchCharactersByMainDocument = {
     },
   ],
 } as unknown as DocumentNode<SearchCharactersByMainQuery, SearchCharactersByMainQueryVariables>;
+export const ConnectionTreeDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "query",
+      name: { kind: "Name", value: "ConnectionTree" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "rootSystem" } },
+          type: {
+            kind: "NonNullType",
+            type: { kind: "NamedType", name: { kind: "Name", value: "String" } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "getConnectionTree" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "rootSystem" },
+                value: { kind: "Variable", name: { kind: "Name", value: "rootSystem" } },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "rootSystemName" } },
+                {
+                  kind: "FragmentSpread",
+                  name: { kind: "Name", value: "RecursiveConnectionTree" },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    ...RecursiveConnectionTreeFragmentDoc.definitions,
+  ],
+} as unknown as DocumentNode<ConnectionTreeQuery, ConnectionTreeQueryVariables>;
 export const SystemDocument = {
   kind: "Document",
   definitions: [

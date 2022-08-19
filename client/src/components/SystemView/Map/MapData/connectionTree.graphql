@@ -1,17 +1,20 @@
-import { gql } from "@apollo/client";
-
-const NODE_FIELDS = gql`
-  fragment NodeFields on ConnectionTreeNode {
-    name
-    wormhole {
-      id
+query ConnectionTree($rootSystem: String!) {
+    getConnectionTree(rootSystem: $rootSystem) {
+      rootSystemName
+      ...RecursiveConnectionTree
     }
   }
-`;
 
-export const RECURSIVE_CONNECTION_TREE = gql`
-  ${NODE_FIELDS}
-  fragment RecursiveConnectionTree on ConnectionTree {
+fragment NodeFields on ConnectionTreeNode {
+  name
+  wormhole {
+    ...SignatureFields
+  }
+}
+
+fragment RecursiveConnectionTree on ConnectionTree {
+  children {
+    ...NodeFields
     children {
       ...NodeFields
       children {
@@ -50,9 +53,6 @@ export const RECURSIVE_CONNECTION_TREE = gql`
                                         ...NodeFields
                                         children {
                                           ...NodeFields
-                                          children {
-                                            ...NodeFields
-                                          }
                                         }
                                       }
                                     }
@@ -73,4 +73,4 @@ export const RECURSIVE_CONNECTION_TREE = gql`
       }
     }
   }
-`;
+}

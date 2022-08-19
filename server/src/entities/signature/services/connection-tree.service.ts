@@ -3,6 +3,7 @@ import { InjectModel } from "@nestjs/mongoose";
 import { Model, Types } from "mongoose";
 import { FolderDocument } from "../../folder/folder.model";
 import { ConnectionTree, ConnectionTreeNode } from "../dto/connection-tree.dto";
+import SigType from "../enums/sig-type.enum";
 import { Signature } from "../signature.model";
 
 @Injectable()
@@ -13,20 +14,26 @@ export class ConnectionTreeService {
     console.time("Wormhole graphlookup");
 
     const res = await this.sigModel.aggregate([
-      { $match: { systemName: rootSystemName, folder: Types.ObjectId(folder._id) } },
+      {
+        $match: {
+          systemName: rootSystemName,
+          folder: Types.ObjectId(folder._id),
+          type: SigType.WORMHOLE,
+        },
+      },
       {
         $graphLookup: {
-          from: "wormholes",
+          from: "signatures",
           startWith: "$destinationName",
           connectFromField: "destinationName",
           connectToField: "systemName",
           as: "children",
           depthField: "n",
-          restrictSearchWithMatch: { folder: Types.ObjectId(folder._id) },
+          restrictSearchWithMatch: { folder: Types.ObjectId(folder._id), type: SigType.WORMHOLE },
         },
       },
     ]);
-
+    console.log(res);
     console.timeEnd("Wormhole graphlookup");
 
     if (!res.length) {

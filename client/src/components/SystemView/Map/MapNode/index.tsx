@@ -16,6 +16,7 @@ export type MapNodeProps = CustomNodeElementProps & {
 const MapNode = ({ nodeDatum }: MapNodeProps) => {
   const { settings } = useUserData();
   const { wormhole } = nodeDatum;
+  console.log(nodeDatum);
   const { name: selectedSystemName } = useSystemData();
 
   const name = wormhole?.name || "";
