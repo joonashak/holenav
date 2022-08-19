@@ -41,6 +41,7 @@ const useWormholeForm = (props: WormholeFormProps) => {
     const mutationData = {
       id,
       eveId,
+      type: SigType.Wormhole,
       wormholeType: whType,
       reverseType: whReverseType,
       eol: life === "eol",

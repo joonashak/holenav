@@ -31,9 +31,10 @@ const useSignatures = () => {
 
   const [updateSigsMutation] = useAuthenticatedMutation(UpdateSignaturesDocument, {
     onCompleted: (data) => {
-      const updatedSig = data.updateSignature;
       state.signatures.set((sigs) =>
-        sigs.map((sig) => (sig.id === updatedSig.id ? updatedSig : sig))
+        sigs.map(
+          (sig) => data.updateSignatures.find((updated: Signature) => updated.id === sig.id) || sig
+        )
       );
     },
   });

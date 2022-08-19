@@ -39,7 +39,7 @@ const WormholeForm = (props: WormholeFormProps) => {
       name: existing?.name || "",
       life: existing?.eol ? "eol" : "lt-24-hrs",
       mass: existing?.massStatus || MassStatus.Stable,
-      whType: existing?.type || "",
+      whType: existing?.wormholeType || "",
       whReverseType: existing?.reverseType || "",
       destinationName: existing?.destinationName || null,
     },
