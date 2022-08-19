@@ -1,5 +1,5 @@
 import { FieldValues } from "react-hook-form";
-import { Signature } from "../../../../../generated/graphqlOperations";
+import { Signature, SigType } from "../../../../../generated/graphqlOperations";
 import useNotification from "../../../../GlobalNotification/useNotification";
 import useMapData from "../../../Map/MapData/useMapData";
 import useSignatures from "../../../SystemData/useSignatures";
@@ -18,7 +18,8 @@ const useWormholeForm = (props: WormholeFormProps) => {
     const mutationData = {
       eveId,
       systemName,
-      type: whType,
+      type: SigType.Wormhole,
+      wormholeType: whType,
       reverseType: whReverseType,
       eol: life === "eol",
       massStatus: mass,
@@ -40,7 +41,7 @@ const useWormholeForm = (props: WormholeFormProps) => {
     const mutationData = {
       id,
       eveId,
-      type: whType,
+      wormholeType: whType,
       reverseType: whReverseType,
       eol: life === "eol",
       massStatus: mass,
