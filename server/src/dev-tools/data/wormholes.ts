@@ -132,13 +132,6 @@ export default [
     eol: true,
   },
   {
-    name: "E1C VWX",
-    eveId: "DEM-008",
-    destinationName: "",
-    systemName: "J165308",
-    wormholeType: "P060",
-  },
-  {
     name: "",
     eveId: "DEM-009",
     destinationName: "J104809",
