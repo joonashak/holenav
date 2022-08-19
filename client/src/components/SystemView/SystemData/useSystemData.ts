@@ -7,9 +7,8 @@ export default () => {
   const state = useState(systemState);
 
   const [changeSystem] = useLazyAuthenticatedQuery(SystemDocument, {
-    onCompleted: ({ getSystemByName, getWormholesBySystem }) => {
-      const wormholes = getWormholesBySystem;
-      state.merge({ ...getSystemByName, wormholes });
+    onCompleted: ({ getSystemByName, getSignaturesBySystem }) => {
+      state.merge({ ...getSystemByName, signatures: getSignaturesBySystem });
     },
   });
 

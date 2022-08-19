@@ -43,7 +43,7 @@ export default () => {
                 <TableCell component="th" scope="row">
                   {sig.eveId}
                 </TableCell>
-                <TableCell>{sig.type || (sig.type === SigType.Wormhole && "Wormhole")}</TableCell>
+                <TableCell sx={{ textTransform: "capitalize" }}>{sig.type.toLowerCase()}</TableCell>
                 <TableCell sx={{ paddingTop: 0, paddingBottom: 0 }}>
                   <Box
                     sx={{
