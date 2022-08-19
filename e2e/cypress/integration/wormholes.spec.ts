@@ -68,7 +68,7 @@ describe("Wormholes", () => {
     cy.cs("sig-list-body").should("contain.text", wh.name);
     cy.cs("delete-sig-Deleting Test 1").click();
     cy.cs("confirm-button").click();
-    cy.contains("Wormhole deleted.");
+    cy.contains("Signature deleted.");
     cy.visit(testSystemUrl);
     cy.cs("sig-list-body").should("not.contain.text", wh.name);
   });

@@ -33,9 +33,9 @@ export class WormholeService {
 
   addWhTypes<T extends { type: SigType; wormholeType?: string; reverseType?: string }>(
     sig: T,
-  ): T & { wormholeType: string; reverseType: string } {
+  ): T & { wormholeType?: string; reverseType?: string } {
     if (sig.type !== SigType.WORMHOLE) {
-      return { ...sig, wormholeType: null, reverseType: null };
+      return { ...sig };
     }
 
     const [wormholeType, reverseType] = this.getValidWormholeTypes(

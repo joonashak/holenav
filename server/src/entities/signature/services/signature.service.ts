@@ -81,10 +81,16 @@ export class SignatureService {
     }
 
     if (isWormhole(old) && isWormhole(update)) {
-      const updatedSig = await this.sigModel.findOneAndUpdate({ id: update.id }, update, {
-        returnDocument: "after",
-      });
+      const sigWithWhTypes = this.wormholeService.addWhTypes(update);
+      const updatedSig = await this.sigModel.findOneAndUpdate(
+        { id: sigWithWhTypes.id },
+        sigWithWhTypes,
+        {
+          returnDocument: "after",
+        },
+      );
       await this.wormholeService.syncReverseWormhole(updatedSig);
+      return updatedSig;
     }
 
     return this.sigModel.findOneAndUpdate({ id: update.id }, update, { returnDocument: "after" });
