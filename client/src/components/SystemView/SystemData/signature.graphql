@@ -21,21 +21,19 @@ query System($name: String!) {
   }
 }
 
-mutation AddSignature($input: AddSignaturesInput!) {
+mutation AddSignatures($input: AddSignaturesInput!) {
   addSignatures(input: $input) {
-    signatures {
-      ...SignatureFields
-    }
+    ...SignatureFields
   }
 }
 
-mutation UpdateSignature($input: UpdateSignaturesInput!) {
+mutation UpdateSignatures($input: UpdateSignaturesInput!) {
   updateSignatures(input: $input) {
     ...SignatureFields
   }
 }
 
-mutation DeleteSignature($input: DeleteSignaturesInput!) {
+mutation DeleteSignatures($input: DeleteSignaturesInput!) {
   deleteSignatures(input: $input) {
     ...SignatureFields
   }

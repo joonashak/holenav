@@ -3,11 +3,11 @@ import { Downgraded, useState } from "@hookstate/core";
 import { systemState } from ".";
 import useAuthenticatedMutation from "../../../auth/useAuthenticatedMutation";
 import {
-  AddSignatureDocument,
-  DeleteSignatureDocument,
+  AddSignaturesDocument,
+  DeleteSignaturesDocument,
   Signature,
   SignatureUpdate,
-  UpdateSignatureDocument,
+  UpdateSignaturesDocument,
 } from "../../../generated/graphqlOperations";
 
 export type AddSignatureHookInput = Omit<Signature, "id" | "folder" | "systemName">;
@@ -15,18 +15,21 @@ export type AddSignatureHookInput = Omit<Signature, "id" | "folder" | "systemNam
 const useSignatures = () => {
   const state = useState(systemState);
 
-  const [addSigMutation] = useAuthenticatedMutation(AddSignatureDocument, {
+  const [addSigMutation] = useAuthenticatedMutation(AddSignaturesDocument, {
     onCompleted: (data) => {
       state.signatures.set((sigs) => sigs.concat(data.addSignatures));
     },
   });
 
-  const addSignature = async (newSig: AddSignatureHookInput) => {
-    const input = { signatures: [newSig], systemId: state.id.value };
-    return addSigMutation({ variables: { input } });
+  const addSignatures = async (newSigs: AddSignatureHookInput[]) => {
+    const signatures = newSigs.map((sig) => ({
+      ...sig,
+      systemName: state.name.get(),
+    }));
+    return addSigMutation({ variables: { input: { signatures } } });
   };
 
-  const [updateSigMutation] = useAuthenticatedMutation(UpdateSignatureDocument, {
+  const [updateSigMutation] = useAuthenticatedMutation(UpdateSignaturesDocument, {
     onCompleted: (data) => {
       const updatedSig = data.updateSignature;
       state.signatures.set((sigs) =>
@@ -38,7 +41,7 @@ const useSignatures = () => {
   const updateSignature = async (update: SignatureUpdate): Promise<FetchResult> =>
     updateSigMutation({ variables: { input: update } });
 
-  const [deleteSigMutation] = useAuthenticatedMutation(DeleteSignatureDocument, {
+  const [deleteSigMutation] = useAuthenticatedMutation(DeleteSignaturesDocument, {
     onCompleted: (data) => {
       const deletedSig = data.deleteSignature;
       state.signatures.set((sigs) => sigs.filter((sig) => sig.id !== deletedSig.id));
@@ -56,7 +59,7 @@ const useSignatures = () => {
     get signatures() {
       return state.signatures.attach(Downgraded).get();
     },
-    addSignature,
+    addSignatures,
     updateSignature,
     deleteSignature,
   };

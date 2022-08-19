@@ -4,7 +4,7 @@ import { RequireFolderRole } from "../../auth/decorators/role.decorator";
 import FolderRole from "../../user/roles/folder-role.enum";
 import { ActiveFolderService } from "../folder/active-folder.service";
 import { Folder, FolderDocument } from "../folder/folder.model";
-import { AddSignaturesInput, AddSignaturesOutput } from "./dto/add-signatures.dto";
+import { AddSignaturesInput } from "./dto/add-signatures.dto";
 import { ConnectionTree } from "./dto/connection-tree.dto";
 import { DeleteSignaturesInput } from "./dto/delete-signatures.dto";
 import { UpdateSignaturesInput } from "./dto/update-signatures.dto";
@@ -31,11 +31,11 @@ export class SignatureResolver {
   }
 
   @RequireFolderRole(FolderRole.WRITE)
-  @Mutation((returns) => AddSignaturesOutput)
-  async addSignatures(@Args("input") input: AddSignaturesInput): Promise<AddSignaturesOutput> {
+  @Mutation((returns) => [Signature])
+  async addSignatures(@Args("input") input: AddSignaturesInput): Promise<Signature[]> {
     const sigs = this.activeFolderService.populateWithActiveFolder(input.signatures);
     const signatures = await this.sigService.createSignatures(sigs);
-    return { signatures };
+    return signatures;
   }
 
   @RequireFolderRole(FolderRole.WRITE)

@@ -29,11 +29,6 @@ export type AddSignaturesInput = {
   signatures: Array<SignatureInput>;
 };
 
-export type AddSignaturesOutput = {
-  __typename?: "AddSignaturesOutput";
-  signatures: Array<Signature>;
-};
-
 export type AppData = {
   __typename?: "AppData";
   appVersion: Scalars["String"];
@@ -107,7 +102,7 @@ export type Mutation = {
   __typename?: "Mutation";
   addFolderRole: SanitizedUser;
   addSavedMap: User;
-  addSignatures: AddSignaturesOutput;
+  addSignatures: Array<Signature>;
   changeActiveFolder: SanitizedUser;
   createFolder: Folder;
   deleteSavedMap: User;
@@ -455,34 +450,31 @@ export type SystemQuery = {
   }>;
 };
 
-export type AddSignatureMutationVariables = Exact<{
+export type AddSignaturesMutationVariables = Exact<{
   input: AddSignaturesInput;
 }>;
 
-export type AddSignatureMutation = {
+export type AddSignaturesMutation = {
   __typename?: "Mutation";
-  addSignatures: {
-    __typename?: "AddSignaturesOutput";
-    signatures: Array<{
-      __typename?: "Signature";
-      id: string;
-      name: string;
-      type: SigType;
-      eveId: string;
-      eol?: boolean | null;
-      massStatus?: MassStatus | null;
-      destinationName?: string | null;
-      wormholeType?: string | null;
-      reverseType?: string | null;
-    }>;
-  };
+  addSignatures: Array<{
+    __typename?: "Signature";
+    id: string;
+    name: string;
+    type: SigType;
+    eveId: string;
+    eol?: boolean | null;
+    massStatus?: MassStatus | null;
+    destinationName?: string | null;
+    wormholeType?: string | null;
+    reverseType?: string | null;
+  }>;
 };
 
-export type UpdateSignatureMutationVariables = Exact<{
+export type UpdateSignaturesMutationVariables = Exact<{
   input: UpdateSignaturesInput;
 }>;
 
-export type UpdateSignatureMutation = {
+export type UpdateSignaturesMutation = {
   __typename?: "Mutation";
   updateSignatures: Array<{
     __typename?: "Signature";
@@ -498,11 +490,11 @@ export type UpdateSignatureMutation = {
   }>;
 };
 
-export type DeleteSignatureMutationVariables = Exact<{
+export type DeleteSignaturesMutationVariables = Exact<{
   input: DeleteSignaturesInput;
 }>;
 
-export type DeleteSignatureMutation = {
+export type DeleteSignaturesMutation = {
   __typename?: "Mutation";
   deleteSignatures: Array<{
     __typename?: "Signature";
@@ -1070,13 +1062,13 @@ export const SystemDocument = {
     ...SignatureFieldsFragmentDoc.definitions,
   ],
 } as unknown as DocumentNode<SystemQuery, SystemQueryVariables>;
-export const AddSignatureDocument = {
+export const AddSignaturesDocument = {
   kind: "Document",
   definitions: [
     {
       kind: "OperationDefinition",
       operation: "mutation",
-      name: { kind: "Name", value: "AddSignature" },
+      name: { kind: "Name", value: "AddSignatures" },
       variableDefinitions: [
         {
           kind: "VariableDefinition",
@@ -1103,16 +1095,7 @@ export const AddSignatureDocument = {
             selectionSet: {
               kind: "SelectionSet",
               selections: [
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "signatures" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      { kind: "FragmentSpread", name: { kind: "Name", value: "SignatureFields" } },
-                    ],
-                  },
-                },
+                { kind: "FragmentSpread", name: { kind: "Name", value: "SignatureFields" } },
               ],
             },
           },
@@ -1121,14 +1104,14 @@ export const AddSignatureDocument = {
     },
     ...SignatureFieldsFragmentDoc.definitions,
   ],
-} as unknown as DocumentNode<AddSignatureMutation, AddSignatureMutationVariables>;
-export const UpdateSignatureDocument = {
+} as unknown as DocumentNode<AddSignaturesMutation, AddSignaturesMutationVariables>;
+export const UpdateSignaturesDocument = {
   kind: "Document",
   definitions: [
     {
       kind: "OperationDefinition",
       operation: "mutation",
-      name: { kind: "Name", value: "UpdateSignature" },
+      name: { kind: "Name", value: "UpdateSignatures" },
       variableDefinitions: [
         {
           kind: "VariableDefinition",
@@ -1164,14 +1147,14 @@ export const UpdateSignatureDocument = {
     },
     ...SignatureFieldsFragmentDoc.definitions,
   ],
-} as unknown as DocumentNode<UpdateSignatureMutation, UpdateSignatureMutationVariables>;
-export const DeleteSignatureDocument = {
+} as unknown as DocumentNode<UpdateSignaturesMutation, UpdateSignaturesMutationVariables>;
+export const DeleteSignaturesDocument = {
   kind: "Document",
   definitions: [
     {
       kind: "OperationDefinition",
       operation: "mutation",
-      name: { kind: "Name", value: "DeleteSignature" },
+      name: { kind: "Name", value: "DeleteSignatures" },
       variableDefinitions: [
         {
           kind: "VariableDefinition",
@@ -1207,7 +1190,7 @@ export const DeleteSignatureDocument = {
     },
     ...SignatureFieldsFragmentDoc.definitions,
   ],
-} as unknown as DocumentNode<DeleteSignatureMutation, DeleteSignatureMutationVariables>;
+} as unknown as DocumentNode<DeleteSignaturesMutation, DeleteSignaturesMutationVariables>;
 export const UserDataDocument = {
   kind: "Document",
   definitions: [

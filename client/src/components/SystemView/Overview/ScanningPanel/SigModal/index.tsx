@@ -1,5 +1,5 @@
 import { DialogContent, DialogTitle, SelectChangeEvent } from "@mui/material";
-import { ChangeEvent, ReactElement, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import Select from "../../../../controls/Select";
 import SigForm from "./SigForm";
 import WormholeForm from "./WormholeForm";
@@ -8,17 +8,13 @@ import Dialog from "../../../../common/Dialog";
 import EveIdField from "./EveIdField";
 import { Signature, SigType } from "../../../../../generated/graphqlOperations";
 
-let typeOptions: Array<{ id: string; value: string; label: string | ReactElement }> = [
-  { id: "sig-type-null", value: "", label: <em>Unknown</em> },
+const typeOptions = [
+  { id: "sig-type-opt-null", value: SigType.Unknown, label: <em>Unknown</em> },
+  { id: "sig-type-opt-wh", value: SigType.Wormhole, label: "Wormhole" },
+  { id: "sig-type-opt-data", value: SigType.Data, label: "Data" },
+  { id: "sig-type-opt-relic", value: SigType.Relic, label: "Relic" },
+  { id: "sig-type-opt-gas", value: SigType.Gas, label: "Gas" },
 ];
-
-typeOptions = typeOptions.concat(
-  Object.entries(SigType).map(([key, label]) => ({
-    id: `sig-type-${label}`,
-    value: label,
-    label: key as string,
-  }))
-);
 
 type SigModalProps = {
   open: boolean;

@@ -5,7 +5,7 @@ import parsePaste from "./sigPasteParser";
 
 const useSigPasteListener = () => {
   const { showWarningNotification } = useNotification();
-  const { signatures, addSignature, updateSignature } = useSignatures();
+  const { signatures, addSignatures: addSignature, updateSignature } = useSignatures();
 
   const sigPasteListener = async (event: Event) => {
     let batch: SigPasteBatch;
@@ -19,7 +19,7 @@ const useSigPasteListener = () => {
     }
 
     // TODO: Create batch mutations for these.
-    await Promise.all(batch.signatureAdd.map(addSignature));
+    await addSignature(batch.signatureAdd);
     await Promise.all(batch.signatureUpdate.map(updateSignature));
   };
 
