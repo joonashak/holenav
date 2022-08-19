@@ -1,10 +1,7 @@
 import { Downgraded, useState } from "@hookstate/core";
 import { systemState } from ".";
 import useLazyAuthenticatedQuery from "../../../auth/useLazyAuthenticatedQuery";
-import { Signature } from "../../../generated/graphqlOperations";
 import { GET_SYSTEM_BY_NAME } from "./graphql";
-
-export type AddSignatureHookInput = Omit<Signature, "id" | "systemId" | "name">;
 
 export default () => {
   const state = useState(systemState);

@@ -8,7 +8,7 @@ import {
   Paper,
   TableCellProps,
 } from "@mui/material";
-import { Wormhole } from "../../../../../generated/graphqlOperations";
+import { SigType } from "../../../../../generated/graphqlOperations";
 import TableRow from "../../../../common/TableRow";
 import useSignatures from "../../../SystemData/useSignatures";
 import DeleteSigButton from "./DeleteSigButton";
@@ -24,9 +24,7 @@ const TableCell = ({ children, sx }: TableCellProps) => (
 );
 
 export default () => {
-  const { allSigs } = useSignatures();
-
-  const isWormhole = (sig: Wormhole): boolean => Object.keys(sig).includes("eol");
+  const { signatures } = useSignatures();
 
   return (
     <TableContainer component={Paper} sx={{ bgcolor: "primary.light" }}>
@@ -39,13 +37,13 @@ export default () => {
           </TableRow>
         </TableHead>
         <TableBody data-cy="sig-list-body">
-          {allSigs &&
-            allSigs.map((sig) => (
+          {signatures &&
+            signatures.map((sig) => (
               <SigContextMenu key={sig.id} signature={sig}>
                 <TableCell component="th" scope="row">
                   {sig.eveId}
                 </TableCell>
-                <TableCell>{sig.type || (isWormhole(sig as Wormhole) && "Wormhole")}</TableCell>
+                <TableCell>{sig.type || (sig.type === SigType.Wormhole && "Wormhole")}</TableCell>
                 <TableCell sx={{ paddingTop: 0, paddingBottom: 0 }}>
                   <Box
                     sx={{
@@ -56,7 +54,7 @@ export default () => {
                   >
                     {sig.name}
                     <Box sx={{ display: "flex", flexGrow: 1, justifyContent: "flex-end" }}>
-                      <EditSigButton sig={sig as Wormhole} />
+                      <EditSigButton signature={sig} />
                       <DeleteSigButton sig={sig} />
                     </Box>
                   </Box>

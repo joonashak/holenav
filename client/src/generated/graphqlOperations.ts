@@ -270,15 +270,15 @@ export type SignatureInput = {
   wormholeType?: InputMaybe<Scalars["String"]>;
 };
 
-export type SignatureWithoutRefs = {
+export type SignatureUpdate = {
   destinationName?: InputMaybe<Scalars["String"]>;
   eol?: InputMaybe<Scalars["Boolean"]>;
-  eveId: Scalars["String"];
+  eveId?: InputMaybe<Scalars["String"]>;
   id: Scalars["String"];
   massStatus?: InputMaybe<MassStatus>;
-  name: Scalars["String"];
+  name?: InputMaybe<Scalars["String"]>;
   reverseType?: InputMaybe<Scalars["String"]>;
-  systemName: Scalars["String"];
+  systemName?: InputMaybe<Scalars["String"]>;
   type: SigType;
   wormholeType?: InputMaybe<Scalars["String"]>;
 };
@@ -307,7 +307,7 @@ export type UpdateSignatureOutput = {
 };
 
 export type UpdateSignaturesInput = {
-  signatures: Array<SignatureWithoutRefs>;
+  signatures: Array<SignatureUpdate>;
 };
 
 export type User = {

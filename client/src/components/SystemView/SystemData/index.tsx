@@ -13,7 +13,6 @@ export const systemState = createState<SystemState>({
   whClass: null,
   effect: null,
   signatures: [],
-  wormholes: [],
   region: { id: 0, name: "" },
   constellation: { id: 0, name: "" },
   staticConnections: [],

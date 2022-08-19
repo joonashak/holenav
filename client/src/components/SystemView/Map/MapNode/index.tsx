@@ -85,7 +85,7 @@ const MapNode = ({ nodeDatum }: MapNodeProps) => {
           }}
         >
           {isRootNode ? <RootNodeName /> : <ConnectionName />}
-          <WhTypeLabel type={type} wormhole={wormhole} />
+          <WhTypeLabel type={type} signature={wormhole} />
         </Box>
       </foreignObject>
     </>

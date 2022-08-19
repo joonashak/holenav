@@ -1,8 +1,8 @@
-import { SigTypes } from "../../../../../generated/graphqlOperations";
+import { SigType } from "../../../../../generated/graphqlOperations";
 
 export type PastedSig = {
   eveId: string;
-  type: SigTypes | null;
+  type: SigType;
   name: string;
 };
 
@@ -11,11 +11,11 @@ export type SigPasteEvent = {
   pastedWormholes: PastedSig[];
 };
 
-const findSigType = (typeString: string) => {
+const findSigType = (typeString: string): SigType => {
   const sigTypeMap = {
-    "Data Site": SigTypes.Data,
-    "Relic Site": SigTypes.Relic,
-    "Gas Site": SigTypes.Gas,
+    "Data Site": SigType.Data,
+    "Relic Site": SigType.Relic,
+    "Gas Site": SigType.Gas,
   };
 
   if (Object.keys(sigTypeMap).includes(typeString)) {
@@ -23,10 +23,10 @@ const findSigType = (typeString: string) => {
   }
 
   if (typeString.match(/Wormhole/)) {
-    return SigTypes.Wormhole;
+    return SigType.Wormhole;
   }
 
-  return null;
+  return SigType.Unknown;
 };
 
 const getPasteDataMatrix = (pasteEvent: ClipboardEvent): string[][] => {
@@ -50,8 +50,8 @@ const formatPasteRow = (row: string[]): PastedSig => {
 const parsePaste = (pasteEvent: ClipboardEvent): SigPasteEvent => {
   const pasteMatrix = getPasteDataMatrix(pasteEvent);
   const formattedData = pasteMatrix.map(formatPasteRow);
-  const pastedSigs = formattedData.filter((sig) => sig.type !== SigTypes.Wormhole);
-  const pastedWormholes = formattedData.filter((sig) => sig.type === SigTypes.Wormhole);
+  const pastedSigs = formattedData.filter((sig) => sig.type !== SigType.Wormhole);
+  const pastedWormholes = formattedData.filter((sig) => sig.type === SigType.Wormhole);
   return { pastedSigs, pastedWormholes };
 };
 

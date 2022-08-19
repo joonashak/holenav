@@ -2,19 +2,15 @@ import { IconButton } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import { useState } from "react";
 import SigModal from "../SigModal";
-import { Signature, Wormhole } from "../../../../../generated/graphqlOperations";
+import { Signature } from "../../../../../generated/graphqlOperations";
 
 type EditSigButtonProps = {
-  sig: Signature | Wormhole;
+  signature: Signature;
 };
 
-const EditSigButton = ({ sig }: EditSigButtonProps) => {
+const EditSigButton = ({ signature }: EditSigButtonProps) => {
   const [modalOpen, setModalOpen] = useState(false);
   const toggleModal = () => setModalOpen((prev) => !prev);
-
-  const isWormhole = Object.keys(sig).includes("eol");
-  const wormhole = isWormhole ? (sig as Wormhole) : undefined;
-  const signature = !isWormhole ? (sig as Signature) : undefined;
 
   return (
     <>
@@ -23,11 +19,11 @@ const EditSigButton = ({ sig }: EditSigButtonProps) => {
         sx={{ pt: 0, pb: 0 }}
         onClick={toggleModal}
         aria-label="Edit Signature"
-        data-cy={`edit-sig-${sig.name}`}
+        data-cy={`edit-sig-${signature.name}`}
       >
         <EditIcon fontSize="inherit" />
       </IconButton>
-      <SigModal open={modalOpen} onClose={toggleModal} wormhole={wormhole} signature={signature} />
+      <SigModal open={modalOpen} onClose={toggleModal} signature={signature} />
     </>
   );
 };

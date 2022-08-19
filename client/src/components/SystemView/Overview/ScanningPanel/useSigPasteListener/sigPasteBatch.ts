@@ -1,5 +1,6 @@
 import { Signature } from "../../../../../generated/graphqlOperations";
-import { AddSignatureHookInput } from "../../../SystemData/useSystemData";
+import { AddSignatureHookInput } from "../../../SystemData/useSignatures";
+
 import { PastedSig, SigPasteEvent } from "./sigPasteParser";
 
 export type SigPasteBatch = {
@@ -14,7 +15,7 @@ const createSignatureAddReducer =
 
     if (!existingSig) {
       const newSignature = { type, eveId, name };
-      return addableSignatures.concat(newSignature);
+      return addableSignatures.concat([newSignature]);
     }
 
     return addableSignatures;
@@ -30,8 +31,7 @@ const createSignatureUpdateReducer =
     const sigExistsWithoutNameAndPasteHasName = existingSig && !existingSig.name && name;
 
     if (sigExistsWihtoutTypeAndPasteHasType || sigExistsWithoutNameAndPasteHasName) {
-      const { id } = existingSig;
-      return sigUpdates.concat({ id, eveId, name, type });
+      return sigUpdates.concat({ ...existingSig, eveId, name, type });
     }
 
     return sigUpdates;

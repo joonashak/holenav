@@ -2,28 +2,17 @@ import { FetchResult } from "@apollo/client";
 import { Downgraded, useState } from "@hookstate/core";
 import { systemState } from ".";
 import useAuthenticatedMutation from "../../../auth/useAuthenticatedMutation";
-import { AddSignatureDocument, Signature } from "../../../generated/graphqlOperations";
+import {
+  AddSignatureDocument,
+  Signature,
+  SignatureUpdate,
+} from "../../../generated/graphqlOperations";
 import { DELETE_SIGNATURE, EDIT_SIGNATURE } from "./graphql";
 
-// FIXME: This is probably wrong. At least name is used thus should not be omitted..?
-type AddSignatureHookInput = Omit<Signature, "id" | "systemId" | "name">;
+export type AddSignatureHookInput = Omit<Signature, "id" | "folder" | "systemName">;
 
 const useSignatures = () => {
   const state = useState(systemState);
-
-  /**
-   * Get all signatures and wormholes in current system.
-   *
-   * This method is provided for convenience. When working with Wormhole-specific properties,
-   * you should use `useWormholes` hook instead of casting some members of this method's
-   * return value.
-   * @returns Sigs and wormholes cast to `Signature`.
-   */
-  const getAllSigs = (): Signature[] => {
-    const signatures = state.signatures.attach(Downgraded).get();
-    const wormholes = state.wormholes.attach(Downgraded).get();
-    return signatures.concat(wormholes as Signature[]);
-  };
 
   const [addSigMutation] = useAuthenticatedMutation(AddSignatureDocument, {
     onCompleted: (data) => {
@@ -45,7 +34,7 @@ const useSignatures = () => {
     },
   });
 
-  const updateSignature = async (update: Signature): Promise<FetchResult> =>
+  const updateSignature = async (update: SignatureUpdate): Promise<FetchResult> =>
     updateSigMutation({ variables: { input: update } });
 
   const [deleteSigMutation] = useAuthenticatedMutation(DELETE_SIGNATURE, {
@@ -65,9 +54,6 @@ const useSignatures = () => {
   return {
     get signatures() {
       return state.signatures.attach(Downgraded).get();
-    },
-    get allSigs() {
-      return getAllSigs();
     },
     addSignature,
     updateSignature,

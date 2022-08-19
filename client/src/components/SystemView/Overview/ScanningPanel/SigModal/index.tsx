@@ -6,14 +6,14 @@ import WormholeForm from "./WormholeForm";
 import FormGroupRow from "../../../../controls/FormGroupRow";
 import Dialog from "../../../../common/Dialog";
 import EveIdField from "./EveIdField";
-import { Signature, SigTypes, Wormhole } from "../../../../../generated/graphqlOperations";
+import { Signature, SigType } from "../../../../../generated/graphqlOperations";
 
 let typeOptions: Array<{ id: string; value: string; label: string | ReactElement }> = [
   { id: "sig-type-null", value: "", label: <em>Unknown</em> },
 ];
 
 typeOptions = typeOptions.concat(
-  Object.entries(SigTypes).map(([key, label]) => ({
+  Object.entries(SigType).map(([key, label]) => ({
     id: `sig-type-${label}`,
     value: label,
     label: key as string,
@@ -23,28 +23,25 @@ typeOptions = typeOptions.concat(
 type SigModalProps = {
   open: boolean;
   onClose: () => void;
-  wormhole?: Wormhole;
   signature?: Signature;
 };
 
-const SigModal = ({ open, onClose, wormhole, signature }: SigModalProps) => {
-  const existingType = wormhole ? SigTypes.Wormhole : signature?.type;
-  const defaultType = existingType || "";
-  const [type, setType] = useState<SigTypes>(defaultType.toUpperCase() as SigTypes);
+const SigModal = ({ open, onClose, signature }: SigModalProps) => {
+  const defaultType = signature?.type || "";
+  const [type, setType] = useState<SigType>(defaultType.toUpperCase() as SigType);
 
-  const [eveId, setEveId] = useState<string>(wormhole?.eveId || signature?.eveId || "");
+  const [eveId, setEveId] = useState<string>(signature?.eveId || "");
 
   const onTypeChange = ({ target }: SelectChangeEvent) => {
-    setType(target.value as SigTypes);
+    setType(target.value as SigType);
   };
 
   const onEveIdChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
     setEveId(target.value);
   };
 
-  const showWormholeForm = type === SigTypes.Wormhole.toUpperCase();
-  const editing = !!wormhole || !!signature;
-  const modalTitle = editing ? "Edit Signature" : "Add Signature";
+  const showWormholeForm = type === SigType.Wormhole.toUpperCase();
+  const modalTitle = signature ? "Edit Signature" : "Add Signature";
 
   return (
     <Dialog open={open} onClose={onClose}>
@@ -57,14 +54,10 @@ const SigModal = ({ open, onClose, wormhole, signature }: SigModalProps) => {
             title="Signature Type"
             options={typeOptions}
           />
-          <EveIdField
-            value={eveId}
-            onChange={onEveIdChange}
-            existingId={signature?.id || wormhole?.id || null}
-          />
+          <EveIdField value={eveId} onChange={onEveIdChange} existingId={signature?.id || null} />
         </FormGroupRow>
         {showWormholeForm ? (
-          <WormholeForm eveId={eveId} existing={wormhole} onClose={onClose} />
+          <WormholeForm eveId={eveId} existing={signature} onClose={onClose} />
         ) : (
           <SigForm type={type} eveId={eveId} existing={signature} onClose={onClose} />
         )}
@@ -74,7 +67,6 @@ const SigModal = ({ open, onClose, wormhole, signature }: SigModalProps) => {
 };
 
 SigModal.defaultProps = {
-  wormhole: null,
   signature: null,
 };
 

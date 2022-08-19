@@ -1,10 +1,20 @@
-import { Field, InputType, ObjectType } from "@nestjs/graphql";
+import { Field, InputType, ObjectType, PartialType } from "@nestjs/graphql";
+import SigType from "../enums/sig-type.enum";
 import { Signature, SignatureWithoutRefs } from "../signature.model";
 
 @InputType()
 export class UpdateSignaturesInput {
-  @Field((type) => [SignatureWithoutRefs])
-  signatures: SignatureWithoutRefs[];
+  @Field((type) => [SignatureUpdate])
+  signatures: SignatureUpdate[];
+}
+
+@InputType()
+export class SignatureUpdate extends PartialType(SignatureWithoutRefs) {
+  @Field()
+  id: string;
+
+  @Field((type) => SigType)
+  type: SigType;
 }
 
 @ObjectType()

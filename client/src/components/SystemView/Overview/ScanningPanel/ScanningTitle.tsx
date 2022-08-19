@@ -2,7 +2,7 @@ import { Box, Chip, Typography } from "@mui/material";
 import useSignatures from "../../SystemData/useSignatures";
 
 export default () => {
-  const { allSigs } = useSignatures();
+  const { signatures } = useSignatures();
 
   return (
     <Box
@@ -15,9 +15,9 @@ export default () => {
       }}
     >
       <Typography variant="h3">Signatures</Typography>
-      {allSigs && (
+      {signatures && (
         <Chip
-          label={allSigs.length}
+          label={signatures.length}
           sx={{
             bgcolor: "primary.dark",
             color: "primary.contrastText",

@@ -2,6 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { Folder } from "../../folder/folder.model";
+import { SignatureUpdate } from "../dto/update-signatures.dto";
 import { Signature, SignatureDocument } from "../signature.model";
 import { isWormhole } from "../signature.utils";
 import { WormholeService } from "./wormhole.service";
@@ -24,7 +25,7 @@ export class SignatureService {
     return sigsWithReverses;
   }
 
-  async updateSignatures(sigUpdates: Signature[]): Promise<Signature[]> {
+  async updateSignatures(sigUpdates: SignatureUpdate[]): Promise<Signature[]> {
     const ids = sigUpdates.map((sig) => sig.id);
     const oldSigs = await this.sigModel.find({ $id: { in: ids } });
 
@@ -54,7 +55,10 @@ export class SignatureService {
     return sigs;
   }
 
-  private async updateSignature(update: Signature, old: SignatureDocument): Promise<Signature> {
+  private async updateSignature(
+    update: SignatureUpdate,
+    old: SignatureDocument,
+  ): Promise<Signature> {
     if (!isWormhole(old) && isWormhole(update)) {
       const sigWithWhTypes = this.wormholeService.addWhTypes(update);
       const updatedSig = await this.sigModel.findOneAndUpdate(
