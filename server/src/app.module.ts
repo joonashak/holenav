@@ -11,6 +11,7 @@ import { CLIENT_URL, MONGO_URL } from "./config";
 import { BootstrapModule } from "./bootstrap/bootstrap.module";
 import { AppDataModule } from "./app-data/app-data.module";
 import { Neo4jModule } from "./integration/neo4j/neo4j.module";
+import { ConnectionGraphModule } from "./connection-graph/connection-graph.module";
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { Neo4jModule } from "./integration/neo4j/neo4j.module";
     FolderModule,
     SignatureModule,
     DevToolsModule,
+    ConnectionGraphModule,
   ],
 })
 export class AppModule {}
