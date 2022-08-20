@@ -19,6 +19,7 @@ services:
       - ENABLE_DEVTOOLS=true
     depends_on:
       - mongo-ci
+      - neo-ci
 
   client-ci:
     build: ./client/
@@ -40,6 +41,18 @@ services:
     container_name: holenav-mongo-ci
     ports:
       - 27017:27017
+    networks:
+      - ci
+
+  neo-ci:
+    image: neo4j:4.4
+    restart: unless-stopped
+    container_name: holenav-neo-ci
+    environment:
+      - NEO4J_AUTH=none
+    ports:
+      - 7474:7474
+      - 7687:7687
     networks:
       - ci
 
