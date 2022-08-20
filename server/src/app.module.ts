@@ -7,13 +7,13 @@ import { CharacterModule } from "./entities/character/character.module";
 import { FolderModule } from "./entities/folder/folder.module";
 import { SignatureModule } from "./entities/signature/signature.module";
 import { DevToolsModule } from "./dev-tools/dev-tools.module";
-import { CLIENT_URL, DATABASE_URL } from "./config";
+import { CLIENT_URL, MONGO_URL } from "./config";
 import { BootstrapModule } from "./bootstrap/bootstrap.module";
 import { AppDataModule } from "./app-data/app-data.module";
 
 @Module({
   imports: [
-    MongooseModule.forRoot(DATABASE_URL, { useFindAndModify: false }),
+    MongooseModule.forRoot(MONGO_URL, { useFindAndModify: false }),
     GraphQLModule.forRoot({
       autoSchemaFile: true,
       playground: true,

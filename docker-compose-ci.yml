@@ -13,12 +13,12 @@ services:
     environment:
       - NODE_ENV=test
       - PORT=3001
-      - DATABASE_URL=mongodb://db-ci/ci
+      - MONGO_URL=mongodb://mongo-ci/ci
       - CLIENT_URL=http://client-ci:3000
       - JWT_SECRET=asdasd
       - ENABLE_DEVTOOLS=true
     depends_on:
-      - db-ci
+      - mongo-ci
 
   client-ci:
     build: ./client/
@@ -34,10 +34,10 @@ services:
       - REACT_APP_CMS_URL=http://server-ci:3001
       - REACT_APP_ENABLE_DEVTOOLS=true
 
-  db-ci:
+  mongo-ci:
     image: mongo:4.4-bionic
     restart: unless-stopped
-    container_name: holenav-db-ci
+    container_name: holenav-mongo-ci
     ports:
       - 27017:27017
     networks:

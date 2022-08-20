@@ -127,7 +127,7 @@ Then create another file called `server.production.env` in the same location. Us
 ```bash
 NODE_ENV=production
 PORT=3001
-DATABASE_URL=
+MONGO_URL=
 CLIENT_URL=https://holenav.com
 SSO_CALLBACK_URL=https://api.holenav.com/auth/callback
 SSO_CLIENT_ID=

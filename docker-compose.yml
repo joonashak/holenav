@@ -9,7 +9,7 @@ services:
     environment:
       - NODE_ENV=development
       - PORT=3001
-      - DATABASE_URL=mongodb://db/holenav
+      - MONGO_URL=mongodb://mongo/holenav
       - CLIENT_URL=http://localhost:3000
       - JWT_SECRET=asdasd
       - ENABLE_DEVTOOLS=true
@@ -18,7 +18,7 @@ services:
     volumes:
       - ./server/src:/usr/src/app/src
     depends_on:
-      - db
+      - mongo
 
   client:
     build: ./client/
@@ -34,10 +34,10 @@ services:
     volumes:
       - ./client/src:/usr/src/app/src
 
-  db:
+  mongo:
     image: mongo:5.0-focal
     restart: unless-stopped
-    container_name: holenav-db
+    container_name: holenav-mongo
     volumes:
       - type: volume
         source: mongo-data
@@ -47,8 +47,7 @@ services:
     ports:
       - 27017:27017
 
-  # Duplicate containers to have an independent and hot-reloaded test env
-  # running at all times.
+  # Duplicate containers to enable an independent and hot-reloaded test env without ruining dev data.
   server-test:
     build: ./server/
     ports:
@@ -57,7 +56,7 @@ services:
     environment:
       - NODE_ENV=test
       - PORT=3001
-      - DATABASE_URL=mongodb://db/holenav-test
+      - MONGO_URL=mongodb://mongo/holenav-test
       - CLIENT_URL=http://localhost:4000
       - JWT_SECRET=asdasd
       - ENABLE_DEVTOOLS=true
@@ -66,7 +65,7 @@ services:
     volumes:
       - ./server/src:/usr/src/app/src
     depends_on:
-      - db
+      - mongo
 
   client-test:
     build: ./client/
