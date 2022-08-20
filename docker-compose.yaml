@@ -10,6 +10,7 @@ services:
       - NODE_ENV=development
       - PORT=3001
       - MONGO_URL=mongodb://mongo/holenav
+      - NEO_URL=neo4j://neo
       - CLIENT_URL=http://localhost:3000
       - JWT_SECRET=asdasd
       - ENABLE_DEVTOOLS=true

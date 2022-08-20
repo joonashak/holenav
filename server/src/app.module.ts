@@ -10,6 +10,7 @@ import { DevToolsModule } from "./dev-tools/dev-tools.module";
 import { CLIENT_URL, MONGO_URL } from "./config";
 import { BootstrapModule } from "./bootstrap/bootstrap.module";
 import { AppDataModule } from "./app-data/app-data.module";
+import { Neo4jModule } from "./integration/neo4j/neo4j.module";
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { AppDataModule } from "./app-data/app-data.module";
       debug: false,
       cors: { origin: CLIENT_URL },
     }),
+    Neo4jModule,
     AppDataModule,
     BootstrapModule,
     SystemModule,
