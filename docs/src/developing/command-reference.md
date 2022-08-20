@@ -19,7 +19,7 @@ Installing NPM packages locally is not always required as the containerized envi
 
 ## Basic Commands
 
-Control the containerized development environment. Requires `npm`, `docker` and `docker-compose` commands to be available on the host machine.
+Control the containerized development environment. Requires `npm`, `docker` and `docker compose` commands to be available on the host machine.
 
 ### Start in Development Mode
 
