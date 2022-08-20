@@ -1,6 +1,6 @@
 import { Injectable, Logger } from "@nestjs/common";
-import neo4j, { Driver } from "neo4j-driver";
-import { NEO_PASSWORD, NEO_URL, NEO_USERNAME } from "../../config";
+import neo4j, { Driver, SessionMode } from "neo4j-driver";
+import { NEO_DB, NEO_PASSWORD, NEO_URL, NEO_USERNAME } from "../../config";
 
 @Injectable()
 export class Neo4jService {
@@ -17,7 +17,27 @@ export class Neo4jService {
     await this.driver.close();
   }
 
-  async verifyConnection() {
+  async read(query: string) {
+    const session = this.getSession(neo4j.session.READ);
+    let result;
+
+    try {
+      result = await session.readTransaction((tx) => tx.run(query));
+    } finally {
+      await session.close();
+    }
+
+    return result;
+  }
+
+  private getSession(mode: SessionMode) {
+    return this.driver.session({
+      database: NEO_DB,
+      defaultAccessMode: mode,
+    });
+  }
+
+  private async verifyConnection() {
     try {
       await this.driver.verifyConnectivity();
     } catch (error) {

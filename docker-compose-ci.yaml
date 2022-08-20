@@ -15,6 +15,7 @@ services:
       - PORT=3001
       - MONGO_URL=mongodb://mongo-ci/ci
       - NEO_URL=neo4j://neo-ci
+      - NEO_DB=holenav
       - CLIENT_URL=http://client-ci:3000
       - JWT_SECRET=asdasd
       - ENABLE_DEVTOOLS=true
