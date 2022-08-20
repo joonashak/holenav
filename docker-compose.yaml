@@ -11,7 +11,7 @@ services:
       - PORT=3001
       - MONGO_URL=mongodb://mongo/holenav
       - NEO_URL=neo4j://neo
-      - NEO_DB=holenav
+      - NEO_DB=neo4j
       - CLIENT_URL=http://localhost:3000
       - JWT_SECRET=asdasd
       - ENABLE_DEVTOOLS=true
@@ -75,7 +75,7 @@ services:
       - PORT=3001
       - MONGO_URL=mongodb://mongo/holenav-test
       - NEO_URL=neo4j://neo
-      - NEO_DB=holenav-test
+      - NEO_DB=neo4j
       - CLIENT_URL=http://localhost:4000
       - JWT_SECRET=asdasd
       - ENABLE_DEVTOOLS=true
