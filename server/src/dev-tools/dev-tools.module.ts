@@ -10,9 +10,17 @@ import { ENABLE_DEVTOOLS } from "../config";
 import { SessionModule } from "../auth/session/session.module";
 import { MockFolderService } from "./mock-data-services/mock-folder.service";
 import { MockWormholeService } from "./mock-data-services/mock-wormholes.service";
+import { ConnectionGraphModule } from "../connection-graph/connection-graph.module";
 
 const options = {
-  imports: [CharacterModule, FolderModule, SignatureModule, SsoSessionModule, SessionModule],
+  imports: [
+    CharacterModule,
+    FolderModule,
+    SignatureModule,
+    SsoSessionModule,
+    SessionModule,
+    ConnectionGraphModule,
+  ],
   providers: [DevToolsService, MockUserService, MockFolderService, MockWormholeService],
   controllers: [DevToolsController],
 };

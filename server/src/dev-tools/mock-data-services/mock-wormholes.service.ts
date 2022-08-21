@@ -6,7 +6,7 @@ import SigType from "../../entities/signature/enums/sig-type.enum";
 import { Signature } from "../../entities/signature/signature.model";
 import { SignatureService } from "../../entities/signature/services/signature.service";
 import MassStatus from "../../entities/signature/enums/mass-status.enum";
-import whMockData from "../data/wormholes";
+import whMockData from "../data/wormholes-OLD";
 
 @Injectable()
 export class MockWormholeService {

@@ -9,4 +9,8 @@ export class ConnectionGraphService {
     const res = await this.neoService.read("MATCH (p:Person) RETURN p");
     return res;
   }
+
+  async deleteAll() {
+    await this.neoService.write("MATCH (n) DETACH DELETE n");
+  }
 }

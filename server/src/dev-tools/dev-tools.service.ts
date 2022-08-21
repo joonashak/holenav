@@ -3,6 +3,7 @@ import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { Session } from "../auth/session/session.model";
 import { SsoSession } from "../auth/sso/sso-session/sso-session.model";
+import { ConnectionGraphService } from "../connection-graph/connection-graph.service";
 import { Character } from "../entities/character/character.model";
 import { Folder } from "../entities/folder/folder.model";
 import { Signature } from "../entities/signature/signature.model";
@@ -28,6 +29,7 @@ export class DevToolsService {
     private mockUserService: MockUserService,
     private mockFolderService: MockFolderService,
     private mockWhService: MockWormholeService,
+    private connectionGraphService: ConnectionGraphService,
   ) {}
 
   /**
@@ -35,6 +37,8 @@ export class DevToolsService {
    */
   async resetDatabase() {
     await this.clearCollections();
+    await this.connectionGraphService.deleteAll();
+
     await this.mockFolderService.mock();
     await this.mockUserService.mock();
   }
