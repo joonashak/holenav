@@ -17,12 +17,25 @@ export class Neo4jService {
     await this.driver.close();
   }
 
-  async read(query: string) {
+  async read(query: string, params?: Record<string, string>) {
     const session = this.getSession(neo4j.session.READ);
     let result;
 
     try {
-      result = await session.readTransaction((tx) => tx.run(query));
+      result = await session.readTransaction((tx) => tx.run(query, params));
+    } finally {
+      await session.close();
+    }
+
+    return result;
+  }
+
+  async write(query: string, params?: Record<string, string>) {
+    const session = this.getSession(neo4j.session.WRITE);
+    let result;
+
+    try {
+      result = await session.writeTransaction((tx) => tx.run(query, params));
     } finally {
       await session.close();
     }
