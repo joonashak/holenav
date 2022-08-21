@@ -33,7 +33,7 @@ export class ConnectionTreeService {
         },
       },
     ]);
-    console.log(res);
+
     console.timeEnd("Wormhole graphlookup");
 
     if (!res.length) {

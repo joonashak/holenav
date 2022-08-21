@@ -30,7 +30,7 @@ export class Neo4jService {
     return result;
   }
 
-  async write(query: string, params?: Record<string, string>) {
+  async write(query: string, params?: any) {
     const session = this.getSession(neo4j.session.WRITE);
     let result;
 
