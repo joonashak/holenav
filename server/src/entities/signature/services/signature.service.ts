@@ -7,6 +7,8 @@ import { Signature, SignatureDocument } from "../signature.model";
 import { isWormhole } from "../signature.utils";
 import { WormholeService } from "./wormhole.service";
 
+// TODO: Move signatures completely to Neo4j. Queries in connection graph module, call them here, etc.
+
 @Injectable()
 export class SignatureService {
   constructor(

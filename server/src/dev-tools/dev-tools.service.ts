@@ -11,6 +11,7 @@ import { System } from "../entities/system/system.model";
 import { Credentials } from "../user/credentials/credentials.model";
 import { User } from "../user/user.model";
 import users from "./data/users";
+import { MockConnectionGraphService } from "./mock-data-services/mock-connection-graph.service";
 import { MockFolderService } from "./mock-data-services/mock-folder.service";
 import { MockUserService } from "./mock-data-services/mock-user.service";
 import { MockWormholeService } from "./mock-data-services/mock-wormholes.service";
@@ -30,6 +31,7 @@ export class DevToolsService {
     private mockFolderService: MockFolderService,
     private mockWhService: MockWormholeService,
     private connectionGraphService: ConnectionGraphService,
+    private mockConnectionGraphService: MockConnectionGraphService,
   ) {}
 
   /**
@@ -37,7 +39,6 @@ export class DevToolsService {
    */
   async resetDatabase() {
     await this.clearCollections();
-    await this.connectionGraphService.deleteAll();
 
     await this.mockFolderService.mock();
     await this.mockUserService.mock();
@@ -52,6 +53,7 @@ export class DevToolsService {
     await this.mockFolderService.mock();
     await this.mockUserService.mock();
     await this.mockWhService.mock();
+    await this.mockConnectionGraphService.mock();
   }
 
   async getMockUsers() {
@@ -68,5 +70,6 @@ export class DevToolsService {
     await this.userModel.deleteMany({});
     await this.credentialsModel.deleteMany({});
     await this.sessionModel.deleteMany({});
+    await this.connectionGraphService.deleteAll();
   }
 }

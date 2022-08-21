@@ -1,5 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { Neo4jService } from "../integration/neo4j/neo4j.service";
+import { GraphConnection, GraphSignature, GraphSystem } from "./types";
 
 @Injectable()
 export class ConnectionGraphService {
@@ -14,26 +15,40 @@ export class ConnectionGraphService {
     await this.neoService.write("MATCH (n) DETACH DELETE n");
   }
 
-  async createSystems(systems: Array<{ name: string }>) {
+  async createSystems(systems: GraphSystem[]) {
     await this.neoService.write(
       `
       UNWIND $systems as system
-      MERGE (s:System {name: system.name})
+      MERGE (s:System {name: system.name, folderId: system.folderId})
       ON CREATE SET s += system
     `,
       { systems },
     );
   }
 
-  async createWormholes(wormholes: Array<{ from: string; to: string }>) {
+  async createSignatures(signatures: GraphSignature[]) {
+    // FIXME: Set proper id (eveId used for nice view in Neo browser).
+    // FIXME: Using id = eveId will break things upon duplicate eveId!
     await this.neoService.write(
       ` 
-      UNWIND $wormholes as wh
-      MATCH (from:System {name: wh.from})
-      MATCH (to:System {name: wh.to})
-      MERGE (from)-[:WORMHOLE]->(to)
+      UNWIND $signatures as sig
+      MATCH (system:System {name: sig.systemName, folderId: sig.folderId})
+      CREATE (newSig:Signature {id: sig.eveId, eveId: sig.eveId})
+      MERGE (system)-[:HAS]->(newSig)
     `,
-      { wormholes },
+      { signatures },
+    );
+  }
+
+  async createConnections(connections: GraphConnection[]) {
+    await this.neoService.write(
+      ` 
+      UNWIND $connections as conn
+      MATCH (from:Signature {id: conn.from})
+      MATCH (to:Signature {id: conn.to})
+      CREATE (from)-[:CONNECTS]->(to)
+    `,
+      { connections },
     );
   }
 }

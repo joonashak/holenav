@@ -1,5 +1,65 @@
-import MassStatus from "../../entities/signature/enums/mass-status.enum";
+import SigType from "../../entities/signature/enums/sig-type.enum";
 
+export const connectedSystems = [
+  {
+    name: "Jita",
+  },
+  {
+    name: "Ikuchi",
+  },
+  {
+    name: "Ansila",
+  },
+  {
+    name: "Jita",
+  },
+  {
+    name: "Otanuomi",
+  },
+  {
+    name: "Ansila",
+  },
+  {
+    name: "Maurasi",
+  },
+  {
+    name: "Urhinichi",
+  },
+];
+
+export const signatures = [
+  {
+    eveId: "WHL-100",
+    type: SigType.WORMHOLE,
+    systemName: "Jita",
+  },
+  {
+    eveId: "WHL-200",
+    type: SigType.WORMHOLE,
+    systemName: "Ikuchi",
+  },
+  {
+    eveId: "DAT-100",
+    type: SigType.DATA,
+    systemName: "Jita",
+  },
+];
+
+// FIXME: This assumes id = eveId which should not be the case after prototyping is done.
+export const connections = [
+  {
+    from: "WHL-100",
+    to: "WHL-200",
+  },
+];
+
+export const wormholes = [
+  {
+    from: "Jita",
+    to: "Ikuchi",
+  },
+];
+/*
 export default [
   // Jita chain.
   {
@@ -26,58 +86,6 @@ export default [
     name: "Urhinichi",
     destinationName: "Urhinichi",
     systemName: "Otanuomi",
-  },
-
-  // Amarr chain.
-  {
-    name: "Sarum Prime",
-    destinationName: "Sarum Prime",
-    systemName: "Amarr",
-  },
-  {
-    name: "Hama",
-    destinationName: "Hama",
-    systemName: "Sarum Prime",
-  },
-  {
-    name: "Bagodan",
-    destinationName: "Bagodan",
-    systemName: "Hama",
-  },
-  {
-    name: "Merz",
-    destinationName: "Merz",
-    systemName: "Bagodan",
-  },
-  {
-    name: "Sirkahri",
-    destinationName: "Sirkahri",
-    systemName: "Merz",
-  },
-  {
-    name: "Galeh",
-    destinationName: "Galeh",
-    systemName: "Sirkahri",
-  },
-  {
-    name: "Madimal",
-    destinationName: "Madimal",
-    systemName: "Galeh",
-  },
-  {
-    name: "Jambu",
-    destinationName: "Jambu",
-    systemName: "Madimal",
-  },
-  {
-    name: "Warouh",
-    destinationName: "Warouh",
-    systemName: "Jambu",
-  },
-  {
-    name: "Murema",
-    destinationName: "Murema",
-    systemName: "Warouh",
   },
   // Proper demo chain (J104809).
   {
@@ -132,6 +140,13 @@ export default [
     eol: true,
   },
   {
+    name: "E1C VWX",
+    eveId: "DEM-008",
+    destinationName: "",
+    systemName: "J165308",
+    wormholeType: "P060",
+  },
+  {
     name: "",
     eveId: "DEM-009",
     destinationName: "J104809",
@@ -141,3 +156,4 @@ export default [
     eol: true,
   },
 ];
+  */
