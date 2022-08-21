@@ -51,4 +51,13 @@ export class ConnectionGraphService {
       { connections },
     );
   }
+
+  async getConnectionGraph() {
+    const res = this.neoService.read(` 
+    MATCH (s:System {name: 'Jita'})-[HAS]->(d:Signature)<-[c:CONNECTS]->(x:Signature)<-[y:HAS]-(z:System)
+    RETURN s, d, c, x, y, z
+    `);
+
+    return res;
+  }
 }
