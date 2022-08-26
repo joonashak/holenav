@@ -1,5 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { Neo4jService } from "../integration/neo4j/neo4j.service";
+import { ConnectionTree, ConnectionTreeNode } from "./dto/connection-tree.dto";
 import { GraphConnection, GraphSignature, GraphSystem } from "./types";
 
 @Injectable()
@@ -52,7 +53,7 @@ export class ConnectionGraphService {
     );
   }
 
-  async getConnectionGraph(rootSystemName: string, folderId: string) {
+  async getConnectionTree(rootSystemName: string, folderId: string): Promise<ConnectionTree> {
     // Kudos to glilienfield for helping with this query:
     // https://community.neo4j.com/t5/neo4j-graph-platform/expand-sets-of-multiple-relations-when-querying-for-hierarchical/m-p/59381
     const res = await this.neoService.read(
@@ -91,17 +92,28 @@ export class ConnectionGraphService {
     return connectionTree;
   }
 
-  private findChildren(allChildren: any[], systemName: string) {
+  private findChildren(allChildren: any[], currentSystemName: string): ConnectionTreeNode[] {
     // TODO: Make sure this stops on loop.
     const children = allChildren
       .filter(
-        (child) => child.from.system.name === systemName || child.to.system.name === systemName,
+        (child) =>
+          child.from.system.name === currentSystemName ||
+          child.to.system.name === currentSystemName,
       )
       .map((child) => {
-        const system = child.from.system.name === systemName ? child.to.system : child.from.system;
-        // FIXME: Return wormhole types, flipped, if necessary.
+        const { connection, to, from } = child;
+        const reversed = to.system.name === currentSystemName;
+        const system = reversed ? from.system : to.system;
+
+        const wormhole = {
+          ...connection,
+          wormholeType: reversed ? connection.reverseType : connection.wormholeType,
+          reverseType: reversed ? connection.wormholeType : connection.reverseType,
+        };
+
         return {
           name: system.name,
+          wormhole,
           children: this.findChildren(
             allChildren.filter((c) => c.id !== child.id),
             system.name,
