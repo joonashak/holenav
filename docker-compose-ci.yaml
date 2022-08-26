@@ -34,7 +34,7 @@ services:
     environment:
       - PORT=3000
       - INTERNAL_STATUS_PORT=30011
-      - REACT_APP_CMS_URL=http://server-ci:3001
+      - REACT_APP_BACKEND_URL=http://server-ci:3001
       - REACT_APP_ENABLE_DEVTOOLS=true
 
   mongo-ci:

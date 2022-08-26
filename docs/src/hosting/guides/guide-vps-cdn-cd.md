@@ -63,7 +63,7 @@ The frontend is implemented as a React app that is served to users via CDN. In t
 
 ### Create Vercel Project
 
-Create a new project in Vercel dashboard. In _Project Settings_, add an environment variable named `REACT_APP_CMS_URL` and set its value to your backend URL (e.g. `https://api.holenav.com`).
+Create a new project in Vercel dashboard. In _Project Settings_, add an environment variable named `REACT_APP_BACKEND_URL` and set its value to your backend URL (e.g. `https://api.holenav.com`).
 
 Next, go to _Personal Account Settings_ and create a new token. It will be used to deploying the frontend from GitHub.
 
