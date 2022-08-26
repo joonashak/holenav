@@ -11,19 +11,13 @@ export const connectedSystems = [
     name: "Ansila",
   },
   {
-    name: "Jita",
+    name: "Dodixie",
   },
   {
-    name: "Otanuomi",
+    name: "Hek",
   },
   {
-    name: "Ansila",
-  },
-  {
-    name: "Maurasi",
-  },
-  {
-    name: "Urhinichi",
+    name: "Amarr",
   },
 ];
 
@@ -34,9 +28,49 @@ export const signatures = [
     systemName: "Jita",
   },
   {
+    eveId: "WHL-101",
+    type: SigType.WORMHOLE,
+    systemName: "Jita",
+  },
+  {
     eveId: "WHL-200",
     type: SigType.WORMHOLE,
     systemName: "Ikuchi",
+  },
+  {
+    eveId: "WHL-201",
+    type: SigType.WORMHOLE,
+    systemName: "Ikuchi",
+  },
+  {
+    eveId: "WHL-300",
+    type: SigType.WORMHOLE,
+    systemName: "Ansila",
+  },
+  {
+    eveId: "WHL-301",
+    type: SigType.WORMHOLE,
+    systemName: "Ansila",
+  },
+  {
+    eveId: "WHL-302",
+    type: SigType.WORMHOLE,
+    systemName: "Ansila",
+  },
+  {
+    eveId: "WHL-400",
+    type: SigType.WORMHOLE,
+    systemName: "Dodixie",
+  },
+  {
+    eveId: "WHL-500",
+    type: SigType.WORMHOLE,
+    systemName: "Amarr",
+  },
+  {
+    eveId: "WHL-600",
+    type: SigType.WORMHOLE,
+    systemName: "Hek",
   },
   {
     eveId: "DAT-100",
@@ -51,14 +85,24 @@ export const connections = [
     from: "WHL-100",
     to: "WHL-200",
   },
-];
-
-export const wormholes = [
   {
-    from: "Jita",
-    to: "Ikuchi",
+    from: "WHL-300",
+    to: "WHL-201",
+  },
+  {
+    from: "WHL-101",
+    to: "WHL-400",
+  },
+  {
+    from: "WHL-301",
+    to: "WHL-500",
+  },
+  {
+    from: "WHL-302",
+    to: "WHL-600",
   },
 ];
+
 /*
 export default [
   // Jita chain.
