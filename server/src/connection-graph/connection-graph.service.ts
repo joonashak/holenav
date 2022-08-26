@@ -46,7 +46,7 @@ export class ConnectionGraphService {
       UNWIND $connections as conn
       MATCH (from:Signature {id: conn.from})
       MATCH (to:Signature {id: conn.to})
-      CREATE (from)-[:CONNECTS]->(to)
+      CREATE (from)-[:CONNECTS {wormholeType: 'H296', reverseType: 'K162'}]->(to)
     `,
       { connections },
     );
@@ -60,10 +60,17 @@ export class ConnectionGraphService {
       MATCH connections=(:System {name: $rootSystemName, folderId: $folderId})-[*]-(end:System)
       WHERE size([(end)-[:HAS]->() | 1]) = 1
       UNWIND [rel IN relationships(connections) WHERE type(rel) = 'CONNECTS'] AS connRel
-      WITH startNode(connRel) AS startNode, endNode(connRel) AS endNode
+      WITH 
+        startNode(connRel) AS startNode,
+        endNode(connRel) AS endNode,
+        properties(connRel) AS connProps
       MATCH (startSystem:System)-[:HAS]->(startNode)
       MATCH (endSystem:System)-[:HAS]->(endNode)
-      RETURN {start_signature: {id: startNode.id, system: startSystem.name}, end_signature: {id: endNode.id, end_system: endSystem.name}} as connection
+      RETURN {
+        start_signature: {id: startNode.id, system: startSystem.name},
+        end_signature: {id: endNode.id, end_system: endSystem.name},
+        props: connProps
+      } as connection
     `,
       { rootSystemName, folderId },
     );
