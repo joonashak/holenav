@@ -63,18 +63,52 @@ export class ConnectionGraphService {
       WITH 
         startNode(connRel) AS startNode,
         endNode(connRel) AS endNode,
-        properties(connRel) AS connProps
+        properties(connRel) AS connProps,
+        id(connRel) AS id
       MATCH (startSystem:System)-[:HAS]->(startNode)
       MATCH (endSystem:System)-[:HAS]->(endNode)
-      RETURN {
-        start_signature: {id: startNode.id, system: startSystem.name},
-        end_signature: {id: endNode.id, end_system: endSystem.name},
-        props: connProps
+      RETURN DISTINCT {
+        from: {id: startNode.id, system: properties(startSystem)},
+        to: {id: endNode.id, system: properties(endSystem)},
+        connection: connProps,
+        id: id
       } as connection
     `,
       { rootSystemName, folderId },
     );
 
-    return res.records;
+    const connections = res.records.map((record) => ({ ...record._fields[0] }));
+    const connectionTree = this.buildConnectionTree(rootSystemName, connections);
+
+    return connectionTree;
+  }
+
+  private buildConnectionTree(rootSystemName: string, connections: any[]) {
+    const connectionTree = {
+      rootSystemName,
+      children: this.findChildren(connections, rootSystemName),
+    };
+    return connectionTree;
+  }
+
+  private findChildren(allChildren: any[], systemName: string) {
+    // TODO: Make sure this stops on loop.
+    const children = allChildren
+      .filter(
+        (child) => child.from.system.name === systemName || child.to.system.name === systemName,
+      )
+      .map((child) => {
+        const system = child.from.system.name === systemName ? child.to.system : child.from.system;
+        // FIXME: Return wormhole types, flipped, if necessary.
+        return {
+          name: system.name,
+          children: this.findChildren(
+            allChildren.filter((c) => c.id !== child.id),
+            system.name,
+          ),
+        };
+      });
+
+    return children;
   }
 }

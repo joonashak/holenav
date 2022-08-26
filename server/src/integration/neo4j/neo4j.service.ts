@@ -9,7 +9,9 @@ export class Neo4jService {
 
   async onModuleInit() {
     console.log("Creating Neo4j driver.");
-    this.driver = neo4j.driver(NEO_URL, neo4j.auth.basic(NEO_USERNAME, NEO_PASSWORD));
+    this.driver = neo4j.driver(NEO_URL, neo4j.auth.basic(NEO_USERNAME, NEO_PASSWORD), {
+      disableLosslessIntegers: true,
+    });
     await this.verifyConnection();
   }
 
