@@ -1,7 +1,7 @@
 import { Downgraded, useState } from "@hookstate/core";
+import axios from "axios";
 import { mapState } from ".";
-import useLazyAuthenticatedQuery from "../../../../auth/useLazyAuthenticatedQuery";
-import { ConnectionTreeDocument } from "../../../../generated/graphqlOperations";
+import { backendUrl } from "../../../../config";
 import useUserData from "../../../UserData/useUserData";
 
 export default () => {
@@ -9,14 +9,13 @@ export default () => {
   const { settings } = useUserData();
   const { selectedMap } = settings;
 
-  const [connectionTreeQuery] = useLazyAuthenticatedQuery(ConnectionTreeDocument, {
-    variables: { rootSystem: selectedMap?.rootSystemName },
-    onCompleted: (data) => {
-      console.log(data.getConnectionTree);
-      state.merge({ connectionTree: data.getConnectionTree });
-    },
-    fetchPolicy: "network-only",
-  });
+  const fetchConnectionTree = async () => {
+    const { rootSystemName } = selectedMap;
+    const res = await axios.get(
+      [backendUrl, "connection-graph", "connection-tree", rootSystemName].join("/")
+    );
+    state.merge({ connectionTree: res.data });
+  };
 
   return {
     get connectionTree() {
@@ -27,6 +26,6 @@ export default () => {
         },
       };
     },
-    fetchConnectionTree: connectionTreeQuery,
+    fetchConnectionTree,
   };
 };

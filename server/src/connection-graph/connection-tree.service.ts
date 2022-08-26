@@ -39,6 +39,8 @@ export class ConnectionTreeService {
 
         const wormhole = {
           ...connection,
+          // FIXME: For testing.
+          name: system.name,
           wormholeType: reversed ? connection.reverseType : connection.wormholeType,
           reverseType: reversed ? connection.wormholeType : connection.reverseType,
         };

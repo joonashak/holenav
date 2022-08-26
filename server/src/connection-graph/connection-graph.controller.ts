@@ -1,4 +1,4 @@
-import { Controller, Get } from "@nestjs/common";
+import { Controller, Get, Param } from "@nestjs/common";
 import { ConnectionTreeService } from "./connection-tree.service";
 import { ConnectionTree } from "./dto/connection-tree.dto";
 
@@ -6,8 +6,8 @@ import { ConnectionTree } from "./dto/connection-tree.dto";
 export class ConnectionGraphController {
   constructor(private connectionTreeService: ConnectionTreeService) {}
 
-  @Get("connection-tree")
-  async test(): Promise<ConnectionTree> {
-    return this.connectionTreeService.getConnectionTree("Jita", "default");
+  @Get("connection-tree/:rootSystemName")
+  async test(@Param("rootSystemName") rootSystemName: string): Promise<ConnectionTree> {
+    return this.connectionTreeService.getConnectionTree(rootSystemName, "default");
   }
 }
