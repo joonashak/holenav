@@ -44,19 +44,6 @@ export type Character = {
   refreshToken?: Maybe<Scalars["String"]>;
 };
 
-export type ConnectionTree = {
-  __typename?: "ConnectionTree";
-  children: Array<ConnectionTreeNode>;
-  rootSystemName: Scalars["String"];
-};
-
-export type ConnectionTreeNode = {
-  __typename?: "ConnectionTreeNode";
-  children: Array<ConnectionTreeNode>;
-  name: Scalars["String"];
-  wormhole: Signature;
-};
-
 export type Credentials = {
   __typename?: "Credentials";
   passwordHash: Scalars["String"];
@@ -180,7 +167,6 @@ export type Query = {
   addCharacter: StartSsoLoginDto;
   getAccessibleFolders: Array<Folder>;
   getAllUsers: Array<SanitizedUser>;
-  getConnectionTree: ConnectionTree;
   getManageableFolders: Array<Folder>;
   getPublicAppData: PublicAppData;
   getSignaturesBySystem: Array<Signature>;
@@ -188,10 +174,6 @@ export type Query = {
   searchCharactersByMain: Array<Character>;
   startSsoLogin: StartSsoLoginDto;
   whoami: User;
-};
-
-export type QueryGetConnectionTreeArgs = {
-  rootSystem: Scalars["String"];
 };
 
 export type QueryGetSignaturesBySystemArgs = {

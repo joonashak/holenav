@@ -3,12 +3,10 @@ import { ActiveFolder } from "../../auth/decorators/active-folder.decorator";
 import { RequireFolderRole } from "../../auth/decorators/role.decorator";
 import FolderRole from "../../user/roles/folder-role.enum";
 import { ActiveFolderService } from "../folder/active-folder.service";
-import { Folder, FolderDocument } from "../folder/folder.model";
+import { Folder } from "../folder/folder.model";
 import { AddSignaturesInput } from "./dto/add-signatures.dto";
-import { ConnectionTree } from "./dto/connection-tree.dto";
 import { DeleteSignaturesInput } from "./dto/delete-signatures.dto";
 import { UpdateSignaturesInput } from "./dto/update-signatures.dto";
-import { ConnectionTreeService } from "./services/connection-tree.service";
 import { SignatureService } from "./services/signature.service";
 import { Signature } from "./signature.model";
 
@@ -17,7 +15,6 @@ export class SignatureResolver {
   constructor(
     private sigService: SignatureService,
     private activeFolderService: ActiveFolderService,
-    private connectionTreeService: ConnectionTreeService,
   ) {}
 
   @RequireFolderRole(FolderRole.READ)
@@ -51,14 +48,5 @@ export class SignatureResolver {
   async deleteSignatures(@Args("input") input: DeleteSignaturesInput): Promise<Signature[]> {
     const signatures = await this.sigService.deleteSignatures(input.ids);
     return signatures;
-  }
-
-  @RequireFolderRole(FolderRole.READ)
-  @Query((returns) => ConnectionTree)
-  async getConnectionTree(
-    @Args("rootSystem") rootSystemName: string,
-    @ActiveFolder() activeFolder: FolderDocument,
-  ): Promise<ConnectionTree> {
-    return this.connectionTreeService.getConnectionTree(rootSystemName, activeFolder);
   }
 }
