@@ -6,6 +6,6 @@ export class ConnectionGraphController {
   constructor(private connectionGraphService: ConnectionGraphService) {}
   @Get("test")
   async test() {
-    return this.connectionGraphService.getConnectionGraph();
+    return this.connectionGraphService.getConnectionGraph("Jita", "default");
   }
 }

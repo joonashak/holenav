@@ -52,12 +52,22 @@ export class ConnectionGraphService {
     );
   }
 
-  async getConnectionGraph() {
-    const res = this.neoService.read(` 
-    MATCH (s:System {name: 'Jita'})-[HAS]->(d:Signature)<-[c:CONNECTS]->(x:Signature)<-[y:HAS]-(z:System)
-    RETURN s, d, c, x, y, z
-    `);
+  async getConnectionGraph(rootSystemName: string, folderId: string) {
+    // Kudos to glilienfield for helping with this query:
+    // https://community.neo4j.com/t5/neo4j-graph-platform/expand-sets-of-multiple-relations-when-querying-for-hierarchical/m-p/59381
+    const res = await this.neoService.read(
+      ` 
+      MATCH connections=(:System {name: $rootSystemName, folderId: $folderId})-[*]-(end:System)
+      WHERE size([(end)-[:HAS]->() | 1]) = 1
+      UNWIND [rel IN relationships(connections) WHERE type(rel) = 'CONNECTS'] AS connRel
+      WITH startNode(connRel) AS startNode, endNode(connRel) AS endNode
+      MATCH (startSystem:System)-[:HAS]->(startNode)
+      MATCH (endSystem:System)-[:HAS]->(endNode)
+      RETURN {start_signature: {id: startNode.id, system: startSystem.name}, end_signature: {id: endNode.id, end_system: endSystem.name}} as connection
+    `,
+      { rootSystemName, folderId },
+    );
 
-    return res;
+    return res.records;
   }
 }
