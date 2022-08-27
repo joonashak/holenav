@@ -6,8 +6,9 @@ import { SignatureOLD, SignatureSchema } from "./signature-OLD.model";
 import { SignatureResolver } from "./signature.resolver";
 import { SignatureService } from "./services/signature.service";
 import { WormholeService } from "./services/wormhole.service";
-import { SignatureNode } from "./services/signature.node";
+import { SignatureNode } from "./neo/signature.node";
 import { Neo4jModule } from "../../integration/neo4j/neo4j.module";
+import { SystemNode } from "./neo/system.node";
 
 @Module({
   imports: [
@@ -15,7 +16,14 @@ import { Neo4jModule } from "../../integration/neo4j/neo4j.module";
     FolderModule,
     Neo4jModule,
   ],
-  exports: [MongooseModule, SignatureService, WormholeService, SignatureNode],
-  providers: [SignatureResolver, SignatureService, FolderService, WormholeService, SignatureNode],
+  exports: [MongooseModule, SignatureService, WormholeService, SignatureNode, SystemNode],
+  providers: [
+    SignatureResolver,
+    SignatureService,
+    FolderService,
+    WormholeService,
+    SignatureNode,
+    SystemNode,
+  ],
 })
 export class SignatureModule {}

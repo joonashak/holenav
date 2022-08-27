@@ -6,7 +6,7 @@ import { SignatureUpdate } from "../dto/update-signatures.dto";
 import { SignatureOLD, SignatureDocument } from "../signature-OLD.model";
 import { Signature } from "../signature.model";
 import { isWormhole } from "../signature.utils";
-import { SignatureNode } from "./signature.node";
+import { SignatureNode } from "../neo/signature.node";
 import { WormholeService } from "./wormhole.service";
 
 // TODO: Move signatures completely to Neo4j. Queries in connection graph module, call them here, etc.

@@ -9,7 +9,7 @@ import {
   testWormholeWithReverse,
 } from "../../../test-utils/test-data";
 import { SignatureOLD } from "../signature-OLD.model";
-import { SignatureNode } from "./signature.node";
+import { SignatureNode } from "../neo/signature.node";
 import { SignatureService } from "./signature.service";
 import { WormholeService } from "./wormhole.service";
 
