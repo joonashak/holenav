@@ -1,5 +1,4 @@
 import { Field, ObjectType, registerEnumType } from "@nestjs/graphql";
-import { Connection } from "./connection.model";
 import MassStatus from "./enums/mass-status.enum";
 import SigType from "./enums/sig-type.enum";
 
@@ -7,22 +6,19 @@ registerEnumType(SigType, { name: "SigType" });
 registerEnumType(MassStatus, { name: "MassStatus" });
 
 @ObjectType()
-export class Signature {
-  @Field()
-  id?: string;
+export class Connection {
+  @Field({ nullable: true })
+  wormholeType?: string;
 
   @Field()
-  eveId?: string;
+  eol: boolean;
 
-  @Field((type) => SigType)
-  type: SigType;
+  @Field((type) => MassStatus)
+  massStatus: MassStatus;
 
-  @Field()
-  name: string;
+  @Field({ nullable: true })
+  destinationName?: string;
 
-  @Field()
-  systemName: string;
-
-  @Field((type) => Connection, { nullable: true })
-  connection?: Connection;
+  @Field({ nullable: true })
+  reverseType?: string;
 }
