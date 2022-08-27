@@ -1,6 +1,7 @@
 import { getModelToken } from "@nestjs/mongoose";
 import { Test } from "@nestjs/testing";
 import { Model } from "mongoose";
+import { Neo4jService } from "../../../integration/neo4j/neo4j.service";
 import { MockWormholeService } from "../../../test-utils/mock-services";
 import {
   testUnknownSig,
@@ -8,6 +9,7 @@ import {
   testWormholeWithReverse,
 } from "../../../test-utils/test-data";
 import { SignatureOLD } from "../signature-OLD.model";
+import { SignatureNode } from "./signature.node";
 import { SignatureService } from "./signature.service";
 import { WormholeService } from "./wormhole.service";
 
@@ -20,6 +22,8 @@ describe("SignatureService", () => {
     const module = await Test.createTestingModule({
       providers: [
         SignatureService,
+        SignatureNode,
+        Neo4jService,
         MockWormholeService,
         {
           provide: getModelToken(SignatureOLD.name),
