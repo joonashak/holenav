@@ -1,5 +1,5 @@
-import { CanActivate, ExecutionContext, Injectable } from "@nestjs/common";
-import { GqlExecutionContext } from "@nestjs/graphql";
+import { BadRequestException, CanActivate, ExecutionContext, Injectable } from "@nestjs/common";
+import { GqlContextType, GqlExecutionContext } from "@nestjs/graphql";
 import { AuthenticationError } from "apollo-server-express";
 import { ENABLE_DEVTOOLS, NOT_PRODUCTION } from "../../config";
 import mockUsers from "../../dev-tools/data/users";
@@ -19,8 +19,7 @@ export class TokenAuthGuard implements CanActivate {
   ) {}
 
   async canActivate(context: ExecutionContext) {
-    const gqlContext = GqlExecutionContext.create(context);
-    const request = gqlContext.getContext().req;
+    const request = this.getRequest(context);
     const accessToken = request.headers.accesstoken || null;
 
     if (!accessToken) {
@@ -48,5 +47,18 @@ export class TokenAuthGuard implements CanActivate {
   private usingMockUser(accessToken: string): boolean {
     const mockUserIds = mockUsers.map((user) => user.id);
     return NOT_PRODUCTION && ENABLE_DEVTOOLS && mockUserIds.includes(accessToken);
+  }
+
+  private getRequest(context: ExecutionContext) {
+    if (context.getType() === "http") {
+      return context.switchToHttp().getRequest();
+    }
+
+    if (context.getType<GqlContextType>() === "graphql") {
+      const gqlContext = GqlExecutionContext.create(context);
+      return gqlContext.getContext().req;
+    }
+
+    throw new BadRequestException("Server only accepts HTTP and GraphQL requests.");
   }
 }
