@@ -3,7 +3,7 @@ import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { Folder } from "../../folder/folder.model";
 import { SignatureUpdate } from "../dto/update-signatures.dto";
-import { Signature, SignatureDocument } from "../signature.model";
+import { Signature, SignatureDocument } from "../signature-OLD.model";
 import { isWormhole } from "../signature.utils";
 import { WormholeService } from "./wormhole.service";
 

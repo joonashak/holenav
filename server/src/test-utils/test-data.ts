@@ -7,7 +7,7 @@ import { Folder } from "../entities/folder/folder.model";
 import FolderRole from "../user/roles/folder-role.enum";
 import SystemRole from "../user/roles/system-role.enum";
 import { User } from "../user/user.model";
-import { Signature } from "../entities/signature/signature.model";
+import { Signature } from "../entities/signature/signature-OLD.model";
 import SigType from "../entities/signature/enums/sig-type.enum";
 import MassStatus from "../entities/signature/enums/mass-status.enum";
 

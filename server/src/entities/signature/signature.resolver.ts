@@ -8,7 +8,7 @@ import { AddSignaturesInput } from "./dto/add-signatures.dto";
 import { DeleteSignaturesInput } from "./dto/delete-signatures.dto";
 import { UpdateSignaturesInput } from "./dto/update-signatures.dto";
 import { SignatureService } from "./services/signature.service";
-import { Signature } from "./signature.model";
+import { Signature } from "./signature-OLD.model";
 
 @Resolver()
 export class SignatureResolver {

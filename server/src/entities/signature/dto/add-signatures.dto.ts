@@ -1,5 +1,5 @@
 import { Field, InputType, ObjectType, OmitType } from "@nestjs/graphql";
-import { Signature, SignatureWithoutRefs } from "../signature.model";
+import { Signature, SignatureWithoutRefs } from "../signature-OLD.model";
 
 @InputType()
 export class AddSignaturesInput {

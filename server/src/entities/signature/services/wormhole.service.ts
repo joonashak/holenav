@@ -3,7 +3,7 @@ import { InjectModel } from "@nestjs/mongoose";
 import { UserInputError } from "apollo-server-express";
 import { Model } from "mongoose";
 import SigType from "../enums/sig-type.enum";
-import { Signature, SignatureDocument } from "../signature.model";
+import { Signature, SignatureDocument } from "../signature-OLD.model";
 
 @Injectable()
 export class WormholeService {

@@ -7,7 +7,7 @@ import {
   testWormhole,
   testWormholeWithReverse,
 } from "../../../test-utils/test-data";
-import { Signature } from "../signature.model";
+import { Signature } from "../signature-OLD.model";
 import { SignatureService } from "./signature.service";
 import { WormholeService } from "./wormhole.service";
 

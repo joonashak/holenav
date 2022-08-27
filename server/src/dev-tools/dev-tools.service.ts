@@ -6,7 +6,7 @@ import { SsoSession } from "../auth/sso/sso-session/sso-session.model";
 import { ConnectionGraphService } from "../connection-graph/connection-graph.service";
 import { Character } from "../entities/character/character.model";
 import { Folder } from "../entities/folder/folder.model";
-import { Signature } from "../entities/signature/signature.model";
+import { Signature } from "../entities/signature/signature-OLD.model";
 import { System } from "../entities/system/system.model";
 import { Credentials } from "../user/credentials/credentials.model";
 import { User } from "../user/user.model";

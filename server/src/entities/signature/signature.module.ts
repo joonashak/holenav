@@ -2,7 +2,7 @@ import { Module } from "@nestjs/common";
 import { MongooseModule } from "@nestjs/mongoose";
 import { FolderModule } from "../folder/folder.module";
 import { FolderService } from "../folder/folder.service";
-import { Signature, SignatureSchema } from "./signature.model";
+import { Signature, SignatureSchema } from "./signature-OLD.model";
 import { SignatureResolver } from "./signature.resolver";
 import { SignatureService } from "./services/signature.service";
 import { WormholeService } from "./services/wormhole.service";

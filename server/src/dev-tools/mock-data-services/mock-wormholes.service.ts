@@ -3,7 +3,7 @@ import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { FolderService } from "../../entities/folder/folder.service";
 import SigType from "../../entities/signature/enums/sig-type.enum";
-import { Signature } from "../../entities/signature/signature.model";
+import { Signature } from "../../entities/signature/signature-OLD.model";
 import { SignatureService } from "../../entities/signature/services/signature.service";
 import MassStatus from "../../entities/signature/enums/mass-status.enum";
 import whMockData from "../data/wormholes-OLD";

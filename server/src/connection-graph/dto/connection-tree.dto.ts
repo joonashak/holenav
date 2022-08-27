@@ -1,6 +1,6 @@
 import systems from "@eve-data/systems";
 import { IsIn } from "class-validator";
-import { Signature } from "../../entities/signature/signature.model";
+import { Signature } from "../../entities/signature/signature-OLD.model";
 
 export type ConnectionTree = {
   rootSystemName: string;

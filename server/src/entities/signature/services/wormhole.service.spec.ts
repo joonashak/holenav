@@ -7,7 +7,7 @@ import {
   testWormhole,
   testWormholeWithReverse,
 } from "../../../test-utils/test-data";
-import { Signature, SignatureDocument } from "../signature.model";
+import { Signature, SignatureDocument } from "../signature-OLD.model";
 import { WormholeService } from "./wormhole.service";
 
 const testDoc = testWormhole as SignatureDocument;
