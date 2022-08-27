@@ -5,6 +5,7 @@ import { Folder } from "../../folder/folder.model";
 import { SignatureUpdate } from "../dto/update-signatures.dto";
 import { Signature, SignatureDocument } from "../signature-OLD.model";
 import { isWormhole } from "../signature.utils";
+import { SignatureNode } from "./signature.node";
 import { WormholeService } from "./wormhole.service";
 
 // TODO: Move signatures completely to Neo4j. Queries in connection graph module, call them here, etc.
@@ -14,9 +15,12 @@ export class SignatureService {
   constructor(
     @InjectModel(Signature.name) private sigModel: Model<SignatureDocument>,
     private wormholeService: WormholeService,
+    private signatureNode: SignatureNode,
   ) {}
 
   async getBySystem(systemName: string, folder: Folder): Promise<Signature[]> {
+    const asd = await this.signatureNode.findBySystem({ systemName, folderId: folder.id });
+    console.log(asd);
     return this.sigModel.find({ systemName, folder }).populate("reverse");
   }
 
