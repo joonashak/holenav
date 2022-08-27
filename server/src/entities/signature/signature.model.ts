@@ -1,18 +1,16 @@
 import { Field, ObjectType, registerEnumType } from "@nestjs/graphql";
 import { Connection } from "./connection.model";
-import MassStatus from "./enums/mass-status.enum";
 import SigType from "./enums/sig-type.enum";
 
 registerEnumType(SigType, { name: "SigType" });
-registerEnumType(MassStatus, { name: "MassStatus" });
 
 @ObjectType()
 export class Signature {
   @Field()
-  id?: string;
+  id: string;
 
   @Field()
-  eveId?: string;
+  eveId: string;
 
   @Field((type) => SigType)
   type: SigType;

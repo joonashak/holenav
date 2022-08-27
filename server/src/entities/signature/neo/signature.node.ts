@@ -1,6 +1,5 @@
 import { Injectable } from "@nestjs/common";
 import { Neo4jService } from "../../../integration/neo4j/neo4j.service";
-import SigType from "../enums/sig-type.enum";
 import { Signature } from "../signature.model";
 
 @Injectable()
@@ -15,16 +14,41 @@ export class SignatureNode {
     `,
       params,
     );
-    const sigs = res.records.map((rec) => rec._fields[0].properties);
 
-    //FIXME: Remove this.
-    const paddedSigs = sigs.map((s) => ({
-      name: "asd",
-      type: SigType.UNKNOWN,
+    const sigsWithoutSystems = res.records.map((rec) => rec._fields[0].properties);
+
+    const sigs = sigsWithoutSystems.map((s) => ({
       systemName: params.systemName,
       ...s,
     }));
 
-    return paddedSigs;
+    return sigs;
+  }
+
+  /**
+   * Create many signatures in a given folder. Each created Signature is linked to a System
+   * with the given `folderId`. Systems are not created if they don't exist.
+   * @param signatures Signatures to create.
+   * @param folderId ID of the Folder to use.
+   * @returns Created Signatures.
+   */
+  async createSignatures(signatures: Signature[], folderId: string): Promise<Signature[]> {
+    const res = await this.neoService.write(
+      ` 
+      UNWIND $signatures as sig
+      MATCH (system:System {name: sig.systemName, folderId: $folderId})
+      CREATE (newSig:Signature {
+        id: sig.id,
+        eveId: sig.eveId,
+        type: sig.type,
+        name: sig.name
+      })
+      CREATE (system)-[:HAS]->(newSig)
+      RETURN newSig
+    `,
+      { signatures, folderId },
+    );
+
+    return res.records.map((rec) => rec._fields[0].properties);
   }
 }
