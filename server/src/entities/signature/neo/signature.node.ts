@@ -9,20 +9,25 @@ export class SignatureNode {
   async findBySystem(params: { systemName: string; folderId: string }): Promise<Signature[]> {
     const res = await this.neoService.read(
       `
-      MATCH (sig:Signature)<-[:HAS]-(:System {name: $systemName, folderId: $folderId})
-      RETURN sig
+      MATCH (:System {name: $systemName, folderId: $folderId})-[:HAS]->(sig:Signature)
+      MATCH (:System {name: $systemName, folderId: $folderId})-[:HAS]->(wh:Signature)-[conn:CONNECTS]-(:Signature)<-[:HAS]-(to:System)
+      WHERE sig.type <> 'WH'
+      WITH
+        sig{ .*, systemName: $systemName} AS sigs,
+        wh{
+          .*,
+          systemName: $systemName,
+          connection: conn{ 
+            .*,
+            destinationName: to.name
+          } 
+        } AS wormholes
+      RETURN collect(DISTINCT sigs) + collect(DISTINCT wormholes)
     `,
       params,
     );
 
-    const sigsWithoutSystems = res.records.map((rec) => rec._fields[0].properties);
-
-    const sigs = sigsWithoutSystems.map((s) => ({
-      systemName: params.systemName,
-      ...s,
-    }));
-
-    return sigs;
+    return res.records[0]._fields[0];
   }
 
   /**

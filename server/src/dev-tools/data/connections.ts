@@ -19,6 +19,13 @@ export const connectedSystems = [
   {
     name: "Amarr",
   },
+  // 2nd chain
+  {
+    name: "Maurasi",
+  },
+  {
+    name: "Tama",
+  },
 ];
 
 export const signatures = [
@@ -77,6 +84,17 @@ export const signatures = [
     type: SigType.DATA,
     systemName: "Jita",
   },
+  // 2nd chain
+  {
+    eveId: "WHL-700",
+    type: SigType.WORMHOLE,
+    systemName: "Maurasi",
+  },
+  {
+    eveId: "WHL-800",
+    type: SigType.WORMHOLE,
+    systemName: "Tama",
+  },
 ];
 
 // FIXME: This assumes id = eveId which should not be the case after prototyping is done.
@@ -100,6 +118,11 @@ export const connections = [
   {
     from: "WHL-302",
     to: "WHL-600",
+  },
+  // 2nd chain
+  {
+    from: "WHL-700",
+    to: "WHL-800",
   },
 ];
 
