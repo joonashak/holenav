@@ -74,7 +74,7 @@ export class SignatureOLD extends SignatureWithoutRefs {
   */
 
   @Field((type) => SignatureOLD, { nullable: true })
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: "Signature", nullable: true })
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: "SignatureOLD", nullable: true })
   reverse?: SignatureOLD;
 }
 

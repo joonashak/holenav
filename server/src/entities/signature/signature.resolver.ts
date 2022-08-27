@@ -9,6 +9,7 @@ import { DeleteSignaturesInput } from "./dto/delete-signatures.dto";
 import { UpdateSignaturesInput } from "./dto/update-signatures.dto";
 import { SignatureService } from "./services/signature.service";
 import { SignatureOLD } from "./signature-OLD.model";
+import { Signature } from "./signature.model";
 
 @Resolver()
 export class SignatureResolver {
@@ -18,11 +19,11 @@ export class SignatureResolver {
   ) {}
 
   @RequireFolderRole(FolderRole.READ)
-  @Query((returns) => [SignatureOLD])
+  @Query((returns) => [Signature])
   async getSignaturesBySystem(
     @Args("systemName") systemName: string,
     @ActiveFolder() activeFolder: Folder,
-  ): Promise<SignatureOLD[]> {
+  ): Promise<Signature[]> {
     const signatures = await this.sigService.getBySystem(systemName, activeFolder);
     return signatures;
   }

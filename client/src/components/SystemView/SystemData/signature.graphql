@@ -1,4 +1,4 @@
-fragment SignatureFields on SignatureOLD {
+fragment SignatureFieldsOld on SignatureOLD {
   id
   name
   type
@@ -8,6 +8,21 @@ fragment SignatureFields on SignatureOLD {
   destinationName
   wormholeType
   reverseType
+}
+
+fragment SignatureFields on Signature {
+  id
+  name
+  type
+  eveId
+  systemName
+  connection {
+    eol
+    massStatus
+    destinationName
+    wormholeType
+    reverseType
+  }
 }
 
 query System($name: String!) {
@@ -23,18 +38,18 @@ query System($name: String!) {
 
 mutation AddSignatures($input: AddSignaturesInput!) {
   addSignatures(input: $input) {
-    ...SignatureFields
+    ...SignatureFieldsOld
   }
 }
 
 mutation UpdateSignatures($input: UpdateSignaturesInput!) {
   updateSignatures(input: $input) {
-    ...SignatureFields
+    ...SignatureFieldsOld
   }
 }
 
 mutation DeleteSignatures($input: DeleteSignaturesInput!) {
   deleteSignatures(input: $input) {
-    ...SignatureFields
+    ...SignatureFieldsOld
   }
 }

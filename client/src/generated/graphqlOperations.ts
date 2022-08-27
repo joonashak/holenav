@@ -44,6 +44,15 @@ export type Character = {
   refreshToken?: Maybe<Scalars["String"]>;
 };
 
+export type Connection = {
+  __typename?: "Connection";
+  destinationName?: Maybe<Scalars["String"]>;
+  eol: Scalars["Boolean"];
+  massStatus: MassStatus;
+  reverseType?: Maybe<Scalars["String"]>;
+  wormholeType?: Maybe<Scalars["String"]>;
+};
+
 export type Credentials = {
   __typename?: "Credentials";
   passwordHash: Scalars["String"];
@@ -169,7 +178,7 @@ export type Query = {
   getAllUsers: Array<SanitizedUser>;
   getManageableFolders: Array<Folder>;
   getPublicAppData: PublicAppData;
-  getSignaturesBySystem: Array<SignatureOld>;
+  getSignaturesBySystem: Array<Signature>;
   getSystemByName: System;
   searchCharactersByMain: Array<Character>;
   startSsoLogin: StartSsoLoginDto;
@@ -208,6 +217,16 @@ export enum SigType {
   Unknown = "UNKNOWN",
   Wormhole = "WORMHOLE",
 }
+
+export type Signature = {
+  __typename?: "Signature";
+  connection?: Maybe<Connection>;
+  eveId: Scalars["String"];
+  id: Scalars["String"];
+  name: Scalars["String"];
+  systemName: Scalars["String"];
+  type: SigType;
+};
 
 export type SignatureInput = {
   destinationName?: InputMaybe<Scalars["String"]>;
@@ -398,7 +417,7 @@ export type SearchCharactersByMainQuery = {
   searchCharactersByMain: Array<{ __typename?: "Character"; name: string; esiId: string }>;
 };
 
-export type SignatureFieldsFragment = {
+export type SignatureFieldsOldFragment = {
   __typename?: "SignatureOLD";
   id: string;
   name: string;
@@ -411,6 +430,23 @@ export type SignatureFieldsFragment = {
   reverseType?: string | null;
 };
 
+export type SignatureFieldsFragment = {
+  __typename?: "Signature";
+  id: string;
+  name: string;
+  type: SigType;
+  eveId: string;
+  systemName: string;
+  connection?: {
+    __typename?: "Connection";
+    eol: boolean;
+    massStatus: MassStatus;
+    destinationName?: string | null;
+    wormholeType?: string | null;
+    reverseType?: string | null;
+  } | null;
+};
+
 export type SystemQueryVariables = Exact<{
   name: Scalars["String"];
 }>;
@@ -419,16 +455,20 @@ export type SystemQuery = {
   __typename?: "Query";
   getSystemByName: { __typename?: "System"; id: string; name: string };
   getSignaturesBySystem: Array<{
-    __typename?: "SignatureOLD";
+    __typename?: "Signature";
     id: string;
     name: string;
     type: SigType;
     eveId: string;
-    eol?: boolean | null;
-    massStatus?: MassStatus | null;
-    destinationName?: string | null;
-    wormholeType?: string | null;
-    reverseType?: string | null;
+    systemName: string;
+    connection?: {
+      __typename?: "Connection";
+      eol: boolean;
+      massStatus: MassStatus;
+      destinationName?: string | null;
+      wormholeType?: string | null;
+      reverseType?: string | null;
+    } | null;
   }>;
 };
 
@@ -516,12 +556,12 @@ export const FolderFieldsFragmentDoc = {
     },
   ],
 } as unknown as DocumentNode<FolderFieldsFragment, unknown>;
-export const SignatureFieldsFragmentDoc = {
+export const SignatureFieldsOldFragmentDoc = {
   kind: "Document",
   definitions: [
     {
       kind: "FragmentDefinition",
-      name: { kind: "Name", value: "SignatureFields" },
+      name: { kind: "Name", value: "SignatureFieldsOld" },
       typeCondition: { kind: "NamedType", name: { kind: "Name", value: "SignatureOLD" } },
       selectionSet: {
         kind: "SelectionSet",
@@ -535,6 +575,40 @@ export const SignatureFieldsFragmentDoc = {
           { kind: "Field", name: { kind: "Name", value: "destinationName" } },
           { kind: "Field", name: { kind: "Name", value: "wormholeType" } },
           { kind: "Field", name: { kind: "Name", value: "reverseType" } },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<SignatureFieldsOldFragment, unknown>;
+export const SignatureFieldsFragmentDoc = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "FragmentDefinition",
+      name: { kind: "Name", value: "SignatureFields" },
+      typeCondition: { kind: "NamedType", name: { kind: "Name", value: "Signature" } },
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          { kind: "Field", name: { kind: "Name", value: "id" } },
+          { kind: "Field", name: { kind: "Name", value: "name" } },
+          { kind: "Field", name: { kind: "Name", value: "type" } },
+          { kind: "Field", name: { kind: "Name", value: "eveId" } },
+          { kind: "Field", name: { kind: "Name", value: "systemName" } },
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "connection" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "eol" } },
+                { kind: "Field", name: { kind: "Name", value: "massStatus" } },
+                { kind: "Field", name: { kind: "Name", value: "destinationName" } },
+                { kind: "Field", name: { kind: "Name", value: "wormholeType" } },
+                { kind: "Field", name: { kind: "Name", value: "reverseType" } },
+              ],
+            },
+          },
         ],
       },
     },
@@ -1077,14 +1151,14 @@ export const AddSignaturesDocument = {
             selectionSet: {
               kind: "SelectionSet",
               selections: [
-                { kind: "FragmentSpread", name: { kind: "Name", value: "SignatureFields" } },
+                { kind: "FragmentSpread", name: { kind: "Name", value: "SignatureFieldsOld" } },
               ],
             },
           },
         ],
       },
     },
-    ...SignatureFieldsFragmentDoc.definitions,
+    ...SignatureFieldsOldFragmentDoc.definitions,
   ],
 } as unknown as DocumentNode<AddSignaturesMutation, AddSignaturesMutationVariables>;
 export const UpdateSignaturesDocument = {
@@ -1120,14 +1194,14 @@ export const UpdateSignaturesDocument = {
             selectionSet: {
               kind: "SelectionSet",
               selections: [
-                { kind: "FragmentSpread", name: { kind: "Name", value: "SignatureFields" } },
+                { kind: "FragmentSpread", name: { kind: "Name", value: "SignatureFieldsOld" } },
               ],
             },
           },
         ],
       },
     },
-    ...SignatureFieldsFragmentDoc.definitions,
+    ...SignatureFieldsOldFragmentDoc.definitions,
   ],
 } as unknown as DocumentNode<UpdateSignaturesMutation, UpdateSignaturesMutationVariables>;
 export const DeleteSignaturesDocument = {
@@ -1163,14 +1237,14 @@ export const DeleteSignaturesDocument = {
             selectionSet: {
               kind: "SelectionSet",
               selections: [
-                { kind: "FragmentSpread", name: { kind: "Name", value: "SignatureFields" } },
+                { kind: "FragmentSpread", name: { kind: "Name", value: "SignatureFieldsOld" } },
               ],
             },
           },
         ],
       },
     },
-    ...SignatureFieldsFragmentDoc.definitions,
+    ...SignatureFieldsOldFragmentDoc.definitions,
   ],
 } as unknown as DocumentNode<DeleteSignaturesMutation, DeleteSignaturesMutationVariables>;
 export const UserDataDocument = {

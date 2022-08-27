@@ -4,6 +4,7 @@ import { Model } from "mongoose";
 import { Folder } from "../../folder/folder.model";
 import { SignatureUpdate } from "../dto/update-signatures.dto";
 import { SignatureOLD, SignatureDocument } from "../signature-OLD.model";
+import { Signature } from "../signature.model";
 import { isWormhole } from "../signature.utils";
 import { SignatureNode } from "./signature.node";
 import { WormholeService } from "./wormhole.service";
@@ -18,10 +19,8 @@ export class SignatureService {
     private signatureNode: SignatureNode,
   ) {}
 
-  async getBySystem(systemName: string, folder: Folder): Promise<SignatureOLD[]> {
-    const asd = await this.signatureNode.findBySystem({ systemName, folderId: folder.id });
-    console.log(asd);
-    return this.sigModel.find({ systemName, folder }).populate("reverse");
+  async getBySystem(systemName: string, folder: Folder): Promise<Signature[]> {
+    return this.signatureNode.findBySystem({ systemName, folderId: folder.id });
   }
 
   async createSignatures(signatures: SignatureOLD[]): Promise<SignatureOLD[]> {
