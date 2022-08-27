@@ -6,9 +6,9 @@ import {
   InternalServerErrorException,
 } from "@nestjs/common";
 import { Reflector } from "@nestjs/core";
-import { GqlExecutionContext } from "@nestjs/graphql";
 import { FolderService } from "../../entities/folder/folder.service";
 import FolderRole from "../../user/roles/folder-role.enum";
+import getRequest from "../utils/get-request.util";
 
 export const requiredFolderRoleKey = "requiredFolderRole";
 
@@ -35,8 +35,7 @@ export class FolderRoleGuard implements CanActivate {
   }
 
   private async getActiveFolderRole(context: ExecutionContext): Promise<FolderRole> {
-    const gqlContext = GqlExecutionContext.create(context);
-    const request = gqlContext.getContext().req;
+    const request = getRequest(context);
 
     const activeFolderId = request.headers.activefolder;
     if (!activeFolderId) {
