@@ -8,7 +8,7 @@ import ControlledTextField from "../../../../controls/ControlledTextField";
 import FormGroupRow from "../../../../controls/FormGroupRow";
 import RhfAutocomplete from "../../../../controls/RhfAutocomplete";
 import useWormholeForm from "./useWormholeForm";
-import { MassStatus, Signature } from "../../../../../generated/graphqlOperations";
+import { MassStatus, SignatureOld } from "../../../../../generated/graphqlOperations";
 
 const lifeOptions = [
   { key: "lt-24-hrs", value: "lt-24-hrs", label: "Less than 24 hrs" },
@@ -27,7 +27,7 @@ const whTypeOptions = [{ key: "wh-K162", value: "K162", label: "K162" }].concat(
 
 export type WormholeFormProps = {
   eveId: string;
-  existing?: Signature;
+  existing?: SignatureOld;
   onClose: () => void;
 };
 

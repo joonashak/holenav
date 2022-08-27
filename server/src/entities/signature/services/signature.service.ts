@@ -3,7 +3,7 @@ import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { Folder } from "../../folder/folder.model";
 import { SignatureUpdate } from "../dto/update-signatures.dto";
-import { Signature, SignatureDocument } from "../signature-OLD.model";
+import { SignatureOLD, SignatureDocument } from "../signature-OLD.model";
 import { isWormhole } from "../signature.utils";
 import { SignatureNode } from "./signature.node";
 import { WormholeService } from "./wormhole.service";
@@ -13,25 +13,25 @@ import { WormholeService } from "./wormhole.service";
 @Injectable()
 export class SignatureService {
   constructor(
-    @InjectModel(Signature.name) private sigModel: Model<SignatureDocument>,
+    @InjectModel(SignatureOLD.name) private sigModel: Model<SignatureDocument>,
     private wormholeService: WormholeService,
     private signatureNode: SignatureNode,
   ) {}
 
-  async getBySystem(systemName: string, folder: Folder): Promise<Signature[]> {
+  async getBySystem(systemName: string, folder: Folder): Promise<SignatureOLD[]> {
     const asd = await this.signatureNode.findBySystem({ systemName, folderId: folder.id });
     console.log(asd);
     return this.sigModel.find({ systemName, folder }).populate("reverse");
   }
 
-  async createSignatures(signatures: Signature[]): Promise<Signature[]> {
+  async createSignatures(signatures: SignatureOLD[]): Promise<SignatureOLD[]> {
     const sigsWithWhTypes = signatures.map((sig) => this.wormholeService.addWhTypes(sig));
     const newSigs = await this.sigModel.create(sigsWithWhTypes);
     const sigsWithReverses = await this.wormholeService.addReverseWormholes(newSigs);
     return sigsWithReverses;
   }
 
-  async updateSignatures(sigUpdates: SignatureUpdate[]): Promise<Signature[]> {
+  async updateSignatures(sigUpdates: SignatureUpdate[]): Promise<SignatureOLD[]> {
     const ids = sigUpdates.map((sig) => sig.id);
     const oldSigs = await this.sigModel.find({ id: { $in: ids } });
 
@@ -50,7 +50,7 @@ export class SignatureService {
    * @param ids IDs of the Signatures to delete.
    * @returns Deleted Signatures (not including possible deleted reverse wormholes).
    */
-  async deleteSignatures(ids: string[]): Promise<Signature[]> {
+  async deleteSignatures(ids: string[]): Promise<SignatureOLD[]> {
     const sigs = await this.sigModel.find({ id: { $in: ids } }).populate("reverse");
     const deletableIds = sigs.reduce(
       (res, sig) => (sig.reverse ? res.concat(sig.reverse.id) : res),
@@ -64,7 +64,7 @@ export class SignatureService {
   private async updateSignature(
     update: SignatureUpdate,
     old: SignatureDocument,
-  ): Promise<Signature> {
+  ): Promise<SignatureOLD> {
     if (!isWormhole(old) && isWormhole(update)) {
       const sigWithWhTypes = this.wormholeService.addWhTypes(update);
       const updatedSig = await this.sigModel.findOneAndUpdate(

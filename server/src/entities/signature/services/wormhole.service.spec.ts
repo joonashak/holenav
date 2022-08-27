@@ -7,21 +7,21 @@ import {
   testWormhole,
   testWormholeWithReverse,
 } from "../../../test-utils/test-data";
-import { Signature, SignatureDocument } from "../signature-OLD.model";
+import { SignatureOLD, SignatureDocument } from "../signature-OLD.model";
 import { WormholeService } from "./wormhole.service";
 
 const testDoc = testWormhole as SignatureDocument;
 
 describe("WormholeService", () => {
   let wormholeService: WormholeService;
-  let sigModel: Model<Signature>;
+  let sigModel: Model<SignatureOLD>;
 
   beforeEach(async () => {
     const module = await Test.createTestingModule({
       providers: [
         WormholeService,
         {
-          provide: getModelToken(Signature.name),
+          provide: getModelToken(SignatureOLD.name),
           useFactory: () => ({
             create: jest.fn().mockImplementation((sig) => sig),
             findByIdAndUpdate: jest.fn(() => ({
@@ -34,7 +34,7 @@ describe("WormholeService", () => {
     }).compile();
 
     wormholeService = module.get<WormholeService>(WormholeService);
-    sigModel = module.get<Model<Signature>>(getModelToken(Signature.name));
+    sigModel = module.get<Model<SignatureOLD>>(getModelToken(SignatureOLD.name));
   });
 
   describe("Wormhole type inference", () => {

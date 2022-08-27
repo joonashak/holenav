@@ -6,7 +6,7 @@ import { SsoSession } from "../auth/sso/sso-session/sso-session.model";
 import { ConnectionGraphService } from "../connection-graph/connection-graph.service";
 import { Character } from "../entities/character/character.model";
 import { Folder } from "../entities/folder/folder.model";
-import { Signature } from "../entities/signature/signature-OLD.model";
+import { SignatureOLD } from "../entities/signature/signature-OLD.model";
 import { System } from "../entities/system/system.model";
 import { Credentials } from "../user/credentials/credentials.model";
 import { User } from "../user/user.model";
@@ -21,7 +21,7 @@ export class DevToolsService {
   constructor(
     @InjectModel(Character.name) private characterModel: Model<Character>,
     @InjectModel(Folder.name) private folderModel: Model<Folder>,
-    @InjectModel(Signature.name) private signatureModel: Model<Signature>,
+    @InjectModel(SignatureOLD.name) private signatureModel: Model<SignatureOLD>,
     @InjectModel(SsoSession.name) private ssoSessionModel: Model<SsoSession>,
     @InjectModel(System.name) private systemModel: Model<System>,
     @InjectModel(User.name) private userModel: Model<User>,

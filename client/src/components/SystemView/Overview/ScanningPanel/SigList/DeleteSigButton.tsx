@@ -2,11 +2,11 @@ import { MouseEvent, useState } from "react";
 import { IconButton, Menu, MenuItem } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import useNotification from "../../../../GlobalNotification/useNotification";
-import { Signature } from "../../../../../generated/graphqlOperations";
+import { SignatureOld } from "../../../../../generated/graphqlOperations";
 import useSignatures from "../../../SystemData/useSignatures";
 
 type DeleteSigButtonProps = {
-  sig: Signature;
+  sig: SignatureOld;
 };
 
 const DeleteSigButton = ({ sig }: DeleteSigButtonProps) => {

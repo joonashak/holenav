@@ -3,11 +3,11 @@ import { InjectModel } from "@nestjs/mongoose";
 import { UserInputError } from "apollo-server-express";
 import { Model } from "mongoose";
 import SigType from "../enums/sig-type.enum";
-import { Signature, SignatureDocument } from "../signature-OLD.model";
+import { SignatureOLD, SignatureDocument } from "../signature-OLD.model";
 
 @Injectable()
 export class WormholeService {
-  constructor(@InjectModel(Signature.name) private sigModel: Model<SignatureDocument>) {}
+  constructor(@InjectModel(SignatureOLD.name) private sigModel: Model<SignatureDocument>) {}
 
   /**
    * Check that given wormhole types are valid and fill the other side with
@@ -64,7 +64,7 @@ export class WormholeService {
       .populate("reverse");
   }
 
-  async addReverseWormholes(signatures: SignatureDocument[]): Promise<Signature[]> {
+  async addReverseWormholes(signatures: SignatureDocument[]): Promise<SignatureOLD[]> {
     return Promise.all(signatures.map((sig) => this.addReverseWormhole(sig)));
   }
 
@@ -97,7 +97,7 @@ export class WormholeService {
     massStatus,
     wormholeType,
     reverseType,
-  }: Signature): Signature {
+  }: SignatureOLD): SignatureOLD {
     return {
       type: SigType.WORMHOLE,
       name: "",

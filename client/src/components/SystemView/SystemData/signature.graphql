@@ -1,4 +1,4 @@
-fragment SignatureFields on Signature {
+fragment SignatureFields on SignatureOLD {
   id
   name
   type

@@ -89,18 +89,18 @@ export type Mutation = {
   __typename?: "Mutation";
   addFolderRole: SanitizedUser;
   addSavedMap: User;
-  addSignatures: Array<Signature>;
+  addSignatures: Array<SignatureOld>;
   changeActiveFolder: SanitizedUser;
   createFolder: Folder;
   deleteSavedMap: User;
-  deleteSignatures: Array<Signature>;
+  deleteSignatures: Array<SignatureOld>;
   getToken: AccessTokenDto;
   login: AccessTokenDto;
   logout: LogoutDto;
   removeAlt: User;
   updateMotd: AppData;
   updateSelectedMap: User;
-  updateSignatures: Array<Signature>;
+  updateSignatures: Array<SignatureOld>;
 };
 
 export type MutationAddFolderRoleArgs = {
@@ -169,7 +169,7 @@ export type Query = {
   getAllUsers: Array<SanitizedUser>;
   getManageableFolders: Array<Folder>;
   getPublicAppData: PublicAppData;
-  getSignaturesBySystem: Array<Signature>;
+  getSignaturesBySystem: Array<SignatureOld>;
   getSystemByName: System;
   searchCharactersByMain: Array<Character>;
   startSsoLogin: StartSsoLoginDto;
@@ -209,22 +209,6 @@ export enum SigType {
   Wormhole = "WORMHOLE",
 }
 
-export type Signature = {
-  __typename?: "Signature";
-  destinationName?: Maybe<Scalars["String"]>;
-  eol?: Maybe<Scalars["Boolean"]>;
-  eveId: Scalars["String"];
-  folder: Folder;
-  id: Scalars["String"];
-  massStatus?: Maybe<MassStatus>;
-  name: Scalars["String"];
-  reverse?: Maybe<Signature>;
-  reverseType?: Maybe<Scalars["String"]>;
-  systemName: Scalars["String"];
-  type: SigType;
-  wormholeType?: Maybe<Scalars["String"]>;
-};
-
 export type SignatureInput = {
   destinationName?: InputMaybe<Scalars["String"]>;
   eol?: InputMaybe<Scalars["Boolean"]>;
@@ -235,6 +219,22 @@ export type SignatureInput = {
   systemName: Scalars["String"];
   type: SigType;
   wormholeType?: InputMaybe<Scalars["String"]>;
+};
+
+export type SignatureOld = {
+  __typename?: "SignatureOLD";
+  destinationName?: Maybe<Scalars["String"]>;
+  eol?: Maybe<Scalars["Boolean"]>;
+  eveId: Scalars["String"];
+  folder: Folder;
+  id: Scalars["String"];
+  massStatus?: Maybe<MassStatus>;
+  name: Scalars["String"];
+  reverse?: Maybe<SignatureOld>;
+  reverseType?: Maybe<Scalars["String"]>;
+  systemName: Scalars["String"];
+  type: SigType;
+  wormholeType?: Maybe<Scalars["String"]>;
 };
 
 export type SignatureUpdate = {
@@ -399,7 +399,7 @@ export type SearchCharactersByMainQuery = {
 };
 
 export type SignatureFieldsFragment = {
-  __typename?: "Signature";
+  __typename?: "SignatureOLD";
   id: string;
   name: string;
   type: SigType;
@@ -419,7 +419,7 @@ export type SystemQuery = {
   __typename?: "Query";
   getSystemByName: { __typename?: "System"; id: string; name: string };
   getSignaturesBySystem: Array<{
-    __typename?: "Signature";
+    __typename?: "SignatureOLD";
     id: string;
     name: string;
     type: SigType;
@@ -439,7 +439,7 @@ export type AddSignaturesMutationVariables = Exact<{
 export type AddSignaturesMutation = {
   __typename?: "Mutation";
   addSignatures: Array<{
-    __typename?: "Signature";
+    __typename?: "SignatureOLD";
     id: string;
     name: string;
     type: SigType;
@@ -459,7 +459,7 @@ export type UpdateSignaturesMutationVariables = Exact<{
 export type UpdateSignaturesMutation = {
   __typename?: "Mutation";
   updateSignatures: Array<{
-    __typename?: "Signature";
+    __typename?: "SignatureOLD";
     id: string;
     name: string;
     type: SigType;
@@ -479,7 +479,7 @@ export type DeleteSignaturesMutationVariables = Exact<{
 export type DeleteSignaturesMutation = {
   __typename?: "Mutation";
   deleteSignatures: Array<{
-    __typename?: "Signature";
+    __typename?: "SignatureOLD";
     id: string;
     name: string;
     type: SigType;
@@ -522,7 +522,7 @@ export const SignatureFieldsFragmentDoc = {
     {
       kind: "FragmentDefinition",
       name: { kind: "Name", value: "SignatureFields" },
-      typeCondition: { kind: "NamedType", name: { kind: "Name", value: "Signature" } },
+      typeCondition: { kind: "NamedType", name: { kind: "Name", value: "SignatureOLD" } },
       selectionSet: {
         kind: "SelectionSet",
         selections: [

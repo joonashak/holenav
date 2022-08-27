@@ -8,7 +8,7 @@ import { AddSignaturesInput } from "./dto/add-signatures.dto";
 import { DeleteSignaturesInput } from "./dto/delete-signatures.dto";
 import { UpdateSignaturesInput } from "./dto/update-signatures.dto";
 import { SignatureService } from "./services/signature.service";
-import { Signature } from "./signature-OLD.model";
+import { SignatureOLD } from "./signature-OLD.model";
 
 @Resolver()
 export class SignatureResolver {
@@ -18,34 +18,34 @@ export class SignatureResolver {
   ) {}
 
   @RequireFolderRole(FolderRole.READ)
-  @Query((returns) => [Signature])
+  @Query((returns) => [SignatureOLD])
   async getSignaturesBySystem(
     @Args("systemName") systemName: string,
     @ActiveFolder() activeFolder: Folder,
-  ): Promise<Signature[]> {
+  ): Promise<SignatureOLD[]> {
     const signatures = await this.sigService.getBySystem(systemName, activeFolder);
     return signatures;
   }
 
   @RequireFolderRole(FolderRole.WRITE)
-  @Mutation((returns) => [Signature])
-  async addSignatures(@Args("input") input: AddSignaturesInput): Promise<Signature[]> {
+  @Mutation((returns) => [SignatureOLD])
+  async addSignatures(@Args("input") input: AddSignaturesInput): Promise<SignatureOLD[]> {
     const sigs = this.activeFolderService.populateWithActiveFolder(input.signatures);
     const signatures = await this.sigService.createSignatures(sigs);
     return signatures;
   }
 
   @RequireFolderRole(FolderRole.WRITE)
-  @Mutation((returns) => [Signature])
-  async updateSignatures(@Args("input") input: UpdateSignaturesInput): Promise<Signature[]> {
+  @Mutation((returns) => [SignatureOLD])
+  async updateSignatures(@Args("input") input: UpdateSignaturesInput): Promise<SignatureOLD[]> {
     const sigs = this.activeFolderService.populateWithActiveFolder(input.signatures);
     const signatures = await this.sigService.updateSignatures(sigs);
     return signatures;
   }
 
   @RequireFolderRole(FolderRole.WRITE)
-  @Mutation((returns) => [Signature])
-  async deleteSignatures(@Args("input") input: DeleteSignaturesInput): Promise<Signature[]> {
+  @Mutation((returns) => [SignatureOLD])
+  async deleteSignatures(@Args("input") input: DeleteSignaturesInput): Promise<SignatureOLD[]> {
     const signatures = await this.sigService.deleteSignatures(input.ids);
     return signatures;
   }

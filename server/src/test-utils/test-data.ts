@@ -7,7 +7,7 @@ import { Folder } from "../entities/folder/folder.model";
 import FolderRole from "../user/roles/folder-role.enum";
 import SystemRole from "../user/roles/system-role.enum";
 import { User } from "../user/user.model";
-import { Signature } from "../entities/signature/signature-OLD.model";
+import { SignatureOLD } from "../entities/signature/signature-OLD.model";
 import SigType from "../entities/signature/enums/sig-type.enum";
 import MassStatus from "../entities/signature/enums/mass-status.enum";
 
@@ -59,14 +59,14 @@ export const testSsoAccessTokenPayload = {
   CharacterId: "test-id",
 };
 
-export const testUnknownSig: Signature = {
+export const testUnknownSig: SignatureOLD = {
   folder: testFolder,
   type: SigType.UNKNOWN,
   name: "Test Unknown Sig",
   systemName: "Jita",
 };
 
-export const testWormhole: Signature = {
+export const testWormhole: SignatureOLD = {
   folder: testFolder,
   type: SigType.WORMHOLE,
   name: "Test Wormhole",
@@ -77,7 +77,7 @@ export const testWormhole: Signature = {
   destinationName: "",
 };
 
-export const testWormholeWithReverse: Signature = {
+export const testWormholeWithReverse: SignatureOLD = {
   ...testWormhole,
   reverse: {
     ...testWormhole,

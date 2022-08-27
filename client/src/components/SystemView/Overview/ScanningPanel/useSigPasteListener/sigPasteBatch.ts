@@ -1,15 +1,15 @@
-import { Signature } from "../../../../../generated/graphqlOperations";
+import { SignatureOld } from "../../../../../generated/graphqlOperations";
 import { AddSignatureHookInput } from "../../../SystemData/useSignatures";
 
 import { PastedSig, SigPasteEvent } from "./sigPasteParser";
 
 export type SigPasteBatch = {
   signatureAdd: AddSignatureHookInput[];
-  signatureUpdate: Signature[];
+  signatureUpdate: SignatureOld[];
 };
 
 const createSignatureAddReducer =
-  (signatures: Signature[]) => (addableSignatures: AddSignatureHookInput[], sig: PastedSig) => {
+  (signatures: SignatureOld[]) => (addableSignatures: AddSignatureHookInput[], sig: PastedSig) => {
     const { type, eveId, name } = sig;
     const existingSig = signatures.find((s) => s.eveId === eveId);
 
@@ -22,7 +22,7 @@ const createSignatureAddReducer =
   };
 
 const createSignatureUpdateReducer =
-  (signatures: Signature[]) => (sigUpdates: Signature[], sig: PastedSig) => {
+  (signatures: SignatureOld[]) => (sigUpdates: SignatureOld[], sig: PastedSig) => {
     const { type, eveId, name } = sig;
     const existingSig = signatures.find((s) => s.eveId === eveId);
 
@@ -39,7 +39,7 @@ const createSignatureUpdateReducer =
 
 const createSigPasteBatch = (
   paste: SigPasteEvent,
-  existingSignatures: Signature[]
+  existingSignatures: SignatureOld[]
 ): SigPasteBatch => ({
   signatureAdd: paste.pastedSigs.reduce(createSignatureAddReducer(existingSignatures), []),
   signatureUpdate: paste.pastedSigs.reduce(createSignatureUpdateReducer(existingSignatures), []),

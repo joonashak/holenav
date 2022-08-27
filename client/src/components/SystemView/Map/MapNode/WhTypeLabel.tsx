@@ -1,11 +1,11 @@
 import { Typography } from "@mui/material";
 import { useState } from "react";
-import { Signature } from "../../../../generated/graphqlOperations";
+import { SignatureOld } from "../../../../generated/graphqlOperations";
 import SigModal from "../../Overview/ScanningPanel/SigModal";
 
 type WhTypeLabelProps = {
   type: string | undefined;
-  signature: Signature | undefined;
+  signature: SignatureOld | undefined;
 };
 
 const WhTypeLabel = ({ type, signature }: WhTypeLabelProps) => {

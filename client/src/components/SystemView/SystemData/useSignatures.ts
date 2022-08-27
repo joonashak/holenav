@@ -5,12 +5,12 @@ import useAuthenticatedMutation from "../../../auth/useAuthenticatedMutation";
 import {
   AddSignaturesDocument,
   DeleteSignaturesDocument,
-  Signature,
+  SignatureOld,
   SignatureUpdate,
   UpdateSignaturesDocument,
 } from "../../../generated/graphqlOperations";
 
-export type AddSignatureHookInput = Omit<Signature, "id" | "folder" | "systemName">;
+export type AddSignatureHookInput = Omit<SignatureOld, "id" | "folder" | "systemName">;
 
 const useSignatures = () => {
   const state = useState(systemState);
@@ -33,7 +33,8 @@ const useSignatures = () => {
     onCompleted: (data) => {
       state.signatures.set((sigs) =>
         sigs.map(
-          (sig) => data.updateSignatures.find((updated: Signature) => updated.id === sig.id) || sig
+          (sig) =>
+            data.updateSignatures.find((updated: SignatureOld) => updated.id === sig.id) || sig
         )
       );
     },
@@ -44,7 +45,7 @@ const useSignatures = () => {
 
   const [deleteSigsMutation] = useAuthenticatedMutation(DeleteSignaturesDocument, {
     onCompleted: (data) => {
-      const deletedIds = data.deleteSignatures.map((sig: Signature) => sig.id);
+      const deletedIds = data.deleteSignatures.map((sig: SignatureOld) => sig.id);
       state.signatures.set((sigs) => sigs.filter((sig) => !deletedIds.includes(sig.id)));
     },
   });

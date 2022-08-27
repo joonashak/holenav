@@ -1,5 +1,5 @@
 import { FieldValues } from "react-hook-form";
-import { Signature, SigType } from "../../../../../generated/graphqlOperations";
+import { SignatureOld, SigType } from "../../../../../generated/graphqlOperations";
 import useNotification from "../../../../GlobalNotification/useNotification";
 import useMapData from "../../../Map/MapData/useMapData";
 import useSignatures from "../../../SystemData/useSignatures";
@@ -26,7 +26,7 @@ const useWormholeForm = (props: WormholeFormProps) => {
       ...data,
     };
 
-    const res = await addSignatures([mutationData as Signature]);
+    const res = await addSignatures([mutationData as SignatureOld]);
 
     if (res.data && !res.errors) {
       fetchConnectionTree();
@@ -50,7 +50,7 @@ const useWormholeForm = (props: WormholeFormProps) => {
       destinationName,
     };
 
-    const res = await updateSignatures([mutationData as Signature]);
+    const res = await updateSignatures([mutationData as SignatureOld]);
 
     if (res.data && !res.errors) {
       showSuccessNotification("Wormhole updated.");

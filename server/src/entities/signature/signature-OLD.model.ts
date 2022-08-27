@@ -6,7 +6,7 @@ import { Folder } from "../folder/folder.model";
 import MassStatus from "./enums/mass-status.enum";
 import SigType from "./enums/sig-type.enum";
 
-export type SignatureDocument = Signature & mongoose.Document;
+export type SignatureDocument = SignatureOLD & mongoose.Document;
 
 registerEnumType(SigType, { name: "SigType" });
 registerEnumType(MassStatus, { name: "MassStatus" });
@@ -64,7 +64,7 @@ export class SignatureWithoutRefs {
 
 @ObjectType()
 @Schema()
-export class Signature extends SignatureWithoutRefs {
+export class SignatureOLD extends SignatureWithoutRefs {
   @Field((type) => Folder)
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: "Folder" })
   folder: Folder;
@@ -73,9 +73,9 @@ export class Signature extends SignatureWithoutRefs {
     Wormhole-only props:
   */
 
-  @Field((type) => Signature, { nullable: true })
+  @Field((type) => SignatureOLD, { nullable: true })
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: "Signature", nullable: true })
-  reverse?: Signature;
+  reverse?: SignatureOLD;
 }
 
-export const SignatureSchema = SchemaFactory.createForClass(Signature);
+export const SignatureSchema = SchemaFactory.createForClass(SignatureOLD);

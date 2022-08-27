@@ -2,14 +2,14 @@
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { MouseEvent, ReactNode, useState } from "react";
-import { Signature, SigType } from "../../../../../generated/graphqlOperations";
+import { SignatureOld, SigType } from "../../../../../generated/graphqlOperations";
 import TableRow from "../../../../common/TableRow";
 import useNotification from "../../../../GlobalNotification/useNotification";
 import useSignatures from "../../../SystemData/useSignatures";
 
 type SigContextMenuProps = {
   children: ReactNode;
-  signature: Signature;
+  signature: SignatureOld;
 };
 
 const SigContextMenu = ({ children, signature }: SigContextMenuProps) => {
