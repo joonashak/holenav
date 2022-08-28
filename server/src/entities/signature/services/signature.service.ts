@@ -76,7 +76,9 @@ export class SignatureService {
       .map((sig) => sig.connection.destinationName);
 
     const uniqueSystems = [...new Set(hostSystems.concat(destinations))];
-    const insertableSystems = uniqueSystems.map((name) => ({ name, folderId }));
+    const insertableSystems = uniqueSystems
+      .filter((name) => name)
+      .map((name) => ({ name, folderId }));
     await this.systemNode.upsertSystems(insertableSystems);
   }
 

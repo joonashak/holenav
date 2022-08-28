@@ -18,7 +18,6 @@ const useSigPasteListener = () => {
       return;
     }
 
-    // TODO: Create batch mutations for these.
     await addSignatures(batch.signatureAdd);
     await updateSignatures(batch.signatureUpdate);
   };

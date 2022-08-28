@@ -5,8 +5,8 @@ import { SignatureWithoutConnection } from "../signature.model";
 // FIXME: For whatever reason, using actual connection model fails.
 @InputType()
 export class ConnectionInput {
-  @Field({ nullable: true })
-  wormholeType?: string;
+  @Field()
+  wormholeType: string;
 
   @Field()
   eol: boolean;
@@ -14,11 +14,11 @@ export class ConnectionInput {
   @Field((type) => MassStatus)
   massStatus: MassStatus;
 
-  @Field({ nullable: true })
-  destinationName?: string;
+  @Field()
+  destinationName: string;
 
-  @Field({ nullable: true })
-  reverseType?: string;
+  @Field()
+  reverseType: string;
 }
 
 @InputType()

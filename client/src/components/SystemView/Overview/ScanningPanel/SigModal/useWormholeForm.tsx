@@ -25,7 +25,7 @@ const useWormholeForm = (props: WormholeFormProps) => {
         reverseType: whReverseType,
         eol: life === "eol",
         massStatus: mass,
-        destinationName,
+        destinationName: destinationName || "",
       },
     };
 

@@ -5,8 +5,8 @@ registerEnumType(MassStatus, { name: "MassStatus" });
 
 @ObjectType()
 export class Connection {
-  @Field({ nullable: true })
-  wormholeType?: string;
+  @Field()
+  wormholeType: string;
 
   @Field()
   eol: boolean;
@@ -14,9 +14,9 @@ export class Connection {
   @Field((type) => MassStatus)
   massStatus: MassStatus;
 
-  @Field({ nullable: true })
-  destinationName?: string;
+  @Field()
+  destinationName: string;
 
-  @Field({ nullable: true })
-  reverseType?: string;
+  @Field()
+  reverseType: string;
 }

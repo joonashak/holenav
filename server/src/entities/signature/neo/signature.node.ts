@@ -71,7 +71,7 @@ export class SignatureNode {
       `
       UNWIND $signatures as sig
       MATCH (from:Signature {id: sig.id})
-      MATCH (dest:System {name: sig.connection.destinationName, folderId: $folderId})
+      MERGE (dest:System {name: sig.connection.destinationName, folderId: $folderId})
       CREATE (to:Signature {
         id: randomUUID(),
         eveId: '',
