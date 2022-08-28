@@ -38,7 +38,7 @@ query System($name: String!) {
 
 mutation AddSignatures($input: AddSignaturesInput!) {
   addSignatures(input: $input) {
-    ...SignatureFieldsOld
+    ...SignatureFields
   }
 }
 

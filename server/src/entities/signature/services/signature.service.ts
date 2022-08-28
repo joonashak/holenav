@@ -28,20 +28,15 @@ export class SignatureService {
   }
 
   async createSignatures(signatures: CreatableSignature[], folder: Folder): Promise<Signature[]> {
-    /*
-    const sigsWithWhTypes = signatures.map((sig) => this.wormholeService.addWhTypes(sig));
-    const newSigs = await this.sigModel.create(sigsWithWhTypes);
-    const sigsWithReverses = await this.wormholeService.addReverseWormholes(newSigs);
-    return sigsWithReverses;
-    */
-    // Create systems
     const sigsWithIds = signatures.map((sig) => addUuid(sig, { overwrite: true }));
     await this.ensureSystemsExist(sigsWithIds, folder.id);
-    // Create sigs
+
     await this.signatureNode.createSignatures(sigsWithIds, folder.id);
+
     const sigsWithConnections = sigsWithIds.filter((sig) => sig.connection);
     await this.signatureNode.createConnections(sigsWithConnections, folder.id);
-    return [];
+
+    return sigsWithIds;
   }
 
   async updateSignatures(sigUpdates: SignatureUpdate[]): Promise<SignatureOLD[]> {

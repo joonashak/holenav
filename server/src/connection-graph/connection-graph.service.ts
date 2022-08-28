@@ -41,7 +41,12 @@ export class ConnectionGraphService {
       UNWIND $connections as conn
       MATCH (from:Signature {id: conn.from})
       MATCH (to:Signature {id: conn.to})
-      CREATE (from)-[:CONNECTS {wormholeType: 'H296', reverseType: 'K162'}]->(to)
+      CREATE (from)-[:CONNECTS {
+        wormholeType: 'H296',
+        reverseType: 'K162',
+        eol: false,
+        massStatus: 'STABLE'
+      }]->(to)
     `,
       { connections },
     );

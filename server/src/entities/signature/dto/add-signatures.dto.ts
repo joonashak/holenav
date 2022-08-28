@@ -1,6 +1,5 @@
-import { Field, InputType, ObjectType, OmitType } from "@nestjs/graphql";
+import { Field, InputType, OmitType } from "@nestjs/graphql";
 import MassStatus from "../enums/mass-status.enum";
-import { SignatureOLD } from "../signature-OLD.model";
 import { SignatureWithoutConnection } from "../signature.model";
 
 // FIXME: For whatever reason, using actual connection model fails.
@@ -32,10 +31,4 @@ export class AddSignaturesInput {
 export class CreatableSignature extends OmitType(SignatureWithoutConnection, ["id"]) {
   @Field((type) => ConnectionInput, { nullable: true })
   connection?: ConnectionInput;
-}
-
-@ObjectType()
-export class AddSignaturesOutput {
-  @Field((type) => [SignatureOLD])
-  signatures: SignatureOLD[];
 }
