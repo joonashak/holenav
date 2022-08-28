@@ -1,14 +1,15 @@
 import { Field, InputType, ObjectType, OmitType } from "@nestjs/graphql";
-import { SignatureOLD, SignatureWithoutRefs } from "../signature-OLD.model";
+import { SignatureOLD } from "../signature-OLD.model";
+import { Signature } from "../signature.model";
 
 @InputType()
 export class AddSignaturesInput {
-  @Field((type) => [SignatureInput])
-  signatures: SignatureInput[];
+  @Field((type) => [CreatableSignature])
+  signatures: CreatableSignature[];
 }
 
 @InputType()
-class SignatureInput extends OmitType(SignatureWithoutRefs, ["id"]) {}
+export class CreatableSignature extends OmitType(Signature, ["id"]) {}
 
 @ObjectType()
 export class AddSignaturesOutput {

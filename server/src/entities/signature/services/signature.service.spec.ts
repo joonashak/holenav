@@ -43,7 +43,7 @@ describe("SignatureService", () => {
     sigModel = module.get<Model<SignatureOLD>>(getModelToken(SignatureOLD.name));
   });
 
-  it("Create signatures", async () => {
+  it.skip("Create signatures", async () => {
     const sigs = [testUnknownSig, testWormhole];
     await expect(signatureService.createSignatures(sigs)).resolves.toEqual(sigs);
     expect(wormholeService.addReverseWormholes).toBeCalledWith(sigs);

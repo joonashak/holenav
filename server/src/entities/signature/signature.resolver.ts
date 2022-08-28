@@ -29,10 +29,13 @@ export class SignatureResolver {
   }
 
   @RequireFolderRole(FolderRole.WRITE)
-  @Mutation((returns) => [SignatureOLD])
-  async addSignatures(@Args("input") input: AddSignaturesInput): Promise<SignatureOLD[]> {
+  @Mutation((returns) => [Signature])
+  async addSignatures(
+    @Args("input") input: AddSignaturesInput,
+    @ActiveFolder() folder: Folder,
+  ): Promise<Signature[]> {
     const sigs = this.activeFolderService.populateWithActiveFolder(input.signatures);
-    const signatures = await this.sigService.createSignatures(sigs);
+    const signatures = await this.sigService.createSignatures(sigs, folder);
     return signatures;
   }
 

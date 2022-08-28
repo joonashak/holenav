@@ -31,6 +31,6 @@ export class MockWormholeService {
       ...wh,
     }));
 
-    await this.sigService.createSignatures(sigs);
+    //await this.sigService.createSignatures(sigs);
   }
 }

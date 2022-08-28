@@ -8,6 +8,9 @@ import { Signature } from "../signature.model";
 import { isWormhole } from "../signature.utils";
 import { SignatureNode } from "../neo/signature.node";
 import { WormholeService } from "./wormhole.service";
+import { SystemNode } from "../neo/system.node";
+import { CreatableSignature } from "../dto/add-signatures.dto";
+import addUuid from "../../../utils/addUuid";
 
 // TODO: Move signatures completely to Neo4j. Queries in connection graph module, call them here, etc.
 
@@ -17,17 +20,26 @@ export class SignatureService {
     @InjectModel(SignatureOLD.name) private sigModel: Model<SignatureDocument>,
     private wormholeService: WormholeService,
     private signatureNode: SignatureNode,
+    private systemNode: SystemNode,
   ) {}
 
   async getBySystem(systemName: string, folder: Folder): Promise<Signature[]> {
     return this.signatureNode.findBySystem({ systemName, folderId: folder.id });
   }
 
-  async createSignatures(signatures: SignatureOLD[]): Promise<SignatureOLD[]> {
+  async createSignatures(signatures: CreatableSignature[], folder: Folder): Promise<Signature[]> {
+    /*
     const sigsWithWhTypes = signatures.map((sig) => this.wormholeService.addWhTypes(sig));
     const newSigs = await this.sigModel.create(sigsWithWhTypes);
     const sigsWithReverses = await this.wormholeService.addReverseWormholes(newSigs);
     return sigsWithReverses;
+    */
+    // Create systems
+    const sigsWithIds = signatures.map((sig) => addUuid(sig));
+    await this.ensureSystemsExist(sigsWithIds, folder.id);
+    // Create sigs
+    await this.signatureNode.createSignatures(sigsWithIds, folder.id);
+    return [];
   }
 
   async updateSignatures(sigUpdates: SignatureUpdate[]): Promise<SignatureOLD[]> {
@@ -58,6 +70,17 @@ export class SignatureService {
 
     await this.sigModel.deleteMany({ id: { $in: deletableIds } });
     return sigs;
+  }
+
+  private async ensureSystemsExist(signatures: Signature[], folderId: string) {
+    const hostSystems = signatures.map((sig) => sig.systemName);
+    const destinations = signatures
+      .filter((sig) => sig.connection)
+      .map((sig) => sig.connection.destinationName);
+
+    const uniqueSystems = [...new Set(hostSystems.concat(destinations))];
+    const insertableSystems = uniqueSystems.map((name) => ({ name, folderId }));
+    await this.systemNode.upsertSystems(insertableSystems);
   }
 
   private async updateSignature(
