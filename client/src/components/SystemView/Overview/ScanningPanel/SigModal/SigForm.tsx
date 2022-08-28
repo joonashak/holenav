@@ -1,13 +1,13 @@
 import { Box, Button, FormGroup } from "@mui/material";
 import { useForm } from "react-hook-form";
-import { SignatureOld, SigType } from "../../../../../generated/graphqlOperations";
+import { Signature, SigType } from "../../../../../generated/graphqlOperations";
 import ControlledTextField from "../../../../controls/ControlledTextField";
 import useSigForm from "./useSigForm";
 
 export type SigFormProps = {
   type: SigType;
   eveId: string;
-  existing?: SignatureOld;
+  existing?: Signature;
   onClose: () => void;
 };
 

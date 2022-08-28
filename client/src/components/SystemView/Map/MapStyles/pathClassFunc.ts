@@ -33,14 +33,12 @@ const getWhSizeClass = (type: string, reverseType: string): MapLinkClasses => {
  * For use with react-d3-tree.
  */
 const pathClassFunc = (link: MapLinkDatum) => {
-  const { wormhole } = link.target.data;
+  const { signature } = link.target.data;
 
-  if (!wormhole) {
+  if (!signature || !signature.connection) {
     return "";
   }
-  const { eol, massStatus, type } = wormhole;
-
-  const { reverseType } = wormhole;
+  const { eol, massStatus, wormholeType, reverseType } = signature.connection;
   const classes = [MapLinkClasses.DEFAULT];
 
   if (eol) {
@@ -53,7 +51,7 @@ const pathClassFunc = (link: MapLinkDatum) => {
     classes.push(MapLinkClasses.CRIT);
   }
 
-  classes.push(getWhSizeClass(type || "", reverseType || ""));
+  classes.push(getWhSizeClass(wormholeType || "", reverseType || ""));
 
   return classes.join(" ");
 };

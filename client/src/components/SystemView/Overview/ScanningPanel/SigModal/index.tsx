@@ -6,7 +6,7 @@ import WormholeForm from "./WormholeForm";
 import FormGroupRow from "../../../../controls/FormGroupRow";
 import Dialog from "../../../../common/Dialog";
 import EveIdField from "./EveIdField";
-import { SignatureOld, SigType } from "../../../../../generated/graphqlOperations";
+import { Signature, SigType } from "../../../../../generated/graphqlOperations";
 
 const typeOptions = [
   { id: "sig-type-opt-null", value: SigType.Unknown, label: <em>Unknown</em> },
@@ -19,7 +19,7 @@ const typeOptions = [
 type SigModalProps = {
   open: boolean;
   onClose: () => void;
-  signature?: SignatureOld;
+  signature?: Signature;
 };
 
 const SigModal = ({ open, onClose: onCloseSuper, signature }: SigModalProps) => {

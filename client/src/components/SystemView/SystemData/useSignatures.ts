@@ -5,12 +5,13 @@ import useAuthenticatedMutation from "../../../auth/useAuthenticatedMutation";
 import {
   AddSignaturesDocument,
   DeleteSignaturesDocument,
+  Signature,
   SignatureOld,
   SignatureUpdate,
   UpdateSignaturesDocument,
 } from "../../../generated/graphqlOperations";
 
-export type AddSignatureHookInput = Omit<SignatureOld, "id" | "folder" | "systemName">;
+export type AddSignatureHookInput = Omit<Signature, "id" | "systemName">;
 
 const useSignatures = () => {
   const state = useState(systemState);

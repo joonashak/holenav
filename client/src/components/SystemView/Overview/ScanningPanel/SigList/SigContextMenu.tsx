@@ -2,14 +2,14 @@
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { MouseEvent, ReactNode, useState } from "react";
-import { SignatureOld, SigType } from "../../../../../generated/graphqlOperations";
+import { Signature, SigType } from "../../../../../generated/graphqlOperations";
 import TableRow from "../../../../common/TableRow";
 import useNotification from "../../../../GlobalNotification/useNotification";
 import useSignatures from "../../../SystemData/useSignatures";
 
 type SigContextMenuProps = {
   children: ReactNode;
-  signature: SignatureOld;
+  signature: Signature;
 };
 
 const SigContextMenu = ({ children, signature }: SigContextMenuProps) => {
@@ -43,7 +43,8 @@ const SigContextMenu = ({ children, signature }: SigContextMenuProps) => {
   const holesWithoutIds = signatures.filter((sig) => sig.type === SigType.Wormhole && !sig.eveId);
   const returnConnectionWithoutId = holesWithoutIds.length === 1 ? holesWithoutIds[0] : null;
 
-  const enabled = returnConnectionWithoutId && signature.eveId && !signature.wormholeType;
+  const enabled =
+    returnConnectionWithoutId && signature.eveId && !signature.connection?.wormholeType;
 
   const markSigAsReturnWormhole = async () => {
     if (!returnConnectionWithoutId) {

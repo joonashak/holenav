@@ -14,19 +14,22 @@ const useWormholeForm = (props: WormholeFormProps) => {
   const { addSignatures, updateSignatures } = useSignatures();
 
   const submitNew = async (formData: FieldValues) => {
-    const { whType, whReverseType, life, mass, ...data } = formData;
+    const { whType, whReverseType, life, mass, name, destinationName } = formData;
     const mutationData = {
       eveId,
       systemName,
       type: SigType.Wormhole,
-      wormholeType: whType,
-      reverseType: whReverseType,
-      eol: life === "eol",
-      massStatus: mass,
-      ...data,
+      name,
+      connection: {
+        wormholeType: whType,
+        reverseType: whReverseType,
+        eol: life === "eol",
+        massStatus: mass,
+        destinationName,
+      },
     };
 
-    const res = await addSignatures([mutationData as SignatureOld]);
+    const res = await addSignatures([mutationData]);
 
     if (res.data && !res.errors) {
       fetchConnectionTree();

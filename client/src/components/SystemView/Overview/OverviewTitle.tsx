@@ -13,11 +13,11 @@ const OverviewTitle = () => {
   const connections = flattenConnectionTreeChildren(connectionTree.children);
 
   const systemFromConnectionTree = connections.find(
-    (conn) => conn.wormhole?.destinationName === name
+    (conn) => conn.signature?.connection?.destinationName === name
   );
 
   const nameFromConnectionTree = systemFromConnectionTree
-    ? systemFromConnectionTree.wormhole?.name
+    ? systemFromConnectionTree.signature?.name
     : null;
 
   const bookmarkName =
