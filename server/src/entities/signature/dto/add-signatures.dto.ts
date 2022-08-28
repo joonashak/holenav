@@ -21,6 +21,7 @@ export class ConnectionInput {
   @Field({ nullable: true })
   reverseType?: string;
 }
+
 @InputType()
 export class AddSignaturesInput {
   @Field((type) => [CreatableSignature])

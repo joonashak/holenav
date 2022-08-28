@@ -12,6 +12,10 @@ export class SystemNode {
    * @returns All given systems after upsert, regardless of whether they existed before.
    */
   async upsertSystems(systems: GraphSystem[]): Promise<GraphSystem[]> {
+    if (!systems.length) {
+      return;
+    }
+
     const res = await this.neoService.write(
       `
       UNWIND $systems as system

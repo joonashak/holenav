@@ -32,10 +32,9 @@ export class SignatureResolver {
   @Mutation((returns) => [Signature])
   async addSignatures(
     @Args("input") input: AddSignaturesInput,
-    @ActiveFolder() folder: Folder,
+    @ActiveFolder() activeFolder: Folder,
   ): Promise<Signature[]> {
-    const sigs = this.activeFolderService.populateWithActiveFolder(input.signatures);
-    const signatures = await this.sigService.createSignatures(sigs, folder);
+    const signatures = await this.sigService.createSignatures(input.signatures, activeFolder);
     return signatures;
   }
 

@@ -35,10 +35,12 @@ export class SignatureService {
     return sigsWithReverses;
     */
     // Create systems
-    const sigsWithIds = signatures.map((sig) => addUuid(sig));
+    const sigsWithIds = signatures.map((sig) => addUuid(sig, { overwrite: true }));
     await this.ensureSystemsExist(sigsWithIds, folder.id);
     // Create sigs
     await this.signatureNode.createSignatures(sigsWithIds, folder.id);
+    const sigsWithConnections = sigsWithIds.filter((sig) => sig.connection);
+    await this.signatureNode.createConnections(sigsWithConnections, folder.id);
     return [];
   }
 
