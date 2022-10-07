@@ -42,7 +42,9 @@ export class SignatureSearchService {
           systemName: $systemName,
           connection: conn{ 
             .*,
-            destinationName: to.name
+            destinationName: to.name,
+            wormholeType: CASE startNode(conn) WHEN wh THEN conn.wormholeType ELSE conn.reverseType END,
+            reverseType: CASE startNode(conn) WHEN wh THEN conn.reverseType ELSE conn.wormholeType END
           } 
         } AS wormholes
       RETURN collect(DISTINCT wormholes)
