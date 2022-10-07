@@ -9,6 +9,7 @@ import { WormholeService } from "./services/wormhole.service";
 import { SignatureNode } from "./neo/signature.node";
 import { Neo4jModule } from "../../integration/neo4j/neo4j.module";
 import { SystemNode } from "./neo/system.node";
+import { SignatureSearchService } from "./neo/signature-search.service";
 
 @Module({
   imports: [
@@ -16,7 +17,14 @@ import { SystemNode } from "./neo/system.node";
     FolderModule,
     Neo4jModule,
   ],
-  exports: [MongooseModule, SignatureService, WormholeService, SignatureNode, SystemNode],
+  exports: [
+    MongooseModule,
+    SignatureService,
+    WormholeService,
+    SignatureNode,
+    SystemNode,
+    SignatureSearchService,
+  ],
   providers: [
     SignatureResolver,
     SignatureService,
@@ -24,6 +32,7 @@ import { SystemNode } from "./neo/system.node";
     WormholeService,
     SignatureNode,
     SystemNode,
+    SignatureSearchService,
   ],
 })
 export class SignatureModule {}

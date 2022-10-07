@@ -11,6 +11,7 @@ import { WormholeService } from "./wormhole.service";
 import { SystemNode } from "../neo/system.node";
 import { CreatableSignature } from "../dto/add-signatures.dto";
 import addUuid from "../../../utils/addUuid";
+import { SignatureSearchService } from "../neo/signature-search.service";
 
 // TODO: Move signatures completely to Neo4j. Queries in connection graph module, call them here, etc.
 
@@ -21,10 +22,11 @@ export class SignatureService {
     private wormholeService: WormholeService,
     private signatureNode: SignatureNode,
     private systemNode: SystemNode,
+    private signatureSearchService: SignatureSearchService,
   ) {}
 
   async getBySystem(systemName: string, folder: Folder): Promise<Signature[]> {
-    return this.signatureNode.findBySystem({ systemName, folderId: folder.id });
+    return this.signatureSearchService.findBySystem({ systemName, folderId: folder.id });
   }
 
   async createSignatures(signatures: CreatableSignature[], folder: Folder): Promise<Signature[]> {
