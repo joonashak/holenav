@@ -42,7 +42,6 @@ const MapNode = ({ nodeDatum }: MapNodeProps) => {
     <AppLink to={`/system/${selectedMap.rootSystemName}`}>{selectedMap.name}</AppLink>
   );
 
-  console.log(nodeDatum);
   const ConnectionName = () =>
     destinationName ? (
       <AppLink to={`/system/${destinationName}`}>{name || destinationName}</AppLink>

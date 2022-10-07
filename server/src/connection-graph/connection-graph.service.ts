@@ -58,7 +58,7 @@ export class ConnectionGraphService {
     const res = await this.neoService.read(
       ` 
       MATCH connections=(:System {name: $rootSystemName, folderId: $folderId})-[*]-(end:System)
-      WHERE size([(end)-[:HAS]->() | 1]) = 1
+      WHERE size([(end)-[:HAS]->() | 1]) > 0
       UNWIND [rel IN relationships(connections) WHERE type(rel) = 'CONNECTS'] AS connRel
       WITH 
         startNode(connRel) AS startNode,

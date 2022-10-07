@@ -52,8 +52,6 @@ export class SignatureSearchService {
       params,
     );
 
-    console.log(res.records[0]);
-
     return res.records[0]._fields[0];
   }
 }
