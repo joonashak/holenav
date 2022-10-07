@@ -76,6 +76,7 @@ export class ConnectionGraphService {
     `,
       { rootSystemName, folderId },
     );
+    console.log(res.records);
 
     return res.records;
   }

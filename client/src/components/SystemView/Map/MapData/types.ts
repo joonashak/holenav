@@ -1,5 +1,5 @@
 import { RawNodeDatum, TreeLinkDatum, TreeNodeDatum } from "react-d3-tree/lib/types/common";
-import { Signature } from "../../../../generated/graphqlOperations";
+import { MassStatus } from "../../../../generated/graphqlOperations";
 
 export type MapState = {
   connectionTree: ConnectionTree;
@@ -11,11 +11,19 @@ export type ConnectionTree = {
 };
 
 export type MapNodeDatum = TreeNodeDatum & {
-  signature?: Signature;
+  wormhole?: Wormhole;
 };
 
 export type MapLinkDatum = TreeLinkDatum & {
   target: {
     data: MapNodeDatum;
   };
+};
+
+export type Wormhole = {
+  eol: boolean;
+  massStatus: MassStatus;
+  destinationName: string;
+  reverseType: string;
+  wormholeType: string;
 };

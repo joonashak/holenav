@@ -1,11 +1,11 @@
 import { Typography } from "@mui/material";
 import { useState } from "react";
-import { Signature } from "../../../../generated/graphqlOperations";
 import SigModal from "../../Overview/ScanningPanel/SigModal";
+import { Wormhole } from "../MapData/types";
 
 type WhTypeLabelProps = {
   type: string | undefined;
-  signature: Signature | undefined;
+  signature: Wormhole | undefined;
 };
 
 const WhTypeLabel = ({ type, signature }: WhTypeLabelProps) => {
@@ -17,7 +17,9 @@ const WhTypeLabel = ({ type, signature }: WhTypeLabelProps) => {
       <Typography variant="caption" onClick={toggleModal}>
         {type}
       </Typography>
+      {/*
       <SigModal open={modalOpen} onClose={toggleModal} signature={signature} />
+      */}
     </>
   );
 };

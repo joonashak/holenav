@@ -15,12 +15,12 @@ export type MapNodeProps = CustomNodeElementProps & {
 
 const MapNode = ({ nodeDatum }: MapNodeProps) => {
   const { settings } = useUserData();
-  const { signature } = nodeDatum;
+  const { wormhole } = nodeDatum;
   const { name: selectedSystemName } = useSystemData();
 
-  const name = signature?.name || "";
-  const type = signature?.connection?.wormholeType || "";
-  const destinationName = signature?.connection?.destinationName || "";
+  const name = nodeDatum?.name || "";
+  const type = wormhole?.wormholeType || "";
+  const destinationName = wormhole?.destinationName || "";
 
   const { selectedMap } = settings;
   const isRootNode = nodeDatum.__rd3t.depth === 0;
@@ -42,6 +42,7 @@ const MapNode = ({ nodeDatum }: MapNodeProps) => {
     <AppLink to={`/system/${selectedMap.rootSystemName}`}>{selectedMap.name}</AppLink>
   );
 
+  console.log(nodeDatum);
   const ConnectionName = () =>
     destinationName ? (
       <AppLink to={`/system/${destinationName}`}>{name || destinationName}</AppLink>
@@ -85,7 +86,7 @@ const MapNode = ({ nodeDatum }: MapNodeProps) => {
           }}
         >
           {isRootNode ? <RootNodeName /> : <ConnectionName />}
-          <WhTypeLabel type={type} signature={signature} />
+          <WhTypeLabel type={type} signature={wormhole} />
         </Box>
       </foreignObject>
     </>
