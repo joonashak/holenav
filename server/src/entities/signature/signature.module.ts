@@ -6,11 +6,11 @@ import { SignatureOLD, SignatureSchema } from "./signature-OLD.model";
 import { SignatureResolver } from "./signature.resolver";
 import { SignatureService } from "./services/signature.service";
 import { WormholeService } from "./services/wormhole.service";
-import { SignatureNode } from "./neo/signature.node";
 import { Neo4jModule } from "../../integration/neo4j/neo4j.module";
 import { SystemNode } from "./neo/system.node";
 import { SignatureSearchService } from "./neo/signature-search.service";
 import { SignatureMutationService } from "./neo/signature-mutation.service";
+import { ConnectionMutationService } from "./neo/connection-mutation.service";
 
 @Module({
   imports: [
@@ -22,20 +22,20 @@ import { SignatureMutationService } from "./neo/signature-mutation.service";
     MongooseModule,
     SignatureService,
     WormholeService,
-    SignatureNode,
     SystemNode,
     SignatureSearchService,
     SignatureMutationService,
+    ConnectionMutationService,
   ],
   providers: [
     SignatureResolver,
     SignatureService,
     FolderService,
     WormholeService,
-    SignatureNode,
     SystemNode,
     SignatureSearchService,
     SignatureMutationService,
+    ConnectionMutationService,
   ],
 })
 export class SignatureModule {}

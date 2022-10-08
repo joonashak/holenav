@@ -6,13 +6,12 @@ import { SignatureUpdate } from "../dto/update-signatures.dto";
 import { SignatureOLD, SignatureDocument } from "../signature-OLD.model";
 import { Signature } from "../signature.model";
 import { isWormhole } from "../signature.utils";
-import { SignatureNode } from "../neo/signature.node";
 import { WormholeService } from "./wormhole.service";
-import { SystemNode } from "../neo/system.node";
 import { CreatableSignature } from "../dto/add-signatures.dto";
 import addUuid from "../../../utils/addUuid";
 import { SignatureSearchService } from "../neo/signature-search.service";
 import { SignatureMutationService } from "../neo/signature-mutation.service";
+import { ConnectionMutationService } from "../neo/connection-mutation.service";
 
 // TODO: Move signatures completely to Neo4j. Queries in connection graph module, call them here, etc.
 
@@ -21,10 +20,9 @@ export class SignatureService {
   constructor(
     @InjectModel(SignatureOLD.name) private sigModel: Model<SignatureDocument>,
     private wormholeService: WormholeService,
-    private signatureNode: SignatureNode,
-    private systemNode: SystemNode,
     private signatureSearchService: SignatureSearchService,
     private signatureMutationService: SignatureMutationService,
+    private connectionMutationService: ConnectionMutationService,
   ) {}
 
   async getBySystem(systemName: string, folder: Folder): Promise<Signature[]> {
@@ -33,12 +31,11 @@ export class SignatureService {
 
   async createSignatures(signatures: CreatableSignature[], folder: Folder): Promise<Signature[]> {
     const sigsWithIds = signatures.map((sig) => addUuid(sig, { overwrite: true }));
-    await this.ensureSystemsExist(sigsWithIds, folder.id);
 
     await this.signatureMutationService.createSignatures(sigsWithIds, folder.id);
 
     const sigsWithConnections = sigsWithIds.filter((sig) => sig.connection);
-    await this.signatureNode.createConnections(sigsWithConnections, folder.id);
+    await this.connectionMutationService.createConnections(sigsWithConnections, folder.id);
 
     return sigsWithIds;
   }
@@ -71,21 +68,6 @@ export class SignatureService {
 
     await this.sigModel.deleteMany({ id: { $in: deletableIds } });
     return sigs;
-  }
-
-  // TODO: Move this into Neo4j module and handle system generation there. Also, make unique unknown systems (destinations).
-  private async ensureSystemsExist(signatures: Signature[], folderId: string) {
-    console.log(signatures);
-    const hostSystems = signatures.map((sig) => sig.systemName);
-    const destinations = signatures
-      .filter((sig) => sig.connection)
-      .map((sig) => sig.connection.destinationName);
-
-    const uniqueSystems = [...new Set(hostSystems.concat(destinations))];
-    const insertableSystems = uniqueSystems
-      .filter((name) => name)
-      .map((name) => ({ name, folderId }));
-    await this.systemNode.upsertSystems(insertableSystems);
   }
 
   private async updateSignature(

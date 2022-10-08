@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { Neo4jService } from "../integration/neo4j/neo4j.service";
-import { GraphConnection, GraphSignature, GraphSystem } from "./types";
+import { GraphConnection, GraphSignature } from "./types";
 
 @Injectable()
 export class ConnectionGraphService {
@@ -10,17 +10,7 @@ export class ConnectionGraphService {
     await this.neoService.write("MATCH (n) DETACH DELETE n");
   }
 
-  async createSystems(systems: GraphSystem[]) {
-    await this.neoService.write(
-      `
-      UNWIND $systems as system
-      MERGE (s:System {name: system.name, folderId: system.folderId})
-      ON CREATE SET s += system
-    `,
-      { systems },
-    );
-  }
-
+  // FIXME: Remove this after mockdata generation uses the actual service.
   async createSignatures(signatures: GraphSignature[]) {
     // FIXME: Set proper id (eveId used for nice view in Neo browser).
     // FIXME: Using id = eveId will break things upon duplicate eveId!
@@ -76,7 +66,6 @@ export class ConnectionGraphService {
     `,
       { rootSystemName, folderId },
     );
-    console.log(res.records);
 
     return res.records;
   }

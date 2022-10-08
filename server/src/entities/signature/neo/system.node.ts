@@ -19,7 +19,10 @@ export class SystemNode {
     const res = await this.neoService.write(
       `
       UNWIND $systems as system
-      MERGE (s:System {name: system.name, folderId: system.folderId})
+      MERGE (s:System {
+        name: system.name,
+        folderId: system.folderId
+      })
       ON CREATE SET s += system
       RETURN s
     `,
