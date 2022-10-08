@@ -10,6 +10,7 @@ import { SignatureNode } from "./neo/signature.node";
 import { Neo4jModule } from "../../integration/neo4j/neo4j.module";
 import { SystemNode } from "./neo/system.node";
 import { SignatureSearchService } from "./neo/signature-search.service";
+import { SignatureMutationService } from "./neo/signature-mutation.service";
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { SignatureSearchService } from "./neo/signature-search.service";
     SignatureNode,
     SystemNode,
     SignatureSearchService,
+    SignatureMutationService,
   ],
   providers: [
     SignatureResolver,
@@ -33,6 +35,7 @@ import { SignatureSearchService } from "./neo/signature-search.service";
     SignatureNode,
     SystemNode,
     SignatureSearchService,
+    SignatureMutationService,
   ],
 })
 export class SignatureModule {}

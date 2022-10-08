@@ -12,6 +12,7 @@ import { SystemNode } from "../neo/system.node";
 import { CreatableSignature } from "../dto/add-signatures.dto";
 import addUuid from "../../../utils/addUuid";
 import { SignatureSearchService } from "../neo/signature-search.service";
+import { SignatureMutationService } from "../neo/signature-mutation.service";
 
 // TODO: Move signatures completely to Neo4j. Queries in connection graph module, call them here, etc.
 
@@ -23,6 +24,7 @@ export class SignatureService {
     private signatureNode: SignatureNode,
     private systemNode: SystemNode,
     private signatureSearchService: SignatureSearchService,
+    private signatureMutationService: SignatureMutationService,
   ) {}
 
   async getBySystem(systemName: string, folder: Folder): Promise<Signature[]> {
@@ -33,7 +35,7 @@ export class SignatureService {
     const sigsWithIds = signatures.map((sig) => addUuid(sig, { overwrite: true }));
     await this.ensureSystemsExist(sigsWithIds, folder.id);
 
-    await this.signatureNode.createSignatures(sigsWithIds, folder.id);
+    await this.signatureMutationService.createSignatures(sigsWithIds, folder.id);
 
     const sigsWithConnections = sigsWithIds.filter((sig) => sig.connection);
     await this.signatureNode.createConnections(sigsWithConnections, folder.id);
@@ -71,7 +73,9 @@ export class SignatureService {
     return sigs;
   }
 
+  // TODO: Move this into Neo4j module and handle system generation there. Also, make unique unknown systems (destinations).
   private async ensureSystemsExist(signatures: Signature[], folderId: string) {
+    console.log(signatures);
     const hostSystems = signatures.map((sig) => sig.systemName);
     const destinations = signatures
       .filter((sig) => sig.connection)

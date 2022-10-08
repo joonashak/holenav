@@ -6,37 +6,6 @@ import { Signature } from "../signature.model";
 export class SignatureNode {
   constructor(private neoService: Neo4jService) {}
 
-  /**
-   * Create many signatures in a given folder. Each created Signature is linked to a System
-   * with the given `folderId`. Systems are not created if they don't exist.
-   * @param signatures Signatures to create.
-   * @param folderId ID of the Folder to use.
-   * @returns Created Signatures.
-   */
-  async createSignatures(signatures: Signature[], folderId: string): Promise<Signature[]> {
-    if (!signatures.length) {
-      return [];
-    }
-
-    const res = await this.neoService.write(
-      ` 
-      UNWIND $signatures as sig
-      MATCH (system:System {name: sig.systemName, folderId: $folderId})
-      CREATE (newSig:Signature {
-        id: sig.id,
-        eveId: sig.eveId,
-        type: sig.type,
-        name: sig.name
-      })
-      CREATE (system)-[:HAS]->(newSig)
-      RETURN newSig
-    `,
-      { signatures, folderId },
-    );
-
-    return res.records.map((rec) => rec._fields[0].properties);
-  }
-
   async createConnections(signatures: Signature[], folderId: string) {
     if (!signatures.length) {
       return;
