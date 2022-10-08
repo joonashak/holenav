@@ -58,8 +58,8 @@ export class ConnectionGraphService {
       MATCH (startSystem:System)-[:HAS]->(startNode)
       MATCH (endSystem:System)-[:HAS]->(endNode)
       RETURN DISTINCT {
-        from: {id: startNode.id, system: properties(startSystem)},
-        to: {id: endNode.id, system: properties(endSystem)},
+        from: startNode{.*, system: properties(startSystem)},
+        to: endNode{.*, system: properties(endSystem)},
         connection: connProps,
         id: id
       } as connection

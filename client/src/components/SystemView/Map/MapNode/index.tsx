@@ -2,6 +2,7 @@ import { findOneSystem } from "@eve-data/systems";
 import { System } from "@eve-data/systems/lib/src/api/system.type";
 import { Box, Typography } from "@mui/material";
 import { CustomNodeElementProps } from "react-d3-tree/lib/types/common";
+import { validate } from "uuid";
 import AppLink from "../../../common/AppLink";
 import useUserData from "../../../UserData/useUserData";
 import useSystemData from "../../SystemData/useSystemData";
@@ -15,7 +16,7 @@ export type MapNodeProps = CustomNodeElementProps & {
 
 const MapNode = ({ nodeDatum }: MapNodeProps) => {
   const { settings } = useUserData();
-  const { wormhole } = nodeDatum;
+  const { wormhole, signature } = nodeDatum;
   const { name: selectedSystemName } = useSystemData();
 
   const name = nodeDatum?.name || "";
@@ -42,8 +43,10 @@ const MapNode = ({ nodeDatum }: MapNodeProps) => {
     <AppLink to={`/system/${selectedMap.rootSystemName}`}>{selectedMap.name}</AppLink>
   );
 
+  const showDestinationLink = destinationName && !validate(destinationName);
+
   const ConnectionName = () =>
-    destinationName ? (
+    showDestinationLink ? (
       <AppLink to={`/system/${destinationName}`}>{name || destinationName}</AppLink>
     ) : (
       <Typography>{name}</Typography>

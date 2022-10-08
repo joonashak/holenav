@@ -34,6 +34,7 @@ export class ConnectionTreeService {
         const { connection, to, from } = child;
         // FIXME: This will not work for K162 (reversed) holes without destination system name.
         const reversed = to.system.name === currentSystemName;
+        const signature = reversed ? to : from;
         const system = reversed ? from.system : to.system;
 
         const wormhole = {
@@ -45,8 +46,9 @@ export class ConnectionTreeService {
         };
 
         return {
-          name: system.name,
+          name: from.name,
           wormhole,
+          signature,
           children: this.findChildren(
             allChildren.filter((c) => c.id !== child.id),
             system.name,
