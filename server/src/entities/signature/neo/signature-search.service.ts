@@ -17,6 +17,19 @@ export class SignatureSearchService {
     return signatures.concat(wormholes);
   }
 
+  async findById(ids: string[]): Promise<Signature[]> {
+    const res = await this.neoService.read(
+      `
+      UNWIND $ids as id
+      MATCH (sig:Signature {id: id})
+      RETURN collect(sig)
+      `,
+      { ids },
+    );
+
+    return res.records[0]._fields[0];
+  }
+
   private async findSignaturesBySystem(params: SignatureSearchParams): Promise<Signature[]> {
     const res = await this.neoService.read(
       `
