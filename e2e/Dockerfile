@@ -1,4 +1,4 @@
-FROM cypress/browsers:node14.17.0-chrome88-ff89
+FROM cypress/browsers:node16.17.1-chrome105-ff104-edge
 
 WORKDIR /e2e
 COPY . .
