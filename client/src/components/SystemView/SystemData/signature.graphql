@@ -44,7 +44,7 @@ mutation AddSignatures($input: AddSignaturesInput!) {
 
 mutation UpdateSignatures($input: UpdateSignaturesInput!) {
   updateSignatures(input: $input) {
-    ...SignatureFieldsOld
+    ...SignatureFields
   }
 }
 

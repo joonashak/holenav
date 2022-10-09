@@ -52,18 +52,18 @@ export class SignatureMutationService {
     const res = await this.neoService.write(
       `
       UNWIND $signatures as sig
-      MATCH (signature:Signature {id: sig.id})
+      MATCH (signature:Signature {id: sig.id})-[:HAS]-(system:System)
       SET signature += {
         eveId: sig.eveId,
         type: sig.type,
         name: sig.name
       }
-      RETURN signature
+      RETURN signature{.*, systemName: system.name}
       `,
       { signatures },
     );
 
-    return res;
+    return res.records[0]._fields[0];
   }
 
   private async ensureSystemsExist(signatures: Signature[], folderId: string) {

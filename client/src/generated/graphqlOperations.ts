@@ -46,19 +46,19 @@ export type Character = {
 
 export type Connection = {
   __typename?: "Connection";
-  destinationName?: Maybe<Scalars["String"]>;
+  destinationName: Scalars["String"];
   eol: Scalars["Boolean"];
   massStatus: MassStatus;
-  reverseType?: Maybe<Scalars["String"]>;
-  wormholeType?: Maybe<Scalars["String"]>;
+  reverseType: Scalars["String"];
+  wormholeType: Scalars["String"];
 };
 
 export type ConnectionInput = {
-  destinationName?: InputMaybe<Scalars["String"]>;
+  destinationName: Scalars["String"];
   eol: Scalars["Boolean"];
   massStatus: MassStatus;
-  reverseType?: InputMaybe<Scalars["String"]>;
-  wormholeType?: InputMaybe<Scalars["String"]>;
+  reverseType: Scalars["String"];
+  wormholeType: Scalars["String"];
 };
 
 export type CreatableSignature = {
@@ -125,7 +125,7 @@ export type Mutation = {
   removeAlt: User;
   updateMotd: AppData;
   updateSelectedMap: User;
-  updateSignatures: Array<SignatureOld>;
+  updateSignatures: Array<Signature>;
 };
 
 export type MutationAddFolderRoleArgs = {
@@ -445,9 +445,9 @@ export type SignatureFieldsFragment = {
     __typename?: "Connection";
     eol: boolean;
     massStatus: MassStatus;
-    destinationName?: string | null;
-    wormholeType?: string | null;
-    reverseType?: string | null;
+    destinationName: string;
+    wormholeType: string;
+    reverseType: string;
   } | null;
 };
 
@@ -469,9 +469,9 @@ export type SystemQuery = {
       __typename?: "Connection";
       eol: boolean;
       massStatus: MassStatus;
-      destinationName?: string | null;
-      wormholeType?: string | null;
-      reverseType?: string | null;
+      destinationName: string;
+      wormholeType: string;
+      reverseType: string;
     } | null;
   }>;
 };
@@ -493,9 +493,9 @@ export type AddSignaturesMutation = {
       __typename?: "Connection";
       eol: boolean;
       massStatus: MassStatus;
-      destinationName?: string | null;
-      wormholeType?: string | null;
-      reverseType?: string | null;
+      destinationName: string;
+      wormholeType: string;
+      reverseType: string;
     } | null;
   }>;
 };
@@ -507,16 +507,20 @@ export type UpdateSignaturesMutationVariables = Exact<{
 export type UpdateSignaturesMutation = {
   __typename?: "Mutation";
   updateSignatures: Array<{
-    __typename?: "SignatureOLD";
+    __typename?: "Signature";
     id: string;
     name: string;
     type: SigType;
     eveId: string;
-    eol?: boolean | null;
-    massStatus?: MassStatus | null;
-    destinationName?: string | null;
-    wormholeType?: string | null;
-    reverseType?: string | null;
+    systemName: string;
+    connection?: {
+      __typename?: "Connection";
+      eol: boolean;
+      massStatus: MassStatus;
+      destinationName: string;
+      wormholeType: string;
+      reverseType: string;
+    } | null;
   }>;
 };
 
@@ -1202,14 +1206,14 @@ export const UpdateSignaturesDocument = {
             selectionSet: {
               kind: "SelectionSet",
               selections: [
-                { kind: "FragmentSpread", name: { kind: "Name", value: "SignatureFieldsOld" } },
+                { kind: "FragmentSpread", name: { kind: "Name", value: "SignatureFields" } },
               ],
             },
           },
         ],
       },
     },
-    ...SignatureFieldsOldFragmentDoc.definitions,
+    ...SignatureFieldsFragmentDoc.definitions,
   ],
 } as unknown as DocumentNode<UpdateSignaturesMutation, UpdateSignaturesMutationVariables>;
 export const DeleteSignaturesDocument = {
