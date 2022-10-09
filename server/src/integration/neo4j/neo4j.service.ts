@@ -19,7 +19,7 @@ export class Neo4jService {
     await this.driver.close();
   }
 
-  async read(query: string, params?: Record<string, string>) {
+  async read(query: string, params?: any) {
     const session = this.getSession(neo4j.session.READ);
     let result;
 

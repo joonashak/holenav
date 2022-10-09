@@ -2,7 +2,6 @@ import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { Folder } from "../../folder/folder.model";
-import { SignatureUpdate } from "../dto/update-signatures.dto";
 import { SignatureOLD, SignatureDocument } from "../signature-OLD.model";
 import { Signature } from "../signature.model";
 import { isWormhole } from "../signature.utils";
@@ -41,9 +40,9 @@ export class SignatureService {
     return sigsWithIds;
   }
 
-  async updateSignatures(sigUpdates: SignatureUpdate[]): Promise<SignatureOLD[]> {
+  async updateSignatures(sigUpdates: Signature[]): Promise<Signature[]> {
     const ids = sigUpdates.map((sig) => sig.id);
-    const oldSigs = await this.sigModel.find({ id: { $in: ids } });
+    const oldSigs = await this.signatureSearchService.findById(ids);
 
     return Promise.all(
       sigUpdates.map(async (update) =>
@@ -71,10 +70,8 @@ export class SignatureService {
     return sigs;
   }
 
-  private async updateSignature(
-    update: SignatureUpdate,
-    old: SignatureDocument,
-  ): Promise<SignatureOLD> {
+  // FIXME: Fix type after all cases have been updated.
+  private async updateSignature(update: Signature, old: Signature): Promise<any> {
     if (!isWormhole(old) && isWormhole(update)) {
       const sigWithWhTypes = this.wormholeService.addWhTypes(update);
       const updatedSig = await this.sigModel.findOneAndUpdate(
@@ -88,7 +85,7 @@ export class SignatureService {
     }
 
     if (isWormhole(old) && !isWormhole(update)) {
-      await this.sigModel.findByIdAndDelete(old.reverse);
+      //await this.sigModel.findByIdAndDelete(old.reverse);
       return this.sigModel.findOneAndUpdate(
         { id: update.id },
         { ...update, reverse: null },
@@ -109,6 +106,7 @@ export class SignatureService {
       return updatedSig;
     }
 
-    return this.sigModel.findOneAndUpdate({ id: update.id }, update, { returnDocument: "after" });
+    //return this.sigModel.findOneAndUpdate({ id: update.id }, update, { returnDocument: "after" });
+    return this.signatureMutationService.updateSignatures([update]);
   }
 }

@@ -41,6 +41,31 @@ export class SignatureMutationService {
     return res.records.map((rec) => rec._fields[0].properties);
   }
 
+  /**
+   * Update signatures by ID. Changing host system or folder is not supported.
+   */
+  async updateSignatures(signatures: Signature[]): Promise<Signature[]> {
+    if (!signatures.length) {
+      return [];
+    }
+
+    const res = await this.neoService.write(
+      `
+      UNWIND $signatures as sig
+      MATCH (signature:Signature {id: sig.id})
+      SET signature += {
+        eveId: sig.eveId,
+        type: sig.type,
+        name: sig.name
+      }
+      RETURN signature
+      `,
+      { signatures },
+    );
+
+    return res;
+  }
+
   private async ensureSystemsExist(signatures: Signature[], folderId: string) {
     const systemNames = signatures.map((sig) => sig.systemName);
     const systems = systemNames.filter((name) => name).map((name) => ({ name, folderId }));

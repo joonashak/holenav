@@ -27,7 +27,7 @@ export class SignatureSearchService {
       { ids },
     );
 
-    return res.records[0]._fields[0];
+    return res.records[0]._fields[0].map((node) => ({ ...node.properties }));
   }
 
   private async findSignaturesBySystem(params: SignatureSearchParams): Promise<Signature[]> {
