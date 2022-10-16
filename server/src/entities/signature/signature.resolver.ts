@@ -46,8 +46,8 @@ export class SignatureResolver {
   }
 
   @RequireFolderRole(FolderRole.WRITE)
-  @Mutation((returns) => [SignatureOLD])
-  async deleteSignatures(@Args("input") input: DeleteSignaturesInput): Promise<SignatureOLD[]> {
+  @Mutation((returns) => [Signature])
+  async deleteSignatures(@Args("input") input: DeleteSignaturesInput): Promise<Signature[]> {
     const signatures = await this.sigService.deleteSignatures(input.ids);
     return signatures;
   }

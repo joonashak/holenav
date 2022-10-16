@@ -66,6 +66,26 @@ export class SignatureMutationService {
     return res.records[0]._fields[0];
   }
 
+  async deleteSignatures(signatureIds: string[]): Promise<Signature[]> {
+    if (!signatureIds) {
+      return [];
+    }
+
+    // TODO: Clean up dangling pseudo systems after delete.
+    const res = await this.neoService.write(
+      `
+        UNWIND $signatureIds as id
+        MATCH (:Signature {id: id})-[:CONNECTS*0..1]-(signature:Signature)
+        WITH signature, properties(signature) AS deleted
+        DETACH DELETE signature
+        RETURN deleted
+      `,
+      { signatureIds },
+    );
+
+    return res.records.map((rec) => rec._fields[0]);
+  }
+
   private async ensureSystemsExist(signatures: Signature[], folderId: string) {
     const systemNames = signatures.map((sig) => sig.systemName);
     const systems = systemNames.filter((name) => name).map((name) => ({ name, folderId }));

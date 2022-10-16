@@ -59,15 +59,8 @@ export class SignatureService {
    * @param ids IDs of the Signatures to delete.
    * @returns Deleted Signatures (not including possible deleted reverse wormholes).
    */
-  async deleteSignatures(ids: string[]): Promise<SignatureOLD[]> {
-    const sigs = await this.sigModel.find({ id: { $in: ids } }).populate("reverse");
-    const deletableIds = sigs.reduce(
-      (res, sig) => (sig.reverse ? res.concat(sig.reverse.id) : res),
-      ids,
-    );
-
-    await this.sigModel.deleteMany({ id: { $in: deletableIds } });
-    return sigs;
+  async deleteSignatures(ids: string[]): Promise<Signature[]> {
+    return this.signatureMutationService.deleteSignatures(ids);
   }
 
   // FIXME: Fix type after all cases have been updated.
