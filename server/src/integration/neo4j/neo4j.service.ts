@@ -1,4 +1,5 @@
 import { Injectable, Logger } from "@nestjs/common";
+import retry from "async-retry";
 import neo4j, { Driver, SessionMode } from "neo4j-driver";
 import { NEO_DB, NEO_PASSWORD, NEO_URL, NEO_USERNAME } from "../../config";
 
@@ -8,11 +9,7 @@ export class Neo4jService {
   private driver: Driver;
 
   async onModuleInit() {
-    console.log("Creating Neo4j driver.");
-    this.driver = neo4j.driver(NEO_URL, neo4j.auth.basic(NEO_USERNAME, NEO_PASSWORD), {
-      disableLosslessIntegers: true,
-    });
-    await this.verifyConnection();
+    await retry(async () => this.connect());
   }
 
   async onModuleDestroy() {
@@ -52,11 +49,19 @@ export class Neo4jService {
     });
   }
 
-  private async verifyConnection() {
+  private async connect() {
+    this.logger.log("Connecting to Neo4j...");
+
     try {
-      await this.driver.verifyConnectivity();
+      const driver = neo4j.driver(NEO_URL, neo4j.auth.basic(NEO_USERNAME, NEO_PASSWORD), {
+        disableLosslessIntegers: true,
+      });
+
+      await driver.verifyConnectivity();
+      this.driver = driver;
+      this.logger.log("Connected to Neo4j.");
     } catch (error) {
-      this.logger.error("Could not connect to Neo4j instance.", error);
+      this.logger.warn("Could not connect to Neo4j. Retrying...");
       throw error;
     }
   }
