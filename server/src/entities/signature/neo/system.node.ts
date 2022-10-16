@@ -18,17 +18,34 @@ export class SystemNode {
 
     const res = await this.neoService.write(
       `
-      UNWIND $systems as system
-      MERGE (s:System {
-        name: system.name,
-        folderId: system.folderId
-      })
-      ON CREATE SET s += system
-      RETURN s
-    `,
+        UNWIND $systems as system
+        MERGE (s:System {
+          name: system.name,
+          folderId: system.folderId
+        })
+        ON CREATE SET
+          s += system,
+          s.id = apoc.create.uuid()
+        RETURN s
+      `,
       { systems },
     );
 
     return res.records.map((r) => r._fields[0].properties);
+  }
+
+  async findSystem(name: string, folderId: string) {
+    const res = await this.neoService.read(
+      `
+        MATCH (system:System {
+          name: $name,
+          folderId: $folderId
+        })
+        RETURN system
+      `,
+      { name, folderId },
+    );
+
+    return res.records[0]._fields[0].properties;
   }
 }
