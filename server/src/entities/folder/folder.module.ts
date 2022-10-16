@@ -1,5 +1,6 @@
 import { Global, Module } from "@nestjs/common";
 import { MongooseModule } from "@nestjs/mongoose";
+import { UserModule } from "../../user/user.module";
 import { UserService } from "../../user/user.service";
 import { CharacterModule } from "../character/character.module";
 import { ActiveFolderService } from "./active-folder.service";
@@ -12,6 +13,7 @@ import { FolderService } from "./folder.service";
   imports: [
     MongooseModule.forFeature([{ name: Folder.name, schema: FolderSchema }]),
     CharacterModule,
+    UserModule,
   ],
   exports: [MongooseModule, FolderService, ActiveFolderService],
   providers: [FolderService, FolderResolver, UserService, ActiveFolderService],

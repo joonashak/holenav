@@ -24,6 +24,6 @@ import { Credentials, CredentialsSchema } from "./credentials/credentials.model"
     CharacterModule,
   ],
   providers: [UserService, UserSettingsService, FolderService, CharacterService, UserResolver],
-  exports: [UserService, UserSettingsService, MongooseModule],
+  exports: [UserService, UserSettingsService, MongooseModule, CharacterService],
 })
 export class UserModule {}
