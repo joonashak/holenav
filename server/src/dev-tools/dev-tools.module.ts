@@ -9,7 +9,6 @@ import { MockUserService } from "./mock-data-services/mock-user.service";
 import { ENABLE_DEVTOOLS } from "../config";
 import { SessionModule } from "../auth/session/session.module";
 import { MockFolderService } from "./mock-data-services/mock-folder.service";
-import { MockWormholeService } from "./mock-data-services/mock-wormholes.service";
 import { ConnectionGraphModule } from "../connection-graph/connection-graph.module";
 import { MockConnectionGraphService } from "./mock-data-services/mock-connection-graph.service";
 
@@ -22,13 +21,7 @@ const options = {
     SessionModule,
     ConnectionGraphModule,
   ],
-  providers: [
-    DevToolsService,
-    MockUserService,
-    MockFolderService,
-    MockWormholeService,
-    MockConnectionGraphService,
-  ],
+  providers: [DevToolsService, MockUserService, MockFolderService, MockConnectionGraphService],
   controllers: [DevToolsController],
 };
 

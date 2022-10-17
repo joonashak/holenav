@@ -13,7 +13,6 @@ import users from "./data/users";
 import { MockConnectionGraphService } from "./mock-data-services/mock-connection-graph.service";
 import { MockFolderService } from "./mock-data-services/mock-folder.service";
 import { MockUserService } from "./mock-data-services/mock-user.service";
-import { MockWormholeService } from "./mock-data-services/mock-wormholes.service";
 
 @Injectable()
 export class DevToolsService {
@@ -27,7 +26,6 @@ export class DevToolsService {
     @InjectModel(Session.name) private sessionModel: Model<Session>,
     private mockUserService: MockUserService,
     private mockFolderService: MockFolderService,
-    private mockWhService: MockWormholeService,
     private connectionGraphService: ConnectionGraphService,
     private mockConnectionGraphService: MockConnectionGraphService,
   ) {}
@@ -50,7 +48,6 @@ export class DevToolsService {
 
     await this.mockFolderService.mock();
     await this.mockUserService.mock();
-    await this.mockWhService.mock();
     await this.mockConnectionGraphService.mock();
   }
 

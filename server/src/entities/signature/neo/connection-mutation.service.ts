@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { uniqWith, isEqual, compact, set } from "lodash";
+import { set } from "lodash";
 import { v4 as uuid } from "uuid";
 import { Neo4jService } from "../../../integration/neo4j/neo4j.service";
 import { Signature } from "../signature.model";
@@ -14,8 +14,8 @@ export class ConnectionMutationService {
       return;
     }
 
-    const signaturesWithUuids = signatures.map(this.replaceEmptyDestinationWithUuid);
-    await this.ensureSystemsExist(signaturesWithUuids, folderId);
+    const signaturesWithUuids = signatures.map(this.replaceEmptyDestinationWithPseudoSystem);
+    await this.systemNode.ensureSystemsExist(signaturesWithUuids, folderId);
 
     // FIXME: Set CONNECTS direction by type.
     const res = await this.neoService.write(
@@ -43,23 +43,14 @@ export class ConnectionMutationService {
     return res;
   }
 
-  private async ensureSystemsExist(signatures: Signature[], folderId: string) {
-    const hostSystemNames = compact(signatures.map((sig) => sig.systemName));
-    const destinationNames = signatures
-      .filter((sig) => sig.connection)
-      .map((sig) => sig.connection.destinationName);
+  private replaceEmptyDestinationWithPseudoSystem(signature: Signature): Signature {
+    const unknownDestination = !signature.connection.destinationName;
+    const insertableSignature = set(signature, "connection.unknownDestination", unknownDestination);
 
-    const systemNames = hostSystemNames.concat(destinationNames);
-    const systems = systemNames.map((name) => ({ name, folderId }));
-
-    const uniqueSystems = uniqWith(systems, isEqual);
-    await this.systemNode.upsertSystems(uniqueSystems);
-  }
-
-  private replaceEmptyDestinationWithUuid(signature: Signature): Signature {
-    if (!signature.connection.destinationName) {
-      return set(signature, "connection.destinationName", uuid());
+    if (unknownDestination) {
+      return set(insertableSignature, "connection.destinationName", uuid());
     }
-    return signature;
+
+    return insertableSignature;
   }
 }

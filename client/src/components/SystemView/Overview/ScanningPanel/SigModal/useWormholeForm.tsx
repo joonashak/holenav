@@ -26,6 +26,7 @@ const useWormholeForm = (props: WormholeFormProps) => {
         eol: life === "eol",
         massStatus: mass,
         destinationName: destinationName || "",
+        unknownDestination: !destinationName,
       },
     };
 

@@ -25,6 +25,7 @@ export type Wormhole = {
   eol: boolean;
   massStatus: MassStatus;
   destinationName: string;
+  unknownDestination: boolean;
   reverseType: string;
   wormholeType: string;
 };

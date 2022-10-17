@@ -56,6 +56,7 @@ export class SignatureSearchService {
           connection: conn{ 
             .*,
             destinationName: to.name,
+            unknownDestination: to.pseudo,
             wormholeType: CASE startNode(conn) WHEN wh THEN conn.wormholeType ELSE conn.reverseType END,
             reverseType: CASE startNode(conn) WHEN wh THEN conn.reverseType ELSE conn.wormholeType END
           } 

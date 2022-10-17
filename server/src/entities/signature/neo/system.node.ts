@@ -1,6 +1,8 @@
 import { Injectable } from "@nestjs/common";
-import { GraphSystem } from "../../../connection-graph/types";
+import { flatten, isEqual, uniqWith } from "lodash";
 import { Neo4jService } from "../../../integration/neo4j/neo4j.service";
+import { System, UpsertableSystem } from "../../system/system.model";
+import { Signature } from "../signature.model";
 
 @Injectable()
 export class SystemNode {
@@ -11,7 +13,7 @@ export class SystemNode {
    * @param systems Systems to upsert.
    * @returns All given systems after upsert, regardless of whether they existed before.
    */
-  async upsertSystems(systems: GraphSystem[]): Promise<GraphSystem[]> {
+  async upsertSystems(systems: UpsertableSystem[]): Promise<System[]> {
     if (!systems.length) {
       return;
     }
@@ -48,4 +50,34 @@ export class SystemNode {
 
     return res.records[0]._fields[0].properties;
   }
+
+  async ensureSystemsExist(signatures: Signature[], folderId: string) {
+    const systems = flatten(signatures.map(this.systemsFromSignature(folderId)));
+    const uniqueSystems = uniqWith(systems, isEqual);
+    await this.upsertSystems(uniqueSystems);
+  }
+
+  private systemsFromSignature =
+    (folderId: string) =>
+    (signature: Signature): UpsertableSystem[] => {
+      const hostSystem: UpsertableSystem = {
+        name: signature.systemName,
+        pseudo: false,
+        folderId,
+      };
+
+      if (!signature.connection || !signature.connection.destinationName) {
+        return [hostSystem];
+      }
+
+      const { destinationName, unknownDestination } = signature.connection;
+
+      const destinationSystem: UpsertableSystem = {
+        name: destinationName,
+        pseudo: !!unknownDestination,
+        folderId,
+      };
+
+      return [hostSystem, destinationSystem];
+    };
 }

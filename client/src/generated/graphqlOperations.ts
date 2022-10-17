@@ -50,6 +50,7 @@ export type Connection = {
   eol: Scalars["Boolean"];
   massStatus: MassStatus;
   reverseType: Scalars["String"];
+  unknownDestination: Scalars["Boolean"];
   wormholeType: Scalars["String"];
 };
 
@@ -118,7 +119,7 @@ export type Mutation = {
   changeActiveFolder: SanitizedUser;
   createFolder: Folder;
   deleteSavedMap: User;
-  deleteSignatures: Array<SignatureOld>;
+  deleteSignatures: Array<Signature>;
   getToken: AccessTokenDto;
   login: AccessTokenDto;
   logout: LogoutDto;
@@ -280,9 +281,10 @@ export type StartSsoLoginDto = {
 
 export type System = {
   __typename?: "System";
-  folder: Folder;
+  folderId: Scalars["String"];
   id: Scalars["String"];
   name: Scalars["String"];
+  pseudo: Scalars["Boolean"];
 };
 
 export enum SystemRoles {
@@ -421,19 +423,6 @@ export type SearchCharactersByMainQuery = {
   searchCharactersByMain: Array<{ __typename?: "Character"; name: string; esiId: string }>;
 };
 
-export type SignatureFieldsOldFragment = {
-  __typename?: "SignatureOLD";
-  id: string;
-  name: string;
-  type: SigType;
-  eveId: string;
-  eol?: boolean | null;
-  massStatus?: MassStatus | null;
-  destinationName?: string | null;
-  wormholeType?: string | null;
-  reverseType?: string | null;
-};
-
 export type SignatureFieldsFragment = {
   __typename?: "Signature";
   id: string;
@@ -446,6 +435,7 @@ export type SignatureFieldsFragment = {
     eol: boolean;
     massStatus: MassStatus;
     destinationName: string;
+    unknownDestination: boolean;
     wormholeType: string;
     reverseType: string;
   } | null;
@@ -470,6 +460,7 @@ export type SystemQuery = {
       eol: boolean;
       massStatus: MassStatus;
       destinationName: string;
+      unknownDestination: boolean;
       wormholeType: string;
       reverseType: string;
     } | null;
@@ -494,6 +485,7 @@ export type AddSignaturesMutation = {
       eol: boolean;
       massStatus: MassStatus;
       destinationName: string;
+      unknownDestination: boolean;
       wormholeType: string;
       reverseType: string;
     } | null;
@@ -518,6 +510,7 @@ export type UpdateSignaturesMutation = {
       eol: boolean;
       massStatus: MassStatus;
       destinationName: string;
+      unknownDestination: boolean;
       wormholeType: string;
       reverseType: string;
     } | null;
@@ -531,16 +524,21 @@ export type DeleteSignaturesMutationVariables = Exact<{
 export type DeleteSignaturesMutation = {
   __typename?: "Mutation";
   deleteSignatures: Array<{
-    __typename?: "SignatureOLD";
+    __typename?: "Signature";
     id: string;
     name: string;
     type: SigType;
     eveId: string;
-    eol?: boolean | null;
-    massStatus?: MassStatus | null;
-    destinationName?: string | null;
-    wormholeType?: string | null;
-    reverseType?: string | null;
+    systemName: string;
+    connection?: {
+      __typename?: "Connection";
+      eol: boolean;
+      massStatus: MassStatus;
+      destinationName: string;
+      unknownDestination: boolean;
+      wormholeType: string;
+      reverseType: string;
+    } | null;
   }>;
 };
 
@@ -568,30 +566,6 @@ export const FolderFieldsFragmentDoc = {
     },
   ],
 } as unknown as DocumentNode<FolderFieldsFragment, unknown>;
-export const SignatureFieldsOldFragmentDoc = {
-  kind: "Document",
-  definitions: [
-    {
-      kind: "FragmentDefinition",
-      name: { kind: "Name", value: "SignatureFieldsOld" },
-      typeCondition: { kind: "NamedType", name: { kind: "Name", value: "SignatureOLD" } },
-      selectionSet: {
-        kind: "SelectionSet",
-        selections: [
-          { kind: "Field", name: { kind: "Name", value: "id" } },
-          { kind: "Field", name: { kind: "Name", value: "name" } },
-          { kind: "Field", name: { kind: "Name", value: "type" } },
-          { kind: "Field", name: { kind: "Name", value: "eveId" } },
-          { kind: "Field", name: { kind: "Name", value: "eol" } },
-          { kind: "Field", name: { kind: "Name", value: "massStatus" } },
-          { kind: "Field", name: { kind: "Name", value: "destinationName" } },
-          { kind: "Field", name: { kind: "Name", value: "wormholeType" } },
-          { kind: "Field", name: { kind: "Name", value: "reverseType" } },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<SignatureFieldsOldFragment, unknown>;
 export const SignatureFieldsFragmentDoc = {
   kind: "Document",
   definitions: [
@@ -616,6 +590,7 @@ export const SignatureFieldsFragmentDoc = {
                 { kind: "Field", name: { kind: "Name", value: "eol" } },
                 { kind: "Field", name: { kind: "Name", value: "massStatus" } },
                 { kind: "Field", name: { kind: "Name", value: "destinationName" } },
+                { kind: "Field", name: { kind: "Name", value: "unknownDestination" } },
                 { kind: "Field", name: { kind: "Name", value: "wormholeType" } },
                 { kind: "Field", name: { kind: "Name", value: "reverseType" } },
               ],
@@ -1249,14 +1224,14 @@ export const DeleteSignaturesDocument = {
             selectionSet: {
               kind: "SelectionSet",
               selections: [
-                { kind: "FragmentSpread", name: { kind: "Name", value: "SignatureFieldsOld" } },
+                { kind: "FragmentSpread", name: { kind: "Name", value: "SignatureFields" } },
               ],
             },
           },
         ],
       },
     },
-    ...SignatureFieldsOldFragmentDoc.definitions,
+    ...SignatureFieldsFragmentDoc.definitions,
   ],
 } as unknown as DocumentNode<DeleteSignaturesMutation, DeleteSignaturesMutationVariables>;
 export const UserDataDocument = {

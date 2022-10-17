@@ -17,6 +17,10 @@ export class Connection {
   @Field()
   destinationName: string;
 
+  // FIXME: Make this mandatory once Neo4j migration is finished.
+  @Field()
+  unknownDestination?: boolean;
+
   @Field()
   reverseType: string;
 }

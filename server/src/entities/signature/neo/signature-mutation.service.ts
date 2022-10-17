@@ -1,5 +1,4 @@
 import { Injectable } from "@nestjs/common";
-import { uniqWith, isEqual } from "lodash";
 import { Neo4jService } from "../../../integration/neo4j/neo4j.service";
 import { Signature } from "../signature.model";
 import { SystemNode } from "./system.node";
@@ -20,7 +19,7 @@ export class SignatureMutationService {
       return [];
     }
 
-    await this.ensureSystemsExist(signatures, folderId);
+    await this.systemNode.ensureSystemsExist(signatures, folderId);
 
     const res = await this.neoService.write(
       ` 
@@ -84,12 +83,5 @@ export class SignatureMutationService {
     );
 
     return res.records.map((rec) => rec._fields[0]);
-  }
-
-  private async ensureSystemsExist(signatures: Signature[], folderId: string) {
-    const systemNames = signatures.map((sig) => sig.systemName);
-    const systems = systemNames.filter((name) => name).map((name) => ({ name, folderId }));
-    const uniqueSystems = uniqWith(systems, isEqual);
-    await this.systemNode.upsertSystems(uniqueSystems);
   }
 }

@@ -1,15 +1,3 @@
-fragment SignatureFieldsOld on SignatureOLD {
-  id
-  name
-  type
-  eveId
-  eol
-  massStatus
-  destinationName
-  wormholeType
-  reverseType
-}
-
 fragment SignatureFields on Signature {
   id
   name
@@ -20,6 +8,7 @@ fragment SignatureFields on Signature {
     eol
     massStatus
     destinationName
+    unknownDestination
     wormholeType
     reverseType
   }
@@ -50,6 +39,6 @@ mutation UpdateSignatures($input: UpdateSignaturesInput!) {
 
 mutation DeleteSignatures($input: DeleteSignaturesInput!) {
   deleteSignatures(input: $input) {
-    ...SignatureFieldsOld
+    ...SignatureFields
   }
 }
