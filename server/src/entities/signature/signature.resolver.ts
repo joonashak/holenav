@@ -8,7 +8,6 @@ import { AddSignaturesInput } from "./dto/add-signatures.dto";
 import { DeleteSignaturesInput } from "./dto/delete-signatures.dto";
 import { UpdateSignaturesInput } from "./dto/update-signatures.dto";
 import { SignatureService } from "./services/signature.service";
-import { SignatureOLD } from "./signature-OLD.model";
 import { Signature } from "./signature.model";
 
 @Resolver()
@@ -49,6 +48,7 @@ export class SignatureResolver {
   @Mutation((returns) => [Signature])
   async deleteSignatures(@Args("input") input: DeleteSignaturesInput): Promise<Signature[]> {
     const signatures = await this.sigService.deleteSignatures(input.ids);
+    console.log(signatures);
     return signatures;
   }
 }

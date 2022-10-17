@@ -29,9 +29,7 @@ export class SignatureService {
   }
 
   async createSignatures(signatures: CreatableSignature[], folder: Folder): Promise<Signature[]> {
-    // FIXME: Do this is signature-mutation.service.
     const sigsWithIds = signatures.map((sig) => addUuid(sig, { overwrite: true }));
-
     await this.signatureMutationService.createSignatures(sigsWithIds, folder.id);
 
     const sigsWithConnections = sigsWithIds.filter((sig) => sig.connection);

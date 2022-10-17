@@ -74,9 +74,10 @@ export class SignatureMutationService {
       `
         UNWIND $signatureIds as id
         MATCH (:Signature {id: id})-[:CONNECTS*0..1]-(signature:Signature)
-        WITH signature, properties(signature) AS deleted
+        MATCH (:Signature {id: id})-[:HAS]-(system:System)
+        WITH signature, system, properties(signature) AS deleted
         DETACH DELETE signature
-        RETURN deleted
+        RETURN deleted{.*, systemName: system.name}
       `,
       { signatureIds },
     );
