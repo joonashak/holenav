@@ -70,7 +70,6 @@ export class SignatureMutationService {
       return [];
     }
 
-    // TODO: Clean up dangling pseudo systems after delete.
     const res = await this.neoService.write(
       `
         UNWIND $signatureIds as id
@@ -81,6 +80,8 @@ export class SignatureMutationService {
       `,
       { signatureIds },
     );
+
+    await this.systemNode.removeDanglingPseudoSystems();
 
     return res.records.map((rec) => rec._fields[0]);
   }

@@ -51,6 +51,19 @@ export class SystemNode {
     return res.records[0]._fields[0].properties;
   }
 
+  /**
+   * Remove all pseudo-systems that have no relations attached to them.
+   */
+  async removeDanglingPseudoSystems(): Promise<number> {
+    const res = await this.neoService.write(`
+      MATCH (system:System {pseudo: true})
+      WHERE NOT (system)--()
+      DELETE system
+    `);
+
+    return res.summary.updateStatistics._stats.nodesDeleted;
+  }
+
   async ensureSystemsExist(signatures: Signature[], folderId: string) {
     const systems = flatten(signatures.map(this.systemsFromSignature(folderId)));
     const uniqueSystems = uniqWith(systems, isEqual);
