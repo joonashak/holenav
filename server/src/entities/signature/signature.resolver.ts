@@ -2,7 +2,6 @@ import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
 import { ActiveFolder } from "../../auth/decorators/active-folder.decorator";
 import { RequireFolderRole } from "../../auth/decorators/role.decorator";
 import FolderRole from "../../user/roles/folder-role.enum";
-import { ActiveFolderService } from "../folder/active-folder.service";
 import { Folder } from "../folder/folder.model";
 import { AddSignaturesInput } from "./dto/add-signatures.dto";
 import { DeleteSignaturesInput } from "./dto/delete-signatures.dto";
@@ -12,10 +11,7 @@ import { Signature } from "./signature.model";
 
 @Resolver()
 export class SignatureResolver {
-  constructor(
-    private sigService: SignatureService,
-    private activeFolderService: ActiveFolderService,
-  ) {}
+  constructor(private sigService: SignatureService) {}
 
   @RequireFolderRole(FolderRole.READ)
   @Query((returns) => [Signature])
@@ -48,7 +44,6 @@ export class SignatureResolver {
   @Mutation((returns) => [Signature])
   async deleteSignatures(@Args("input") input: DeleteSignaturesInput): Promise<Signature[]> {
     const signatures = await this.sigService.deleteSignatures(input.ids);
-    console.log(signatures);
     return signatures;
   }
 }
