@@ -1,4 +1,6 @@
 import { v4 } from "uuid";
+import { CreatableSignature } from "../entities/signature/dto/add-signatures.dto";
+import { Signature, SignatureWithoutConnection } from "../entities/signature/signature.model";
 
 type AddUuidOptions = {
   overwrite: boolean;
@@ -14,7 +16,7 @@ const defaultOptions: AddUuidOptions = {
  * @param opt Optional configuration. Pass `{ overwrite: true }` to overwrite existing id.
  * @returns Given object with random UUID as value of `id` field.
  */
-const addUuid = <T>(obj: T, opt: AddUuidOptions = defaultOptions): T & { id: string } => {
+export const addUuid = <T>(obj: T, opt: AddUuidOptions = defaultOptions): T & { id: string } => {
   const id = v4();
 
   if (opt.overwrite) {
@@ -24,4 +26,19 @@ const addUuid = <T>(obj: T, opt: AddUuidOptions = defaultOptions): T & { id: str
   return { id, ...obj };
 };
 
-export default addUuid;
+/**
+ * Like `addUuid` but also adds an UUID to reverse side signature, if one exists.
+ */
+export const addUuidToSignatureAndReverseSignature = (
+  signature: Signature | CreatableSignature,
+): Signature | SignatureWithoutConnection => {
+  const sigWithUuid = addUuid(signature, { overwrite: true });
+
+  if (sigWithUuid.connection.reverseSignature) {
+    sigWithUuid.connection.reverseSignature = addUuid(sigWithUuid.connection.reverseSignature, {
+      overwrite: true,
+    });
+  }
+
+  return sigWithUuid;
+};

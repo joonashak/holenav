@@ -18,6 +18,9 @@ export class SignatureWithoutConnection {
   @Field((type) => SigType)
   type: SigType;
 
+  @Field({ nullable: true })
+  wormholeType?: string;
+
   @Field()
   name: string;
 
@@ -27,21 +30,6 @@ export class SignatureWithoutConnection {
 
 @ObjectType()
 export class Signature extends SignatureWithoutConnection {
-  @Field()
-  id: string;
-
-  @Field()
-  eveId: string;
-
-  @Field((type) => SigType)
-  type: SigType;
-
-  @Field()
-  name: string;
-
-  @Field()
-  systemName: string;
-
   @Field((type) => Connection, { nullable: true })
   connection?: Connection;
 }

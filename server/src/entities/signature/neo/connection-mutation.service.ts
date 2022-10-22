@@ -1,23 +1,23 @@
 import { Injectable } from "@nestjs/common";
-import { set } from "lodash";
-import { v4 as uuid } from "uuid";
 import { Neo4jService } from "../../../integration/neo4j/neo4j.service";
 import { Signature } from "../signature.model";
-import { SystemNode } from "./system.node";
+import { SystemMutationService } from "./system-mutation.service";
 
 @Injectable()
 export class ConnectionMutationService {
-  constructor(private neoService: Neo4jService, private systemNode: SystemNode) {}
+  constructor(private neoService: Neo4jService, private systemNode: SystemMutationService) {}
 
   async createConnections(signatures: Signature[], folderId: string) {
     if (!signatures.length) {
       return;
     }
 
-    const signaturesWithUuids = signatures.map(this.replaceEmptyDestinationWithPseudoSystem);
-    await this.systemNode.ensureSystemsExist(signaturesWithUuids, folderId);
+    //await this.systemNode.ensureSystemsExist(signaturesWithUuids, folderId);
 
-    // FIXME: Set CONNECTS direction by type.
+    // FIXME: CONNECTS direction should not convey meaning.
+    // FIXME: Include wormhole type in Signature instead of CONNECTS.
+    // FIXME: Pass also reverse side Signature when creating a new wormhole, all the way from UI.
+    // FIXME: Don't create reverse sig here, only connect two sigs.
     const res = await this.neoService.write(
       `
       UNWIND $signatures as sig
@@ -37,20 +37,9 @@ export class ConnectionMutationService {
         massStatus: sig.connection.massStatus
       }]->(to)
       `,
-      { signatures: signaturesWithUuids, folderId },
+      { signatures, folderId },
     );
 
     return res;
-  }
-
-  private replaceEmptyDestinationWithPseudoSystem(signature: Signature): Signature {
-    const unknownDestination = !signature.connection.destinationName;
-    const insertableSignature = set(signature, "connection.unknownDestination", unknownDestination);
-
-    if (unknownDestination) {
-      return set(insertableSignature, "connection.destinationName", uuid());
-    }
-
-    return insertableSignature;
   }
 }

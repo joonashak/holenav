@@ -1,11 +1,13 @@
 import { Injectable } from "@nestjs/common";
-import { flatten, isEqual, uniqWith } from "lodash";
+import { isEqual, uniqWith } from "lodash";
 import { Neo4jService } from "../../../integration/neo4j/neo4j.service";
-import { System, UpsertableSystem } from "../../system/system.model";
-import { Signature } from "../signature.model";
+import { addUuid } from "../../../utils/addUuid";
+import uuid from "../../../utils/uuid";
+import { SignatureWithoutConnection } from "../signature.model";
+import { SystemNode } from "./graph-types";
 
 @Injectable()
-export class SystemNode {
+export class SystemMutationService {
   constructor(private neoService: Neo4jService) {}
 
   /**
@@ -13,7 +15,7 @@ export class SystemNode {
    * @param systems Systems to upsert.
    * @returns All given systems after upsert, regardless of whether they existed before.
    */
-  async upsertSystems(systems: UpsertableSystem[]): Promise<System[]> {
+  async upsertSystems(systems: SystemNode[]): Promise<SystemNode[]> {
     if (!systems.length) {
       return;
     }
@@ -27,7 +29,7 @@ export class SystemNode {
         })
         ON CREATE SET
           s += system,
-          s.id = apoc.create.uuid()
+          s.id = system.id
         RETURN s
       `,
       { systems },
@@ -64,33 +66,22 @@ export class SystemNode {
     return res.summary.updateStatistics._stats.nodesDeleted;
   }
 
-  async ensureSystemsExist(signatures: Signature[], folderId: string) {
-    const systems = flatten(signatures.map(this.systemsFromSignature(folderId)));
+  async ensureSystemsExist(signatures: SignatureWithoutConnection[], folderId: string) {
+    const systems = signatures.map(this.systemFromSignature(folderId));
     const uniqueSystems = uniqWith(systems, isEqual);
     await this.upsertSystems(uniqueSystems);
   }
 
-  private systemsFromSignature =
+  private systemFromSignature =
     (folderId: string) =>
-    (signature: Signature): UpsertableSystem[] => {
-      const hostSystem: UpsertableSystem = {
-        name: signature.systemName,
-        pseudo: false,
+    (signature: SignatureWithoutConnection): SystemNode => {
+      const pseudo = !!signature.systemName;
+      const name = pseudo ? signature.systemName : uuid();
+
+      return addUuid({
+        name,
+        pseudo,
         folderId,
-      };
-
-      if (!signature.connection || !signature.connection.destinationName) {
-        return [hostSystem];
-      }
-
-      const { destinationName, unknownDestination } = signature.connection;
-
-      const destinationSystem: UpsertableSystem = {
-        name: destinationName,
-        pseudo: !!unknownDestination,
-        folderId,
-      };
-
-      return [hostSystem, destinationSystem];
+      });
     };
 }

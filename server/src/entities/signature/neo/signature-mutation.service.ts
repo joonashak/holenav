@@ -1,11 +1,12 @@
 import { Injectable } from "@nestjs/common";
+import { compact, omit } from "lodash";
 import { Neo4jService } from "../../../integration/neo4j/neo4j.service";
-import { Signature } from "../signature.model";
-import { SystemNode } from "./system.node";
+import { Signature, SignatureWithoutConnection } from "../signature.model";
+import { SystemMutationService } from "./system-mutation.service";
 
 @Injectable()
 export class SignatureMutationService {
-  constructor(private neoService: Neo4jService, private systemNode: SystemNode) {}
+  constructor(private neoService: Neo4jService, private systemNode: SystemMutationService) {}
 
   /**
    * Create many signatures in a given folder. Each created Signature is linked to a System
@@ -19,7 +20,8 @@ export class SignatureMutationService {
       return [];
     }
 
-    await this.systemNode.ensureSystemsExist(signatures, folderId);
+    const signaturesToCreate = this.getSignaturesAndReverseSignatures(signatures);
+    await this.systemNode.ensureSystemsExist(signaturesToCreate, folderId);
 
     const res = await this.neoService.write(
       ` 
@@ -34,7 +36,7 @@ export class SignatureMutationService {
       CREATE (system)-[:HAS]->(newSig)
       RETURN newSig
     `,
-      { signatures, folderId },
+      { signatures: signaturesToCreate, folderId },
     );
 
     return res.records.map((rec) => rec._fields[0].properties);
@@ -85,5 +87,14 @@ export class SignatureMutationService {
     await this.systemNode.removeDanglingPseudoSystems();
 
     return res.records.map((rec) => rec._fields[0]);
+  }
+
+  private getSignaturesAndReverseSignatures(signatures: Signature[]): SignatureWithoutConnection[] {
+    const signaturesWithoutConnections = signatures.map((sig) => omit(sig, "connection"));
+    const reverseSignatures = compact(
+      signatures.map((sig) => sig.connection.reverseSignature || null),
+    );
+
+    return signaturesWithoutConnections.concat(reverseSignatures);
   }
 }

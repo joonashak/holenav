@@ -6,19 +6,13 @@ import { SignatureWithoutConnection } from "../signature.model";
 @InputType()
 export class ConnectionInput {
   @Field()
-  wormholeType: string;
-
-  @Field()
   eol: boolean;
 
   @Field((type) => MassStatus)
   massStatus: MassStatus;
 
-  @Field()
-  destinationName: string;
-
-  @Field()
-  reverseType: string;
+  @Field((type) => CreatableSignature)
+  reverseSignature: CreatableSignature;
 }
 
 @InputType()

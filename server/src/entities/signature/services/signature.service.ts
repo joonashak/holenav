@@ -7,7 +7,7 @@ import { Signature } from "../signature.model";
 import { isWormhole } from "../signature.utils";
 import { WormholeService } from "./wormhole.service";
 import { CreatableSignature } from "../dto/add-signatures.dto";
-import addUuid from "../../../utils/addUuid";
+import { addUuidToSignatureAndReverseSignature } from "../../../utils/addUuid";
 import { SignatureSearchService } from "../neo/signature-search.service";
 import { SignatureMutationService } from "../neo/signature-mutation.service";
 import { ConnectionMutationService } from "../neo/connection-mutation.service";
@@ -29,11 +29,12 @@ export class SignatureService {
   }
 
   async createSignatures(signatures: CreatableSignature[], folder: Folder): Promise<Signature[]> {
-    const sigsWithIds = signatures.map((sig) => addUuid(sig, { overwrite: true }));
+    const sigsWithIds = signatures.map((sig) => addUuidToSignatureAndReverseSignature(sig));
     await this.signatureMutationService.createSignatures(sigsWithIds, folder.id);
 
-    const sigsWithConnections = sigsWithIds.filter((sig) => sig.connection);
-    await this.connectionMutationService.createConnections(sigsWithConnections, folder.id);
+    // TODO: Extract connections and create them separately. Link by sig id created above.
+    //const sigsWithConnections = sigsWithIds.filter((sig) => sig.connection);
+    //await this.connectionMutationService.createConnections(sigsWithConnections, folder.id);
 
     return sigsWithIds;
   }
