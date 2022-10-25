@@ -48,17 +48,17 @@ export class SignatureSearchService {
   private async findWormholesBySystem(params: SignatureSearchParams): Promise<Signature[]> {
     const res = await this.neoService.read(
       `
-      MATCH (:System {name: $systemName, folderId: $folderId})-[:HAS]->(wh:Signature)-[conn:CONNECTS]-(:Signature)<-[:HAS]-(to:System)
+      MATCH (origin:System {name: $systemName, folderId: $folderId})-[:HAS]->(originSig:Signature)-[conn:CONNECTS]-(destSig:Signature)<-[:HAS]-(dest:System)
       WITH
-        wh{
+        originSig{
           .*,
-          systemName: $systemName,
+          systemName: origin.name,
           connection: conn{ 
             .*,
-            destinationName: to.name,
-            unknownDestination: to.pseudo,
-            wormholeType: CASE startNode(conn) WHEN wh THEN conn.wormholeType ELSE conn.reverseType END,
-            reverseType: CASE startNode(conn) WHEN wh THEN conn.reverseType ELSE conn.wormholeType END
+            reverseSignature: destSig{
+              .*,
+              systemName: dest.name
+            }
           } 
         } AS wormholes
       RETURN collect(DISTINCT wormholes)
