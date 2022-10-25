@@ -1,9 +1,11 @@
 import { Injectable } from "@nestjs/common";
-import { isEqual, uniqWith } from "lodash";
+import { isEqual, set, uniqWith } from "lodash";
+import { validate } from "uuid";
 import { Neo4jService } from "../../../integration/neo4j/neo4j.service";
 import { addUuid } from "../../../utils/addUuid";
 import uuid from "../../../utils/uuid";
-import { SignatureWithoutConnection } from "../signature.model";
+import SigType from "../enums/sig-type.enum";
+import { Signature, SignatureWithoutConnection } from "../signature.model";
 import { SystemNode } from "./graph-types";
 
 @Injectable()
@@ -72,14 +74,30 @@ export class SystemMutationService {
     await this.upsertSystems(uniqueSystems);
   }
 
+  /**
+   * Change connection's reverse side system name into an UUID value, is empty.
+   */
+  transformUnknownReverseSystemIntoPseudoSystem(signature: Signature): Signature {
+    if (signature.type !== SigType.WORMHOLE) {
+      return signature;
+    }
+
+    const { systemName } = signature.connection.reverseSignature;
+    return set(
+      signature,
+      "connection.reverseSignature.systemName",
+      systemName ? systemName : uuid(),
+    );
+  }
+
   private systemFromSignature =
     (folderId: string) =>
     (signature: SignatureWithoutConnection): SystemNode => {
-      const pseudo = !!signature.systemName;
-      const name = pseudo ? signature.systemName : uuid();
+      const { systemName } = signature;
+      const pseudo = validate(systemName);
 
       return addUuid({
-        name,
+        name: systemName,
         pseudo,
         folderId,
       });

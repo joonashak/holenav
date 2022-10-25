@@ -11,6 +11,7 @@ import { addUuidToSignatureAndReverseSignature } from "../../../utils/addUuid";
 import { SignatureSearchService } from "../neo/signature-search.service";
 import { SignatureMutationService } from "../neo/signature-mutation.service";
 import { ConnectionMutationService } from "../neo/connection-mutation.service";
+import { SystemMutationService } from "../neo/system-mutation.service";
 
 // TODO: Move signatures completely to Neo4j. Queries in connection graph module, call them here, etc.
 
@@ -22,6 +23,7 @@ export class SignatureService {
     private signatureSearchService: SignatureSearchService,
     private signatureMutationService: SignatureMutationService,
     private connectionMutationService: ConnectionMutationService,
+    private systemMutationService: SystemMutationService,
   ) {}
 
   async getBySystem(systemName: string, folder: Folder): Promise<Signature[]> {
@@ -29,8 +31,11 @@ export class SignatureService {
   }
 
   async createSignatures(signatures: CreatableSignature[], folder: Folder): Promise<Signature[]> {
-    const sigsWithIds = signatures.map((sig) => addUuidToSignatureAndReverseSignature(sig));
-    await this.signatureMutationService.createSignatures(sigsWithIds, folder.id);
+    const sigsWithIds = signatures.map(addUuidToSignatureAndReverseSignature);
+    const graphSafeSigs = sigsWithIds.map(
+      this.systemMutationService.transformUnknownReverseSystemIntoPseudoSystem,
+    );
+    await this.signatureMutationService.createSignatures(graphSafeSigs, folder.id);
 
     // TODO: Extract connections and create them separately. Link by sig id created above.
     //const sigsWithConnections = sigsWithIds.filter((sig) => sig.connection);
