@@ -12,6 +12,7 @@ import { SignatureSearchService } from "../neo/signature-search.service";
 import { SignatureMutationService } from "../neo/signature-mutation.service";
 import { ConnectionMutationService } from "../neo/connection-mutation.service";
 import { SystemMutationService } from "../neo/system-mutation.service";
+import SigType from "../enums/sig-type.enum";
 
 // TODO: Move signatures completely to Neo4j. Queries in connection graph module, call them here, etc.
 
@@ -37,9 +38,8 @@ export class SignatureService {
     );
     await this.signatureMutationService.createSignatures(graphSafeSigs, folder.id);
 
-    // TODO: Extract connections and create them separately. Link by sig id created above.
-    //const sigsWithConnections = sigsWithIds.filter((sig) => sig.connection);
-    //await this.connectionMutationService.createConnections(sigsWithConnections, folder.id);
+    const wormholes = graphSafeSigs.filter((sig) => sig.type === SigType.WORMHOLE);
+    await this.connectionMutationService.createConnectionsFromSignatures(wormholes);
 
     return sigsWithIds;
   }
