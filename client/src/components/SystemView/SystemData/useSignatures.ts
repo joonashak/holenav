@@ -4,6 +4,7 @@ import { systemState } from ".";
 import useAuthenticatedMutation from "../../../auth/useAuthenticatedMutation";
 import {
   AddSignaturesDocument,
+  CreatableSignature,
   DeleteSignaturesDocument,
   Signature,
   SignatureOld,
@@ -22,7 +23,7 @@ const useSignatures = () => {
     },
   });
 
-  const addSignatures = async (newSigs: AddSignatureHookInput[]) => {
+  const addSignatures = async (newSigs: CreatableSignature[]) => {
     const signatures = newSigs.map((sig) => ({
       ...sig,
       systemName: state.name.get(),

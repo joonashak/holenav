@@ -39,9 +39,9 @@ const WormholeForm = (props: WormholeFormProps) => {
       name: existing?.name || "",
       life: existing?.connection?.eol ? "eol" : "lt-24-hrs",
       mass: existing?.connection?.massStatus || MassStatus.Stable,
-      whType: existing?.connection?.wormholeType || "",
-      whReverseType: existing?.connection?.reverseType || "",
-      destinationName: existing?.connection?.destinationName || null,
+      whType: existing?.wormholeType || "",
+      whReverseType: existing?.connection?.reverseSignature.wormholeType || "",
+      destinationName: existing?.connection?.reverseSignature.systemName || null,
     },
   });
 

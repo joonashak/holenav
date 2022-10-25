@@ -43,8 +43,7 @@ const SigContextMenu = ({ children, signature }: SigContextMenuProps) => {
   const holesWithoutIds = signatures.filter((sig) => sig.type === SigType.Wormhole && !sig.eveId);
   const returnConnectionWithoutId = holesWithoutIds.length === 1 ? holesWithoutIds[0] : null;
 
-  const enabled =
-    returnConnectionWithoutId && signature.eveId && !signature.connection?.wormholeType;
+  const enabled = returnConnectionWithoutId && signature.eveId && !signature.wormholeType;
 
   const markSigAsReturnWormhole = async () => {
     if (!returnConnectionWithoutId) {

@@ -20,13 +20,17 @@ const useWormholeForm = (props: WormholeFormProps) => {
       systemName,
       type: SigType.Wormhole,
       name,
+      wormholeType: whType,
       connection: {
-        wormholeType: whType,
-        reverseType: whReverseType,
         eol: life === "eol",
         massStatus: mass,
-        destinationName: destinationName || "",
-        unknownDestination: !destinationName,
+        reverseSignature: {
+          eveId: "",
+          name: "",
+          systemName: destinationName || "",
+          type: SigType.Wormhole,
+          wormholeType: whReverseType,
+        },
       },
     };
 

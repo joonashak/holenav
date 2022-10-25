@@ -1,20 +1,20 @@
-import { Signature } from "../../../../../generated/graphqlOperations";
-import { AddSignatureHookInput } from "../../../SystemData/useSignatures";
+import { CreatableSignature, Signature } from "../../../../../generated/graphqlOperations";
 
 import { PastedSig, SigPasteEvent } from "./sigPasteParser";
 
 export type SigPasteBatch = {
-  signatureAdd: AddSignatureHookInput[];
+  signatureAdd: CreatableSignature[];
   signatureUpdate: Signature[];
 };
 
 const createSignatureAddReducer =
-  (signatures: Signature[]) => (addableSignatures: AddSignatureHookInput[], sig: PastedSig) => {
+  (signatures: Signature[]) => (addableSignatures: CreatableSignature[], sig: PastedSig) => {
     const { type, eveId, name } = sig;
     const existingSig = signatures.find((s) => s.eveId === eveId);
 
     if (!existingSig) {
-      const newSignature = { type, eveId, name };
+      // FIXME: Pastes need to include current system to work.
+      const newSignature = { type, eveId, name, systemName: "" };
       return addableSignatures.concat([newSignature]);
     }
 

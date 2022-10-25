@@ -1,16 +1,42 @@
+fragment SignatureFieldsWithoutConnection on Signature {
+  id
+  name
+  type
+  eveId
+  systemName
+  wormholeType
+  connection {
+    eol
+    massStatus
+    reverseSignature {
+      id
+      name
+      type
+      eveId
+      systemName
+      wormholeType
+    }
+  }
+}
+
 fragment SignatureFields on Signature {
   id
   name
   type
   eveId
   systemName
+  wormholeType
   connection {
     eol
     massStatus
-    destinationName
-    unknownDestination
-    wormholeType
-    reverseType
+    reverseSignature {
+      id
+      name
+      type
+      eveId
+      systemName
+      wormholeType
+    }
   }
 }
 
