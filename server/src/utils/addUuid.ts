@@ -34,7 +34,7 @@ export const addUuidToSignatureAndReverseSignature = (
 ): Signature | SignatureWithoutConnection => {
   const sigWithUuid = addUuid(signature, { overwrite: true });
 
-  if (sigWithUuid.connection.reverseSignature) {
+  if (sigWithUuid.connection?.reverseSignature) {
     sigWithUuid.connection.reverseSignature = addUuid(sigWithUuid.connection.reverseSignature, {
       overwrite: true,
     });

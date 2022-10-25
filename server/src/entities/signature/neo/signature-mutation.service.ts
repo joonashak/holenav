@@ -92,7 +92,7 @@ export class SignatureMutationService {
   private getSignaturesAndReverseSignatures(signatures: Signature[]): SignatureWithoutConnection[] {
     const signaturesWithoutConnections = signatures.map((sig) => omit(sig, "connection"));
     const reverseSignatures = compact(
-      signatures.map((sig) => sig.connection.reverseSignature || null),
+      signatures.map((sig) => sig.connection?.reverseSignature || null),
     );
 
     return signaturesWithoutConnections.concat(reverseSignatures);
