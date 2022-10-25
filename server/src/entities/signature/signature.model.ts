@@ -7,7 +7,6 @@ registerEnumType(SigType, { name: "SigType" });
 // This split is done because a reference to another @InputType class with
 // duplicate field names breaks the GraphQL type system.
 @InputType()
-@InputType()
 export class SignatureWithoutConnection {
   @Field()
   id: string;
