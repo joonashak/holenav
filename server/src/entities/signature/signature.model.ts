@@ -1,4 +1,4 @@
-import { Field, InputType, ObjectType, registerEnumType } from "@nestjs/graphql";
+import { Field, ObjectType, registerEnumType } from "@nestjs/graphql";
 import { Connection } from "./connection.model";
 import SigType from "./enums/sig-type.enum";
 
@@ -6,7 +6,7 @@ registerEnumType(SigType, { name: "SigType" });
 
 // This split is done because a reference to another @InputType class with
 // duplicate field names breaks the GraphQL type system.
-@InputType()
+@ObjectType()
 export class SignatureWithoutConnection {
   @Field()
   id: string;

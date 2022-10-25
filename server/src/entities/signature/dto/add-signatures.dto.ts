@@ -3,11 +3,13 @@ import MassStatus from "../enums/mass-status.enum";
 import { SignatureWithoutConnection } from "../signature.model";
 
 @InputType()
-export class CreatableSignatureWithoutConnection extends OmitType(SignatureWithoutConnection, [
+class SignatureWithoutConnectionInput extends SignatureWithoutConnection {}
+
+@InputType()
+export class CreatableSignatureWithoutConnection extends OmitType(SignatureWithoutConnectionInput, [
   "id",
 ]) {}
 
-// FIXME: For whatever reason, using actual connection model fails.
 @InputType()
 export class ConnectionInput {
   @Field()

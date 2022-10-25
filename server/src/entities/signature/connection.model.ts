@@ -12,6 +12,6 @@ export class Connection {
   @Field((type) => MassStatus)
   massStatus: MassStatus;
 
-  @Field()
+  @Field((type) => SignatureWithoutConnection)
   reverseSignature: SignatureWithoutConnection;
 }
