@@ -88,9 +88,10 @@ export class SignatureService {
         folder.id,
       );
 
-      const updatedSig = (await this.signatureMutationService.updateSignatures([graphSafeSig]))[0];
+      const updateResult = await this.signatureMutationService.updateSignatures([graphSafeSig]);
       await this.connectionMutationService.createConnectionsFromSignatures([graphSafeSig]);
-      return updatedSig;
+      // FIXME: Return updated sig with connection info (requires modifications to signatureSearchService.findManyById).
+      return updateResult[0];
     }
 
     if (isWormhole(old) && !isWormhole(update)) {
@@ -115,7 +116,6 @@ export class SignatureService {
       return updatedSig;
     }
 
-    //return this.sigModel.findOneAndUpdate({ id: update.id }, update, { returnDocument: "after" });
     return this.signatureMutationService.updateSignatures([update]);
   }
 }

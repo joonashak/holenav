@@ -68,7 +68,7 @@ export class SignatureMutationService {
       { signatures },
     );
 
-    return res.records[0]._fields[0];
+    return res.records.map((rec) => rec._fields[0]);
   }
 
   async deleteSignatures(signatureIds: string[]): Promise<Signature[]> {
