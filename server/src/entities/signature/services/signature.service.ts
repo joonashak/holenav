@@ -51,6 +51,7 @@ export class SignatureService {
     // FIXME: Folder ID must be checked to match user's ActiveFolder ID, otherwise folder security depends only on sig ID.
     const ids = sigUpdates.map((sig) => sig.id);
     const oldSigs = await this.signatureSearchService.findManyById(ids);
+    console.log(oldSigs);
 
     return Promise.all(
       sigUpdates.map(async (update) =>
@@ -88,10 +89,10 @@ export class SignatureService {
         folder.id,
       );
 
-      const updateResult = await this.signatureMutationService.updateSignatures([graphSafeSig]);
+      await this.signatureMutationService.updateSignatures([graphSafeSig]);
       await this.connectionMutationService.createConnectionsFromSignatures([graphSafeSig]);
-      // FIXME: Return updated sig with connection info (requires modifications to signatureSearchService.findManyById).
-      return updateResult[0];
+      const results = await this.signatureSearchService.findManyById([graphSafeSig.id]);
+      return results[0];
     }
 
     if (isWormhole(old) && !isWormhole(update)) {

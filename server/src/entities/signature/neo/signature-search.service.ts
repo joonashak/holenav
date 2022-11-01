@@ -21,13 +21,28 @@ export class SignatureSearchService {
     const res = await this.neoService.read(
       `
       UNWIND $ids as id
-      MATCH (sig:Signature {id: id})
-      RETURN collect(sig)
+      MATCH (origin:System)-[:HAS]-(sig:Signature {id: id})
+      OPTIONAL MATCH (sig)-[conn:CONNECTS]-(destSig:Signature)-[:HAS]-(dest:System)
+      RETURN
+      CASE
+        WHEN destSig IS NOT NULL THEN sig{
+          .*,
+          systemName: origin.name,
+          connection: conn{
+            .*,
+            reverseSignature: destSig{
+              .*,
+              systemName: dest.name
+            }
+          }
+        }
+        ELSE sig{.*, systemName: origin.name}
+      END AS signature
       `,
       { ids },
     );
 
-    return res.records[0]._fields[0].map((node) => ({ ...node.properties }));
+    return res.records[0]._fields;
   }
 
   private async findSignaturesBySystem(params: SignatureSearchParams): Promise<Signature[]> {
@@ -36,7 +51,7 @@ export class SignatureSearchService {
       MATCH (:System {name: $systemName, folderId: $folderId})-[:HAS]->(sig:Signature)
       WHERE sig.type <> 'WH'
       WITH
-        sig{ .*, systemName: $systemName} AS sigs
+        sig{.*, systemName: $systemName} AS sigs
       RETURN collect(DISTINCT sigs)
     `,
       params,
