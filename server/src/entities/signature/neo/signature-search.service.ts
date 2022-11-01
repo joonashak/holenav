@@ -17,7 +17,7 @@ export class SignatureSearchService {
     return signatures.concat(wormholes);
   }
 
-  async findById(ids: string[]): Promise<Signature[]> {
+  async findManyById(ids: string[]): Promise<Signature[]> {
     const res = await this.neoService.read(
       `
       UNWIND $ids as id

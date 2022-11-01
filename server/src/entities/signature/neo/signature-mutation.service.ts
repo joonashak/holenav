@@ -1,7 +1,9 @@
 import { Injectable } from "@nestjs/common";
 import { compact, omit } from "lodash";
 import { Neo4jService } from "../../../integration/neo4j/neo4j.service";
-import { Signature, SignatureWithoutConnection } from "../signature.model";
+import { CreatableSignature, CreatableSignatureWithoutConnection } from "../dto/add-signatures.dto";
+import { UpdateableSignature } from "../dto/update-signatures.dto";
+import { Signature } from "../signature.model";
 import { SystemMutationService } from "./system-mutation.service";
 
 @Injectable()
@@ -15,7 +17,7 @@ export class SignatureMutationService {
    * @param folderId ID of the Folder to use.
    * @returns Created Signatures.
    */
-  async createSignatures(signatures: Signature[], folderId: string): Promise<Signature[]> {
+  async createSignatures(signatures: CreatableSignature[], folderId: string): Promise<Signature[]> {
     if (!signatures.length) {
       return [];
     }
@@ -46,7 +48,7 @@ export class SignatureMutationService {
   /**
    * Update signatures by ID. Changing host system or folder is not supported.
    */
-  async updateSignatures(signatures: Signature[]): Promise<Signature[]> {
+  async updateSignatures(signatures: UpdateableSignature[]): Promise<Signature[]> {
     if (!signatures.length) {
       return [];
     }
@@ -58,7 +60,8 @@ export class SignatureMutationService {
       SET signature += {
         eveId: sig.eveId,
         type: sig.type,
-        name: sig.name
+        name: sig.name,
+        wormholeType: sig.wormholeType
       }
       RETURN signature{.*, systemName: system.name}
       `,
@@ -90,7 +93,9 @@ export class SignatureMutationService {
     return res.records.map((rec) => rec._fields[0]);
   }
 
-  private getSignaturesAndReverseSignatures(signatures: Signature[]): SignatureWithoutConnection[] {
+  private getSignaturesAndReverseSignatures(
+    signatures: CreatableSignature[],
+  ): CreatableSignatureWithoutConnection[] {
     const signaturesWithoutConnections = signatures.map((sig) => omit(sig, "connection"));
     const reverseSignatures = compact(
       signatures.map((sig) => sig.connection?.reverseSignature || null),

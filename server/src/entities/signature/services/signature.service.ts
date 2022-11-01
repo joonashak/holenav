@@ -13,6 +13,9 @@ import { SignatureMutationService } from "../neo/signature-mutation.service";
 import { ConnectionMutationService } from "../neo/connection-mutation.service";
 import { SystemMutationService } from "../neo/system-mutation.service";
 import SigType from "../enums/sig-type.enum";
+import { set } from "lodash";
+import uuid from "../../../utils/uuid";
+import { UpdateableSignature } from "../dto/update-signatures.dto";
 
 // TODO: Move signatures completely to Neo4j. Queries in connection graph module, call them here, etc.
 
@@ -44,15 +47,17 @@ export class SignatureService {
     return sigsWithIds;
   }
 
-  async updateSignatures(sigUpdates: Signature[]): Promise<Signature[]> {
+  async updateSignatures(sigUpdates: UpdateableSignature[], folder: Folder): Promise<Signature[]> {
+    // FIXME: Folder ID must be checked to match user's ActiveFolder ID, otherwise folder security depends only on sig ID.
     const ids = sigUpdates.map((sig) => sig.id);
-    const oldSigs = await this.signatureSearchService.findById(ids);
+    const oldSigs = await this.signatureSearchService.findManyById(ids);
 
     return Promise.all(
       sigUpdates.map(async (update) =>
         this.updateSignature(
           update,
           oldSigs.find((sig) => sig.id === update.id),
+          folder,
         ),
       ),
     );
@@ -68,17 +73,24 @@ export class SignatureService {
   }
 
   // FIXME: Fix type after all cases have been updated.
-  private async updateSignature(update: Signature, old: Signature): Promise<any> {
+  private async updateSignature(
+    update: UpdateableSignature,
+    old: Signature,
+    folder: Folder,
+  ): Promise<any> {
     if (!isWormhole(old) && isWormhole(update)) {
-      const sigWithWhTypes = this.wormholeService.addWhTypes(update);
-      const updatedSig = await this.sigModel.findOneAndUpdate(
-        { id: sigWithWhTypes.id },
-        sigWithWhTypes,
-        {
-          returnDocument: "after",
-        },
+      const sigWithReverseId = set(update, "connection.reverseSignature.id", uuid());
+      const graphSafeSig =
+        this.systemMutationService.transformUnknownReverseSystemIntoPseudoSystem(sigWithReverseId);
+
+      await this.signatureMutationService.createSignatures(
+        [graphSafeSig.connection.reverseSignature],
+        folder.id,
       );
-      return this.wormholeService.addReverseWormhole(updatedSig);
+
+      const updatedSig = (await this.signatureMutationService.updateSignatures([graphSafeSig]))[0];
+      await this.connectionMutationService.createConnectionsFromSignatures([graphSafeSig]);
+      return updatedSig;
     }
 
     if (isWormhole(old) && !isWormhole(update)) {

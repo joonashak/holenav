@@ -35,8 +35,11 @@ export class SignatureResolver {
 
   @RequireFolderRole(FolderRole.WRITE)
   @Mutation((returns) => [Signature])
-  async updateSignatures(@Args("input") input: UpdateSignaturesInput): Promise<Signature[]> {
-    const signatures = await this.sigService.updateSignatures(input.signatures);
+  async updateSignatures(
+    @Args("input") input: UpdateSignaturesInput,
+    @ActiveFolder() activeFolder: Folder,
+  ): Promise<Signature[]> {
+    const signatures = await this.sigService.updateSignatures(input.signatures, activeFolder);
     return signatures;
   }
 

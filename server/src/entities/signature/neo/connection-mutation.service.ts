@@ -1,12 +1,13 @@
 import { Injectable } from "@nestjs/common";
 import { Neo4jService } from "../../../integration/neo4j/neo4j.service";
+import { UpdateableSignature } from "../dto/update-signatures.dto";
 import { Signature } from "../signature.model";
 
 @Injectable()
 export class ConnectionMutationService {
   constructor(private neoService: Neo4jService) {}
 
-  async createConnectionsFromSignatures(signatures: Signature[]) {
+  async createConnectionsFromSignatures(signatures: Signature[] | UpdateableSignature[]) {
     if (!signatures.length) {
       return;
     }

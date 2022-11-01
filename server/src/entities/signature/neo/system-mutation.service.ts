@@ -4,6 +4,7 @@ import { validate } from "uuid";
 import { Neo4jService } from "../../../integration/neo4j/neo4j.service";
 import { addUuid } from "../../../utils/addUuid";
 import uuid from "../../../utils/uuid";
+import { CreatableSignature, CreatableSignatureWithoutConnection } from "../dto/add-signatures.dto";
 import SigType from "../enums/sig-type.enum";
 import { Signature, SignatureWithoutConnection } from "../signature.model";
 import { SystemNode } from "./graph-types";
@@ -68,7 +69,10 @@ export class SystemMutationService {
     return res.summary.updateStatistics._stats.nodesDeleted;
   }
 
-  async ensureSystemsExist(signatures: SignatureWithoutConnection[], folderId: string) {
+  async ensureSystemsExist(
+    signatures: SignatureWithoutConnection[] | CreatableSignatureWithoutConnection[],
+    folderId: string,
+  ) {
     const systems = signatures.map(this.systemFromSignature(folderId));
     const uniqueSystems = uniqWith(systems, isEqual);
     await this.upsertSystems(uniqueSystems);
@@ -77,7 +81,9 @@ export class SystemMutationService {
   /**
    * Change connection's reverse side system name into an UUID value, is empty.
    */
-  transformUnknownReverseSystemIntoPseudoSystem(signature: Signature): Signature {
+  transformUnknownReverseSystemIntoPseudoSystem<T extends Signature | CreatableSignature>(
+    signature: T,
+  ): T {
     if (signature.type !== SigType.WORMHOLE) {
       return signature;
     }
