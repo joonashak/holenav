@@ -51,7 +51,6 @@ export class SignatureService {
     // FIXME: Folder ID must be checked to match user's ActiveFolder ID, otherwise folder security depends only on sig ID.
     const ids = sigUpdates.map((sig) => sig.id);
     const oldSigs = await this.signatureSearchService.findManyById(ids);
-    console.log(oldSigs);
 
     return Promise.all(
       sigUpdates.map(async (update) =>
@@ -117,6 +116,7 @@ export class SignatureService {
       return updatedSig;
     }
 
-    return this.signatureMutationService.updateSignatures([update]);
+    const res = await this.signatureMutationService.updateSignatures([update]);
+    return res[0];
   }
 }
