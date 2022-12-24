@@ -1,4 +1,4 @@
-import { omit, omitBy } from "lodash";
+import { omit } from "lodash";
 import { FieldValues } from "react-hook-form";
 import { SigType } from "../../../../../generated/graphqlOperations";
 import useNotification from "../../../../GlobalNotification/useNotification";
@@ -61,7 +61,7 @@ const useWormholeForm = (props: WormholeFormProps) => {
         massStatus: mass,
         reverseSignature: {
           ...omit(existing?.connection?.reverseSignature, ["__typename"]),
-          systemName: destinationName,
+          systemName: destinationName || "",
           wormholeType: whReverseType,
         },
       },

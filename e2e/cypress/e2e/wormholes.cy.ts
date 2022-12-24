@@ -150,7 +150,10 @@ describe("Wormholes", () => {
     cy.cs("autocomplete-destinationName").clear();
     submitWormholeForm();
 
-    testWormholeProperties({ ...wh, destinationName: "" });
+    cy.get("[data-cy=autocomplete-destinationName-input] > div > input").should(
+      "not.have.value",
+      wh.destinationName
+    );
 
     cy.visit("/system/Perimeter");
     cy.get("#scanning-content").should("not.contain.text", "rev from Jita");

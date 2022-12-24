@@ -94,6 +94,7 @@ export class SignatureService {
     }
 
     if (isWormhole(old) && !isWormhole(update)) {
+      // FIXME:
       //await this.sigModel.findByIdAndDelete(old.reverse);
       return this.sigModel.findOneAndUpdate(
         { id: update.id },
@@ -116,8 +117,14 @@ export class SignatureService {
       }
 
       // Destination changed: Recreate connection and reverse signature.
-      const newReverseSig = addUuid(update.connection.reverseSignature, { overwrite: true });
-      const updatedSig = addK162(set(update, "connection.reverseSignature", newReverseSig));
+      const graphSafeUpdate =
+        this.systemMutationService.transformUnknownReverseSystemIntoPseudoSystem(update);
+      const newReverseSig = addUuid(graphSafeUpdate.connection.reverseSignature, {
+        overwrite: true,
+      });
+      const updatedSig = addK162(
+        set(graphSafeUpdate, "connection.reverseSignature", newReverseSig),
+      );
 
       await this.signatureMutationService.updateSignatures([updatedSig]);
       await this.signatureMutationService.deleteSignatures([old.connection.reverseSignature.id]);
