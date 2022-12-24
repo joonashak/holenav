@@ -23,4 +23,6 @@ export const addK162 = <T extends CreatableSignature | Signature>(signature: T):
     signature.wormholeType = k162;
     return signature;
   }
+
+  return signature;
 };

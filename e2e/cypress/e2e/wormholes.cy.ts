@@ -5,7 +5,8 @@ import {
   testWormholeProperties,
 } from "../support/helpers/wormholeForm.utils";
 
-const testSystemUrl = "/system/Jita";
+const testSystem = "J104809";
+const testSystemUrl = `/system/${testSystem}`;
 
 describe("Wormholes", () => {
   before(() => {
@@ -43,7 +44,7 @@ describe("Wormholes", () => {
       mass: "DESTAB",
     } as const;
 
-    cy.cs("edit-sig-Ikuchi").click();
+    cy.cs("edit-sig-FLA DEF").click();
     setWormholeFormValues(wh);
     submitWormholeForm();
     cy.contains("Wormhole updated.");
@@ -85,7 +86,10 @@ describe("Wormholes", () => {
 
     submitWormholeForm();
     testWormholeProperties(wh);
-    testWormholeProperties({ name: "", destinationName: "Jita", type: "K162" }, "/system/Hakonen");
+    testWormholeProperties(
+      { name: "", destinationName: testSystem, type: "K162" },
+      "/system/Hakonen"
+    );
   });
 
   it("Connection is correctly updated", () => {
