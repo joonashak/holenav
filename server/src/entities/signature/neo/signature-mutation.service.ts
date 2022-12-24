@@ -79,7 +79,7 @@ export class SignatureMutationService {
     const res = await this.neoService.write(
       `
         UNWIND $signatureIds as id
-        MATCH (:Signature {id: id})-[:CONNECTS*0..1]-(signature:Signature)
+        MATCH (signature:Signature {id: id})-[:CONNECTS*0..1]-(:Signature)
         MATCH (:Signature {id: id})-[:HAS]-(system:System)
         WITH signature, system, properties(signature) AS deleted
         DETACH DELETE signature

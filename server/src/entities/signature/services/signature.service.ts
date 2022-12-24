@@ -5,9 +5,8 @@ import { Folder } from "../../folder/folder.model";
 import { SignatureOLD, SignatureDocument } from "../signature-OLD.model";
 import { Signature } from "../signature.model";
 import { isWormhole } from "../signature.utils";
-import { WormholeService } from "./wormhole.service";
 import { CreatableSignature } from "../dto/add-signatures.dto";
-import { addUuidToSignatureAndReverseSignature } from "../../../utils/addUuid";
+import { addUuid, addUuidToSignatureAndReverseSignature } from "../../../utils/addUuid";
 import { SignatureSearchService } from "../neo/signature-search.service";
 import { SignatureMutationService } from "../neo/signature-mutation.service";
 import { ConnectionMutationService } from "../neo/connection-mutation.service";
@@ -24,7 +23,6 @@ import { addK162 } from "../../../utils/addK162";
 export class SignatureService {
   constructor(
     @InjectModel(SignatureOLD.name) private sigModel: Model<SignatureDocument>,
-    private wormholeService: WormholeService,
     private signatureSearchService: SignatureSearchService,
     private signatureMutationService: SignatureMutationService,
     private connectionMutationService: ConnectionMutationService,
@@ -105,22 +103,30 @@ export class SignatureService {
     }
 
     if (isWormhole(old) && isWormhole(update)) {
-      // TODO:
-      // - If destination not changed: update sig+conn data.
-      // - If desto changed: remove reverse sig+conn, create new reverse sig and new conn.
+      // Destination not changed.
       if (
         old.connection.reverseSignature.systemName === update.connection.reverseSignature.systemName
       ) {
-        console.log(old);
-        console.log(old.connection.reverseSignature);
         this.signatureMutationService.updateSignatures([
           update,
           update.connection.reverseSignature,
         ]);
         return this.connectionMutationService.updateConnection(update);
       }
-      // FIXME:
-      return update;
+
+      // Destination changed: Recreate connection and reverse signature.
+      await this.signatureMutationService.deleteSignatures([old.connection.reverseSignature.id]);
+      const newReverseSig = addUuid(update.connection.reverseSignature, { overwrite: true });
+
+      const updatedSig = addK162(set(update, "connection.reverseSignature", newReverseSig));
+
+      await this.signatureMutationService.createSignatures(
+        [updatedSig.connection.reverseSignature],
+        folder.id,
+      );
+      await this.connectionMutationService.createConnectionsFromSignatures([updatedSig]);
+
+      return updatedSig;
     }
 
     const res = await this.signatureMutationService.updateSignatures([update]);
