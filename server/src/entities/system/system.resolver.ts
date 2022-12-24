@@ -11,7 +11,7 @@ export class SystemResolver {
   constructor(private systemService: SystemMutationService) {}
 
   @RequireFolderRole(FolderRole.READ)
-  @Query((returns) => System)
+  @Query((returns) => System, { nullable: true })
   async getSystemByName(@Args("name") name: string, @ActiveFolder() activeFolder: FolderDocument) {
     const res = await this.systemService.findSystem(name, activeFolder.id);
     return res;

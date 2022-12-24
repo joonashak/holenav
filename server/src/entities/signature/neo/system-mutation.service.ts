@@ -53,6 +53,10 @@ export class SystemMutationService {
       { name, folderId },
     );
 
+    if (!res.records.length) {
+      return null;
+    }
+
     return res.records[0]._fields[0].properties;
   }
 

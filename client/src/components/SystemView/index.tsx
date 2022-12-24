@@ -13,7 +13,7 @@ const SystemView = () => {
   const { changeSystem } = useSystemData();
 
   useEffect(() => {
-    changeSystem({ variables: { name: systemName } });
+    changeSystem(systemName);
   }, [systemName]);
 
   return (

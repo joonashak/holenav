@@ -35,6 +35,10 @@ export class SignatureSearchService {
       params,
     );
 
+    if (!res.records.length) {
+      return [];
+    }
+
     return res.records.map((rec) => rec._fields[0]);
   }
 

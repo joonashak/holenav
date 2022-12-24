@@ -6,11 +6,19 @@ import { SystemDocument } from "../../../generated/graphqlOperations";
 export default () => {
   const state = useState(systemState);
 
-  const [changeSystem] = useLazyAuthenticatedQuery(SystemDocument, {
+  const [changeSystemQuery] = useLazyAuthenticatedQuery(SystemDocument, {
     onCompleted: ({ getSystemByName, getSignaturesBySystem }) => {
+      if (!getSystemByName) {
+        return;
+      }
       state.merge({ ...getSystemByName, signatures: getSignaturesBySystem });
     },
   });
+
+  const changeSystem = (name: string) => {
+    state.merge({ name });
+    changeSystemQuery({ variables: { name } });
+  };
 
   return {
     get id() {

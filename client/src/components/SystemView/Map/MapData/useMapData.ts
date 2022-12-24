@@ -11,6 +11,11 @@ export default () => {
 
   const fetchConnectionTree = async () => {
     const { rootSystemName } = selectedMap;
+
+    if (!rootSystemName) {
+      return;
+    }
+
     const res = await get(["connection-graph", "connection-tree", rootSystemName].join("/"));
     state.merge({ connectionTree: res.data });
   };
