@@ -105,16 +105,21 @@ export class SignatureService {
     }
 
     if (isWormhole(old) && isWormhole(update)) {
-      const sigWithWhTypes = this.wormholeService.addWhTypes(update);
-      const updatedSig = await this.sigModel.findOneAndUpdate(
-        { id: sigWithWhTypes.id },
-        sigWithWhTypes,
-        {
-          returnDocument: "after",
-        },
-      );
-      await this.wormholeService.syncReverseWormhole(updatedSig);
-      return updatedSig;
+      // TODO:
+      // - If destination not changed: update sig+conn data.
+      // - If desto changed: remove reverse sig+conn, create new reverse sig and new conn.
+      if (
+        old.connection.reverseSignature.systemName === update.connection.reverseSignature.systemName
+      ) {
+        console.log(old);
+        console.log(old.connection.reverseSignature);
+        this.signatureMutationService.updateSignatures([
+          update,
+          update.connection.reverseSignature,
+        ]);
+      }
+      // FIXME:
+      return update;
     }
 
     const res = await this.signatureMutationService.updateSignatures([update]);

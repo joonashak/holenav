@@ -1,5 +1,5 @@
 import { Field, InputType } from "@nestjs/graphql";
-import { CreatableSignature } from "./add-signatures.dto";
+import { ConnectionInput, CreatableSignatureWithoutConnection } from "./add-signatures.dto";
 
 @InputType()
 export class UpdateSignaturesInput {
@@ -8,7 +8,19 @@ export class UpdateSignaturesInput {
 }
 
 @InputType()
-export class UpdateableSignature extends CreatableSignature {
+export class SignatureUpdateWithoutConnection extends CreatableSignatureWithoutConnection {
   @Field()
   id: string;
+}
+
+@InputType()
+export class ConnectionInputUpdate extends ConnectionInput {
+  @Field((type) => SignatureUpdateWithoutConnection)
+  reverseSignature: SignatureUpdateWithoutConnection;
+}
+
+@InputType()
+export class UpdateableSignature extends SignatureUpdateWithoutConnection {
+  @Field((type) => ConnectionInputUpdate, { nullable: true })
+  connection?: ConnectionInputUpdate;
 }

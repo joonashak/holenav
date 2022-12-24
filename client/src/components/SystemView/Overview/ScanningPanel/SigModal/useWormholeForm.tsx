@@ -1,5 +1,6 @@
+import { omit, omitBy } from "lodash";
 import { FieldValues } from "react-hook-form";
-import { SignatureOld, SigType } from "../../../../../generated/graphqlOperations";
+import { SigType } from "../../../../../generated/graphqlOperations";
 import useNotification from "../../../../GlobalNotification/useNotification";
 import useMapData from "../../../Map/MapData/useMapData";
 import useSignatures from "../../../SystemData/useSignatures";
@@ -46,19 +47,27 @@ const useWormholeForm = (props: WormholeFormProps) => {
   const submitEdit = async (formData: FieldValues) => {
     const id = existing?.id || "";
     const { whType, whReverseType, life, mass, name, destinationName } = formData;
+
     const mutationData = {
+      ...omit(existing, ["__typename"]),
       id,
       eveId,
       type: SigType.Wormhole,
       wormholeType: whType,
-      reverseType: whReverseType,
-      eol: life === "eol",
-      massStatus: mass,
       name,
-      destinationName,
+      connection: {
+        ...omit(existing?.connection, ["__typename"]),
+        eol: life === "eol",
+        massStatus: mass,
+        reverseSignature: {
+          ...omit(existing?.connection?.reverseSignature, ["__typename"]),
+          systemName: destinationName,
+          wormholeType: whReverseType,
+        },
+      },
     };
 
-    const res = await updateSignatures([mutationData as SignatureOld]);
+    const res = await updateSignatures([mutationData]);
 
     if (res.data && !res.errors) {
       showSuccessNotification("Wormhole updated.");

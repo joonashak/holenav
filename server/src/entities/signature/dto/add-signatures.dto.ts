@@ -8,7 +8,10 @@ class SignatureWithoutConnectionInput extends SignatureWithoutConnection {}
 @InputType()
 export class CreatableSignatureWithoutConnection extends OmitType(SignatureWithoutConnectionInput, [
   "id",
-]) {}
+]) {
+  @Field({ nullable: true })
+  id?: string;
+}
 
 @InputType()
 export class ConnectionInput {
