@@ -117,6 +117,7 @@ export class SignatureService {
           update,
           update.connection.reverseSignature,
         ]);
+        return this.connectionMutationService.updateConnection(update);
       }
       // FIXME:
       return update;
