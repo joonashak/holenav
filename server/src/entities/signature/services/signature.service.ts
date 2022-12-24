@@ -16,6 +16,7 @@ import SigType from "../enums/sig-type.enum";
 import { set } from "lodash";
 import uuid from "../../../utils/uuid";
 import { UpdateableSignature } from "../dto/update-signatures.dto";
+import { addK162 } from "../../../utils/addK162";
 
 // TODO: Move signatures completely to Neo4j. Queries in connection graph module, call them here, etc.
 
@@ -35,7 +36,7 @@ export class SignatureService {
   }
 
   async createSignatures(signatures: CreatableSignature[], folder: Folder): Promise<Signature[]> {
-    const sigsWithIds = signatures.map(addUuidToSignatureAndReverseSignature);
+    const sigsWithIds = signatures.map(addUuidToSignatureAndReverseSignature).map(addK162);
     const graphSafeSigs = sigsWithIds.map(
       this.systemMutationService.transformUnknownReverseSystemIntoPseudoSystem,
     );
