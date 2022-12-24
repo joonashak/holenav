@@ -108,7 +108,7 @@ export class SignatureService {
         old.connection.reverseSignature.systemName === update.connection.reverseSignature.systemName
       ) {
         const modifiedUpdate = addK162(update);
-        this.signatureMutationService.updateSignatures([
+        await this.signatureMutationService.updateSignatures([
           modifiedUpdate,
           modifiedUpdate.connection.reverseSignature,
         ]);

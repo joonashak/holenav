@@ -70,6 +70,7 @@ const useWormholeForm = (props: WormholeFormProps) => {
     const res = await updateSignatures([mutationData]);
 
     if (res.data && !res.errors) {
+      fetchConnectionTree();
       showSuccessNotification("Wormhole updated.");
       onClose();
     }
