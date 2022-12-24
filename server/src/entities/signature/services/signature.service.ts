@@ -116,10 +116,11 @@ export class SignatureService {
       }
 
       // Destination changed: Recreate connection and reverse signature.
-      await this.signatureMutationService.deleteSignatures([old.connection.reverseSignature.id]);
       const newReverseSig = addUuid(update.connection.reverseSignature, { overwrite: true });
-
       const updatedSig = addK162(set(update, "connection.reverseSignature", newReverseSig));
+
+      await this.signatureMutationService.updateSignatures([updatedSig]);
+      await this.signatureMutationService.deleteSignatures([old.connection.reverseSignature.id]);
 
       await this.signatureMutationService.createSignatures(
         [updatedSig.connection.reverseSignature],

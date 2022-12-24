@@ -125,7 +125,7 @@ describe("Wormholes", () => {
     testWormholeProperties(
       {
         name: "",
-        destinationName: "Jita",
+        destinationName: testSystem,
         type: "K162",
         reverseType: "V753",
         eol: "eol",
