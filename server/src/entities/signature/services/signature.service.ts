@@ -107,11 +107,12 @@ export class SignatureService {
       if (
         old.connection.reverseSignature.systemName === update.connection.reverseSignature.systemName
       ) {
+        const modifiedUpdate = addK162(update);
         this.signatureMutationService.updateSignatures([
-          update,
-          update.connection.reverseSignature,
+          modifiedUpdate,
+          modifiedUpdate.connection.reverseSignature,
         ]);
-        return this.connectionMutationService.updateConnection(update);
+        return this.connectionMutationService.updateConnection(modifiedUpdate);
       }
 
       // Destination changed: Recreate connection and reverse signature.
