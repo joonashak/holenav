@@ -13,8 +13,8 @@ jobs:
       run:
         working-directory: client
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
           node-version: 16.4
       - name: Install dependencies
@@ -29,8 +29,8 @@ jobs:
       run:
         working-directory: server
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
           node-version: 16.4
       - name: Install dependencies
@@ -45,8 +45,8 @@ jobs:
       run:
         working-directory: e2e
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
           node-version: 16.4
       - name: Install dependencies
@@ -61,8 +61,8 @@ jobs:
       run:
         working-directory: server
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
           node-version: 16.4
       - name: Install dependencies
@@ -74,7 +74,7 @@ jobs:
     name: E2E tests
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Build and start containers
         run: docker-compose -f docker-compose-ci.yaml up -d mongo-ci neo-ci server-ci client-ci
       - name: Run E2E tests
