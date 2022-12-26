@@ -10,6 +10,9 @@ import pathClassFunc from "./MapStyles/pathClassFunc";
 // Avoid rerendering map style definitions.
 const inputMapStyles = <MapStyles />;
 
+// Hack to enable hooks in MapNode...
+const Node = (props: any) => <MapNode {...props} />;
+
 export default () => {
   const { width } = useWindowDimensions();
   const { connectionTree } = useMapData();
@@ -32,9 +35,6 @@ export default () => {
   const data = { name: rootSystemName, children: orderChildren(rootChildren) };
 
   const x = width / 2 + 240;
-
-  // Hack to enable hooks in MapNode...
-  const Node = (props: any) => <MapNode {...props} />;
 
   return (
     <Box

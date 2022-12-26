@@ -1,9 +1,9 @@
 import { Link, Typography } from "@mui/material";
-import { ReactElement } from "react";
+import { ReactNode } from "react";
 import { Link as RouterLink } from "react-router-dom";
 
 type AppLinkProps = {
-  children: ReactElement | string;
+  children?: ReactNode | string;
   to: string;
 };
 
@@ -12,5 +12,9 @@ const AppLink = ({ children, to }: AppLinkProps) => (
     <Typography sx={{ color: "white" }}>{children}</Typography>
   </Link>
 );
+
+AppLink.defaultProps = {
+  children: null,
+};
 
 export default AppLink;

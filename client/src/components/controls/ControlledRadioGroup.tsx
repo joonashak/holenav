@@ -16,6 +16,7 @@ type Options = {
 };
 
 export default ({ options, name, control, label }: ControlledRadioGroupProps) => {
+  // eslint-disable-next-line react/no-unstable-nested-components
   const Render = ({ field }: any) => (
     <FormControl component="fieldset" fullWidth>
       <FormLabel component="legend">{label}</FormLabel>

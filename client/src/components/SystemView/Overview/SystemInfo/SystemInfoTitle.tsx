@@ -3,6 +3,19 @@ import SecurityClasses from "../../../../enum/SecurityClasses";
 import useSystemData from "../../SystemData/useSystemData";
 import EffectInfoTable from "./EffectInfoTable";
 
+const EffectLabel = ({ effect }: { effect: any }) => (
+  <Tooltip
+    title={<EffectInfoTable effect={effect} />}
+    componentsProps={{
+      tooltip: {
+        sx: { padding: 0, margin: 1 },
+      },
+    }}
+  >
+    <span> - {effect && effect.name}</span>
+  </Tooltip>
+);
+
 const SystemInfoTitle = () => {
   const { securityClass, securityStatus, whClass, effect } = useSystemData();
   const roundedSecStatus = securityStatus.toFixed(1);
@@ -14,23 +27,10 @@ const SystemInfoTitle = () => {
     [SecurityClasses.Wormhole]: `Class ${whClass}`,
   };
 
-  const EffectLabel = () => (
-    <Tooltip
-      title={<EffectInfoTable effect={effect} />}
-      componentsProps={{
-        tooltip: {
-          sx: { padding: 0, margin: 1 },
-        },
-      }}
-    >
-      <span> - {effect && effect.name}</span>
-    </Tooltip>
-  );
-
   return (
     <Typography variant="h3">
       {classTextMap[securityClass]}
-      {effect && <EffectLabel />}
+      {effect && <EffectLabel effect={effect} />}
     </Typography>
   );
 };

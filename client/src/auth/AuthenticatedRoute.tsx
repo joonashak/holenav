@@ -1,4 +1,5 @@
-import { Redirect, Route, RouteProps } from "react-router-dom";
+import { Route, RouteProps } from "react-router-dom";
+import AuthenticatedComponent from "./AuthenticatedComponent";
 import useAuth from "./useAuth";
 
 type AuthenticatedRouteProps = Omit<RouteProps, "component">;
@@ -6,11 +7,9 @@ type AuthenticatedRouteProps = Omit<RouteProps, "component">;
 const AuthenticatedRoute = ({ children, ...props }: AuthenticatedRouteProps) => {
   const { token } = useAuth();
 
-  const AuthenticatedComponent = () => (token ? <>{children}</> : <Redirect to="/login" />);
-
   return (
     <Route {...props}>
-      <AuthenticatedComponent />
+      <AuthenticatedComponent token={token}>{children}</AuthenticatedComponent>
     </Route>
   );
 };

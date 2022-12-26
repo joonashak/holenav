@@ -1,35 +1,21 @@
-import { AppBar, Box, Container, Link, Paper, Toolbar, Typography } from "@mui/material";
+import { AppBar, Container, Link, Paper, Toolbar, Typography } from "@mui/material";
 import { devToolsEnabled } from "../../config";
 import AppTitle from "../common/AppTitle";
-import GoToButton from "../common/GoToButton";
-import LoginButton from "../common/LoginButton";
 import useLocalData from "../LocalData/useLocalData";
-import LocalLogin from "../LocalLogin";
 import DevToolsNotice from "./DevToolsNotice";
+import LoginOrAppButton from "./LoginOrAppButton";
 import Motd from "./Motd";
 
 export default () => {
   const { authToken, mockUser } = useLocalData();
   const loggedIn = authToken || mockUser;
 
-  const LoginOrApp = () =>
-    loggedIn ? (
-      <GoToButton href="/system/J104809" sx={{ mb: { xs: 3, md: 0 } }}>
-        Go To App
-      </GoToButton>
-    ) : (
-      <Box sx={{ display: "flex", flexDirection: "column" }}>
-        <LoginButton sx={{ mb: { xs: 3, md: 1 }, pl: 0, pr: 0 }} />
-        <LocalLogin />
-      </Box>
-    );
-
   return (
     <>
       <AppBar position="static" sx={{ bgcolor: "primary.dark", marginBottom: 6 }}>
         <Toolbar sx={{ flexDirection: { xs: "column", md: "row" } }}>
           <AppTitle sx={{ flexGrow: 1 }} />
-          <LoginOrApp />
+          <LoginOrAppButton loggedIn={!!loggedIn} />
         </Toolbar>
       </AppBar>
       <Container maxWidth="md">

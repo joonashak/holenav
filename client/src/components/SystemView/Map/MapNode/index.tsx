@@ -6,7 +6,9 @@ import AppLink from "../../../common/AppLink";
 import useUserData from "../../../UserData/useUserData";
 import useSystemData from "../../SystemData/useSystemData";
 import { MapNodeDatum } from "../MapData/types";
+import ConnectionName from "./ConnectionName";
 import MapNodeRect from "./MapNodeRect";
+import RootNodeName from "./RootNodeName";
 import WhTypeLabel from "./WhTypeLabel";
 
 export type MapNodeProps = CustomNodeElementProps & {
@@ -38,18 +40,7 @@ const MapNode = ({ nodeDatum }: MapNodeProps) => {
     }
   }
 
-  const RootNodeName = () => (
-    <AppLink to={`/system/${selectedMap.rootSystemName}`}>{selectedMap.name}</AppLink>
-  );
-
-  const showDestinationLink = destinationName && !wormhole?.unknownDestination;
-
-  const ConnectionName = () =>
-    showDestinationLink ? (
-      <AppLink to={`/system/${destinationName}`}>{name || destinationName}</AppLink>
-    ) : (
-      <Typography>{name}</Typography>
-    );
+  const showDestinationLink = !!destinationName && !wormhole?.unknownDestination;
 
   return (
     <>
@@ -86,7 +77,15 @@ const MapNode = ({ nodeDatum }: MapNodeProps) => {
             color: "white",
           }}
         >
-          {isRootNode ? <RootNodeName /> : <ConnectionName />}
+          {isRootNode ? (
+            <RootNodeName rootSystemName={selectedMap.rootSystemName} mapName={selectedMap.name} />
+          ) : (
+            <ConnectionName
+              showDestinationLink={showDestinationLink}
+              destinationName={destinationName}
+              name={name}
+            />
+          )}
           <WhTypeLabel type={type} signature={wormhole} />
         </Box>
       </foreignObject>

@@ -11,6 +11,7 @@ type RhfAutocompleteProps = {
 const RhfAutocomplete = ({ options, name, control }: RhfAutocompleteProps) => {
   const getOptionLabel = (option: unknown): string => (typeof option === "string" ? option : "");
 
+  // eslint-disable-next-line react/no-unstable-nested-components
   const Render = ({ field }: UseControllerReturn) => (
     <Autocomplete
       value={field.value}

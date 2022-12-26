@@ -26,9 +26,7 @@ const whTypeOptions = [{ key: "wh-K162", value: "K162", label: "K162" }].concat(
 );
 
 export type WormholeFormProps = {
-  eveId: string;
   existing?: Signature;
-  onClose: () => void;
 };
 
 const WormholeForm = (props: WormholeFormProps) => {

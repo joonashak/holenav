@@ -3,16 +3,16 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import useSystemData from "../../SystemData/useSystemData";
 import EffectInfoTable from "./EffectInfoTable";
 
+const ExpandIcon = ({ effect }: { effect: boolean }) =>
+  effect ? <ExpandMoreIcon sx={{ color: "primary.light", m: 0 }} /> : null;
+
 const EffectInfoAccordion = () => {
   const { effect } = useSystemData();
-
-  const ExpandIcon = () =>
-    effect ? <ExpandMoreIcon sx={{ color: "primary.light", m: 0 }} /> : null;
 
   return (
     <Accordion sx={{ width: 0.8, mx: "auto" }} disableGutters>
       <AccordionSummary
-        expandIcon={<ExpandIcon />}
+        expandIcon={<ExpandIcon effect={!!effect} />}
         disabled={!effect}
         aria-controls="system-effects-accordion"
         id="system-effects-header"
