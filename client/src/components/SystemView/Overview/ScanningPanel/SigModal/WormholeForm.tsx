@@ -7,8 +7,8 @@ import ControlledSelect from "../../../../controls/Select/ControlledSelect";
 import ControlledTextField from "../../../../controls/ControlledTextField";
 import FormGroupRow from "../../../../controls/FormGroupRow";
 import RhfAutocomplete from "../../../../controls/RhfAutocomplete";
-import useWormholeForm from "./useWormholeForm";
-import { MassStatus, Signature } from "../../../../../generated/graphqlOperations";
+import useWormholeForm, { UseWormholeFormProps } from "./useWormholeForm";
+import { MassStatus } from "../../../../../generated/graphqlOperations";
 
 const lifeOptions = [
   { key: "lt-24-hrs", value: "lt-24-hrs", label: "Less than 24 hrs" },
@@ -25,11 +25,7 @@ const whTypeOptions = [{ key: "wh-K162", value: "K162", label: "K162" }].concat(
   wormholes.map(({ type }) => ({ key: `wh-${type}`, value: type, label: type }))
 );
 
-export type WormholeFormProps = {
-  existing?: Signature;
-};
-
-const WormholeForm = (props: WormholeFormProps) => {
+const WormholeForm = (props: UseWormholeFormProps) => {
   const { existing } = props;
   const { submitWormholeForm } = useWormholeForm(props);
   const { handleSubmit, control } = useForm({

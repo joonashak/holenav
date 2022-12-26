@@ -1,13 +1,18 @@
 import { omit } from "lodash";
 import { FieldValues } from "react-hook-form";
-import { SigType } from "../../../../../generated/graphqlOperations";
+import { Signature, SigType } from "../../../../../generated/graphqlOperations";
 import useNotification from "../../../../GlobalNotification/useNotification";
 import useMapData from "../../../Map/MapData/useMapData";
 import useSignatures from "../../../SystemData/useSignatures";
 import useSystemData from "../../../SystemData/useSystemData";
-import { WormholeFormProps } from "./WormholeForm";
 
-const useWormholeForm = (props: WormholeFormProps) => {
+export type UseWormholeFormProps = {
+  eveId: string;
+  existing?: Signature;
+  onClose: () => void;
+};
+
+const useWormholeForm = (props: UseWormholeFormProps) => {
   const { eveId, existing, onClose } = props;
   const { name: systemName } = useSystemData();
   const { fetchConnectionTree } = useMapData();

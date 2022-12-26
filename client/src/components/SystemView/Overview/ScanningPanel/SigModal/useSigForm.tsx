@@ -1,10 +1,17 @@
 import { FieldValues } from "react-hook-form";
+import { Signature, SigType } from "../../../../../generated/graphqlOperations";
 import useNotification from "../../../../GlobalNotification/useNotification";
 import useSignatures from "../../../SystemData/useSignatures";
 import useSystemData from "../../../SystemData/useSystemData";
-import { SigFormProps } from "./SigForm";
 
-const useSigForm = (props: SigFormProps) => {
+export type UseSigFormProps = {
+  type: SigType;
+  eveId: string;
+  existing?: Signature;
+  onClose: () => void;
+};
+
+const useSigForm = (props: UseSigFormProps) => {
   const { type, eveId, existing, onClose } = props;
   const { addSignatures, updateSignatures } = useSignatures();
   const { name: systemName } = useSystemData();

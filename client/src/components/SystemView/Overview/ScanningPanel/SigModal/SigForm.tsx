@@ -1,14 +1,9 @@
 import { Box, Button, FormGroup } from "@mui/material";
 import { useForm } from "react-hook-form";
-import { Signature } from "../../../../../generated/graphqlOperations";
 import ControlledTextField from "../../../../controls/ControlledTextField";
-import useSigForm from "./useSigForm";
+import useSigForm, { UseSigFormProps } from "./useSigForm";
 
-export type SigFormProps = {
-  existing?: Signature;
-};
-
-const SigForm = (props: SigFormProps) => {
+const SigForm = (props: UseSigFormProps) => {
   const { existing } = props;
   const { handleSubmit, control } = useForm({ defaultValues: { name: existing?.name || "" } });
   const { submitSigForm } = useSigForm(props);
