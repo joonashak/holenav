@@ -2,6 +2,9 @@
   "name": "client",
   "version": "0.1.8",
   "private": true,
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "dependencies": {
     "@apollo/client": "^3.4.5",
     "@emotion/react": "^11.5.0",
@@ -46,11 +49,15 @@
     "@types/lodash": "^4.14.177",
     "@types/react-router-dom": "^5.1.8",
     "@types/uuid": "^8.3.4",
-    "eslint-config-airbnb": "^18.2.1",
+    "eslint": "^8.30.0",
+    "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^8.3.0",
     "eslint-config-react-app": "^7.0.0",
-    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jsx-a11y": "^6.6.1",
     "eslint-plugin-prettier": "^3.4.0",
+    "eslint-plugin-react": "^7.31.11",
+    "eslint-plugin-react-hooks": "^4.6.0",
     "prettier": "^2.3.2"
   },
   "scripts": {

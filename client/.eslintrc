@@ -39,6 +39,10 @@
     "@typescript-eslint/no-unused-vars": ["warn"],
     "import/prefer-default-export": 0,
     "react/jsx-props-no-spreading": 0,
-    "no-underscore-dangle": ["error", { "allow": ["__rd3t"] }]
+    "no-underscore-dangle": ["error", { "allow": ["__rd3t"] }],
+    "react/function-component-definition": [
+      2,
+      { "namedComponents": "arrow-function", "unnamedComponents": "arrow-function" }
+    ]
   }
 }
