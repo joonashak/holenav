@@ -46,6 +46,8 @@ const SigContextMenu = ({ children, signature }: SigContextMenuProps) => {
   const enabled = returnConnectionWithoutId && signature.eveId && !signature.wormholeType;
 
   const markSigAsReturnWormhole = async () => {
+    throw new Error("Not implemented.");
+    /*
     if (!returnConnectionWithoutId) {
       showErrorNotification("Could not figure out what signature to link.");
       handleClose();
@@ -56,6 +58,7 @@ const SigContextMenu = ({ children, signature }: SigContextMenuProps) => {
       { eveId: signature.eveId, id: returnConnectionWithoutId.id, type: SigType.Wormhole },
     ]);
     handleClose();
+    */
   };
 
   return (

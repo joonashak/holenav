@@ -1,6 +1,6 @@
 import systems from "@eve-data/systems";
 import { IsIn } from "class-validator";
-import { SignatureOLD } from "../../entities/signature/signature-OLD.model";
+import { Signature } from "../../entities/signature/signature.model";
 
 export type ConnectionTree = {
   rootSystemName: string;
@@ -10,7 +10,7 @@ export type ConnectionTree = {
 export type ConnectionTreeNode = {
   name: string;
   children: ConnectionTreeNode[];
-  wormhole: SignatureOLD;
+  wormhole: Signature;
 };
 
 export class ConnectionTreeParams {

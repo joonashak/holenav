@@ -1,8 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { InjectModel } from "@nestjs/mongoose";
-import { Model } from "mongoose";
 import { Folder } from "../folder/folder.model";
-import { SignatureOLD, SignatureDocument } from "./signature-OLD.model";
 import { Signature } from "./signature.model";
 import { isWormhole } from "./signature.utils";
 import { CreatableSignature } from "./dto/add-signatures.dto";
@@ -22,7 +19,6 @@ import { addK162 } from "../../utils/addK162";
 @Injectable()
 export class SignatureService {
   constructor(
-    @InjectModel(SignatureOLD.name) private sigModel: Model<SignatureDocument>,
     private signatureSearchService: SignatureSearchService,
     private signatureMutationService: SignatureMutationService,
     private connectionMutationService: ConnectionMutationService,

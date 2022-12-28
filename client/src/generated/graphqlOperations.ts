@@ -57,9 +57,16 @@ export type ConnectionInput = {
   reverseSignature: CreatableSignatureWithoutConnection;
 };
 
+export type ConnectionInputUpdate = {
+  eol: Scalars["Boolean"];
+  massStatus: MassStatus;
+  reverseSignature: SignatureUpdateWithoutConnection;
+};
+
 export type CreatableSignature = {
   connection?: InputMaybe<ConnectionInput>;
   eveId: Scalars["String"];
+  id?: InputMaybe<Scalars["String"]>;
   name: Scalars["String"];
   systemName: Scalars["String"];
   type: SigType;
@@ -68,6 +75,7 @@ export type CreatableSignature = {
 
 export type CreatableSignatureWithoutConnection = {
   eveId: Scalars["String"];
+  id?: InputMaybe<Scalars["String"]>;
   name: Scalars["String"];
   systemName: Scalars["String"];
   type: SigType;
@@ -200,7 +208,7 @@ export type Query = {
   getManageableFolders: Array<Folder>;
   getPublicAppData: PublicAppData;
   getSignaturesBySystem: Array<Signature>;
-  getSystemByName: System;
+  getSystemByName?: Maybe<System>;
   searchCharactersByMain: Array<Character>;
   startSsoLogin: StartSsoLoginDto;
   whoami: User;
@@ -266,15 +274,11 @@ export type SignatureOld = {
   wormholeType?: Maybe<Scalars["String"]>;
 };
 
-export type SignatureUpdate = {
-  destinationName?: InputMaybe<Scalars["String"]>;
-  eol?: InputMaybe<Scalars["Boolean"]>;
-  eveId?: InputMaybe<Scalars["String"]>;
+export type SignatureUpdateWithoutConnection = {
+  eveId: Scalars["String"];
   id: Scalars["String"];
-  massStatus?: InputMaybe<MassStatus>;
-  name?: InputMaybe<Scalars["String"]>;
-  reverseType?: InputMaybe<Scalars["String"]>;
-  systemName?: InputMaybe<Scalars["String"]>;
+  name: Scalars["String"];
+  systemName: Scalars["String"];
   type: SigType;
   wormholeType?: InputMaybe<Scalars["String"]>;
 };
@@ -309,7 +313,17 @@ export enum SystemRoles {
 }
 
 export type UpdateSignaturesInput = {
-  signatures: Array<SignatureUpdate>;
+  signatures: Array<UpdateableSignature>;
+};
+
+export type UpdateableSignature = {
+  connection?: InputMaybe<ConnectionInputUpdate>;
+  eveId: Scalars["String"];
+  id: Scalars["String"];
+  name: Scalars["String"];
+  systemName: Scalars["String"];
+  type: SigType;
+  wormholeType?: InputMaybe<Scalars["String"]>;
 };
 
 export type User = {
@@ -492,7 +506,7 @@ export type SystemQueryVariables = Exact<{
 
 export type SystemQuery = {
   __typename?: "Query";
-  getSystemByName: { __typename?: "System"; id: string; name: string };
+  getSystemByName?: { __typename?: "System"; id: string; name: string } | null;
   getSignaturesBySystem: Array<{
     __typename?: "Signature";
     id: string;

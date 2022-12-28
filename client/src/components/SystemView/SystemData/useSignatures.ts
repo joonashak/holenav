@@ -8,7 +8,7 @@ import {
   DeleteSignaturesDocument,
   Signature,
   SignatureOld,
-  SignatureUpdate,
+  UpdateableSignature,
   UpdateSignaturesDocument,
 } from "../../../generated/graphqlOperations";
 
@@ -42,7 +42,7 @@ const useSignatures = () => {
     },
   });
 
-  const updateSignatures = async (signatures: SignatureUpdate[]): Promise<FetchResult> =>
+  const updateSignatures = async (signatures: UpdateableSignature[]): Promise<FetchResult> =>
     updateSigsMutation({ variables: { input: { signatures } } });
 
   const [deleteSigsMutation] = useAuthenticatedMutation(DeleteSignaturesDocument, {

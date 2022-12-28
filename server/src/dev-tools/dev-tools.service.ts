@@ -6,7 +6,6 @@ import { SsoSession } from "../auth/sso/sso-session/sso-session.model";
 import { ConnectionGraphService } from "../connection-graph/connection-graph.service";
 import { Character } from "../entities/character/character.model";
 import { Folder } from "../entities/folder/folder.model";
-import { SignatureOLD } from "../entities/signature/signature-OLD.model";
 import { Credentials } from "../user/credentials/credentials.model";
 import { User } from "../user/user.model";
 import users from "./data/users";
@@ -19,7 +18,6 @@ export class DevToolsService {
   constructor(
     @InjectModel(Character.name) private characterModel: Model<Character>,
     @InjectModel(Folder.name) private folderModel: Model<Folder>,
-    @InjectModel(SignatureOLD.name) private signatureModel: Model<SignatureOLD>,
     @InjectModel(SsoSession.name) private ssoSessionModel: Model<SsoSession>,
     @InjectModel(User.name) private userModel: Model<User>,
     @InjectModel(Credentials.name) private credentialsModel: Model<Credentials>,
@@ -59,7 +57,6 @@ export class DevToolsService {
   private async clearCollections() {
     await this.characterModel.deleteMany({});
     await this.folderModel.deleteMany({});
-    await this.signatureModel.deleteMany({});
     await this.ssoSessionModel.deleteMany({});
     await this.userModel.deleteMany({});
     await this.credentialsModel.deleteMany({});
