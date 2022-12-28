@@ -71,12 +71,11 @@ export class SignatureService {
     return this.signatureMutationService.deleteSignatures(ids);
   }
 
-  // FIXME: Fix type after all cases have been updated.
   private async updateSignature(
     update: UpdateableSignature,
     old: Signature,
     folder: Folder,
-  ): Promise<any> {
+  ): Promise<Signature> {
     if (!isWormhole(old) && isWormhole(update)) {
       const sigWithReverseId = set(update, "connection.reverseSignature.id", uuid());
       const graphSafeSig =
@@ -94,13 +93,7 @@ export class SignatureService {
     }
 
     if (isWormhole(old) && !isWormhole(update)) {
-      // FIXME:
-      //await this.sigModel.findByIdAndDelete(old.reverse);
-      return this.sigModel.findOneAndUpdate(
-        { id: update.id },
-        { ...update, reverse: null },
-        { returnDocument: "after" },
-      );
+      await this.signatureMutationService.deleteSignatures([old.connection.reverseSignature.id]);
     }
 
     if (isWormhole(old) && isWormhole(update)) {
