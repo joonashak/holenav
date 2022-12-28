@@ -1,4 +1,9 @@
 import {
+  openSignatureForm,
+  setSignatureFormValues,
+  submitSignatureForm,
+} from "../support/helpers/signatureForm.utils";
+import {
   openWormholeForm,
   setWormholeFormValues,
   submitWormholeForm,
@@ -149,5 +154,31 @@ describe("Wormholes", () => {
 
     cy.visitAndWaitForXhr("/system/Perimeter");
     cy.get("#scanning-content").should("not.contain.text", "wormhole");
+  });
+
+  it("Can update signature into wormhole", () => {
+    const sig = {
+      type: "RELIC",
+      name: "Type Update Test 1",
+      eveId: "JEE-999",
+    };
+
+    openSignatureForm();
+    setSignatureFormValues(sig);
+    submitSignatureForm();
+
+    const update = {
+      destinationName: "Mies",
+      type: "H296",
+    };
+
+    cy.cs("edit-sig-Type Update Test 1").click();
+    cy.cs("select-Signature Type").click();
+    cy.get("[data-value=WORMHOLE]").click();
+    setWormholeFormValues(update);
+    submitWormholeForm();
+
+    cy.visitAndWaitForXhr("/system/Mies");
+    cy.get("#scanning-content").should("contain.text", "wormhole");
   });
 });

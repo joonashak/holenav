@@ -53,6 +53,16 @@ const useWormholeForm = (props: UseWormholeFormProps) => {
     const id = existing?.id || "";
     const { whType, whReverseType, life, mass, name, destinationName } = formData;
 
+    // Add missing fields when updating non-WH sig into WH.
+    const reverseSignature = existing?.connection
+      ? omit(existing?.connection?.reverseSignature, ["__typename"])
+      : {
+          eveId: "",
+          type: SigType.Wormhole,
+          name: "",
+          id: "",
+        };
+
     const mutationData = {
       ...omit(existing, ["__typename"]),
       id,
@@ -65,7 +75,7 @@ const useWormholeForm = (props: UseWormholeFormProps) => {
         eol: life === "eol",
         massStatus: mass,
         reverseSignature: {
-          ...omit(existing?.connection?.reverseSignature, ["__typename"]),
+          ...reverseSignature,
           systemName: destinationName || "",
           wormholeType: whReverseType,
         },
