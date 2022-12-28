@@ -16,7 +16,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          node-version: 16.4
+          node-version: 18.12.1
       - name: Install dependencies
         run: npm ci
       - name: Lint client
@@ -32,7 +32,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          node-version: 16.4
+          node-version: 18.12.1
       - name: Install dependencies
         run: npm ci
       - name: Lint server
@@ -48,7 +48,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          node-version: 16.4
+          node-version: 18.12.1
       - name: Install dependencies
         run: npm ci
       - name: Lint E2E tests
@@ -64,7 +64,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          node-version: 16.4
+          node-version: 18.12.1
       - name: Install dependencies
         run: npm ci
       - name: Run unit tests
