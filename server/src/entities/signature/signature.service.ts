@@ -1,21 +1,21 @@
 import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
-import { Folder } from "../../folder/folder.model";
-import { SignatureOLD, SignatureDocument } from "../signature-OLD.model";
-import { Signature } from "../signature.model";
-import { isWormhole } from "../signature.utils";
-import { CreatableSignature } from "../dto/add-signatures.dto";
-import { addUuid, addUuidToSignatureAndReverseSignature } from "../../../utils/addUuid";
-import { SignatureSearchService } from "../neo/signature-search.service";
-import { SignatureMutationService } from "../neo/signature-mutation.service";
-import { ConnectionMutationService } from "../neo/connection-mutation.service";
-import { SystemMutationService } from "../neo/system-mutation.service";
-import SigType from "../enums/sig-type.enum";
+import { Folder } from "../folder/folder.model";
+import { SignatureOLD, SignatureDocument } from "./signature-OLD.model";
+import { Signature } from "./signature.model";
+import { isWormhole } from "./signature.utils";
+import { CreatableSignature } from "./dto/add-signatures.dto";
+import { addUuid, addUuidToSignatureAndReverseSignature } from "../../utils/addUuid";
+import { SignatureSearchService } from "./neo/signature-search.service";
+import { SignatureMutationService } from "./neo/signature-mutation.service";
+import { ConnectionMutationService } from "./neo/connection-mutation.service";
+import { SystemMutationService } from "./neo/system-mutation.service";
+import SigType from "./enums/sig-type.enum";
 import { set } from "lodash";
-import uuid from "../../../utils/uuid";
-import { UpdateableSignature } from "../dto/update-signatures.dto";
-import { addK162 } from "../../../utils/addK162";
+import uuid from "../../utils/uuid";
+import { UpdateableSignature } from "./dto/update-signatures.dto";
+import { addK162 } from "../../utils/addK162";
 
 // TODO: Move signatures completely to Neo4j. Queries in connection graph module, call them here, etc.
 

@@ -6,7 +6,7 @@ import { Folder } from "../folder/folder.model";
 import { AddSignaturesInput } from "./dto/add-signatures.dto";
 import { DeleteSignaturesInput } from "./dto/delete-signatures.dto";
 import { UpdateSignaturesInput } from "./dto/update-signatures.dto";
-import { SignatureService } from "./services/signature.service";
+import { SignatureService } from "./signature.service";
 import { Signature } from "./signature.model";
 
 @Resolver()

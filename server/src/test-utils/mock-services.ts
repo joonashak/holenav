@@ -4,7 +4,6 @@ import { SsoApiService } from "../auth/sso/sso-api.service";
 import { SsoSessionService } from "../auth/sso/sso-session/sso-session.service";
 import { CharacterService } from "../entities/character/character.service";
 import { FolderService } from "../entities/folder/folder.service";
-import { WormholeService } from "../entities/signature/services/wormhole.service";
 import { UserService } from "../user/user.service";
 import {
   testFolder,
@@ -78,13 +77,5 @@ export const MockFolderService = {
   provide: FolderService,
   useFactory: () => ({
     getFolderById: fn().mockResolvedValue({ ...testFolder, _id: testFolder.id }),
-  }),
-};
-
-export const MockWormholeService = {
-  provide: WormholeService,
-  useFactory: () => ({
-    addWhTypes: fn((x) => x),
-    addReverseWormholes: fn(async (x) => x),
   }),
 };

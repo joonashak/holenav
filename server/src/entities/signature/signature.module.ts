@@ -4,8 +4,7 @@ import { FolderModule } from "../folder/folder.module";
 import { FolderService } from "../folder/folder.service";
 import { SignatureOLD, SignatureSchema } from "./signature-OLD.model";
 import { SignatureResolver } from "./signature.resolver";
-import { SignatureService } from "./services/signature.service";
-import { WormholeService } from "./services/wormhole.service";
+import { SignatureService } from "./signature.service";
 import { Neo4jModule } from "../../integration/neo4j/neo4j.module";
 import { SystemMutationService } from "./neo/system-mutation.service";
 import { SignatureSearchService } from "./neo/signature-search.service";
@@ -21,7 +20,6 @@ import { ConnectionMutationService } from "./neo/connection-mutation.service";
   exports: [
     MongooseModule,
     SignatureService,
-    WormholeService,
     SystemMutationService,
     SignatureSearchService,
     SignatureMutationService,
@@ -31,7 +29,6 @@ import { ConnectionMutationService } from "./neo/connection-mutation.service";
     SignatureResolver,
     SignatureService,
     FolderService,
-    WormholeService,
     SystemMutationService,
     SignatureSearchService,
     SignatureMutationService,
