@@ -43,5 +43,10 @@ declare namespace Cypress {
      * autocompletes in the DOM.
      */
     getDropdownOptions(): Chainable<Element>;
+
+    /**
+     * Visit given `url` and wait for XHR requests to complete before proceeding.
+     */
+    visitAndWaitForXhr(url: string): void;
   }
 }

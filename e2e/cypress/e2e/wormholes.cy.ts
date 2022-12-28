@@ -12,7 +12,7 @@ describe("Wormholes", () => {
   beforeEach(() => {
     cy.resetDatabase();
     cy.mockNormalUser();
-    cy.visit(testSystemUrl);
+    cy.visitAndWaitForXhr(testSystemUrl);
   });
 
   it("Can add new wormhole", () => {
@@ -62,12 +62,12 @@ describe("Wormholes", () => {
     submitWormholeForm();
     testWormholeProperties(wh);
 
-    cy.visit(testSystemUrl);
+    cy.visitAndWaitForXhr(testSystemUrl);
     cy.cs("sig-list-body").should("contain.text", wh.name);
     cy.cs("delete-sig-Deleting Test 1").click();
     cy.cs("confirm-button").click();
     cy.contains("Signature deleted.");
-    cy.visit(testSystemUrl);
+    cy.visitAndWaitForXhr(testSystemUrl);
     cy.cs("sig-list-body").should("not.contain.text", wh.name);
   });
 
@@ -107,14 +107,14 @@ describe("Wormholes", () => {
     setWormholeFormValues(wh);
     submitWormholeForm();
 
-    cy.visit(testSystemUrl);
+    cy.visitAndWaitForXhr(testSystemUrl);
     cy.cs("edit-sig-Connection Test 2").click();
     setWormholeFormValues(update);
     submitWormholeForm();
 
     testWormholeProperties({ ...wh, ...update, reverseType: "K162" });
 
-    cy.visit("/system/Dodixie");
+    cy.visitAndWaitForXhr("/system/Dodixie");
     cy.get("#scanning-content").should("not.contain.text", "Wormhole");
     cy.get("#scanning-content").should("not.contain.text", "K162");
     cy.get("#scanning-content").should("not.contain.text", "V753");
@@ -142,17 +142,12 @@ describe("Wormholes", () => {
     setWormholeFormValues(wh);
     submitWormholeForm();
 
-    cy.visit(testSystemUrl);
+    cy.visitAndWaitForXhr(testSystemUrl);
     cy.cs("edit-sig-Connection Test 3").click();
     cy.cs("autocomplete-destinationName").clear();
     submitWormholeForm();
 
-    cy.get("[data-cy=autocomplete-destinationName-input] > div > input").should(
-      "not.have.value",
-      wh.destinationName
-    );
-
-    cy.visit("/system/Perimeter");
-    cy.get("#scanning-content").should("not.contain.text", "rev from Jita");
+    cy.visitAndWaitForXhr("/system/Perimeter");
+    cy.get("#scanning-content").should("not.contain.text", "wormhole");
   });
 });

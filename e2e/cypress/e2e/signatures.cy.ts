@@ -45,7 +45,7 @@ describe("Signatures", () => {
     setSignatureFormValues(sig);
     submitSignatureForm();
 
-    cy.visit(testSystemUrl);
+    cy.visitAndWaitForXhr(testSystemUrl);
     cy.cs("edit-sig-Test Sig 2").click();
     setSignatureFormValues(update);
     submitSignatureForm();
@@ -64,11 +64,11 @@ describe("Signatures", () => {
     setSignatureFormValues(sig);
     submitSignatureForm();
 
-    cy.visit(testSystemUrl);
+    cy.visitAndWaitForXhr(testSystemUrl);
     cy.cs("sig-list-body").should("contain.text", sig.name);
     cy.cs("delete-sig-Test Sig 3").click();
     cy.cs("confirm-button").click();
-    cy.visit(testSystemUrl);
+    cy.visitAndWaitForXhr(testSystemUrl);
     cy.cs("sig-list-body").should("not.contain.text", sig.name);
   });
 });

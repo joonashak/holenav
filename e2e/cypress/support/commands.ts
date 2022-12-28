@@ -35,3 +35,20 @@ Cypress.Commands.add("getDropdownOptions", () => {
     timeout: 10000,
   });
 });
+
+Cypress.Commands.add("visitAndWaitForXhr", (url: string) => {
+  cy.visit(url);
+
+  cy.intercept({
+    method: "GET",
+    url: `${apiUrl}/**`,
+  }).as("xhrGet");
+
+  cy.intercept({
+    method: "POST",
+    url: `${apiUrl}/**`,
+  }).as("xhrPost");
+
+  cy.wait("@xhrGet");
+  cy.wait("@xhrPost");
+});
