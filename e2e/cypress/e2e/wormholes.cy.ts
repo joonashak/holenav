@@ -9,12 +9,9 @@ const testSystem = "J104809";
 const testSystemUrl = `/system/${testSystem}`;
 
 describe("Wormholes", () => {
-  before(() => {
+  beforeEach(() => {
     cy.resetDatabase();
     cy.mockNormalUser();
-  });
-
-  beforeEach(() => {
     cy.visit(testSystemUrl);
   });
 

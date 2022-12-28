@@ -31,7 +31,7 @@ describe("Authentication", () => {
   });
 
   describe("Logout", () => {
-    before(() => {
+    beforeEach(() => {
       cy.resetDatabase();
       cy.visit("/");
     });

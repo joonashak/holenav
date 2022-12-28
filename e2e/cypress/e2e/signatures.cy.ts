@@ -8,12 +8,9 @@ import {
 const testSystemUrl = "/system/Jita";
 
 describe("Signatures", () => {
-  before(() => {
+  beforeEach(() => {
     cy.resetDatabase();
     cy.mockNormalUser();
-  });
-
-  beforeEach(() => {
     cy.visit(testSystemUrl);
   });
 
