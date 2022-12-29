@@ -181,4 +181,28 @@ describe("Wormholes", () => {
     cy.visitAndWaitForXhr("/system/Mies");
     cy.get("#scanning-content").should("contain.text", "wormhole");
   });
+
+  it("Can update wormhole into signature", () => {
+    const wh = {
+      name: "Type Update Test 2",
+      destinationName: "Tama",
+      type: "C140",
+    };
+
+    openWormholeForm();
+    setWormholeFormValues(wh);
+    submitWormholeForm();
+
+    cy.visitAndWaitForXhr("/system/Tama");
+    cy.get("#scanning-content").should("contain.text", "wormhole");
+
+    cy.visitAndWaitForXhr(testSystemUrl);
+    cy.cs("edit-sig-Type Update Test 2").click();
+    cy.cs("select-Signature Type").click();
+    cy.get("[data-value=DATA]").click();
+    submitSignatureForm();
+
+    cy.visitAndWaitForXhr("/system/Tama");
+    cy.get("#scanning-content").should("not.contain.text", "wormhole");
+  });
 });
