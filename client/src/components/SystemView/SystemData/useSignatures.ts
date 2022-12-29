@@ -11,6 +11,7 @@ import {
   UpdateableSignature,
   UpdateSignaturesDocument,
 } from "../../../generated/graphqlOperations";
+import { stripGraphQlTypenames } from "../../../utils/stripGraphQlTypenames";
 
 export type AddSignatureHookInput = Omit<Signature, "id" | "systemName">;
 
@@ -43,7 +44,9 @@ const useSignatures = () => {
   });
 
   const updateSignatures = async (signatures: UpdateableSignature[]): Promise<FetchResult> =>
-    updateSigsMutation({ variables: { input: { signatures } } });
+    updateSigsMutation({
+      variables: { input: { signatures: signatures.map(stripGraphQlTypenames) } },
+    });
 
   const [deleteSigsMutation] = useAuthenticatedMutation(DeleteSignaturesDocument, {
     onCompleted: (data) => {

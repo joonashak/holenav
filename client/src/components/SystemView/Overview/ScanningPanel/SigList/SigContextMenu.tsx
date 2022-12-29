@@ -43,22 +43,21 @@ const SigContextMenu = ({ children, signature }: SigContextMenuProps) => {
   const holesWithoutIds = signatures.filter((sig) => sig.type === SigType.Wormhole && !sig.eveId);
   const returnConnectionWithoutId = holesWithoutIds.length === 1 ? holesWithoutIds[0] : null;
 
-  const enabled = returnConnectionWithoutId && signature.eveId && !signature.wormholeType;
+  const markSigAsReturnWormholeEnabled =
+    returnConnectionWithoutId && signature.eveId && !signature.wormholeType;
 
   const markSigAsReturnWormhole = async () => {
-    throw new Error("Not implemented.");
-    /*
     if (!returnConnectionWithoutId) {
       showErrorNotification("Could not figure out what signature to link.");
       handleClose();
       return;
     }
+
     await deleteSignatures([signature.id]);
     await updateSignatures([
-      { eveId: signature.eveId, id: returnConnectionWithoutId.id, type: SigType.Wormhole },
+      { ...returnConnectionWithoutId, eveId: signature.eveId, type: SigType.Wormhole },
     ]);
     handleClose();
-    */
   };
 
   return (
@@ -76,7 +75,7 @@ const SigContextMenu = ({ children, signature }: SigContextMenuProps) => {
           contextMenu !== null ? { top: contextMenu.mouseY, left: contextMenu.mouseX } : undefined
         }
       >
-        <MenuItem onClick={markSigAsReturnWormhole} disabled={!enabled}>
+        <MenuItem onClick={markSigAsReturnWormhole} disabled={!markSigAsReturnWormholeEnabled}>
           Mark {signature.eveId} as Return Wormhole
         </MenuItem>
       </Menu>
