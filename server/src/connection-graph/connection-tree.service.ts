@@ -22,8 +22,13 @@ export class ConnectionTreeService {
     return connectionTree;
   }
 
-  private findChildren(allChildren: any[], currentSystemName: string): ConnectionTreeNode[] {
-    // TODO: Make sure this stops on loop.
+  private findChildren(
+    allChildren: any[],
+    currentSystemName: string,
+    systemsInTree: string[] = [],
+  ): ConnectionTreeNode[] {
+    systemsInTree.push(currentSystemName);
+
     const children = allChildren
       .filter(
         (child) =>
@@ -32,7 +37,6 @@ export class ConnectionTreeService {
       )
       .map((child) => {
         const { connection, to, from } = child;
-        // FIXME: This will not work for K162 (reversed) holes without destination system name.
         const reversed = to.system.name === currentSystemName;
         const signature = reversed ? to : from;
         const system = reversed ? from.system : to.system;
@@ -45,14 +49,19 @@ export class ConnectionTreeService {
           reverseType: reversed ? connection.wormholeType : connection.reverseType,
         };
 
+        const loop = systemsInTree.includes(system.name);
+
         return {
-          name: from.name,
+          name: loop ? `Loop to ${system.name}` : from.name,
           wormhole,
           signature,
-          children: this.findChildren(
-            allChildren.filter((c) => c.id !== child.id),
-            system.name,
-          ),
+          children: loop
+            ? []
+            : this.findChildren(
+                allChildren.filter((c) => c.id !== child.id),
+                system.name,
+                systemsInTree,
+              ),
         };
       });
 
