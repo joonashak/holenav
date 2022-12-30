@@ -1,6 +1,6 @@
 # Database
 
-Designed to be used with a Mongo DaaS but self-hosted will naturally work as well.
+The development environment spins up Docker containers for a Mongo database and two Neo4j databases. Two Neo4j's are needed to have separate databases for dev and test environments, as the community edition does not allow for using multiple databases per instance.
 
 ## Database Diagram
 
