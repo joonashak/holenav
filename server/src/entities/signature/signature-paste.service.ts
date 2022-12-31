@@ -10,8 +10,14 @@ export class SignaturePasteService {
 
   async applySignaturePaste(paste: SignaturePaste, folder: Folder): Promise<Signature[]> {
     const existingSigs = await this.signatureService.getBySystem(paste.systemName, folder);
+
     const addableSigs = this.getAddableSigs(paste, existingSigs);
-    return this.signatureService.createSignatures(addableSigs, folder);
+    const addedSigs = await this.signatureService.createSignatures(addableSigs, folder);
+
+    const updateableSigs = this.getUpdateableSigs(paste, existingSigs);
+    const updatedSigs = await this.signatureService.updateSignatures(updateableSigs, folder);
+
+    return addedSigs.concat(updatedSigs);
   }
 
   private getAddableSigs(paste: SignaturePaste, existing: Signature[]) {
@@ -22,5 +28,28 @@ export class SignaturePasteService {
       .map((pastedSig) => ({ ...pastedSig, systemName: paste.systemName }));
 
     return addableSigs;
+  }
+
+  private getUpdateableSigs(paste: SignaturePaste, existing: Signature[]) {
+    return paste.pastedSignatures.reduce((updateableSigs, pastedSig) => {
+      const existingSig = existing.find((sig) => sig.eveId === pastedSig.eveId);
+
+      // The only scenarios when an update is performed based on paste data.
+      const sigExistsWihtoutTypeAndPasteHasType =
+        existingSig && !existingSig.type && pastedSig.type;
+      const sigExistsWithoutNameAndPasteHasName =
+        existingSig && !existingSig.name && pastedSig.name;
+
+      if (sigExistsWihtoutTypeAndPasteHasType || sigExistsWithoutNameAndPasteHasName) {
+        return updateableSigs.concat({
+          ...existingSig,
+          type: pastedSig.type,
+          name: pastedSig.name,
+          systemName: paste.systemName,
+        });
+      }
+
+      return updateableSigs;
+    }, []);
   }
 }

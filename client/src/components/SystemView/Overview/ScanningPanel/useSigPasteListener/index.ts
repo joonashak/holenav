@@ -16,11 +16,10 @@ const useSigPasteListener = () => {
       console.log(pasteEvent);
     } catch (error: any) {
       showWarningNotification(error.message, { autoHide: true });
-      return;
     }
 
-    //await addSignatures(batch.signatureAdd);
-    //await updateSignatures(batch.signatureUpdate);
+    // await addSignatures(batch.signatureAdd);
+    // await updateSignatures(batch.signatureUpdate);
   };
 
   return {
