@@ -39,14 +39,15 @@ export class ConnectionTreeService {
         const { connection, to, from } = child;
         const reversed = to.system.name === currentSystemName;
         const signature = reversed ? to : from;
+        const reverseSignature = reversed ? from : to;
         const system = reversed ? from.system : to.system;
 
         const wormhole = {
           ...connection,
           destinationName: system.name,
           unknownDestination: system.pseudo,
-          wormholeType: reversed ? connection.reverseType : connection.wormholeType,
-          reverseType: reversed ? connection.wormholeType : connection.reverseType,
+          wormholeType: signature.wormholeType,
+          reverseType: reverseSignature.wormholeType,
         };
 
         const loop = systemsInTree.includes(system.name);
