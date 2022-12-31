@@ -15,6 +15,7 @@ export default ({ children }: ContainerProps) => (
       maxWidth: "100vw",
       height: "100vh",
       margin: 0,
+      overflow: "scroll",
     }}
   >
     {children}
