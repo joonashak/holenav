@@ -8,10 +8,15 @@ import { DeleteSignaturesInput } from "./dto/delete-signatures.dto";
 import { UpdateSignaturesInput } from "./dto/update-signatures.dto";
 import { SignatureService } from "./signature.service";
 import { Signature } from "./signature.model";
+import { SignaturePaste } from "./dto/paste-signatures.dto";
+import { SignaturePasteService } from "./signature-paste.service";
 
 @Resolver()
 export class SignatureResolver {
-  constructor(private sigService: SignatureService) {}
+  constructor(
+    private sigService: SignatureService,
+    private sigPasteService: SignaturePasteService,
+  ) {}
 
   @RequireFolderRole(FolderRole.READ)
   @Query((returns) => [Signature])
@@ -48,5 +53,14 @@ export class SignatureResolver {
   async deleteSignatures(@Args("input") input: DeleteSignaturesInput): Promise<Signature[]> {
     const signatures = await this.sigService.deleteSignatures(input.ids);
     return signatures;
+  }
+
+  @RequireFolderRole(FolderRole.WRITE)
+  @Mutation((returns) => [Signature])
+  async pasteSignatures(
+    @Args("input") input: SignaturePaste,
+    @ActiveFolder() activeFolder: Folder,
+  ): Promise<Signature[]> {
+    return this.sigPasteService.applySignaturePaste(input, activeFolder);
   }
 }

@@ -8,6 +8,7 @@ import { SystemMutationService } from "./neo/system-mutation.service";
 import { SignatureSearchService } from "./neo/signature-search.service";
 import { SignatureMutationService } from "./neo/signature-mutation.service";
 import { ConnectionMutationService } from "./neo/connection-mutation.service";
+import { SignaturePasteService } from "./signature-paste.service";
 
 @Module({
   imports: [FolderModule, Neo4jModule],
@@ -21,6 +22,7 @@ import { ConnectionMutationService } from "./neo/connection-mutation.service";
   providers: [
     SignatureResolver,
     SignatureService,
+    SignaturePasteService,
     FolderService,
     SystemMutationService,
     SignatureSearchService,
