@@ -1,6 +1,7 @@
 import { CreatableSignature, Signature } from "../../../../../generated/graphqlOperations";
+import { findSigByEveId } from "../../../../../utils/findSigByEveId";
 
-import { PastedSig, SigPasteEvent } from "./sigPasteParser";
+import { PastedSig } from "./sigPasteParser";
 
 export type SigPasteBatch = {
   signatureAdd: CreatableSignature[];
@@ -10,10 +11,9 @@ export type SigPasteBatch = {
 const createSignatureAddReducer =
   (signatures: Signature[]) => (addableSignatures: CreatableSignature[], sig: PastedSig) => {
     const { type, eveId, name } = sig;
-    const existingSig = signatures.find((s) => s.eveId === eveId);
+    const existingSig = findSigByEveId(eveId, signatures);
 
     if (!existingSig) {
-      // FIXME: Pastes need to include current system to work.
       const newSignature = { type, eveId, name, systemName: "" };
       return addableSignatures.concat([newSignature]);
     }
@@ -24,7 +24,7 @@ const createSignatureAddReducer =
 const createSignatureUpdateReducer =
   (signatures: Signature[]) => (sigUpdates: Signature[], sig: PastedSig) => {
     const { type, eveId, name } = sig;
-    const existingSig = signatures.find((s) => s.eveId === eveId);
+    const existingSig = findSigByEveId(eveId, signatures);
 
     // Only scenarios when an update is performed based on paste data.
     const sigExistsWihtoutTypeAndPasteHasType = existingSig && !existingSig.type && type;
@@ -38,11 +38,11 @@ const createSignatureUpdateReducer =
   };
 
 const createSigPasteBatch = (
-  paste: SigPasteEvent,
+  paste: PastedSig[],
   existingSignatures: Signature[]
 ): SigPasteBatch => ({
-  signatureAdd: paste.pastedSigs.reduce(createSignatureAddReducer(existingSignatures), []),
-  signatureUpdate: paste.pastedSigs.reduce(createSignatureUpdateReducer(existingSignatures), []),
+  signatureAdd: paste.reduce(createSignatureAddReducer(existingSignatures), []),
+  signatureUpdate: paste.reduce(createSignatureUpdateReducer(existingSignatures), []),
 });
 
 export default createSigPasteBatch;

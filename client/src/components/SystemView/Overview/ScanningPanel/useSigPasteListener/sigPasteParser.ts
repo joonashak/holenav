@@ -6,11 +6,6 @@ export type PastedSig = {
   name: string;
 };
 
-export type SigPasteEvent = {
-  pastedSigs: PastedSig[];
-  pastedWormholes: PastedSig[];
-};
-
 const findSigType = (typeString: string): SigType => {
   const sigTypeMap = {
     "Data Site": SigType.Data,
@@ -43,16 +38,13 @@ const formatPasteRow = (row: string[]): PastedSig => {
   }
 
   const type = findSigType(row[2]);
-  const name = row[3];
+  const name = type === SigType.Wormhole ? "" : row[3];
   return { eveId, type, name };
 };
 
-const parsePaste = (pasteEvent: ClipboardEvent): SigPasteEvent => {
+const parsePaste = (pasteEvent: ClipboardEvent): PastedSig[] => {
   const pasteMatrix = getPasteDataMatrix(pasteEvent);
-  const formattedData = pasteMatrix.map(formatPasteRow);
-  const pastedSigs = formattedData.filter((sig) => sig.type !== SigType.Wormhole);
-  const pastedWormholes = formattedData.filter((sig) => sig.type === SigType.Wormhole);
-  return { pastedSigs, pastedWormholes };
+  return pasteMatrix.map(formatPasteRow);
 };
 
 export default parsePaste;

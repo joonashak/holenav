@@ -1,9 +1,9 @@
 import { Injectable } from "@nestjs/common";
 import { Folder } from "../folder/folder.model";
 import { Signature } from "./signature.model";
-import { isWormhole } from "./signature.utils";
+import { addK162, completeSignature, isWormhole } from "./signature.utils";
 import { CreatableSignature } from "./dto/add-signatures.dto";
-import { addUuid, addUuidToSignatureAndReverseSignature } from "../../utils/addUuid";
+import { addUuid } from "../../utils/addUuid";
 import { SignatureSearchService } from "./neo/signature-search.service";
 import { SignatureMutationService } from "./neo/signature-mutation.service";
 import { ConnectionMutationService } from "./neo/connection-mutation.service";
@@ -12,7 +12,6 @@ import SigType from "./enums/sig-type.enum";
 import { set } from "lodash";
 import uuid from "../../utils/uuid";
 import { UpdateableSignature } from "./dto/update-signatures.dto";
-import { addK162 } from "../../utils/addK162";
 
 @Injectable()
 export class SignatureService {
@@ -28,7 +27,7 @@ export class SignatureService {
   }
 
   async createSignatures(signatures: CreatableSignature[], folder: Folder): Promise<Signature[]> {
-    const sigsWithIds = signatures.map(addUuidToSignatureAndReverseSignature).map(addK162);
+    const sigsWithIds = signatures.map(completeSignature);
     const graphSafeSigs = sigsWithIds.map(
       this.systemMutationService.transformUnknownReverseSystemIntoPseudoSystem,
     );
