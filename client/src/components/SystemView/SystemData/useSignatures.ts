@@ -6,8 +6,9 @@ import {
   AddSignaturesDocument,
   CreatableSignature,
   DeleteSignaturesDocument,
+  PastedSignature,
+  PasteSignaturesDocument,
   Signature,
-  SignatureOld,
   UpdateableSignature,
   UpdateSignaturesDocument,
 } from "../../../generated/graphqlOperations";
@@ -36,8 +37,7 @@ const useSignatures = () => {
     onCompleted: (data) => {
       state.signatures.set((sigs) =>
         sigs.map(
-          (sig) =>
-            data.updateSignatures.find((updated: SignatureOld) => updated.id === sig.id) || sig
+          (sig) => data.updateSignatures.find((updated: Signature) => updated.id === sig.id) || sig
         )
       );
     },
@@ -50,7 +50,7 @@ const useSignatures = () => {
 
   const [deleteSigsMutation] = useAuthenticatedMutation(DeleteSignaturesDocument, {
     onCompleted: (data) => {
-      const deletedIds = data.deleteSignatures.map((sig: SignatureOld) => sig.id);
+      const deletedIds = data.deleteSignatures.map((sig: Signature) => sig.id);
       state.signatures.set((sigs) => sigs.filter((sig) => !deletedIds.includes(sig.id)));
     },
   });
@@ -58,6 +58,26 @@ const useSignatures = () => {
   const deleteSignatures = async (ids: string[]): Promise<void> => {
     await deleteSigsMutation({ variables: { input: { ids } } });
   };
+
+  const [pasteSigsMutation] = useAuthenticatedMutation(PasteSignaturesDocument, {
+    onCompleted: (data) => {
+      state.signatures.set((sigs) =>
+        sigs.map(
+          (sig) => data.updateSignatures.find((updated: Signature) => updated.id === sig.id) || sig
+        )
+      );
+    },
+  });
+
+  const pasteSignatures = async (pastedSignatures: PastedSignature[]) =>
+    pasteSigsMutation({
+      variables: {
+        input: {
+          pastedSignatures,
+          systemName: state.name.get(),
+        },
+      },
+    });
 
   return {
     get signatures() {

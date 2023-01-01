@@ -135,6 +135,7 @@ export type Mutation = {
   getToken: AccessTokenDto;
   login: AccessTokenDto;
   logout: LogoutDto;
+  pasteSignatures: Array<Signature>;
   removeAlt: User;
   updateMotd: AppData;
   updateSelectedMap: User;
@@ -179,6 +180,10 @@ export type MutationLoginArgs = {
   username: Scalars["String"];
 };
 
+export type MutationPasteSignaturesArgs = {
+  input: SignaturePaste;
+};
+
 export type MutationRemoveAltArgs = {
   esiId: Scalars["String"];
 };
@@ -193,6 +198,12 @@ export type MutationUpdateSelectedMapArgs = {
 
 export type MutationUpdateSignaturesArgs = {
   input: UpdateSignaturesInput;
+};
+
+export type PastedSignature = {
+  eveId: Scalars["String"];
+  name: Scalars["String"];
+  type: SigType;
 };
 
 export type PublicAppData = {
@@ -258,20 +269,9 @@ export type Signature = {
   wormholeType?: Maybe<Scalars["String"]>;
 };
 
-export type SignatureOld = {
-  __typename?: "SignatureOLD";
-  destinationName?: Maybe<Scalars["String"]>;
-  eol?: Maybe<Scalars["Boolean"]>;
-  eveId: Scalars["String"];
-  folder: Folder;
-  id: Scalars["String"];
-  massStatus?: Maybe<MassStatus>;
-  name: Scalars["String"];
-  reverse?: Maybe<SignatureOld>;
-  reverseType?: Maybe<Scalars["String"]>;
+export type SignaturePaste = {
+  pastedSignatures: Array<PastedSignature>;
   systemName: Scalars["String"];
-  type: SigType;
-  wormholeType?: Maybe<Scalars["String"]>;
 };
 
 export type SignatureUpdateWithoutConnection = {
@@ -601,6 +601,37 @@ export type DeleteSignaturesMutationVariables = Exact<{
 export type DeleteSignaturesMutation = {
   __typename?: "Mutation";
   deleteSignatures: Array<{
+    __typename?: "Signature";
+    id: string;
+    name: string;
+    type: SigType;
+    eveId: string;
+    systemName: string;
+    wormholeType?: string | null;
+    connection?: {
+      __typename?: "Connection";
+      eol: boolean;
+      massStatus: MassStatus;
+      reverseSignature: {
+        __typename?: "SignatureWithoutConnection";
+        id: string;
+        name: string;
+        type: SigType;
+        eveId: string;
+        systemName: string;
+        wormholeType?: string | null;
+      };
+    } | null;
+  }>;
+};
+
+export type PasteSignaturesMutationVariables = Exact<{
+  input: SignaturePaste;
+}>;
+
+export type PasteSignaturesMutation = {
+  __typename?: "Mutation";
+  pasteSignatures: Array<{
     __typename?: "Signature";
     id: string;
     name: string;
@@ -1376,6 +1407,49 @@ export const DeleteSignaturesDocument = {
     ...SignatureFieldsFragmentDoc.definitions,
   ],
 } as unknown as DocumentNode<DeleteSignaturesMutation, DeleteSignaturesMutationVariables>;
+export const PasteSignaturesDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "PasteSignatures" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "input" } },
+          type: {
+            kind: "NonNullType",
+            type: { kind: "NamedType", name: { kind: "Name", value: "SignaturePaste" } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "pasteSignatures" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "input" },
+                value: { kind: "Variable", name: { kind: "Name", value: "input" } },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "FragmentSpread", name: { kind: "Name", value: "SignatureFields" } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    ...SignatureFieldsFragmentDoc.definitions,
+  ],
+} as unknown as DocumentNode<PasteSignaturesMutation, PasteSignaturesMutationVariables>;
 export const UserDataDocument = {
   kind: "Document",
   definitions: [
