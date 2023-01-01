@@ -61,21 +61,31 @@ const useSignatures = () => {
 
   const [pasteSigsMutation] = useAuthenticatedMutation(PasteSignaturesDocument, {
     onCompleted: (data) => {
-      if (!data.pasteSignatures.length) {
+      if (data.pasteSignatures.length === 0) {
         return;
       }
 
-      const existingIds = state.signatures.get().map((sig) => sig.id);
+      const existingIds = state.signatures
+        .attach(Downgraded)
+        .get()
+        .map((sig) => sig.id);
 
       const newSigs = data.pasteSignatures.filter(
         (sig: Signature) => !existingIds.includes(sig.id)
       );
+
       state.signatures.set((sigs) => sigs.concat(newSigs));
 
+      if (newSigs.length === data.pasteSignatures.length) {
+        return;
+      }
+
+      const updatedSigs = data.pasteSignatures.filter((sig: Signature) =>
+        existingIds.includes(sig.id)
+      );
+
       state.signatures.set((sigs) =>
-        sigs.map(
-          (sig) => data.pasteSignatures.find((updated: Signature) => updated.id === sig.id) || sig
-        )
+        sigs.map((sig) => updatedSigs.find((updated: Signature) => updated.id === sig.id) || sig)
       );
     },
   });
