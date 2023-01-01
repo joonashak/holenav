@@ -61,9 +61,20 @@ const useSignatures = () => {
 
   const [pasteSigsMutation] = useAuthenticatedMutation(PasteSignaturesDocument, {
     onCompleted: (data) => {
+      if (!data.pasteSignatures.length) {
+        return;
+      }
+
+      const existingIds = state.signatures.get().map((sig) => sig.id);
+
+      const newSigs = data.pasteSignatures.filter(
+        (sig: Signature) => !existingIds.includes(sig.id)
+      );
+      state.signatures.set((sigs) => sigs.concat(newSigs));
+
       state.signatures.set((sigs) =>
         sigs.map(
-          (sig) => data.updateSignatures.find((updated: Signature) => updated.id === sig.id) || sig
+          (sig) => data.pasteSignatures.find((updated: Signature) => updated.id === sig.id) || sig
         )
       );
     },
@@ -86,6 +97,7 @@ const useSignatures = () => {
     addSignatures,
     updateSignatures,
     deleteSignatures,
+    pasteSignatures,
   };
 };
 
