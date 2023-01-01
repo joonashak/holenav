@@ -1,6 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { Folder } from "../folder/folder.model";
 import { SignaturePaste } from "./dto/paste-signatures.dto";
+import SigType from "./enums/sig-type.enum";
 import { Signature } from "./signature.model";
 import { SignatureService } from "./signature.service";
 
@@ -15,6 +16,7 @@ export class SignaturePasteService {
     const addedSigs = await this.signatureService.createSignatures(addableSigs, folder);
 
     const updateableSigs = this.getUpdateableSigs(paste, existingSigs);
+
     const updatedSigs = await this.signatureService.updateSignatures(updateableSigs, folder);
 
     return addedSigs.concat(updatedSigs);
@@ -34,9 +36,14 @@ export class SignaturePasteService {
     return paste.pastedSignatures.reduce((updateableSigs, pastedSig) => {
       const existingSig = existing.find((sig) => sig.eveId === pastedSig.eveId);
 
+      if (!existingSig) {
+        return updateableSigs;
+      }
+
+      const existingUknown = existingSig.type === SigType.UNKNOWN;
+      const pastedUnkown = pastedSig.type === SigType.UNKNOWN;
       // The only scenarios when an update is performed based on paste data.
-      const sigExistsWihtoutTypeAndPasteHasType =
-        existingSig && !existingSig.type && pastedSig.type;
+      const sigExistsWihtoutTypeAndPasteHasType = existingSig && existingUknown && !pastedUnkown;
       const sigExistsWithoutNameAndPasteHasName =
         existingSig && !existingSig.name && pastedSig.name;
 
