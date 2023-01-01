@@ -33,29 +33,36 @@ export default () => {
             <TableHeadCell>ID</TableHeadCell>
             <TableHeadCell>Type</TableHeadCell>
             <TableHeadCell>Name</TableHeadCell>
+            <TableHeadCell />
           </TableRow>
         </TableHead>
         <TableBody data-cy="sig-list-body">
           {signatures &&
             signatures.map((sig) => (
               <SigContextMenu key={sig.id} signature={sig}>
-                <TableCell component="th" scope="row">
+                <TableCell component="th" scope="row" sx={{ whiteSpace: "nowrap", width: 0.2 }}>
                   {sig.eveId}
                 </TableCell>
-                <TableCell sx={{ textTransform: "capitalize" }}>{sig.type.toLowerCase()}</TableCell>
-                <TableCell sx={{ paddingTop: 0, paddingBottom: 0 }}>
+                <TableCell sx={{ textTransform: "capitalize", width: 0.2 }}>
+                  {sig.type.toLowerCase()}
+                </TableCell>
+                <TableCell
+                  sx={{ paddingTop: 0, paddingBottom: 0, maxWidth: 0, width: "100%", pr: 0 }}
+                >
                   <Box
                     sx={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
                     }}
                   >
                     {sig.name}
-                    <Box sx={{ display: "flex", flexGrow: 1, justifyContent: "flex-end" }}>
-                      <EditSigButton signature={sig} />
-                      <DeleteSigButton sig={sig} />
-                    </Box>
+                  </Box>
+                </TableCell>
+                <TableCell sx={{ width: 0.2, pr: "7px" }}>
+                  <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+                    <EditSigButton signature={sig} />
+                    <DeleteSigButton sig={sig} />
                   </Box>
                 </TableCell>
               </SigContextMenu>
