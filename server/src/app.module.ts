@@ -12,12 +12,14 @@ import { BootstrapModule } from "./bootstrap/bootstrap.module";
 import { AppDataModule } from "./app-data/app-data.module";
 import { Neo4jModule } from "./integration/neo4j/neo4j.module";
 import { ConnectionGraphModule } from "./connection-graph/connection-graph.module";
+import { ApolloDriver, ApolloDriverConfig } from "@nestjs/apollo";
 
 @Module({
   imports: [
     MongooseModule.forRoot(MONGO_URL, { useFindAndModify: false }),
-    GraphQLModule.forRoot({
+    GraphQLModule.forRoot<ApolloDriverConfig>({
       autoSchemaFile: true,
+      driver: ApolloDriver,
       playground: true,
       debug: false,
       cors: { origin: CLIENT_URL },
