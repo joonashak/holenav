@@ -77,10 +77,11 @@ The backend is hosted on a standard Ubuntu VPS instance using Docker and the `ho
 
 MongoDB is required when setting up the backend, so make sure to set that up before continuing. If you are using MongoDB Atlas, the free service tier is of type _Shared Cluster_ and _M0 Sandbox_.
 
-To setup the backend, you need to create three configuration files:
+To setup the backend, you need to create four configuration files:
 
 - `docker-compose.yaml`
 - `server.production.env`
+- `neo.production.env`
 - `Caddyfile`
 
 ### Configure Holenav Server
@@ -104,6 +105,21 @@ services:
     logging:
       driver: "local"
 
+  neo:
+    image: neo4j:4.4
+    restart: unless-stopped
+    container_name: holenav-neo
+    env_file:
+      - neo.production.env
+    volumes:
+      - type: volume
+        source: neo-data
+        target: /data
+    ports:
+      - 7687:7687
+    logging:
+      driver: "local"
+
   proxy:
     image: caddy:2
     container_name: holenav-caddy
@@ -118,9 +134,12 @@ services:
     restart: unless-stopped
     logging:
       driver: "local"
+
+volumes:
+  neo-data:
 ```
 
-Then create another file called `server.production.env` in the same location. Use the following environment variables to populate it and replace the values with your own.
+Then create files `server.production.env` and `neo.production.env` in the same location. Use the following environment variables to populate it and replace the values with your own.
 
 #### `server.production.env`
 
@@ -137,6 +156,16 @@ CLIENT_CD_TOKEN=
 CLIENT_CD_OWNER=
 CLIENT_CD_REPO=
 CLIENT_CD_WORKFLOW_ID=deploy_client.yaml
+NEO_URL=neo4j://neo
+NEO_DB=neo4j
+NEO_USERNAME=neo4j
+NEO_PASSWORD=yourSuperSecretNeoPassword
+```
+
+#### `neo.production.env`
+
+```bash
+NEO4J_AUTH=neo4j/yourSuperSecretNeoPassword
 ```
 
 ### Configure Caddy
