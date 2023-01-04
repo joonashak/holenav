@@ -48,6 +48,10 @@ export class BootstrapService implements OnApplicationBootstrap {
     }
 
     const url = "POST /repos/{owner}/{repo}/actions/workflows/{workflow_id}/dispatches";
+
+    // Don't set input variables if APP_VERSION is not set; GitHub rejects requests with unexpected inputs.
+    const inputs = APP_VERSION ? { version: `v${APP_VERSION}` } : {};
+
     const options = {
       headers: {
         authorization: `token ${CLIENT_CD_TOKEN}`,
@@ -56,9 +60,7 @@ export class BootstrapService implements OnApplicationBootstrap {
       repo: CLIENT_CD_REPO,
       workflow_id: CLIENT_CD_WORKFLOW_ID,
       ref: "main",
-      inputs: {
-        version: `v${APP_VERSION}`,
-      },
+      inputs,
     };
 
     try {
