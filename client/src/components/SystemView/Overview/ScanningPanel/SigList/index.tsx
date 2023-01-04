@@ -8,6 +8,7 @@ import {
   Paper,
   TableCellProps,
 } from "@mui/material";
+import { sortBy } from "lodash";
 import TableRow from "../../../../common/TableRow";
 import useSignatures from "../../../SystemData/useSignatures";
 import DeleteSigButton from "./DeleteSigButton";
@@ -24,6 +25,7 @@ const TableCell = ({ children, sx }: TableCellProps) => (
 
 export default () => {
   const { signatures } = useSignatures();
+  const sortedSigs = sortBy(signatures, ["eveId"]);
 
   return (
     <TableContainer component={Paper} sx={{ bgcolor: "primary.light" }}>
@@ -38,7 +40,7 @@ export default () => {
         </TableHead>
         <TableBody data-cy="sig-list-body">
           {signatures &&
-            signatures.map((sig) => (
+            sortedSigs.map((sig) => (
               <SigContextMenu key={sig.id} signature={sig}>
                 <TableCell component="th" scope="row" sx={{ whiteSpace: "nowrap", width: 0.2 }}>
                   {sig.eveId}
