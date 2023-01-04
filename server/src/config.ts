@@ -19,5 +19,7 @@ export const CLIENT_CD_TOKEN = process.env.CLIENT_CD_TOKEN;
 export const CLIENT_CD_OWNER = process.env.CLIENT_CD_OWNER;
 export const CLIENT_CD_REPO = process.env.CLIENT_CD_REPO;
 export const CLIENT_CD_WORKFLOW_ID = process.env.CLIENT_CD_WORKFLOW_ID;
+export const DISABLE_CLIENT_CD_VERSION_INPUT =
+  process.env.DISABLE_CLIENT_CD_VERSION_INPUT === "true";
 
 export const getClientLoginCallbackUrl = (state: string) => `${CLIENT_URL}/login/${state}`;

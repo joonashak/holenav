@@ -7,6 +7,7 @@ import {
   CLIENT_CD_REPO,
   CLIENT_CD_TOKEN,
   CLIENT_CD_WORKFLOW_ID,
+  DISABLE_CLIENT_CD_VERSION_INPUT,
 } from "../config";
 import { AppDataService } from "../app-data/app-data.service";
 
@@ -48,6 +49,13 @@ export class BootstrapService implements OnApplicationBootstrap {
     }
 
     const url = "POST /repos/{owner}/{repo}/actions/workflows/{workflow_id}/dispatches";
+
+    const inputs = DISABLE_CLIENT_CD_VERSION_INPUT
+      ? {}
+      : {
+          version: `v${APP_VERSION}`,
+        };
+
     const options = {
       headers: {
         authorization: `token ${CLIENT_CD_TOKEN}`,
@@ -56,9 +64,7 @@ export class BootstrapService implements OnApplicationBootstrap {
       repo: CLIENT_CD_REPO,
       workflow_id: CLIENT_CD_WORKFLOW_ID,
       ref: "main",
-      inputs: {
-        version: `v${APP_VERSION}`,
-      },
+      inputs,
     };
 
     try {
