@@ -9,6 +9,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+        # Workaround to get rid of "unexpected input" errors.
+      - run: echo ${{ inputs.version }}
       - name: Deploy client to Vercel
         uses: amondnet/vercel-action@v19
         with:
