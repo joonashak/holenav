@@ -83,12 +83,13 @@ const useSignatures = () => {
     },
   });
 
-  const pasteSignatures = async (pastedSignatures: PastedSignature[]) =>
+  const pasteSignatures = async (pastedSignatures: PastedSignature[], deleteMissingSigs = false) =>
     pasteSigsMutation({
       variables: {
         input: {
           pastedSignatures,
           systemName: state.name.get(),
+          deleteMissingSigs,
         },
       },
     });

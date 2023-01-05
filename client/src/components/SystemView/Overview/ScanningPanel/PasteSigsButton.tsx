@@ -1,6 +1,7 @@
 import { Button, ButtonProps } from "@mui/material";
 import ContentPasteGoIcon from "@mui/icons-material/ContentPasteGo";
 import SyncIcon from "@mui/icons-material/Sync";
+import useSigPasteListener from "./useSigPasteListener";
 
 type PasteSigsButtonProps = {
   sync?: boolean;
@@ -8,11 +9,14 @@ type PasteSigsButtonProps = {
 };
 
 const PasteSigsButton = ({ sync, sx }: PasteSigsButtonProps) => {
-  console.log("asd");
+  const { updateSigsFromClipboard } = useSigPasteListener();
+
+  const onClick = async () => updateSigsFromClipboard(sync);
 
   return (
     <>
       <Button
+        onClick={onClick}
         variant="outlined"
         color="secondary"
         data-cy="add-sig-button"
