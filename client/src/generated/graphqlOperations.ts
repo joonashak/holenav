@@ -135,7 +135,7 @@ export type Mutation = {
   getToken: AccessTokenDto;
   login: AccessTokenDto;
   logout: LogoutDto;
-  pasteSignatures: Array<Signature>;
+  pasteSignatures: SignaturePasteResult;
   removeAlt: User;
   updateMotd: AppData;
   updateSelectedMap: User;
@@ -270,8 +270,16 @@ export type Signature = {
 };
 
 export type SignaturePaste = {
+  deleteMissingSigs?: InputMaybe<Scalars["Boolean"]>;
   pastedSignatures: Array<PastedSignature>;
   systemName: Scalars["String"];
+};
+
+export type SignaturePasteResult = {
+  __typename?: "SignaturePasteResult";
+  added: Array<Signature>;
+  deleted: Array<Signature>;
+  updated: Array<Signature>;
 };
 
 export type SignatureUpdateWithoutConnection = {
@@ -631,29 +639,78 @@ export type PasteSignaturesMutationVariables = Exact<{
 
 export type PasteSignaturesMutation = {
   __typename?: "Mutation";
-  pasteSignatures: Array<{
-    __typename?: "Signature";
-    id: string;
-    name: string;
-    type: SigType;
-    eveId: string;
-    systemName: string;
-    wormholeType?: string | null;
-    connection?: {
-      __typename?: "Connection";
-      eol: boolean;
-      massStatus: MassStatus;
-      reverseSignature: {
-        __typename?: "SignatureWithoutConnection";
-        id: string;
-        name: string;
-        type: SigType;
-        eveId: string;
-        systemName: string;
-        wormholeType?: string | null;
-      };
-    } | null;
-  }>;
+  pasteSignatures: {
+    __typename?: "SignaturePasteResult";
+    added: Array<{
+      __typename?: "Signature";
+      id: string;
+      name: string;
+      type: SigType;
+      eveId: string;
+      systemName: string;
+      wormholeType?: string | null;
+      connection?: {
+        __typename?: "Connection";
+        eol: boolean;
+        massStatus: MassStatus;
+        reverseSignature: {
+          __typename?: "SignatureWithoutConnection";
+          id: string;
+          name: string;
+          type: SigType;
+          eveId: string;
+          systemName: string;
+          wormholeType?: string | null;
+        };
+      } | null;
+    }>;
+    updated: Array<{
+      __typename?: "Signature";
+      id: string;
+      name: string;
+      type: SigType;
+      eveId: string;
+      systemName: string;
+      wormholeType?: string | null;
+      connection?: {
+        __typename?: "Connection";
+        eol: boolean;
+        massStatus: MassStatus;
+        reverseSignature: {
+          __typename?: "SignatureWithoutConnection";
+          id: string;
+          name: string;
+          type: SigType;
+          eveId: string;
+          systemName: string;
+          wormholeType?: string | null;
+        };
+      } | null;
+    }>;
+    deleted: Array<{
+      __typename?: "Signature";
+      id: string;
+      name: string;
+      type: SigType;
+      eveId: string;
+      systemName: string;
+      wormholeType?: string | null;
+      connection?: {
+        __typename?: "Connection";
+        eol: boolean;
+        massStatus: MassStatus;
+        reverseSignature: {
+          __typename?: "SignatureWithoutConnection";
+          id: string;
+          name: string;
+          type: SigType;
+          eveId: string;
+          systemName: string;
+          wormholeType?: string | null;
+        };
+      } | null;
+    }>;
+  };
 };
 
 export type UserDataQueryVariables = Exact<{ [key: string]: never }>;
@@ -1440,7 +1497,36 @@ export const PasteSignaturesDocument = {
             selectionSet: {
               kind: "SelectionSet",
               selections: [
-                { kind: "FragmentSpread", name: { kind: "Name", value: "SignatureFields" } },
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "added" },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      { kind: "FragmentSpread", name: { kind: "Name", value: "SignatureFields" } },
+                    ],
+                  },
+                },
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "updated" },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      { kind: "FragmentSpread", name: { kind: "Name", value: "SignatureFields" } },
+                    ],
+                  },
+                },
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "deleted" },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      { kind: "FragmentSpread", name: { kind: "Name", value: "SignatureFields" } },
+                    ],
+                  },
+                },
               ],
             },
           },

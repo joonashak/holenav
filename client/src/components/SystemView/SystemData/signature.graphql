@@ -71,6 +71,16 @@ mutation DeleteSignatures($input: DeleteSignaturesInput!) {
 
 mutation PasteSignatures($input: SignaturePaste!) {
   pasteSignatures(input: $input) {
-    ...SignatureFields
+    added {
+      ...SignatureFields
+    }
+
+    updated {
+      ...SignatureFields
+    }
+
+    deleted {
+      ...SignatureFields
+    }
   }
 }

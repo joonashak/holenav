@@ -12,7 +12,7 @@ const useApolloOptions = <T extends HookOptions>(options: T): T => {
   const { setAuthToken } = useLocalData();
 
   const handleAuthError = async (error: ApolloError) => {
-    const isAuthError = !!error.graphQLErrors.find(
+    const isAuthError = !!error.graphQLErrors?.find(
       (e) => e?.extensions?.code === "UNAUTHENTICATED"
     );
 

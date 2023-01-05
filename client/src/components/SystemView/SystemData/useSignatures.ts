@@ -9,6 +9,7 @@ import {
   PastedSignature,
   PasteSignaturesDocument,
   Signature,
+  SignaturePasteResult,
   UpdateableSignature,
   UpdateSignaturesDocument,
 } from "../../../generated/graphqlOperations";
@@ -61,32 +62,24 @@ const useSignatures = () => {
 
   const [pasteSigsMutation] = useAuthenticatedMutation(PasteSignaturesDocument, {
     onCompleted: (data) => {
-      if (data.pasteSignatures.length === 0) {
-        return;
+      const { added, updated, deleted } = data.pasteSignatures as SignaturePasteResult;
+
+      if (added.length) {
+        state.signatures.set((sigs) => sigs.concat(added));
       }
 
-      const existingIds = state.signatures
-        .attach(Downgraded)
-        .get()
-        .map((sig) => sig.id);
-
-      const newSigs = data.pasteSignatures.filter(
-        (sig: Signature) => !existingIds.includes(sig.id)
-      );
-
-      state.signatures.set((sigs) => sigs.concat(newSigs));
-
-      if (newSigs.length === data.pasteSignatures.length) {
-        return;
+      if (updated.length) {
+        state.signatures.set((sigs) =>
+          sigs.map(
+            (sig) => updated.find((updatedSig: Signature) => updatedSig.id === sig.id) || sig
+          )
+        );
       }
 
-      const updatedSigs = data.pasteSignatures.filter((sig: Signature) =>
-        existingIds.includes(sig.id)
-      );
-
-      state.signatures.set((sigs) =>
-        sigs.map((sig) => updatedSigs.find((updated: Signature) => updated.id === sig.id) || sig)
-      );
+      if (deleted.length) {
+        const deletedIds = deleted.map((sig) => sig.id);
+        state.signatures.set((sigs) => sigs.filter((sig) => !deletedIds.includes(sig.id)));
+      }
     },
   });
 
