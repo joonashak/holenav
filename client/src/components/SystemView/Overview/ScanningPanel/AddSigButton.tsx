@@ -1,5 +1,6 @@
 import { Button } from "@mui/material";
 import { useState } from "react";
+import QueueIcon from "@mui/icons-material/Queue";
 import SigModal from "./SigModal";
 
 export default () => {
@@ -13,6 +14,7 @@ export default () => {
         variant="contained"
         data-cy="add-sig-button"
         fullWidth
+        startIcon={<QueueIcon />}
         sx={{ mt: 2 }}
       >
         Add Signature
