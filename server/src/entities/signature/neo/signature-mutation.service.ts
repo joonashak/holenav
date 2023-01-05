@@ -72,7 +72,7 @@ export class SignatureMutationService {
   }
 
   async deleteSignatures(signatureIds: string[]): Promise<Signature[]> {
-    if (!signatureIds) {
+    if (!signatureIds.length) {
       return [];
     }
 

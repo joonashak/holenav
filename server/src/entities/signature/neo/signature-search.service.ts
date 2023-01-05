@@ -71,6 +71,6 @@ export class SignatureSearchService {
       { ids },
     );
 
-    return res.records[0]._fields;
+    return res.records.map((rec) => rec._fields[0]);
   }
 }

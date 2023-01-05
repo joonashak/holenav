@@ -12,6 +12,7 @@ import SigType from "./enums/sig-type.enum";
 import { set } from "lodash";
 import uuid from "../../utils/uuid";
 import { UpdateableSignature } from "./dto/update-signatures.dto";
+import MassStatus from "./enums/mass-status.enum";
 
 @Injectable()
 export class SignatureService {
@@ -27,6 +28,10 @@ export class SignatureService {
   }
 
   async createSignatures(signatures: CreatableSignature[], folder: Folder): Promise<Signature[]> {
+    if (!signatures.length) {
+      return [];
+    }
+
     const sigsWithIds = signatures.map(completeSignature);
     const graphSafeSigs = sigsWithIds.map(
       this.systemMutationService.transformUnknownReverseSystemIntoPseudoSystem,
@@ -40,18 +45,15 @@ export class SignatureService {
   }
 
   async updateSignatures(sigUpdates: UpdateableSignature[], folder: Folder): Promise<Signature[]> {
+    if (!sigUpdates.length) {
+      return [];
+    }
     // FIXME: Folder ID must be checked to match user's ActiveFolder ID, otherwise folder security depends only on sig ID.
     const ids = sigUpdates.map((sig) => sig.id);
     const oldSigs = await this.signatureSearchService.findManyById(ids);
 
     return Promise.all(
-      sigUpdates.map(async (update) =>
-        this.updateSignature(
-          update,
-          oldSigs.find((sig) => sig.id === update.id),
-          folder,
-        ),
-      ),
+      sigUpdates.map(async (update) => this.updateSignature(update, oldSigs, folder)),
     );
   }
 
@@ -61,16 +63,24 @@ export class SignatureService {
    * @returns Deleted Signatures (not including possible deleted reverse wormholes).
    */
   async deleteSignatures(ids: string[]): Promise<Signature[]> {
+    if (!ids.length) {
+      return [];
+    }
     return this.signatureMutationService.deleteSignatures(ids);
   }
 
   private async updateSignature(
     update: UpdateableSignature,
-    old: Signature,
+    existing: Signature[],
     folder: Folder,
   ): Promise<Signature> {
+    const old = existing.find((sig) => sig.id === update.id);
     if (!isWormhole(old) && isWormhole(update)) {
-      const sigWithReverseId = set(update, "connection.reverseSignature.id", uuid());
+      const sigWithReverseId = {
+        ...completeSignature(update),
+        id: update.id,
+      } as UpdateableSignature;
+
       const graphSafeSig =
         this.systemMutationService.transformUnknownReverseSystemIntoPseudoSystem(sigWithReverseId);
 
