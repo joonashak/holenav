@@ -19,7 +19,7 @@ const PasteSigsButton = ({ sync, sx }: PasteSigsButtonProps) => {
         onClick={onClick}
         variant="outlined"
         color={sync ? "info" : "secondary"}
-        data-cy="add-sig-button"
+        data-cy={sync ? "sync-sigs-button" : "update-sigs-button"}
         fullWidth
         startIcon={!sync && <ContentPasteGoIcon />}
         endIcon={sync && <SyncIcon />}
