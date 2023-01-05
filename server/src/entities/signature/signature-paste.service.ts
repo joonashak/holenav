@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { Folder } from "../folder/folder.model";
-import { SignaturePaste } from "./dto/paste-signatures.dto";
+import { SignaturePaste, SignaturePasteResult } from "./dto/paste-signatures.dto";
 import SigType from "./enums/sig-type.enum";
 import { Signature } from "./signature.model";
 import { SignatureService } from "./signature.service";
@@ -9,17 +9,19 @@ import { SignatureService } from "./signature.service";
 export class SignaturePasteService {
   constructor(private signatureService: SignatureService) {}
 
-  async applySignaturePaste(paste: SignaturePaste, folder: Folder): Promise<Signature[]> {
+  async applySignaturePaste(paste: SignaturePaste, folder: Folder): Promise<SignaturePasteResult> {
     const existingSigs = await this.signatureService.getBySystem(paste.systemName, folder);
 
     const addableSigs = this.getAddableSigs(paste, existingSigs);
-    const addedSigs = await this.signatureService.createSignatures(addableSigs, folder);
+    const added = await this.signatureService.createSignatures(addableSigs, folder);
 
     const updateableSigs = this.getUpdateableSigs(paste, existingSigs);
+    const updated = await this.signatureService.updateSignatures(updateableSigs, folder);
 
-    const updatedSigs = await this.signatureService.updateSignatures(updateableSigs, folder);
+    const deletableSigs = this.getDeletableSigs(paste, existingSigs);
+    const deleted = await this.signatureService.deleteSignatures(deletableSigs);
 
-    return addedSigs.concat(updatedSigs);
+    return { added, updated, deleted };
   }
 
   private getAddableSigs(paste: SignaturePaste, existing: Signature[]) {
@@ -58,5 +60,15 @@ export class SignaturePasteService {
 
       return updateableSigs;
     }, []);
+  }
+
+  private getDeletableSigs(paste: SignaturePaste, existing: Signature[]) {
+    if (!paste.deleteMissingSigs) {
+      return [];
+    }
+
+    const pastedEveIds = paste.pastedSignatures.map((sig) => sig.eveId);
+    const deletableSigs = existing.filter((sig) => !pastedEveIds.includes(sig.eveId));
+    return deletableSigs.map((sig) => sig.id);
   }
 }
