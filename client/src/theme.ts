@@ -113,6 +113,9 @@ theme = createTheme(theme, {
           backgroundColor: theme.palette.secondary.light,
           color: theme.palette.primary.dark,
         },
+        outlined: {
+          backgroundColor: "rgba(0, 0, 0, 0.1)",
+        },
       },
     },
     MuiDialogContent: {
