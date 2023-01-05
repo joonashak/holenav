@@ -10,9 +10,7 @@ import { ConnectionMutationService } from "./neo/connection-mutation.service";
 import { SystemMutationService } from "./neo/system-mutation.service";
 import SigType from "./enums/sig-type.enum";
 import { set } from "lodash";
-import uuid from "../../utils/uuid";
 import { UpdateableSignature } from "./dto/update-signatures.dto";
-import MassStatus from "./enums/mass-status.enum";
 
 @Injectable()
 export class SignatureService {
