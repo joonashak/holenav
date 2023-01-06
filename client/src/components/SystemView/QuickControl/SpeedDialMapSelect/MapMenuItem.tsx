@@ -8,12 +8,12 @@ import useNotification from "../../../GlobalNotification/useNotification";
 
 type MapMenuItemProps = {
   map: SavedMap;
-  selectMap: (mapId: string) => void;
+  selectMap: (map: SavedMap) => void;
 };
 
 const MapMenuItem = ({ map, selectMap }: MapMenuItemProps) => {
   const { showSuccessNotification } = useNotification();
-  const { id, name } = map;
+  const { name } = map;
   const {
     deleteSavedMap,
     settings: { selectedMap },
@@ -31,7 +31,7 @@ const MapMenuItem = ({ map, selectMap }: MapMenuItemProps) => {
   };
 
   return (
-    <MenuItem onClick={() => selectMap(id)}>
+    <MenuItem onClick={() => selectMap(map)}>
       <ListItemIcon>
         {selected ? <CheckIcon sx={{ color: "secondary.light" }} /> : null}
       </ListItemIcon>

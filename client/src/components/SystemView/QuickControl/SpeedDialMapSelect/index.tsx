@@ -13,6 +13,8 @@ import AddIcon from "@mui/icons-material/Add";
 import useUserData from "../../../UserData/useUserData";
 import MapMenuItem from "./MapMenuItem";
 import SaveMapDialog from "../../Map/utils/SaveMapDialog";
+import useMapData from "../../Map/MapData/useMapData";
+import { SavedMap } from "../../../../generated/graphqlOperations";
 
 const SpeedDialMapSelect = (props: SpeedDialActionProps) => {
   const anchorEl = useRef(null);
@@ -26,9 +28,11 @@ const SpeedDialMapSelect = (props: SpeedDialActionProps) => {
     setSelectedMap,
     settings: { maps },
   } = useUserData();
+  const { fetchConnectionTree } = useMapData();
 
-  const selectMap = (mapId: string) => {
-    setSelectedMap(mapId);
+  const selectMap = (map: SavedMap) => {
+    setSelectedMap(map.id);
+    fetchConnectionTree(map.rootSystemName);
     toggleMenu();
   };
 

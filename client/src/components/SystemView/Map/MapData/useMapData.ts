@@ -9,8 +9,8 @@ export default () => {
   const { get } = useAuthenticatedRestApi();
   const { selectedMap } = settings;
 
-  const fetchConnectionTree = async () => {
-    const { rootSystemName } = selectedMap;
+  const fetchConnectionTree = async (rootSystemNameOverride: string | null = null) => {
+    const rootSystemName = rootSystemNameOverride || selectedMap.rootSystemName;
 
     if (!rootSystemName) {
       return;
