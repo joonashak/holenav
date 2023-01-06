@@ -1,5 +1,5 @@
 import { DialogContent, DialogTitle, SelectChangeEvent } from "@mui/material";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import Select from "../../../../controls/Select";
 import SigForm from "./SigForm";
 import WormholeForm from "./WormholeForm";
@@ -7,6 +7,7 @@ import FormGroupRow from "../../../../controls/FormGroupRow";
 import Dialog from "../../../../common/Dialog";
 import EveIdField from "./EveIdField";
 import { Signature, SigType } from "../../../../../generated/graphqlOperations";
+import useSigPasteListener from "../useSigPasteListener";
 
 const typeOptions = [
   { id: "sig-type-opt-null", value: SigType.Unknown, label: <em>Unknown</em> },
@@ -23,10 +24,19 @@ type SigModalProps = {
 };
 
 const SigModal = ({ open, onClose: onCloseSuper, signature }: SigModalProps) => {
+  const { disableSigPasteListener, enableSigPasteListener } = useSigPasteListener();
   const defaultType = signature?.type || SigType.Unknown;
   const [type, setType] = useState(defaultType);
   const defaultEveId = signature?.eveId || "";
   const [eveId, setEveId] = useState(defaultEveId);
+
+  useEffect(() => {
+    if (open) {
+      disableSigPasteListener();
+    } else {
+      enableSigPasteListener();
+    }
+  }, [open]);
 
   const onClose = () => {
     if (!signature) {
