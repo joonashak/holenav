@@ -115,6 +115,9 @@ theme = createTheme(theme, {
         },
         outlined: {
           backgroundColor: "rgba(0, 0, 0, 0.1)",
+          lineHeight: "1.2rem",
+          paddingTop: theme.spacing(1),
+          paddingBottom: theme.spacing(1),
         },
       },
     },
