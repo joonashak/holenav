@@ -11,8 +11,8 @@ export default ({ children }: ContainerProps) => (
     sx={{
       display: "flex",
       backgroundColor: "primary.dark",
-      width: "100%",
-      maxWidth: "100vw",
+      width: "100vw",
+      maxWidth: "100vw !important",
       height: "100vh",
       margin: 0,
       overflow: "scroll",

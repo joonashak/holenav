@@ -7,6 +7,7 @@ export type UserData = {
   alts: Character[];
   accessibleFolders: Folder[];
   systemRole: SystemRoles | null;
+  userDataReady: boolean;
 };
 
 export type UserSettings = {
