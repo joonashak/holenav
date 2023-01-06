@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import MapIcon from "@mui/icons-material/Map";
 import AddIcon from "@mui/icons-material/Add";
+import { useHistory } from "react-router-dom";
 import useUserData from "../../../UserData/useUserData";
 import MapMenuItem from "./MapMenuItem";
 import SaveMapDialog from "../../Map/utils/SaveMapDialog";
@@ -29,11 +30,13 @@ const SpeedDialMapSelect = (props: SpeedDialActionProps) => {
     settings: { maps },
   } = useUserData();
   const { fetchConnectionTree } = useMapData();
+  const { push } = useHistory();
 
-  const selectMap = (map: SavedMap) => {
+  const selectMap = async (map: SavedMap) => {
     setSelectedMap(map.id);
-    fetchConnectionTree(map.rootSystemName);
+    await fetchConnectionTree(map.rootSystemName);
     toggleMenu();
+    push(`/system/${map.rootSystemName}`);
   };
 
   return (
