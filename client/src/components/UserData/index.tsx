@@ -67,7 +67,7 @@ export default ({ children }: UserDataProviderProps) => {
     }
   }, [token]);
 
-  if (loading || !state.userDataReady.get()) {
+  if (loading || (token && !state.userDataReady.get())) {
     return null;
   }
 
