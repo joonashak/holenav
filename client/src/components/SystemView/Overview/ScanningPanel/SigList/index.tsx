@@ -9,10 +9,12 @@ import {
   TableCellProps,
 } from "@mui/material";
 import { sortBy } from "lodash";
+import { SigType } from "../../../../../generated/graphqlOperations";
 import TableRow from "../../../../common/TableRow";
 import useSignatures from "../../../SystemData/useSignatures";
 import DeleteSigButton from "./DeleteSigButton";
 import EditSigButton from "./EditSigButton";
+import LifetimeClock from "./LifetimeClock";
 import SigContextMenu from "./SigContextMenu";
 
 const TableHeadCell = ({ children }: TableCellProps) => (
@@ -35,6 +37,7 @@ export default () => {
             <TableHeadCell>ID</TableHeadCell>
             <TableHeadCell>Type</TableHeadCell>
             <TableHeadCell>Name</TableHeadCell>
+            <TableHeadCell />
             <TableHeadCell />
           </TableRow>
         </TableHead>
@@ -60,6 +63,9 @@ export default () => {
                   >
                     {sig.name}
                   </Box>
+                </TableCell>
+                <TableCell>
+                  {sig.type === SigType.Wormhole && <LifetimeClock signature={sig} />}
                 </TableCell>
                 <TableCell sx={{ width: 0.2, pr: "7px" }}>
                   <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
