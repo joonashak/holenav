@@ -25,6 +25,9 @@ export class SignatureWithoutConnection {
 
   @Field()
   systemName: string;
+
+  @Field((type) => Date, { nullable: true })
+  createdAt?: Date;
 }
 
 @ObjectType()

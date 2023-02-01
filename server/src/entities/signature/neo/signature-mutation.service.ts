@@ -34,7 +34,8 @@ export class SignatureMutationService {
         eveId: sig.eveId,
         type: sig.type,
         name: sig.name,
-        wormholeType: sig.wormholeType
+        wormholeType: sig.wormholeType,
+        createdAt: datetime()
       })
       CREATE (system)-[:HAS]->(newSig)
       RETURN newSig
