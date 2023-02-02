@@ -1,4 +1,4 @@
-import { Box, Tooltip, useTheme } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import { buildStyles, CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { Signature } from "../../../../../generated/graphqlOperations";
