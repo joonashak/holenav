@@ -16,6 +16,7 @@ import DeleteSigButton from "./DeleteSigButton";
 import EditSigButton from "./EditSigButton";
 import LifetimeClock from "./LifetimeClock";
 import SigContextMenu from "./SigContextMenu";
+import SigTypeLabel from "./SigTypeLabel";
 
 const TableHeadCell = ({ children }: TableCellProps) => (
   <MuiTableCell sx={{ color: "secondary.light", fontSize: "0.95rem" }}>{children}</MuiTableCell>
@@ -49,7 +50,7 @@ export default () => {
                   {sig.eveId}
                 </TableCell>
                 <TableCell sx={{ textTransform: "capitalize", width: 0.2 }}>
-                  {sig.type.toLowerCase()}
+                  <SigTypeLabel signature={sig} />
                 </TableCell>
                 <TableCell
                   sx={{ paddingTop: 0, paddingBottom: 0, maxWidth: 0, width: "100%", pr: 0 }}

@@ -6,13 +6,13 @@ export type GridTooltipTitleProps = {
 };
 
 const GridTooltipTitle = ({ rows }: GridTooltipTitleProps) => (
-  <Grid container spacing={1} sx={{ p: 1 }}>
+  <Grid container columnSpacing={1} sx={{ p: 1 }}>
     {rows.map((row) => (
       <Fragment key={`grid-tooltip-${row.label}-${row.value}`}>
-        <Grid item xs={8}>
+        <Grid item xs={7}>
           <Typography variant="body2">{row.label}</Typography>
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={5}>
           <Typography variant="body2">{row.value}</Typography>
         </Grid>
       </Fragment>
