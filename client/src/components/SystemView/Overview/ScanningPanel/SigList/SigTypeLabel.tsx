@@ -15,7 +15,7 @@ const SigTypeLabel = ({ signature }: SigTypeLabelProps) => {
   }
 
   return (
-    <WormholeInfoTooltip signature={signature}>
+    <WormholeInfoTooltip type={trueType}>
       <>{label}</>
     </WormholeInfoTooltip>
   );
