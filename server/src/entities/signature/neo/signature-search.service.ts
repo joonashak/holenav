@@ -1,5 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { Neo4jService } from "../../../integration/neo4j/neo4j.service";
+import { mapDateTimeToJsDateByKey } from "../../../utils/dateConverters";
 import { Signature } from "../signature.model";
 
 export type SignatureSearchParams = {
@@ -39,7 +40,11 @@ export class SignatureSearchService {
       return [];
     }
 
-    return res.records.map((rec) => rec._fields[0]);
+    const signatures = res.records
+      .map((rec) => rec._fields[0])
+      .map(mapDateTimeToJsDateByKey(["createdAt"]));
+
+    return signatures;
   }
 
   async findManyById(ids: string[]): Promise<Signature[]> {
@@ -71,6 +76,10 @@ export class SignatureSearchService {
       { ids },
     );
 
-    return res.records.map((rec) => rec._fields[0]);
+    const signatures = res.records
+      .map((rec) => rec._fields[0])
+      .map(mapDateTimeToJsDateByKey(["createdAt"]));
+
+    return signatures;
   }
 }

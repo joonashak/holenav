@@ -1,6 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { compact, omit } from "lodash";
 import { Neo4jService } from "../../../integration/neo4j/neo4j.service";
+import { mapDateTimeToJsDateByKey } from "../../../utils/dateConverters";
 import { CreatableSignature, CreatableSignatureWithoutConnection } from "../dto/add-signatures.dto";
 import { UpdateableSignature } from "../dto/update-signatures.dto";
 import { Signature } from "../signature.model";
@@ -43,7 +44,11 @@ export class SignatureMutationService {
       { signatures: signaturesToCreate, folderId },
     );
 
-    return res.records.map((rec) => rec._fields[0].properties);
+    const newSignatures = res.records
+      .map((rec) => rec._fields[0].properties)
+      .map(mapDateTimeToJsDateByKey(["createdAt"]));
+
+    return newSignatures;
   }
 
   /**
@@ -69,7 +74,11 @@ export class SignatureMutationService {
       { signatures },
     );
 
-    return res.records.map((rec) => rec._fields[0]);
+    const updatedSignatures = res.records
+      .map((rec) => rec._fields[0])
+      .map(mapDateTimeToJsDateByKey(["createdAt"]));
+
+    return updatedSignatures;
   }
 
   async deleteSignatures(signatureIds: string[]): Promise<Signature[]> {
@@ -91,7 +100,11 @@ export class SignatureMutationService {
 
     await this.systemNode.removeDanglingPseudoSystems();
 
-    return res.records.map((rec) => rec._fields[0]);
+    const deletedSignatures = res.records
+      .map((rec) => rec._fields[0])
+      .map(mapDateTimeToJsDateByKey(["createdAt"]));
+
+    return deletedSignatures;
   }
 
   private getSignaturesAndReverseSignatures(
