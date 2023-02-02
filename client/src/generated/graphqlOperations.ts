@@ -12,6 +12,7 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  DateTime: any;
 };
 
 export type AccessTokenDto = {
@@ -65,6 +66,7 @@ export type ConnectionInputUpdate = {
 
 export type CreatableSignature = {
   connection?: InputMaybe<ConnectionInput>;
+  createdAt?: InputMaybe<Scalars["DateTime"]>;
   eveId: Scalars["String"];
   id?: InputMaybe<Scalars["String"]>;
   name: Scalars["String"];
@@ -74,6 +76,7 @@ export type CreatableSignature = {
 };
 
 export type CreatableSignatureWithoutConnection = {
+  createdAt?: InputMaybe<Scalars["DateTime"]>;
   eveId: Scalars["String"];
   id?: InputMaybe<Scalars["String"]>;
   name: Scalars["String"];
@@ -261,6 +264,7 @@ export enum SigType {
 export type Signature = {
   __typename?: "Signature";
   connection?: Maybe<Connection>;
+  createdAt?: Maybe<Scalars["DateTime"]>;
   eveId: Scalars["String"];
   id: Scalars["String"];
   name: Scalars["String"];
@@ -283,6 +287,7 @@ export type SignaturePasteResult = {
 };
 
 export type SignatureUpdateWithoutConnection = {
+  createdAt?: InputMaybe<Scalars["DateTime"]>;
   eveId: Scalars["String"];
   id: Scalars["String"];
   name: Scalars["String"];
@@ -293,6 +298,7 @@ export type SignatureUpdateWithoutConnection = {
 
 export type SignatureWithoutConnection = {
   __typename?: "SignatureWithoutConnection";
+  createdAt?: Maybe<Scalars["DateTime"]>;
   eveId: Scalars["String"];
   id: Scalars["String"];
   name: Scalars["String"];
@@ -326,6 +332,7 @@ export type UpdateSignaturesInput = {
 
 export type UpdateableSignature = {
   connection?: InputMaybe<ConnectionInputUpdate>;
+  createdAt?: InputMaybe<Scalars["DateTime"]>;
   eveId: Scalars["String"];
   id: Scalars["String"];
   name: Scalars["String"];
@@ -460,30 +467,6 @@ export type SearchCharactersByMainQuery = {
   searchCharactersByMain: Array<{ __typename?: "Character"; name: string; esiId: string }>;
 };
 
-export type SignatureFieldsWithoutConnectionFragment = {
-  __typename?: "Signature";
-  id: string;
-  name: string;
-  type: SigType;
-  eveId: string;
-  systemName: string;
-  wormholeType?: string | null;
-  connection?: {
-    __typename?: "Connection";
-    eol: boolean;
-    massStatus: MassStatus;
-    reverseSignature: {
-      __typename?: "SignatureWithoutConnection";
-      id: string;
-      name: string;
-      type: SigType;
-      eveId: string;
-      systemName: string;
-      wormholeType?: string | null;
-    };
-  } | null;
-};
-
 export type SignatureFieldsFragment = {
   __typename?: "Signature";
   id: string;
@@ -492,6 +475,7 @@ export type SignatureFieldsFragment = {
   eveId: string;
   systemName: string;
   wormholeType?: string | null;
+  createdAt?: any | null;
   connection?: {
     __typename?: "Connection";
     eol: boolean;
@@ -523,6 +507,7 @@ export type SystemQuery = {
     eveId: string;
     systemName: string;
     wormholeType?: string | null;
+    createdAt?: any | null;
     connection?: {
       __typename?: "Connection";
       eol: boolean;
@@ -554,6 +539,7 @@ export type AddSignaturesMutation = {
     eveId: string;
     systemName: string;
     wormholeType?: string | null;
+    createdAt?: any | null;
     connection?: {
       __typename?: "Connection";
       eol: boolean;
@@ -585,6 +571,7 @@ export type UpdateSignaturesMutation = {
     eveId: string;
     systemName: string;
     wormholeType?: string | null;
+    createdAt?: any | null;
     connection?: {
       __typename?: "Connection";
       eol: boolean;
@@ -616,6 +603,7 @@ export type DeleteSignaturesMutation = {
     eveId: string;
     systemName: string;
     wormholeType?: string | null;
+    createdAt?: any | null;
     connection?: {
       __typename?: "Connection";
       eol: boolean;
@@ -649,6 +637,7 @@ export type PasteSignaturesMutation = {
       eveId: string;
       systemName: string;
       wormholeType?: string | null;
+      createdAt?: any | null;
       connection?: {
         __typename?: "Connection";
         eol: boolean;
@@ -672,6 +661,7 @@ export type PasteSignaturesMutation = {
       eveId: string;
       systemName: string;
       wormholeType?: string | null;
+      createdAt?: any | null;
       connection?: {
         __typename?: "Connection";
         eol: boolean;
@@ -695,6 +685,7 @@ export type PasteSignaturesMutation = {
       eveId: string;
       systemName: string;
       wormholeType?: string | null;
+      createdAt?: any | null;
       connection?: {
         __typename?: "Connection";
         eol: boolean;
@@ -737,53 +728,6 @@ export const FolderFieldsFragmentDoc = {
     },
   ],
 } as unknown as DocumentNode<FolderFieldsFragment, unknown>;
-export const SignatureFieldsWithoutConnectionFragmentDoc = {
-  kind: "Document",
-  definitions: [
-    {
-      kind: "FragmentDefinition",
-      name: { kind: "Name", value: "SignatureFieldsWithoutConnection" },
-      typeCondition: { kind: "NamedType", name: { kind: "Name", value: "Signature" } },
-      selectionSet: {
-        kind: "SelectionSet",
-        selections: [
-          { kind: "Field", name: { kind: "Name", value: "id" } },
-          { kind: "Field", name: { kind: "Name", value: "name" } },
-          { kind: "Field", name: { kind: "Name", value: "type" } },
-          { kind: "Field", name: { kind: "Name", value: "eveId" } },
-          { kind: "Field", name: { kind: "Name", value: "systemName" } },
-          { kind: "Field", name: { kind: "Name", value: "wormholeType" } },
-          {
-            kind: "Field",
-            name: { kind: "Name", value: "connection" },
-            selectionSet: {
-              kind: "SelectionSet",
-              selections: [
-                { kind: "Field", name: { kind: "Name", value: "eol" } },
-                { kind: "Field", name: { kind: "Name", value: "massStatus" } },
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "reverseSignature" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
-                      { kind: "Field", name: { kind: "Name", value: "name" } },
-                      { kind: "Field", name: { kind: "Name", value: "type" } },
-                      { kind: "Field", name: { kind: "Name", value: "eveId" } },
-                      { kind: "Field", name: { kind: "Name", value: "systemName" } },
-                      { kind: "Field", name: { kind: "Name", value: "wormholeType" } },
-                    ],
-                  },
-                },
-              ],
-            },
-          },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<SignatureFieldsWithoutConnectionFragment, unknown>;
 export const SignatureFieldsFragmentDoc = {
   kind: "Document",
   definitions: [
@@ -800,6 +744,7 @@ export const SignatureFieldsFragmentDoc = {
           { kind: "Field", name: { kind: "Name", value: "eveId" } },
           { kind: "Field", name: { kind: "Name", value: "systemName" } },
           { kind: "Field", name: { kind: "Name", value: "wormholeType" } },
+          { kind: "Field", name: { kind: "Name", value: "createdAt" } },
           {
             kind: "Field",
             name: { kind: "Name", value: "connection" },
