@@ -4,6 +4,7 @@ import "react-circular-progressbar/dist/styles.css";
 import { Signature } from "../../../../../generated/graphqlOperations";
 import dayjs, { fixNegativeDurationMinuteFormatting } from "../../../../../utils/dayjs";
 import { getWormholeProperties, getWormholeTrueType } from "../../../../../utils/wormholeUtils";
+import GridTooltip from "../../../../common/GridToolTip";
 
 type LifetimeClockProps = {
   signature: Signature;
@@ -30,12 +31,11 @@ const LifetimeClock = ({ signature }: LifetimeClockProps) => {
     ? remainingLife.format("mm")
     : fixNegativeDurationMinuteFormatting(remainingLife);
   const durationString = [durationStringH, durationStringM].join(":");
-  const tooltipTitle = overdue
-    ? `Overdue by: ${durationString}`
-    : `Lifetime left: ${durationString}`;
+  const tooltipTitle = overdue ? `Overdue by` : `Lifetime left`;
+  const tooltipRows = [{ label: tooltipTitle, value: durationString }];
 
   return (
-    <Tooltip title={tooltipTitle} arrow>
+    <GridTooltip rows={tooltipRows}>
       <Box sx={{ display: "block", width: 16 }}>
         <CircularProgressbar
           value={Math.max(5, value)}
@@ -47,7 +47,7 @@ const LifetimeClock = ({ signature }: LifetimeClockProps) => {
           })}
         />
       </Box>
-    </Tooltip>
+    </GridTooltip>
   );
 };
 
