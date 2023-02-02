@@ -18,8 +18,10 @@ import LifetimeClock from "./LifetimeClock";
 import SigContextMenu from "./SigContextMenu";
 import SigTypeLabel from "./SigTypeLabel";
 
-const TableHeadCell = ({ children }: TableCellProps) => (
-  <MuiTableCell sx={{ color: "secondary.light", fontSize: "0.95rem" }}>{children}</MuiTableCell>
+const TableHeadCell = ({ children, sx }: TableCellProps) => (
+  <MuiTableCell sx={{ color: "secondary.light", fontSize: "0.95rem", ...sx }}>
+    {children}
+  </MuiTableCell>
 );
 
 const TableCell = ({ children, sx }: TableCellProps) => (
@@ -38,7 +40,7 @@ export default () => {
             <TableHeadCell>ID</TableHeadCell>
             <TableHeadCell>Type</TableHeadCell>
             <TableHeadCell>Name</TableHeadCell>
-            <TableHeadCell />
+            <TableHeadCell sx={{ p: 0 }} />
             <TableHeadCell />
           </TableRow>
         </TableHead>
@@ -65,10 +67,10 @@ export default () => {
                     {sig.name}
                   </Box>
                 </TableCell>
-                <TableCell>
+                <TableCell sx={{ p: 0 }}>
                   {sig.type === SigType.Wormhole && <LifetimeClock signature={sig} />}
                 </TableCell>
-                <TableCell sx={{ width: 0.2, pr: "7px" }}>
+                <TableCell sx={{ width: 0.2, pr: 1, pl: 1 }}>
                   <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
                     <EditSigButton signature={sig} />
                     <DeleteSigButton sig={sig} />
