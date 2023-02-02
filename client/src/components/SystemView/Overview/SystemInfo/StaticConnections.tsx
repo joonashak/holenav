@@ -1,6 +1,7 @@
 import wormholes from "@eve-data/wormholes";
 import { Box, BoxProps, Typography } from "@mui/material";
 import DataChip from "../../../common/DataChip";
+import WormholeInfoTooltip from "../../../common/WormholeInfoTooltip";
 import useSystemData from "../../SystemData/useSystemData";
 
 const chipValueColors = {
@@ -27,7 +28,15 @@ const WormholeChip = ({ whType }: WormholeChipProps) => {
     destination.type !== "WH" ? chipValueColors[destination.type] : "primary.contrastText";
 
   return (
-    <DataChip label={type} value={value} sx={{ width: 0.35 }} valueSx={{ color: valueColor }} />
+    <WormholeInfoTooltip type={type}>
+      <DataChip
+        label={type}
+        value={value}
+        sx={{ width: "fit-contents" }}
+        labelSx={{ mr: 3 }}
+        valueSx={{ color: valueColor, ml: 3 }}
+      />
+    </WormholeInfoTooltip>
   );
 };
 
