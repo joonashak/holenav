@@ -13,6 +13,8 @@ import { AppDataModule } from "./app-data/app-data.module";
 import { Neo4jModule } from "./integration/neo4j/neo4j.module";
 import { ConnectionGraphModule } from "./connection-graph/connection-graph.module";
 import { ApolloDriver, ApolloDriverConfig } from "@nestjs/apollo";
+import { ScheduledTasksModule } from "./scheduled-tasks/scheduled-tasks.module";
+import { ScheduleModule } from "@nestjs/schedule";
 
 @Module({
   imports: [
@@ -24,6 +26,7 @@ import { ApolloDriver, ApolloDriverConfig } from "@nestjs/apollo";
       debug: false,
       cors: { origin: CLIENT_URL },
     }),
+    ScheduleModule.forRoot(),
     Neo4jModule,
     AppDataModule,
     BootstrapModule,
@@ -34,6 +37,7 @@ import { ApolloDriver, ApolloDriverConfig } from "@nestjs/apollo";
     SignatureModule,
     DevToolsModule,
     ConnectionGraphModule,
+    ScheduledTasksModule,
   ],
 })
 export class AppModule {}

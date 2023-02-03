@@ -1,6 +1,5 @@
 import { Injectable, Logger } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
-import { Cron } from "@nestjs/schedule";
 import { AuthenticationError } from "apollo-server-express";
 import dayjs from "dayjs";
 import { Model } from "mongoose";
@@ -47,7 +46,6 @@ export class SessionService {
     return session;
   }
 
-  @Cron("0 3 * * * *")
   async removeExpiredSessions(): Promise<void> {
     const { deletedCount } = await this.sessionModel.remove({
       expiresAt: { $lte: new Date() },
