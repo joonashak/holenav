@@ -8,6 +8,7 @@ fragment SignatureFields on Signature {
   createdAt
   connection {
     eol
+    eolAt
     massStatus
     reverseSignature {
       id

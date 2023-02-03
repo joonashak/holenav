@@ -19,8 +19,12 @@ const LifetimeClock = ({ signature }: LifetimeClockProps) => {
 
   const lifetime = dayjs.duration(whProps?.lifetimeHrs || 24, "h");
   const createdAt = dayjs(signature.createdAt);
+  const eolAt = eol ? dayjs(signature.connection?.eolAt) : createdAt;
   const age = dayjs.duration(dayjs().diff(createdAt));
-  const remainingLife = lifetime.subtract(age);
+  const ageSinceEol = dayjs.duration(dayjs().diff(eolAt));
+  const remainingStdLife = lifetime.subtract(age);
+  const remainingEolLife = dayjs.duration({ hours: 4 }).subtract(ageSinceEol);
+  const remainingLife = eol ? remainingEolLife : remainingStdLife;
   const value = Math.max(0, (remainingLife.asMinutes() / lifetime.asMinutes()) * 100);
 
   const overdue = remainingLife.asMilliseconds() < 0;

@@ -48,19 +48,16 @@ export type Character = {
 export type Connection = {
   __typename?: "Connection";
   eol: Scalars["Boolean"];
+  eolAt?: Maybe<Scalars["DateTime"]>;
   massStatus: MassStatus;
   reverseSignature: SignatureWithoutConnection;
 };
 
 export type ConnectionInput = {
-  eol: Scalars["Boolean"];
-  massStatus: MassStatus;
   reverseSignature: CreatableSignatureWithoutConnection;
 };
 
 export type ConnectionInputUpdate = {
-  eol: Scalars["Boolean"];
-  massStatus: MassStatus;
   reverseSignature: SignatureUpdateWithoutConnection;
 };
 
@@ -479,6 +476,7 @@ export type SignatureFieldsFragment = {
   connection?: {
     __typename?: "Connection";
     eol: boolean;
+    eolAt?: any | null;
     massStatus: MassStatus;
     reverseSignature: {
       __typename?: "SignatureWithoutConnection";
@@ -511,6 +509,7 @@ export type SystemQuery = {
     connection?: {
       __typename?: "Connection";
       eol: boolean;
+      eolAt?: any | null;
       massStatus: MassStatus;
       reverseSignature: {
         __typename?: "SignatureWithoutConnection";
@@ -543,6 +542,7 @@ export type AddSignaturesMutation = {
     connection?: {
       __typename?: "Connection";
       eol: boolean;
+      eolAt?: any | null;
       massStatus: MassStatus;
       reverseSignature: {
         __typename?: "SignatureWithoutConnection";
@@ -575,6 +575,7 @@ export type UpdateSignaturesMutation = {
     connection?: {
       __typename?: "Connection";
       eol: boolean;
+      eolAt?: any | null;
       massStatus: MassStatus;
       reverseSignature: {
         __typename?: "SignatureWithoutConnection";
@@ -607,6 +608,7 @@ export type DeleteSignaturesMutation = {
     connection?: {
       __typename?: "Connection";
       eol: boolean;
+      eolAt?: any | null;
       massStatus: MassStatus;
       reverseSignature: {
         __typename?: "SignatureWithoutConnection";
@@ -641,6 +643,7 @@ export type PasteSignaturesMutation = {
       connection?: {
         __typename?: "Connection";
         eol: boolean;
+        eolAt?: any | null;
         massStatus: MassStatus;
         reverseSignature: {
           __typename?: "SignatureWithoutConnection";
@@ -665,6 +668,7 @@ export type PasteSignaturesMutation = {
       connection?: {
         __typename?: "Connection";
         eol: boolean;
+        eolAt?: any | null;
         massStatus: MassStatus;
         reverseSignature: {
           __typename?: "SignatureWithoutConnection";
@@ -689,6 +693,7 @@ export type PasteSignaturesMutation = {
       connection?: {
         __typename?: "Connection";
         eol: boolean;
+        eolAt?: any | null;
         massStatus: MassStatus;
         reverseSignature: {
           __typename?: "SignatureWithoutConnection";
@@ -752,6 +757,7 @@ export const SignatureFieldsFragmentDoc = {
               kind: "SelectionSet",
               selections: [
                 { kind: "Field", name: { kind: "Name", value: "eol" } },
+                { kind: "Field", name: { kind: "Name", value: "eolAt" } },
                 { kind: "Field", name: { kind: "Name", value: "massStatus" } },
                 {
                   kind: "Field",

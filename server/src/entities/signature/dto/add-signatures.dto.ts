@@ -18,6 +18,9 @@ export class ConnectionInput {
   @Field()
   eol: boolean;
 
+  @Field((type) => Date, { nullable: true })
+  eolAt?: Date;
+
   @Field((type) => MassStatus)
   massStatus: MassStatus;
 
