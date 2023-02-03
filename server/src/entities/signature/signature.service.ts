@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { Folder } from "../folder/folder.model";
 import { Signature } from "./signature.model";
-import { addK162, completeSignature, isWormhole } from "./signature.utils";
+import { addEolAt, addK162, completeSignature, isWormhole } from "./signature.utils";
 import { CreatableSignature } from "./dto/add-signatures.dto";
 import { addUuid } from "../../utils/addUuid";
 import { SignatureSearchService } from "./neo/signature-search.service";
@@ -36,7 +36,7 @@ export class SignatureService {
     );
     await this.signatureMutationService.createSignatures(graphSafeSigs, folder.id);
 
-    const wormholes = graphSafeSigs.filter((sig) => sig.type === SigType.WORMHOLE);
+    const wormholes = graphSafeSigs.filter((sig) => sig.type === SigType.WORMHOLE).map(addEolAt);
     await this.connectionMutationService.createConnectionsFromSignatures(wormholes);
 
     return sigsWithIds;
@@ -73,14 +73,16 @@ export class SignatureService {
     folder: Folder,
   ): Promise<Signature> {
     const old = existing.find((sig) => sig.id === update.id);
+
     if (!isWormhole(old) && isWormhole(update)) {
       const sigWithReverseId = {
         ...completeSignature(update),
         id: update.id,
       } as UpdateableSignature;
 
-      const graphSafeSig =
-        this.systemMutationService.transformUnknownReverseSystemIntoPseudoSystem(sigWithReverseId);
+      const graphSafeSig = this.systemMutationService.transformUnknownReverseSystemIntoPseudoSystem(
+        addEolAt(sigWithReverseId),
+      );
 
       await this.signatureMutationService.createSignatures(
         [graphSafeSig.connection.reverseSignature],
@@ -98,11 +100,16 @@ export class SignatureService {
     }
 
     if (isWormhole(old) && isWormhole(update)) {
+      const updateWithEol =
+        !old.connection.eol && update.connection.eol
+          ? addEolAt(update)
+          : { ...update, connection: { ...update.connection, eolAt: old.connection.eolAt } };
+
       // Destination not changed.
       if (
         old.connection.reverseSignature.systemName === update.connection.reverseSignature.systemName
       ) {
-        const modifiedUpdate = addK162(update);
+        const modifiedUpdate = addK162(updateWithEol);
         await this.signatureMutationService.updateSignatures([
           modifiedUpdate,
           modifiedUpdate.connection.reverseSignature,
@@ -112,7 +119,7 @@ export class SignatureService {
 
       // Destination changed: Recreate connection and reverse signature.
       const graphSafeUpdate =
-        this.systemMutationService.transformUnknownReverseSystemIntoPseudoSystem(update);
+        this.systemMutationService.transformUnknownReverseSystemIntoPseudoSystem(updateWithEol);
       const newReverseSig = addUuid(graphSafeUpdate.connection.reverseSignature, {
         overwrite: true,
       });

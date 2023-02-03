@@ -38,7 +38,7 @@ const LifetimeClock = ({ signature }: LifetimeClockProps) => {
     <GridTooltip rows={tooltipRows}>
       <Box sx={{ display: "block", width: 16 }}>
         <CircularProgressbar
-          value={Math.max(5, value)}
+          value={value}
           strokeWidth={50}
           styles={buildStyles({
             strokeLinecap: "butt",

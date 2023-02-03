@@ -46,7 +46,7 @@ export class SignatureMutationService {
 
     const newSignatures = res.records
       .map((rec) => rec._fields[0].properties)
-      .map(mapDateTimeToJsDateByKey(["createdAt"]));
+      .map(mapDateTimeToJsDateByKey(["createdAt", "connection.eolAt"]));
 
     return newSignatures;
   }
@@ -76,7 +76,7 @@ export class SignatureMutationService {
 
     const updatedSignatures = res.records
       .map((rec) => rec._fields[0])
-      .map(mapDateTimeToJsDateByKey(["createdAt"]));
+      .map(mapDateTimeToJsDateByKey(["createdAt", "connection.eolAt"]));
 
     return updatedSignatures;
   }
@@ -102,7 +102,7 @@ export class SignatureMutationService {
 
     const deletedSignatures = res.records
       .map((rec) => rec._fields[0])
-      .map(mapDateTimeToJsDateByKey(["createdAt"]));
+      .map(mapDateTimeToJsDateByKey(["createdAt", "connection.eolAt"]));
 
     return deletedSignatures;
   }

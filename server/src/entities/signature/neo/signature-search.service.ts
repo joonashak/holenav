@@ -42,7 +42,7 @@ export class SignatureSearchService {
 
     const signatures = res.records
       .map((rec) => rec._fields[0])
-      .map(mapDateTimeToJsDateByKey(["createdAt"]));
+      .map(mapDateTimeToJsDateByKey(["createdAt", "connection.eolAt"]));
 
     return signatures;
   }
@@ -78,7 +78,7 @@ export class SignatureSearchService {
 
     const signatures = res.records
       .map((rec) => rec._fields[0])
-      .map(mapDateTimeToJsDateByKey(["createdAt"]));
+      .map(mapDateTimeToJsDateByKey(["createdAt", "connection.eolAt"]));
 
     return signatures;
   }

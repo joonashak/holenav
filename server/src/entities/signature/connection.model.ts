@@ -9,6 +9,9 @@ export class Connection {
   @Field()
   eol: boolean;
 
+  @Field((type) => Date, { nullable: true })
+  eolAt?: Date;
+
   @Field((type) => MassStatus)
   massStatus: MassStatus;
 
