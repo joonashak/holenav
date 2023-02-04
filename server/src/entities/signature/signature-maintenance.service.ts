@@ -1,5 +1,6 @@
 import wormholes from "@eve-data/wormholes";
 import { Injectable } from "@nestjs/common";
+import { SignatureMutationService } from "./neo/signature-mutation.service";
 import { SignatureSearchService } from "./neo/signature-search.service";
 import { Signature } from "./signature.model";
 import { SignatureService } from "./signature.service";
@@ -12,10 +13,10 @@ export class SignatureMaintenanceService {
   constructor(
     private signatureService: SignatureService,
     private signatureSearchService: SignatureSearchService,
+    private signatureMutationService: SignatureMutationService,
   ) {}
 
   // TODO: Performance should be recorded because of full-graph scans etc.
-  // TODO: Remove eol holes based on eolAt!
   async removeOldSignatures(): Promise<void> {
     const typesByLifetime = wormholes.reduce(
       (res, val) => {
@@ -30,6 +31,7 @@ export class SignatureMaintenanceService {
 
     for (const [lifetime, whTypes] of Object.entries(typesByLifetime)) {
       await this.removeOldWormholes(Number(lifetime), whTypes);
+      await this.updateEolStatuses(Number(lifetime), whTypes);
     }
 
     await this.removeOldNonWhSigs();
@@ -59,6 +61,19 @@ export class SignatureMaintenanceService {
     const minAgeHrs = 24 * 7;
     const oldSigs = await this.signatureSearchService.findByQuery({ type: "other", minAgeHrs });
     await this.signatureService.deleteSignatures(oldSigs.map((sig) => sig.id));
+  }
+
+  private async updateEolStatuses(lifetime: number, whTypes: string[]): Promise<void> {
+    const maxLifeTime = lifetime * 1.1;
+    const minAgeHrs = maxLifeTime - 4;
+    const shouldBeEol = await this.signatureSearchService.findByQuery({
+      type: "wormhole",
+      eol: false,
+      whTypes,
+      minAgeHrs,
+    });
+
+    await this.signatureMutationService.markAsEol(shouldBeEol.map((sig) => sig.id));
   }
 
   /**

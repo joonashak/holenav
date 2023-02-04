@@ -107,6 +107,24 @@ export class SignatureMutationService {
     return deletedSignatures;
   }
 
+  async markAsEol(signatureIds: string[]): Promise<void> {
+    if (!signatureIds.length) {
+      return;
+    }
+
+    await this.neoService.write(
+      `
+        UNWIND $signatureIds as id
+        MATCH (:Signature {id: id})-[conn:CONNECTS]-()
+        SET conn += {
+          eol: true,
+          eolAt: datetime()
+        }
+      `,
+      { signatureIds },
+    );
+  }
+
   private getSignaturesAndReverseSignatures(
     signatures: CreatableSignature[],
   ): CreatableSignatureWithoutConnection[] {
