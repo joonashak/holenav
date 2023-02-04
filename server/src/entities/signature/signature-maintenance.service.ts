@@ -1,7 +1,7 @@
 import wormholes from "@eve-data/wormholes";
 import { Injectable } from "@nestjs/common";
-import { groupBy } from "lodash";
 import { SignatureSearchService } from "./neo/signature-search.service";
+import { Signature } from "./signature.model";
 import { SignatureService } from "./signature.service";
 
 /**
@@ -15,13 +15,39 @@ export class SignatureMaintenanceService {
   ) {}
 
   // TODO: Performance should be recorded because of full-graph scans etc.
+  // TODO: Remove eol holes based on eolAt!
   async removeOldSignatures(): Promise<void> {
-    const wormholesByLifetime = groupBy(wormholes, "lifetimeHrs");
-    const asd = await this.signatureSearchService.findDeletable({
+    const typesByLifetime = wormholes.reduce(
+      (res, val) => {
+        if (!res[val.lifetimeHrs]) {
+          res[val.lifetimeHrs] = [];
+        }
+        res[val.lifetimeHrs].push(val.type);
+        return res;
+      },
+      { "48": ["K162", ""] },
+    );
+
+    for (const [lifetime, whTypes] of Object.entries(typesByLifetime)) {
+      await this.removeOldWormholes(Number(lifetime), whTypes);
+    }
+  }
+
+  private async removeOldWormholes(lifetime: number, whTypes: string[]): Promise<void> {
+    const minAgeHrs = Math.ceil(lifetime * 1.1);
+    const oldWormholes = await this.signatureSearchService.findDeletable({
       type: "wormhole",
-      minAgeHrs: 1,
-      whTypes: ["B274"],
+      minAgeHrs,
+      whTypes,
     });
-    console.log(asd.records.map((r) => r._fields[0]));
+    const deletableIds = this.getDeletableIds(oldWormholes);
+    await this.signatureService.deleteSignatures(deletableIds);
+  }
+
+  /**
+   * Remove duplicate ID's so we don't try to remove both sides of connection.
+   */
+  private getDeletableIds(signatures: Signature[]): string[] {
+    return [...new Set(signatures.map((sig) => sig.id))];
   }
 }

@@ -8,11 +8,20 @@ export type SignatureSearchParams = {
   folderId: string;
 };
 
-type DeletableQuery = {
+type DeletableQueryBase = {
   minAgeHrs: number;
-  type: "wormhole" | "other";
+};
+
+type DeletableQueryNonWh = DeletableQueryBase & {
+  type: "other";
+};
+
+type DeletableQueryWh = DeletableQueryBase & {
+  type: "wormhole";
   whTypes: string[];
 };
+
+type DeletableQuery = DeletableQueryNonWh | DeletableQueryWh;
 
 @Injectable()
 export class SignatureSearchService {
@@ -92,13 +101,13 @@ export class SignatureSearchService {
   /**
    * Find sigs matching given deletion criteria. For internal use.
    */
-  async findDeletable(query: DeletableQuery) {
+  async findDeletable(query: DeletableQuery): Promise<Signature[]> {
     return query.type === "wormhole"
       ? this.findDeletableWormholes(query)
       : this.findDeletableNonWhSigs(query);
   }
 
-  private async findDeletableNonWhSigs({ minAgeHrs }: DeletableQuery) {
+  private async findDeletableNonWhSigs({ minAgeHrs }: DeletableQueryNonWh): Promise<Signature[]> {
     const res = await this.neoService.read(
       `
         MATCH (sig:Signature)
@@ -109,20 +118,31 @@ export class SignatureSearchService {
       { minAgeHrs },
     );
 
-    return res;
+    return res.records.map((r) => r._fields[0].properties);
   }
 
-  private async findDeletableWormholes({ minAgeHrs, whTypes }: DeletableQuery) {
+  private async findDeletableWormholes({
+    minAgeHrs,
+    whTypes,
+  }: DeletableQueryWh): Promise<Signature[]> {
     const res = await this.neoService.read(
       `
-      MATCH (sig:Signature {type: 'WH'})
-      WHERE sig.createdAt < datetime() - duration({hours: $minAgeHrs})
-        AND sig.wormholeType IN $whTypes
-      RETURN sig
+        MATCH (sig:Signature {type: 'WH'})-[conn:CONNECTS]-(rev:Signature)
+        WHERE sig.createdAt < datetime() - duration({hours: $minAgeHrs})
+          AND sig.wormholeType IN $whTypes
+        RETURN sig{
+          .*,
+          connection: conn{
+            .*,
+            reverseSignature: rev{
+              .*
+            }
+          }
+        }
     `,
       { minAgeHrs, whTypes },
     );
 
-    return res;
+    return res.records.map((r) => r._fields[0]);
   }
 }
