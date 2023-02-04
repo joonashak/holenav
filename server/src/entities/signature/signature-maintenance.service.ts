@@ -31,9 +31,12 @@ export class SignatureMaintenanceService {
     for (const [lifetime, whTypes] of Object.entries(typesByLifetime)) {
       await this.removeOldWormholes(Number(lifetime), whTypes);
     }
+
+    await this.removeOldNonWhSigs();
   }
 
   private async removeOldWormholes(lifetime: number, whTypes: string[]): Promise<void> {
+    // +10% lifetime variance.
     const minAgeHrs = Math.ceil(lifetime * 1.1);
     const oldWormholes = await this.signatureSearchService.findDeletable({
       type: "wormhole",
@@ -42,6 +45,13 @@ export class SignatureMaintenanceService {
     });
     const deletableIds = this.getDeletableIds(oldWormholes);
     await this.signatureService.deleteSignatures(deletableIds);
+  }
+
+  private async removeOldNonWhSigs(): Promise<void> {
+    // Remove after a week.
+    const minAgeHrs = 24 * 7;
+    const oldSigs = await this.signatureSearchService.findDeletable({ type: "other", minAgeHrs });
+    await this.signatureService.deleteSignatures(oldSigs.map((sig) => sig.id));
   }
 
   /**
