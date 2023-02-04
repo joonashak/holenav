@@ -1,5 +1,5 @@
 import wormholes from "@eve-data/wormholes";
-import { Injectable } from "@nestjs/common";
+import { Injectable, Logger } from "@nestjs/common";
 import { SignatureMutationService } from "./neo/signature-mutation.service";
 import { SignatureSearchService } from "./neo/signature-search.service";
 import { Signature } from "./signature.model";
@@ -10,14 +10,17 @@ import { SignatureService } from "./signature.service";
  */
 @Injectable()
 export class SignatureMaintenanceService {
+  private readonly logger = new Logger(SignatureMaintenanceService.name);
+
   constructor(
     private signatureService: SignatureService,
     private signatureSearchService: SignatureSearchService,
     private signatureMutationService: SignatureMutationService,
   ) {}
 
-  // TODO: Performance should be recorded because of full-graph scans etc.
-  async removeOldSignatures(): Promise<void> {
+  async runSignatureMaintenance(): Promise<void> {
+    const start = new Date().getTime();
+
     const typesByLifetime = wormholes.reduce(
       (res, val) => {
         if (!res[val.lifetimeHrs]) {
@@ -35,6 +38,8 @@ export class SignatureMaintenanceService {
     }
 
     await this.removeOldNonWhSigs();
+
+    this.logger.log(`Cleaned up old signatures. Took ${new Date().getTime() - start} ms.`);
   }
 
   private async removeOldWormholes(lifetime: number, whTypes: string[]): Promise<void> {
