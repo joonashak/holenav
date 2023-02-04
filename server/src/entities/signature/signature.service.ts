@@ -1,16 +1,16 @@
 import { Injectable } from "@nestjs/common";
+import { set } from "lodash";
+import { addUuid } from "../../utils/addUuid";
 import { Folder } from "../folder/folder.model";
+import { CreatableSignature } from "./dto/add-signatures.dto";
+import { UpdateableSignature } from "./dto/update-signatures.dto";
+import SigType from "./enums/sig-type.enum";
+import { ConnectionMutationService } from "./neo/connection-mutation.service";
+import { SignatureMutationService } from "./neo/signature-mutation.service";
+import { SignatureSearchService } from "./neo/signature-search.service";
+import { SystemMutationService } from "./neo/system-mutation.service";
 import { Signature } from "./signature.model";
 import { addEolAt, addK162, completeSignature, isWormhole } from "./signature.utils";
-import { CreatableSignature } from "./dto/add-signatures.dto";
-import { addUuid } from "../../utils/addUuid";
-import { SignatureSearchService } from "./neo/signature-search.service";
-import { SignatureMutationService } from "./neo/signature-mutation.service";
-import { ConnectionMutationService } from "./neo/connection-mutation.service";
-import { SystemMutationService } from "./neo/system-mutation.service";
-import SigType from "./enums/sig-type.enum";
-import { set } from "lodash";
-import { UpdateableSignature } from "./dto/update-signatures.dto";
 
 @Injectable()
 export class SignatureService {

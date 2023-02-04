@@ -8,6 +8,12 @@ export type SignatureSearchParams = {
   folderId: string;
 };
 
+type DeletableQuery = {
+  minAgeHrs: number;
+  type: "wormhole" | "other";
+  whTypes: string[];
+};
+
 @Injectable()
 export class SignatureSearchService {
   constructor(private neoService: Neo4jService) {}
@@ -81,5 +87,42 @@ export class SignatureSearchService {
       .map(mapDateTimeToJsDateByKey(["createdAt", "connection.eolAt"]));
 
     return signatures;
+  }
+
+  /**
+   * Find sigs matching given deletion criteria. For internal use.
+   */
+  async findDeletable(query: DeletableQuery) {
+    return query.type === "wormhole"
+      ? this.findDeletableWormholes(query)
+      : this.findDeletableNonWhSigs(query);
+  }
+
+  private async findDeletableNonWhSigs({ minAgeHrs }: DeletableQuery) {
+    const res = await this.neoService.read(
+      `
+        MATCH (sig:Signature)
+        WHERE sig.createdAt < datetime() - duration({hours: $minAgeHrs})
+          AND sig.type <> 'WH'
+        RETURN sig
+      `,
+      { minAgeHrs },
+    );
+
+    return res;
+  }
+
+  private async findDeletableWormholes({ minAgeHrs, whTypes }: DeletableQuery) {
+    const res = await this.neoService.read(
+      `
+      MATCH (sig:Signature {type: 'WH'})
+      WHERE sig.createdAt < datetime() - duration({hours: $minAgeHrs})
+        AND sig.wormholeType IN $whTypes
+      RETURN sig
+    `,
+      { minAgeHrs, whTypes },
+    );
+
+    return res;
   }
 }
