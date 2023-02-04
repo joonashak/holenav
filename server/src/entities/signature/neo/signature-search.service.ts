@@ -8,20 +8,21 @@ export type SignatureSearchParams = {
   folderId: string;
 };
 
-type DeletableQueryBase = {
+type SignatureQueryBase = {
   minAgeHrs: number;
 };
 
-type DeletableQueryNonWh = DeletableQueryBase & {
+type SignatureQueryNonWh = SignatureQueryBase & {
   type: "other";
 };
 
-type DeletableQueryWh = DeletableQueryBase & {
+type SignatureQueryWh = SignatureQueryBase & {
   type: "wormhole";
   whTypes: string[];
+  eol?: boolean;
 };
 
-type DeletableQuery = DeletableQueryNonWh | DeletableQueryWh;
+type SignatureQuery = SignatureQueryNonWh | SignatureQueryWh;
 
 @Injectable()
 export class SignatureSearchService {
@@ -99,15 +100,15 @@ export class SignatureSearchService {
   }
 
   /**
-   * Find sigs matching given deletion criteria. For internal use.
+   * Find sigs matching given criteria. For internal use.
    */
-  async findDeletable(query: DeletableQuery): Promise<Signature[]> {
+  async findByQuery(query: SignatureQuery): Promise<Signature[]> {
     return query.type === "wormhole"
-      ? this.findDeletableWormholes(query)
-      : this.findDeletableNonWhSigs(query);
+      ? this.findWormholesByQuery(query)
+      : this.findNonWhSigsByQuery(query);
   }
 
-  private async findDeletableNonWhSigs({ minAgeHrs }: DeletableQueryNonWh): Promise<Signature[]> {
+  private async findNonWhSigsByQuery({ minAgeHrs }: SignatureQueryNonWh): Promise<Signature[]> {
     const res = await this.neoService.read(
       `
         MATCH (sig:Signature)
@@ -121,10 +122,10 @@ export class SignatureSearchService {
     return res.records.map((r) => r._fields[0].properties);
   }
 
-  private async findDeletableWormholes({
+  private async findWormholesByQuery({
     minAgeHrs,
     whTypes,
-  }: DeletableQueryWh): Promise<Signature[]> {
+  }: SignatureQueryWh): Promise<Signature[]> {
     const res = await this.neoService.read(
       `
         MATCH (sig:Signature {type: 'WH'})-[conn:CONNECTS]-(rev:Signature)
