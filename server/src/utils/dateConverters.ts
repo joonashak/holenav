@@ -29,7 +29,11 @@ export const mapDateTimeToJsDateByKey =
   <T extends object>(keys: string[]) =>
   (obj: T) => {
     for (const key of keys) {
-      set(obj, key, dateTimeToJsDate(get(obj, key)));
+      const val = get(obj, key);
+      if (!val) {
+        continue;
+      }
+      set(obj, key, dateTimeToJsDate(val));
     }
     return obj;
   };
