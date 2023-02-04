@@ -9,7 +9,7 @@ export type SignatureSearchParams = {
 };
 
 type SignatureQueryBase = {
-  minAgeHrs: number;
+  minAgeHrs?: number;
 };
 
 type SignatureQueryNonWh = SignatureQueryBase & {
@@ -18,8 +18,9 @@ type SignatureQueryNonWh = SignatureQueryBase & {
 
 type SignatureQueryWh = SignatureQueryBase & {
   type: "wormhole";
-  whTypes: string[];
+  whTypes?: string[];
   eol?: boolean;
+  minEolAgeHrs?: number;
 };
 
 type SignatureQuery = SignatureQueryNonWh | SignatureQueryWh;
@@ -125,12 +126,28 @@ export class SignatureSearchService {
   private async findWormholesByQuery({
     minAgeHrs,
     whTypes,
+    eol,
+    minEolAgeHrs,
   }: SignatureQueryWh): Promise<Signature[]> {
+    const minAgePredicate =
+      minAgeHrs === undefined
+        ? ""
+        : "AND sig.createdAt < datetime() - duration({hours: $minAgeHrs})";
+    const whTypePredicate = whTypes === undefined ? "" : "AND sig.wormholeType IN $whTypes";
+    const eolPredicate = eol === undefined ? "" : "AND conn.eol = $eol";
+    const minEolAgePredicate =
+      minEolAgeHrs === undefined
+        ? ""
+        : `AND conn.eolAt < datetime() - duration({hours: $minEolAgeHrs})`;
+
     const res = await this.neoService.read(
       `
         MATCH (sig:Signature {type: 'WH'})-[conn:CONNECTS]-(rev:Signature)
-        WHERE sig.createdAt < datetime() - duration({hours: $minAgeHrs})
-          AND sig.wormholeType IN $whTypes
+        WHERE sig.type = 'WH'
+          ${whTypePredicate}
+          ${minAgePredicate}
+          ${eolPredicate}
+          ${minEolAgePredicate}
         RETURN sig{
           .*,
           connection: conn{
@@ -141,7 +158,7 @@ export class SignatureSearchService {
           }
         }
     `,
-      { minAgeHrs, whTypes },
+      { minAgeHrs, whTypes, eol, minEolAgeHrs },
     );
 
     return res.records.map((r) => r._fields[0]);

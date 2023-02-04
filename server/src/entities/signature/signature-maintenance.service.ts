@@ -36,14 +36,21 @@ export class SignatureMaintenanceService {
   }
 
   private async removeOldWormholes(lifetime: number, whTypes: string[]): Promise<void> {
-    // +10% lifetime variance.
-    const minAgeHrs = Math.ceil(lifetime * 1.1);
+    // +10% lifetime variance and a little bit of slack.
+    const minAgeHrs = lifetime * 1.1 + 0.2;
     const oldWormholes = await this.signatureSearchService.findByQuery({
       type: "wormhole",
       minAgeHrs,
       whTypes,
     });
-    const deletableIds = this.getDeletableIds(oldWormholes);
+
+    const oldEolWormholes = await this.signatureSearchService.findByQuery({
+      type: "wormhole",
+      eol: true,
+      minEolAgeHrs: 4.5,
+    });
+
+    const deletableIds = this.getDeletableIds(oldWormholes.concat(oldEolWormholes));
     await this.signatureService.deleteSignatures(deletableIds);
   }
 
