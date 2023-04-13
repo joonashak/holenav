@@ -1,49 +1,11 @@
 {
-  "extends": ["react-app", "airbnb", "plugin:jsx-a11y/recommended", "prettier"],
-  "plugins": ["jsx-a11y", "prettier"],
-  "settings": {
-    "import/resolver": {
-      "node": {
-        "extensions": [".js", ".jsx", ".ts", ".tsx"],
-        "moduleDirectory": ["node_modules", "src/"]
-      }
-    }
-  },
-  "rules": {
-    "semi": 2,
-    "react/react-in-jsx-scope": "off",
-    "react/jsx-filename-extension": [1, { "extensions": [".jsx", ".tsx"] }],
-    "prettier/prettier": [
-      "error",
-      {
-        "printWidth": 100
-      }
+    "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended"
     ],
-    "no-use-before-define": "off",
-    "@typescript-eslint/no-use-before-define": ["error"],
-    "import/extensions": [
-      "error",
-      "ignorePackages",
-      {
-        "js": "never",
-        "jsx": "never",
-        "ts": "never",
-        "tsx": "never"
-      }
+    "parser": "@typescript-eslint/parser",
+    "plugins": [
+        "@typescript-eslint"
     ],
-    "react-hooks/exhaustive-deps": 0,
-    // These two required for enums to work.
-    "no-shadow": "off",
-    "@typescript-eslint/no-shadow": ["error"],
-    "no-unused-vars": "off",
-    "@typescript-eslint/no-unused-vars": ["warn"],
-    "import/prefer-default-export": 0,
-    "react/jsx-props-no-spreading": 0,
-    "no-underscore-dangle": ["error", { "allow": ["__rd3t"] }],
-    "react/function-component-definition": [
-      2,
-      { "namedComponents": "arrow-function", "unnamedComponents": "arrow-function" }
-    ],
-    "react/jsx-no-useless-fragment": 0
-  }
+    "root": true
 }

@@ -39,7 +39,6 @@
     "react-markdown": "^8.0.3",
     "react-router-dom": "^5.2.0",
     "react-scripts": "^5.0.0",
-    "typescript": "^4.4.4",
     "uuid": "^9.0.0",
     "web-vitals": "^1.1.2"
   },
@@ -52,17 +51,11 @@
     "@types/react": "^17.0.52",
     "@types/react-router-dom": "^5.1.8",
     "@types/uuid": "^8.3.4",
-    "eslint": "^8.30.0",
-    "eslint-config-airbnb": "^19.0.4",
-    "eslint-config-prettier": "^8.3.0",
-    "eslint-config-react-app": "^7.0.0",
-    "eslint-plugin-import": "^2.26.0",
-    "eslint-plugin-jsx-a11y": "^6.6.1",
-    "eslint-plugin-prettier": "^3.4.0",
-    "eslint-plugin-react": "^7.31.11",
-    "eslint-plugin-react-hooks": "^4.6.0",
-    "prettier": "^2.3.2",
-    "prettier-plugin-organize-imports": "^3.2.2"
+    "@typescript-eslint/eslint-plugin": "^5.58.0",
+    "@typescript-eslint/parser": "^5.58.0",
+    "eslint": "^8.38.0",
+    "prettier": "^2.8.7",
+    "typescript": "^5.0.4"
   },
   "scripts": {
     "start": "ESLINT_NO_DEV_ERRORS=true FAST_REFRESH=false react-scripts start",
@@ -71,12 +64,6 @@
     "generate": "npm run generate:codegen && npm run generate:lintfix",
     "generate:codegen": "graphql-codegen",
     "generate:lintfix": "eslint src/generated/ --fix"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
   },
   "browserslist": {
     "production": [
