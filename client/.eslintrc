@@ -1,7 +1,9 @@
 {
     "extends": [
         "eslint:recommended",
-        "plugin:@typescript-eslint/recommended"
+        "plugin:@typescript-eslint/recommended",
+        // Keep prettier last so it overrides other configs correctly!
+        "prettier"
     ],
     "parser": "@typescript-eslint/parser",
     "plugins": [
