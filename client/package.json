@@ -59,6 +59,9 @@
     "prettier": "^2.8.7",
     "typescript": "^5.0.4"
   },
+  "overrides": {
+    "typescript": "^5.0.4"
+  },
   "scripts": {
     "start": "ESLINT_NO_DEV_ERRORS=true FAST_REFRESH=false react-scripts start",
     "build": "react-scripts build",
