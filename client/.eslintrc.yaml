@@ -3,7 +3,8 @@ parser: "@typescript-eslint/parser"
 extends:
     - eslint:recommended
     - plugin:@typescript-eslint/recommended
-    - react-app
+    - plugin:react/recommended
+    - plugin:react/jsx-runtime
     # Keep prettier last so it overrides other configs correctly!
     - prettier
 plugins:
