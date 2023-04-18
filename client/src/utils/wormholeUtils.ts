@@ -1,7 +1,7 @@
 import wormholes from "@eve-data/wormholes";
-import { Signature } from "../generated/graphqlOperations";
+import { Maybe, Signature } from "../generated/graphqlOperations";
 
-const isTrueType = (wormholeType: string | undefined | null) =>
+const isTrueType = (wormholeType: Maybe<string> | undefined) =>
   wormholeType && wormholeType !== "K162";
 
 /**
@@ -12,7 +12,7 @@ export const getWormholeTrueType = (sig: Signature): string | null => {
     return sig.wormholeType || null;
   }
 
-  if (isTrueType(sig.connection?.reverseSignature.wormholeType!)) {
+  if (isTrueType(sig.connection?.reverseSignature.wormholeType)) {
     return sig.connection?.reverseSignature.wormholeType || null;
   }
 

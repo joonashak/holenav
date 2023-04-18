@@ -28,7 +28,7 @@ const TableCell = ({ children, sx }: TableCellProps) => (
   <MuiTableCell sx={{ borderBottomColor: "primary.main", ...sx }}>{children}</MuiTableCell>
 );
 
-export default () => {
+const SigList = () => {
   const { signatures } = useSignatures();
   const sortedSigs = sortBy(signatures, ["eveId"]);
 
@@ -83,3 +83,5 @@ export default () => {
     </TableContainer>
   );
 };
+
+export default SigList;

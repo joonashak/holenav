@@ -3,7 +3,7 @@ import { useState } from "react";
 import QueueIcon from "@mui/icons-material/Queue";
 import SigModal from "./SigModal";
 
-export default () => {
+const AddSigButton = () => {
   const [open, setOpen] = useState(false);
   const toggleOpen = () => setOpen((prev) => !prev);
 
@@ -23,3 +23,5 @@ export default () => {
     </>
   );
 };
+
+export default AddSigButton;

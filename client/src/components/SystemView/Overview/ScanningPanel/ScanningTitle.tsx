@@ -1,7 +1,7 @@
 import { Box, Chip, Typography } from "@mui/material";
 import useSignatures from "../../SystemData/useSignatures";
 
-export default () => {
+const ScanningTitle = () => {
   const { signatures } = useSignatures();
 
   return (
@@ -30,3 +30,5 @@ export default () => {
     </Box>
   );
 };
+
+export default ScanningTitle;

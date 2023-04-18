@@ -1,6 +1,6 @@
 import { Typography, TypographyProps } from "@mui/material";
 
-export default ({ sx, ...props }: TypographyProps) => (
+const AppTitle = ({ sx, ...props }: TypographyProps) => (
   <Typography
     sx={{
       fontFamily: "Gugi",
@@ -16,3 +16,5 @@ export default ({ sx, ...props }: TypographyProps) => (
     Holenav
   </Typography>
 );
+
+export default AppTitle;

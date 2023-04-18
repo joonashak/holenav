@@ -3,7 +3,7 @@ import { Button, ButtonProps } from "@mui/material";
 import { StartSsoLoginDocument } from "../../../generated/graphqlOperations";
 import ssoLogo from "./eve_sso_login_button_dark.png";
 
-export default (props: ButtonProps) => {
+const LoginButton = (props: ButtonProps) => {
   const [ssoLoginQuery] = useLazyQuery(StartSsoLoginDocument, {
     onCompleted: ({ startSsoLogin }) => {
       window.location.href = startSsoLogin.ssoLoginUrl;
@@ -18,3 +18,5 @@ export default (props: ButtonProps) => {
     </Button>
   );
 };
+
+export default LoginButton;

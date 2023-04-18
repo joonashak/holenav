@@ -12,7 +12,7 @@ interface GetTokenProps {
   };
 }
 
-export default ({ match }: GetTokenProps) => {
+const GetToken = ({ match }: GetTokenProps) => {
   const { state } = match.params;
   const { setAuthToken } = useLocalData();
   const [fetchAndSaveToken, { loading, called }] = useMutation(GetTokenDocument, {
@@ -33,3 +33,5 @@ export default ({ match }: GetTokenProps) => {
 
   return <Redirect to="/system/J104809" />;
 };
+
+export default GetToken;

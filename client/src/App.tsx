@@ -14,7 +14,7 @@ const apolloClient = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
-export default () => {
+const App = () => {
   const { loadingLocalState } = useLocalData();
 
   if (loadingLocalState) {
@@ -37,3 +37,5 @@ export default () => {
     </ThemeProvider>
   );
 };
+
+export default App;

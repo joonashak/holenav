@@ -10,7 +10,7 @@ type DevToolsDrawerProps = {
   onClose: () => void;
 };
 
-export default ({ open, onClose }: DevToolsDrawerProps) => {
+const DevToolsDrawer = ({ open, onClose }: DevToolsDrawerProps) => {
   const reset = async () => {
     await axios.get(endpoints.dev.reset);
     window.location.reload();
@@ -48,3 +48,5 @@ export default ({ open, onClose }: DevToolsDrawerProps) => {
     </Drawer>
   );
 };
+
+export default DevToolsDrawer;

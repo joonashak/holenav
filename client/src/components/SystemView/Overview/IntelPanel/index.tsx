@@ -1,7 +1,7 @@
 import { Typography } from "@mui/material";
 import OverviewPanel from "../OverviewPanel";
 
-export default () => (
+const IntelPanel = () => (
   <OverviewPanel
     name="intel"
     panelTitle={
@@ -13,3 +13,5 @@ export default () => (
     <Typography>Structures, notes, etc.</Typography>
   </OverviewPanel>
 );
+
+export default IntelPanel;

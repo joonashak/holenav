@@ -7,7 +7,7 @@ import ScanningTitle from "./ScanningTitle";
 import SigList from "./SigList";
 import useSigPasteListener from "./useSigPasteListener";
 
-export default () => {
+const ScanningPanel = () => {
   const { sigPasteListener } = useSigPasteListener();
 
   useEffect(() => {
@@ -26,3 +26,5 @@ export default () => {
     </OverviewPanel>
   );
 };
+
+export default ScanningPanel;

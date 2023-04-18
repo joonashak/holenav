@@ -7,7 +7,7 @@ import { devToolsEnabled } from "../../config";
 import SettingsView from "../SettingsView";
 import AuthenticatedRoute from "../../auth/AuthenticatedRoute";
 
-export default () => (
+const Router = () => (
   <BrowserRouter>
     <Switch>
       <Route path="/login/:state" exact component={GetToken} />
@@ -22,3 +22,5 @@ export default () => (
     {devToolsEnabled && <DevTools />}
   </BrowserRouter>
 );
+
+export default Router;

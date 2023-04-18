@@ -6,7 +6,7 @@ import DevToolsNotice from "./DevToolsNotice";
 import LoginOrAppButton from "./LoginOrAppButton";
 import Motd from "./Motd";
 
-export default () => {
+const FrontPage = () => {
   const { authToken, mockUser } = useLocalData();
   const loggedIn = authToken || mockUser;
 
@@ -42,3 +42,5 @@ export default () => {
     </>
   );
 };
+
+export default FrontPage;

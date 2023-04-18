@@ -1,12 +1,12 @@
-import { Container } from "@mui/material";
+import { Container as MuiContainer } from "@mui/material";
 import { ReactChild } from "react";
 
 type ContainerProps = {
   children: ReactChild | ReactChild[];
 };
 
-export default ({ children }: ContainerProps) => (
-  <Container
+const Container = ({ children }: ContainerProps) => (
+  <MuiContainer
     disableGutters
     sx={{
       display: "flex",
@@ -19,5 +19,7 @@ export default ({ children }: ContainerProps) => (
     }}
   >
     {children}
-  </Container>
+  </MuiContainer>
 );
+
+export default Container;

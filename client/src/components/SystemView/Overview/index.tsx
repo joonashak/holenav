@@ -7,7 +7,7 @@ import IntelPanel from "./IntelPanel";
 import OverviewMenu from "./OverviewMenu";
 import OverviewTitle from "./OverviewTitle";
 
-export default () => {
+const Overview = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const toggleMenu = () => setMenuOpen((prev) => !prev);
 
@@ -43,3 +43,5 @@ export default () => {
     </Box>
   );
 };
+
+export default Overview;

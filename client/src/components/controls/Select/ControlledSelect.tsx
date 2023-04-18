@@ -16,7 +16,7 @@ type Options = {
 };
 
 // FIXME: Rename and update to use styled select (or integrate in the same mess...?)
-export default ({ options, name, control, label }: ControlledSelectProps) => {
+const ControlledSelect = ({ options, name, control, label }: ControlledSelectProps) => {
   // eslint-disable-next-line react/no-unstable-nested-components
   const Render = ({ field }: any) => (
     <TextField {...field} select label={label} fullWidth data-cy={`select-${name}`}>
@@ -30,3 +30,5 @@ export default ({ options, name, control, label }: ControlledSelectProps) => {
 
   return <Controller name={name} control={control} render={Render} />;
 };
+
+export default ControlledSelect;

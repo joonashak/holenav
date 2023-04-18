@@ -2,7 +2,7 @@ import { SelectChangeEvent } from "@mui/material";
 import Select from "../../../controls/Select";
 import useUserData from "../../../UserData/useUserData";
 
-export default () => {
+const MapSelector = () => {
   const {
     setSelectedMap,
     settings: { maps, selectedMap },
@@ -17,3 +17,5 @@ export default () => {
 
   return <Select title="Map" onChange={onChange} value={value} options={options} />;
 };
+
+export default MapSelector;

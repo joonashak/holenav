@@ -2,7 +2,7 @@ import { useState } from "react";
 import DevToolsDrawer from "./DevToolsDrawer";
 import DevToolsFab from "./DevToolsFab";
 
-export default () => {
+const DevTools = () => {
   const [open, setOpen] = useState(false);
   const toggleOpen = () => setOpen((prev) => !prev);
 
@@ -13,3 +13,5 @@ export default () => {
     </>
   );
 };
+
+export default DevTools;

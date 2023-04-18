@@ -7,7 +7,7 @@ type DevToolsFabProps = {
   onClick: () => void;
 };
 
-export default ({ onClick }: DevToolsFabProps) => {
+const DevToolsFab = ({ onClick }: DevToolsFabProps) => {
   const [extended, setExtended] = useState(false);
 
   const variant = extended ? "extended" : "circular";
@@ -37,3 +37,5 @@ export default ({ onClick }: DevToolsFabProps) => {
     </Fab>
   );
 };
+
+export default DevToolsFab;

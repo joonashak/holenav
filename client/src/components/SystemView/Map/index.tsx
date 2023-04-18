@@ -13,7 +13,7 @@ const inputMapStyles = <MapStyles />;
 // Hack to enable hooks in MapNode...
 const Node = (props: any) => <MapNode {...props} />;
 
-export default () => {
+const Map = () => {
   const { width } = useWindowDimensions();
   const { connectionTree } = useMapData();
   const { rootSystemName, children: rootChildren } = connectionTree;
@@ -58,3 +58,5 @@ export default () => {
     </Box>
   );
 };
+
+export default Map;

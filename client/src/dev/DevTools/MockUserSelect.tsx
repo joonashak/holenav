@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import useLocalData from "../../components/LocalData/useLocalData";
 import { endpoints } from "../../config";
 
-export default () => {
+const MockUserSelect = () => {
   const [users, setUsers] = useState([]);
   const nullString = "none";
   const { mockUser, setMockUser } = useLocalData();
@@ -39,7 +39,7 @@ export default () => {
         data-cy="mock-user-select"
         sx={{
           color: "primary.dark",
-          "& .MuiSelect-icon": { color: "primary.main" },
+          "& .MuiSelect-icon": { color: "primary.main" }
         }}
       >
         <MenuItem value={nullString}>None</MenuItem>
@@ -52,3 +52,5 @@ export default () => {
     </FormControl>
   );
 };
+
+export default MockUserSelect;

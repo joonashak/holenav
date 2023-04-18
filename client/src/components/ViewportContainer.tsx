@@ -5,7 +5,7 @@ interface ViewportContainerProps {
   children: ReactChild | ReactChild[];
 }
 
-export default ({ children }: ViewportContainerProps) => (
+const ViewportContainer = ({ children }: ViewportContainerProps) => (
   <Container
     maxWidth={false}
     disableGutters
@@ -14,3 +14,5 @@ export default ({ children }: ViewportContainerProps) => (
     {children}
   </Container>
 );
+
+export default ViewportContainer;
