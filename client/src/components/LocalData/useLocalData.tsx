@@ -65,7 +65,7 @@ const useLocalData = () => {
       return state.pollSetting.get();
     },
     get devKey() {
-      return state.devKey.get();
+      return state.devKey.get() || undefined;
     },
     setActiveCharacter,
     setDefaultActiveCharacter,
