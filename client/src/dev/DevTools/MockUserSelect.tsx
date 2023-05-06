@@ -1,17 +1,16 @@
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import useLocalData from "../../components/LocalData/useLocalData";
-import { endpoints } from "../../config";
+import devToolsService from "../../services/devToolsService";
 
 const MockUserSelect = () => {
   const [users, setUsers] = useState([]);
   const nullString = "none";
-  const { mockUser, setMockUser } = useLocalData();
+  const { mockUser, setMockUser, devKey } = useLocalData();
 
   useEffect(() => {
     (async () => {
-      const { data } = await axios.get(endpoints.dev.mockUsers);
+      const { data } = await devToolsService.getMockUsers(devKey);
       setUsers(data);
     })();
   }, []);
@@ -39,7 +38,7 @@ const MockUserSelect = () => {
         data-cy="mock-user-select"
         sx={{
           color: "primary.dark",
-          "& .MuiSelect-icon": { color: "primary.main" }
+          "& .MuiSelect-icon": { color: "primary.main" },
         }}
       >
         <MenuItem value={nullString}>None</MenuItem>

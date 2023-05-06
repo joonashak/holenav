@@ -1,10 +1,10 @@
 import { Button, Drawer } from "@mui/material";
 import { yellow } from "@mui/material/colors";
-import axios from "axios";
-import { endpoints } from "../../config";
 import MockUserSelect from "./MockUserSelect";
 import PollSettingSwitch from "./PollSettingSwitch";
 import DevKeyForm from "./DevKeyForm";
+import useLocalData from "../../components/LocalData/useLocalData";
+import devToolsService from "../../services/devToolsService";
 
 type DevToolsDrawerProps = {
   open: boolean;
@@ -12,12 +12,15 @@ type DevToolsDrawerProps = {
 };
 
 const DevToolsDrawer = ({ open, onClose }: DevToolsDrawerProps) => {
+  const { devKey } = useLocalData();
+
   const reset = async () => {
-    await axios.get(endpoints.dev.reset);
+    await devToolsService.reset(devKey);
     window.location.reload();
   };
+
   const seed = async () => {
-    await axios.get(endpoints.dev.seed);
+    await devToolsService.seed(devKey);
     window.location.reload();
   };
 
