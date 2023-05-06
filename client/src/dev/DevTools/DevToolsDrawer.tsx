@@ -4,6 +4,7 @@ import axios from "axios";
 import { endpoints } from "../../config";
 import MockUserSelect from "./MockUserSelect";
 import PollSettingSwitch from "./PollSettingSwitch";
+import DevKeyForm from "./DevKeyForm";
 
 type DevToolsDrawerProps = {
   open: boolean;
@@ -37,6 +38,7 @@ const DevToolsDrawer = ({ open, onClose }: DevToolsDrawerProps) => {
         },
       }}
     >
+      <DevKeyForm />
       <PollSettingSwitch />
       <Button variant="contained" color="primary" onClick={reset}>
         Reset Database
