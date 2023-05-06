@@ -1,6 +1,6 @@
 import { CanActivate, ExecutionContext, Injectable } from "@nestjs/common";
 import getRequest from "../utils/get-request.util";
-import { DEV_KEY, ENABLE_DEVTOOLS } from "src/config";
+import { DEV_KEY, ENABLE_DEVTOOLS } from "../../config";
 
 /**
  * Guard to require dev key passed in headers to protect API when dev tools are enabled.

@@ -1,7 +1,9 @@
-import { Controller, Get } from "@nestjs/common";
+import { Controller, Get, UseGuards } from "@nestjs/common";
 import { DevToolsService } from "./dev-tools.service";
+import { DevKeyGuard } from "../auth/guards/dev-key.guard";
 
 @Controller("dev")
+@UseGuards(DevKeyGuard)
 export class DevToolsController {
   constructor(private devToolsService: DevToolsService) {}
 
