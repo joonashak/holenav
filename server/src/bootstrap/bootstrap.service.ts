@@ -53,7 +53,7 @@ export class BootstrapService implements OnApplicationBootstrap {
     const inputs = DISABLE_CLIENT_CD_VERSION_INPUT
       ? {}
       : {
-          version: `v${APP_VERSION}`,
+          ref: `v${APP_VERSION}`,
         };
 
     const options = {

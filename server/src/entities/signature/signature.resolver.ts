@@ -5,11 +5,11 @@ import FolderRole from "../../user/roles/folder-role.enum";
 import { Folder } from "../folder/folder.model";
 import { AddSignaturesInput } from "./dto/add-signatures.dto";
 import { DeleteSignaturesInput } from "./dto/delete-signatures.dto";
+import { SignaturePaste, SignaturePasteResult } from "./dto/paste-signatures.dto";
 import { UpdateSignaturesInput } from "./dto/update-signatures.dto";
-import { SignatureService } from "./signature.service";
-import { Signature } from "./signature.model";
-import { SignaturePaste } from "./dto/paste-signatures.dto";
 import { SignaturePasteService } from "./signature-paste.service";
+import { Signature } from "./signature.model";
+import { SignatureService } from "./signature.service";
 
 @Resolver()
 export class SignatureResolver {
@@ -56,11 +56,11 @@ export class SignatureResolver {
   }
 
   @RequireFolderRole(FolderRole.WRITE)
-  @Mutation((returns) => [Signature])
+  @Mutation((returns) => SignaturePasteResult)
   async pasteSignatures(
     @Args("input") input: SignaturePaste,
     @ActiveFolder() activeFolder: Folder,
-  ): Promise<Signature[]> {
+  ): Promise<SignaturePasteResult> {
     return this.sigPasteService.applySignaturePaste(input, activeFolder);
   }
 }

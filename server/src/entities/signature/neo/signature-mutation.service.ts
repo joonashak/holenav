@@ -1,6 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { compact, omit } from "lodash";
 import { Neo4jService } from "../../../integration/neo4j/neo4j.service";
+import { mapDateTimeToJsDateByKey } from "../../../utils/dateConverters";
 import { CreatableSignature, CreatableSignatureWithoutConnection } from "../dto/add-signatures.dto";
 import { UpdateableSignature } from "../dto/update-signatures.dto";
 import { Signature } from "../signature.model";
@@ -34,7 +35,8 @@ export class SignatureMutationService {
         eveId: sig.eveId,
         type: sig.type,
         name: sig.name,
-        wormholeType: sig.wormholeType
+        wormholeType: sig.wormholeType,
+        createdAt: datetime()
       })
       CREATE (system)-[:HAS]->(newSig)
       RETURN newSig
@@ -42,7 +44,11 @@ export class SignatureMutationService {
       { signatures: signaturesToCreate, folderId },
     );
 
-    return res.records.map((rec) => rec._fields[0].properties);
+    const newSignatures = res.records
+      .map((rec) => rec._fields[0].properties)
+      .map(mapDateTimeToJsDateByKey(["createdAt", "connection.eolAt"]));
+
+    return newSignatures;
   }
 
   /**
@@ -68,11 +74,15 @@ export class SignatureMutationService {
       { signatures },
     );
 
-    return res.records.map((rec) => rec._fields[0]);
+    const updatedSignatures = res.records
+      .map((rec) => rec._fields[0])
+      .map(mapDateTimeToJsDateByKey(["createdAt", "connection.eolAt"]));
+
+    return updatedSignatures;
   }
 
   async deleteSignatures(signatureIds: string[]): Promise<Signature[]> {
-    if (!signatureIds) {
+    if (!signatureIds.length) {
       return [];
     }
 
@@ -90,7 +100,29 @@ export class SignatureMutationService {
 
     await this.systemNode.removeDanglingPseudoSystems();
 
-    return res.records.map((rec) => rec._fields[0]);
+    const deletedSignatures = res.records
+      .map((rec) => rec._fields[0])
+      .map(mapDateTimeToJsDateByKey(["createdAt", "connection.eolAt"]));
+
+    return deletedSignatures;
+  }
+
+  async markAsEol(signatureIds: string[]): Promise<void> {
+    if (!signatureIds.length) {
+      return;
+    }
+
+    await this.neoService.write(
+      `
+        UNWIND $signatureIds as id
+        MATCH (:Signature {id: id})-[conn:CONNECTS]-()
+        SET conn += {
+          eol: true,
+          eolAt: datetime()
+        }
+      `,
+      { signatureIds },
+    );
   }
 
   private getSignaturesAndReverseSignatures(

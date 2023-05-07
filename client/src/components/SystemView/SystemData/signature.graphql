@@ -1,24 +1,3 @@
-fragment SignatureFieldsWithoutConnection on Signature {
-  id
-  name
-  type
-  eveId
-  systemName
-  wormholeType
-  connection {
-    eol
-    massStatus
-    reverseSignature {
-      id
-      name
-      type
-      eveId
-      systemName
-      wormholeType
-    }
-  }
-}
-
 fragment SignatureFields on Signature {
   id
   name
@@ -26,8 +5,10 @@ fragment SignatureFields on Signature {
   eveId
   systemName
   wormholeType
+  createdAt
   connection {
     eol
+    eolAt
     massStatus
     reverseSignature {
       id
@@ -71,6 +52,16 @@ mutation DeleteSignatures($input: DeleteSignaturesInput!) {
 
 mutation PasteSignatures($input: SignaturePaste!) {
   pasteSignatures(input: $input) {
-    ...SignatureFields
+    added {
+      ...SignatureFields
+    }
+
+    updated {
+      ...SignatureFields
+    }
+
+    deleted {
+      ...SignatureFields
+    }
   }
 }

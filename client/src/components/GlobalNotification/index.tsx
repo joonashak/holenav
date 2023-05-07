@@ -7,7 +7,7 @@ import { Snackbar, Alert } from "@mui/material";
 
 import useNotification from "./useNotification";
 
-export default () => {
+const GlobalNotification = () => {
   const [open, setOpen] = useState(false);
   const { type, message, autoHide, resetNotification } = useNotification();
 
@@ -36,3 +36,5 @@ export default () => {
     </Snackbar>
   );
 };
+
+export default GlobalNotification;

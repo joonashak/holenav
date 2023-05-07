@@ -1,17 +1,16 @@
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import useLocalData from "../../components/LocalData/useLocalData";
-import { endpoints } from "../../config";
+import devToolsService from "../../services/devToolsService";
 
-export default () => {
+const MockUserSelect = () => {
   const [users, setUsers] = useState([]);
   const nullString = "none";
-  const { mockUser, setMockUser } = useLocalData();
+  const { mockUser, setMockUser, devKey } = useLocalData();
 
   useEffect(() => {
     (async () => {
-      const { data } = await axios.get(endpoints.dev.mockUsers);
+      const { data } = await devToolsService.getMockUsers(devKey);
       setUsers(data);
     })();
   }, []);
@@ -52,3 +51,5 @@ export default () => {
     </FormControl>
   );
 };
+
+export default MockUserSelect;

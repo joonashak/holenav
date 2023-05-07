@@ -6,7 +6,7 @@ import StaticConnections from "./StaticConnections";
 import SystemActivityStats from "./SystemActivityStats";
 import SystemInfoTitle from "./SystemInfoTitle";
 
-export default () => {
+const SystemInfo = () => {
   const { whClass, region, constellation } = useSystemData();
 
   return (
@@ -22,3 +22,5 @@ export default () => {
     </OverviewPanel>
   );
 };
+
+export default SystemInfo;

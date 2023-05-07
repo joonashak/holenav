@@ -6,15 +6,16 @@ import Router from "./components/Router";
 import SettingsData from "./components/SettingsView/SettingsData";
 import UserData from "./components/UserData";
 import ViewportContainer from "./components/ViewportContainer";
-import { endpoints } from "./config";
+import { devToolsEnabled, endpoints } from "./config";
 import appTheme from "./theme";
+import DevTools from "./dev/DevTools";
 
 const apolloClient = new ApolloClient({
   uri: endpoints.graphQl,
   cache: new InMemoryCache(),
 });
 
-export default () => {
+const App = () => {
   const { loadingLocalState } = useLocalData();
 
   if (loadingLocalState) {
@@ -33,7 +34,10 @@ export default () => {
             </ViewportContainer>
           </SettingsData>
         </UserData>
+      {devToolsEnabled && <DevTools />}
       </ApolloProvider>
     </ThemeProvider>
   );
 };
+
+export default App;

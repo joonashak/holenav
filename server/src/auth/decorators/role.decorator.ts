@@ -4,6 +4,7 @@ import SystemRole from "../../user/roles/system-role.enum";
 import { TokenAuthGuard } from "../guards/token-auth.guard";
 import { FolderRoleGuard, requiredFolderRoleKey } from "../guards/folder-role.guard";
 import { requiredSystemRoleKey, SystemRoleGuard } from "../guards/system-role.guard";
+import { DevKeyGuard } from "../guards/dev-key.guard";
 
 /**
  * Require the user to have the given system-level role to activate the decorated function.
@@ -13,7 +14,7 @@ import { requiredSystemRoleKey, SystemRoleGuard } from "../guards/system-role.gu
 export const RequireSystemRole = (role: SystemRole) =>
   applyDecorators(
     SetMetadata(requiredSystemRoleKey, role),
-    UseGuards(TokenAuthGuard, SystemRoleGuard),
+    UseGuards(TokenAuthGuard, SystemRoleGuard, DevKeyGuard),
   );
 
 /**
@@ -24,5 +25,5 @@ export const RequireSystemRole = (role: SystemRole) =>
 export const RequireFolderRole = (role: FolderRole) =>
   applyDecorators(
     SetMetadata(requiredFolderRoleKey, role),
-    UseGuards(TokenAuthGuard, FolderRoleGuard),
+    UseGuards(TokenAuthGuard, FolderRoleGuard, DevKeyGuard),
   );

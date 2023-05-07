@@ -24,9 +24,8 @@ const findSigType = (typeString: string): SigType => {
   return SigType.Unknown;
 };
 
-const getPasteDataMatrix = (pasteEvent: ClipboardEvent): string[][] => {
-  const input = pasteEvent.clipboardData?.getData("text") || "";
-  const rows = input.split(/\r?\n/).filter((row) => row.length);
+const getPasteDataMatrix = (paste: string): string[][] => {
+  const rows = paste.split(/\r?\n/).filter((row) => row.length);
   return rows.map((row) => row.split(/\t/));
 };
 
@@ -42,8 +41,10 @@ const formatPasteRow = (row: string[]): PastedSig => {
   return { eveId, type, name };
 };
 
-const parsePaste = (pasteEvent: ClipboardEvent): PastedSig[] => {
-  const pasteMatrix = getPasteDataMatrix(pasteEvent);
+const parsePaste = (pasteEvent: ClipboardEvent | string): PastedSig[] => {
+  const paste =
+    typeof pasteEvent === "string" ? pasteEvent : pasteEvent.clipboardData?.getData("text") || "";
+  const pasteMatrix = getPasteDataMatrix(paste);
   return pasteMatrix.map(formatPasteRow);
 };
 

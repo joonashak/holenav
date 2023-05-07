@@ -1,5 +1,6 @@
-import { Field, InputType } from "@nestjs/graphql";
+import { Field, InputType, ObjectType } from "@nestjs/graphql";
 import SigType from "../enums/sig-type.enum";
+import { Signature } from "../signature.model";
 
 @InputType()
 export class SignaturePaste {
@@ -8,6 +9,9 @@ export class SignaturePaste {
 
   @Field()
   systemName: string;
+
+  @Field({ nullable: true })
+  deleteMissingSigs?: boolean;
 }
 
 @InputType()
@@ -20,4 +24,16 @@ export class PastedSignature {
 
   @Field()
   name: string;
+}
+
+@ObjectType()
+export class SignaturePasteResult {
+  @Field((type) => [Signature])
+  added: Signature[];
+
+  @Field((type) => [Signature])
+  updated: Signature[];
+
+  @Field((type) => [Signature])
+  deleted: Signature[];
 }

@@ -2,6 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { Neo4jService } from "../../../integration/neo4j/neo4j.service";
 import { UpdateableSignature } from "../dto/update-signatures.dto";
 import { Signature } from "../signature.model";
+import { sanitizeSignatureForNeo4j } from "../signature.utils";
 
 @Injectable()
 export class ConnectionMutationService {
@@ -19,10 +20,11 @@ export class ConnectionMutationService {
         MATCH (to:Signature {id: sig.connection.reverseSignature.id})
         CREATE (from)-[:CONNECTS {
           eol: sig.connection.eol,
+          eolAt: datetime(sig.connection.eolAt),
           massStatus: sig.connection.massStatus
         }]->(to)
       `,
-      { signatures },
+      { signatures: signatures.map(sanitizeSignatureForNeo4j) },
     );
 
     return res;
@@ -34,6 +36,7 @@ export class ConnectionMutationService {
         MATCH (from:System)-[:HAS]-(sig:Signature {id: $signature.id})-[conn:CONNECTS]-(rev:Signature {id: $signature.connection.reverseSignature.id})-[:HAS]-(to:System)
         SET conn += {
           eol: $signature.connection.eol,
+          eolAt: datetime($signature.connection.eolAt),
           massStatus: $signature.connection.massStatus
         }
         RETURN sig{
@@ -48,7 +51,7 @@ export class ConnectionMutationService {
           }
         }
       `,
-      { signature },
+      { signature: sanitizeSignatureForNeo4j(signature) },
     );
 
     return res.records[0]._fields[0];

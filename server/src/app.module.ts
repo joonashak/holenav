@@ -12,16 +12,21 @@ import { BootstrapModule } from "./bootstrap/bootstrap.module";
 import { AppDataModule } from "./app-data/app-data.module";
 import { Neo4jModule } from "./integration/neo4j/neo4j.module";
 import { ConnectionGraphModule } from "./connection-graph/connection-graph.module";
+import { ApolloDriver, ApolloDriverConfig } from "@nestjs/apollo";
+import { ScheduledTasksModule } from "./scheduled-tasks/scheduled-tasks.module";
+import { ScheduleModule } from "@nestjs/schedule";
 
 @Module({
   imports: [
     MongooseModule.forRoot(MONGO_URL, { useFindAndModify: false }),
-    GraphQLModule.forRoot({
+    GraphQLModule.forRoot<ApolloDriverConfig>({
       autoSchemaFile: true,
+      driver: ApolloDriver,
       playground: true,
       debug: false,
       cors: { origin: CLIENT_URL },
     }),
+    ScheduleModule.forRoot(),
     Neo4jModule,
     AppDataModule,
     BootstrapModule,
@@ -32,6 +37,7 @@ import { ConnectionGraphModule } from "./connection-graph/connection-graph.modul
     SignatureModule,
     DevToolsModule,
     ConnectionGraphModule,
+    ScheduledTasksModule,
   ],
 })
 export class AppModule {}

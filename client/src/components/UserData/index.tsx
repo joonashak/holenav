@@ -27,6 +27,7 @@ export const userState = createState<UserData>({
   alts: [],
   accessibleFolders: [],
   systemRole: null,
+  userDataReady: false,
 });
 
 interface UserDataProviderProps {
@@ -53,6 +54,7 @@ export default ({ children }: UserDataProviderProps) => {
         accessibleFolders: getAccessibleFolders,
         settings,
         ...rest,
+        userDataReady: true,
       });
 
       setDefaultActiveCharacter(main.esiId);
@@ -65,7 +67,7 @@ export default ({ children }: UserDataProviderProps) => {
     }
   }, [token]);
 
-  if (loading) {
+  if (loading || (token && !state.userDataReady.get())) {
     return null;
   }
 

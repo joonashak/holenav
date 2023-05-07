@@ -9,15 +9,16 @@ jobs:
   publish-docs:
     name: Publish documentation
     runs-on: ubuntu-latest
+    environment: docs.holenav.com
     steps:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Deploy documentation to Vercel
-        uses: amondnet/vercel-action@v19
+        uses: amondnet/vercel-action@v25
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-          alias-domains: |
-            ${{ secrets.DOCUMENTATION_DOMAIN }}
+          alias-domains: ${{ vars.DOMAIN }}
+          vercel-args: --prod
           working-directory: ./docs

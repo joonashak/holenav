@@ -179,7 +179,7 @@ describe("Wormholes", () => {
     submitWormholeForm();
 
     cy.visitAndWaitForXhr("/system/Mies");
-    cy.get("#scanning-content").should("contain.text", "wormhole");
+    cy.get("#scanning-content").should("contain.text", "K162");
   });
 
   it("Can update wormhole into signature", () => {
@@ -194,7 +194,7 @@ describe("Wormholes", () => {
     submitWormholeForm();
 
     cy.visitAndWaitForXhr("/system/Tama");
-    cy.get("#scanning-content").should("contain.text", "wormhole");
+    cy.get("#scanning-content").should("contain.text", "K162");
 
     cy.visitAndWaitForXhr(testSystemUrl);
     cy.cs("edit-sig-Type Update Test 2").click();

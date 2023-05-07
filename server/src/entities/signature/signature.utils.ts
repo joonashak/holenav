@@ -1,3 +1,4 @@
+import { get, set } from "lodash";
 import { addUuid } from "../../utils/addUuid";
 import { CreatableSignature } from "./dto/add-signatures.dto";
 import MassStatus from "./enums/mass-status.enum";
@@ -78,4 +79,27 @@ export const completeSignature = (
   const whWithTypes = addK162(whWithIds);
 
   return whWithTypes;
+};
+
+/**
+ * Set `connection.eolAt` to now if given sig is an EOL wormhole.
+ */
+export const addEolAt = (signature: Signature): Signature => {
+  if (signature.type !== SigType.WORMHOLE || !signature.connection.eol) {
+    return signature;
+  }
+
+  return set(signature, "connection.eolAt", new Date());
+};
+
+export const sanitizeSignatureForNeo4j = (signature: Signature) => {
+  const dateKeys = ["createdAt", "connection.eolAt"];
+
+  for (const key of dateKeys) {
+    const cur = get(signature, key, null) as Date;
+    const val = cur?.toISOString() || null;
+    set(signature, key, val);
+  }
+
+  return signature;
 };

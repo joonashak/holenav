@@ -7,7 +7,7 @@ type OverviewMenuProps = {
   toggle: () => void;
 };
 
-export default ({ open, toggle }: OverviewMenuProps) => (
+const OverviewMenu = ({ open, toggle }: OverviewMenuProps) => (
   <Drawer anchor="top" open={open} onClose={toggle}>
     <Container>
       <List>
@@ -21,3 +21,5 @@ export default ({ open, toggle }: OverviewMenuProps) => (
     </Container>
   </Drawer>
 );
+
+export default OverviewMenu;
