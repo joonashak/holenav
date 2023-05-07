@@ -1,6 +1,7 @@
 name: Publish documentation
 
 on:
+  workflow_call:
   push:
     branches:
       - update-docs

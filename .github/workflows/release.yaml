@@ -47,16 +47,4 @@ jobs:
   publish-docs:
     name: Publish documentation
     needs: publish-server
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Deploy documentation to Vercel
-        uses: amondnet/vercel-action@v19
-        with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
-          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-          alias-domains: |
-            ${{ secrets.DOCUMENTATION_DOMAIN }}
-          working-directory: ./docs
+    uses: ./.github/workflows/publish_docs.yaml
