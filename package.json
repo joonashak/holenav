@@ -5,7 +5,7 @@
   "scripts": {
     "start": "npm run startd && npm run logs",
     "startd": "docker compose up -d --build",
-    "stop": "docker compose down && docker compose -f docker-compose-ci.yaml down",
+    "stop": "docker compose down && docker compose -f ci.compose.yaml down",
     "logs": "docker compose logs -f server client",
     "logs:all": "docker compose logs -f",
     "test": "npm run lint && npm run test:server && npm run test:e2e",

@@ -76,9 +76,9 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Build and start containers
-        run: docker-compose -f docker-compose-ci.yaml up -d mongo-ci neo-ci server-ci client-ci
+        run: docker compose -f ci.compose.yaml up -d mongo-ci neo-ci server-ci client-ci
       - name: Run E2E tests
-        run: docker-compose -f docker-compose-ci.yaml run e2e-ci
+        run: docker compose -f ci.compose.yaml run e2e-ci
       - uses: actions/upload-artifact@v2
         if: failure()
         with:

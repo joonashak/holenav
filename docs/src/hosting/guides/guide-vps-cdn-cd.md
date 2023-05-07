@@ -79,20 +79,18 @@ MongoDB is required when setting up the backend, so make sure to set that up bef
 
 To setup the backend, you need to create four configuration files:
 
-- `docker-compose.yaml`
+- `compose.yaml`
 - `server.production.env`
 - `neo.production.env`
 - `Caddyfile`
 
 ### Configure Holenav Server
 
-Create a new file called `docker-compose.yaml`. Use `/holenav` as the directory or make sure to update the configuration if you used another location.
+Create a new file called `compose.yaml`. Use `/holenav` as the directory or make sure to update the configuration if you used another location.
 
-#### `docker-compose.yaml`
+#### `compose.yaml`
 
 ```yaml
-version: "3.7"
-
 services:
   server:
     image: ghcr.io/joonashak/holenav-server:latest
@@ -173,7 +171,7 @@ NEO4J_AUTH=neo4j/yourSuperSecretNeoPassword
 Caddy will act as a proxy server between the `server` service and the internet, providing automatic SSL certificates. This enables HTTPS, without which virtually all modern browsers will refuse to make requests to the backend.
 
 :::tip
-If you are using another way to enable HTTPS (commonly offered by VPS providers), you can skip this step. Just make sure to also remove the `proxy` service defined in `docker-compose.yaml`.
+If you are using another way to enable HTTPS (commonly offered by VPS providers), you can skip this step. Just make sure to also remove the `proxy` service defined in `compose.yaml`.
 :::
 
 Create a new file called `Caddyfile` at `/holenav/caddy`. Insert the following configuration into the file, replacing `holenav.com` with your own domain.
