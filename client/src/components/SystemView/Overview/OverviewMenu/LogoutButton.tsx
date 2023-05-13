@@ -1,4 +1,5 @@
 import { Button } from "@mui/material";
+import LogoutIcon from "@mui/icons-material/Logout";
 import { useHistory } from "react-router-dom";
 import useAuth from "../../../../auth/useAuth";
 import useAuthenticatedMutation from "../../../../auth/useAuthenticatedMutation";
@@ -25,7 +26,13 @@ const LogoutButton = () => {
   };
 
   return (
-    <Button variant="outlined" color="secondary" onClick={onClick} data-cy="logout-button">
+    <Button
+      variant="outlined"
+      color="warning"
+      startIcon={<LogoutIcon />}
+      onClick={onClick}
+      data-cy="logout-button"
+    >
       Logout
     </Button>
   );

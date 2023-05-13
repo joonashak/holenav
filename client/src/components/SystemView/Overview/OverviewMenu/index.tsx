@@ -9,14 +9,14 @@ type OverviewMenuProps = {
 };
 
 const OverviewMenu = ({ open, toggle }: OverviewMenuProps) => (
-  <Drawer anchor="top" open={true} onClose={toggle}>
+  <Drawer anchor="top" open={open} onClose={toggle}>
     <Container>
       <List>
         <ListItem>
           <MapSelector />
         </ListItem>
-        <ListItem>
-          <SettingsButton />
+        <ListItem sx={{ justifyContent: { xs: "space-between", md: "center" } }}>
+          <SettingsButton sx={{ mr: { xs: 0, md: 4 } }} />
           <LogoutButton />
         </ListItem>
       </List>
