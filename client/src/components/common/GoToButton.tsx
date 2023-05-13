@@ -1,5 +1,4 @@
 import { Button, ButtonProps } from "@mui/material";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { useHistory } from "react-router-dom";
 
 type GoToButtonProps = ButtonProps & {
@@ -18,7 +17,6 @@ const GoToButton = ({ href, children, ...props }: GoToButtonProps) => {
       onClick={onClick}
       variant="outlined"
       color="secondary"
-      endIcon={<ArrowForwardIcon />}
       {...props}
     >
       {children}

@@ -1,6 +1,7 @@
 import { Container, Drawer, List, ListItem } from "@mui/material";
 import LogoutButton from "./LogoutButton";
 import MapSelector from "./MapSelector";
+import SettingsButton from "./SettingsButton";
 
 type OverviewMenuProps = {
   open: boolean;
@@ -8,13 +9,14 @@ type OverviewMenuProps = {
 };
 
 const OverviewMenu = ({ open, toggle }: OverviewMenuProps) => (
-  <Drawer anchor="top" open={open} onClose={toggle}>
+  <Drawer anchor="top" open={true} onClose={toggle}>
     <Container>
       <List>
         <ListItem>
           <MapSelector />
         </ListItem>
         <ListItem>
+          <SettingsButton />
           <LogoutButton />
         </ListItem>
       </List>

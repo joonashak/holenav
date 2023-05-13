@@ -1,4 +1,5 @@
 import { Box } from "@mui/material";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import GoToButton from "../common/GoToButton";
 import LoginButton from "../common/LoginButton";
 import LocalLogin from "../LocalLogin";
@@ -9,7 +10,7 @@ type LoginOrAppButtonProps = {
 
 const LoginOrAppButton = ({ loggedIn }: LoginOrAppButtonProps) =>
   loggedIn ? (
-    <GoToButton href="/system/J104809" sx={{ mb: { xs: 3, md: 0 } }}>
+    <GoToButton href="/system/J104809" endIcon={<ArrowForwardIcon />} sx={{ mb: { xs: 3, md: 0 } }}>
       Go To App
     </GoToButton>
   ) : (
