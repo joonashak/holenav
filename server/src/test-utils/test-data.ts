@@ -7,10 +7,17 @@ import { Folder } from "../entities/folder/folder.model";
 import FolderRole from "../user/roles/folder-role.enum";
 import SystemRole from "../user/roles/system-role.enum";
 import { User } from "../user/user.model";
+import { Corporation } from "../entities/common/corporation.model";
 
 export const testFolder: Folder = {
   id: "test-folder",
   name: "Test Folder",
+};
+
+export const testCorp: Corporation = {
+  esiId: "123",
+  name: "test-corp",
+  ticker: "TEST",
 };
 
 export const testUserPassword = "test-user-pwd";
@@ -29,6 +36,9 @@ export const testUser: User = {
     accessToken: "j67j64m",
     refreshToken: "g7i84nthg",
     isMain: true,
+    corporation: testCorp,
+    alliance: null,
+    portraitUrl: "",
   },
   settings: null,
   systemRole: SystemRole.USER,
