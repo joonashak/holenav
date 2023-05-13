@@ -48,3 +48,4 @@ jobs:
     name: Publish documentation
     needs: publish-server
     uses: ./.github/workflows/publish_docs.yaml
+    secrets: inherit
