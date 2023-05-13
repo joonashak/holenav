@@ -4,12 +4,14 @@ import ActiveFolder from "./folder/ActiveFolder";
 import FolderManagement from "./folder/FolderManagement";
 import GeneralSettings from "./personal/GeneralSettings";
 import SettingsMenu from "./SettingsMenu";
+import UserManagement from "./UserManagement";
 
 export const menuWidthRem = 20;
 
 export const settingsRoutes = {
   activeFolder: "/settings/folder/active",
   folderManagement: "/settings/folder/management",
+  userManagement: "/settings/users",
 };
 
 const SettingsView = () => (
@@ -19,6 +21,7 @@ const SettingsView = () => (
       <Switch>
         <Route path={settingsRoutes.activeFolder} component={ActiveFolder} />
         <Route path={settingsRoutes.folderManagement} component={FolderManagement} />
+        <Route path={settingsRoutes.userManagement} component={UserManagement} />
         <Route path="*" component={GeneralSettings} />
       </Switch>
     </Box>

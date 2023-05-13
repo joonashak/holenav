@@ -49,10 +49,16 @@ const MenuContent = ({ sx, bottomListSx }: MenuContentProps) => (
           />
         </SystemRoleGuard>
       </List>
+      <SystemRoleGuard minRole={SystemRoles.Manager}>
+        <MenuDivider>Manager Settings</MenuDivider>
+        <List>
+          <MenuItem text="Users" Icon={GroupIcon} href={settingsRoutes.userManagement} />
+        </List>
+      </SystemRoleGuard>
       <SystemRoleGuard minRole={SystemRoles.Administrator}>
         <MenuDivider>Admin Settings</MenuDivider>
         <List>
-          <MenuItem text="Users" Icon={GroupIcon} />
+          <MenuItem text="App Settings" Icon={SettingsIcon} />
         </List>
       </SystemRoleGuard>
       <List sx={{ bgcolor: "primary.light", ...bottomListSx }}>
