@@ -2,6 +2,7 @@ import { createState, useState } from "@hookstate/core";
 import { ReactNode } from "react";
 import useAuthenticatedQuery from "../../../auth/useAuthenticatedQuery";
 import {
+  AllUsersDocument,
   SettingsDataDocument,
   SettingsDataForManagerDocument,
 } from "../../../generated/graphqlOperations";
@@ -12,6 +13,7 @@ import { Settings } from "./types";
 export const settingsState = createState<Settings>({
   accessibleFolders: [],
   manageableFolders: [],
+  users: [],
 });
 
 type SettingsDataProps = {
@@ -32,6 +34,13 @@ const SettingsData = ({ children }: SettingsDataProps) => {
   useAuthenticatedQuery(SettingsDataForManagerDocument, {
     onCompleted: (data) => {
       state.merge({ manageableFolders: data.getManageableFolders });
+    },
+    skip: !atLeastManager(systemRole),
+  });
+
+  useAuthenticatedQuery(AllUsersDocument, {
+    onCompleted: (data) => {
+      state.merge({ users: data.getAllUsers });
     },
     skip: !atLeastManager(systemRole),
   });

@@ -1,5 +1,4 @@
 import { TypedDocumentNode as DocumentNode } from "@graphql-typed-document-node/core";
-
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -54,10 +53,16 @@ export type Connection = {
 };
 
 export type ConnectionInput = {
+  eol: Scalars["Boolean"];
+  eolAt?: InputMaybe<Scalars["DateTime"]>;
+  massStatus: MassStatus;
   reverseSignature: CreatableSignatureWithoutConnection;
 };
 
 export type ConnectionInputUpdate = {
+  eol: Scalars["Boolean"];
+  eolAt?: InputMaybe<Scalars["DateTime"]>;
+  massStatus: MassStatus;
   reverseSignature: SignatureUpdateWithoutConnection;
 };
 
@@ -453,6 +458,17 @@ export type ChangeActiveFolderMutationVariables = Exact<{
 export type ChangeActiveFolderMutation = {
   __typename?: "Mutation";
   changeActiveFolder: { __typename?: "SanitizedUser"; id: string };
+};
+
+export type AllUsersQueryVariables = Exact<{ [key: string]: never }>;
+
+export type AllUsersQuery = {
+  __typename?: "Query";
+  getAllUsers: Array<{
+    __typename?: "SanitizedUser";
+    id: string;
+    main: { __typename?: "Character"; esiId: string; name: string };
+  }>;
 };
 
 export type SearchCharactersByMainQueryVariables = Exact<{
@@ -1182,6 +1198,42 @@ export const ChangeActiveFolderDocument = {
     },
   ],
 } as unknown as DocumentNode<ChangeActiveFolderMutation, ChangeActiveFolderMutationVariables>;
+export const AllUsersDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "query",
+      name: { kind: "Name", value: "AllUsers" },
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "getAllUsers" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "id" } },
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "main" },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      { kind: "Field", name: { kind: "Name", value: "esiId" } },
+                      { kind: "Field", name: { kind: "Name", value: "name" } },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<AllUsersQuery, AllUsersQueryVariables>;
 export const SearchCharactersByMainDocument = {
   kind: "Document",
   definitions: [

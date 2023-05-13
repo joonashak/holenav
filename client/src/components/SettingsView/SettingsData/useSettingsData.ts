@@ -26,6 +26,9 @@ const useSettingsData = () => {
     get manageableFolders() {
       return state.manageableFolders.attach(Downgraded).get();
     },
+    get users() {
+      return state.users.attach(Downgraded).get();
+    },
     createFolder,
   };
 };
