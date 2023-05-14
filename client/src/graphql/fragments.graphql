@@ -1,0 +1,17 @@
+fragment UserFieldsForManager on SanitizedUser {
+  main {
+    esiId
+    name
+    portraitUrl
+    corporation {
+      esiId
+      name
+      ticker
+    }
+    alliance {
+      esiId
+      name
+      ticker
+    }
+  }
+}

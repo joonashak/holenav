@@ -1,0 +1,5 @@
+query AllUsers {
+  getAllUsers {
+    ...UserFieldsForManager
+  }
+}

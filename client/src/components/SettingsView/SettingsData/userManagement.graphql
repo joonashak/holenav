@@ -1,9 +1,0 @@
-query AllUsers {
-  getAllUsers {
-    id
-    main {
-      esiId
-      name
-    }
-  }
-}
