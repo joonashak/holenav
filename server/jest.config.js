@@ -9,6 +9,9 @@ const config = {
   coverageDirectory: "../coverage",
   testEnvironment: "node",
   setupFiles: ["<rootDir>/../test/test-env.ts"],
+  moduleNameMapper: {
+    axios: "axios/dist/node/axios.cjs",
+  },
 };
 
 module.exports = config;
