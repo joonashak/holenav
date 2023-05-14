@@ -10,6 +10,7 @@ import { UserSettingsService } from "./settings/user-settings.service";
 import { CharacterModule } from "../entities/character/character.module";
 import { CharacterService } from "../entities/character/character.service";
 import { Credentials, CredentialsSchema } from "./credentials/credentials.model";
+import { EsiModule } from "../esi/esi.module";
 
 @Global()
 @Module({
@@ -22,6 +23,7 @@ import { Credentials, CredentialsSchema } from "./credentials/credentials.model"
       secret: JWT_SECRET,
     }),
     CharacterModule,
+    EsiModule,
   ],
   providers: [UserService, UserSettingsService, FolderService, CharacterService, UserResolver],
   exports: [UserService, UserSettingsService, MongooseModule, CharacterService],
