@@ -5,5 +5,6 @@ import { EsiService } from "./esi.service";
 @Module({
   imports: [HttpModule],
   providers: [EsiService],
+  exports: [EsiService, HttpModule],
 })
 export class EsiModule {}
