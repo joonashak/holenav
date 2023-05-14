@@ -5,6 +5,7 @@ import { useState } from "react";
 import { User } from "../../../generated/graphqlOperations";
 import useLayout from "../../../utils/useLayout";
 import TableRow from "../../common/TableRow";
+import UserProfile from "./UserProfile";
 
 type UserListRowProps = {
   user: User;
@@ -31,7 +32,9 @@ const UserListRow = ({ user }: UserListRowProps) => {
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={4}>
           <Collapse in={open} timeout="auto" unmountOnExit sx={{ mb: 2 }}>
-            <Paper sx={{ p: 1 }}>Jee!</Paper>
+            <Paper sx={{ p: 1 }}>
+              <UserProfile user={user} />
+            </Paper>
           </Collapse>
         </TableCell>
       </TableRow>

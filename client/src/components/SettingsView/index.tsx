@@ -1,10 +1,10 @@
 import { Box } from "@mui/material";
 import { Route, Switch } from "react-router-dom";
+import SettingsMenu from "./SettingsMenu";
+import UserManagement from "./UserManagement";
 import ActiveFolder from "./folder/ActiveFolder";
 import FolderManagement from "./folder/FolderManagement";
 import GeneralSettings from "./personal/GeneralSettings";
-import SettingsMenu from "./SettingsMenu";
-import UserManagement from "./UserManagement";
 
 export const menuWidthRem = 20;
 
@@ -15,7 +15,7 @@ export const settingsRoutes = {
 };
 
 const SettingsView = () => (
-  <Box sx={{ bgcolor: "primary.dark", minHeight: "100vh" }}>
+  <Box sx={{ bgcolor: "primary.dark", height: "100vh", overflow: "scroll" }}>
     <SettingsMenu />
     <Box sx={{ ml: { xs: 2, md: `${menuWidthRem + 2}rem` }, mr: 2, pt: 2 }}>
       <Switch>
