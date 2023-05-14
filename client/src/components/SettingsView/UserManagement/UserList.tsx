@@ -1,6 +1,7 @@
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead } from "@mui/material";
 import useSettingsData from "../SettingsData/useSettingsData";
 import TableRow from "../../common/TableRow";
+import UserListRow from "./UserListRow";
 
 const UserList = () => {
   const { users } = useSettingsData();
@@ -10,6 +11,7 @@ const UserList = () => {
       <Table>
         <TableHead>
           <TableRow>
+            <TableCell />
             <TableCell>Name</TableCell>
             <TableCell>Alliance</TableCell>
             <TableCell>Corporation</TableCell>
@@ -17,11 +19,7 @@ const UserList = () => {
         </TableHead>
         <TableBody>
           {users.map((user) => (
-            <TableRow key={`user-list-row-${user.main.esiId}`}>
-              <TableCell>{user.main.name}</TableCell>
-              <TableCell>{user.main.alliance?.ticker}</TableCell>
-              <TableCell>{user.main.corporation?.ticker}</TableCell>
-            </TableRow>
+            <UserListRow user={user} key={`user-list-row-${user.main.esiId}`} />
           ))}
         </TableBody>
       </Table>
