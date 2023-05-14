@@ -55,6 +55,9 @@ export class CharacterService {
       character.esiId,
     );
 
+    const { px512x512 } = await this.esiService.getCharacterPortraitUrl(character.esiId);
+    character.portraitUrl = px512x512;
+
     const { name, ticker } = await this.esiService.getCorporationPublicInfo(
       corporation_id.toString(),
     );
