@@ -1,17 +1,10 @@
-import { useState } from "react";
-import {
-  AppBar,
-  Drawer,
-  IconButton,
-  Toolbar,
-  Typography,
-  useMediaQuery,
-  useTheme,
-} from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import MenuContent from "./MenuContent";
-import GoToButton from "../../common/GoToButton";
+import { AppBar, Drawer, IconButton, Toolbar, Typography } from "@mui/material";
+import { useState } from "react";
 import { menuWidthRem } from "..";
+import useLayout from "../../../utils/useLayout";
+import GoToButton from "../../common/GoToButton";
+import MenuContent from "./MenuContent";
 
 const SidebarMenu = () => (
   <MenuContent
@@ -45,8 +38,7 @@ const DrawerMenu = () => {
 };
 
 const SettingsMenu = () => {
-  const theme = useTheme();
-  const wideViewport = useMediaQuery(theme.breakpoints.up("md"), { noSsr: true });
+  const { wideViewport } = useLayout();
 
   return wideViewport ? <SidebarMenu /> : <DrawerMenu />;
 };
