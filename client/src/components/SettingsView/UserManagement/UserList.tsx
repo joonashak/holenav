@@ -1,10 +1,12 @@
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead } from "@mui/material";
-import useSettingsData from "../SettingsData/useSettingsData";
+import useLayout from "../../../utils/useLayout";
 import TableRow from "../../common/TableRow";
+import useSettingsData from "../SettingsData/useSettingsData";
 import UserListRow from "./UserListRow";
 
 const UserList = () => {
   const { users } = useSettingsData();
+  const { wideViewport } = useLayout();
 
   return (
     <TableContainer component={Paper} sx={{ bgcolor: "primary.main" }}>
@@ -13,8 +15,8 @@ const UserList = () => {
           <TableRow>
             <TableCell />
             <TableCell>Name</TableCell>
-            <TableCell>Alliance</TableCell>
-            <TableCell>Corporation</TableCell>
+            {wideViewport && <TableCell>Alliance</TableCell>}
+            {wideViewport && <TableCell>Corporation</TableCell>}
           </TableRow>
         </TableHead>
         <TableBody>
