@@ -150,6 +150,7 @@ export type Mutation = {
   addFolderRole: SanitizedUser;
   addSavedMap: User;
   addSignatures: Array<Signature>;
+  assignSystemRole: SanitizedUserForManager;
   changeActiveFolder: SanitizedUser;
   createFolder: Folder;
   deleteSavedMap: User;
@@ -178,6 +179,12 @@ export type MutationAddSavedMapArgs = {
 
 export type MutationAddSignaturesArgs = {
   input: AddSignaturesInput;
+};
+
+
+export type MutationAssignSystemRoleArgs = {
+  systemRole: Scalars['Float'];
+  userId: Scalars['String'];
 };
 
 

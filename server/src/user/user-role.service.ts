@@ -8,6 +8,13 @@ import { User, UserDocument } from "./user.model";
 export class UserRoleService {
   constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
+  async assignSystemRole(userId: string, newRole: SystemRole): Promise<UserDocument> {
+    await this.preventDemotingLastAdmin(userId);
+    const user = await this.userModel.findById(userId);
+    user.systemRole = newRole;
+    return user.save();
+  }
+
   /**
    * Role to be assigned for next new user.
    *
@@ -16,5 +23,17 @@ export class UserRoleService {
   async getNewUserSystemRole(): Promise<SystemRole> {
     const users = await this.userModel.find();
     return users.length === 0 ? SystemRole.ADMINISTRATOR : SystemRole.USER;
+  }
+
+  /**
+   * Ensures that at least one admin is always left after role updates.
+   */
+  private async preventDemotingLastAdmin(userId: string): Promise<void> {
+    const currentAdmins = await this.userModel.find({ systemRole: SystemRole.ADMINISTRATOR });
+    const adminsLeft = currentAdmins.filter((user) => user.id !== userId);
+
+    if (adminsLeft.length === 0) {
+      throw new Error("Demoting the last admin is not allowed.");
+    }
   }
 }

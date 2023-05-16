@@ -7,12 +7,17 @@ import { SanitizedUserForManager } from "./dto/sanitized-user-for-manager.dto";
 import { SanitizedUser } from "./dto/sanitized-user.dto";
 import SystemRole from "./roles/system-role.enum";
 import { UserSettingsService } from "./settings/user-settings.service";
+import { UserRoleService } from "./user-role.service";
 import { User } from "./user.model";
 import { UserService } from "./user.service";
 
 @Resolver()
 export class UserResolver {
-  constructor(private userService: UserService, private userSettingsService: UserSettingsService) {}
+  constructor(
+    private userService: UserService,
+    private userRoleService: UserRoleService,
+    private userSettingsService: UserSettingsService,
+  ) {}
 
   @RequireAuth()
   @Query((returns) => User)
@@ -75,5 +80,14 @@ export class UserResolver {
     @CurrentUser() user: User,
   ): Promise<User> {
     return this.userSettingsService.changeActiveFolder(folderId, user);
+  }
+
+  @RequireSystemRole(SystemRole.ADMINISTRATOR)
+  @Mutation((returns) => SanitizedUserForManager)
+  async assignSystemRole(
+    @Args("userId") userId: string,
+    @Args("systemRole") systemRole: SystemRole,
+  ): Promise<SanitizedUserForManager> {
+    return this.userRoleService.assignSystemRole(userId, systemRole);
   }
 }
