@@ -9,7 +9,7 @@ import { CreateUserDto } from "./dto/create-user.dto";
 import { SanitizedUserForManager } from "./dto/sanitized-user-for-manager.dto";
 import FolderRole from "./roles/folder-role.enum";
 import { FolderRole as FolderRoleModel } from "./roles/folder-role.model";
-import SystemRole from "./roles/system-role.enum";
+import { UserRoleService } from "./user-role.service";
 import { User, UserDocument } from "./user.model";
 
 @Injectable()
@@ -19,6 +19,7 @@ export class UserService {
     @InjectModel(Credentials.name) private credentialsModel: Model<CredentialsDocument>,
     private folderService: FolderService,
     private characterService: CharacterService,
+    private userRoleService: UserRoleService,
   ) {}
 
   /**
@@ -31,7 +32,7 @@ export class UserService {
     await this.characterService.makeMain(user.main);
 
     const folder = await this.folderService.createFolder({ name: "My Folder", personal: true });
-    const systemRole = await this.getNewUserSystemRole();
+    const systemRole = await this.userRoleService.getNewUserSystemRole();
     const newUser = await this.userModel.create({
       ...user,
       folderRoles: [{ role: FolderRole.ADMIN, folder }],
@@ -133,11 +134,6 @@ export class UserService {
     if (mains.length || alts.length) {
       throw new HttpException("Character already in use.", HttpStatus.BAD_REQUEST);
     }
-  }
-
-  private async getNewUserSystemRole(): Promise<SystemRole> {
-    const users = await this.userModel.find();
-    return users.length === 0 ? SystemRole.ADMINISTRATOR : SystemRole.USER;
   }
 
   async addFolderRole(user: User, folderRole: FolderRoleModel): Promise<User> {
