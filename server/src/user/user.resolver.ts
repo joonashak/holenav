@@ -1,13 +1,14 @@
 import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
+import RequireAuth from "../auth/decorators/auth.decorator";
+import { RequireSystemRole } from "../auth/decorators/role.decorator";
 import { CurrentUser } from "../auth/decorators/user.decorator";
+import AddFolderRoleInput from "./dto/add-folder-role.dto";
+import { SanitizedUserForManager } from "./dto/sanitized-user-for-manager.dto";
+import { SanitizedUser } from "./dto/sanitized-user.dto";
+import SystemRole from "./roles/system-role.enum";
+import { UserSettingsService } from "./settings/user-settings.service";
 import { User } from "./user.model";
 import { UserService } from "./user.service";
-import RequireAuth from "../auth/decorators/auth.decorator";
-import { UserSettingsService } from "./settings/user-settings.service";
-import { RequireSystemRole } from "../auth/decorators/role.decorator";
-import SystemRole from "./roles/system-role.enum";
-import { SanitizedUser } from "./dto/sanitized-user.dto";
-import AddFolderRoleInput from "./dto/add-folder-role.dto";
 
 @Resolver()
 export class UserResolver {
@@ -55,9 +56,9 @@ export class UserResolver {
   }
 
   @RequireSystemRole(SystemRole.MANAGER)
-  @Query((returns) => [SanitizedUser])
-  async getAllUsers(): Promise<SanitizedUser[]> {
-    return this.userService.findAllUsersSanitized();
+  @Query((returns) => [SanitizedUserForManager])
+  async getAllUsersForManager(): Promise<SanitizedUserForManager[]> {
+    return this.userService.findAllUsersSanitizedForManager();
   }
 
   @RequireSystemRole(SystemRole.MANAGER)

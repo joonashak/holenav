@@ -1,4 +1,5 @@
-fragment UserFieldsForManager on SanitizedUser {
+fragment UserFieldsForManager on SanitizedUserForManager {
+  systemRole
   main {
     esiId
     name

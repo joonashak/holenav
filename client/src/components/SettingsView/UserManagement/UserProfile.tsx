@@ -24,6 +24,7 @@ const UserProfile = ({ user }: UserProfileProps) => (
           {`${user.main.corporation.name} [${user.main.corporation.ticker}]`}
           {user.main.alliance && ` / ${user.main.alliance.name} [${user.main.alliance.ticker}]`}
         </Typography>
+        <Typography variant="body2">System Role: {user.systemRole}</Typography>
       </CardContent>
       <CardActions>
         <Button size="small" color="primary">

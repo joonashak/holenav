@@ -6,9 +6,9 @@ import { CharacterService } from "../entities/character/character.service";
 import { FolderService } from "../entities/folder/folder.service";
 import { Credentials, CredentialsDocument } from "./credentials/credentials.model";
 import { CreateUserDto } from "./dto/create-user.dto";
-import { SanitizedUser } from "./dto/sanitized-user.dto";
-import { FolderRole as FolderRoleModel } from "./roles/folder-role.model";
+import { SanitizedUserForManager } from "./dto/sanitized-user-for-manager.dto";
 import FolderRole from "./roles/folder-role.enum";
+import { FolderRole as FolderRoleModel } from "./roles/folder-role.model";
 import SystemRole from "./roles/system-role.enum";
 import { User, UserDocument } from "./user.model";
 
@@ -48,8 +48,8 @@ export class UserService {
    * settings and alts are removed.
    * @returns List of users.
    */
-  async findAllUsersSanitized(): Promise<SanitizedUser[]> {
-    return this.userModel.find().populate(["main"]).select(["id", "main"]);
+  async findAllUsersSanitizedForManager(): Promise<SanitizedUserForManager[]> {
+    return this.userModel.find().populate(["main"]).select(["id", "main", "systemRole"]);
   }
 
   /**

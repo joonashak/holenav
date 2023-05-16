@@ -40,7 +40,7 @@ const SettingsData = ({ children }: SettingsDataProps) => {
 
   useAuthenticatedQuery(AllUsersDocument, {
     onCompleted: (data) => {
-      state.merge({ users: data.getAllUsers });
+      state.merge({ users: data.getAllUsersForManager });
     },
     skip: !atLeastManager(systemRole),
   });

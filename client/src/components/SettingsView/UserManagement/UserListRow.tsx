@@ -13,7 +13,7 @@ type UserListRowProps = {
 
 const UserListRow = ({ user }: UserListRowProps) => {
   const { wideViewport } = useLayout();
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   const toggleOpen = () => setOpen((val) => !val);
   const { main } = user;
 
