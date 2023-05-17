@@ -1,9 +1,9 @@
 import { Tooltip, Typography } from "@mui/material";
 import SecurityClasses from "../../../../enum/SecurityClasses";
 import useSystemData from "../../SystemData/useSystemData";
-import EffectInfoTable from "./EffectInfoTable";
+import EffectInfoTable, { EffectInfoTableProps } from "./EffectInfoTable";
 
-const EffectLabel = ({ effect }: { effect: any }) => (
+const EffectLabel = ({ effect }: EffectInfoTableProps) => (
   <Tooltip
     title={<EffectInfoTable effect={effect} />}
     componentsProps={{

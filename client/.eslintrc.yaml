@@ -1,13 +1,15 @@
 root: true
 parser: "@typescript-eslint/parser"
 extends:
-    - eslint:recommended
-    - plugin:@typescript-eslint/recommended
-    - plugin:react/recommended
-    - plugin:react/jsx-runtime
-    # Keep prettier last so it overrides other configs correctly!
-    - prettier
+  - eslint:recommended
+  - plugin:@typescript-eslint/recommended
+  - plugin:react/recommended
+  - plugin:react/jsx-runtime
+  # Keep prettier last so it overrides other configs correctly!
+  - prettier
 plugins:
-    - "@typescript-eslint"
+  - "@typescript-eslint"
 rules:
-    "@typescript-eslint/no-empty-function": warn
+  "@typescript-eslint/no-empty-function": warn
+ignorePatterns:
+  - graphqlOperations.ts

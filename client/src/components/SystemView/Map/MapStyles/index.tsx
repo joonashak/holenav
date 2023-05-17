@@ -14,6 +14,7 @@ const specificClassName = (className: string) => `.${className}.${className}`;
  */
 const MapStyles = () => (
   <GlobalStyles
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     styles={(theme: any) => ({
       [specificClassName(MapLinkClasses.DEFAULT)]: {
         stroke: theme.palette.secondary.light,

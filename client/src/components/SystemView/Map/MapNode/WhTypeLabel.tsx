@@ -1,6 +1,5 @@
 import { Typography } from "@mui/material";
 import { useState } from "react";
-import SigModal from "../../Overview/ScanningPanel/SigModal";
 import { Wormhole } from "../MapData/types";
 
 type WhTypeLabelProps = {

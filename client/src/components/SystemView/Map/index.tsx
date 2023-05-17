@@ -11,6 +11,7 @@ import pathClassFunc from "./MapStyles/pathClassFunc";
 const inputMapStyles = <MapStyles />;
 
 // Hack to enable hooks in MapNode...
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const Node = (props: any) => <MapNode {...props} />;
 
 const Map = () => {
@@ -24,6 +25,7 @@ const Map = () => {
 
   const compareMapNodes = (a: RawNodeDatum, b: RawNodeDatum) => a.name.localeCompare(b.name);
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const orderChildren = (children: RawNodeDatum[]): any[] =>
     children
       .map(({ children: subChildren, ...rest }) => ({

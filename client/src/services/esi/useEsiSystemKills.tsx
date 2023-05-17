@@ -19,7 +19,7 @@ const useEsiSystemKills = (): EsiSystemKillsHook => {
     if (!data) {
       return defaultKills;
     }
-
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const res = data.find((system: any) => system.system_id === systemId);
 
     return {

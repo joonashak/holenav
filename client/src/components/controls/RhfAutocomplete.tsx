@@ -1,9 +1,9 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import { Autocomplete, TextField } from "@mui/material";
 import { Control, Controller, UseControllerReturn } from "react-hook-form";
 
 type RhfAutocompleteProps = {
   name: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   control: Control<any, object>;
   options: string[];
 };

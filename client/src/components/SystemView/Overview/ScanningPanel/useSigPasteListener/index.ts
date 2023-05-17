@@ -18,6 +18,7 @@ const useSigPasteListener = () => {
     try {
       const pastedSigs = parsePaste(event as ClipboardEvent);
       await pasteSignatures(pastedSigs);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       showWarningNotification(error.message, { autoHide: true });
     }
@@ -29,6 +30,7 @@ const useSigPasteListener = () => {
     try {
       const pastedSigs = parsePaste(paste);
       await pasteSignatures(pastedSigs, sync);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       showWarningNotification(error.message, { autoHide: true });
     }

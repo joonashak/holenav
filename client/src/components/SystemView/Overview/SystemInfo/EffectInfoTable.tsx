@@ -2,7 +2,7 @@ import { WormholeEffect } from "@eve-data/systems/lib/src/api/system.type";
 import { Paper, Table, TableBody, TableCell, TableContainer } from "@mui/material";
 import TableRow from "../../../common/TableRow";
 
-type EffectInfoTableProps = {
+export type EffectInfoTableProps = {
   effect: WormholeEffect | null;
 };
 

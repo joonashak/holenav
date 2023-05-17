@@ -13,6 +13,7 @@ const getSecurityStyle = (securityClass: string, theme: Theme) => {
   return theme.palette.primary.light;
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const Rect = (props: any) => <rect {...props} />;
 const MapNodeRect = styled(Rect)(({ theme, securityclass }) => ({
   "&&": {

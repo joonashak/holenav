@@ -1,10 +1,9 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import { MenuItem, TextField } from "@mui/material";
-import { Controller } from "react-hook-form";
+import { Control, Controller } from "react-hook-form";
 
 type ControlledSelectProps = {
   name: string;
-  control: any;
+  control: Control;
   label: string;
   options: Options[];
 };
@@ -17,7 +16,7 @@ type Options = {
 
 // FIXME: Rename and update to use styled select (or integrate in the same mess...?)
 const ControlledSelect = ({ options, name, control, label }: ControlledSelectProps) => {
-  // eslint-disable-next-line react/no-unstable-nested-components
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const Render = ({ field }: any) => (
     <TextField {...field} select label={label} fullWidth data-cy={`select-${name}`}>
       {options.map(({ key, value, label: optionLabel }) => (
