@@ -1,5 +1,7 @@
 import { Button, Card, CardActions, CardContent, CardMedia, Typography } from "@mui/material";
-import { User } from "../../../../generated/graphqlOperations";
+import SystemRoleGuard from "../../../../auth/SystemRoleGuard";
+import { SystemRoles, User } from "../../../../generated/graphqlOperations";
+import SystemRoleWidget from "./SystemRoleWidget";
 
 type UserProfileProps = {
   user: User;
@@ -24,7 +26,12 @@ const UserProfile = ({ user }: UserProfileProps) => (
           {`${user.main.corporation.name} [${user.main.corporation.ticker}]`}
           {user.main.alliance && ` / ${user.main.alliance.name} [${user.main.alliance.ticker}]`}
         </Typography>
-        <Typography variant="body2">System Role: {user.systemRole}</Typography>
+        <SystemRoleGuard
+          showTo={[SystemRoles.Administrator]}
+          defaultComponent={<Typography variant="body2">System Role: {user.systemRole}</Typography>}
+        >
+          <SystemRoleWidget user={user} />
+        </SystemRoleGuard>
       </CardContent>
       <CardActions>
         <Button size="small" color="primary">

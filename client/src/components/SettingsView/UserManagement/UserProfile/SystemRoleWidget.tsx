@@ -1,4 +1,4 @@
-import { Box, Select, SelectChangeEvent } from "@mui/material";
+import { Box, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import { useState } from "react";
 import { SystemRoles, User } from "../../../../generated/graphqlOperations";
 
@@ -21,7 +21,11 @@ const SystemRoleWidget = ({ user }: SystemRoleWidgetProps) => {
         value={selectedRole}
         label="System Role"
         onChange={onChange}
-      ></Select>
+      >
+        <MenuItem value={SystemRoles.User}>{SystemRoles.User}</MenuItem>
+        <MenuItem value={SystemRoles.Manager}>{SystemRoles.Manager}</MenuItem>
+        <MenuItem value={SystemRoles.Administrator}>{SystemRoles.Administrator}</MenuItem>
+      </Select>
     </Box>
   );
 };
