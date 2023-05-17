@@ -1,3 +1,8 @@
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import FolderOpenIcon from "@mui/icons-material/FolderOpen";
+import FolderSharedIcon from "@mui/icons-material/FolderShared";
+import GroupIcon from "@mui/icons-material/Group";
+import SettingsIcon from "@mui/icons-material/Settings";
 import {
   Box,
   BoxProps,
@@ -8,16 +13,11 @@ import {
   ListItemText,
   ListProps,
 } from "@mui/material";
-import GroupIcon from "@mui/icons-material/Group";
-import SettingsIcon from "@mui/icons-material/Settings";
-import FolderOpenIcon from "@mui/icons-material/FolderOpen";
-import FolderSharedIcon from "@mui/icons-material/FolderShared";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import MenuDivider from "./MenuDivider";
-import MenuItem from "./MenuItem";
 import { settingsRoutes } from "..";
 import SystemRoleGuard from "../../../auth/SystemRoleGuard";
 import { SystemRoles } from "../../../generated/graphqlOperations";
+import MenuDivider from "./MenuDivider";
+import MenuItem from "./MenuItem";
 
 type MenuContentProps = {
   sx?: BoxProps["sx"];
@@ -41,7 +41,7 @@ const MenuContent = ({ sx, bottomListSx }: MenuContentProps) => (
       <MenuDivider>Folder Settings</MenuDivider>
       <List>
         <MenuItem text="Active Folder" Icon={FolderOpenIcon} href={settingsRoutes.activeFolder} />
-        <SystemRoleGuard minRole={SystemRoles.Manager}>
+        <SystemRoleGuard hideFrom={[SystemRoles.User]}>
           <MenuItem
             text="Folder Management"
             Icon={FolderSharedIcon}
@@ -49,13 +49,13 @@ const MenuContent = ({ sx, bottomListSx }: MenuContentProps) => (
           />
         </SystemRoleGuard>
       </List>
-      <SystemRoleGuard minRole={SystemRoles.Manager}>
+      <SystemRoleGuard hideFrom={[SystemRoles.User]}>
         <MenuDivider>Manager Settings</MenuDivider>
         <List>
           <MenuItem text="Users" Icon={GroupIcon} href={settingsRoutes.userManagement} />
         </List>
       </SystemRoleGuard>
-      <SystemRoleGuard minRole={SystemRoles.Administrator}>
+      <SystemRoleGuard showTo={[SystemRoles.Administrator]}>
         <MenuDivider>Admin Settings</MenuDivider>
         <List>
           <MenuItem text="App Settings" Icon={SettingsIcon} />
