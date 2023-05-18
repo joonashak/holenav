@@ -3,6 +3,7 @@ import RequireAuth from "../auth/decorators/auth.decorator";
 import { RequireSystemRole } from "../auth/decorators/role.decorator";
 import { CurrentUser } from "../auth/decorators/user.decorator";
 import AddFolderRoleInput from "./dto/add-folder-role.dto";
+import AssignSystemRoleInput from "./dto/assign-system-role.dto";
 import { SanitizedUserForManager } from "./dto/sanitized-user-for-manager.dto";
 import { SanitizedUser } from "./dto/sanitized-user.dto";
 import SystemRole from "./roles/system-role.enum";
@@ -85,9 +86,8 @@ export class UserResolver {
   @RequireSystemRole(SystemRole.ADMINISTRATOR)
   @Mutation((returns) => SanitizedUserForManager)
   async assignSystemRole(
-    @Args("userId") userId: string,
-    @Args("systemRole") systemRole: SystemRole,
+    @Args("input") input: AssignSystemRoleInput,
   ): Promise<SanitizedUserForManager> {
-    return this.userRoleService.assignSystemRole(userId, systemRole);
+    return this.userRoleService.assignSystemRole(input.userId, input.systemRole);
   }
 }
