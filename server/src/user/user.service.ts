@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
-import { Model } from "mongoose";
+import { FilterQuery, Model } from "mongoose";
 import { Character } from "../entities/character/character.model";
 import { CharacterService } from "../entities/character/character.service";
 import { FolderService } from "../entities/folder/folder.service";
@@ -49,8 +49,10 @@ export class UserService {
    * settings and alts are removed.
    * @returns List of users.
    */
-  async findAllUsersSanitizedForManager(): Promise<SanitizedUserForManager[]> {
-    return this.userModel.find().populate(["main"]).select(["id", "main", "systemRole"]);
+  async findUsersSanitizedForManager(
+    query?: FilterQuery<UserDocument>,
+  ): Promise<SanitizedUserForManager[]> {
+    return this.userModel.find(query).populate(["main"]).select(["id", "main", "systemRole"]);
   }
 
   /**

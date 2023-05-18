@@ -3,3 +3,9 @@ query AllUsers {
     ...UserFieldsForManager
   }
 }
+
+mutation AssignSystemRole($userId: String!, $systemRole: SystemRoles!) {
+  assignSystemRole(input: { userId: $userId, systemRole: $systemRole }) {
+    ...UserFieldsForManager
+  }
+}

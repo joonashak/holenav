@@ -6,6 +6,6 @@ export default class AssignSystemRoleInput {
   @Field()
   userId: string;
 
-  @Field((type) => SystemRole)
+  @Field((type) => SystemRole, { nullable: true })
   systemRole: SystemRole;
 }

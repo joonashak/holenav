@@ -68,7 +68,7 @@
     "lint": "eslint src",
     "generate": "npm run generate:codegen && npm run generate:lintfix",
     "generate:codegen": "graphql-codegen",
-    "generate:lintfix": "eslint src/generated/ --fix"
+    "generate:lintfix": "eslint src/generated/ --fix --no-ignore --rule '@typescript-eslint/no-explicit-any: 0'"
   },
   "browserslist": {
     "production": [

@@ -65,7 +65,7 @@ export class UserResolver {
   @RequireSystemRole(SystemRole.MANAGER)
   @Query((returns) => [SanitizedUserForManager])
   async getAllUsersForManager(): Promise<SanitizedUserForManager[]> {
-    return this.userService.findAllUsersSanitizedForManager();
+    return this.userService.findUsersSanitizedForManager();
   }
 
   @RequireSystemRole(SystemRole.MANAGER)
@@ -89,6 +89,8 @@ export class UserResolver {
   async assignSystemRole(
     @Args("input") input: AssignSystemRoleInput,
   ): Promise<SanitizedUserForManager> {
-    return this.userRoleService.assignSystemRole(input.userId, input.systemRole);
+    await this.userRoleService.assignSystemRole(input.userId, input.systemRole);
+    const users = await this.userService.findUsersSanitizedForManager({ id: input.userId });
+    return users[0];
   }
 }
