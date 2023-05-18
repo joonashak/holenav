@@ -5,7 +5,7 @@ import { Character } from "../../entities/character/character.model";
 import { FolderService } from "../../entities/folder/folder.service";
 import { Credentials } from "../../user/credentials/credentials.model";
 import defaultUserSettings from "../../user/settings/default-user-settings";
-import { User } from "../../user/user.model";
+import { User, UserDocument } from "../../user/user.model";
 import users from "../data/users";
 
 @Injectable()
@@ -24,7 +24,7 @@ export class MockUserService {
       const { id, main, defaultFolderRole, systemRole } = user;
       const newChar = await this.characterModel.create({ ...main, isMain: true });
       const credentials = await this.credentialsModel.create(user.credentials);
-      await this.userModel.create({
+      const newUser = await this.userModel.create({
         main: newChar,
         id,
         systemRole,
@@ -32,6 +32,12 @@ export class MockUserService {
         folderRoles: [{ role: defaultFolderRole, folder: defaultFolder }],
         settings: { ...defaultUserSettings, activeFolder: defaultFolder },
       });
+      await this.preSelectMap(newUser);
     }
+  }
+
+  private async preSelectMap(user: UserDocument) {
+    user.settings.selectedMap = user.settings.maps[0];
+    await user.save();
   }
 }
