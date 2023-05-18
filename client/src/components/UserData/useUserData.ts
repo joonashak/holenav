@@ -2,8 +2,8 @@ import { FetchResult } from "@apollo/client";
 import { Downgraded, useState } from "@hookstate/core";
 import { userState } from ".";
 import useAuthenticatedMutation from "../../auth/useAuthenticatedMutation";
-import { ADD_SAVED_MAP, UPDATE_SELECTED_MAP, DELETE_SAVED_MAP, REMOVE_ALT } from "./graphql";
-import { SavedMap } from "./types";
+import { SavedMap } from "../../generated/graphqlOperations";
+import { ADD_SAVED_MAP, DELETE_SAVED_MAP, REMOVE_ALT, UPDATE_SELECTED_MAP } from "./graphql";
 
 const useUserData = () => {
   const state = useState(userState);

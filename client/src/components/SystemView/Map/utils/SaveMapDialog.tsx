@@ -1,13 +1,13 @@
 import systems from "@eve-data/systems";
 import { Button, DialogContent, DialogProps, DialogTitle } from "@mui/material";
 import { FieldValues, useForm } from "react-hook-form";
+import { SavedMap } from "../../../../generated/graphqlOperations";
+import useNotification from "../../../GlobalNotification/useNotification";
+import useUserData from "../../../UserData/useUserData";
 import Dialog from "../../../common/Dialog";
 import ControlledTextField from "../../../controls/ControlledTextField";
 import FormGroupRow from "../../../controls/FormGroupRow";
 import RhfAutocomplete from "../../../controls/RhfAutocomplete";
-import useNotification from "../../../GlobalNotification/useNotification";
-import { SavedMap } from "../../../UserData/types";
-import useUserData from "../../../UserData/useUserData";
 import useSystemData from "../../SystemData/useSystemData";
 
 type SaveMapDialogProps = DialogProps & {

@@ -1,10 +1,10 @@
-import { SyntheticEvent } from "react";
-import { IconButton, ListItemIcon, ListItemText, MenuItem } from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { SavedMap } from "../../../UserData/types";
-import useUserData from "../../../UserData/useUserData";
+import { IconButton, ListItemIcon, ListItemText, MenuItem } from "@mui/material";
+import { SyntheticEvent } from "react";
+import { SavedMap } from "../../../../generated/graphqlOperations";
 import useNotification from "../../../GlobalNotification/useNotification";
+import useUserData from "../../../UserData/useUserData";
 
 type MapMenuItemProps = {
   map: SavedMap;

@@ -1,11 +1,11 @@
-import { SyntheticEvent } from "react";
-import { IconButton, ListItemIcon, ListItemText, MenuItem } from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { Character } from "../../../UserData/types";
-import useUserData from "../../../UserData/useUserData";
+import { IconButton, ListItemIcon, ListItemText, MenuItem } from "@mui/material";
+import { SyntheticEvent } from "react";
+import { Character } from "../../../../generated/graphqlOperations";
 import useNotification from "../../../GlobalNotification/useNotification";
 import useLocalData from "../../../LocalData/useLocalData";
+import useUserData from "../../../UserData/useUserData";
 
 type CharacterMenuItemProps = {
   character: Character;
