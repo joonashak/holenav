@@ -1,9 +1,11 @@
 fragment UserFieldsForManager on SanitizedUserForManager {
+  id
   systemRole
   main {
     esiId
     name
     portraitUrl
+    isMain
     corporation {
       esiId
       name

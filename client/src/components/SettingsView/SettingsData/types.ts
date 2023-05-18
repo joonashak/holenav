@@ -1,7 +1,7 @@
-import { Folder, User } from "../../../generated/graphqlOperations";
+import { Folder, SanitizedUserForManager } from "../../../generated/graphqlOperations";
 
 export type Settings = {
   accessibleFolders: Folder[];
   manageableFolders: Folder[];
-  users: User[];
+  users: SanitizedUserForManager[];
 };
