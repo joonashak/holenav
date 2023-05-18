@@ -63,9 +63,7 @@ const useUserData = () => {
       return state.alts.get();
     },
     get settings() {
-      const maps = state.settings.maps.attach(Downgraded).get();
-      const selectedMap = state.settings.selectedMap.get() || maps[0];
-      return { maps, selectedMap };
+      return state.settings.attach(Downgraded).get();
     },
     get systemRole() {
       return state.systemRole.get();

@@ -10,7 +10,7 @@ export default () => {
   const { selectedMap } = settings;
 
   const fetchConnectionTree = async (rootSystemNameOverride: string | null = null) => {
-    const rootSystemName = rootSystemNameOverride || selectedMap.rootSystemName;
+    const rootSystemName = rootSystemNameOverride || selectedMap?.rootSystemName;
 
     if (!rootSystemName) {
       return;

@@ -1,8 +1,8 @@
 import { Typography } from "@mui/material";
-import useSystemData from "../SystemData/useSystemData";
-import useMapData from "../Map/MapData/useMapData";
 import useUserData from "../../UserData/useUserData";
+import useMapData from "../Map/MapData/useMapData";
 import { flattenConnectionTreeChildren } from "../Map/MapData/utils";
+import useSystemData from "../SystemData/useSystemData";
 
 const OverviewTitle = () => {
   const { name } = useSystemData();
@@ -13,7 +13,7 @@ const OverviewTitle = () => {
   const connections = flattenConnectionTreeChildren(connectionTree.children);
 
   const systemFromConnectionTree = connections.find(
-    (conn) => conn.wormhole?.destinationName === name
+    (conn) => conn.wormhole?.destinationName === name,
   );
 
   const nameFromConnectionTree = systemFromConnectionTree
@@ -21,7 +21,7 @@ const OverviewTitle = () => {
     : null;
 
   const bookmarkName =
-    name === selectedMap.rootSystemName ? selectedMap.name : nameFromConnectionTree;
+    name === selectedMap?.rootSystemName ? selectedMap.name : nameFromConnectionTree;
 
   const bookmarkNameInTitle = bookmarkName ? ` - ${bookmarkName}` : null;
 
