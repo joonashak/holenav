@@ -1,10 +1,10 @@
 import { Button, Card, CardActions, CardContent, CardMedia, Typography } from "@mui/material";
 import SystemRoleGuard from "../../../../auth/SystemRoleGuard";
-import { SystemRoles, User } from "../../../../generated/graphqlOperations";
+import { SanitizedUserForManager, SystemRoles } from "../../../../generated/graphqlOperations";
 import SystemRoleWidget from "./SystemRoleWidget";
 
 type UserProfileProps = {
-  user: User;
+  user: SanitizedUserForManager;
 };
 
 const UserProfile = ({ user }: UserProfileProps) => (

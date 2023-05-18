@@ -1,6 +1,6 @@
 import { Box, Button, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import { useState } from "react";
-import { SystemRoles, User } from "../../../../generated/graphqlOperations";
+import { SanitizedUserForManager, SystemRoles } from "../../../../generated/graphqlOperations";
 import useSettingsData from "../../SettingsData/useSettingsData";
 
 const options = [
@@ -11,22 +11,21 @@ const options = [
 ];
 
 type SystemRoleWidgetProps = {
-  user: User;
+  user: SanitizedUserForManager;
 };
 
 const SystemRoleWidget = ({ user }: SystemRoleWidgetProps) => {
-  // Represent `null` role as an empty string so that it works with <Select>.
   const [selectedRole, setSelectedRole] = useState(user.systemRole);
   const [showConfirm, setShowConfirm] = useState(false);
   const { assignSystemRole } = useSettingsData();
 
   const onChange = (event: SelectChangeEvent<SystemRoles>) => {
-    setSelectedRole(event.target.value);
+    setSelectedRole(event.target.value as SystemRoles);
     setShowConfirm(true);
   };
 
   const confirm = async () => {
-    const role = await assignSystemRole(user.id, selectedRole);
+    await assignSystemRole(user.id, selectedRole);
   };
 
   return (

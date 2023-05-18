@@ -2,18 +2,18 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { Collapse, IconButton, Paper, TableCell } from "@mui/material";
 import { useState } from "react";
-import { User } from "../../../generated/graphqlOperations";
+import { SanitizedUserForManager } from "../../../generated/graphqlOperations";
 import useLayout from "../../../utils/useLayout";
 import TableRow from "../../common/TableRow";
 import UserProfile from "./UserProfile";
 
 type UserListRowProps = {
-  user: User;
+  user: SanitizedUserForManager;
 };
 
 const UserListRow = ({ user }: UserListRowProps) => {
   const { wideViewport } = useLayout();
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const toggleOpen = () => setOpen((val) => !val);
   const { main } = user;
 
