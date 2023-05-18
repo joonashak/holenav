@@ -23,10 +23,21 @@ export const userState = createState<UserData>({
       personal: false,
     },
   },
-  main: null,
+  main: {
+    esiId: "",
+    name: "",
+    isMain: true,
+    portraitUrl: "",
+    corporation: {
+      esiId: "",
+      name: "",
+      ticker: "",
+    },
+  },
   alts: [],
   accessibleFolders: [],
   systemRole: null,
+  folderRoles: [],
   userDataReady: false,
 });
 

@@ -3,11 +3,11 @@ import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import mongoose from "mongoose";
 import { v4 as uuid } from "uuid";
 import { Character } from "../entities/character/character.model";
+import { Credentials } from "./credentials/credentials.model";
 import { FolderRole, FolderRoleSchema } from "./roles/folder-role.model";
+import SystemRole from "./roles/system-role.enum";
 import defaultUserSettings from "./settings/default-user-settings";
 import { UserSettings, UserSettingsSchema } from "./settings/user-settings.model";
-import SystemRole from "./roles/system-role.enum";
-import { Credentials } from "./credentials/credentials.model";
 
 export type UserDocument = User & mongoose.Document;
 
@@ -36,7 +36,7 @@ export class User {
   @Prop({ type: UserSettingsSchema, default: defaultUserSettings })
   settings: UserSettings;
 
-  @Field((type) => SystemRole)
+  @Field((type) => SystemRole, { nullable: true })
   @Prop({ default: SystemRole.USER })
   systemRole: SystemRole;
 

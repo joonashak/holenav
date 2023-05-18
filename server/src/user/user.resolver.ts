@@ -5,6 +5,7 @@ import { CurrentUser } from "../auth/decorators/user.decorator";
 import AddFolderRoleInput from "./dto/add-folder-role.dto";
 import AssignSystemRoleInput from "./dto/assign-system-role.dto";
 import { SanitizedUserForManager } from "./dto/sanitized-user-for-manager.dto";
+import { SanitizedUserForSelf } from "./dto/sanitized-user-for-self.dto";
 import { SanitizedUser } from "./dto/sanitized-user.dto";
 import SystemRole from "./roles/system-role.enum";
 import { UserSettingsService } from "./settings/user-settings.service";
@@ -21,8 +22,8 @@ export class UserResolver {
   ) {}
 
   @RequireAuth()
-  @Query((returns) => User)
-  async whoami(@CurrentUser() user: User) {
+  @Query((returns) => SanitizedUserForSelf)
+  async whoami(@CurrentUser() user: SanitizedUserForSelf) {
     // ^ The name is all lowercase intentionally.. ;)
     // Don't return the decorator's User object to avoid leaking sensitive data.
     const acualUser = await this.userService.findById(user.id);

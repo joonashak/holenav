@@ -269,7 +269,7 @@ export type Query = {
   getSystemByName?: Maybe<System>;
   searchCharactersByMain: Array<Character>;
   startSsoLogin: StartSsoLoginDto;
-  whoami: User;
+  whoami: SanitizedUserForSelf;
 };
 
 
@@ -297,7 +297,17 @@ export type SanitizedUserForManager = {
   __typename?: 'SanitizedUserForManager';
   id: Scalars['String'];
   main: Character;
-  systemRole: SystemRoles;
+  systemRole?: Maybe<SystemRoles>;
+};
+
+export type SanitizedUserForSelf = {
+  __typename?: 'SanitizedUserForSelf';
+  alts: Array<Character>;
+  folderRoles: Array<FolderRole>;
+  id: Scalars['String'];
+  main: Character;
+  settings: UserSettings;
+  systemRole?: Maybe<SystemRoles>;
 };
 
 export type SavedMap = {
@@ -403,7 +413,7 @@ export type User = {
   id: Scalars['String'];
   main: Character;
   settings: UserSettings;
-  systemRole: SystemRoles;
+  systemRole?: Maybe<SystemRoles>;
 };
 
 export type UserSettings = {
@@ -450,7 +460,7 @@ export type SearchCharactersByMainQueryVariables = Exact<{
 
 export type SearchCharactersByMainQuery = { __typename?: 'Query', searchCharactersByMain: Array<{ __typename?: 'Character', esiId: string, name: string, isMain: boolean, portraitUrl: string, corporation: { __typename?: 'Corporation', esiId: string, name: string, ticker: string } }> };
 
-export type UserFieldsForManagerFragment = { __typename?: 'SanitizedUserForManager', id: string, systemRole: SystemRoles, main: { __typename?: 'Character', esiId: string, name: string, portraitUrl: string, isMain: boolean, corporation: { __typename?: 'Corporation', esiId: string, name: string, ticker: string }, alliance?: { __typename?: 'Alliance', esiId: string, name: string, ticker: string } | null } };
+export type UserFieldsForManagerFragment = { __typename?: 'SanitizedUserForManager', id: string, systemRole?: SystemRoles | null, main: { __typename?: 'Character', esiId: string, name: string, portraitUrl: string, isMain: boolean, corporation: { __typename?: 'Corporation', esiId: string, name: string, ticker: string }, alliance?: { __typename?: 'Alliance', esiId: string, name: string, ticker: string } | null } };
 
 export type CorporationFieldsFragment = { __typename?: 'Corporation', esiId: string, name: string, ticker: string };
 
@@ -543,12 +553,12 @@ export type PasteSignaturesMutation = { __typename?: 'Mutation', pasteSignatures
 export type UserDataQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type UserDataQuery = { __typename?: 'Query', whoami: { __typename?: 'User', id: string, systemRole: SystemRoles, main: { __typename?: 'Character', esiId: string, name: string, isMain: boolean, portraitUrl: string, corporation: { __typename?: 'Corporation', esiId: string, name: string, ticker: string } }, alts: Array<{ __typename?: 'Character', esiId: string, name: string, isMain: boolean, portraitUrl: string, corporation: { __typename?: 'Corporation', esiId: string, name: string, ticker: string } }>, settings: { __typename?: 'UserSettings', maps: Array<{ __typename?: 'SavedMap', id: string, name: string, rootSystemName: string }>, selectedMap?: { __typename?: 'SavedMap', id: string, name: string, rootSystemName: string } | null, activeFolder?: { __typename?: 'Folder', id: string, name: string, personal: boolean } | null } }, getAccessibleFolders: Array<{ __typename?: 'Folder', id: string, name: string, personal: boolean }> };
+export type UserDataQuery = { __typename?: 'Query', whoami: { __typename?: 'SanitizedUserForSelf', id: string, systemRole?: SystemRoles | null, main: { __typename?: 'Character', esiId: string, name: string, isMain: boolean, portraitUrl: string, corporation: { __typename?: 'Corporation', esiId: string, name: string, ticker: string } }, alts: Array<{ __typename?: 'Character', esiId: string, name: string, isMain: boolean, portraitUrl: string, corporation: { __typename?: 'Corporation', esiId: string, name: string, ticker: string } }>, settings: { __typename?: 'UserSettings', maps: Array<{ __typename?: 'SavedMap', id: string, name: string, rootSystemName: string }>, selectedMap?: { __typename?: 'SavedMap', id: string, name: string, rootSystemName: string } | null, activeFolder?: { __typename?: 'Folder', id: string, name: string, personal: boolean } | null } }, getAccessibleFolders: Array<{ __typename?: 'Folder', id: string, name: string, personal: boolean }> };
 
 export type AllUsersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AllUsersQuery = { __typename?: 'Query', getAllUsersForManager: Array<{ __typename?: 'SanitizedUserForManager', id: string, systemRole: SystemRoles, main: { __typename?: 'Character', esiId: string, name: string, portraitUrl: string, isMain: boolean, corporation: { __typename?: 'Corporation', esiId: string, name: string, ticker: string }, alliance?: { __typename?: 'Alliance', esiId: string, name: string, ticker: string } | null } }> };
+export type AllUsersQuery = { __typename?: 'Query', getAllUsersForManager: Array<{ __typename?: 'SanitizedUserForManager', id: string, systemRole?: SystemRoles | null, main: { __typename?: 'Character', esiId: string, name: string, portraitUrl: string, isMain: boolean, corporation: { __typename?: 'Corporation', esiId: string, name: string, ticker: string }, alliance?: { __typename?: 'Alliance', esiId: string, name: string, ticker: string } | null } }> };
 
 export const UserFieldsForManagerFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"UserFieldsForManager"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"SanitizedUserForManager"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"systemRole"}},{"kind":"Field","name":{"kind":"Name","value":"main"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"esiId"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"portraitUrl"}},{"kind":"Field","name":{"kind":"Name","value":"isMain"}},{"kind":"Field","name":{"kind":"Name","value":"corporation"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"esiId"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"ticker"}}]}},{"kind":"Field","name":{"kind":"Name","value":"alliance"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"esiId"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"ticker"}}]}}]}}]}}]} as unknown as DocumentNode<UserFieldsForManagerFragment, unknown>;
 export const CorporationFieldsFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"CorporationFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Corporation"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"esiId"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"ticker"}}]}}]} as unknown as DocumentNode<CorporationFieldsFragment, unknown>;
