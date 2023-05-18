@@ -3,9 +3,13 @@ import { cloneDeep } from "lodash";
 import { ReactElement, ReactNode, useEffect } from "react";
 import useAuth from "../../auth/useAuth";
 import useLazyAuthenticatedQuery from "../../auth/useLazyAuthenticatedQuery";
-import { Folder, UserDataQuery, UserDataQueryVariables } from "../../generated/graphqlOperations";
+import {
+  Folder,
+  UserDataDocument,
+  UserDataQuery,
+  UserDataQueryVariables,
+} from "../../generated/graphqlOperations";
 import useLocalData from "../LocalData/useLocalData";
-import { GET_USER_DATA } from "./graphql";
 import { UserData } from "./types";
 
 export const userState = createState<UserData>({
@@ -51,7 +55,7 @@ export default ({ children }: UserDataProviderProps) => {
   const { setDefaultActiveCharacter } = useLocalData();
 
   const [userQuery, { loading }] = useLazyAuthenticatedQuery<UserDataQuery, UserDataQueryVariables>(
-    GET_USER_DATA,
+    UserDataDocument,
     {
       onCompleted: (data) => {
         const { whoami, getAccessibleFolders } = data;

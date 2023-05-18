@@ -29,3 +29,11 @@ query UserData {
     personal
   }
 }
+
+mutation RemoveAlt($esiId: String!) {
+  removeAlt(esiId: $esiId) {
+    alts {
+      ...CharacterFields
+    }
+  }
+}
