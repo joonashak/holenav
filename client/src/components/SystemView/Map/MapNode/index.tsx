@@ -25,6 +25,11 @@ const MapNode = ({ nodeDatum }: MapNodeProps) => {
   const destinationName = wormhole?.destinationName || "";
 
   const { selectedMap } = settings;
+
+  if (!selectedMap) {
+    return null;
+  }
+
   const isRootNode = nodeDatum.__rd3t.depth === 0;
   const isSelectedSystem =
     destinationName === selectedSystemName ||

@@ -32,7 +32,7 @@ const useApolloOptions = <T, V>(options: HookOptions<T, V>): AuthenticatedApollo
     context: {
       headers: {
         accesstoken: token,
-        activefolder: settings.activeFolder.get().id || "default",
+        activefolder: settings.activeFolder.get()?.id || "default",
       },
     },
     onError: async (error: ApolloError) =>

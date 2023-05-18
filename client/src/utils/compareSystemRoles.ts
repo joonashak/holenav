@@ -11,7 +11,7 @@ const systemRoleValues = {
  * @param role System role.
  * @returns `true` if role check passed.
  */
-export const atLeastManager = (role: SystemRoles | null): boolean => {
+export const atLeastManager = (role: SystemRoles | null | undefined): boolean => {
   if (!role) {
     return false;
   }
