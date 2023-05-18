@@ -1,6 +1,7 @@
 fragment FolderFields on Folder {
   id
   name
+  personal
 }
 
 query SettingsData {

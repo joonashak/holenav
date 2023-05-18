@@ -42,6 +42,11 @@ export type AppData = {
   motd: Scalars['String'];
 };
 
+export type AssignSystemRoleInput = {
+  systemRole: SystemRoles;
+  userId: Scalars['String'];
+};
+
 export type Character = {
   __typename?: 'Character';
   accessToken?: Maybe<Scalars['String']>;
@@ -183,8 +188,7 @@ export type MutationAddSignaturesArgs = {
 
 
 export type MutationAssignSystemRoleArgs = {
-  systemRole: Scalars['Float'];
-  userId: Scalars['String'];
+  input: AssignSystemRoleInput;
 };
 
 
@@ -460,24 +464,24 @@ export type UpdateMotdMutationVariables = Exact<{
 
 export type UpdateMotdMutation = { __typename?: 'Mutation', updateMotd: { __typename?: 'AppData', motd: string } };
 
-export type FolderFieldsFragment = { __typename?: 'Folder', id: string, name: string };
+export type FolderFieldsFragment = { __typename?: 'Folder', id: string, name: string, personal: boolean };
 
 export type SettingsDataQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type SettingsDataQuery = { __typename?: 'Query', getAccessibleFolders: Array<{ __typename?: 'Folder', id: string, name: string }> };
+export type SettingsDataQuery = { __typename?: 'Query', getAccessibleFolders: Array<{ __typename?: 'Folder', id: string, name: string, personal: boolean }> };
 
 export type SettingsDataForManagerQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type SettingsDataForManagerQuery = { __typename?: 'Query', getManageableFolders: Array<{ __typename?: 'Folder', id: string, name: string }> };
+export type SettingsDataForManagerQuery = { __typename?: 'Query', getManageableFolders: Array<{ __typename?: 'Folder', id: string, name: string, personal: boolean }> };
 
 export type CreateFolderMutationVariables = Exact<{
   name: Scalars['String'];
 }>;
 
 
-export type CreateFolderMutation = { __typename?: 'Mutation', createFolder: { __typename?: 'Folder', id: string, name: string } };
+export type CreateFolderMutation = { __typename?: 'Mutation', createFolder: { __typename?: 'Folder', id: string, name: string, personal: boolean } };
 
 export type AddFolderRoleMutationVariables = Exact<{
   input: AddFolderRoleInput;
@@ -541,7 +545,7 @@ export type AllUsersQueryVariables = Exact<{ [key: string]: never; }>;
 export type AllUsersQuery = { __typename?: 'Query', getAllUsersForManager: Array<{ __typename?: 'SanitizedUserForManager', systemRole: SystemRoles, main: { __typename?: 'Character', esiId: string, name: string, portraitUrl: string, corporation: { __typename?: 'Corporation', esiId: string, name: string, ticker: string }, alliance?: { __typename?: 'Alliance', esiId: string, name: string, ticker: string } | null } }> };
 
 export const UserFieldsForManagerFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"UserFieldsForManager"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"SanitizedUserForManager"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"systemRole"}},{"kind":"Field","name":{"kind":"Name","value":"main"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"esiId"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"portraitUrl"}},{"kind":"Field","name":{"kind":"Name","value":"corporation"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"esiId"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"ticker"}}]}},{"kind":"Field","name":{"kind":"Name","value":"alliance"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"esiId"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"ticker"}}]}}]}}]}}]} as unknown as DocumentNode<UserFieldsForManagerFragment, unknown>;
-export const FolderFieldsFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"FolderFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Folder"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]} as unknown as DocumentNode<FolderFieldsFragment, unknown>;
+export const FolderFieldsFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"FolderFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Folder"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"personal"}}]}}]} as unknown as DocumentNode<FolderFieldsFragment, unknown>;
 export const SignatureFieldsFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"SignatureFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Signature"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"eveId"}},{"kind":"Field","name":{"kind":"Name","value":"systemName"}},{"kind":"Field","name":{"kind":"Name","value":"wormholeType"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"connection"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"eol"}},{"kind":"Field","name":{"kind":"Name","value":"eolAt"}},{"kind":"Field","name":{"kind":"Name","value":"massStatus"}},{"kind":"Field","name":{"kind":"Name","value":"reverseSignature"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"eveId"}},{"kind":"Field","name":{"kind":"Name","value":"systemName"}},{"kind":"Field","name":{"kind":"Name","value":"wormholeType"}}]}}]}}]}}]} as unknown as DocumentNode<SignatureFieldsFragment, unknown>;
 export const GetTokenDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"GetToken"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"state"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getToken"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"state"},"value":{"kind":"Variable","name":{"kind":"Name","value":"state"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"accessToken"}}]}}]}}]} as unknown as DocumentNode<GetTokenMutation, GetTokenMutationVariables>;
 export const StartSsoLoginDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"StartSsoLogin"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"startSsoLogin"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ssoLoginUrl"}}]}}]}}]} as unknown as DocumentNode<StartSsoLoginQuery, StartSsoLoginQueryVariables>;

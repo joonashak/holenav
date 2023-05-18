@@ -1,14 +1,21 @@
 import { Downgraded, useState } from "@hookstate/core";
 import { settingsState } from ".";
 import useAuthenticatedMutation from "../../../auth/useAuthenticatedMutation";
-import { CreateFolderDocument } from "../../../generated/graphqlOperations";
+import {
+  CreateFolderDocument,
+  CreateFolderMutation,
+  CreateFolderMutationVariables,
+} from "../../../generated/graphqlOperations";
 import useNotification from "../../GlobalNotification/useNotification";
 
 const useSettingsData = () => {
   const state = useState(settingsState);
   const { showSuccessNotification, showErrorNotification } = useNotification();
 
-  const [createFolderMutation] = useAuthenticatedMutation(CreateFolderDocument, {
+  const [createFolderMutation] = useAuthenticatedMutation<
+    CreateFolderMutation,
+    CreateFolderMutationVariables
+  >(CreateFolderDocument, {
     onCompleted: ({ createFolder }) => {
       state.accessibleFolders.set((folders) => folders.concat([createFolder]));
       state.manageableFolders.set((folders) => folders.concat([createFolder]));
