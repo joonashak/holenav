@@ -10,7 +10,7 @@ export class UserRoleService {
 
   async assignSystemRole(userId: string, newRole: SystemRole): Promise<UserDocument> {
     await this.preventDemotingLastAdmin(userId);
-    const user = await this.userModel.findById(userId);
+    const user = await this.userModel.findOne({ id: userId });
     user.systemRole = newRole;
     return user.save();
   }
