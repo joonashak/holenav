@@ -36,8 +36,8 @@ export class User {
   @Prop({ type: UserSettingsSchema, default: defaultUserSettings })
   settings: UserSettings;
 
-  @Field((type) => SystemRole, { nullable: true })
-  @Prop({ default: SystemRole.USER })
+  @Field((type) => SystemRole)
+  @Prop({ default: SystemRole.NONE })
   systemRole: SystemRole;
 
   @Field((type) => Credentials)
