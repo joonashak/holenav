@@ -48,7 +48,8 @@ export class UserSettingsService {
   async deleteSavedMap(mapId: string, user: User): Promise<User> {
     const { settings } = await this.userService.findById(user.id);
     const maps = settings.maps.filter((map) => map.id !== mapId);
-    return this.updateUserSettings(user.id, { maps });
+    const selectedMap = settings.selectedMap.id === mapId ? null : settings.selectedMap;
+    return this.updateUserSettings(user.id, { maps, selectedMap });
   }
 
   async changeActiveFolder(folderId: string, user: User): Promise<User> {
