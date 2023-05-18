@@ -12,8 +12,8 @@ export type UserData = {
 
 export type UserSettings = {
   maps: SavedMap[];
-  selectedMap: SavedMap;
-  activeFolder: Folder;
+  selectedMap?: SavedMap | null | undefined;
+  activeFolder?: Folder | null | undefined;
 };
 
 export type SavedMap = {

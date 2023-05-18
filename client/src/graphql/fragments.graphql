@@ -18,3 +18,25 @@ fragment UserFieldsForManager on SanitizedUserForManager {
     }
   }
 }
+
+fragment CorporationFields on Corporation {
+  esiId
+  name
+  ticker
+}
+
+fragment CharacterFields on Character {
+  esiId
+  name
+  isMain
+  portraitUrl
+  corporation {
+    ...CorporationFields
+  }
+}
+
+fragment MapFields on SavedMap {
+  id
+  name
+  rootSystemName
+}

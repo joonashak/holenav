@@ -2,5 +2,30 @@ query UserData {
   whoami {
     id
     systemRole
+    main {
+      ...CharacterFields
+    }
+    alts {
+      ...CharacterFields
+    }
+    settings {
+      maps {
+        ...MapFields
+      }
+      selectedMap {
+        ...MapFields
+      }
+      activeFolder {
+        id
+        name
+        personal
+      }
+    }
+  }
+
+  getAccessibleFolders {
+    id
+    name
+    personal
   }
 }

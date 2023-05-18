@@ -1,4 +1,5 @@
-import { useRef, useState } from "react";
+import AddIcon from "@mui/icons-material/Add";
+import GroupIcon from "@mui/icons-material/Group";
 import {
   Divider,
   ListItemIcon,
@@ -8,13 +9,16 @@ import {
   SpeedDialAction,
   SpeedDialActionProps,
 } from "@mui/material";
-import GroupIcon from "@mui/icons-material/Group";
-import AddIcon from "@mui/icons-material/Add";
+import { useRef, useState } from "react";
+import useLazyAuthenticatedQuery from "../../../../auth/useLazyAuthenticatedQuery";
+import {
+  AddCharacterDocument,
+  AddCharacterQuery,
+  AddCharacterQueryVariables,
+} from "../../../../generated/graphqlOperations";
+import useLocalData from "../../../LocalData/useLocalData";
 import useUserData from "../../../UserData/useUserData";
 import CharacterMenuItem from "./CharacterMenuItem";
-import useLocalData from "../../../LocalData/useLocalData";
-import { AddCharacterDocument } from "../../../../generated/graphqlOperations";
-import useLazyAuthenticatedQuery from "../../../../auth/useLazyAuthenticatedQuery";
 
 const SpeedDialCharacterSelect = (props: SpeedDialActionProps) => {
   const { main, alts } = useUserData();
@@ -24,11 +28,14 @@ const SpeedDialCharacterSelect = (props: SpeedDialActionProps) => {
 
   const toggleMenu = () => setMenuOpen((prev) => !prev);
 
-  const [ssoLoginQuery] = useLazyAuthenticatedQuery(AddCharacterDocument, {
-    onCompleted: ({ addCharacter }) => {
-      window.location.href = addCharacter.ssoLoginUrl;
+  const [ssoLoginQuery] = useLazyAuthenticatedQuery<AddCharacterQuery, AddCharacterQueryVariables>(
+    AddCharacterDocument,
+    {
+      onCompleted: ({ addCharacter }) => {
+        window.location.href = addCharacter.ssoLoginUrl;
+      },
     },
-  });
+  );
 
   const addCharacter = () => ssoLoginQuery();
 

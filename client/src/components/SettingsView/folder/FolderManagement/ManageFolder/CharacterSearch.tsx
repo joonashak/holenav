@@ -7,6 +7,8 @@ import useLazyAuthenticatedQuery from "../../../../../auth/useLazyAuthenticatedQ
 import {
   Character,
   SearchCharactersByMainDocument,
+  SearchCharactersByMainQuery,
+  SearchCharactersByMainQueryVariables,
 } from "../../../../../generated/graphqlOperations";
 
 const CharacterSearch = () => {
@@ -17,7 +19,10 @@ const CharacterSearch = () => {
 
   const [debouncedValue, setDebouncedValue] = useDebounce("", 200);
 
-  const [searchQuery, { loading }] = useLazyAuthenticatedQuery(SearchCharactersByMainDocument, {
+  const [searchQuery, { loading }] = useLazyAuthenticatedQuery<
+    SearchCharactersByMainQuery,
+    SearchCharactersByMainQueryVariables
+  >(SearchCharactersByMainDocument, {
     onCompleted: ({ searchCharactersByMain }) => {
       setOptions(searchCharactersByMain);
     },

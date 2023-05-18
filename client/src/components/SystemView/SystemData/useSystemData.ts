@@ -1,19 +1,26 @@
 import { Downgraded, useState } from "@hookstate/core";
 import { systemState } from ".";
 import useLazyAuthenticatedQuery from "../../../auth/useLazyAuthenticatedQuery";
-import { SystemDocument } from "../../../generated/graphqlOperations";
+import {
+  SystemDocument,
+  SystemQuery,
+  SystemQueryVariables,
+} from "../../../generated/graphqlOperations";
 
 export default () => {
   const state = useState(systemState);
 
-  const [changeSystemQuery] = useLazyAuthenticatedQuery(SystemDocument, {
-    onCompleted: ({ getSystemByName, getSignaturesBySystem }) => {
-      if (!getSystemByName) {
-        return;
-      }
-      state.merge({ ...getSystemByName, signatures: getSignaturesBySystem });
+  const [changeSystemQuery] = useLazyAuthenticatedQuery<SystemQuery, SystemQueryVariables>(
+    SystemDocument,
+    {
+      onCompleted: ({ getSystemByName, getSignaturesBySystem }) => {
+        if (!getSystemByName) {
+          return;
+        }
+        state.merge({ ...getSystemByName, signatures: getSignaturesBySystem });
+      },
     },
-  });
+  );
 
   const changeSystem = (name: string) => {
     state.merge({ name });
