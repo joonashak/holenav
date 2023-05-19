@@ -1,15 +1,16 @@
 import { Global, Module } from "@nestjs/common";
 import { JwtModule } from "@nestjs/jwt";
-import { AuthController } from "./auth.controller";
-import { SsoService } from "./sso/sso.service";
-import { AuthService } from "./auth.service";
-import { CharacterModule } from "../entities/character/character.module";
 import { JWT_LIFETIME, JWT_SECRET } from "../config";
-import { SsoSessionModule } from "./sso/sso-session/sso-session.module";
+import { CharacterModule } from "../entities/character/character.module";
+import { EsiModule } from "../esi/esi.module";
+import { AuthController } from "./auth.controller";
 import AuthResolver from "./auth.resolver";
-import { SsoModule } from "./sso/sso.module";
+import { AuthService } from "./auth.service";
 import { SessionModule } from "./session/session.module";
 import { SessionService } from "./session/session.service";
+import { SsoSessionModule } from "./sso/sso-session/sso-session.module";
+import { SsoModule } from "./sso/sso.module";
+import { SsoService } from "./sso/sso.service";
 
 @Global()
 @Module({
@@ -23,6 +24,7 @@ import { SessionService } from "./session/session.service";
     SsoModule,
     SsoSessionModule,
     SessionModule,
+    EsiModule,
   ],
   providers: [SsoService, AuthService, AuthResolver, SessionService],
   exports: [JwtModule, AuthService, SessionService],

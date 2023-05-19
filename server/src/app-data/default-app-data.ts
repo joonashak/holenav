@@ -6,6 +6,8 @@ const defaultAppData: AppData = {
   settings: {
     registration: {
       enabled: true,
+      corporationFilterEnabled: false,
+      allianceFilterEnabled: false,
       allowedAlliances: [],
       allowedCorporations: [],
     },

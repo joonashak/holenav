@@ -12,6 +12,20 @@ export class RegistrationSettings {
   enabled: boolean;
 
   /**
+   * Controls whether corporation filter is enabled.
+   */
+  @Field()
+  @Prop()
+  corporationFilterEnabled: boolean;
+
+  /**
+   * Controls whether alliance filter is enabled.
+   */
+  @Field()
+  @Prop()
+  allianceFilterEnabled: boolean;
+
+  /**
    * List of tickers of corporations that registrations are allowed from.
    */
   @Field((type) => [String])

@@ -1,5 +1,4 @@
 import { Module } from "@nestjs/common";
-import { AppDataModule } from "../app-data/app-data.module";
 import { SessionModule } from "../auth/session/session.module";
 import { SsoSessionModule } from "../auth/sso/sso-session/sso-session.module";
 import { ENABLE_DEVTOOLS } from "../config";
@@ -21,7 +20,6 @@ const options = {
     SsoSessionModule,
     SessionModule,
     ConnectionGraphModule,
-    AppDataModule,
   ],
   providers: [DevToolsService, MockUserService, MockFolderService, MockConnectionGraphService],
   controllers: [DevToolsController],

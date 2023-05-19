@@ -1,16 +1,18 @@
-import { Injectable } from "@nestjs/common";
+import { ForbiddenException, Injectable } from "@nestjs/common";
+import { AppSettingsService } from "../../app-data/settings/app-settings.service";
 import {
   CLIENT_URL,
-  getClientLoginCallbackUrl,
   SSO_CALLBACK_URL,
   SSO_CLIENT_ID,
+  getClientLoginCallbackUrl,
 } from "../../config";
 import { CharacterService } from "../../entities/character/character.service";
+import { EsiService } from "../../esi/esi.service";
 import { User } from "../../user/user.model";
 import { UserService } from "../../user/user.service";
 import { SsoApiService } from "./sso-api.service";
-import { SsoSessionService } from "./sso-session/sso-session.service";
 import SsoSessionType from "./sso-session/sso-session-type.enum";
+import { SsoSessionService } from "./sso-session/sso-session.service";
 import { SsoUrl } from "./sso-url.enum";
 
 @Injectable()
@@ -20,6 +22,8 @@ export class SsoService {
     private characterService: CharacterService,
     private userService: UserService,
     private ssoApiService: SsoApiService,
+    private appSettingsService: AppSettingsService,
+    private esiService: EsiService,
   ) {}
 
   /**
@@ -43,6 +47,12 @@ export class SsoService {
     const { accessToken, refreshToken } = await this.ssoApiService.getSsoTokens(authorizationCode);
     const jwtData = await this.ssoApiService.verifyAndDecodeSsoAccessToken(accessToken);
 
+    const userCanRegister = await this.userCanRegister(jwtData.CharacterID, ssoSession.type);
+    if (!userCanRegister) {
+      await this.ssoSessionService.removeSsoSession(ssoSession.key);
+      throw new ForbiddenException("User is not allowed to register.");
+    }
+
     const character = await this.characterService.upsert({
       name: jwtData.CharacterName,
       esiId: jwtData.CharacterID,
@@ -62,5 +72,20 @@ export class SsoService {
       ssoSession.type === SsoSessionType.LOGIN ? getClientLoginCallbackUrl(state) : CLIENT_URL;
 
     return clientCallbackUrl;
+  }
+
+  private async userCanRegister(
+    characterId: string,
+    ssoSessionType: SsoSessionType,
+  ): Promise<boolean> {
+    if (ssoSessionType === SsoSessionType.ADD_CHARACTER) {
+      return true;
+    }
+
+    const character = await this.esiService.getCharacterPublicInfo(characterId);
+    return this.appSettingsService.userCanRegister(
+      character.corporation_id.toString(),
+      (character.alliance_id || "").toString(),
+    );
   }
 }

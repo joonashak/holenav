@@ -1,15 +1,17 @@
-import { Module } from "@nestjs/common";
+import { Global, Module } from "@nestjs/common";
 import { MongooseModule } from "@nestjs/mongoose";
 import { AppData, AppDataSchema } from "./app-data.model";
 import { AppDataResolver } from "./app-data.resolver";
 import { AppDataService } from "./app-data.service";
+import { AppSettingsService } from "./settings/app-settings.service";
 
 /**
  * Application metadata.
  */
+@Global()
 @Module({
   imports: [MongooseModule.forFeature([{ name: AppData.name, schema: AppDataSchema }])],
-  providers: [AppDataService, AppDataResolver],
-  exports: [AppDataService, MongooseModule],
+  providers: [AppDataService, AppDataResolver, AppSettingsService],
+  exports: [AppDataService, AppSettingsService, MongooseModule],
 })
 export class AppDataModule {}
