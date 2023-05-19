@@ -1,4 +1,4 @@
-FROM node:18.12.1-alpine
+FROM node:18.12.1
 
 # Install dependencies.
 WORKDIR /usr/src/app
@@ -10,9 +10,7 @@ COPY . .
 # Build and clean up.
 ARG NODE_ENV=production
 ENV NODE_ENV=${NODE_ENV}
-ARG APP_VERSION
-ENV APP_VERSION=${APP_VERSION}
 RUN npm run build
 RUN npm prune --production
 
-CMD node dist/main.js
+CMD APP_VERSION=$(npm pkg get version | tr -d \") node dist/main.js
