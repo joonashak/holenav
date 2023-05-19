@@ -58,7 +58,7 @@ const MenuContent = ({ sx, bottomListSx }: MenuContentProps) => (
       <SystemRoleGuard showTo={[SystemRoles.Administrator]}>
         <MenuDivider>Admin Settings</MenuDivider>
         <List>
-          <MenuItem text="App Settings" Icon={SettingsIcon} />
+          <MenuItem text="App Settings" Icon={SettingsIcon} href={settingsRoutes.appSettings} />
         </List>
       </SystemRoleGuard>
       <List sx={{ bgcolor: "primary.light", ...bottomListSx }}>

@@ -1,5 +1,6 @@
 import { Box } from "@mui/material";
 import { Route, Switch } from "react-router-dom";
+import AppSettings from "./AppSettings";
 import SettingsMenu from "./SettingsMenu";
 import UserManagement from "./UserManagement";
 import ActiveFolder from "./folder/ActiveFolder";
@@ -12,6 +13,7 @@ export const settingsRoutes = {
   activeFolder: "/settings/folder/active",
   folderManagement: "/settings/folder/management",
   userManagement: "/settings/users",
+  appSettings: "/settings/app",
 };
 
 const SettingsView = () => (
@@ -22,6 +24,7 @@ const SettingsView = () => (
         <Route path={settingsRoutes.activeFolder} component={ActiveFolder} />
         <Route path={settingsRoutes.folderManagement} component={FolderManagement} />
         <Route path={settingsRoutes.userManagement} component={UserManagement} />
+        <Route path={settingsRoutes.appSettings} component={AppSettings} />
         <Route path="*" component={GeneralSettings} />
       </Switch>
     </Box>
