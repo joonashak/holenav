@@ -1,16 +1,18 @@
 import { Test } from "@nestjs/testing";
 import {
+  MockAppSettingsService,
   MockCharacterService,
+  MockEsiService,
   MockSsoApiService,
   MockSsoSessionService,
   MockUserService,
 } from "../../test-utils/mock-services";
-import { UserService } from "../../user/user.service";
-import { SsoService } from "./sso.service";
-import { SsoApiService } from "./sso-api.service";
-import { SsoSessionService } from "./sso-session/sso-session.service";
 import { testSsoSession, testSsoTokens, testUser } from "../../test-utils/test-data";
+import { UserService } from "../../user/user.service";
+import { SsoApiService } from "./sso-api.service";
 import SsoSessionType from "./sso-session/sso-session-type.enum";
+import { SsoSessionService } from "./sso-session/sso-session.service";
+import { SsoService } from "./sso.service";
 
 const expectedCallbackUrl = `https://login.eveonline.com/v2/oauth/authorize/?response_type=code&redirect_uri=test-callback-url&client_id=test-sso-client-id&state=${testSsoSession.key}`;
 
@@ -28,6 +30,8 @@ describe("SsoService", () => {
         MockUserService,
         MockCharacterService,
         MockSsoApiService,
+        MockAppSettingsService,
+        MockEsiService,
       ],
     }).compile();
 

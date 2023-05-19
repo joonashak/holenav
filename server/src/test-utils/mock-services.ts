@@ -1,9 +1,11 @@
+import { AppSettingsService } from "../app-data/settings/app-settings.service";
 import { AuthService } from "../auth/auth.service";
 import { SessionService } from "../auth/session/session.service";
 import { SsoApiService } from "../auth/sso/sso-api.service";
 import { SsoSessionService } from "../auth/sso/sso-session/sso-session.service";
 import { CharacterService } from "../entities/character/character.service";
 import { FolderService } from "../entities/folder/folder.service";
+import { EsiService } from "../esi/esi.service";
 import { UserService } from "../user/user.service";
 import {
   testFolder,
@@ -77,5 +79,19 @@ export const MockFolderService = {
   provide: FolderService,
   useFactory: () => ({
     getFolderById: fn().mockResolvedValue({ ...testFolder, _id: testFolder.id }),
+  }),
+};
+
+export const MockAppSettingsService = {
+  provide: AppSettingsService,
+  useFactory: () => ({
+    userCanRegister: fn().mockResolvedValue(true),
+  }),
+};
+
+export const MockEsiService = {
+  provide: EsiService,
+  useFactory: () => ({
+    getCharacterPublicInfo: fn().mockResolvedValue({ corporation_id: "" }),
   }),
 };
