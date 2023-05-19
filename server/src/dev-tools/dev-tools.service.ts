@@ -1,6 +1,8 @@
 import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
+import { AppData } from "../app-data/app-data.model";
+import { AppDataService } from "../app-data/app-data.service";
 import { Session } from "../auth/session/session.model";
 import { SsoSession } from "../auth/sso/sso-session/sso-session.model";
 import { ConnectionGraphService } from "../connection-graph/connection-graph.service";
@@ -22,6 +24,8 @@ export class DevToolsService {
     @InjectModel(User.name) private userModel: Model<User>,
     @InjectModel(Credentials.name) private credentialsModel: Model<Credentials>,
     @InjectModel(Session.name) private sessionModel: Model<Session>,
+    @InjectModel(AppData.name) private appDataModel: Model<AppData>,
+    private appDataService: AppDataService,
     private mockUserService: MockUserService,
     private mockFolderService: MockFolderService,
     private connectionGraphService: ConnectionGraphService,
@@ -44,6 +48,7 @@ export class DevToolsService {
   async seedDatabase() {
     await this.clearCollections();
 
+    await this.appDataService.initialize();
     await this.mockFolderService.mock();
     await this.mockUserService.mock();
     await this.mockConnectionGraphService.mock();
@@ -61,6 +66,7 @@ export class DevToolsService {
     await this.userModel.deleteMany({});
     await this.credentialsModel.deleteMany({});
     await this.sessionModel.deleteMany({});
+    await this.appDataModel.deleteMany({});
     await this.connectionGraphService.deleteAll();
   }
 }

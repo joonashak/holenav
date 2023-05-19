@@ -1,29 +1,35 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, InternalServerErrorException } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
-import { Model } from "mongoose";
+import { Model, UpdateQuery } from "mongoose";
 import { AppData, AppDataDocument } from "./app-data.model";
+import defaultAppData from "./default-app-data";
 
 @Injectable()
 export class AppDataService {
   constructor(@InjectModel(AppData.name) private appDataModel: Model<AppDataDocument>) {}
 
-  async getAppData(): Promise<AppDataDocument> {
-    const appData = await this.appDataModel.findOne();
+  /**
+   * Create default `AppData` object, if it does not exists. Throw, if multiple found.
+   */
+  async initialize(): Promise<void> {
+    const current = await this.appDataModel.find();
 
-    if (!appData) {
-      return this.initialize();
+    if (current.length === 0) {
+      await this.appDataModel.create(defaultAppData);
     }
 
-    return appData;
+    if (current.length > 1) {
+      throw new InternalServerErrorException(
+        "Multiple AppData objects found. Maximum of one is supported",
+      );
+    }
   }
 
-  async updateAppData(update: Partial<AppData>) {
-    const appData = (await this.getAppData()).toObject();
-    delete appData._id;
-    return this.appDataModel.create({ ...appData, ...update });
+  async getAppData(): Promise<AppDataDocument> {
+    return this.appDataModel.findOne();
   }
 
-  private async initialize(): Promise<AppDataDocument> {
-    return this.appDataModel.create({});
+  async updateAppData(update: UpdateQuery<AppData>) {
+    return this.appDataModel.findOneAndUpdate({}, update, { new: true });
   }
 }

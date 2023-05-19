@@ -6,7 +6,7 @@ import { AppSettings } from "./settings/app-settings.model";
 export type AppDataDocument = AppData & Document;
 
 @ObjectType()
-@Schema({ collection: "app-data", capped: { size: 4096, max: 1 } })
+@Schema({ collection: "app-data" })
 export class AppData {
   @Field()
   @Prop({ default: "" })
