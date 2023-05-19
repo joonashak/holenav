@@ -19,6 +19,12 @@ fragment UserFieldsForManager on SanitizedUserForManager {
   }
 }
 
+fragment FolderFields on Folder {
+  id
+  name
+  personal
+}
+
 fragment CorporationFields on Corporation {
   esiId
   name
@@ -39,4 +45,14 @@ fragment MapFields on SavedMap {
   id
   name
   rootSystemName
+}
+
+fragment AppSettingsFields on AppSettings {
+  registration {
+    enabled
+    corporationFilterEnabled
+    allianceFilterEnabled
+    allowedCorporations
+    allowedAlliances
+  }
 }
