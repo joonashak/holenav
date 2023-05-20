@@ -1,5 +1,5 @@
 import { createState, useState } from "@hookstate/core";
-import { ReactNode } from "react";
+import { ReactNode, useState as useReactState } from "react";
 import useAuthenticatedQuery from "../../../../auth/useAuthenticatedQuery";
 import {
   AppSettings,
@@ -24,16 +24,16 @@ type AppSettingsDataProps = {
 
 const AppSettingsData = ({ children }: AppSettingsDataProps) => {
   const state = useState(appSettingsState);
-  const ready = createState(false);
+  const [ready, setReady] = useReactState(false);
 
   useAuthenticatedQuery<AppSettingsQuery, AppSettingsQueryVariables>(AppSettingsDocument, {
     onCompleted: ({ getAppData }) => {
       state.set(getAppData.settings);
-      ready.set(true);
+      setReady(true);
     },
   });
 
-  if (!ready.value) {
+  if (!ready) {
     return null;
   }
 
