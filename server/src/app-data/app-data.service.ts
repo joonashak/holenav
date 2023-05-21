@@ -2,6 +2,7 @@ import { Injectable, InternalServerErrorException } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { merge } from "lodash";
 import { Model } from "mongoose";
+import { PartialDeep } from "type-fest";
 import { AppData, AppDataDocument } from "./app-data.model";
 import defaultAppData from "./default-app-data";
 
@@ -30,7 +31,7 @@ export class AppDataService {
     return this.appDataModel.findOne();
   }
 
-  async updateAppData(update: Partial<AppData>) {
+  async updateAppData(update: PartialDeep<AppData>) {
     const current = await this.getAppData();
     merge(current, update);
     return this.appDataModel.findOneAndUpdate({}, current, { new: true });

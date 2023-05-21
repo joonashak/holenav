@@ -10,12 +10,6 @@ export class RegistrationSettingsUpdateDto {
 
   @Field({ nullable: true })
   allianceFilterEnabled: boolean;
-
-  @Field((type) => [String], { nullable: true })
-  allowedCorporations: string[];
-
-  @Field((type) => [String], { nullable: true })
-  allowedAlliances: string[];
 }
 
 @InputType()
