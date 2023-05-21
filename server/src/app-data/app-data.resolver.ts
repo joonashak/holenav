@@ -3,6 +3,7 @@ import { RequireSystemRole } from "../auth/decorators/role.decorator";
 import SystemRole from "../user/roles/system-role.enum";
 import { AppData } from "./app-data.model";
 import { AppDataService } from "./app-data.service";
+import { AppDataUpdateDto } from "./dto/app-data-update.dto";
 import { PublicAppData } from "./dto/public-app-data.dto";
 
 @Resolver()
@@ -24,5 +25,11 @@ export class AppDataResolver {
   @Mutation((returns) => AppData)
   async updateMotd(@Args("motd") motd: string): Promise<AppData> {
     return this.appDataService.updateAppData({ motd });
+  }
+
+  @RequireSystemRole(SystemRole.ADMINISTRATOR)
+  @Mutation((returns) => AppData)
+  async updateAppData(@Args("input") input: AppDataUpdateDto): Promise<AppData> {
+    return this.appDataService.updateAppData(input);
   }
 }
