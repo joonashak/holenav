@@ -42,13 +42,16 @@ export class SsoService {
    * @returns URL to redirect the client to.
    */
   async handleCallback(authorizationCode: string, state: string): Promise<string> {
+    // TODO: Refactor - this is too long and hard to understand.
     const ssoSession = await this.ssoSessionService.verifySsoSession(state);
 
     const { accessToken, refreshToken } = await this.ssoApiService.getSsoTokens(authorizationCode);
     const jwtData = await this.ssoApiService.verifyAndDecodeSsoAccessToken(accessToken);
 
+    // If registering a new user, check the character against registration settings.
+    const userExists = !!(await this.characterService.findByEsiId(jwtData.CharacterID));
     const userCanRegister = await this.userCanRegister(jwtData.CharacterID, ssoSession.type);
-    if (!userCanRegister) {
+    if (!userExists && !userCanRegister) {
       await this.ssoSessionService.removeSsoSession(ssoSession.key);
       throw new ForbiddenException("User is not allowed to register.");
     }
