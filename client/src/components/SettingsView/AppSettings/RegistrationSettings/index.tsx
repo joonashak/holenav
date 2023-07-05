@@ -1,33 +1,15 @@
 import { Box, Checkbox, FormControlLabel, FormGroup } from "@mui/material";
 import { ChangeEvent } from "react";
-import useAuthenticatedMutation from "../../../../auth/useAuthenticatedMutation";
-import useAuthenticatedQuery from "../../../../auth/useAuthenticatedQuery";
-import {
-  AppSettingsDocument,
-  AppSettingsQuery,
-  AppSettingsQueryVariables,
-  SetRegistrationEnabledDocument,
-  SetRegistrationEnabledMutation,
-  SetRegistrationEnabledMutationVariables,
-} from "../../../../generated/graphqlOperations";
+import useAppSettings from "../useAppSettings";
 
 const RegistrationSettings = () => {
-  const { data, loading } = useAuthenticatedQuery<AppSettingsQuery, AppSettingsQueryVariables>(
-    AppSettingsDocument,
-  );
-
-  const [setEnabled] = useAuthenticatedMutation<
-    SetRegistrationEnabledMutation,
-    SetRegistrationEnabledMutationVariables
-  >(SetRegistrationEnabledDocument, { refetchQueries: [AppSettingsDocument] });
+  const { appSettingsQuery, setRegistrationEnabled } = useAppSettings();
 
   const toggle = async (_: ChangeEvent, checked: boolean) => {
-    await setEnabled({ variables: { enabled: checked } });
+    setRegistrationEnabled(checked);
   };
 
-  if (loading) {
-    return null;
-  }
+  // FIXME: Add notification back after refactoring!
 
   return (
     <Box>
@@ -37,7 +19,7 @@ const RegistrationSettings = () => {
           control={
             <Checkbox
               color="secondary"
-              checked={data?.getAppData.settings.registration.enabled}
+              checked={appSettingsQuery.data?.getAppData.settings.registration.enabled}
               onChange={toggle}
             />
           }
