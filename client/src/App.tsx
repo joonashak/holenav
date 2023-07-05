@@ -7,8 +7,8 @@ import SettingsData from "./components/SettingsView/SettingsData";
 import UserData from "./components/UserData";
 import ViewportContainer from "./components/ViewportContainer";
 import { devToolsEnabled, endpoints } from "./config";
-import appTheme from "./theme";
 import DevTools from "./dev/DevTools";
+import appTheme from "./theme";
 
 const apolloClient = new ApolloClient({
   uri: endpoints.graphQl,
@@ -34,7 +34,7 @@ const App = () => {
             </ViewportContainer>
           </SettingsData>
         </UserData>
-      {devToolsEnabled && <DevTools />}
+        {devToolsEnabled && <DevTools />}
       </ApolloProvider>
     </ThemeProvider>
   );

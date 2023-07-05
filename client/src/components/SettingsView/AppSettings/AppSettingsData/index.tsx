@@ -27,9 +27,13 @@ const AppSettingsData = ({ children }: AppSettingsDataProps) => {
   const [ready, setReady] = useReactState(false);
 
   useAuthenticatedQuery<AppSettingsQuery, AppSettingsQueryVariables>(AppSettingsDocument, {
-    onCompleted: ({ getAppData }) => {
-      state.set(getAppData.settings);
-      console.log("state set");
+    onCompleted: (asd) => {
+      console.log(asd);
+      // console.log(getAppData);
+      // const { ...registration } = getAppData.settings.registration;
+      // state.set({ registration });
+      // console.log(registration);
+      // console.log("state set");
       setReady(true);
     },
   });

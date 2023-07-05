@@ -1,23 +1,46 @@
-import { useState } from "@hookstate/core";
 import { Box, Checkbox, FormControlLabel, FormGroup } from "@mui/material";
 import { ChangeEvent } from "react";
-import { appSettingsState } from "../AppSettingsData";
-import useAppSettingsData from "../AppSettingsData/useAppSettingsData";
+import useAuthenticatedMutation from "../../../../auth/useAuthenticatedMutation";
+import useAuthenticatedQuery from "../../../../auth/useAuthenticatedQuery";
+import {
+  AppSettingsDocument,
+  AppSettingsQuery,
+  AppSettingsQueryVariables,
+  SetRegistrationEnabledDocument,
+  SetRegistrationEnabledMutation,
+  SetRegistrationEnabledMutationVariables,
+} from "../../../../generated/graphqlOperations";
 
 const RegistrationSettings = () => {
-  const { registration, setRegistrationEnabled } = useAppSettingsData();
-  const state = useState(appSettingsState);
+  const { data, loading } = useAuthenticatedQuery<AppSettingsQuery, AppSettingsQueryVariables>(
+    AppSettingsDocument,
+  );
+
+  const [setEnabled] = useAuthenticatedMutation<
+    SetRegistrationEnabledMutation,
+    SetRegistrationEnabledMutationVariables
+  >(SetRegistrationEnabledDocument, { refetchQueries: [AppSettingsDocument] });
 
   const toggle = async (_: ChangeEvent, checked: boolean) => {
-    await setRegistrationEnabled(checked);
+    await setEnabled({ variables: { enabled: checked } });
   };
+
+  if (loading) {
+    return null;
+  }
 
   return (
     <Box>
       <FormGroup>
         <FormControlLabel
           label="New User Registration Enabled"
-          control={<Checkbox color="secondary" checked={true} onChange={toggle} />}
+          control={
+            <Checkbox
+              color="secondary"
+              checked={data?.getAppData.settings.registration.enabled}
+              onChange={toggle}
+            />
+          }
         />
       </FormGroup>
     </Box>

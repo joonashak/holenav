@@ -17,8 +17,9 @@ const useAppSettingsData = () => {
     SetRegistrationEnabledMutationVariables
   >(SetRegistrationEnabledDocument, {
     onCompleted: ({ updateAppData }) => {
-      console.log("hi");
-      //state.registration.merge({ enabled: true });
+      console.log(updateAppData);
+      //state.registration.merge(() => ({ enabled: true }));
+      state.registration.enabled.set(updateAppData.settings.registration.enabled);
       console.log("asd");
       console.log(state.registration.get());
     },
