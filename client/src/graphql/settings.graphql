@@ -43,3 +43,13 @@ mutation SetRegistrationEnabled($enabled: Boolean) {
     }
   }
 }
+
+mutation SetCorporationFilterEnabled($enabled: Boolean) {
+  updateAppData(input: { settings: { registration: { corporationFilterEnabled: $enabled } } }) {
+    settings {
+      registration {
+        enabled
+      }
+    }
+  }
+}

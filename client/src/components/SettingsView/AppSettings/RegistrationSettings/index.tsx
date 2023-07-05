@@ -1,6 +1,7 @@
-import { Box, Checkbox, FormControlLabel, FormGroup } from "@mui/material";
+import { Box, FormControlLabel, FormGroup, Switch, Typography } from "@mui/material";
 import { ChangeEvent } from "react";
 import useAppSettings from "../useAppSettings";
+import AllowedCorporations from "./AllowedCorporations";
 
 const RegistrationSettings = () => {
   const { appSettingsQuery, setRegistrationEnabled } = useAppSettings();
@@ -13,9 +14,9 @@ const RegistrationSettings = () => {
     <Box>
       <FormGroup>
         <FormControlLabel
-          label="New User Registration Enabled"
+          label="Enable New User Registration"
           control={
-            <Checkbox
+            <Switch
               color="secondary"
               checked={appSettingsQuery.data?.getAppData.settings.registration.enabled}
               onChange={toggle}
@@ -23,6 +24,12 @@ const RegistrationSettings = () => {
           }
         />
       </FormGroup>
+      <AllowedCorporations />
+      <Typography variant="body2">
+        If both filters are activated, satisfying one condition (i.e. matching corp or alliance) is
+        enough for registration to be allowed. Deactivating both filters allows registration using
+        any character.
+      </Typography>
     </Box>
   );
 };

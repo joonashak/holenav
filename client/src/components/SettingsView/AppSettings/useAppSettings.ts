@@ -4,6 +4,9 @@ import {
   AppSettingsDocument,
   AppSettingsQuery,
   AppSettingsQueryVariables,
+  SetCorporationFilterEnabledDocument,
+  SetCorporationFilterEnabledMutation,
+  SetCorporationFilterEnabledMutationVariables,
   SetRegistrationEnabledDocument,
   SetRegistrationEnabledMutation,
   SetRegistrationEnabledMutationVariables,
@@ -29,10 +32,26 @@ const useAppSettings = () => {
   const setRegistrationEnabled = (enabled: boolean) =>
     setRegistrationEnabledMutation({ variables: { enabled } });
 
+  const [setCorporationFilterEnabledMutation, setCorporationFilterEnabledResult] =
+    useAuthenticatedMutation<
+      SetCorporationFilterEnabledMutation,
+      SetCorporationFilterEnabledMutationVariables
+    >(SetCorporationFilterEnabledDocument, {
+      refetchQueries: [AppSettingsDocument],
+      onCompleted: () => {
+        showSuccessNotification("App settings updated.");
+      },
+    });
+
+  const setCorporationFilterEnabled = (enabled: boolean) =>
+    setCorporationFilterEnabledMutation({ variables: { enabled } });
+
   return {
     appSettingsQuery,
     setRegistrationEnabled,
     setRegistrationEnabledResult,
+    setCorporationFilterEnabled,
+    setCorporationFilterEnabledResult,
   };
 };
 

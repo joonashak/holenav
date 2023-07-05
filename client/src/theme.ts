@@ -1,4 +1,4 @@
-import { responsiveFontSizes, createTheme } from "@mui/material";
+import { createTheme, responsiveFontSizes } from "@mui/material";
 import { grey, lightGreen } from "@mui/material/colors";
 
 let theme = createTheme({
@@ -34,10 +34,12 @@ theme = createTheme(theme, {
     h3: {
       fontSize: "1.3rem",
       fontWeight: 400,
+      color: theme.palette.secondary.light,
     },
     h4: {
       fontSize: "1.1rem",
       fontWeight: 400,
+      color: theme.palette.secondary.light,
     },
     body1: {
       color: theme.palette.primary.contrastText,
