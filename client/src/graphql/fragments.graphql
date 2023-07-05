@@ -56,3 +56,10 @@ fragment AppSettingsFields on AppSettings {
     allowedAlliances
   }
 }
+
+fragment AppDataFields on AppData {
+  appVersion
+  settings {
+    ...AppSettingsFields
+  }
+}

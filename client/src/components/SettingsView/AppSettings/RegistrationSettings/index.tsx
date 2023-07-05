@@ -1,13 +1,15 @@
+import { useState } from "@hookstate/core";
 import { Box, Checkbox, FormControlLabel, FormGroup } from "@mui/material";
 import { ChangeEvent } from "react";
+import { appSettingsState } from "../AppSettingsData";
 import useAppSettingsData from "../AppSettingsData/useAppSettingsData";
 
 const RegistrationSettings = () => {
-  const { registration } = useAppSettingsData();
+  const { registration, setRegistrationEnabled } = useAppSettingsData();
+  const state = useState(appSettingsState);
 
-  const toggle = (_: ChangeEvent, checked: boolean) => {
-    console.log(checked);
-    console.log("toggle");
+  const toggle = async (_: ChangeEvent, checked: boolean) => {
+    await setRegistrationEnabled(checked);
   };
 
   return (
@@ -15,7 +17,7 @@ const RegistrationSettings = () => {
       <FormGroup>
         <FormControlLabel
           label="New User Registration Enabled"
-          control={<Checkbox color="secondary" checked={registration.enabled} onChange={toggle} />}
+          control={<Checkbox color="secondary" checked={true} onChange={toggle} />}
         />
       </FormGroup>
     </Box>

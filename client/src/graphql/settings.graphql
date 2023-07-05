@@ -12,10 +12,7 @@ query SettingsDataForManager {
 
 query AppSettings {
   getAppData {
-    appVersion
-    settings {
-      ...AppSettingsFields
-    }
+    ...AppDataFields
   }
 }
 
@@ -34,5 +31,15 @@ mutation AddFolderRole($input: AddFolderRoleInput!) {
 mutation ChangeActiveFolder($folderId: String!) {
   changeActiveFolder(folderId: $folderId) {
     id
+  }
+}
+
+mutation SetRegistrationEnabled($enabled: Boolean) {
+  updateAppData(input: { settings: { registration: { enabled: $enabled } } }) {
+    settings {
+      registration {
+        enabled
+      }
+    }
   }
 }

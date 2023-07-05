@@ -29,6 +29,7 @@ const AppSettingsData = ({ children }: AppSettingsDataProps) => {
   useAuthenticatedQuery<AppSettingsQuery, AppSettingsQueryVariables>(AppSettingsDocument, {
     onCompleted: ({ getAppData }) => {
       state.set(getAppData.settings);
+      console.log("state set");
       setReady(true);
     },
   });
