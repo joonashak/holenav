@@ -8,8 +8,10 @@ import {
   SetRegistrationEnabledMutation,
   SetRegistrationEnabledMutationVariables,
 } from "../../../generated/graphqlOperations";
+import useNotification from "../../GlobalNotification/useNotification";
 
 const useAppSettings = () => {
+  const { showSuccessNotification } = useNotification();
   const appSettingsQuery = useAuthenticatedQuery<AppSettingsQuery, AppSettingsQueryVariables>(
     AppSettingsDocument,
   );
@@ -17,7 +19,12 @@ const useAppSettings = () => {
   const [setRegistrationEnabledMutation, setRegistrationEnabledResult] = useAuthenticatedMutation<
     SetRegistrationEnabledMutation,
     SetRegistrationEnabledMutationVariables
-  >(SetRegistrationEnabledDocument, { refetchQueries: [AppSettingsDocument] });
+  >(SetRegistrationEnabledDocument, {
+    refetchQueries: [AppSettingsDocument],
+    onCompleted: () => {
+      showSuccessNotification("App settings updated.");
+    },
+  });
 
   const setRegistrationEnabled = (enabled: boolean) =>
     setRegistrationEnabledMutation({ variables: { enabled } });

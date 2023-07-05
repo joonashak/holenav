@@ -9,8 +9,6 @@ const RegistrationSettings = () => {
     setRegistrationEnabled(checked);
   };
 
-  // FIXME: Add notification back after refactoring!
-
   return (
     <Box>
       <FormGroup>
