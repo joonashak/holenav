@@ -47,6 +47,7 @@ export const MockUserService = {
 export const MockCharacterService = {
   provide: CharacterService,
   useFactory: () => ({
+    findByEsiId: fn(async () => testUser.main),
     upsert: fn(async () => testUser.main),
   }),
 };
