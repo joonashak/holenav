@@ -1,9 +1,15 @@
 import { Injectable } from "@nestjs/common";
+import { InjectModel } from "@nestjs/mongoose";
+import { Model } from "mongoose";
+import { AppData, AppDataDocument } from "../app-data.model";
 import { AppDataService } from "../app-data.service";
 
 @Injectable()
 export class AppSettingsService {
-  constructor(private appDataService: AppDataService) {}
+  constructor(
+    @InjectModel(AppData.name) private appDataModel: Model<AppDataDocument>,
+    private appDataService: AppDataService,
+  ) {}
 
   /**
    * Check if user is allowed to register as per current app settings.
@@ -29,5 +35,17 @@ export class AppSettingsService {
     }
 
     return true;
+  }
+
+  async addAllowedCorporation(esiId: string): Promise<AppDataDocument> {
+    await this.appDataModel.updateOne(
+      {},
+      {
+        $push: {
+          "settings.registration.allowedCorporations": esiId,
+        },
+      },
+    );
+    return this.appDataService.getAppData();
   }
 }
