@@ -104,6 +104,9 @@ services:
     container_name: holenav-neo-test
     environment:
       - NEO4J_AUTH=none
+    ports:
+      - 7475:7474
+      - 7688:7687
 
 volumes:
   mongo-data:

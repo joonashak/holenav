@@ -39,7 +39,10 @@ export class SignatureService {
     const wormholes = graphSafeSigs.filter((sig) => sig.type === SigType.WORMHOLE).map(addEolAt);
     await this.connectionMutationService.createConnectionsFromSignatures(wormholes);
 
-    return sigsWithIds;
+    const created = await this.signatureSearchService.findManyById(
+      sigsWithIds.map((sig) => sig.id),
+    );
+    return created;
   }
 
   async updateSignatures(sigUpdates: UpdateableSignature[], folder: Folder): Promise<Signature[]> {
@@ -136,7 +139,7 @@ export class SignatureService {
       );
       await this.connectionMutationService.createConnectionsFromSignatures([updatedSig]);
 
-      return updatedSig;
+      return (await this.signatureSearchService.findManyById([updatedSig.id]))[0];
     }
 
     const res = await this.signatureMutationService.updateSignatures([update]);

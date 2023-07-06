@@ -1,5 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { Neo4jService } from "../../../integration/neo4j/neo4j.service";
+import { mapDateTimeToJsDateByKey } from "../../../utils/dateConverters";
 import { UpdateableSignature } from "../dto/update-signatures.dto";
 import { Signature } from "../signature.model";
 import { sanitizeSignatureForNeo4j } from "../signature.utils";
@@ -26,7 +27,6 @@ export class ConnectionMutationService {
       `,
       { signatures: signatures.map(sanitizeSignatureForNeo4j) },
     );
-
     return res;
   }
 
@@ -54,6 +54,8 @@ export class ConnectionMutationService {
       { signature: sanitizeSignatureForNeo4j(signature) },
     );
 
-    return res.records[0]._fields[0];
+    return res.records
+      .map((rec) => rec._fields[0])
+      .map(mapDateTimeToJsDateByKey(["createdAt", "connection.eolAt"]))[0];
   }
 }
