@@ -4,9 +4,9 @@ import { AuthenticationError } from "apollo-server-express";
 import dayjs from "dayjs";
 import { Model } from "mongoose";
 import { testSsoSession, testUser } from "../../../test-utils/test-data";
+import SsoSessionType from "./sso-session-type.enum";
 import { SsoSession } from "./sso-session.model";
 import { SsoSessionService } from "./sso-session.service";
-import SsoSessionType from "./sso-session-type.enum";
 
 describe("SsoSessionService", () => {
   let ssoSessionService: SsoSessionService;
@@ -25,7 +25,7 @@ describe("SsoSessionService", () => {
             findOne: jest.fn(() => ({ populate: () => testSsoSession })),
             findOneAndRemove: jest.fn(),
             findOneAndUpdate: jest.fn(),
-            remove: jest.fn(),
+            deleteMany: jest.fn(),
           }),
         },
       ],
@@ -69,7 +69,7 @@ describe("SsoSessionService", () => {
 
     it("Remove expired sessions", async () => {
       await expect(ssoSessionService.removeExpiredSsoSessions()).resolves.not.toThrow();
-      const query: any = jest.spyOn(ssoSessionModel, "remove").mock.calls[0][0];
+      const query: any = jest.spyOn(ssoSessionModel, "deleteMany").mock.calls[0][0];
       expect(dayjs(query.expiry.$lte).isSame(dayjs(), "s")).toBe(true);
     });
   });

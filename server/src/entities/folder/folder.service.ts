@@ -1,11 +1,11 @@
 import { forwardRef, Inject, Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import mongoose, { Model } from "mongoose";
-import { Folder, FolderDocument } from "./folder.model";
-import { UserDocument } from "../../user/user.model";
-import { UserService } from "../../user/user.service";
 import FolderRole from "../../user/roles/folder-role.enum";
 import SystemRole from "../../user/roles/system-role.enum";
+import { UserDocument } from "../../user/user.model";
+import { UserService } from "../../user/user.service";
+import { Folder, FolderDocument } from "./folder.model";
 
 const defaultFolderName = "Default Folder";
 
@@ -47,7 +47,7 @@ export class FolderService {
 
     const folderIds = user.folderRoles
       .filter(({ role }) => role >= minRole)
-      .map(({ folder }) => mongoose.Types.ObjectId(folder as unknown as string));
+      .map(({ folder }) => new mongoose.Types.ObjectId(folder as unknown as string));
     return this.folderModel.find({ _id: { $in: folderIds } });
   }
 

@@ -6,7 +6,7 @@ import { ScheduleModule } from "@nestjs/schedule";
 import { AppDataModule } from "./app-data/app-data.module";
 import { AuthModule } from "./auth/auth.module";
 import { BootstrapModule } from "./bootstrap/bootstrap.module";
-import { CLIENT_URL, MONGO_URL } from "./config";
+import { MONGO_URL } from "./config";
 import { ConnectionGraphModule } from "./connection-graph/connection-graph.module";
 import { DevToolsModule } from "./dev-tools/dev-tools.module";
 import { CharacterModule } from "./entities/character/character.module";
@@ -19,13 +19,11 @@ import { ScheduledTasksModule } from "./scheduled-tasks/scheduled-tasks.module";
 
 @Module({
   imports: [
-    MongooseModule.forRoot(MONGO_URL, { useFindAndModify: false }),
+    MongooseModule.forRoot(MONGO_URL),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       autoSchemaFile: true,
       driver: ApolloDriver,
       playground: true,
-      debug: false,
-      cors: { origin: CLIENT_URL },
     }),
     ScheduleModule.forRoot(),
     AppDataModule,

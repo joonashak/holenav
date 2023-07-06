@@ -1,13 +1,13 @@
 import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
+import { AuthenticationError } from "apollo-server-express";
 import dayjs from "dayjs";
 import { Model } from "mongoose";
-import { Character } from "../../../entities/character/character.model";
 import { v4 as uuid } from "uuid";
-import { SsoSession, SsoSessionDocument } from "./sso-session.model";
-import SsoSessionType from "./sso-session-type.enum";
+import { Character } from "../../../entities/character/character.model";
 import { User } from "../../../user/user.model";
-import { AuthenticationError } from "apollo-server-express";
+import SsoSessionType from "./sso-session-type.enum";
+import { SsoSession, SsoSessionDocument } from "./sso-session.model";
 
 @Injectable()
 export class SsoSessionService {
@@ -79,7 +79,7 @@ export class SsoSessionService {
   }
 
   async removeExpiredSsoSessions(): Promise<void> {
-    await this.ssoSessionModel.remove({
+    await this.ssoSessionModel.deleteMany({
       expiry: { $lte: new Date() },
     });
   }

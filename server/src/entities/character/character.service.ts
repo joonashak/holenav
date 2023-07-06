@@ -1,8 +1,8 @@
 import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
-import { Character, CharacterDocument } from "./character.model";
 import { EsiService } from "../../esi/esi.service";
+import { Character, CharacterDocument } from "./character.model";
 
 @Injectable()
 export class CharacterService {
@@ -16,9 +16,9 @@ export class CharacterService {
   }
 
   async create(character: Partial<Character>): Promise<Character> {
-    let newCharacter = await this.characterModel.create(character);
-    newCharacter = await this.appendPublicInfoFromEsi(newCharacter);
-    return newCharacter;
+    const newCharacter = await this.characterModel.create(character);
+    const charWithInfo = await this.appendPublicInfoFromEsi(newCharacter);
+    return charWithInfo;
   }
 
   /**

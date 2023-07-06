@@ -47,7 +47,7 @@ export class SessionService {
   }
 
   async removeExpiredSessions(): Promise<void> {
-    const { deletedCount } = await this.sessionModel.remove({
+    const { deletedCount } = await this.sessionModel.deleteMany({
       expiresAt: { $lte: new Date() },
     });
 

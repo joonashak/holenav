@@ -10,7 +10,7 @@ registerEnumType(FolderRoleEnum, { name: "FolderRoles" });
 @Schema()
 export class FolderRole {
   @Field((type) => FolderRoleEnum)
-  @Prop({ type: FolderRoleEnum })
+  @Prop({ type: String, enum: FolderRoleEnum })
   role: FolderRoleEnum;
 
   @Field((type) => Folder)

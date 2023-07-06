@@ -22,7 +22,7 @@ describe("SessionService", () => {
           useFactory: () => ({
             create: jest.fn().mockResolvedValue(testSession),
             findOne: jest.fn(() => ({ populate: () => testSession })),
-            remove: jest.fn().mockResolvedValue({ deletedCount: 1 }),
+            deleteMany: jest.fn().mockResolvedValue({ deletedCount: 1 }),
           }),
         },
       ],
@@ -48,7 +48,7 @@ describe("SessionService", () => {
 
   it("Remove expired sessions", async () => {
     await expect(sessionService.removeExpiredSessions()).resolves.not.toThrow();
-    const query: any = jest.spyOn(sessionModel, "remove").mock.calls[0][0];
+    const query: any = jest.spyOn(sessionModel, "deleteMany").mock.calls[0][0];
     expect(dayjs(query.expiresAt.$lte).isSame(dayjs(), "s")).toBe(true);
   });
 

@@ -63,7 +63,12 @@ export class UserService {
   async findById(id: string): Promise<UserDocument> {
     const user = await this.userModel
       .findOne({ id })
-      .populate(["roles", "main", "alts", "settings.activeFolder"]);
+      .populate([
+        { path: "roles", strictPopulate: false },
+        "main",
+        "alts",
+        "settings.activeFolder",
+      ]);
     return user;
   }
 
