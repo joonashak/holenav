@@ -12,9 +12,10 @@ import { UserService } from "../../user/user.service";
 import { SsoApiService } from "./sso-api.service";
 import SsoSessionType from "./sso-session/sso-session-type.enum";
 import { SsoSessionService } from "./sso-session/sso-session.service";
+import { SSO_MODULE_CONFIG_TOKEN } from "./sso.module-definition";
 import { SsoService } from "./sso.service";
 
-const expectedCallbackUrl = `https://login.eveonline.com/v2/oauth/authorize/?response_type=code&redirect_uri=test-callback-url&client_id=test-sso-client-id&state=${testSsoSession.key}`;
+const expectedCallbackUrl = `https://login.eveonline.com/v2/oauth/authorize/?response_type=code&redirect_uri=test-callback-url&client_id=test-sso-client-id&state=${testSsoSession.key}&scope=test-scope%20another.scope`;
 
 describe("SsoService", () => {
   let userService: UserService;
@@ -32,6 +33,12 @@ describe("SsoService", () => {
         MockSsoApiService,
         MockAppSettingsService,
         MockEsiService,
+        {
+          provide: SSO_MODULE_CONFIG_TOKEN,
+          useValue: {
+            scopes: ["test-scope", "another.scope"],
+          },
+        },
       ],
     }).compile();
 
