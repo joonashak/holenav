@@ -20,7 +20,7 @@ import { SsoModule } from "./sso/sso.module";
       signOptions: { expiresIn: JWT_LIFETIME },
     }),
     CharacterModule,
-    SsoModule.register({ scopes: [] }),
+    SsoModule.register({ scopes: ["esi-search.search_structures.v1"] }),
     SsoSessionModule,
     SessionModule,
     EsiModule,

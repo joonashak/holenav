@@ -33,7 +33,8 @@ export class SsoService {
    */
   async getSsoLoginUrl(user: User = null) {
     const { key } = await this.ssoSessionService.createSsoSession(user);
-    const loginUrl = `${SsoUrl.Authorize}/?response_type=code&redirect_uri=${SSO_CALLBACK_URL}&client_id=${SSO_CLIENT_ID}&state=${key}`;
+    const scopes = this.moduleConfig.scopes.join(" ");
+    const loginUrl = `${SsoUrl.Authorize}/?response_type=code&redirect_uri=${SSO_CALLBACK_URL}&client_id=${SSO_CLIENT_ID}&state=${key}&scope=${scopes}`;
     return encodeURI(loginUrl);
   }
 
