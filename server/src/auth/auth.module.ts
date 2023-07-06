@@ -10,7 +10,6 @@ import { SessionModule } from "./session/session.module";
 import { SessionService } from "./session/session.service";
 import { SsoSessionModule } from "./sso/sso-session/sso-session.module";
 import { SsoModule } from "./sso/sso.module";
-import { SsoService } from "./sso/sso.service";
 
 @Global()
 @Module({
@@ -21,12 +20,12 @@ import { SsoService } from "./sso/sso.service";
       signOptions: { expiresIn: JWT_LIFETIME },
     }),
     CharacterModule,
-    SsoModule,
+    SsoModule.register({ scopes: [] }),
     SsoSessionModule,
     SessionModule,
     EsiModule,
   ],
-  providers: [SsoService, AuthService, AuthResolver, SessionService],
+  providers: [AuthService, AuthResolver, SessionService],
   exports: [JwtModule, AuthService, SessionService],
 })
 export class AuthModule {}

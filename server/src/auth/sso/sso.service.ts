@@ -1,4 +1,4 @@
-import { ForbiddenException, Injectable } from "@nestjs/common";
+import { ForbiddenException, Inject, Injectable } from "@nestjs/common";
 import { AppSettingsService } from "../../app-data/settings/app-settings.service";
 import {
   CLIENT_URL,
@@ -14,10 +14,12 @@ import { SsoApiService } from "./sso-api.service";
 import SsoSessionType from "./sso-session/sso-session-type.enum";
 import { SsoSessionService } from "./sso-session/sso-session.service";
 import { SsoUrl } from "./sso-url.enum";
+import { SSO_MODULE_CONFIG_TOKEN, SsoModuleConfig } from "./sso.module-definition";
 
 @Injectable()
 export class SsoService {
   constructor(
+    @Inject(SSO_MODULE_CONFIG_TOKEN) private moduleConfig: SsoModuleConfig,
     private ssoSessionService: SsoSessionService,
     private characterService: CharacterService,
     private userService: UserService,
