@@ -1,8 +1,9 @@
 import { Field, ObjectType } from "@nestjs/graphql";
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import { Document } from "mongoose";
-import { Corporation } from "../common/corporation.model";
+import mongoose, { Document } from "mongoose";
+import { SsoToken } from "../../auth/sso/sso-token/sso-token.model";
 import { Alliance } from "../common/alliance.model";
+import { Corporation } from "../common/corporation.model";
 
 export type CharacterDocument = Character & Document;
 
@@ -17,13 +18,9 @@ export class Character {
   @Prop({ unique: true })
   esiId: string;
 
-  @Field({ nullable: true })
-  @Prop({ select: false })
-  accessToken: string;
-
-  @Field({ nullable: true })
-  @Prop({ select: false })
-  refreshToken: string;
+  @Field((type) => SsoToken, { nullable: true })
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: SsoToken.name, select: false })
+  ssoToken: SsoToken;
 
   @Field()
   @Prop({ default: false })

@@ -66,8 +66,7 @@ export class SsoService {
     const character = await this.characterService.upsert({
       name: jwtData.CharacterName,
       esiId: jwtData.CharacterID,
-      accessToken,
-      refreshToken,
+      ssoToken,
       isMain: false,
     });
 

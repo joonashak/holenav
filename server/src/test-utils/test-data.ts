@@ -1,13 +1,13 @@
 import { hashSync } from "bcrypt";
 import dayjs from "dayjs";
 import { Session } from "../auth/session/session.model";
-import { SsoSession } from "../auth/sso/sso-session/sso-session.model";
 import SsoSessionType from "../auth/sso/sso-session/sso-session-type.enum";
+import { SsoSession } from "../auth/sso/sso-session/sso-session.model";
+import { Corporation } from "../entities/common/corporation.model";
 import { Folder } from "../entities/folder/folder.model";
 import FolderRole from "../user/roles/folder-role.enum";
 import SystemRole from "../user/roles/system-role.enum";
 import { User } from "../user/user.model";
-import { Corporation } from "../entities/common/corporation.model";
 
 export const testFolder: Folder = {
   id: "test-folder",
@@ -33,8 +33,7 @@ export const testUser: User = {
   main: {
     name: "test character",
     esiId: "uske67ent",
-    accessToken: "j67j64m",
-    refreshToken: "g7i84nthg",
+    ssoToken: null,
     isMain: true,
     corporation: testCorp,
     alliance: null,
