@@ -3,6 +3,7 @@ import { AuthService } from "../auth/auth.service";
 import { SessionService } from "../auth/session/session.service";
 import { SsoApiService } from "../auth/sso/sso-api.service";
 import { SsoSessionService } from "../auth/sso/sso-session/sso-session.service";
+import { SsoTokenService } from "../auth/sso/sso-token/sso-token.service";
 import { CharacterService } from "../entities/character/character.service";
 import { FolderService } from "../entities/folder/folder.service";
 import { EsiService } from "../esi/esi.service";
@@ -94,5 +95,12 @@ export const MockEsiService = {
   provide: EsiService,
   useFactory: () => ({
     getCharacterPublicInfo: fn().mockResolvedValue({ corporation_id: "" }),
+  }),
+};
+
+export const MockSsoTokenService = {
+  provide: SsoTokenService,
+  useFactory: () => ({
+    create: fn(),
   }),
 };

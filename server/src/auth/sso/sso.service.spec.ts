@@ -5,6 +5,7 @@ import {
   MockEsiService,
   MockSsoApiService,
   MockSsoSessionService,
+  MockSsoTokenService,
   MockUserService,
 } from "../../test-utils/mock-services";
 import { testSsoSession, testSsoTokens, testUser } from "../../test-utils/test-data";
@@ -33,6 +34,7 @@ describe("SsoService", () => {
         MockSsoApiService,
         MockAppSettingsService,
         MockEsiService,
+        MockSsoTokenService,
         {
           provide: SSO_MODULE_CONFIG_TOKEN,
           useValue: {
