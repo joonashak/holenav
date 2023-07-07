@@ -7,6 +7,7 @@ import AssignSystemRoleInput from "./dto/assign-system-role.dto";
 import { SanitizedUserForManager } from "./dto/sanitized-user-for-manager.dto";
 import { SanitizedUserForSelf } from "./dto/sanitized-user-for-self.dto";
 import { SanitizedUser } from "./dto/sanitized-user.dto";
+import { UserSsoTokens } from "./dto/user-sso-tokens.dto";
 import SystemRole from "./roles/system-role.enum";
 import { UserSettingsService } from "./settings/user-settings.service";
 import { UserRoleService } from "./user-role.service";
@@ -92,5 +93,11 @@ export class UserResolver {
     await this.userRoleService.assignSystemRole(input.userId, input.systemRole);
     const users = await this.userService.findUsersSanitizedForManager({ id: input.userId });
     return users[0];
+  }
+
+  @RequireSystemRole(SystemRole.USER)
+  @Query((returns) => UserSsoTokens)
+  async getSsoTokens(@CurrentUser() user: User): Promise<UserSsoTokens> {
+    return this.userService.getSsoTokens(user);
   }
 }

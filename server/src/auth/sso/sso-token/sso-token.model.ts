@@ -10,7 +10,7 @@ export class SsoToken {
   accessToken: string;
 
   @Field()
-  @Prop()
+  @Prop({ select: false })
   refreshToken: string;
 }
 

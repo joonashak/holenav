@@ -7,6 +7,7 @@ import { FolderService } from "../entities/folder/folder.service";
 import { Credentials, CredentialsDocument } from "./credentials/credentials.model";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { SanitizedUserForManager } from "./dto/sanitized-user-for-manager.dto";
+import { UserSsoTokens } from "./dto/user-sso-tokens.dto";
 import FolderRole from "./roles/folder-role.enum";
 import { FolderRole as FolderRoleModel } from "./roles/folder-role.model";
 import { UserRoleService } from "./user-role.service";
@@ -154,5 +155,25 @@ export class UserService {
     const user = await this.findByEsiId(userEsiId);
     const folder = await this.folderService.getFolderById(folderId);
     return await this.addFolderRole(user, { folder, role });
+  }
+
+  async getSsoTokens(user: User): Promise<UserSsoTokens> {
+    const { main, alts } = await (
+      await this.userModel
+        .findOne({ id: user.id })
+        .populate("main", ["ssoToken", "esiId"])
+        .populate("alts", ["ssoToken", "esiId"])
+    ).populate(["main.ssoToken", "alts.ssoToken"]);
+
+    return {
+      main: {
+        esiId: main.esiId,
+        accessToken: main.ssoToken.accessToken,
+      },
+      alts: alts.map((alt) => ({
+        esiId: alt.esiId,
+        accessToken: alt.ssoToken.accessToken,
+      })),
+    };
   }
 }
