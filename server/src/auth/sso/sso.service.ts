@@ -13,6 +13,7 @@ import { UserService } from "../../user/user.service";
 import { SsoApiService } from "./sso-api.service";
 import SsoSessionType from "./sso-session/sso-session-type.enum";
 import { SsoSessionService } from "./sso-session/sso-session.service";
+import { SsoTokenService } from "./sso-token/sso-token.service";
 import { SsoUrl } from "./sso-url.enum";
 import { SSO_MODULE_CONFIG_TOKEN, SsoModuleConfig } from "./sso.module-definition";
 
@@ -21,6 +22,7 @@ export class SsoService {
   constructor(
     @Inject(SSO_MODULE_CONFIG_TOKEN) private moduleConfig: SsoModuleConfig,
     private ssoSessionService: SsoSessionService,
+    private ssoTokenService: SsoTokenService,
     private characterService: CharacterService,
     private userService: UserService,
     private ssoApiService: SsoApiService,
@@ -58,6 +60,8 @@ export class SsoService {
       await this.ssoSessionService.removeSsoSession(ssoSession.key);
       throw new ForbiddenException("User is not allowed to register.");
     }
+
+    const ssoToken = await this.ssoTokenService.create({ accessToken, refreshToken });
 
     const character = await this.characterService.upsert({
       name: jwtData.CharacterName,
