@@ -168,11 +168,11 @@ export class UserService {
     return {
       main: {
         esiId: main.esiId,
-        accessToken: main.ssoToken.accessToken,
+        accessToken: main.ssoToken?.accessToken || "",
       },
       alts: alts.map((alt) => ({
         esiId: alt.esiId,
-        accessToken: alt.ssoToken.accessToken,
+        accessToken: alt.ssoToken?.accessToken || "",
       })),
     };
   }

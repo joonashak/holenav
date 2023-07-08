@@ -1,10 +1,13 @@
 import { Box, FormControlLabel, FormGroup, Switch, Typography } from "@mui/material";
 import { ChangeEvent } from "react";
+import useEsiSearch from "../../../../services/esi/useEsiSearch";
 import useAppSettings from "../useAppSettings";
 import AllowedCorporations from "./AllowedCorporations";
 
 const RegistrationSettings = () => {
   const { appSettingsQuery, setRegistrationEnabled } = useAppSettings();
+  const { getSearchResult } = useEsiSearch();
+  getSearchResult("asd");
 
   const toggle = async (_: ChangeEvent, checked: boolean) => {
     setRegistrationEnabled(checked);

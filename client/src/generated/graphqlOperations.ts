@@ -63,14 +63,13 @@ export type AssignSystemRoleInput = {
 
 export type Character = {
   __typename?: 'Character';
-  accessToken?: Maybe<Scalars['String']>;
   alliance?: Maybe<Alliance>;
   corporation: Corporation;
   esiId: Scalars['String'];
   isMain: Scalars['Boolean'];
   name: Scalars['String'];
   portraitUrl: Scalars['String'];
-  refreshToken?: Maybe<Scalars['String']>;
+  ssoToken?: Maybe<SsoToken>;
 };
 
 export type Connection = {
@@ -293,6 +292,7 @@ export type Query = {
   getManageableFolders: Array<Folder>;
   getPublicAppData: PublicAppData;
   getSignaturesBySystem: Array<Signature>;
+  getSsoTokens: UserSsoTokens;
   getSystemByName?: Maybe<System>;
   searchCharactersByMain: Array<Character>;
   startSsoLogin: StartSsoLoginDto;
@@ -413,6 +413,18 @@ export type SignatureWithoutConnection = {
   wormholeType?: Maybe<Scalars['String']>;
 };
 
+export type SsoToken = {
+  __typename?: 'SsoToken';
+  accessToken: Scalars['String'];
+  refreshToken: Scalars['String'];
+};
+
+export type SsoTokenDto = {
+  __typename?: 'SsoTokenDto';
+  accessToken: Scalars['String'];
+  esiId: Scalars['String'];
+};
+
 export type StartSsoLoginDto = {
   __typename?: 'StartSsoLoginDto';
   ssoLoginUrl: Scalars['String'];
@@ -466,6 +478,12 @@ export type UserSettings = {
   selectedMap?: Maybe<SavedMap>;
 };
 
+export type UserSsoTokens = {
+  __typename?: 'UserSsoTokens';
+  alts: Array<SsoTokenDto>;
+  main: SsoTokenDto;
+};
+
 export type GetTokenMutationVariables = Exact<{
   state: Scalars['String'];
 }>;
@@ -482,6 +500,11 @@ export type AddCharacterQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type AddCharacterQuery = { __typename?: 'Query', addCharacter: { __typename?: 'StartSsoLoginDto', ssoLoginUrl: string } };
+
+export type GetSsoTokensQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetSsoTokensQuery = { __typename?: 'Query', getSsoTokens: { __typename?: 'UserSsoTokens', main: { __typename?: 'SsoTokenDto', esiId: string, accessToken: string }, alts: Array<{ __typename?: 'SsoTokenDto', esiId: string, accessToken: string }> } };
 
 export type LoginMutationVariables = Exact<{
   username: Scalars['String'];
@@ -674,6 +697,7 @@ export const SignatureFieldsFragmentDoc = {"kind":"Document","definitions":[{"ki
 export const GetTokenDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"GetToken"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"state"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getToken"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"state"},"value":{"kind":"Variable","name":{"kind":"Name","value":"state"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"accessToken"}}]}}]}}]} as unknown as DocumentNode<GetTokenMutation, GetTokenMutationVariables>;
 export const StartSsoLoginDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"StartSsoLogin"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"startSsoLogin"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ssoLoginUrl"}}]}}]}}]} as unknown as DocumentNode<StartSsoLoginQuery, StartSsoLoginQueryVariables>;
 export const AddCharacterDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"AddCharacter"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addCharacter"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ssoLoginUrl"}}]}}]}}]} as unknown as DocumentNode<AddCharacterQuery, AddCharacterQueryVariables>;
+export const GetSsoTokensDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetSsoTokens"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getSsoTokens"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"main"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"esiId"}},{"kind":"Field","name":{"kind":"Name","value":"accessToken"}}]}},{"kind":"Field","name":{"kind":"Name","value":"alts"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"esiId"}},{"kind":"Field","name":{"kind":"Name","value":"accessToken"}}]}}]}}]}}]} as unknown as DocumentNode<GetSsoTokensQuery, GetSsoTokensQueryVariables>;
 export const LoginDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"Login"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"username"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"password"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"login"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"username"},"value":{"kind":"Variable","name":{"kind":"Name","value":"username"}}},{"kind":"Argument","name":{"kind":"Name","value":"password"},"value":{"kind":"Variable","name":{"kind":"Name","value":"password"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"accessToken"}}]}}]}}]} as unknown as DocumentNode<LoginMutation, LoginMutationVariables>;
 export const LogoutDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"Logout"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"logout"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"loggedOut"}}]}}]}}]} as unknown as DocumentNode<LogoutMutation, LogoutMutationVariables>;
 export const SearchCharactersByMainDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SearchCharactersByMain"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"search"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"searchCharactersByMain"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"search"},"value":{"kind":"Variable","name":{"kind":"Name","value":"search"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"CharacterFields"}}]}}]}},...CharacterFieldsFragmentDoc.definitions]} as unknown as DocumentNode<SearchCharactersByMainQuery, SearchCharactersByMainQueryVariables>;
