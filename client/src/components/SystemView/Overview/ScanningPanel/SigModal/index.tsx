@@ -1,13 +1,13 @@
 import { DialogContent, DialogTitle, SelectChangeEvent } from "@mui/material";
 import { ChangeEvent, useEffect, useState } from "react";
+import { SigType, Signature } from "../../../../../generated/graphqlOperations";
+import Dialog from "../../../../common/Dialog";
+import FormGroupRow from "../../../../controls/FormGroupRow";
 import Select from "../../../../controls/Select";
+import useSigPasteListener from "../useSigPasteListener";
+import EveIdField from "./EveIdField";
 import SigForm from "./SigForm";
 import WormholeForm from "./WormholeForm";
-import FormGroupRow from "../../../../controls/FormGroupRow";
-import Dialog from "../../../../common/Dialog";
-import EveIdField from "./EveIdField";
-import { Signature, SigType } from "../../../../../generated/graphqlOperations";
-import useSigPasteListener from "../useSigPasteListener";
 
 const typeOptions = [
   { id: "sig-type-opt-null", value: SigType.Unknown, label: <em>Unknown</em> },
@@ -59,7 +59,7 @@ const SigModal = ({ open, onClose: onCloseSuper, signature }: SigModalProps) => 
   const modalTitle = signature ? "Edit Signature" : "Add Signature";
 
   return (
-    <Dialog open={open} onClose={onClose}>
+    <Dialog open={open} onClose={onClose} data-cy="sig-modal">
       <DialogTitle>{modalTitle}</DialogTitle>
       <DialogContent>
         <FormGroupRow>

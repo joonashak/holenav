@@ -1,5 +1,6 @@
 export const openSignatureForm = (): void => {
   cy.cs("add-sig-button").click();
+  cy.contains("[data-cy='sig-modal']", "Add Signature");
 };
 
 export const submitSignatureForm = (): void => {
