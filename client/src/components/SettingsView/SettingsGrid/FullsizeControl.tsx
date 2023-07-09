@@ -1,12 +1,10 @@
-import { Box, FormControlLabel, FormControlLabelProps } from "@mui/material";
+import { FormControlLabel, FormControlLabelProps } from "@mui/material";
+import Row from "./Row";
 
 const FullsizeControl = (props: FormControlLabelProps) => (
-  <Box
+  <Row
     sx={{
-      display: "flex",
       flexDirection: "column",
-      borderBottom: "1px solid",
-      borderBottomColor: "primary.light",
     }}
   >
     <FormControlLabel
@@ -14,14 +12,12 @@ const FullsizeControl = (props: FormControlLabelProps) => (
       labelPlacement="start"
       componentsProps={{ typography: { sx: { flexGrow: 1 } } }}
       sx={{
-        ml: 0,
-        mr: 0,
+        m: 0,
         pt: 1,
         pb: 1,
-        "&:hover": { bgcolor: "rgba(0, 0, 0, 0.15)" },
       }}
     />
-  </Box>
+  </Row>
 );
 
 export default FullsizeControl;
