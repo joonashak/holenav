@@ -1,4 +1,4 @@
-import PageTitle from "../../common/PageTitle";
+import SettingsGrid from "../SettingsGrid";
 import RegistrationSettings from "./RegistrationSettings";
 import useAppSettings from "./useAppSettings";
 
@@ -6,12 +6,7 @@ const AppSettings = () => {
   const { appSettingsQuery } = useAppSettings();
   const { loading } = appSettingsQuery;
 
-  return (
-    <>
-      <PageTitle>App Settings</PageTitle>
-      {!loading && <RegistrationSettings />}
-    </>
-  );
+  return <SettingsGrid title="App Settings">{!loading && <RegistrationSettings />}</SettingsGrid>;
 };
 
 export default AppSettings;
