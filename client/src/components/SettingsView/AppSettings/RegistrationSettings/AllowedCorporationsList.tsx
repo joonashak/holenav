@@ -5,6 +5,7 @@ import { EsiSearchCategories } from "../../../../services/esi/types";
 import useEsiCorporation from "../../../../services/esi/useEsiCorporation";
 import useEsiSearch from "../../../../services/esi/useEsiSearch";
 import DebouncingAutocomplete from "../../../common/DebouncingAutocomplete";
+import Row from "../../SettingsGrid/Row";
 import useAppSettings from "../useAppSettings";
 
 type CorpOption = {
@@ -52,7 +53,7 @@ const AllowedCorporationsList = () => {
   };
 
   return (
-    <Box>
+    <Row sx={{ flexDirection: "column" }} disableHover>
       <Box sx={{ display: "flex" }}>
         <DebouncingAutocomplete<CorpOption>
           label="Add Corporation"
@@ -62,6 +63,7 @@ const AllowedCorporationsList = () => {
           onChange={(_, corp) => setSelected(corp)}
           search={search}
           sx={{ flexGrow: 1, mr: 1 }}
+          textFieldProps={{ variant: "filled" }}
         />
         <IconButton size="large" color="secondary" onClick={onClick}>
           <AddCircleIcon fontSize="inherit" />
@@ -73,7 +75,7 @@ const AllowedCorporationsList = () => {
           <ListItem key={`allowed-corp-item-${esiId}`}>{esiId}</ListItem>
         ))}
       </List>
-    </Box>
+    </Row>
   );
 };
 

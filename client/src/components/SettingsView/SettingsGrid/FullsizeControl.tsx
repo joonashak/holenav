@@ -13,8 +13,6 @@ const FullsizeControl = (props: FormControlLabelProps) => (
       componentsProps={{ typography: { sx: { flexGrow: 1 } } }}
       sx={{
         m: 0,
-        pt: 1,
-        pb: 1,
       }}
     />
   </Row>

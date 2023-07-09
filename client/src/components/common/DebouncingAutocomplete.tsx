@@ -1,4 +1,10 @@
-import { Autocomplete, AutocompleteProps, CircularProgress, TextField } from "@mui/material";
+import {
+  Autocomplete,
+  AutocompleteProps,
+  CircularProgress,
+  TextField,
+  TextFieldProps,
+} from "@mui/material";
 import { useDebounce } from "@react-hook/debounce";
 import { get } from "lodash";
 import { useEffect, useState } from "react";
@@ -30,6 +36,10 @@ type DebouncingAutocompleteProps<T> = Partial<AutocompleteProps<T, false, false,
    * Callback fired when search string has changed and debounce has passed.
    */
   search: (text: string) => void;
+  /**
+   * Props passed to `TextField` input component.
+   */
+  textFieldProps?: TextFieldProps;
 };
 
 export default function DebouncingAutocomplete<T>({
@@ -41,6 +51,7 @@ export default function DebouncingAutocomplete<T>({
   loading,
   onChange,
   search,
+  textFieldProps = {},
   ...rest
 }: DebouncingAutocompleteProps<T>) {
   const [open, setOpen] = useState(false);
@@ -70,6 +81,7 @@ export default function DebouncingAutocomplete<T>({
       renderInput={(params) => (
         <TextField
           {...params}
+          {...textFieldProps}
           label={label}
           data-cy={dataCy}
           InputProps={{
