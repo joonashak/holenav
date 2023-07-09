@@ -1,6 +1,9 @@
 import useAuthenticatedMutation from "../../../auth/useAuthenticatedMutation";
 import useAuthenticatedQuery from "../../../auth/useAuthenticatedQuery";
 import {
+  AddAllowedCorporationDocument,
+  AddAllowedCorporationMutation,
+  AddAllowedCorporationMutationVariables,
   AppSettingsDocument,
   AppSettingsQuery,
   AppSettingsQueryVariables,
@@ -46,12 +49,27 @@ const useAppSettings = () => {
   const setCorporationFilterEnabled = (enabled: boolean) =>
     setCorporationFilterEnabledMutation({ variables: { enabled } });
 
+  const [addAllowedCorporationMutation, addAllowedCorporationResult] = useAuthenticatedMutation<
+    AddAllowedCorporationMutation,
+    AddAllowedCorporationMutationVariables
+  >(AddAllowedCorporationDocument, {
+    refetchQueries: [AppSettingsDocument],
+    onCompleted: () => {
+      showSuccessNotification("Corporation added to allowed corporations");
+    },
+  });
+
+  const addAllowedCorporation = (esiId: string) =>
+    addAllowedCorporationMutation({ variables: { esiId } });
+
   return {
     appSettingsQuery,
     setRegistrationEnabled,
     setRegistrationEnabledResult,
     setCorporationFilterEnabled,
     setCorporationFilterEnabledResult,
+    addAllowedCorporation,
+    addAllowedCorporationResult,
   };
 };
 

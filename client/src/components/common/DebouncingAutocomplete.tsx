@@ -41,6 +41,7 @@ export default function DebouncingAutocomplete<T>({
   loading,
   onChange,
   search,
+  ...rest
 }: DebouncingAutocompleteProps<T>) {
   const [open, setOpen] = useState(false);
   const toggleOpen = () => setOpen((prev) => !prev);
@@ -56,6 +57,7 @@ export default function DebouncingAutocomplete<T>({
 
   return (
     <Autocomplete
+      {...rest}
       open={open}
       onOpen={toggleOpen}
       onClose={toggleOpen}

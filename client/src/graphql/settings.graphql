@@ -53,3 +53,13 @@ mutation SetCorporationFilterEnabled($enabled: Boolean) {
     }
   }
 }
+
+mutation AddAllowedCorporation($esiId: String!) {
+  addAllowedCorporation(esiId: $esiId) {
+    settings {
+      registration {
+        allowedCorporations
+      }
+    }
+  }
+}
