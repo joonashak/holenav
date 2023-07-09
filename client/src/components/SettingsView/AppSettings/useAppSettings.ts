@@ -1,12 +1,18 @@
 import useAuthenticatedMutation from "../../../auth/useAuthenticatedMutation";
 import useAuthenticatedQuery from "../../../auth/useAuthenticatedQuery";
 import {
+  AddAllowedAllianceDocument,
+  AddAllowedAllianceMutation,
+  AddAllowedAllianceMutationVariables,
   AddAllowedCorporationDocument,
   AddAllowedCorporationMutation,
   AddAllowedCorporationMutationVariables,
   AppSettingsDocument,
   AppSettingsQuery,
   AppSettingsQueryVariables,
+  SetAllianceFilterEnabledDocument,
+  SetAllianceFilterEnabledMutation,
+  SetAllianceFilterEnabledMutationVariables,
   SetCorporationFilterEnabledDocument,
   SetCorporationFilterEnabledMutation,
   SetCorporationFilterEnabledMutationVariables,
@@ -49,18 +55,45 @@ const useAppSettings = () => {
   const setCorporationFilterEnabled = (enabled: boolean) =>
     setCorporationFilterEnabledMutation({ variables: { enabled } });
 
+  const [setAllianceFilterEnabledMutation, setAllianceFilterEnabledResult] =
+    useAuthenticatedMutation<
+      SetAllianceFilterEnabledMutation,
+      SetAllianceFilterEnabledMutationVariables
+    >(SetAllianceFilterEnabledDocument, {
+      refetchQueries: [AppSettingsDocument],
+      onCompleted: () => {
+        showSuccessNotification("App settings updated.");
+      },
+    });
+
+  const setAllianceFilterEnabled = (enabled: boolean) =>
+    setAllianceFilterEnabledMutation({ variables: { enabled } });
+
   const [addAllowedCorporationMutation, addAllowedCorporationResult] = useAuthenticatedMutation<
     AddAllowedCorporationMutation,
     AddAllowedCorporationMutationVariables
   >(AddAllowedCorporationDocument, {
     refetchQueries: [AppSettingsDocument],
     onCompleted: () => {
-      showSuccessNotification("Corporation added to allowed corporations");
+      showSuccessNotification("Corporation added to allowlist.");
     },
   });
 
   const addAllowedCorporation = (esiId: string) =>
     addAllowedCorporationMutation({ variables: { esiId } });
+
+  const [addAllowedAllianceMutation, addAllowedAllianceResult] = useAuthenticatedMutation<
+    AddAllowedAllianceMutation,
+    AddAllowedAllianceMutationVariables
+  >(AddAllowedAllianceDocument, {
+    refetchQueries: [AppSettingsDocument],
+    onCompleted: () => {
+      showSuccessNotification("Alliance added to allowlist.");
+    },
+  });
+
+  const addAllowedAlliance = (esiId: string) =>
+    addAllowedAllianceMutation({ variables: { esiId } });
 
   return {
     appSettingsQuery,
@@ -68,8 +101,12 @@ const useAppSettings = () => {
     setRegistrationEnabledResult,
     setCorporationFilterEnabled,
     setCorporationFilterEnabledResult,
+    setAllianceFilterEnabled,
+    setAllianceFilterEnabledResult,
     addAllowedCorporation,
     addAllowedCorporationResult,
+    addAllowedAlliance,
+    addAllowedAllianceResult,
   };
 };
 

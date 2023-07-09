@@ -54,11 +54,31 @@ mutation SetCorporationFilterEnabled($enabled: Boolean) {
   }
 }
 
+mutation SetAllianceFilterEnabled($enabled: Boolean) {
+  updateAppData(input: { settings: { registration: { allianceFilterEnabled: $enabled } } }) {
+    settings {
+      registration {
+        enabled
+      }
+    }
+  }
+}
+
 mutation AddAllowedCorporation($esiId: String!) {
   addAllowedCorporation(esiId: $esiId) {
     settings {
       registration {
         allowedCorporations
+      }
+    }
+  }
+}
+
+mutation AddAllowedAlliance($esiId: String!) {
+  addAllowedAlliance(esiId: $esiId) {
+    settings {
+      registration {
+        allowedAlliances
       }
     }
   }

@@ -38,11 +38,19 @@ export class AppSettingsService {
   }
 
   async addAllowedCorporation(esiId: string): Promise<AppDataDocument> {
+    return this.pushToList("settings.registration.allowedCorporations", esiId);
+  }
+
+  async addAllowedAlliance(esiId: string): Promise<AppDataDocument> {
+    return this.pushToList("settings.registration.allowedAlliances", esiId);
+  }
+
+  private async pushToList(key: string, value: any): Promise<AppDataDocument> {
     await this.appDataModel.updateOne(
       {},
       {
         $push: {
-          "settings.registration.allowedCorporations": esiId,
+          [key]: value,
         },
       },
     );

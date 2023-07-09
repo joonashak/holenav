@@ -13,4 +13,10 @@ export class AppSettingsResolver {
   async addAllowedCorporation(@Args("esiId") esiId: string): Promise<AppData> {
     return this.appSettingsService.addAllowedCorporation(esiId);
   }
+
+  @RequireSystemRole(SystemRole.ADMINISTRATOR)
+  @Mutation((returns) => AppData)
+  async addAllowedAlliance(@Args("esiId") esiId: string): Promise<AppData> {
+    return this.appSettingsService.addAllowedAlliance(esiId);
+  }
 }
