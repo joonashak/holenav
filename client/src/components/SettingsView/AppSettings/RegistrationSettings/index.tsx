@@ -2,6 +2,7 @@ import { Switch, Typography } from "@mui/material";
 import { ChangeEvent } from "react";
 import FullsizeControl from "../../SettingsGrid/FullsizeControl";
 import SettingsGroup from "../../SettingsGrid/SettingsGroup";
+import SplitRow from "../../SettingsGrid/SplitRow";
 import useAppSettings from "../useAppSettings";
 import AllowedAlliances from "./AllowedAlliances";
 import AllowedCorporations from "./AllowedCorporations";
@@ -16,7 +17,7 @@ const RegistrationSettings = () => {
   return (
     <SettingsGroup title="User Registration" expanded>
       <FullsizeControl
-        label="Enable New User Registration"
+        label="Enable new user registration"
         control={
           <Switch
             color="secondary"
@@ -25,8 +26,10 @@ const RegistrationSettings = () => {
           />
         }
       />
-      <AllowedCorporations />
-      <AllowedAlliances />
+      <SplitRow>
+        <AllowedCorporations />
+        <AllowedAlliances />
+      </SplitRow>
       <Typography variant="body2">
         If both filters are activated, satisfying one condition (i.e. matching corp or alliance) is
         enough for registration to be allowed. Deactivating both filters allows registration using

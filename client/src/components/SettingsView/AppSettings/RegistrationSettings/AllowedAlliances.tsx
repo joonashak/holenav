@@ -1,5 +1,6 @@
-import { Box, FormControlLabel, FormGroup, Switch, Typography } from "@mui/material";
+import { Box, Switch } from "@mui/material";
 import { ChangeEvent } from "react";
+import FullsizeControl from "../../SettingsGrid/FullsizeControl";
 import useAppSettings from "../useAppSettings";
 import AllowedAlliancesList from "./AllowedAlliancesList";
 
@@ -18,16 +19,10 @@ const AllowedAlliances = () => {
 
   return (
     <Box>
-      <Typography variant="h3">Allowed Alliances</Typography>
-      <Typography variant="body2">
-        Restrict new user registration to allow characters from the listed alliances.
-      </Typography>
-      <FormGroup>
-        <FormControlLabel
-          label="Activate filter"
-          control={<Switch color="secondary" checked={allianceFilterEnabled} onChange={toggle} />}
-        />
-      </FormGroup>
+      <FullsizeControl
+        label="Restrict registration to members of selected alliances"
+        control={<Switch color="secondary" checked={allianceFilterEnabled} onChange={toggle} />}
+      />
       <AllowedAlliancesList />
     </Box>
   );

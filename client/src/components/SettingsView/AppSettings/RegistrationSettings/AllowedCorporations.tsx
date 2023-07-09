@@ -1,5 +1,6 @@
-import { Box, FormControlLabel, FormGroup, Switch, Typography } from "@mui/material";
+import { Box, Switch } from "@mui/material";
 import { ChangeEvent } from "react";
+import FullsizeControl from "../../SettingsGrid/FullsizeControl";
 import useAppSettings from "../useAppSettings";
 import AllowedCorporationsList from "./AllowedCorporationsList";
 
@@ -18,18 +19,10 @@ const AllowedCorporations = () => {
 
   return (
     <Box>
-      <Typography variant="h3">Allowed Corporations</Typography>
-      <Typography variant="body2">
-        Restrict new user registration to allow characters from the listed corporations.
-      </Typography>
-      <FormGroup>
-        <FormControlLabel
-          label="Activate filter"
-          control={
-            <Switch color="secondary" checked={corporationFilterEnabled} onChange={toggle} />
-          }
-        />
-      </FormGroup>
+      <FullsizeControl
+        label="Restrict registration to members of selected corporations"
+        control={<Switch color="secondary" checked={corporationFilterEnabled} onChange={toggle} />}
+      />
       <AllowedCorporationsList />
     </Box>
   );
