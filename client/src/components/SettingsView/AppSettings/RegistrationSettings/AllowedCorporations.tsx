@@ -1,14 +1,7 @@
-import {
-  Box,
-  FormControlLabel,
-  FormGroup,
-  List,
-  ListItem,
-  Switch,
-  Typography,
-} from "@mui/material";
+import { Box, FormControlLabel, FormGroup, Switch, Typography } from "@mui/material";
 import { ChangeEvent } from "react";
 import useAppSettings from "../useAppSettings";
+import AllowedCorporationsList from "./AllowedCorporationsList";
 
 const AllowedCorporations = () => {
   const { appSettingsQuery, setCorporationFilterEnabled } = useAppSettings();
@@ -17,8 +10,7 @@ const AllowedCorporations = () => {
     return null;
   }
 
-  const { corporationFilterEnabled, allowedCorporations } =
-    appSettingsQuery.data.getAppData.settings.registration;
+  const { corporationFilterEnabled } = appSettingsQuery.data.getAppData.settings.registration;
 
   const toggle = async (_: ChangeEvent, checked: boolean) => {
     setCorporationFilterEnabled(checked);
@@ -38,12 +30,7 @@ const AllowedCorporations = () => {
           }
         />
       </FormGroup>
-      <List>
-        {!allowedCorporations.length && <ListItem>Empty list</ListItem>}
-        {allowedCorporations.map((esiId) => (
-          <ListItem key={`allowed-corp-item-${esiId}`}>{esiId}</ListItem>
-        ))}
-      </List>
+      <AllowedCorporationsList />
     </Box>
   );
 };

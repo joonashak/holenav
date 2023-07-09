@@ -10,7 +10,7 @@ const useEsiSearch = () => {
     search: string,
     categories: EsiSearchCategories[],
   ): Promise<EsiSearchResult> => {
-    if (!getSsoTokens.data) {
+    if (!getSsoTokens.data || search.length < 3) {
       return Object.fromEntries(
         Object.values(EsiSearchCategories).map((cat) => [cat, []]),
       ) as unknown as EsiSearchResult;

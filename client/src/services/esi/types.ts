@@ -18,7 +18,7 @@ export enum EsiSearchCategories {
   STRUCTURE = "structure",
 }
 
-export type EsiSearchResult = Record<EsiSearchCategories, number>;
+export type EsiSearchResult = Record<EsiSearchCategories, number[]>;
 
 export type EsiCorporationPublicInfo = {
   ceo_id: number;

@@ -7,7 +7,7 @@ type DebouncingAutocompleteProps<T> = Partial<AutocompleteProps<T, false, false,
   /**
    * Value for `TextField` input's `data-cy` attribute.
    */
-  dataCy: string;
+  dataCy?: string;
   /**
    * `TextField` label text.
    */
@@ -33,7 +33,7 @@ type DebouncingAutocompleteProps<T> = Partial<AutocompleteProps<T, false, false,
 };
 
 export default function DebouncingAutocomplete<T>({
-  dataCy,
+  dataCy = "",
   label,
   options,
   optionLabelKey,

@@ -1,18 +1,10 @@
 import { Box, FormControlLabel, FormGroup, Switch, Typography } from "@mui/material";
 import { ChangeEvent } from "react";
-import { EsiSearchCategories } from "../../../../services/esi/types";
-import useEsiSearch from "../../../../services/esi/useEsiSearch";
 import useAppSettings from "../useAppSettings";
 import AllowedCorporations from "./AllowedCorporations";
 
 const RegistrationSettings = () => {
   const { appSettingsQuery, setRegistrationEnabled } = useAppSettings();
-  const { getSearchResult } = useEsiSearch();
-  getSearchResult("quantum yards", [
-    EsiSearchCategories.CORPORATION,
-    EsiSearchCategories.ALLIANCE,
-    EsiSearchCategories.INVENTORY_TYPE,
-  ]);
 
   const toggle = async (_: ChangeEvent, checked: boolean) => {
     setRegistrationEnabled(checked);
