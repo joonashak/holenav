@@ -13,7 +13,7 @@ type SettingsGroupProps = AccordionProps & {
 
 const SettingsGroup = ({ title, children, ...accordionProps }: SettingsGroupProps) => (
   <Accordion {...accordionProps} sx={{ bgcolor: "primary.main" }}>
-    <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+    <AccordionSummary expandIcon={<ExpandMoreIcon color="secondary" />}>
       <Typography>{title}</Typography>
     </AccordionSummary>
     <AccordionDetails>{children}</AccordionDetails>

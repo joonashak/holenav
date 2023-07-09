@@ -5,6 +5,7 @@ import { EsiSearchCategories } from "../../../../services/esi/types";
 import useEsiAlliance from "../../../../services/esi/useEsiAlliance";
 import useEsiSearch from "../../../../services/esi/useEsiSearch";
 import DebouncingAutocomplete from "../../../common/DebouncingAutocomplete";
+import OrganizationListItem from "../../SettingsGrid/OrganizationListItem";
 import Row from "../../SettingsGrid/Row";
 import useAppSettings from "../useAppSettings";
 
@@ -53,7 +54,7 @@ const AllowedAlliancesList = () => {
   };
 
   return (
-    <Row sx={{ flexDirection: "column" }} disableHover>
+    <Row sx={{ flexDirection: "column" }} disableHover hideBorder>
       <Box sx={{ display: "flex" }}>
         <DebouncingAutocomplete<AllianceOption>
           label="Add Alliance"
@@ -69,10 +70,10 @@ const AllowedAlliancesList = () => {
           <AddCircleIcon fontSize="inherit" />
         </IconButton>
       </Box>
-      <List>
+      <List sx={{ pb: 0 }}>
         {!allowedAlliances.length && <ListItem>Empty list</ListItem>}
         {allowedAlliances.map((esiId) => (
-          <ListItem key={`allowed-corp-item-${esiId}`}>{esiId}</ListItem>
+          <OrganizationListItem alliance esiId={esiId} key={`allowed-alliance-item-${esiId}`} />
         ))}
       </List>
     </Row>

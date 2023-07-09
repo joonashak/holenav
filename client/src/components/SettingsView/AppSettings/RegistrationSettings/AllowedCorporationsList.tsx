@@ -1,10 +1,11 @@
 import AddCircleIcon from "@mui/icons-material/AddCircle";
-import { Box, IconButton, List, ListItem } from "@mui/material";
+import { Box, IconButton, List, ListItem, useMediaQuery, useTheme } from "@mui/material";
 import { useState } from "react";
 import { EsiSearchCategories } from "../../../../services/esi/types";
 import useEsiCorporation from "../../../../services/esi/useEsiCorporation";
 import useEsiSearch from "../../../../services/esi/useEsiSearch";
 import DebouncingAutocomplete from "../../../common/DebouncingAutocomplete";
+import OrganizationListItem from "../../SettingsGrid/OrganizationListItem";
 import Row from "../../SettingsGrid/Row";
 import useAppSettings from "../useAppSettings";
 
@@ -18,6 +19,8 @@ const AllowedCorporationsList = () => {
   const { appSettingsQuery, addAllowedCorporation } = useAppSettings();
   const { getSearchResult } = useEsiSearch();
   const { getPublicInfo } = useEsiCorporation();
+  const theme = useTheme();
+  const wideViewport = useMediaQuery(theme.breakpoints.up("md"));
   const [options, setOptions] = useState<CorpOption[]>([]);
   const [selected, setSelected] = useState<CorpOption | null>();
 
@@ -53,7 +56,7 @@ const AllowedCorporationsList = () => {
   };
 
   return (
-    <Row sx={{ flexDirection: "column" }} disableHover>
+    <Row sx={{ flexDirection: "column" }} disableHover hideBorder={wideViewport}>
       <Box sx={{ display: "flex" }}>
         <DebouncingAutocomplete<CorpOption>
           label="Add Corporation"
@@ -69,10 +72,10 @@ const AllowedCorporationsList = () => {
           <AddCircleIcon fontSize="inherit" />
         </IconButton>
       </Box>
-      <List>
+      <List sx={{ pb: 0 }}>
         {!allowedCorporations.length && <ListItem>Empty list</ListItem>}
         {allowedCorporations.map((esiId) => (
-          <ListItem key={`allowed-corp-item-${esiId}`}>{esiId}</ListItem>
+          <OrganizationListItem esiId={esiId} key={`allowed-corp-item-${esiId}`} />
         ))}
       </List>
     </Row>
