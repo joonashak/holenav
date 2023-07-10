@@ -83,3 +83,23 @@ mutation AddAllowedAlliance($esiId: String!) {
     }
   }
 }
+
+mutation RemoveAllowedCorporation($esiId: String!) {
+  removeAllowedCorporation(esiId: $esiId) {
+    settings {
+      registration {
+        allowedCorporations
+      }
+    }
+  }
+}
+
+mutation RemoveAllowedAlliance($esiId: String!) {
+  removeAllowedAlliance(esiId: $esiId) {
+    settings {
+      registration {
+        allowedCorporations
+      }
+    }
+  }
+}

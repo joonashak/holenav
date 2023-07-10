@@ -45,6 +45,14 @@ export class AppSettingsService {
     return this.pushToList("settings.registration.allowedAlliances", esiId);
   }
 
+  async removeAllowedCorporation(esiId: string): Promise<AppDataDocument> {
+    return this.removeFromList("settings.registration.allowedCorporations", [esiId]);
+  }
+
+  async removeAllowedAlliance(esiId: string): Promise<AppDataDocument> {
+    return this.removeFromList("settings.registration.allowedAlliances", [esiId]);
+  }
+
   private async pushToList(key: string, value: any): Promise<AppDataDocument> {
     await this.appDataModel.updateOne(
       {},
@@ -54,6 +62,17 @@ export class AppSettingsService {
         },
       },
     );
+    return this.appDataService.getAppData();
+  }
+
+  private async removeFromList(key: string, value: any[]): Promise<AppDataDocument> {
+    await this.appDataModel.updateOne(
+      {},
+      {
+        $pullAll: { [key]: value },
+      },
+    );
+
     return this.appDataService.getAppData();
   }
 }

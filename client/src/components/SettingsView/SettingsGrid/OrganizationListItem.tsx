@@ -1,16 +1,9 @@
-import DeleteIcon from "@mui/icons-material/Delete";
-import {
-  Avatar,
-  IconButton,
-  ListItem,
-  ListItemAvatar,
-  ListItemProps,
-  ListItemText,
-} from "@mui/material";
+import { Avatar, ListItem, ListItemAvatar, ListItemProps, ListItemText } from "@mui/material";
 import { useEffect, useState } from "react";
 import useEsiAlliance from "../../../services/esi/useEsiAlliance";
 import useEsiCorporation from "../../../services/esi/useEsiCorporation";
 import eveImageServerUrl, { EveImageServerCategories } from "../../../services/eveImageServerUrl";
+import RemoveOrganizationButton from "./RemoveOrganizationButton";
 
 type OrganizationListItemProps = ListItemProps & {
   alliance?: boolean;
@@ -46,15 +39,7 @@ const OrganizationListItem = ({
   return (
     <ListItem
       {...listItemProps}
-      secondaryAction={
-        <IconButton
-          edge="end"
-          aria-label="delete"
-          sx={{ color: "primary.dark", "&:hover": { color: "warning.light" } }}
-        >
-          <DeleteIcon />
-        </IconButton>
-      }
+      secondaryAction={<RemoveOrganizationButton alliance={alliance} esiId={esiId} />}
     >
       <ListItemAvatar>
         <Avatar alt={publicInfo.name} src={eveImageServerUrl(imageCategory, esiId, 128)} />
