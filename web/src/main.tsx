@@ -1,4 +1,5 @@
 import "@fontsource/gugi";
+import "@fontsource/roboto";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
