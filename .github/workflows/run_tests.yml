@@ -19,7 +19,7 @@ jobs:
       - name: Check format
         run: npm run format:check
 
-  lint-client:
+  lint:
     name: Lint
     runs-on: ubuntu-22.04
     steps:
@@ -41,13 +41,9 @@ jobs:
         if: success() || failure()
         run: npm run lint
         working-directory: e2e
-      - name: Lint docs
-        if: success() || failure()
-        run: npm run lint
-        working-directory: docs
 
   test-server:
-    name: Unit tests (server)
+    name: Test server
     runs-on: ubuntu-latest
     defaults:
       run:
