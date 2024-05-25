@@ -21,15 +21,23 @@ type TestableWormholeProps = {
 const wormholePropertyTests = {
   name: (name: string) => cy.cs("textfield-name").should("have.value", name),
   destinationName: (name: string) =>
-    cy.get("[data-cy=autocomplete-destinationName-input] > div > input").should("have.value", name),
+    cy
+      .get("[data-cy=autocomplete-destinationName-input] > div > input")
+      .should("have.value", name),
   type: (type: string) =>
     cy.get("[data-cy=select-whType] > div > input").should("have.value", type),
   eveId: (eveId: string) =>
-    cy.get("[data-cy=textfield-eveId] > div > input").should("have.value", eveId),
+    cy
+      .get("[data-cy=textfield-eveId] > div > input")
+      .should("have.value", eveId),
   reverseType: (type: string) =>
-    cy.get("[data-cy=select-whReverseType] > div > input").should("have.value", type),
-  eol: (eol: string) => cy.get(`[data-cy=checkbox-life-${eol}] > input`).should("be.checked"),
-  mass: (mass: string) => cy.get(`[data-cy=checkbox-mass-${mass}] > input`).should("be.checked"),
+    cy
+      .get("[data-cy=select-whReverseType] > div > input")
+      .should("have.value", type),
+  eol: (eol: string) =>
+    cy.get(`[data-cy=checkbox-life-${eol}] > input`).should("be.checked"),
+  mass: (mass: string) =>
+    cy.get(`[data-cy=checkbox-mass-${mass}] > input`).should("be.checked"),
 };
 
 export const testWormholeProperties = (
@@ -64,5 +72,6 @@ const setFormValue = {
   mass: (mass: string) => cy.cs(`checkbox-mass-${mass}`).click(),
 };
 
-export const setWormholeFormValues = (props: Partial<TestableWormholeProps>): void =>
-  Object.keys(props).forEach((key) => setFormValue[key](props[key]));
+export const setWormholeFormValues = (
+  props: Partial<TestableWormholeProps>,
+): void => Object.keys(props).forEach((key) => setFormValue[key](props[key]));

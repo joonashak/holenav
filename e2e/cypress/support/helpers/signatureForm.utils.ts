@@ -16,9 +16,13 @@ type TestableSignatureProps = {
 const signaturePropertyTests = {
   name: (name: string) => cy.cs("textfield-name").should("have.value", name),
   type: (type: string) =>
-    cy.get("[data-cy='select-Signature Type'] > input").should("have.value", type),
+    cy
+      .get("[data-cy='select-Signature Type'] > input")
+      .should("have.value", type),
   eveId: (eveId: string) =>
-    cy.get("[data-cy=textfield-eveId] > div > input").should("have.value", eveId),
+    cy
+      .get("[data-cy=textfield-eveId] > div > input")
+      .should("have.value", eveId),
 };
 
 export const testSignatureProperties = (
@@ -46,5 +50,6 @@ const setFormValue = {
   eveId: (eveId: string) => cy.cs("textfield-eveId").clear().type(eveId),
 };
 
-export const setSignatureFormValues = (props: Partial<TestableSignatureProps>): void =>
-  Object.keys(props).forEach((key) => setFormValue[key](props[key]));
+export const setSignatureFormValues = (
+  props: Partial<TestableSignatureProps>,
+): void => Object.keys(props).forEach((key) => setFormValue[key](props[key]));
