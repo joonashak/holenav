@@ -3,10 +3,8 @@
   "version": "0.4.0",
   "description": "Holenav Documentation",
   "main": "index.js",
-  "authors": {
-    "name": "Joonas Häkkinen",
-    "email": "hakkijoo@gmail.com"
-  },
+  "author": "Joonas Häkkinen <joonashak@proton.me>",
+  "license": "EUPL-1.2",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/joonashak/holenav.git"
@@ -15,7 +13,6 @@
     "dev": "vuepress dev src",
     "build": "vuepress build src"
   },
-  "license": "EUPL-1.2",
   "devDependencies": {
     "vuepress": "^1.5.3"
   }

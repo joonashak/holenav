@@ -9,7 +9,7 @@
     "test": "cypress run",
     "lint": "eslint \"cypress/**/*.ts\""
   },
-  "author": "Joonas Häkkinen <hakkijoo@gmail.com>",
+  "author": "Joonas Häkkinen <joonashak@proton.me>",
   "license": "EUPL-1.2",
   "dependencies": {
     "cypress": "^10.9.0"
