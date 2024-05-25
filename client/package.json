@@ -56,7 +56,6 @@
     "eslint": "^8.38.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-react": "^7.32.2",
-    "prettier": "^2.8.7",
     "typescript": "^5.0.4"
   },
   "overrides": {
@@ -66,9 +65,7 @@
     "start": "ESLINT_NO_DEV_ERRORS=true FAST_REFRESH=false react-scripts start",
     "build": "react-scripts build",
     "lint": "eslint src",
-    "generate": "npm run generate:codegen && npm run generate:lintfix",
-    "generate:codegen": "graphql-codegen",
-    "generate:lintfix": "eslint src/generated/ --fix --no-ignore --rule '@typescript-eslint/no-explicit-any: 0'"
+    "generate": "graphql-codegen"
   },
   "browserslist": {
     "production": [
