@@ -16,7 +16,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 18.12.1
+          node-version-file: .nvmrc
       - name: Install dependencies
         run: npm ci
       - name: Lint client
@@ -32,7 +32,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 18.12.1
+          node-version-file: .nvmrc
       - name: Install dependencies
         run: npm ci
       - name: Lint server
@@ -48,7 +48,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 18.12.1
+          node-version-file: .nvmrc
       - name: Install dependencies
         run: npm ci
       - name: Lint E2E tests
@@ -64,7 +64,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 18.12.1
+          node-version-file: .nvmrc
       - name: Install dependencies
         run: npm ci
       - name: Run unit tests
