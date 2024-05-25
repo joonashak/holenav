@@ -3,6 +3,7 @@ import { FieldValues, useForm } from "react-hook-form";
 import ControlledTextField from "../../../../controls/ControlledTextField";
 import useSettingsData from "../../../SettingsData/useSettingsData";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 type AddNewFolderDialogProps = {
   open: boolean;
 };

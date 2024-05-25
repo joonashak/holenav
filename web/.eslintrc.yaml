@@ -10,7 +10,7 @@ extends:
   - prettier
 ignorePatterns:
   - "dist"
-  - "src/graphql/generated"
+  - "src/generated"
 parser: "@typescript-eslint/parser"
 plugins:
   - "react-refresh"
