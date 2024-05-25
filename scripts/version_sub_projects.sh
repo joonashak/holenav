@@ -7,7 +7,7 @@
 
 # List projects to update here by their folder name.
 projects=(
-  "client"
+  "web"
   "docs"
   "e2e"
   "server"
