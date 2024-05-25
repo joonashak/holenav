@@ -1,15 +1,15 @@
 import {
   Box,
-  Table,
-  TableBody,
-  TableContainer,
-  TableHead,
   TableCell as MuiTableCell,
   Paper,
+  Table,
+  TableBody,
   TableCellProps,
+  TableContainer,
+  TableHead,
 } from "@mui/material";
 import { sortBy } from "lodash";
-import { SigType } from "../../../../../generated/graphqlOperations";
+import { SigType, Signature } from "../../../../../generated/graphqlOperations";
 import TableRow from "../../../../common/TableRow";
 import useSignatures from "../../../SystemData/useSignatures";
 import DeleteSigButton from "./DeleteSigButton";
@@ -32,7 +32,8 @@ const TableCell = ({ children, sx }: TableCellProps) => (
 
 const SigList = () => {
   const { signatures } = useSignatures();
-  const sortedSigs = sortBy(signatures, ["eveId"]);
+  // FIXME: Empty list because this got somehow f*cked moving from CRA to Vite.
+  const sortedSigs = sortBy([], ["eveId"]) as Signature[];
 
   return (
     <TableContainer component={Paper} sx={{ bgcolor: "primary.light" }}>
