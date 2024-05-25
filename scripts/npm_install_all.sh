@@ -5,7 +5,7 @@
 # List projects here by their folder name.
 projects=(
   ""
-  "client"
+  "web"
   "docs"
   "e2e"
   "server"

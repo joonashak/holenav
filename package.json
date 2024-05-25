@@ -15,7 +15,7 @@
     "test:server": "cd server && npm test",
     "test:e2e": "cd e2e && npm test",
     "test:open": "cd e2e && npm start",
-    "lint": "cd client && npm run lint && cd ../server && npm run lint && cd ../e2e && npm run lint",
+    "lint": "cd web && npm run lint && cd ../server && npm run lint && cd ../e2e && npm run lint",
     "build": "docker compose build",
     "db:drop": "docker volume rm holenav_mongo-data",
     "docs": "cd docs && npm run dev",
