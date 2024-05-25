@@ -1,4 +1,27 @@
 services:
+  web-base:
+    build: ./web/
+    environment:
+      - VITE_ENABLE_DEVTOOLS=true
+    volumes:
+      - ./web/src:/usr/src/app/src
+
+  web:
+    extends: web-base
+    container_name: holenav-web
+    environment:
+      - VITE_BACKEND_URL=http://localhost:3001
+    ports:
+      - 3000:5173
+
+  web-test:
+    extends: web-base
+    container_name: holenav-web-test
+    environment:
+      - VITE_BACKEND_URL=http://localhost:4001
+    ports:
+      - 4000:5173
+
   server:
     build: ./server/
     ports:
@@ -20,31 +43,6 @@ services:
     depends_on:
       - mongo
       - neo
-
-  client:
-    build: ./client/
-    ports:
-      - 3000:3000
-      - 30011:30011
-    container_name: holenav-client
-    environment:
-      - PORT=3000
-      - INTERNAL_STATUS_PORT=30011
-      - REACT_APP_BACKEND_URL=http://localhost:3001
-      - REACT_APP_ENABLE_DEVTOOLS=true
-    volumes:
-      - ./client/src:/usr/src/app/src
-
-  web:
-    build: ./web/
-    container_name: holenav-web
-    environment:
-      - VITE_BACKEND_URL=http://localhost:3001
-      - VITE_ENABLE_DEVTOOLS=true
-    ports:
-      - 3000:5173
-    volumes:
-      - ./web/src:/usr/src/app/src
 
   mongo:
     image: mongo:5.0-focal
@@ -93,20 +91,6 @@ services:
     depends_on:
       - mongo
       - neo-test
-
-  client-test:
-    build: ./client/
-    ports:
-      - 4000:3000
-      - 40011:30011
-    container_name: holenav-client-test
-    environment:
-      - PORT=3000
-      - INTERNAL_STATUS_PORT=30011
-      - REACT_APP_BACKEND_URL=http://localhost:4001
-      - REACT_APP_ENABLE_DEVTOOLS=true
-    volumes:
-      - ./client/src:/usr/src/app/src
 
   # Community edition does not allow multiple databases, so we must spin up another container for tests.
   neo-test:
