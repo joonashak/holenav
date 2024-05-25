@@ -28,7 +28,9 @@ export class SystemRoleGuard implements CanActivate {
     );
 
     if (!requiredRole) {
-      throw new InternalServerErrorException("Required system role not configured.");
+      throw new InternalServerErrorException(
+        "Required system role not configured.",
+      );
     }
 
     return requiredRole;

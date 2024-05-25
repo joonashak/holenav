@@ -2,8 +2,13 @@ import { Box, useTheme } from "@mui/material";
 import { buildStyles, CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { Signature } from "../../../../../generated/graphqlOperations";
-import dayjs, { fixNegativeDurationMinuteFormatting } from "../../../../../utils/dayjs";
-import { getWormholeProperties, getWormholeTrueType } from "../../../../../utils/wormholeUtils";
+import dayjs, {
+  fixNegativeDurationMinuteFormatting,
+} from "../../../../../utils/dayjs";
+import {
+  getWormholeProperties,
+  getWormholeTrueType,
+} from "../../../../../utils/wormholeUtils";
 import GridTooltip from "../../../../common/GridToolTip";
 
 type LifetimeClockProps = {
@@ -25,7 +30,10 @@ const LifetimeClock = ({ signature }: LifetimeClockProps) => {
   const remainingStdLife = lifetime.subtract(age);
   const remainingEolLife = dayjs.duration({ hours: 4 }).subtract(ageSinceEol);
   const remainingLife = eol ? remainingEolLife : remainingStdLife;
-  const value = Math.max(0, (remainingLife.asMinutes() / lifetime.asMinutes()) * 100);
+  const value = Math.max(
+    0,
+    (remainingLife.asMinutes() / lifetime.asMinutes()) * 100,
+  );
 
   const overdue = remainingLife.asMilliseconds() < 0;
   const durationStringH = overdue

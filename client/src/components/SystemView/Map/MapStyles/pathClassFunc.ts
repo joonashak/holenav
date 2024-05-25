@@ -29,8 +29,8 @@ const getWhSizeClass = (type: string, reverseType: string): MapLinkClasses => {
 };
 
 /**
- * Create dynamic CSS class name string according to wormhole properties.
- * For use with react-d3-tree.
+ * Create dynamic CSS class name string according to wormhole properties. For
+ * use with react-d3-tree.
  */
 const pathClassFunc = (link: MapLinkDatum) => {
   const { wormhole } = link.target.data;

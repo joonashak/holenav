@@ -1,4 +1,9 @@
-import { Accordion, AccordionSummary, AccordionDetails, AccordionProps } from "@mui/material";
+import {
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+  AccordionProps,
+} from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { ReactNode } from "react";
 
@@ -7,7 +12,13 @@ type OverviewPanelProps = AccordionProps & {
   name: string;
 };
 
-const OverviewPanel = ({ panelTitle, children, name, defaultExpanded, sx }: OverviewPanelProps) => (
+const OverviewPanel = ({
+  panelTitle,
+  children,
+  name,
+  defaultExpanded,
+  sx,
+}: OverviewPanelProps) => (
   <Accordion
     defaultExpanded={defaultExpanded}
     disableGutters

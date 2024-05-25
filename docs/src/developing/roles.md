@@ -1,14 +1,15 @@
 # Roles
 
-:::tip
-This is currently a working document for developing the roles system.
-:::
+:::tip This is currently a working document for developing the roles system. :::
 
 Holenav combines roles and folders to implement access control.
 
 ## Folder Roles
 
-Folder roles describe the rights a specific user has to a specific folder. By default, users have no access to a newly created folder. Access can be granted either by corporation/alliance membership or by assigning roles to specific users.
+Folder roles describe the rights a specific user has to a specific folder. By
+default, users have no access to a newly created folder. Access can be granted
+either by corporation/alliance membership or by assigning roles to specific
+users.
 
 Each role inherits the rights of previous roles.
 
@@ -18,7 +19,8 @@ Each role inherits the rights of previous roles.
 
 ### `WRITE`
 
-- Create, edit and delete folder data (i.e., signatures, intel, etc. in the folder).
+- Create, edit and delete folder data (i.e., signatures, intel, etc. in the
+  folder).
 
 ### `MANAGE`
 
@@ -31,7 +33,9 @@ Each role inherits the rights of previous roles.
 
 ## System Roles
 
-Each user has exactly one role that is not related to any folder – _the system role_. These are used to control who can log in and to grant global administrative privileges.
+Each user has exactly one role that is not related to any folder – _the system
+role_. These are used to control who can log in and to grant global
+administrative privileges.
 
 Each role inherits the rights of previous roles.
 
@@ -47,7 +51,11 @@ Each role inherits the rights of previous roles.
 
 ### `ADMINISTRATOR`
 
-The highest level role. Can be used as a traditional "superuser" or granted to multiple users in more trusting communities. The last remaining `ADMINISTRATOR` cannot revoke this role or delete their account. The first user to register is granted this role.
+The highest level role. Can be used as a traditional "superuser" or granted to
+multiple users in more trusting communities. The last remaining `ADMINISTRATOR`
+cannot revoke this role or delete their account. The first user to register is
+granted this role.
 
 - Manage app settings.
-- Manage all users. This includes other users with the `ADMINISTRATOR` role, as well as granting and revoking the `ADMINISTRATOR` role.
+- Manage all users. This includes other users with the `ADMINISTRATOR` role, as
+  well as granting and revoking the `ADMINISTRATOR` role.

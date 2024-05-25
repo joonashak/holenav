@@ -7,9 +7,15 @@ type ConnectionNameProps = {
   name: string;
 };
 
-const ConnectionName = ({ showDestinationLink, destinationName, name }: ConnectionNameProps) =>
+const ConnectionName = ({
+  showDestinationLink,
+  destinationName,
+  name,
+}: ConnectionNameProps) =>
   showDestinationLink ? (
-    <AppLink to={`/system/${destinationName}`}>{name || destinationName}</AppLink>
+    <AppLink to={`/system/${destinationName}`}>
+      {name || destinationName}
+    </AppLink>
   ) : (
     <Typography>{name}</Typography>
   );

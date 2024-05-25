@@ -1,6 +1,9 @@
 import { Injectable } from "@nestjs/common";
 import { Folder } from "../folder/folder.model";
-import { SignaturePaste, SignaturePasteResult } from "./dto/paste-signatures.dto";
+import {
+  SignaturePaste,
+  SignaturePasteResult,
+} from "./dto/paste-signatures.dto";
 import SigType from "./enums/sig-type.enum";
 import { Signature } from "./signature.model";
 import { SignatureService } from "./signature.service";
@@ -9,14 +12,26 @@ import { SignatureService } from "./signature.service";
 export class SignaturePasteService {
   constructor(private signatureService: SignatureService) {}
 
-  async applySignaturePaste(paste: SignaturePaste, folder: Folder): Promise<SignaturePasteResult> {
-    const existingSigs = await this.signatureService.getBySystem(paste.systemName, folder);
+  async applySignaturePaste(
+    paste: SignaturePaste,
+    folder: Folder,
+  ): Promise<SignaturePasteResult> {
+    const existingSigs = await this.signatureService.getBySystem(
+      paste.systemName,
+      folder,
+    );
 
     const addableSigs = this.getAddableSigs(paste, existingSigs);
-    const added = await this.signatureService.createSignatures(addableSigs, folder);
+    const added = await this.signatureService.createSignatures(
+      addableSigs,
+      folder,
+    );
 
     const updateableSigs = this.getUpdateableSigs(paste, existingSigs);
-    const updated = await this.signatureService.updateSignatures(updateableSigs, folder);
+    const updated = await this.signatureService.updateSignatures(
+      updateableSigs,
+      folder,
+    );
 
     const deletableSigs = this.getDeletableSigs(paste, existingSigs);
     const deleted = await this.signatureService.deleteSignatures(deletableSigs);
@@ -45,11 +60,15 @@ export class SignaturePasteService {
       const existingUknown = existingSig.type === SigType.UNKNOWN;
       const pastedUnkown = pastedSig.type === SigType.UNKNOWN;
       // The only scenarios when an update is performed based on paste data.
-      const sigExistsWihtoutTypeAndPasteHasType = existingSig && existingUknown && !pastedUnkown;
+      const sigExistsWihtoutTypeAndPasteHasType =
+        existingSig && existingUknown && !pastedUnkown;
       const sigExistsWithoutNameAndPasteHasName =
         existingSig && !existingSig.name && pastedSig.name;
 
-      if (sigExistsWihtoutTypeAndPasteHasType || sigExistsWithoutNameAndPasteHasName) {
+      if (
+        sigExistsWihtoutTypeAndPasteHasType ||
+        sigExistsWithoutNameAndPasteHasName
+      ) {
         return updateableSigs.concat({
           ...existingSig,
           type: pastedSig.type,
@@ -68,7 +87,9 @@ export class SignaturePasteService {
     }
 
     const pastedEveIds = paste.pastedSignatures.map((sig) => sig.eveId);
-    const deletableSigs = existing.filter((sig) => !pastedEveIds.includes(sig.eveId));
+    const deletableSigs = existing.filter(
+      (sig) => !pastedEveIds.includes(sig.eveId),
+    );
     return deletableSigs.map((sig) => sig.id);
   }
 }

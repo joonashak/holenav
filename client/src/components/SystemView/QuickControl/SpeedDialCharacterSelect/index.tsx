@@ -28,14 +28,14 @@ const SpeedDialCharacterSelect = (props: SpeedDialActionProps) => {
 
   const toggleMenu = () => setMenuOpen((prev) => !prev);
 
-  const [ssoLoginQuery] = useLazyAuthenticatedQuery<AddCharacterQuery, AddCharacterQueryVariables>(
-    AddCharacterDocument,
-    {
-      onCompleted: ({ addCharacter }) => {
-        window.location.href = addCharacter.ssoLoginUrl;
-      },
+  const [ssoLoginQuery] = useLazyAuthenticatedQuery<
+    AddCharacterQuery,
+    AddCharacterQueryVariables
+  >(AddCharacterDocument, {
+    onCompleted: ({ addCharacter }) => {
+      window.location.href = addCharacter.ssoLoginUrl;
     },
-  );
+  });
 
   const addCharacter = () => ssoLoginQuery();
 
@@ -64,7 +64,10 @@ const SpeedDialCharacterSelect = (props: SpeedDialActionProps) => {
         onClose={toggleMenu}
         MenuListProps={{ sx: { bgcolor: "primary.main" }, dense: true }}
       >
-        <CharacterMenuItem character={main} selectCharacter={selectCharacter(main.esiId)} />
+        <CharacterMenuItem
+          character={main}
+          selectCharacter={selectCharacter(main.esiId)}
+        />
         {!!alts.length && <Divider />}
         {alts.map((alt) => (
           <CharacterMenuItem

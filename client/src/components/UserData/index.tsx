@@ -54,31 +54,31 @@ export default ({ children }: UserDataProviderProps) => {
   const { token } = useAuth();
   const { setDefaultActiveCharacter } = useLocalData();
 
-  const [userQuery, { loading }] = useLazyAuthenticatedQuery<UserDataQuery, UserDataQueryVariables>(
-    UserDataDocument,
-    {
-      onCompleted: (data) => {
-        const { whoami, getAccessibleFolders } = data;
-        const { main, settings, ...rest } = cloneDeep(whoami);
+  const [userQuery, { loading }] = useLazyAuthenticatedQuery<
+    UserDataQuery,
+    UserDataQueryVariables
+  >(UserDataDocument, {
+    onCompleted: (data) => {
+      const { whoami, getAccessibleFolders } = data;
+      const { main, settings, ...rest } = cloneDeep(whoami);
 
-        if (!settings.activeFolder) {
-          settings.activeFolder =
-            getAccessibleFolders.find((folder: Folder) => folder.personal) ||
-            getAccessibleFolders[0];
-        }
+      if (!settings.activeFolder) {
+        settings.activeFolder =
+          getAccessibleFolders.find((folder: Folder) => folder.personal) ||
+          getAccessibleFolders[0];
+      }
 
-        state.merge({
-          main,
-          accessibleFolders: getAccessibleFolders,
-          settings,
-          ...rest,
-          userDataReady: true,
-        });
+      state.merge({
+        main,
+        accessibleFolders: getAccessibleFolders,
+        settings,
+        ...rest,
+        userDataReady: true,
+      });
 
-        setDefaultActiveCharacter(main.esiId);
-      },
+      setDefaultActiveCharacter(main.esiId);
     },
-  );
+  });
 
   useEffect(() => {
     if (token) {

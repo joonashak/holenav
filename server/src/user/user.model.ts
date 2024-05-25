@@ -7,7 +7,10 @@ import { Credentials } from "./credentials/credentials.model";
 import { FolderRole, FolderRoleSchema } from "./roles/folder-role.model";
 import SystemRole from "./roles/system-role.enum";
 import defaultUserSettings from "./settings/default-user-settings";
-import { UserSettings, UserSettingsSchema } from "./settings/user-settings.model";
+import {
+  UserSettings,
+  UserSettingsSchema,
+} from "./settings/user-settings.model";
 
 export type UserDocument = User & mongoose.Document;
 
@@ -21,7 +24,11 @@ export class User {
   id: string;
 
   @Field((type) => Character)
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: "Character", unique: true })
+  @Prop({
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Character",
+    unique: true,
+  })
   main: Character;
 
   @Field((type) => [Character])
@@ -41,7 +48,11 @@ export class User {
   systemRole: SystemRole;
 
   @Field((type) => Credentials)
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: "Credentials", unique: true })
+  @Prop({
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Credentials",
+    unique: true,
+  })
   credentials?: Credentials;
 }
 

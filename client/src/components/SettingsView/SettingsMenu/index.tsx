@@ -20,7 +20,12 @@ const DrawerMenu = () => {
   return (
     <AppBar sx={{ position: "sticky" }}>
       <Toolbar>
-        <IconButton aria-label="Open Settings Menu" onClick={toggleMenu} size="large" edge="start">
+        <IconButton
+          aria-label="Open Settings Menu"
+          onClick={toggleMenu}
+          size="large"
+          edge="start"
+        >
           <MenuIcon />
         </IconButton>
         <Drawer anchor="top" open={menuOpen} onClose={toggleMenu}>

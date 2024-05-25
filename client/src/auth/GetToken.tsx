@@ -15,11 +15,14 @@ interface GetTokenProps {
 const GetToken = ({ match }: GetTokenProps) => {
   const { state } = match.params;
   const { setAuthToken } = useLocalData();
-  const [fetchAndSaveToken, { loading, called }] = useMutation(GetTokenDocument, {
-    onCompleted: async ({ getToken }) => {
-      await setAuthToken(getToken.accessToken);
+  const [fetchAndSaveToken, { loading, called }] = useMutation(
+    GetTokenDocument,
+    {
+      onCompleted: async ({ getToken }) => {
+        await setAuthToken(getToken.accessToken);
+      },
     },
-  });
+  );
 
   useEffect(() => {
     (async () => {

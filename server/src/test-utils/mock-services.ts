@@ -24,7 +24,10 @@ export const MockSsoSessionService = {
   provide: SsoSessionService,
   useFactory: () => ({
     create: fn(),
-    verifySsoLoginSuccess: fn(async () => ({ ...testSsoSession, ssoLoginSuccess: true })),
+    verifySsoLoginSuccess: fn(async () => ({
+      ...testSsoSession,
+      ssoLoginSuccess: true,
+    })),
     verifySsoSession: fn(async () => testSsoSession),
     setSsoLoginSuccess: fn(),
     createSsoSession: fn(async () => testSsoSession),
@@ -80,7 +83,10 @@ export const MockAuthService = {
 export const MockFolderService = {
   provide: FolderService,
   useFactory: () => ({
-    getFolderById: fn().mockResolvedValue({ ...testFolder, _id: testFolder.id }),
+    getFolderById: fn().mockResolvedValue({
+      ...testFolder,
+      _id: testFolder.id,
+    }),
   }),
 };
 

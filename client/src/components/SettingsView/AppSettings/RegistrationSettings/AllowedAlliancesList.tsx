@@ -26,10 +26,13 @@ const AllowedAlliancesList = () => {
     return null;
   }
 
-  const { allowedAlliances } = appSettingsQuery.data.getAppData.settings.registration;
+  const { allowedAlliances } =
+    appSettingsQuery.data.getAppData.settings.registration;
 
   const search = async (search: string) => {
-    const searchResult = await getSearchResult(search, [EsiSearchCategories.ALLIANCE]);
+    const searchResult = await getSearchResult(search, [
+      EsiSearchCategories.ALLIANCE,
+    ]);
 
     const visibleResults = await Promise.all(
       searchResult.alliance.slice(0, 10).map(async (allianceId) => {
@@ -73,7 +76,11 @@ const AllowedAlliancesList = () => {
       <List sx={{ pb: 0 }}>
         {!allowedAlliances.length && <ListItem>Empty list</ListItem>}
         {allowedAlliances.map((esiId) => (
-          <OrganizationListItem alliance esiId={esiId} key={`allowed-alliance-item-${esiId}`} />
+          <OrganizationListItem
+            alliance
+            esiId={esiId}
+            key={`allowed-alliance-item-${esiId}`}
+          />
         ))}
       </List>
     </Row>

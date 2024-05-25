@@ -7,10 +7,11 @@ dayjs.extend(Duration);
 export default dayjs;
 
 /**
- * Get formatted string of the minute part of a given negative `Duration` without sign but with leading zero.
+ * Get formatted string of the minute part of a given negative `Duration`
+ * without sign but with leading zero.
  *
- * `dayjs.duration` formatting does not work with these durations as it adds a sign to the minutes but not the
- * leading zero.
+ * `dayjs.duration` formatting does not work with these durations as it adds a
+ * sign to the minutes but not the leading zero.
  */
 export const fixNegativeDurationMinuteFormatting = (dur: Duration.Duration) => {
   const mm = dur.format("mm");

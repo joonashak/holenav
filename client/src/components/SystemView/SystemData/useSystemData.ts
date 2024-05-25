@@ -10,17 +10,17 @@ import {
 export default () => {
   const state = useState(systemState);
 
-  const [changeSystemQuery] = useLazyAuthenticatedQuery<SystemQuery, SystemQueryVariables>(
-    SystemDocument,
-    {
-      onCompleted: ({ getSystemByName, getSignaturesBySystem }) => {
-        if (!getSystemByName) {
-          return;
-        }
-        state.merge({ ...getSystemByName, signatures: getSignaturesBySystem });
-      },
+  const [changeSystemQuery] = useLazyAuthenticatedQuery<
+    SystemQuery,
+    SystemQueryVariables
+  >(SystemDocument, {
+    onCompleted: ({ getSystemByName, getSignaturesBySystem }) => {
+      if (!getSystemByName) {
+        return;
+      }
+      state.merge({ ...getSystemByName, signatures: getSignaturesBySystem });
     },
-  );
+  });
 
   const changeSystem = (name: string) => {
     state.merge({ name });

@@ -7,7 +7,9 @@ const FolderManagement = () => (
   <>
     <PageTitle>Folder Management</PageTitle>
     <AddNewFolder />
-    <Typography>Select a folder to manage its properties and users&apos; access to it.</Typography>
+    <Typography>
+      Select a folder to manage its properties and users&apos; access to it.
+    </Typography>
     <ManageFolder />
   </>
 );

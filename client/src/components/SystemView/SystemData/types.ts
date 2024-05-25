@@ -1,4 +1,7 @@
-import { System, WormholeEffect } from "@eve-data/systems/lib/src/api/system.type";
+import {
+  System,
+  WormholeEffect,
+} from "@eve-data/systems/lib/src/api/system.type";
 import SecurityClasses from "../../../enum/SecurityClasses";
 import { Signature } from "../../../generated/graphqlOperations";
 

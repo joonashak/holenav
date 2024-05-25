@@ -1,4 +1,9 @@
-import { Accordion, AccordionDetails, AccordionSummary, Typography } from "@mui/material";
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Typography,
+} from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import useSystemData from "../../SystemData/useSystemData";
 import EffectInfoTable from "./EffectInfoTable";
@@ -18,7 +23,11 @@ const EffectInfoAccordion = () => {
         id="system-effects-header"
         sx={{
           minHeight: 0,
-          "&>div:first-of-type": { m: 1, justifyContent: "center", flexGrow: 0 },
+          "&>div:first-of-type": {
+            m: 1,
+            justifyContent: "center",
+            flexGrow: 0,
+          },
         }}
       >
         <Typography sx={{ textTransform: "uppercase" }} variant="button">

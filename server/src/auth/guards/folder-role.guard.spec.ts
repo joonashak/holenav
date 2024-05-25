@@ -5,7 +5,10 @@ import { FolderRoleGuard, requiredFolderRoleKey } from "./folder-role.guard";
 import { MockFolderService } from "../../test-utils/mock-services";
 import { FolderService } from "../../entities/folder/folder.service";
 import FolderRole from "../../user/roles/folder-role.enum";
-import { BadRequestException, InternalServerErrorException } from "@nestjs/common";
+import {
+  BadRequestException,
+  InternalServerErrorException,
+} from "@nestjs/common";
 
 describe("FolderRoleGuard", () => {
   let folderRoleGuard: FolderRoleGuard;
@@ -71,7 +74,9 @@ describe("FolderRoleGuard", () => {
     it("Active folder is missing from request headers", async () => {
       const context = mockContextWithTestFolderRole(FolderRole.WRITE, {});
       jest.spyOn(reflector, "get").mockReturnValueOnce(FolderRole.READ);
-      await expect(folderRoleGuard.canActivate(context)).rejects.toThrow(BadRequestException);
+      await expect(folderRoleGuard.canActivate(context)).rejects.toThrow(
+        BadRequestException,
+      );
       assertReflectorCall();
     });
 
@@ -79,7 +84,9 @@ describe("FolderRoleGuard", () => {
       jest.spyOn(folderService, "getFolderById").mockResolvedValueOnce(null);
       const context = mockContextWithTestFolderRole(FolderRole.READ);
       jest.spyOn(reflector, "get").mockReturnValueOnce(FolderRole.READ);
-      await expect(folderRoleGuard.canActivate(context)).rejects.toThrow(BadRequestException);
+      await expect(folderRoleGuard.canActivate(context)).rejects.toThrow(
+        BadRequestException,
+      );
       assertReflectorCall();
     });
   });

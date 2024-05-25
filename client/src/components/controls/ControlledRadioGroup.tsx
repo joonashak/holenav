@@ -1,5 +1,11 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import { FormControl, FormControlLabel, FormLabel, Radio, RadioGroup } from "@mui/material";
+import {
+  FormControl,
+  FormControlLabel,
+  FormLabel,
+  Radio,
+  RadioGroup,
+} from "@mui/material";
 import { Control, Controller } from "react-hook-form";
 
 type ControlledRadioGroupProps = {
@@ -15,7 +21,12 @@ type Options = {
   label: string;
 };
 
-const ControlledRadioGroup = ({ options, name, control, label }: ControlledRadioGroupProps) => {
+const ControlledRadioGroup = ({
+  options,
+  name,
+  control,
+  label,
+}: ControlledRadioGroupProps) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const Render = ({ field }: any) => (
     <FormControl component="fieldset" fullWidth>

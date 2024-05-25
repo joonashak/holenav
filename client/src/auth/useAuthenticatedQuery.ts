@@ -1,4 +1,9 @@
-import { OperationVariables, QueryHookOptions, QueryResult, useQuery } from "@apollo/client";
+import {
+  OperationVariables,
+  QueryHookOptions,
+  QueryResult,
+  useQuery,
+} from "@apollo/client";
 import { DocumentNode } from "graphql";
 import useApolloOptions from "./useApolloOptions";
 

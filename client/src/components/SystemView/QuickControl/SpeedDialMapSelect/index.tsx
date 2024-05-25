@@ -56,7 +56,11 @@ const SpeedDialMapSelect = (props: SpeedDialActionProps) => {
         MenuListProps={{ sx: { bgcolor: "primary.main" }, dense: true }}
       >
         {maps.map((map) => (
-          <MapMenuItem map={map} selectMap={selectMap} key={`quick-map-select-${map.id}`} />
+          <MapMenuItem
+            map={map}
+            selectMap={selectMap}
+            key={`quick-map-select-${map.id}`}
+          />
         ))}
         <Divider />
         <MenuItem onClick={toggleDialog}>

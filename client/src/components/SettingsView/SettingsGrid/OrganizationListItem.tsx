@@ -1,8 +1,16 @@
-import { Avatar, ListItem, ListItemAvatar, ListItemProps, ListItemText } from "@mui/material";
+import {
+  Avatar,
+  ListItem,
+  ListItemAvatar,
+  ListItemProps,
+  ListItemText,
+} from "@mui/material";
 import { useEffect, useState } from "react";
 import useEsiAlliance from "../../../services/esi/useEsiAlliance";
 import useEsiCorporation from "../../../services/esi/useEsiCorporation";
-import eveImageServerUrl, { EveImageServerCategories } from "../../../services/eveImageServerUrl";
+import eveImageServerUrl, {
+  EveImageServerCategories,
+} from "../../../services/eveImageServerUrl";
 import RemoveOrganizationButton from "./RemoveOrganizationButton";
 
 type OrganizationListItemProps = ListItemProps & {
@@ -17,7 +25,10 @@ const OrganizationListItem = ({
 }: OrganizationListItemProps) => {
   const { getPublicInfo } = useEsiCorporation();
   const { getPublicInfo: getAlliancePublicInfo } = useEsiAlliance();
-  const [publicInfo, setPublicInfo] = useState<{ name: string; ticker: string }>();
+  const [publicInfo, setPublicInfo] = useState<{
+    name: string;
+    ticker: string;
+  }>();
 
   useEffect(() => {
     (async () => {
@@ -39,10 +50,15 @@ const OrganizationListItem = ({
   return (
     <ListItem
       {...listItemProps}
-      secondaryAction={<RemoveOrganizationButton alliance={alliance} esiId={esiId} />}
+      secondaryAction={
+        <RemoveOrganizationButton alliance={alliance} esiId={esiId} />
+      }
     >
       <ListItemAvatar>
-        <Avatar alt={publicInfo.name} src={eveImageServerUrl(imageCategory, esiId, 128)} />
+        <Avatar
+          alt={publicInfo.name}
+          src={eveImageServerUrl(imageCategory, esiId, 128)}
+        />
       </ListItemAvatar>
       <ListItemText
         primary={publicInfo.name}

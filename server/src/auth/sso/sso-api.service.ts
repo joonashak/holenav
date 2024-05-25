@@ -6,9 +6,7 @@ import { SsoUrl } from "./sso-url.enum";
 
 @Injectable()
 export class SsoApiService {
-  /**
-   * Get access and refresh tokens from EVE SSO server.
-   */
+  /** Get access and refresh tokens from EVE SSO server. */
   async getSsoTokens(authorizationCode: string) {
     const formData = new FormData();
     formData.append("grant_type", "authorization_code");
@@ -16,7 +14,9 @@ export class SsoApiService {
 
     const res = await axios.post(SsoUrl.Token, formData, {
       auth: { username: SSO_CLIENT_ID, password: SSO_SECRET_KEY },
-      headers: { "Content-Type": `multipart/form-data; boundary=${formData.getBoundary()}` },
+      headers: {
+        "Content-Type": `multipart/form-data; boundary=${formData.getBoundary()}`,
+      },
     });
 
     const { data } = res;

@@ -8,10 +8,13 @@ import defaultAppData from "./default-app-data";
 
 @Injectable()
 export class AppDataService {
-  constructor(@InjectModel(AppData.name) private appDataModel: Model<AppDataDocument>) {}
+  constructor(
+    @InjectModel(AppData.name) private appDataModel: Model<AppDataDocument>,
+  ) {}
 
   /**
-   * Create default `AppData` object, if it does not exists. Throw, if multiple found.
+   * Create default `AppData` object, if it does not exists. Throw, if multiple
+   * found.
    */
   async initialize(): Promise<void> {
     const current = await this.appDataModel.find();

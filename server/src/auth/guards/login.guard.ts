@@ -15,7 +15,10 @@ export class LoginGuard implements CanActivate {
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const gqlContext = GqlExecutionContext.create(context);
     const { username, password } = gqlContext.getArgs();
-    const user = await this.authService.validateUserCredentials(username, password);
+    const user = await this.authService.validateUserCredentials(
+      username,
+      password,
+    );
 
     if (!user) {
       throw new AuthenticationError("Login failed on invalid credentials.");

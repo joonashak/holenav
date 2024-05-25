@@ -12,7 +12,10 @@ export class SystemResolver {
 
   @RequireFolderRole(FolderRole.READ)
   @Query((returns) => System, { nullable: true })
-  async getSystemByName(@Args("name") name: string, @ActiveFolder() activeFolder: FolderDocument) {
+  async getSystemByName(
+    @Args("name") name: string,
+    @ActiveFolder() activeFolder: FolderDocument,
+  ) {
     const res = await this.systemService.findSystem(name, activeFolder.id);
     return res;
   }

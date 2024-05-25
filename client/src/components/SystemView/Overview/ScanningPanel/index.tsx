@@ -16,7 +16,11 @@ const ScanningPanel = () => {
   }, []);
 
   return (
-    <OverviewPanel name="scanning" panelTitle={<ScanningTitle />} defaultExpanded>
+    <OverviewPanel
+      name="scanning"
+      panelTitle={<ScanningTitle />}
+      defaultExpanded
+    >
       <SigList />
       <AddSigButton />
       <Box sx={{ display: "flex" }}>

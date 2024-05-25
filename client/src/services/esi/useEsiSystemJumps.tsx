@@ -13,7 +13,9 @@ const useEsiSystemJumps = (): EsiSystemJumpsHook => {
       return 0;
     }
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return data.find((system: any) => system.system_id === systemId)?.ship_jumps || 0;
+    return (
+      data.find((system: any) => system.system_id === systemId)?.ship_jumps || 0
+    );
   };
 
   return {

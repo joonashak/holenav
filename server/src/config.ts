@@ -23,4 +23,5 @@ export const DISABLE_CLIENT_CD_VERSION_INPUT =
   process.env.DISABLE_CLIENT_CD_VERSION_INPUT === "true";
 export const DEV_KEY = process.env.DEV_KEY;
 
-export const getClientLoginCallbackUrl = (state: string) => `${CLIENT_URL}/login/${state}`;
+export const getClientLoginCallbackUrl = (state: string) =>
+  `${CLIENT_URL}/login/${state}`;

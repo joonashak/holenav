@@ -4,7 +4,10 @@ import useAuth from "./useAuth";
 
 type AuthenticatedRouteProps = Omit<RouteProps, "component">;
 
-const AuthenticatedRoute = ({ children, ...props }: AuthenticatedRouteProps) => {
+const AuthenticatedRoute = ({
+  children,
+  ...props
+}: AuthenticatedRouteProps) => {
   const { token } = useAuth();
 
   return (

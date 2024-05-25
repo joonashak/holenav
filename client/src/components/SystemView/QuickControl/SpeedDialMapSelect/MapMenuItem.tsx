@@ -1,6 +1,11 @@
 import CheckIcon from "@mui/icons-material/Check";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { IconButton, ListItemIcon, ListItemText, MenuItem } from "@mui/material";
+import {
+  IconButton,
+  ListItemIcon,
+  ListItemText,
+  MenuItem,
+} from "@mui/material";
 import { SyntheticEvent } from "react";
 import { SavedMap } from "../../../../generated/graphqlOperations";
 import useNotification from "../../../GlobalNotification/useNotification";
@@ -36,7 +41,10 @@ const MapMenuItem = ({ map, selectMap }: MapMenuItemProps) => {
         {selected ? <CheckIcon sx={{ color: "secondary.light" }} /> : null}
       </ListItemIcon>
       <ListItemText
-        sx={{ marginRight: 2, color: selected ? "secondary.light" : "primary.contrastText" }}
+        sx={{
+          marginRight: 2,
+          color: selected ? "secondary.light" : "primary.contrastText",
+        }}
       >
         {name}
       </ListItemText>

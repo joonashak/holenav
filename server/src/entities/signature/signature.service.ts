@@ -10,7 +10,12 @@ import { SignatureMutationService } from "./neo/signature-mutation.service";
 import { SignatureSearchService } from "./neo/signature-search.service";
 import { SystemMutationService } from "./neo/system-mutation.service";
 import { Signature } from "./signature.model";
-import { addEolAt, addK162, completeSignature, isWormhole } from "./signature.utils";
+import {
+  addEolAt,
+  addK162,
+  completeSignature,
+  isWormhole,
+} from "./signature.utils";
 
 @Injectable()
 export class SignatureService {
@@ -22,10 +27,16 @@ export class SignatureService {
   ) {}
 
   async getBySystem(systemName: string, folder: Folder): Promise<Signature[]> {
-    return this.signatureSearchService.findBySystem({ systemName, folderId: folder.id });
+    return this.signatureSearchService.findBySystem({
+      systemName,
+      folderId: folder.id,
+    });
   }
 
-  async createSignatures(signatures: CreatableSignature[], folder: Folder): Promise<Signature[]> {
+  async createSignatures(
+    signatures: CreatableSignature[],
+    folder: Folder,
+  ): Promise<Signature[]> {
     if (!signatures.length) {
       return [];
     }
@@ -34,10 +45,17 @@ export class SignatureService {
     const graphSafeSigs = sigsWithIds.map(
       this.systemMutationService.transformUnknownReverseSystemIntoPseudoSystem,
     );
-    await this.signatureMutationService.createSignatures(graphSafeSigs, folder.id);
+    await this.signatureMutationService.createSignatures(
+      graphSafeSigs,
+      folder.id,
+    );
 
-    const wormholes = graphSafeSigs.filter((sig) => sig.type === SigType.WORMHOLE).map(addEolAt);
-    await this.connectionMutationService.createConnectionsFromSignatures(wormholes);
+    const wormholes = graphSafeSigs
+      .filter((sig) => sig.type === SigType.WORMHOLE)
+      .map(addEolAt);
+    await this.connectionMutationService.createConnectionsFromSignatures(
+      wormholes,
+    );
 
     const created = await this.signatureSearchService.findManyById(
       sigsWithIds.map((sig) => sig.id),
@@ -45,7 +63,10 @@ export class SignatureService {
     return created;
   }
 
-  async updateSignatures(sigUpdates: UpdateableSignature[], folder: Folder): Promise<Signature[]> {
+  async updateSignatures(
+    sigUpdates: UpdateableSignature[],
+    folder: Folder,
+  ): Promise<Signature[]> {
     if (!sigUpdates.length) {
       return [];
     }
@@ -54,14 +75,18 @@ export class SignatureService {
     const oldSigs = await this.signatureSearchService.findManyById(ids);
 
     return Promise.all(
-      sigUpdates.map(async (update) => this.updateSignature(update, oldSigs, folder)),
+      sigUpdates.map(async (update) =>
+        this.updateSignature(update, oldSigs, folder),
+      ),
     );
   }
 
   /**
    * Delete signatures and their possible reverse wormholes by ID.
+   *
    * @param ids IDs of the Signatures to delete.
-   * @returns Deleted Signatures (not including possible deleted reverse wormholes).
+   * @returns Deleted Signatures (not including possible deleted reverse
+   *   wormholes).
    */
   async deleteSignatures(ids: string[]): Promise<Signature[]> {
     if (!ids.length) {
@@ -83,9 +108,10 @@ export class SignatureService {
         id: update.id,
       } as UpdateableSignature;
 
-      const graphSafeSig = this.systemMutationService.transformUnknownReverseSystemIntoPseudoSystem(
-        addEolAt(sigWithReverseId),
-      );
+      const graphSafeSig =
+        this.systemMutationService.transformUnknownReverseSystemIntoPseudoSystem(
+          addEolAt(sigWithReverseId),
+        );
 
       await this.signatureMutationService.createSignatures(
         [graphSafeSig.connection.reverseSignature],
@@ -93,24 +119,34 @@ export class SignatureService {
       );
 
       await this.signatureMutationService.updateSignatures([graphSafeSig]);
-      await this.connectionMutationService.createConnectionsFromSignatures([graphSafeSig]);
-      const results = await this.signatureSearchService.findManyById([graphSafeSig.id]);
+      await this.connectionMutationService.createConnectionsFromSignatures([
+        graphSafeSig,
+      ]);
+      const results = await this.signatureSearchService.findManyById([
+        graphSafeSig.id,
+      ]);
       return results[0];
     }
 
     if (isWormhole(old) && !isWormhole(update)) {
-      await this.signatureMutationService.deleteSignatures([old.connection.reverseSignature.id]);
+      await this.signatureMutationService.deleteSignatures([
+        old.connection.reverseSignature.id,
+      ]);
     }
 
     if (isWormhole(old) && isWormhole(update)) {
       const updateWithEol =
         !old.connection.eol && update.connection.eol
           ? addEolAt(update)
-          : { ...update, connection: { ...update.connection, eolAt: old.connection.eolAt } };
+          : {
+              ...update,
+              connection: { ...update.connection, eolAt: old.connection.eolAt },
+            };
 
       // Destination not changed.
       if (
-        old.connection.reverseSignature.systemName === update.connection.reverseSignature.systemName
+        old.connection.reverseSignature.systemName ===
+        update.connection.reverseSignature.systemName
       ) {
         const modifiedUpdate = addK162(updateWithEol);
         await this.signatureMutationService.updateSignatures([
@@ -122,24 +158,35 @@ export class SignatureService {
 
       // Destination changed: Recreate connection and reverse signature.
       const graphSafeUpdate =
-        this.systemMutationService.transformUnknownReverseSystemIntoPseudoSystem(updateWithEol);
-      const newReverseSig = addUuid(graphSafeUpdate.connection.reverseSignature, {
-        overwrite: true,
-      });
+        this.systemMutationService.transformUnknownReverseSystemIntoPseudoSystem(
+          updateWithEol,
+        );
+      const newReverseSig = addUuid(
+        graphSafeUpdate.connection.reverseSignature,
+        {
+          overwrite: true,
+        },
+      );
       const updatedSig = addK162(
         set(graphSafeUpdate, "connection.reverseSignature", newReverseSig),
       );
 
       await this.signatureMutationService.updateSignatures([updatedSig]);
-      await this.signatureMutationService.deleteSignatures([old.connection.reverseSignature.id]);
+      await this.signatureMutationService.deleteSignatures([
+        old.connection.reverseSignature.id,
+      ]);
 
       await this.signatureMutationService.createSignatures(
         [updatedSig.connection.reverseSignature],
         folder.id,
       );
-      await this.connectionMutationService.createConnectionsFromSignatures([updatedSig]);
+      await this.connectionMutationService.createConnectionsFromSignatures([
+        updatedSig,
+      ]);
 
-      return (await this.signatureSearchService.findManyById([updatedSig.id]))[0];
+      return (
+        await this.signatureSearchService.findManyById([updatedSig.id])
+      )[0];
     }
 
     const res = await this.signatureMutationService.updateSignatures([update]);

@@ -1,4 +1,7 @@
-import { Folder, SanitizedUserForSelf } from "../../generated/graphqlOperations";
+import {
+  Folder,
+  SanitizedUserForSelf,
+} from "../../generated/graphqlOperations";
 
 export type UserData = SanitizedUserForSelf & {
   accessibleFolders: Folder[];

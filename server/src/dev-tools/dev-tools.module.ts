@@ -21,7 +21,12 @@ const options = {
     SessionModule,
     ConnectionGraphModule,
   ],
-  providers: [DevToolsService, MockUserService, MockFolderService, MockConnectionGraphService],
+  providers: [
+    DevToolsService,
+    MockUserService,
+    MockFolderService,
+    MockConnectionGraphService,
+  ],
   controllers: [DevToolsController],
 };
 

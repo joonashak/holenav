@@ -90,7 +90,7 @@ describe("Wormholes", () => {
     testWormholeProperties(wh);
     testWormholeProperties(
       { name: "", destinationName: testSystem, type: "K162" },
-      "/system/Hakonen"
+      "/system/Hakonen",
     );
   });
 
@@ -133,7 +133,7 @@ describe("Wormholes", () => {
         eol: "eol",
         mass: "CRIT",
       },
-      "/system/Amarr"
+      "/system/Amarr",
     );
   });
 

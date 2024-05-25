@@ -23,7 +23,8 @@ const Map = () => {
     return null;
   }
 
-  const compareMapNodes = (a: RawNodeDatum, b: RawNodeDatum) => a.name.localeCompare(b.name);
+  const compareMapNodes = (a: RawNodeDatum, b: RawNodeDatum) =>
+    a.name.localeCompare(b.name);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const orderChildren = (children: RawNodeDatum[]): any[] =>

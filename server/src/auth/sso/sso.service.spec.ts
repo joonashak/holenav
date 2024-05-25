@@ -8,7 +8,11 @@ import {
   MockSsoTokenService,
   MockUserService,
 } from "../../test-utils/mock-services";
-import { testSsoSession, testSsoTokens, testUser } from "../../test-utils/test-data";
+import {
+  testSsoSession,
+  testSsoTokens,
+  testUser,
+} from "../../test-utils/test-data";
 import { UserService } from "../../user/user.service";
 import { SsoApiService } from "./sso-api.service";
 import SsoSessionType from "./sso-session/sso-session-type.enum";
@@ -51,46 +55,67 @@ describe("SsoService", () => {
   });
 
   it("Initializes SSO login", async () => {
-    await expect(ssoService.getSsoLoginUrl()).resolves.toEqual(expectedCallbackUrl);
+    await expect(ssoService.getSsoLoginUrl()).resolves.toEqual(
+      expectedCallbackUrl,
+    );
     expect(ssoSessionService.createSsoSession).toBeCalledTimes(1);
     expect(ssoSessionService.createSsoSession).toBeCalledWith(null);
   });
 
   it("Initializes SSO login for adding an alt", async () => {
-    await expect(ssoService.getSsoLoginUrl(testUser)).resolves.toEqual(expectedCallbackUrl);
+    await expect(ssoService.getSsoLoginUrl(testUser)).resolves.toEqual(
+      expectedCallbackUrl,
+    );
     expect(ssoSessionService.createSsoSession).toBeCalledTimes(1);
     expect(ssoSessionService.createSsoSession).toBeCalledWith(testUser);
   });
 
   it("Handles SSO login callback correctly", async () => {
-    await expect(ssoService.handleCallback("asd", testSsoSession.key)).resolves.toEqual(
-      `test-client-url/login/${testSsoSession.key}`,
-    );
+    await expect(
+      ssoService.handleCallback("asd", testSsoSession.key),
+    ).resolves.toEqual(`test-client-url/login/${testSsoSession.key}`);
     expect(ssoSessionService.verifySsoSession).toBeCalledTimes(1);
-    expect(ssoSessionService.verifySsoSession).toBeCalledWith(testSsoSession.key);
+    expect(ssoSessionService.verifySsoSession).toBeCalledWith(
+      testSsoSession.key,
+    );
     expect(ssoSessionService.setSsoLoginSuccess).toBeCalledTimes(1);
-    expect(ssoSessionService.setSsoLoginSuccess).toBeCalledWith(testSsoSession.key, testUser.main);
+    expect(ssoSessionService.setSsoLoginSuccess).toBeCalledWith(
+      testSsoSession.key,
+      testUser.main,
+    );
     expect(userService.addAlt).toBeCalledTimes(0);
     expect(ssoApiService.verifyAndDecodeSsoAccessToken).toBeCalledTimes(1);
-    expect(ssoApiService.verifyAndDecodeSsoAccessToken).toBeCalledWith(testSsoTokens.accessToken);
+    expect(ssoApiService.verifyAndDecodeSsoAccessToken).toBeCalledWith(
+      testSsoTokens.accessToken,
+    );
   });
 
   it("Adds a character and deletes the SSO session when adding an alt instead of logging in", async () => {
-    jest
-      .spyOn(ssoSessionService, "verifySsoSession")
-      .mockResolvedValueOnce({ ...testSsoSession, type: SsoSessionType.ADD_CHARACTER });
+    jest.spyOn(ssoSessionService, "verifySsoSession").mockResolvedValueOnce({
+      ...testSsoSession,
+      type: SsoSessionType.ADD_CHARACTER,
+    });
 
-    await expect(ssoService.handleCallback("asd", testSsoSession.key)).resolves.toEqual(
-      "test-client-url",
-    );
+    await expect(
+      ssoService.handleCallback("asd", testSsoSession.key),
+    ).resolves.toEqual("test-client-url");
     expect(ssoSessionService.verifySsoSession).toBeCalledTimes(1);
-    expect(ssoSessionService.verifySsoSession).toBeCalledWith(testSsoSession.key);
+    expect(ssoSessionService.verifySsoSession).toBeCalledWith(
+      testSsoSession.key,
+    );
     expect(ssoSessionService.setSsoLoginSuccess).toBeCalledTimes(1);
-    expect(ssoSessionService.setSsoLoginSuccess).toBeCalledWith(testSsoSession.key, testUser.main);
+    expect(ssoSessionService.setSsoLoginSuccess).toBeCalledWith(
+      testSsoSession.key,
+      testUser.main,
+    );
     expect(userService.addAlt).toBeCalledTimes(1);
     expect(ssoApiService.verifyAndDecodeSsoAccessToken).toBeCalledTimes(1);
-    expect(ssoApiService.verifyAndDecodeSsoAccessToken).toBeCalledWith(testSsoTokens.accessToken);
+    expect(ssoApiService.verifyAndDecodeSsoAccessToken).toBeCalledWith(
+      testSsoTokens.accessToken,
+    );
     expect(ssoSessionService.removeSsoSession).toBeCalledTimes(1);
-    expect(ssoSessionService.removeSsoSession).toBeCalledWith(testSsoSession.key);
+    expect(ssoSessionService.removeSsoSession).toBeCalledWith(
+      testSsoSession.key,
+    );
   });
 });

@@ -35,7 +35,12 @@ const LocalLogin = () => {
 
   return (
     <>
-      <Button variant="contained" color="secondary" onClick={toggleOpen} data-cy="open-local-login">
+      <Button
+        variant="contained"
+        color="secondary"
+        onClick={toggleOpen}
+        data-cy="open-local-login"
+      >
         Login with Holenav
       </Button>
       <Dialog open={open} onClose={toggleOpen}>
@@ -43,7 +48,11 @@ const LocalLogin = () => {
         <DialogContent>
           <form onSubmit={handleSubmit(onSubmit)}>
             <FormGroupRow fullWidth>
-              <ControlledTextField name="username" label="Username" control={control} />
+              <ControlledTextField
+                name="username"
+                label="Username"
+                control={control}
+              />
             </FormGroupRow>
             <FormGroupRow fullWidth>
               <ControlledTextField
@@ -54,7 +63,13 @@ const LocalLogin = () => {
               />
             </FormGroupRow>
             <FormGroupRow fullWidth>
-              <Button type="submit" variant="contained" color="secondary" data-cy="login" fullWidth>
+              <Button
+                type="submit"
+                variant="contained"
+                color="secondary"
+                data-cy="login"
+                fullWidth
+              >
                 Login
               </Button>
             </FormGroupRow>

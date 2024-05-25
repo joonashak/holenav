@@ -31,16 +31,15 @@ export class AppUpdateService {
     await this.appDataService.updateAppData({ appVersion: APP_VERSION });
   }
 
-  /**
-   * Trigger client deployment using a GitHub Actions webhook.
-   */
+  /** Trigger client deployment using a GitHub Actions webhook. */
   async triggerClientDeployment(): Promise<void> {
     if (!CLIENT_CD_TOKEN) {
       this.logger.log("Skipping client deployment (CLIENT_CD_TOKEN not set).");
       return;
     }
 
-    const url = "POST /repos/{owner}/{repo}/actions/workflows/{workflow_id}/dispatches";
+    const url =
+      "POST /repos/{owner}/{repo}/actions/workflows/{workflow_id}/dispatches";
 
     const inputs = DISABLE_CLIENT_CD_VERSION_INPUT
       ? {}
@@ -62,7 +61,9 @@ export class AppUpdateService {
     try {
       await request(url, options);
     } catch (error) {
-      this.logger.warn("Request to client deployment webhook failed with the following error:");
+      this.logger.warn(
+        "Request to client deployment webhook failed with the following error:",
+      );
       throw error;
     }
 

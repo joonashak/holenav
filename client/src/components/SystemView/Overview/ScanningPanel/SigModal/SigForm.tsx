@@ -5,7 +5,9 @@ import useSigForm, { UseSigFormProps } from "./useSigForm";
 
 const SigForm = (props: UseSigFormProps) => {
   const { existing } = props;
-  const { handleSubmit, control } = useForm({ defaultValues: { name: existing?.name || "" } });
+  const { handleSubmit, control } = useForm({
+    defaultValues: { name: existing?.name || "" },
+  });
   const { submitSigForm } = useSigForm(props);
 
   return (
@@ -15,7 +17,12 @@ const SigForm = (props: UseSigFormProps) => {
           <ControlledTextField name="name" control={control} label="Name" />
         </FormGroup>
         <FormGroup>
-          <Button type="submit" variant="contained" color="secondary" data-cy="sig-form-submit">
+          <Button
+            type="submit"
+            variant="contained"
+            color="secondary"
+            data-cy="sig-form-submit"
+          >
             Save Signature
           </Button>
         </FormGroup>

@@ -30,7 +30,7 @@
     "type": "git",
     "url": "git+https://github.com/joonashak/holenav.git"
   },
-  "author": "Joonas Häkkinen <hakkijoo@gmail.com>",
+  "author": "Joonas Häkkinen <joonashak@proton.me>",
   "license": "EUPL-1.2",
   "bugs": {
     "url": "https://github.com/joonashak/holenav/issues"

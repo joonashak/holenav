@@ -8,7 +8,10 @@ import { LoginGuard } from "./login.guard";
 import { GraphQLExecutionContext } from "@nestjs/graphql";
 import { AuthenticationError } from "apollo-server-express";
 import { JWT_LIFETIME, JWT_SECRET } from "../../config";
-import { MockAuthService, MockSessionService } from "../../test-utils/mock-services";
+import {
+  MockAuthService,
+  MockSessionService,
+} from "../../test-utils/mock-services";
 
 const createContextWithGqlArgs = (gqlArgs: any): ExecutionContext => {
   const gqlContext = createMock<GraphQLExecutionContext>();
@@ -45,12 +48,18 @@ describe("LoginGuard", () => {
 
     await expect(guard.canActivate(context)).resolves.toEqual(true);
     expect(authService.validateUserCredentials).toBeCalledTimes(1);
-    expect(authService.validateUserCredentials).toBeCalledWith(...Object.values(input));
+    expect(authService.validateUserCredentials).toBeCalledWith(
+      ...Object.values(input),
+    );
   });
 
   it("Cannot login with invalid credentials", async () => {
     const context = createContextWithGqlArgs({});
-    jest.spyOn(authService, "validateUserCredentials").mockResolvedValueOnce(null);
-    await expect(guard.canActivate(context)).rejects.toThrowError(AuthenticationError);
+    jest
+      .spyOn(authService, "validateUserCredentials")
+      .mockResolvedValueOnce(null);
+    await expect(guard.canActivate(context)).rejects.toThrowError(
+      AuthenticationError,
+    );
   });
 });

@@ -4,9 +4,7 @@ import { Maybe, Signature } from "../generated/graphqlOperations";
 const isTrueType = (wormholeType: Maybe<string> | undefined) =>
   wormholeType && wormholeType !== "K162";
 
-/**
- * Get the true type (i.e., not K162) of given wormhole or `null`.
- */
+/** Get the true type (i.e., not K162) of given wormhole or `null`. */
 export const getWormholeTrueType = (sig: Signature): string | null => {
   if (isTrueType(sig.wormholeType)) {
     return sig.wormholeType || null;

@@ -31,7 +31,13 @@ const MotdEditor = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <FormGroupRow fullWidth>
-        <ControlledTextField name="motd" control={control} label="MOTD" multiline minRows={3} />
+        <ControlledTextField
+          name="motd"
+          control={control}
+          label="MOTD"
+          multiline
+          minRows={3}
+        />
       </FormGroupRow>
       <FormGroupRow>
         <Typography sx={{ color: "secondary.light", fontStyle: "italic" }}>

@@ -7,9 +7,7 @@ import { AuthService } from "../auth.service";
 import { SessionService } from "../session/session.service";
 import getRequest from "../utils/get-request.util";
 
-/**
- * Guard to require only token authentication.
- */
+/** Guard to require only token authentication. */
 @Injectable()
 export class TokenAuthGuard implements CanActivate {
   constructor(
@@ -46,6 +44,8 @@ export class TokenAuthGuard implements CanActivate {
 
   private usingMockUser(accessToken: string): boolean {
     const mockUserIds = mockUsers.map((user) => user.id);
-    return NOT_PRODUCTION && ENABLE_DEVTOOLS && mockUserIds.includes(accessToken);
+    return (
+      NOT_PRODUCTION && ENABLE_DEVTOOLS && mockUserIds.includes(accessToken)
+    );
   }
 }

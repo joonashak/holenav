@@ -1,4 +1,11 @@
-import { Paper, Table, TableBody, TableCell, TableContainer, TableHead } from "@mui/material";
+import {
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+} from "@mui/material";
 import { clone } from "lodash";
 import useLayout from "../../../utils/useLayout";
 import TableRow from "../../common/TableRow";
@@ -9,7 +16,9 @@ const UserList = () => {
   const { users } = useSettingsData();
   const { wideViewport } = useLayout();
 
-  const sortedUsers = clone(users).sort((a, b) => a.main.name.localeCompare(b.main.name));
+  const sortedUsers = clone(users).sort((a, b) =>
+    a.main.name.localeCompare(b.main.name),
+  );
 
   return (
     <TableContainer component={Paper} sx={{ bgcolor: "primary.main" }}>

@@ -11,7 +11,8 @@ const AllowedCorporations = () => {
     return null;
   }
 
-  const { corporationFilterEnabled } = appSettingsQuery.data.getAppData.settings.registration;
+  const { corporationFilterEnabled } =
+    appSettingsQuery.data.getAppData.settings.registration;
 
   const toggle = async (_: ChangeEvent, checked: boolean) => {
     setCorporationFilterEnabled(checked);
@@ -21,7 +22,13 @@ const AllowedCorporations = () => {
     <Box>
       <FullsizeControl
         label="Restrict registration to members of selected corporations"
-        control={<Switch color="secondary" checked={corporationFilterEnabled} onChange={toggle} />}
+        control={
+          <Switch
+            color="secondary"
+            checked={corporationFilterEnabled}
+            onChange={toggle}
+          />
+        }
       />
       <AllowedCorporationsList />
     </Box>

@@ -5,9 +5,7 @@ import { SignatureSearchService } from "./neo/signature-search.service";
 import { Signature } from "./signature.model";
 import { SignatureService } from "./signature.service";
 
-/**
- * Service for updating EOL statuses and removing old sigs.
- */
+/** Service for updating EOL statuses and removing old sigs. */
 @Injectable()
 export class SignatureMaintenanceService {
   private readonly logger = new Logger(SignatureMaintenanceService.name);
@@ -39,10 +37,15 @@ export class SignatureMaintenanceService {
 
     await this.removeOldNonWhSigs();
 
-    this.logger.log(`Cleaned up old signatures. Took ${new Date().getTime() - start} ms.`);
+    this.logger.log(
+      `Cleaned up old signatures. Took ${new Date().getTime() - start} ms.`,
+    );
   }
 
-  private async removeOldWormholes(lifetime: number, whTypes: string[]): Promise<void> {
+  private async removeOldWormholes(
+    lifetime: number,
+    whTypes: string[],
+  ): Promise<void> {
     // +10% lifetime variance and a little bit of slack.
     const minAgeHrs = lifetime * 1.1 + 0.2;
     const oldWormholes = await this.signatureSearchService.findByQuery({
@@ -57,18 +60,26 @@ export class SignatureMaintenanceService {
       minEolAgeHrs: 4.5,
     });
 
-    const deletableIds = this.getDeletableIds(oldWormholes.concat(oldEolWormholes));
+    const deletableIds = this.getDeletableIds(
+      oldWormholes.concat(oldEolWormholes),
+    );
     await this.signatureService.deleteSignatures(deletableIds);
   }
 
   private async removeOldNonWhSigs(): Promise<void> {
     // Remove after a week.
     const minAgeHrs = 24 * 7;
-    const oldSigs = await this.signatureSearchService.findByQuery({ type: "other", minAgeHrs });
+    const oldSigs = await this.signatureSearchService.findByQuery({
+      type: "other",
+      minAgeHrs,
+    });
     await this.signatureService.deleteSignatures(oldSigs.map((sig) => sig.id));
   }
 
-  private async updateEolStatuses(lifetime: number, whTypes: string[]): Promise<void> {
+  private async updateEolStatuses(
+    lifetime: number,
+    whTypes: string[],
+  ): Promise<void> {
     const maxLifeTime = lifetime * 1.1;
     const minAgeHrs = maxLifeTime - 4;
     const shouldBeEol = await this.signatureSearchService.findByQuery({
@@ -78,12 +89,12 @@ export class SignatureMaintenanceService {
       minAgeHrs,
     });
 
-    await this.signatureMutationService.markAsEol(shouldBeEol.map((sig) => sig.id));
+    await this.signatureMutationService.markAsEol(
+      shouldBeEol.map((sig) => sig.id),
+    );
   }
 
-  /**
-   * Remove duplicate ID's so we don't try to remove both sides of connection.
-   */
+  /** Remove duplicate ID's so we don't try to remove both sides of connection. */
   private getDeletableIds(signatures: Signature[]): string[] {
     return [...new Set(signatures.map((sig) => sig.id))];
   }

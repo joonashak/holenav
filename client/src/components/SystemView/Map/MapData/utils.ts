@@ -10,7 +10,12 @@ const getChildren = (node: MapNodeDatum): any => {
   return [node, flatMapDeep(node.children, getChildren)];
 };
 
-export const flattenConnectionTreeChildren = (rootChildren: RawNodeDatum[]): MapNodeDatum[] => {
-  const connections = flatMapDeep(rootChildren, getChildren) as unknown as MapNodeDatum[];
+export const flattenConnectionTreeChildren = (
+  rootChildren: RawNodeDatum[],
+): MapNodeDatum[] => {
+  const connections = flatMapDeep(
+    rootChildren,
+    getChildren,
+  ) as unknown as MapNodeDatum[];
   return connections;
 };

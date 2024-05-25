@@ -10,7 +10,11 @@ const SystemInfo = () => {
   const { whClass, region, constellation } = useSystemData();
 
   return (
-    <OverviewPanel name="system-info" panelTitle={<SystemInfoTitle />} defaultExpanded>
+    <OverviewPanel
+      name="system-info"
+      panelTitle={<SystemInfoTitle />}
+      defaultExpanded
+    >
       <Box sx={{ mx: 1 }}>
         <Typography sx={{ mb: 2 }}>
           {region.name} / {constellation.name}

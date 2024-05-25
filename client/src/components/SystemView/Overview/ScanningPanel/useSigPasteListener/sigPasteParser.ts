@@ -43,7 +43,9 @@ const formatPasteRow = (row: string[]): PastedSig => {
 
 const parsePaste = (pasteEvent: ClipboardEvent | string): PastedSig[] => {
   const paste =
-    typeof pasteEvent === "string" ? pasteEvent : pasteEvent.clipboardData?.getData("text") || "";
+    typeof pasteEvent === "string"
+      ? pasteEvent
+      : pasteEvent.clipboardData?.getData("text") || "";
   const pasteMatrix = getPasteDataMatrix(paste);
   return pasteMatrix.map(formatPasteRow);
 };

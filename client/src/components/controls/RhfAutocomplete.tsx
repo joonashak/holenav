@@ -9,7 +9,8 @@ type RhfAutocompleteProps = {
 };
 
 const RhfAutocomplete = ({ options, name, control }: RhfAutocompleteProps) => {
-  const getOptionLabel = (option: unknown): string => (typeof option === "string" ? option : "");
+  const getOptionLabel = (option: unknown): string =>
+    typeof option === "string" ? option : "";
 
   // eslint-disable-next-line react/no-unstable-nested-components
   const Render = ({ field }: UseControllerReturn) => (
@@ -19,7 +20,11 @@ const RhfAutocomplete = ({ options, name, control }: RhfAutocompleteProps) => {
       options={options}
       getOptionLabel={getOptionLabel}
       renderInput={(params) => (
-        <TextField {...params} label="Destination" data-cy={`autocomplete-${name}-input`} />
+        <TextField
+          {...params}
+          label="Destination"
+          data-cy={`autocomplete-${name}-input`}
+        />
       )}
       fullWidth
       data-cy={`autocomplete-${name}`}

@@ -19,7 +19,11 @@ export class Character {
   esiId: string;
 
   @Field((type) => SsoToken, { nullable: true })
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: SsoToken.name, select: false })
+  @Prop({
+    type: mongoose.Schema.Types.ObjectId,
+    ref: SsoToken.name,
+    select: false,
+  })
   ssoToken: SsoToken;
 
   @Field()
@@ -39,4 +43,6 @@ export class Character {
   portraitUrl: string;
 }
 
-export const CharacterSchema = SchemaFactory.createForClass(Character).index({ name: "text" });
+export const CharacterSchema = SchemaFactory.createForClass(Character).index({
+  name: "text",
+});

@@ -1,6 +1,7 @@
 /**
- * This component renders a single, global notification in accordance with Material Design rules.
- * To trigger the notification, use the custom hook `useNotification`.
+ * This component renders a single, global notification in accordance with
+ * Material Design rules. To trigger the notification, use the custom hook
+ * `useNotification`.
  */
 import { useState, useEffect } from "react";
 import { Snackbar, Alert } from "@mui/material";

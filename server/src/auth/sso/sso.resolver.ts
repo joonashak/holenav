@@ -9,9 +9,7 @@ import { SsoService } from "./sso.service";
 export default class SsoResolver {
   constructor(private ssoService: SsoService) {}
 
-  /**
-   * Start the EVE SSO authentication flow to login or sign up.
-   */
+  /** Start the EVE SSO authentication flow to login or sign up. */
   @Query((returns) => StartSsoLoginDto)
   async startSsoLogin(): Promise<StartSsoLoginDto> {
     const ssoLoginUrl = await this.ssoService.getSsoLoginUrl();
@@ -19,8 +17,8 @@ export default class SsoResolver {
   }
 
   /**
-   * Start the EVE SSO authentication flow to add a new character to and existing
-   * account.
+   * Start the EVE SSO authentication flow to add a new character to and
+   * existing account.
    */
   @RequireAuth()
   @Query((returns) => StartSsoLoginDto)

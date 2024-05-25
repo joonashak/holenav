@@ -53,9 +53,13 @@ export class Neo4jService {
     this.logger.log("Connecting to Neo4j...");
 
     try {
-      const driver = neo4j.driver(NEO_URL, neo4j.auth.basic(NEO_USERNAME, NEO_PASSWORD), {
-        disableLosslessIntegers: true,
-      });
+      const driver = neo4j.driver(
+        NEO_URL,
+        neo4j.auth.basic(NEO_USERNAME, NEO_PASSWORD),
+        {
+          disableLosslessIntegers: true,
+        },
+      );
 
       await driver.verifyConnectivity();
       this.driver = driver;

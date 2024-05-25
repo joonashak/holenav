@@ -15,7 +15,9 @@ const MapSelector = () => {
   const options = maps.map(({ id, name }) => ({ id, value: id, label: name }));
   const value = selectedMap?.id || "";
 
-  return <Select title="Map" onChange={onChange} value={value} options={options} />;
+  return (
+    <Select title="Map" onChange={onChange} value={value} options={options} />
+  );
 };
 
 export default MapSelector;

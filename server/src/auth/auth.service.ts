@@ -20,13 +20,13 @@ export class AuthService {
 
   /**
    * Get JWT token for token authentication given a valid SSO state secret.
+   *
    * @param state SSO state secret used to secure the SSO authentication flow.
    * @returns JWT token to be saved on the client.
    */
   async validateSsoLogin(state: string): Promise<string> {
-    const { ssoLoginSuccess, character } = await this.ssoSessionService.verifySsoLoginSuccess(
-      state,
-    );
+    const { ssoLoginSuccess, character } =
+      await this.ssoSessionService.verifySsoLoginSuccess(state);
 
     if (!ssoLoginSuccess) {
       throw new AuthenticationError("SSO login unsuccessful.");
@@ -38,11 +38,16 @@ export class AuthService {
 
   /**
    * Validate user credentials for local login.
+   *
    * @param username Username.
    * @param password Password.
-   * @returns User whose valid credentials were supplied or `null` if not successful.
+   * @returns User whose valid credentials were supplied or `null` if not
+   *   successful.
    */
-  async validateUserCredentials(username: string, password: string): Promise<User | null> {
+  async validateUserCredentials(
+    username: string,
+    password: string,
+  ): Promise<User | null> {
     const user = await this.userService.findWithCredentials(username);
     if (!user) {
       return null;
@@ -61,6 +66,7 @@ export class AuthService {
 
   /**
    * Verify that `token` is a valid JWT token.
+   *
    * @param token JWT token.
    * @returns Decoded JWT payload object.
    */
@@ -74,7 +80,9 @@ export class AuthService {
     }
 
     if (!Object.keys(payload).includes("sessionId")) {
-      throw new AuthenticationError("Access token does not contain a session ID.");
+      throw new AuthenticationError(
+        "Access token does not contain a session ID.",
+      );
     }
 
     return payload;
@@ -82,6 +90,7 @@ export class AuthService {
 
   /**
    * Create new session and get a corresponding JWT token.
+   *
    * @param user User to link to session.
    * @returns JWT token to be saved on the client.
    */

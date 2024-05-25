@@ -1,4 +1,10 @@
-import { Box, Chip, ChipProps, Typography, TypographyProps } from "@mui/material";
+import {
+  Box,
+  Chip,
+  ChipProps,
+  Typography,
+  TypographyProps,
+} from "@mui/material";
 
 type DataChipProps = {
   label: string;
@@ -9,7 +15,14 @@ type DataChipProps = {
   labelProps?: TypographyProps;
 };
 
-const DataChip = ({ label, value, sx, labelSx, valueSx, labelProps }: DataChipProps) => (
+const DataChip = ({
+  label,
+  value,
+  sx,
+  labelSx,
+  valueSx,
+  labelProps,
+}: DataChipProps) => (
   <Chip
     sx={{
       width: 0.45,

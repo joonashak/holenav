@@ -6,7 +6,10 @@ type AuthenticatedComponentProps = {
   token: string | null;
 };
 
-const AuthenticatedComponent = ({ children, token }: AuthenticatedComponentProps) =>
+const AuthenticatedComponent = ({
+  children,
+  token,
+}: AuthenticatedComponentProps) =>
   token ? <>{children}</> : <Redirect to="/login" />;
 
 AuthenticatedComponent.defaultProps = {

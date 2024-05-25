@@ -23,7 +23,7 @@ const signaturePropertyTests = {
 
 export const testSignatureProperties = (
   props: TestableSignatureProps,
-  url: string | null = null
+  url: string | null = null,
 ): void => {
   const { name } = props;
 

@@ -61,7 +61,9 @@ describe("SystemRoleGuard", () => {
         ...testUser,
         systemRole: SystemRole.MANAGER,
       });
-      jest.spyOn(reflector, "get").mockReturnValueOnce(SystemRole.ADMINISTRATOR);
+      jest
+        .spyOn(reflector, "get")
+        .mockReturnValueOnce(SystemRole.ADMINISTRATOR);
       expect(systemRoleGuard.canActivate(context)).toBe(false);
       assertReflectorCall();
     });
@@ -69,13 +71,17 @@ describe("SystemRoleGuard", () => {
     it("Invalid system role", async () => {
       const context = mockContextWithUser({ ...testUser, systemRole: 5 });
       jest.spyOn(reflector, "get").mockReturnValueOnce(SystemRole.USER);
-      expect(() => systemRoleGuard.canActivate(context)).toThrow(AuthenticationError);
+      expect(() => systemRoleGuard.canActivate(context)).toThrow(
+        AuthenticationError,
+      );
       assertReflectorCall();
     });
 
     it("Required role is missing from request metadata", async () => {
       const context = mockContextWithUser(testUser);
-      expect(() => systemRoleGuard.canActivate(context)).toThrow(InternalServerErrorException);
+      expect(() => systemRoleGuard.canActivate(context)).toThrow(
+        InternalServerErrorException,
+      );
       assertReflectorCall();
     });
 
@@ -89,7 +95,9 @@ describe("SystemRoleGuard", () => {
     it("User is missing system role", async () => {
       const context = mockContextWithUser({ ...testUser, systemRole: null });
       jest.spyOn(reflector, "get").mockReturnValueOnce(SystemRole.USER);
-      expect(() => systemRoleGuard.canActivate(context)).toThrow(AuthenticationError);
+      expect(() => systemRoleGuard.canActivate(context)).toThrow(
+        AuthenticationError,
+      );
       assertReflectorCall();
     });
   });

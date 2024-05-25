@@ -11,10 +11,11 @@ export class AppSettingsService {
     private appDataService: AppDataService,
   ) {}
 
-  /**
-   * Check if user is allowed to register as per current app settings.
-   */
-  async userCanRegister(corporationEsiId: string, allianceEsiId: string): Promise<boolean> {
+  /** Check if user is allowed to register as per current app settings. */
+  async userCanRegister(
+    corporationEsiId: string,
+    allianceEsiId: string,
+  ): Promise<boolean> {
     const {
       settings: { registration },
     } = await this.appDataService.getAppData();
@@ -28,7 +29,8 @@ export class AppSettingsService {
       !registration.corporationFilterEnabled;
 
     const allowedByAlliance =
-      registration.allowedAlliances.includes(allianceEsiId) || !registration.allianceFilterEnabled;
+      registration.allowedAlliances.includes(allianceEsiId) ||
+      !registration.allianceFilterEnabled;
 
     if (!allowedByCorporation || !allowedByAlliance) {
       return false;
@@ -46,11 +48,15 @@ export class AppSettingsService {
   }
 
   async removeAllowedCorporation(esiId: string): Promise<AppDataDocument> {
-    return this.removeFromList("settings.registration.allowedCorporations", [esiId]);
+    return this.removeFromList("settings.registration.allowedCorporations", [
+      esiId,
+    ]);
   }
 
   async removeAllowedAlliance(esiId: string): Promise<AppDataDocument> {
-    return this.removeFromList("settings.registration.allowedAlliances", [esiId]);
+    return this.removeFromList("settings.registration.allowedAlliances", [
+      esiId,
+    ]);
   }
 
   private async pushToList(key: string, value: any): Promise<AppDataDocument> {
@@ -65,7 +71,10 @@ export class AppSettingsService {
     return this.appDataService.getAppData();
   }
 
-  private async removeFromList(key: string, value: any[]): Promise<AppDataDocument> {
+  private async removeFromList(
+    key: string,
+    value: any[],
+  ): Promise<AppDataDocument> {
     await this.appDataModel.updateOne(
       {},
       {

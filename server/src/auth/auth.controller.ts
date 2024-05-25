@@ -6,16 +6,17 @@ import { SsoService } from "./sso/sso.service";
 export class AuthController {
   constructor(private ssoService: SsoService) {}
 
-  /**
-   * Handle callback after player has successfully logged in through EVE SSO.
-   */
+  /** Handle callback after player has successfully logged in through EVE SSO. */
   @Get("callback")
   async callback(
     @Query("code") authorizationCode: string,
     @Query("state") state: string,
     @Res() response: Response,
   ) {
-    const clientCallbackUrl = await this.ssoService.handleCallback(authorizationCode, state);
+    const clientCallbackUrl = await this.ssoService.handleCallback(
+      authorizationCode,
+      state,
+    );
     response.redirect(clientCallbackUrl);
   }
 }

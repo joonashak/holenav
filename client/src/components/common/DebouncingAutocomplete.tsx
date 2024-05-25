@@ -9,36 +9,27 @@ import { useDebounce } from "@react-hook/debounce";
 import { get } from "lodash";
 import { useEffect, useState } from "react";
 
-type DebouncingAutocompleteProps<T> = Partial<AutocompleteProps<T, false, false, false>> & {
-  /**
-   * Value for `TextField` input's `data-cy` attribute.
-   */
+type DebouncingAutocompleteProps<T> = Partial<
+  AutocompleteProps<T, false, false, false>
+> & {
+  /** Value for `TextField` input's `data-cy` attribute. */
   dataCy?: string;
-  /**
-   * `TextField` label text.
-   */
+  /** `TextField` label text. */
   label: string;
-  /**
-   * List of options to show in the dropdown.
-   */
+  /** List of options to show in the dropdown. */
   options: T[];
-  /**
-   * Key to use for getting label text from `options` objects.
-   */
+  /** Key to use for getting label text from `options` objects. */
   optionLabelKey: string;
   /**
    * Key to use for getting value from `options` objects.
    *
-   * The resulting value is used for equality comparison so it should be unique and stable.
+   * The resulting value is used for equality comparison so it should be unique
+   * and stable.
    */
   optionValueKey: string;
-  /**
-   * Callback fired when search string has changed and debounce has passed.
-   */
+  /** Callback fired when search string has changed and debounce has passed. */
   search: (text: string) => void;
-  /**
-   * Props passed to `TextField` input component.
-   */
+  /** Props passed to `TextField` input component. */
   textFieldProps?: TextFieldProps;
 };
 
@@ -75,7 +66,9 @@ export default function DebouncingAutocomplete<T>({
       loading={loading}
       options={options}
       getOptionLabel={(opt) => get(opt, optionLabelKey, "")}
-      isOptionEqualToValue={(opt, val) => get(opt, optionValueKey) === get(val, optionValueKey)}
+      isOptionEqualToValue={(opt, val) =>
+        get(opt, optionValueKey) === get(val, optionValueKey)
+      }
       onChange={onChange}
       onInputChange={(_, value) => setDebouncedValue(value)}
       renderInput={(params) => (
@@ -88,7 +81,9 @@ export default function DebouncingAutocomplete<T>({
             ...params.InputProps,
             endAdornment: (
               <>
-                {loading ? <CircularProgress color="inherit" size={20} /> : null}
+                {loading ? (
+                  <CircularProgress color="inherit" size={20} />
+                ) : null}
                 {params.InputProps.endAdornment}
               </>
             ),

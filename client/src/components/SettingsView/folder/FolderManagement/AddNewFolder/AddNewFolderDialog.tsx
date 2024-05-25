@@ -22,7 +22,7 @@ const AddNewFolderDialog = () => {
           display: "flex",
           flexDirection: { xs: "column", md: "row" },
           alignItems: { xs: "stretch", md: "center" },
-          mb: 3
+          mb: 3,
         }}
       >
         <FormGroup sx={{ flexGrow: 1, mr: { xs: 0, md: 2 } }}>

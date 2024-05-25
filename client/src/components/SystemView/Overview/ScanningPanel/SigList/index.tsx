@@ -25,7 +25,9 @@ const TableHeadCell = ({ children, sx }: TableCellProps) => (
 );
 
 const TableCell = ({ children, sx }: TableCellProps) => (
-  <MuiTableCell sx={{ borderBottomColor: "primary.main", ...sx }}>{children}</MuiTableCell>
+  <MuiTableCell sx={{ borderBottomColor: "primary.main", ...sx }}>
+    {children}
+  </MuiTableCell>
 );
 
 const SigList = () => {
@@ -48,14 +50,24 @@ const SigList = () => {
           {signatures &&
             sortedSigs.map((sig) => (
               <SigContextMenu key={sig.id} signature={sig}>
-                <TableCell component="th" scope="row" sx={{ whiteSpace: "nowrap", width: 0.2 }}>
+                <TableCell
+                  component="th"
+                  scope="row"
+                  sx={{ whiteSpace: "nowrap", width: 0.2 }}
+                >
                   {sig.eveId}
                 </TableCell>
                 <TableCell sx={{ textTransform: "capitalize", width: 0.2 }}>
                   <SigTypeLabel signature={sig} />
                 </TableCell>
                 <TableCell
-                  sx={{ paddingTop: 0, paddingBottom: 0, maxWidth: 0, width: "100%", pr: 0 }}
+                  sx={{
+                    paddingTop: 0,
+                    paddingBottom: 0,
+                    maxWidth: 0,
+                    width: "100%",
+                    pr: 0,
+                  }}
                 >
                   <Box
                     sx={{
@@ -68,7 +80,9 @@ const SigList = () => {
                   </Box>
                 </TableCell>
                 <TableCell sx={{ p: 0 }}>
-                  {sig.type === SigType.Wormhole && <LifetimeClock signature={sig} />}
+                  {sig.type === SigType.Wormhole && (
+                    <LifetimeClock signature={sig} />
+                  )}
                 </TableCell>
                 <TableCell sx={{ width: 0.2, pr: 1, pl: 1 }}>
                   <Box sx={{ display: "flex", justifyContent: "flex-end" }}>

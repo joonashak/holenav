@@ -9,7 +9,13 @@ type ControlledTextFieldProps = TextFieldProps & {
   type?: TextFieldProps["type"];
 };
 
-const ControlledTextField = ({ name, control, rules, type, ...rest }: ControlledTextFieldProps) => {
+const ControlledTextField = ({
+  name,
+  control,
+  rules,
+  type,
+  ...rest
+}: ControlledTextFieldProps) => {
   const { field, fieldState } = useController({
     name,
     control,

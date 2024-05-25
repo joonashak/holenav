@@ -6,7 +6,10 @@ import { AppUpdateService } from "./services/app-update.service";
 export class BootstrapService implements OnApplicationBootstrap {
   private readonly logger = new Logger(BootstrapService.name);
 
-  constructor(private appUpdateService: AppUpdateService, private appDataService: AppDataService) {}
+  constructor(
+    private appUpdateService: AppUpdateService,
+    private appDataService: AppDataService,
+  ) {}
 
   async onApplicationBootstrap() {
     await this.appDataService.initialize();

@@ -25,7 +25,9 @@ const PasteSigsButton = ({ sync, sx }: PasteSigsButtonProps) => {
         endIcon={sync && <SyncIcon />}
         sx={{ mt: 1.5, ...sx }}
       >
-        {sync ? "Sync Signatures from Clipboard" : "Update Signatures from Clipboard"}
+        {sync
+          ? "Sync Signatures from Clipboard"
+          : "Update Signatures from Clipboard"}
       </Button>
     </>
   );

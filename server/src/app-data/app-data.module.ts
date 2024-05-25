@@ -6,13 +6,18 @@ import { AppDataService } from "./app-data.service";
 import { AppSettingsResolver } from "./settings/app-settings.resolver";
 import { AppSettingsService } from "./settings/app-settings.service";
 
-/**
- * Application metadata.
- */
+/** Application metadata. */
 @Global()
 @Module({
-  imports: [MongooseModule.forFeature([{ name: AppData.name, schema: AppDataSchema }])],
-  providers: [AppDataService, AppDataResolver, AppSettingsService, AppSettingsResolver],
+  imports: [
+    MongooseModule.forFeature([{ name: AppData.name, schema: AppDataSchema }]),
+  ],
+  providers: [
+    AppDataService,
+    AppDataResolver,
+    AppSettingsService,
+    AppSettingsResolver,
+  ],
   exports: [AppDataService, AppSettingsService, MongooseModule],
 })
 export class AppDataModule {}

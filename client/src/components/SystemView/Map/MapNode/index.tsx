@@ -45,7 +45,8 @@ const MapNode = ({ nodeDatum }: MapNodeProps) => {
     }
   }
 
-  const showDestinationLink = !!destinationName && !wormhole?.unknownDestination;
+  const showDestinationLink =
+    !!destinationName && !wormhole?.unknownDestination;
 
   return (
     <>
@@ -83,7 +84,10 @@ const MapNode = ({ nodeDatum }: MapNodeProps) => {
           }}
         >
           {isRootNode ? (
-            <RootNodeName rootSystemName={selectedMap.rootSystemName} mapName={selectedMap.name} />
+            <RootNodeName
+              rootSystemName={selectedMap.rootSystemName}
+              mapName={selectedMap.name}
+            />
           ) : (
             <ConnectionName
               showDestinationLink={showDestinationLink}

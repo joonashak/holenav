@@ -6,9 +6,10 @@ import {
 import useAuthenticatedQuery from "./useAuthenticatedQuery";
 
 const useSsoTokens = () => {
-  const getSsoTokens = useAuthenticatedQuery<GetSsoTokensQuery, GetSsoTokensQueryVariables>(
-    GetSsoTokensDocument,
-  );
+  const getSsoTokens = useAuthenticatedQuery<
+    GetSsoTokensQuery,
+    GetSsoTokensQueryVariables
+  >(GetSsoTokensDocument);
 
   return {
     getSsoTokens,

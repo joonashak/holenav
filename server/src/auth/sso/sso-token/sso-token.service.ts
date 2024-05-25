@@ -5,7 +5,9 @@ import { SsoToken, SsoTokenDocument } from "./sso-token.model";
 
 @Injectable()
 export class SsoTokenService {
-  constructor(@InjectModel(SsoToken.name) private ssoTokenModel: Model<SsoTokenDocument>) {}
+  constructor(
+    @InjectModel(SsoToken.name) private ssoTokenModel: Model<SsoTokenDocument>,
+  ) {}
 
   async create(ssoToken: SsoToken): Promise<SsoTokenDocument> {
     return this.ssoTokenModel.create(ssoToken);

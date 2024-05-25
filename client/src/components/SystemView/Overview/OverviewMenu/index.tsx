@@ -15,7 +15,9 @@ const OverviewMenu = ({ open, toggle }: OverviewMenuProps) => (
         <ListItem>
           <MapSelector />
         </ListItem>
-        <ListItem sx={{ justifyContent: { xs: "space-between", md: "center" } }}>
+        <ListItem
+          sx={{ justifyContent: { xs: "space-between", md: "center" } }}
+        >
           <SettingsButton sx={{ mr: { xs: 0, md: 4 } }} />
           <LogoutButton />
         </ListItem>

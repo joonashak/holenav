@@ -14,7 +14,10 @@ export const requiredFolderRoleKey = "requiredFolderRole";
 
 @Injectable()
 export class FolderRoleGuard implements CanActivate {
-  constructor(private reflector: Reflector, private folderService: FolderService) {}
+  constructor(
+    private reflector: Reflector,
+    private folderService: FolderService,
+  ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const requiredRole = this.getRequiredRole(context);
@@ -28,18 +31,24 @@ export class FolderRoleGuard implements CanActivate {
       context.getHandler(),
     );
     if (!requiredRole) {
-      throw new InternalServerErrorException("Required folder role not configured.");
+      throw new InternalServerErrorException(
+        "Required folder role not configured.",
+      );
     }
 
     return requiredRole;
   }
 
-  private async getActiveFolderRole(context: ExecutionContext): Promise<FolderRole> {
+  private async getActiveFolderRole(
+    context: ExecutionContext,
+  ): Promise<FolderRole> {
     const request = getRequest(context);
 
     const activeFolderId = request.headers.activefolder;
     if (!activeFolderId) {
-      throw new BadRequestException("Active folder's ID must be passed in headers.");
+      throw new BadRequestException(
+        "Active folder's ID must be passed in headers.",
+      );
     }
 
     const activeFolder = await this.folderService.getFolderById(activeFolderId);

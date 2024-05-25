@@ -100,16 +100,16 @@ export class SignatureSearchService {
     return signatures;
   }
 
-  /**
-   * Find sigs matching given criteria. For internal use.
-   */
+  /** Find sigs matching given criteria. For internal use. */
   async findByQuery(query: SignatureQuery): Promise<Signature[]> {
     return query.type === "wormhole"
       ? this.findWormholesByQuery(query)
       : this.findNonWhSigsByQuery(query);
   }
 
-  private async findNonWhSigsByQuery({ minAgeHrs }: SignatureQueryNonWh): Promise<Signature[]> {
+  private async findNonWhSigsByQuery({
+    minAgeHrs,
+  }: SignatureQueryNonWh): Promise<Signature[]> {
     const res = await this.neoService.read(
       `
         MATCH (sig:Signature)
@@ -133,7 +133,8 @@ export class SignatureSearchService {
       minAgeHrs === undefined
         ? ""
         : "AND sig.createdAt < datetime() - duration({hours: $minAgeHrs})";
-    const whTypePredicate = whTypes === undefined ? "" : "AND sig.wormholeType IN $whTypes";
+    const whTypePredicate =
+      whTypes === undefined ? "" : "AND sig.wormholeType IN $whTypes";
     const eolPredicate = eol === undefined ? "" : "AND conn.eol = $eol";
     const minEolAgePredicate =
       minEolAgeHrs === undefined

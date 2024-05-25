@@ -6,7 +6,11 @@ const AppSettings = () => {
   const { appSettingsQuery } = useAppSettings();
   const { loading } = appSettingsQuery;
 
-  return <SettingsGrid title="App Settings">{!loading && <RegistrationSettings />}</SettingsGrid>;
+  return (
+    <SettingsGrid title="App Settings">
+      {!loading && <RegistrationSettings />}
+    </SettingsGrid>
+  );
 };
 
 export default AppSettings;

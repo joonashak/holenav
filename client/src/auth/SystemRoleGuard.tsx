@@ -10,12 +10,19 @@ type RoleGuardProps = {
 };
 
 /**
- * Render `children` only if user has required role, `defaultComponent` otherwise.
+ * Render `children` only if user has required role, `defaultComponent`
+ * otherwise.
  *
- * If only `hideFrom` is given, `children` is shown to all other roles. Otherwise, `hideFrom` roles
- * are filtered out of `showTo` roles and `children` shown to the roles that are left.
+ * If only `hideFrom` is given, `children` is shown to all other roles.
+ * Otherwise, `hideFrom` roles are filtered out of `showTo` roles and `children`
+ * shown to the roles that are left.
  */
-const SystemRoleGuard = ({ children, defaultComponent, showTo, hideFrom }: RoleGuardProps) => {
+const SystemRoleGuard = ({
+  children,
+  defaultComponent,
+  showTo,
+  hideFrom,
+}: RoleGuardProps) => {
   const { systemRole } = useUserData();
 
   if (!systemRole) {

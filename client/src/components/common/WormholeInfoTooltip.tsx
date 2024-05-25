@@ -16,8 +16,12 @@ const WormholeInfoTooltip = ({ children, type }: WormholeInfoTooltipProps) => {
 
   const { mass, lifetimeHrs } = properties;
 
-  const formattedTotalMass = new Intl.NumberFormat().format((mass.total || 0) / 1000000);
-  const formattedJumpMass = new Intl.NumberFormat().format((mass.jump || 0) / 1000000);
+  const formattedTotalMass = new Intl.NumberFormat().format(
+    (mass.total || 0) / 1000000,
+  );
+  const formattedJumpMass = new Intl.NumberFormat().format(
+    (mass.jump || 0) / 1000000,
+  );
 
   const rows = [
     { label: "Lifetime", value: `${lifetimeHrs} h` },

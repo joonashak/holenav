@@ -12,7 +12,9 @@ import { Session, SessionDocument } from "./session.model";
 export class SessionService {
   private readonly logger = new Logger(SessionService.name);
 
-  constructor(@InjectModel(Session.name) private sessionModel: Model<SessionDocument>) {}
+  constructor(
+    @InjectModel(Session.name) private sessionModel: Model<SessionDocument>,
+  ) {}
 
   async create(user: User): Promise<Session> {
     const expiresAt = dayjs().add(ms(JWT_LIFETIME), "ms").toDate();
@@ -28,7 +30,9 @@ export class SessionService {
   }
 
   /**
-   * Verify that there is a `Session` associated with given `sessionId` and it has not expired.
+   * Verify that there is a `Session` associated with given `sessionId` and it
+   * has not expired.
+   *
    * @param sessionId ID of the session to verify.
    * @returns Session object.
    */

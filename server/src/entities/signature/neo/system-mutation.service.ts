@@ -4,7 +4,10 @@ import { validate } from "uuid";
 import { Neo4jService } from "../../../integration/neo4j/neo4j.service";
 import { addUuid } from "../../../utils/addUuid";
 import uuid from "../../../utils/uuid";
-import { CreatableSignature, CreatableSignatureWithoutConnection } from "../dto/add-signatures.dto";
+import {
+  CreatableSignature,
+  CreatableSignatureWithoutConnection,
+} from "../dto/add-signatures.dto";
 import SigType from "../enums/sig-type.enum";
 import { Signature, SignatureWithoutConnection } from "../signature.model";
 import { SystemNode } from "./graph-types";
@@ -14,9 +17,12 @@ export class SystemMutationService {
   constructor(private neoService: Neo4jService) {}
 
   /**
-   * Create systems in Neo4j if they don't already exist. Input data is not validated.
+   * Create systems in Neo4j if they don't already exist. Input data is not
+   * validated.
+   *
    * @param systems Systems to upsert.
-   * @returns All given systems after upsert, regardless of whether they existed before.
+   * @returns All given systems after upsert, regardless of whether they existed
+   *   before.
    */
   async upsertSystems(systems: SystemNode[]): Promise<SystemNode[]> {
     if (!systems.length) {
@@ -60,9 +66,7 @@ export class SystemMutationService {
     return res.records[0]._fields[0].properties;
   }
 
-  /**
-   * Remove all pseudo-systems that have no relations attached to them.
-   */
+  /** Remove all pseudo-systems that have no relations attached to them. */
   async removeDanglingPseudoSystems(): Promise<number> {
     const res = await this.neoService.write(`
       MATCH (system:System {pseudo: true})
@@ -74,7 +78,9 @@ export class SystemMutationService {
   }
 
   async ensureSystemsExist(
-    signatures: SignatureWithoutConnection[] | CreatableSignatureWithoutConnection[],
+    signatures:
+      | SignatureWithoutConnection[]
+      | CreatableSignatureWithoutConnection[],
     folderId: string,
   ) {
     const systems = signatures.map(this.systemFromSignature(folderId));
@@ -82,12 +88,10 @@ export class SystemMutationService {
     await this.upsertSystems(uniqueSystems);
   }
 
-  /**
-   * Change connection's reverse side system name into an UUID value, is empty.
-   */
-  transformUnknownReverseSystemIntoPseudoSystem<T extends Signature | CreatableSignature>(
-    signature: T,
-  ): T {
+  /** Change connection's reverse side system name into an UUID value, is empty. */
+  transformUnknownReverseSystemIntoPseudoSystem<
+    T extends Signature | CreatableSignature,
+  >(signature: T): T {
     if (signature.type !== SigType.WORMHOLE) {
       return signature;
     }

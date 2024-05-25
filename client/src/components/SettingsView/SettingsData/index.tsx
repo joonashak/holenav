@@ -30,29 +30,35 @@ const SettingsData = ({ children }: SettingsDataProps) => {
   const state = useState(settingsState);
   const { systemRole } = useUserData();
 
-  useAuthenticatedQuery<SettingsDataQuery, SettingsDataQueryVariables>(SettingsDataDocument, {
-    onCompleted: (data) => {
-      state.merge({ accessibleFolders: data.getAccessibleFolders });
-    },
-    onError: () => {},
-  });
-
-  useAuthenticatedQuery<SettingsDataForManagerQuery, SettingsDataForManagerQueryVariables>(
-    SettingsDataForManagerDocument,
+  useAuthenticatedQuery<SettingsDataQuery, SettingsDataQueryVariables>(
+    SettingsDataDocument,
     {
       onCompleted: (data) => {
-        state.merge({ manageableFolders: data.getManageableFolders });
+        state.merge({ accessibleFolders: data.getAccessibleFolders });
+      },
+      onError: () => {},
+    },
+  );
+
+  useAuthenticatedQuery<
+    SettingsDataForManagerQuery,
+    SettingsDataForManagerQueryVariables
+  >(SettingsDataForManagerDocument, {
+    onCompleted: (data) => {
+      state.merge({ manageableFolders: data.getManageableFolders });
+    },
+    skip: !atLeastManager(systemRole),
+  });
+
+  useAuthenticatedQuery<AllUsersQuery, AllUsersQueryVariables>(
+    AllUsersDocument,
+    {
+      onCompleted: (data) => {
+        state.merge({ users: data.getAllUsersForManager });
       },
       skip: !atLeastManager(systemRole),
     },
   );
-
-  useAuthenticatedQuery<AllUsersQuery, AllUsersQueryVariables>(AllUsersDocument, {
-    onCompleted: (data) => {
-      state.merge({ users: data.getAllUsersForManager });
-    },
-    skip: !atLeastManager(systemRole),
-  });
 
   return <>{children}</>;
 };

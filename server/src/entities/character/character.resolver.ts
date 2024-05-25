@@ -10,7 +10,9 @@ export class CharacterResolver {
 
   @RequireSystemRole(SystemRole.MANAGER)
   @Query((returns) => [Character])
-  async searchCharactersByMain(@Args("search") search: string): Promise<Character[]> {
+  async searchCharactersByMain(
+    @Args("search") search: string,
+  ): Promise<Character[]> {
     return this.characterService.searchByMain(search);
   }
 }

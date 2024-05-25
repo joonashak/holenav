@@ -15,10 +15,21 @@ type Options = {
 };
 
 // FIXME: Rename and update to use styled select (or integrate in the same mess...?)
-const ControlledSelect = ({ options, name, control, label }: ControlledSelectProps) => {
+const ControlledSelect = ({
+  options,
+  name,
+  control,
+  label,
+}: ControlledSelectProps) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const Render = ({ field }: any) => (
-    <TextField {...field} select label={label} fullWidth data-cy={`select-${name}`}>
+    <TextField
+      {...field}
+      select
+      label={label}
+      fullWidth
+      data-cy={`select-${name}`}
+    >
       {options.map(({ key, value, label: optionLabel }) => (
         <MenuItem key={key} value={value}>
           {optionLabel}

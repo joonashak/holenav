@@ -1,4 +1,11 @@
-import { AppBar, Container, Link, Paper, Toolbar, Typography } from "@mui/material";
+import {
+  AppBar,
+  Container,
+  Link,
+  Paper,
+  Toolbar,
+  Typography,
+} from "@mui/material";
 import { devToolsEnabled } from "../../config";
 import AppTitle from "../common/AppTitle";
 import useLocalData from "../LocalData/useLocalData";
@@ -12,19 +19,26 @@ const FrontPage = () => {
 
   return (
     <>
-      <AppBar position="static" sx={{ bgcolor: "primary.dark", marginBottom: 6 }}>
+      <AppBar
+        position="static"
+        sx={{ bgcolor: "primary.dark", marginBottom: 6 }}
+      >
         <Toolbar sx={{ flexDirection: { xs: "column", md: "row" } }}>
           <AppTitle sx={{ flexGrow: 1 }} />
           <LoginOrAppButton loggedIn={!!loggedIn} />
         </Toolbar>
       </AppBar>
       <Container maxWidth="md">
-        <Paper elevation={0} sx={{ bgcolor: "transparent", "&&>*": { marginBottom: 2 } }}>
+        <Paper
+          elevation={0}
+          sx={{ bgcolor: "transparent", "&&>*": { marginBottom: 2 } }}
+        >
           <Typography variant="h2">Welcome to Holenav!</Typography>
           <Typography>
-            This is a new wormhole mapper for the EVE Online community. It is currently in early
-            development and not ready for operational use. You are welcome to try it out and follow
-            the project&apos;s progress at{" "}
+            This is a new wormhole mapper for the EVE Online community. It is
+            currently in early development and not ready for operational use.
+            You are welcome to try it out and follow the project&apos;s progress
+            at{" "}
             <Link
               href="https://github.com/joonashak/holenav"
               target="_blank"

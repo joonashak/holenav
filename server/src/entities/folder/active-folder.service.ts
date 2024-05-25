@@ -1,4 +1,9 @@
-import { Inject, Injectable, InternalServerErrorException, Scope } from "@nestjs/common";
+import {
+  Inject,
+  Injectable,
+  InternalServerErrorException,
+  Scope,
+} from "@nestjs/common";
 import { CONTEXT } from "@nestjs/graphql";
 import { Folder } from "./folder.model";
 

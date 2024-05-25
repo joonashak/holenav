@@ -9,7 +9,9 @@ import { sanitizeSignatureForNeo4j } from "../signature.utils";
 export class ConnectionMutationService {
   constructor(private neoService: Neo4jService) {}
 
-  async createConnectionsFromSignatures(signatures: Signature[] | UpdateableSignature[]) {
+  async createConnectionsFromSignatures(
+    signatures: Signature[] | UpdateableSignature[],
+  ) {
     if (!signatures.length) {
       return;
     }

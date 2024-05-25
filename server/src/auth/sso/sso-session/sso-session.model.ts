@@ -10,9 +10,9 @@ export type SsoSessionDocument = SsoSession & mongoose.Document;
 registerEnumType(SsoSessionType, { name: "SsoSessionTypes" });
 
 /**
- * SSO Session implements a verifiable state between the client and server
- * while the SSO authentication is being negotiated between the client and the
- * SSO server (EVE/CCP).
+ * SSO Session implements a verifiable state between the client and server while
+ * the SSO authentication is being negotiated between the client and the SSO
+ * server (EVE/CCP).
  */
 @ObjectType()
 @Schema({ collection: "sso-sessions" })

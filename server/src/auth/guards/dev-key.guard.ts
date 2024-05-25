@@ -3,11 +3,12 @@ import getRequest from "../utils/get-request.util";
 import { DEV_KEY, ENABLE_DEVTOOLS } from "../../config";
 
 /**
- * Guard to require dev key passed in headers to protect API when dev tools are enabled.
- * 
- * Using a dev key is not required for dev tools to function. This guard is meant as a
- * lightweight protection for exposed APIs that want to have dev tools enabled, e.g.,
- * staging APIs, etc.
+ * Guard to require dev key passed in headers to protect API when dev tools are
+ * enabled.
+ *
+ * Using a dev key is not required for dev tools to function. This guard is
+ * meant as a lightweight protection for exposed APIs that want to have dev
+ * tools enabled, e.g., staging APIs, etc.
  */
 @Injectable()
 export class DevKeyGuard implements CanActivate {

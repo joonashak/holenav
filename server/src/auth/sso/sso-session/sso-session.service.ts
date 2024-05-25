@@ -11,11 +11,12 @@ import { SsoSession, SsoSessionDocument } from "./sso-session.model";
 
 @Injectable()
 export class SsoSessionService {
-  constructor(@InjectModel(SsoSession.name) private ssoSessionModel: Model<SsoSessionDocument>) {}
+  constructor(
+    @InjectModel(SsoSession.name)
+    private ssoSessionModel: Model<SsoSessionDocument>,
+  ) {}
 
-  /**
-   * Create new SSO state.
-   */
+  /** Create new SSO state. */
   async createSsoSession(user: User): Promise<SsoSession> {
     return this.ssoSessionModel.create({
       key: uuid(),
@@ -25,18 +26,16 @@ export class SsoSessionService {
     });
   }
 
-  /**
-   * Remove given SSO state secret.
-   */
+  /** Remove given SSO state secret. */
   async removeSsoSession(key: string) {
     await this.ssoSessionModel.findOneAndRemove({ key });
   }
 
-  /**
-   * Verify given SSO state secret to be valid and not expired.
-   */
+  /** Verify given SSO state secret to be valid and not expired. */
   async verifySsoSession(key: string): Promise<SsoSession> {
-    const currentSession = await this.ssoSessionModel.findOne({ key }).populate("user");
+    const currentSession = await this.ssoSessionModel
+      .findOne({ key })
+      .populate("user");
 
     if (!currentSession) {
       throw new AuthenticationError("SSO session not found.");
@@ -50,16 +49,18 @@ export class SsoSessionService {
     return currentSession;
   }
 
-  /**
-   * Mark given (and valid) SSO state with a successful login.
-   */
+  /** Mark given (and valid) SSO state with a successful login. */
   async setSsoLoginSuccess(key: string, character: Character) {
     await this.verifySsoSession(key);
-    await this.ssoSessionModel.findOneAndUpdate({ key }, { ssoLoginSuccess: true, character });
+    await this.ssoSessionModel.findOneAndUpdate(
+      { key },
+      { ssoLoginSuccess: true, character },
+    );
   }
 
   /**
-   * Verify that given state is valid and is associated with a successful SSO login.
+   * Verify that given state is valid and is associated with a successful SSO
+   * login.
    *
    * The given SSO state secret is always removed after this operation.
    */

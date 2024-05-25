@@ -4,7 +4,10 @@ import { Box, IconButton, Paper, Typography } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import { useState as useReactState } from "react";
 import ReactMarkdown from "react-markdown";
-import { GetPublicAppDataDocument, SystemRoles } from "../../../generated/graphqlOperations";
+import {
+  GetPublicAppDataDocument,
+  SystemRoles,
+} from "../../../generated/graphqlOperations";
 import useUserData from "../../UserData/useUserData";
 import MotdEditor from "./MotdEditor";
 
@@ -58,7 +61,11 @@ const Motd = () => {
           </IconButton>
         )}
       </Box>
-      {!editOpen ? <ReactMarkdown>{state.value}</ReactMarkdown> : <MotdEditor />}
+      {!editOpen ? (
+        <ReactMarkdown>{state.value}</ReactMarkdown>
+      ) : (
+        <MotdEditor />
+      )}
     </Paper>
   );
 };

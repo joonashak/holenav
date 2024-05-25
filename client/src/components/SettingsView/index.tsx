@@ -22,8 +22,14 @@ const SettingsView = () => (
     <Box sx={{ ml: { xs: 2, md: `${menuWidthRem + 2}rem` }, mr: 2, pt: 2 }}>
       <Switch>
         <Route path={settingsRoutes.activeFolder} component={ActiveFolder} />
-        <Route path={settingsRoutes.folderManagement} component={FolderManagement} />
-        <Route path={settingsRoutes.userManagement} component={UserManagement} />
+        <Route
+          path={settingsRoutes.folderManagement}
+          component={FolderManagement}
+        />
+        <Route
+          path={settingsRoutes.userManagement}
+          component={UserManagement}
+        />
         <Route path={settingsRoutes.appSettings} component={AppSettings} />
         <Route path="*" component={GeneralSettings} />
       </Switch>

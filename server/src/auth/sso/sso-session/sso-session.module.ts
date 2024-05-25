@@ -4,7 +4,11 @@ import { SsoSession, SsoSessionSchema } from "./sso-session.model";
 import { SsoSessionService } from "./sso-session.service";
 
 @Module({
-  imports: [MongooseModule.forFeature([{ name: SsoSession.name, schema: SsoSessionSchema }])],
+  imports: [
+    MongooseModule.forFeature([
+      { name: SsoSession.name, schema: SsoSessionSchema },
+    ]),
+  ],
   providers: [SsoSessionService],
   exports: [SsoSessionService, MongooseModule],
 })

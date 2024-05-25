@@ -1,4 +1,10 @@
-import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
+import {
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+} from "@mui/material";
 import { useEffect, useState } from "react";
 import useLocalData from "../../components/LocalData/useLocalData";
 import devToolsService from "../../services/devToolsService";

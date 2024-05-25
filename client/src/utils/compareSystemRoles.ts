@@ -8,10 +8,13 @@ const systemRoleValues = {
 
 /**
  * Check that given role is at least manager.
+ *
  * @param role System role.
  * @returns `true` if role check passed.
  */
-export const atLeastManager = (role: SystemRoles | null | undefined): boolean => {
+export const atLeastManager = (
+  role: SystemRoles | null | undefined,
+): boolean => {
   if (!role) {
     return false;
   }
@@ -20,9 +23,12 @@ export const atLeastManager = (role: SystemRoles | null | undefined): boolean =>
 
 /**
  * Compare two roles (inclusive).
+ *
  * @param role System role to check.
  * @param minRole Lowest role to accept.
  * @returns `true` if role check passed.
  */
-export const roleIsAtLeast = (role: SystemRoles, minRole: SystemRoles): boolean =>
-  systemRoleValues[role] >= systemRoleValues[minRole];
+export const roleIsAtLeast = (
+  role: SystemRoles,
+  minRole: SystemRoles,
+): boolean => systemRoleValues[role] >= systemRoleValues[minRole];

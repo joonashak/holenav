@@ -5,20 +5,13 @@ type GoToButtonProps = ButtonProps & {
   href: string;
 };
 
-/**
- * MUI `Button` that uses `react-router-dom` to navigate to prop `href` value.
- */
+/** MUI `Button` that uses `react-router-dom` to navigate to prop `href` value. */
 const GoToButton = ({ href, children, ...props }: GoToButtonProps) => {
   const history = useHistory();
   const onClick = () => history.push(href);
 
   return (
-    <Button
-      onClick={onClick}
-      variant="outlined"
-      color="secondary"
-      {...props}
-    >
+    <Button onClick={onClick} variant="outlined" color="secondary" {...props}>
       {children}
     </Button>
   );

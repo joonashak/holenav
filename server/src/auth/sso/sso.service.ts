@@ -15,7 +15,10 @@ import SsoSessionType from "./sso-session/sso-session-type.enum";
 import { SsoSessionService } from "./sso-session/sso-session.service";
 import { SsoTokenService } from "./sso-token/sso-token.service";
 import { SsoUrl } from "./sso-url.enum";
-import { SSO_MODULE_CONFIG_TOKEN, SsoModuleConfig } from "./sso.module-definition";
+import {
+  SSO_MODULE_CONFIG_TOKEN,
+  SsoModuleConfig,
+} from "./sso.module-definition";
 
 @Injectable()
 export class SsoService {
@@ -30,9 +33,7 @@ export class SsoService {
     private esiService: EsiService,
   ) {}
 
-  /**
-   * Generate EVE SSO login page URL.
-   */
+  /** Generate EVE SSO login page URL. */
   async getSsoLoginUrl(user: User = null) {
     const { key } = await this.ssoSessionService.createSsoSession(user);
     const scopes = this.moduleConfig.scopes.join(" ");
@@ -46,22 +47,35 @@ export class SsoService {
    *
    * @returns URL to redirect the client to.
    */
-  async handleCallback(authorizationCode: string, state: string): Promise<string> {
+  async handleCallback(
+    authorizationCode: string,
+    state: string,
+  ): Promise<string> {
     // TODO: Refactor - this is too long and hard to understand.
     const ssoSession = await this.ssoSessionService.verifySsoSession(state);
 
-    const { accessToken, refreshToken } = await this.ssoApiService.getSsoTokens(authorizationCode);
-    const jwtData = await this.ssoApiService.verifyAndDecodeSsoAccessToken(accessToken);
+    const { accessToken, refreshToken } =
+      await this.ssoApiService.getSsoTokens(authorizationCode);
+    const jwtData =
+      await this.ssoApiService.verifyAndDecodeSsoAccessToken(accessToken);
 
     // If registering a new user, check the character against registration settings.
-    const userExists = !!(await this.characterService.findByEsiId(jwtData.CharacterID));
-    const userCanRegister = await this.userCanRegister(jwtData.CharacterID, ssoSession.type);
+    const userExists = !!(await this.characterService.findByEsiId(
+      jwtData.CharacterID,
+    ));
+    const userCanRegister = await this.userCanRegister(
+      jwtData.CharacterID,
+      ssoSession.type,
+    );
     if (!userExists && !userCanRegister) {
       await this.ssoSessionService.removeSsoSession(ssoSession.key);
       throw new ForbiddenException("User is not allowed to register.");
     }
 
-    const ssoToken = await this.ssoTokenService.create({ accessToken, refreshToken });
+    const ssoToken = await this.ssoTokenService.create({
+      accessToken,
+      refreshToken,
+    });
 
     const character = await this.characterService.upsert({
       name: jwtData.CharacterName,
@@ -78,7 +92,9 @@ export class SsoService {
     }
 
     const clientCallbackUrl =
-      ssoSession.type === SsoSessionType.LOGIN ? getClientLoginCallbackUrl(state) : CLIENT_URL;
+      ssoSession.type === SsoSessionType.LOGIN
+        ? getClientLoginCallbackUrl(state)
+        : CLIENT_URL;
 
     return clientCallbackUrl;
   }

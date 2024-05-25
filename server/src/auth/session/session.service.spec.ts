@@ -35,13 +35,16 @@ describe("SessionService", () => {
   it("Create session", async () => {
     await expect(sessionService.create(testUser)).resolves.toEqual(testSession);
     expect(sessionModel.create).toBeCalledTimes(1);
-    const { expiresAt }: any = jest.spyOn(sessionModel, "create").mock.calls[0][0];
+    const { expiresAt }: any = jest.spyOn(sessionModel, "create").mock
+      .calls[0][0];
     const expectedExpiry = dayjs().add(ms(JWT_LIFETIME), "ms");
     expect(dayjs(expiresAt).isSame(expectedExpiry, "minute")).toBe(true);
   });
 
   it("Find session by ID", async () => {
-    await expect(sessionService.findOneById(testSession.id)).resolves.toEqual(testSession);
+    await expect(sessionService.findOneById(testSession.id)).resolves.toEqual(
+      testSession,
+    );
     expect(sessionModel.findOne).toBeCalledTimes(1);
     expect(sessionModel.findOne).toBeCalledWith({ id: testSession.id });
   });
@@ -54,7 +57,9 @@ describe("SessionService", () => {
 
   describe("Verify session", () => {
     it("Accept valid session", async () => {
-      await expect(sessionService.verifySession(testSession.id)).resolves.toEqual(testSession);
+      await expect(
+        sessionService.verifySession(testSession.id),
+      ).resolves.toEqual(testSession);
     });
 
     it("Reject missing session", () => {
@@ -62,7 +67,7 @@ describe("SessionService", () => {
         () =>
           ({
             populate: () => null,
-          } as any),
+          }) as any,
       );
 
       expect(sessionService.verifySession(testSession.id)).rejects.toThrowError(
@@ -74,8 +79,11 @@ describe("SessionService", () => {
       jest.spyOn(sessionModel, "findOne").mockImplementationOnce(
         () =>
           ({
-            populate: () => ({ ...testSession, expiresAt: dayjs().subtract(1, "s").toDate() }),
-          } as any),
+            populate: () => ({
+              ...testSession,
+              expiresAt: dayjs().subtract(1, "s").toDate(),
+            }),
+          }) as any,
       );
 
       expect(sessionService.verifySession(testSession.id)).rejects.toThrowError(

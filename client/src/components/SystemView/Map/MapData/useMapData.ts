@@ -9,14 +9,19 @@ export default () => {
   const { get } = useAuthenticatedRestApi();
   const { selectedMap } = settings;
 
-  const fetchConnectionTree = async (rootSystemNameOverride: string | null = null) => {
-    const rootSystemName = rootSystemNameOverride || selectedMap?.rootSystemName;
+  const fetchConnectionTree = async (
+    rootSystemNameOverride: string | null = null,
+  ) => {
+    const rootSystemName =
+      rootSystemNameOverride || selectedMap?.rootSystemName;
 
     if (!rootSystemName) {
       return;
     }
 
-    const res = await get(["connection-graph", "connection-tree", rootSystemName].join("/"));
+    const res = await get(
+      ["connection-graph", "connection-tree", rootSystemName].join("/"),
+    );
     state.merge({ connectionTree: res.data });
   };
 
@@ -25,7 +30,10 @@ export default () => {
       return {
         rootSystemName: state.connectionTree.nested("rootSystemName").get(),
         get children() {
-          return state.connectionTree.nested("children").attach(Downgraded).get();
+          return state.connectionTree
+            .nested("children")
+            .attach(Downgraded)
+            .get();
         },
       };
     },

@@ -1,4 +1,8 @@
-import { ApolloError, MutationHookOptions, QueryHookOptions } from "@apollo/client";
+import {
+  ApolloError,
+  MutationHookOptions,
+  QueryHookOptions,
+} from "@apollo/client";
 import { useState } from "@hookstate/core";
 import { set } from "lodash";
 import useLocalData from "../components/LocalData/useLocalData";
@@ -8,11 +12,14 @@ import useAuth from "./useAuth";
 
 type HookOptions<T, V> = MutationHookOptions<T, V> | QueryHookOptions<T, V>;
 
-type AuthenticatedApolloOptions<T, V> = HookOptions<T, V> extends MutationHookOptions<T, V>
-  ? QueryHookOptions<T, V>
-  : MutationHookOptions<T, V>;
+type AuthenticatedApolloOptions<T, V> =
+  HookOptions<T, V> extends MutationHookOptions<T, V>
+    ? QueryHookOptions<T, V>
+    : MutationHookOptions<T, V>;
 
-const useApolloOptions = <T, V>(options: HookOptions<T, V>): AuthenticatedApolloOptions<T, V> => {
+const useApolloOptions = <T, V>(
+  options: HookOptions<T, V>,
+): AuthenticatedApolloOptions<T, V> => {
   const { token } = useAuth();
   const { settings } = useState(userState);
   const { setAuthToken, devKey } = useLocalData();

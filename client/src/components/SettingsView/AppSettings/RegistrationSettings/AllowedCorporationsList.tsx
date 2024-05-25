@@ -1,5 +1,12 @@
 import AddCircleIcon from "@mui/icons-material/AddCircle";
-import { Box, IconButton, List, ListItem, useMediaQuery, useTheme } from "@mui/material";
+import {
+  Box,
+  IconButton,
+  List,
+  ListItem,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import { useState } from "react";
 import { EsiSearchCategories } from "../../../../services/esi/types";
 import useEsiCorporation from "../../../../services/esi/useEsiCorporation";
@@ -28,10 +35,13 @@ const AllowedCorporationsList = () => {
     return null;
   }
 
-  const { allowedCorporations } = appSettingsQuery.data.getAppData.settings.registration;
+  const { allowedCorporations } =
+    appSettingsQuery.data.getAppData.settings.registration;
 
   const search = async (search: string) => {
-    const searchResult = await getSearchResult(search, [EsiSearchCategories.CORPORATION]);
+    const searchResult = await getSearchResult(search, [
+      EsiSearchCategories.CORPORATION,
+    ]);
 
     const visibleResults = await Promise.all(
       searchResult.corporation.slice(0, 10).map(async (corporationId) => {
@@ -56,7 +66,11 @@ const AllowedCorporationsList = () => {
   };
 
   return (
-    <Row sx={{ flexDirection: "column" }} disableHover hideBorder={wideViewport}>
+    <Row
+      sx={{ flexDirection: "column" }}
+      disableHover
+      hideBorder={wideViewport}
+    >
       <Box sx={{ display: "flex" }}>
         <DebouncingAutocomplete<CorpOption>
           label="Add Corporation"
@@ -75,7 +89,10 @@ const AllowedCorporationsList = () => {
       <List sx={{ pb: 0 }}>
         {!allowedCorporations.length && <ListItem>Empty list</ListItem>}
         {allowedCorporations.map((esiId) => (
-          <OrganizationListItem esiId={esiId} key={`allowed-corp-item-${esiId}`} />
+          <OrganizationListItem
+            esiId={esiId}
+            key={`allowed-corp-item-${esiId}`}
+          />
         ))}
       </List>
     </Row>

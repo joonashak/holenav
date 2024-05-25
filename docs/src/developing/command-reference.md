@@ -1,6 +1,7 @@
 # Command Reference
 
-These commands control the development environment. Run them in the project root.
+These commands control the development environment. Run them in the project
+root.
 
 ## Installation
 
@@ -12,18 +13,20 @@ Install NPM packages in all sub-projects on the local machine.
 npm run setup
 ```
 
-:::tip
-Installing NPM packages locally is not always required as the containerized environment will function without. However, for actual development work it is necessary in order to use tools such as linting, have TypeScript resolve dependencies correctly, etc.
-:::
-
+:::tip Installing NPM packages locally is not always required as the
+containerized environment will function without. However, for actual development
+work it is necessary in order to use tools such as linting, have TypeScript
+resolve dependencies correctly, etc. :::
 
 ## Basic Commands
 
-Control the containerized development environment. Requires `npm`, `docker` and `docker compose` commands to be available on the host machine.
+Control the containerized development environment. Requires `npm`, `docker` and
+`docker compose` commands to be available on the host machine.
 
 ### Start in Development Mode
 
-Starts the development and test containers in detached mode and displays the backend and frontend logs.
+Starts the development and test containers in detached mode and displays the
+backend and frontend logs.
 
 ```bash
 npm start
@@ -51,13 +54,14 @@ npm run logs
 
 ## Linting
 
-:::tip
-Linting runs on the host machine, thus [NPM packages must be installed](#installation). Containers do not need to be up.
-:::
+:::tip Linting runs on the host machine, thus
+[NPM packages must be installed](#installation). Containers do not need to be
+up. :::
 
 ### Run Linter
 
-Lints all sub-projects when run in repository root. Can also be run in sub-project folders `client`, `e2e` and `server`.
+Lints all sub-projects when run in repository root. Can also be run in
+sub-project folders `client`, `e2e` and `server`.
 
 ```bash
 npm run lint
@@ -65,13 +69,14 @@ npm run lint
 
 ## Backend Unit Tests
 
-:::tip
-These tests run on the host machine and require [NPM packages to be installed](#installation). Containers do not need to be up.
+:::tip These tests run on the host machine and require
+[NPM packages to be installed](#installation). Containers do not need to be up.
 :::
 
 Execute in `server/` directory.
 
-Both commands can be appended with `-- PATTERN` to run only test files that match `PATTERN`, e.g., `npm run test:watch -- auth`.
+Both commands can be appended with `-- PATTERN` to run only test files that
+match `PATTERN`, e.g., `npm run test:watch -- auth`.
 
 ### Run Backend Unit Tests
 
@@ -87,7 +92,8 @@ npm run test:watch
 
 ## Containerized Tests
 
-Development environment containers must be running before using these testing commands.
+Development environment containers must be running before using these testing
+commands.
 
 ### Run All Tests
 
@@ -121,7 +127,9 @@ npm run db:drop
 
 ### Generate GraphQL Operations
 
-Uses `graphql-codegen` to generate TypeScript GraphQL operations from `.graphql` documents in frontend. Backend must be running as schema is taken from the GraphQL endpoint.
+Uses `graphql-codegen` to generate TypeScript GraphQL operations from `.graphql`
+documents in frontend. Backend must be running as schema is taken from the
+GraphQL endpoint.
 
 Run this command in the `client/` directory.
 
@@ -133,7 +141,8 @@ npm run generate
 
 ### Run Documentation Dev Server
 
-Docs will be available at [http://localhost:8080](http://localhost:8080) when this command is running.
+Docs will be available at [http://localhost:8080](http://localhost:8080) when
+this command is running.
 
 ```bash
 npm run docs

@@ -21,7 +21,9 @@ const OverviewTitle = () => {
     : null;
 
   const bookmarkName =
-    name === selectedMap?.rootSystemName ? selectedMap.name : nameFromConnectionTree;
+    name === selectedMap?.rootSystemName
+      ? selectedMap.name
+      : nameFromConnectionTree;
 
   const bookmarkNameInTitle = bookmarkName ? ` - ${bookmarkName}` : null;
 

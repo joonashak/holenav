@@ -14,6 +14,8 @@ export type ConnectionTreeNode = {
 };
 
 export class ConnectionTreeParams {
-  @IsIn(systems.map((s) => s.name), { message: "rootSystemName must be a valid EVE system name" })
+  @IsIn(systems.map((s) => s.name), {
+    message: "rootSystemName must be a valid EVE system name",
+  })
   rootSystemName: string;
 }

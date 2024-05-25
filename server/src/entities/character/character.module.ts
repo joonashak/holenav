@@ -8,7 +8,9 @@ import { EsiService } from "../../esi/esi.service";
 
 @Module({
   imports: [
-    MongooseModule.forFeature([{ name: Character.name, schema: CharacterSchema }]),
+    MongooseModule.forFeature([
+      { name: Character.name, schema: CharacterSchema },
+    ]),
     EsiModule,
   ],
   providers: [CharacterService, CharacterResolver, EsiService],

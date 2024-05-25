@@ -7,7 +7,10 @@ export class MockFolderService implements MockService {
   constructor(private folderService: FolderService) {}
 
   async mock() {
-    await this.folderService.createFolder({ name: "Default Folder", id: "default" });
+    await this.folderService.createFolder({
+      name: "Default Folder",
+      id: "default",
+    });
     await this.folderService.createFolder({ name: "Test Folder" });
   }
 }

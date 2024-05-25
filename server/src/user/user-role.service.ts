@@ -8,7 +8,10 @@ import { User, UserDocument } from "./user.model";
 export class UserRoleService {
   constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
-  async assignSystemRole(userId: string, newRole: SystemRole): Promise<UserDocument> {
+  async assignSystemRole(
+    userId: string,
+    newRole: SystemRole,
+  ): Promise<UserDocument> {
     await this.preventDemotingLastAdmin(userId);
     const user = await this.userModel.findOne({ id: userId });
     user.systemRole = newRole;
@@ -25,11 +28,11 @@ export class UserRoleService {
     return users.length === 0 ? SystemRole.ADMINISTRATOR : SystemRole.USER;
   }
 
-  /**
-   * Ensures that at least one admin is always left after role updates.
-   */
+  /** Ensures that at least one admin is always left after role updates. */
   private async preventDemotingLastAdmin(userId: string): Promise<void> {
-    const currentAdmins = await this.userModel.find({ systemRole: SystemRole.ADMINISTRATOR });
+    const currentAdmins = await this.userModel.find({
+      systemRole: SystemRole.ADMINISTRATOR,
+    });
     const adminsLeft = currentAdmins.filter((user) => user.id !== userId);
 
     if (adminsLeft.length === 0) {

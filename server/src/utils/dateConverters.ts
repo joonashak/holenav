@@ -2,9 +2,7 @@
 import { get, set } from "lodash";
 import { DateTime } from "neo4j-driver";
 
-/**
- * Convert Neo4j DateTime into JS Date object.
- */
+/** Convert Neo4j DateTime into JS Date object. */
 export const dateTimeToJsDate = (dateTime: DateTime | undefined): Date => {
   if (!dateTime) {
     return null;

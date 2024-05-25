@@ -24,12 +24,19 @@ export const manageFolderState = createState<ManageFolderState>({
 });
 
 const ManageFolder = () => {
-  const { selectedFolder, selectedRole, selectedCharacter } = useState(manageFolderState);
+  const { selectedFolder, selectedRole, selectedCharacter } =
+    useState(manageFolderState);
   const { manageableFolders } = useSettingsData();
-  const [addFolderRoleMutation] = useAuthenticatedMutation(AddFolderRoleDocument);
+  const [addFolderRoleMutation] = useAuthenticatedMutation(
+    AddFolderRoleDocument,
+  );
   const { showSuccessNotification } = useNotification();
 
-  const folderOptions = manageableFolders.map(({ id, name }) => ({ id, value: id, label: name }));
+  const folderOptions = manageableFolders.map(({ id, name }) => ({
+    id,
+    value: id,
+    label: name,
+  }));
   const roleOptions = Object.keys(FolderRoles).map((role) => ({
     id: `role-${role}`,
     value: FolderRoles[role as keyof typeof FolderRoles],

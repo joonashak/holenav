@@ -32,7 +32,12 @@ describe("AuthService", () => {
           signOptions: { expiresIn: "30d" },
         }),
       ],
-      providers: [AuthService, MockSsoSessionService, MockUserService, MockSessionService],
+      providers: [
+        AuthService,
+        MockSsoSessionService,
+        MockUserService,
+        MockSessionService,
+      ],
     }).compile();
 
     authService = module.get<AuthService>(AuthService);
@@ -50,7 +55,9 @@ describe("AuthService", () => {
       expect(ssoSessionService.verifySsoLoginSuccess).toBeCalledTimes(1);
       expect(ssoSessionService.verifySsoLoginSuccess).toBeCalledWith("asd");
       expect(userService.findByCharacterOrCreateUser).toBeCalledTimes(1);
-      expect(userService.findByCharacterOrCreateUser).toBeCalledWith(testUser.main);
+      expect(userService.findByCharacterOrCreateUser).toBeCalledWith(
+        testUser.main,
+      );
       expect(sessionService.create).toBeCalledTimes(1);
       expect(sessionService.create).toBeCalledWith(testUser);
     });
@@ -60,7 +67,9 @@ describe("AuthService", () => {
         .spyOn(ssoSessionService, "verifySsoLoginSuccess")
         .mockResolvedValueOnce({ ...testSsoSession, ssoLoginSuccess: false });
 
-      await expect(authService.validateSsoLogin("")).rejects.toThrowError(AuthenticationError);
+      await expect(authService.validateSsoLogin("")).rejects.toThrowError(
+        AuthenticationError,
+      );
     });
   });
 
@@ -74,12 +83,16 @@ describe("AuthService", () => {
     it("Rejects an invalid token", () => {
       const sessionId = "jfasd8f";
       const testToken = jwtService.sign({ sessionId }).concat("a");
-      expect(() => authService.verifyToken(testToken)).toThrowError(AuthenticationError);
+      expect(() => authService.verifyToken(testToken)).toThrowError(
+        AuthenticationError,
+      );
     });
 
     it("Rejects a valid token with an invalid payload", () => {
       const testToken = jwtService.sign({});
-      expect(() => authService.verifyToken(testToken)).toThrowError(AuthenticationError);
+      expect(() => authService.verifyToken(testToken)).toThrowError(
+        AuthenticationError,
+      );
     });
 
     it("Creates valid JWT tokens", async () => {
@@ -103,15 +116,24 @@ describe("AuthService", () => {
   describe("Local authentication", () => {
     it("Validate legit user correctly", async () => {
       await expect(
-        authService.validateUserCredentials(testUserCredentials.username, testUserPassword),
+        authService.validateUserCredentials(
+          testUserCredentials.username,
+          testUserPassword,
+        ),
       ).resolves.toStrictEqual(testUser);
-      expect(userService.findWithCredentials).toBeCalledWith(testUserCredentials.username);
+      expect(userService.findWithCredentials).toBeCalledWith(
+        testUserCredentials.username,
+      );
       expect(userService.findWithCredentials).toBeCalledTimes(1);
     });
 
     it("Invalidate unknown user", async () => {
-      jest.spyOn(userService, "findWithCredentials").mockResolvedValueOnce(null);
-      await expect(authService.validateUserCredentials("", testUserPassword)).resolves.toBeNull();
+      jest
+        .spyOn(userService, "findWithCredentials")
+        .mockResolvedValueOnce(null);
+      await expect(
+        authService.validateUserCredentials("", testUserPassword),
+      ).resolves.toBeNull();
     });
 
     it("Invalidate wrong password", async () => {

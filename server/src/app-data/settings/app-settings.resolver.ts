@@ -22,7 +22,9 @@ export class AppSettingsResolver {
 
   @RequireSystemRole(SystemRole.ADMINISTRATOR)
   @Mutation((returns) => AppData)
-  async removeAllowedCorporation(@Args("esiId") esiId: string): Promise<AppData> {
+  async removeAllowedCorporation(
+    @Args("esiId") esiId: string,
+  ): Promise<AppData> {
     return this.appSettingsService.removeAllowedCorporation(esiId);
   }
 

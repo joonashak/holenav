@@ -4,9 +4,7 @@ import { Model } from "mongoose";
 import { DataMigration } from "./data-migration.model";
 import { FolderService } from "../entities/folder/folder.service";
 
-/**
- * Pretty crude hack to keep database contents up to date :sad_face:
- */
+/** Pretty crude hack to keep database contents up to date :sad_face: */
 @Injectable()
 export class DataMigrationService implements OnApplicationBootstrap {
   private readonly logger = new Logger(DataMigrationService.name);
@@ -17,7 +15,8 @@ export class DataMigrationService implements OnApplicationBootstrap {
   };
 
   constructor(
-    @InjectModel(DataMigration.name) private dataMigrationModel: Model<DataMigration>,
+    @InjectModel(DataMigration.name)
+    private dataMigrationModel: Model<DataMigration>,
     private folderService: FolderService,
   ) {}
 

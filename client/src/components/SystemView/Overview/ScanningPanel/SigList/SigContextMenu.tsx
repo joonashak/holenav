@@ -32,7 +32,7 @@ const SigContextMenu = ({ children, signature }: SigContextMenuProps) => {
         : // repeated contextmenu when it is already open closes it with Chrome 84 on Ubuntu
           // Other native context menus might behave different.
           // With this behavior we prevent contextmenu from the backdrop to re-locale existing context menus.
-          null
+          null,
     );
   };
 
@@ -40,8 +40,11 @@ const SigContextMenu = ({ children, signature }: SigContextMenuProps) => {
     setContextMenu(null);
   };
 
-  const holesWithoutIds = signatures.filter((sig) => sig.type === SigType.Wormhole && !sig.eveId);
-  const returnConnectionWithoutId = holesWithoutIds.length === 1 ? holesWithoutIds[0] : null;
+  const holesWithoutIds = signatures.filter(
+    (sig) => sig.type === SigType.Wormhole && !sig.eveId,
+  );
+  const returnConnectionWithoutId =
+    holesWithoutIds.length === 1 ? holesWithoutIds[0] : null;
 
   const markSigAsReturnWormholeEnabled =
     returnConnectionWithoutId && signature.eveId && !signature.wormholeType;
@@ -55,7 +58,11 @@ const SigContextMenu = ({ children, signature }: SigContextMenuProps) => {
 
     await deleteSignatures([signature.id]);
     await updateSignatures([
-      { ...returnConnectionWithoutId, eveId: signature.eveId, type: SigType.Wormhole },
+      {
+        ...returnConnectionWithoutId,
+        eveId: signature.eveId,
+        type: SigType.Wormhole,
+      },
     ]);
     handleClose();
   };
@@ -72,10 +79,15 @@ const SigContextMenu = ({ children, signature }: SigContextMenuProps) => {
         onClose={handleClose}
         anchorReference="anchorPosition"
         anchorPosition={
-          contextMenu !== null ? { top: contextMenu.mouseY, left: contextMenu.mouseX } : undefined
+          contextMenu !== null
+            ? { top: contextMenu.mouseY, left: contextMenu.mouseX }
+            : undefined
         }
       >
-        <MenuItem onClick={markSigAsReturnWormhole} disabled={!markSigAsReturnWormholeEnabled}>
+        <MenuItem
+          onClick={markSigAsReturnWormhole}
+          disabled={!markSigAsReturnWormholeEnabled}
+        >
           Mark {signature.eveId} as Return Wormhole
         </MenuItem>
       </Menu>

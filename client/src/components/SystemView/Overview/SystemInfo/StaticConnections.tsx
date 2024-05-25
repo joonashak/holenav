@@ -23,9 +23,12 @@ const WormholeChip = ({ whType }: WormholeChipProps) => {
   }
 
   const { type, destination } = wormhole;
-  const value = destination.type === "WH" ? `C${destination.whClass}` : destination.type;
+  const value =
+    destination.type === "WH" ? `C${destination.whClass}` : destination.type;
   const valueColor =
-    destination.type !== "WH" ? chipValueColors[destination.type] : "primary.contrastText";
+    destination.type !== "WH"
+      ? chipValueColors[destination.type]
+      : "primary.contrastText";
 
   return (
     <WormholeInfoTooltip type={type}>
@@ -41,7 +44,14 @@ const WormholeChip = ({ whType }: WormholeChipProps) => {
 };
 
 const HBox = ({ children }: BoxProps) => (
-  <Box sx={{ display: "flex", justifyContent: "space-evenly", width: 1, my: "3px" }}>
+  <Box
+    sx={{
+      display: "flex",
+      justifyContent: "space-evenly",
+      width: 1,
+      my: "3px",
+    }}
+  >
     {children}
   </Box>
 );
@@ -54,10 +64,20 @@ const StaticConnections = () => {
       <Typography variant="h4" color="secondary.light">
         Static Connections
       </Typography>
-      <Box sx={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between", my: 2 }}>
+      <Box
+        sx={{
+          display: "flex",
+          flexWrap: "wrap",
+          justifyContent: "space-between",
+          my: 2,
+        }}
+      >
         <HBox>
           {staticConnections.map((whType) => (
-            <WormholeChip whType={whType} key={`system-info-static-conn-${whType}`} />
+            <WormholeChip
+              whType={whType}
+              key={`system-info-static-conn-${whType}`}
+            />
           ))}
         </HBox>
       </Box>

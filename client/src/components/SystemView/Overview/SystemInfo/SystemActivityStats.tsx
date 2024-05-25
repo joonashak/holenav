@@ -5,7 +5,14 @@ import DataChip from "../../../common/DataChip";
 import useSystemData from "../../SystemData/useSystemData";
 
 const HBox = ({ children }: BoxProps) => (
-  <Box sx={{ display: "flex", justifyContent: "space-evenly", width: 1, my: "3px" }}>
+  <Box
+    sx={{
+      display: "flex",
+      justifyContent: "space-evenly",
+      width: 1,
+      my: "3px",
+    }}
+  >
     {children}
   </Box>
 );
@@ -21,18 +28,37 @@ const SystemActivityStats = () => {
       <Typography variant="h4" color="secondary.light">
         Activity (Last Hour)
       </Typography>
-      <Box sx={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between", my: 2 }}>
+      <Box
+        sx={{
+          display: "flex",
+          flexWrap: "wrap",
+          justifyContent: "space-between",
+          my: 2,
+        }}
+      >
         <HBox>
           <DataChip
             label="Jumps"
             value={getJumpsBySystem(eveId)}
             labelProps={{ variant: "body2" }}
           />
-          <DataChip label="Ship Kills" value={shipKills} labelProps={{ variant: "body2" }} />
+          <DataChip
+            label="Ship Kills"
+            value={shipKills}
+            labelProps={{ variant: "body2" }}
+          />
         </HBox>
         <HBox>
-          <DataChip label="NPC Kills" value={npcKills} labelProps={{ variant: "body2" }} />
-          <DataChip label="Pod Kills" value={podKills} labelProps={{ variant: "body2" }} />
+          <DataChip
+            label="NPC Kills"
+            value={npcKills}
+            labelProps={{ variant: "body2" }}
+          />
+          <DataChip
+            label="Pod Kills"
+            value={podKills}
+            labelProps={{ variant: "body2" }}
+          />
         </HBox>
       </Box>
     </>

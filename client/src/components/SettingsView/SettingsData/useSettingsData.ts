@@ -28,7 +28,8 @@ const useSettingsData = () => {
     onError: () => showErrorNotification("Could not create new folder."),
   });
 
-  const createFolder = async (name: string) => createFolderMutation({ variables: { name } });
+  const createFolder = async (name: string) =>
+    createFolderMutation({ variables: { name } });
 
   const [assignSystemRoleMutation] = useAuthenticatedMutation<
     AssignSystemRoleMutation,
@@ -36,7 +37,9 @@ const useSettingsData = () => {
   >(AssignSystemRoleDocument, {
     onCompleted: ({ assignSystemRole }) => {
       state.users.set((users) =>
-        users.filter((user) => user.id !== assignSystemRole.id).concat(assignSystemRole),
+        users
+          .filter((user) => user.id !== assignSystemRole.id)
+          .concat(assignSystemRole),
       );
     },
   });

@@ -2,28 +2,40 @@ import { Injectable } from "@nestjs/common";
 import { compact, omit } from "lodash";
 import { Neo4jService } from "../../../integration/neo4j/neo4j.service";
 import { mapDateTimeToJsDateByKey } from "../../../utils/dateConverters";
-import { CreatableSignature, CreatableSignatureWithoutConnection } from "../dto/add-signatures.dto";
+import {
+  CreatableSignature,
+  CreatableSignatureWithoutConnection,
+} from "../dto/add-signatures.dto";
 import { UpdateableSignature } from "../dto/update-signatures.dto";
 import { Signature } from "../signature.model";
 import { SystemMutationService } from "./system-mutation.service";
 
 @Injectable()
 export class SignatureMutationService {
-  constructor(private neoService: Neo4jService, private systemNode: SystemMutationService) {}
+  constructor(
+    private neoService: Neo4jService,
+    private systemNode: SystemMutationService,
+  ) {}
 
   /**
-   * Create many signatures in a given folder. Each created Signature is linked to a System
-   * with the given `folderId`. Systems are not created if they don't exist.
+   * Create many signatures in a given folder. Each created Signature is linked
+   * to a System with the given `folderId`. Systems are not created if they
+   * don't exist.
+   *
    * @param signatures Signatures to create.
    * @param folderId ID of the Folder to use.
    * @returns Created Signatures.
    */
-  async createSignatures(signatures: CreatableSignature[], folderId: string): Promise<Signature[]> {
+  async createSignatures(
+    signatures: CreatableSignature[],
+    folderId: string,
+  ): Promise<Signature[]> {
     if (!signatures.length) {
       return [];
     }
 
-    const signaturesToCreate = this.getSignaturesAndReverseSignatures(signatures);
+    const signaturesToCreate =
+      this.getSignaturesAndReverseSignatures(signatures);
     await this.systemNode.ensureSystemsExist(signaturesToCreate, folderId);
 
     const res = await this.neoService.write(
@@ -51,10 +63,10 @@ export class SignatureMutationService {
     return newSignatures;
   }
 
-  /**
-   * Update signatures by ID. Changing host system or folder is not supported.
-   */
-  async updateSignatures(signatures: UpdateableSignature[]): Promise<Signature[]> {
+  /** Update signatures by ID. Changing host system or folder is not supported. */
+  async updateSignatures(
+    signatures: UpdateableSignature[],
+  ): Promise<Signature[]> {
     if (!signatures.length) {
       return [];
     }
@@ -128,7 +140,9 @@ export class SignatureMutationService {
   private getSignaturesAndReverseSignatures(
     signatures: CreatableSignature[],
   ): CreatableSignatureWithoutConnection[] {
-    const signaturesWithoutConnections = signatures.map((sig) => omit(sig, "connection"));
+    const signaturesWithoutConnections = signatures.map((sig) =>
+      omit(sig, "connection"),
+    );
     const reverseSignatures = compact(
       signatures.map((sig) => sig.connection?.reverseSignature || null),
     );

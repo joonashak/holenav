@@ -45,7 +45,11 @@ mutation SetRegistrationEnabled($enabled: Boolean) {
 }
 
 mutation SetCorporationFilterEnabled($enabled: Boolean) {
-  updateAppData(input: { settings: { registration: { corporationFilterEnabled: $enabled } } }) {
+  updateAppData(
+    input: {
+      settings: { registration: { corporationFilterEnabled: $enabled } }
+    }
+  ) {
     settings {
       registration {
         enabled
@@ -55,7 +59,9 @@ mutation SetCorporationFilterEnabled($enabled: Boolean) {
 }
 
 mutation SetAllianceFilterEnabled($enabled: Boolean) {
-  updateAppData(input: { settings: { registration: { allianceFilterEnabled: $enabled } } }) {
+  updateAppData(
+    input: { settings: { registration: { allianceFilterEnabled: $enabled } } }
+  ) {
     settings {
       registration {
         enabled

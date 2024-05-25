@@ -22,13 +22,20 @@ export class FolderService {
 
   /**
    * Create new folder and give the creator admin rights to it.
+   *
    * @param name Folder name.
    * @param user Creator of the folder.
    * @returns The created folder.
    */
-  async createFolderAndPermissions(name: string, user: UserDocument): Promise<Folder> {
+  async createFolderAndPermissions(
+    name: string,
+    user: UserDocument,
+  ): Promise<Folder> {
     const folder = await this.createFolder({ name });
-    await this.userService.addFolderRole(user, { folder, role: FolderRole.ADMIN });
+    await this.userService.addFolderRole(user, {
+      folder,
+      role: FolderRole.ADMIN,
+    });
     return folder;
   }
 
@@ -40,14 +47,20 @@ export class FolderService {
     return this.folderModel.findOne({ id });
   }
 
-  private async getFolderByRole(user: UserDocument, minRole: FolderRole): Promise<Folder[]> {
+  private async getFolderByRole(
+    user: UserDocument,
+    minRole: FolderRole,
+  ): Promise<Folder[]> {
     if (user.systemRole === SystemRole.ADMINISTRATOR) {
       return this.folderModel.find({});
     }
 
     const folderIds = user.folderRoles
       .filter(({ role }) => role >= minRole)
-      .map(({ folder }) => new mongoose.Types.ObjectId(folder as unknown as string));
+      .map(
+        ({ folder }) =>
+          new mongoose.Types.ObjectId(folder as unknown as string),
+      );
     return this.folderModel.find({ _id: { $in: folderIds } });
   }
 
@@ -55,6 +68,7 @@ export class FolderService {
    * Get `Folder`s that `user` has any roles for.
    *
    * Returns all folders for system admins.
+   *
    * @param user Usually current user.
    * @returns List of `Folder`s.
    */
@@ -66,6 +80,7 @@ export class FolderService {
    * Get `Folder`s that `user` can manage.
    *
    * Returns all folders for system admins.
+   *
    * @param user Usually current user.
    * @returns List of `Folder`s.
    */

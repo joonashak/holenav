@@ -6,9 +6,10 @@ import { SignatureWithoutConnection } from "../signature.model";
 class SignatureWithoutConnectionInput extends SignatureWithoutConnection {}
 
 @InputType()
-export class CreatableSignatureWithoutConnection extends OmitType(SignatureWithoutConnectionInput, [
-  "id",
-]) {
+export class CreatableSignatureWithoutConnection extends OmitType(
+  SignatureWithoutConnectionInput,
+  ["id"],
+) {
   @Field({ nullable: true })
   id?: string;
 }

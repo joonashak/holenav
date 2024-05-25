@@ -11,7 +11,8 @@ const AllowedAlliances = () => {
     return null;
   }
 
-  const { allianceFilterEnabled } = appSettingsQuery.data.getAppData.settings.registration;
+  const { allianceFilterEnabled } =
+    appSettingsQuery.data.getAppData.settings.registration;
 
   const toggle = async (_: ChangeEvent, checked: boolean) => {
     setAllianceFilterEnabled(checked);
@@ -21,7 +22,13 @@ const AllowedAlliances = () => {
     <Box>
       <FullsizeControl
         label="Restrict registration to members of selected alliances"
-        control={<Switch color="secondary" checked={allianceFilterEnabled} onChange={toggle} />}
+        control={
+          <Switch
+            color="secondary"
+            checked={allianceFilterEnabled}
+            onChange={toggle}
+          />
+        }
       />
       <AllowedAlliancesList />
     </Box>

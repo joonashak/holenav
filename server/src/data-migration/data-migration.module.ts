@@ -6,7 +6,9 @@ import { DataMigrationService } from "./data-migration.service";
 
 @Module({
   imports: [
-    MongooseModule.forFeature([{ name: DataMigration.name, schema: DataMigrationSchema }]),
+    MongooseModule.forFeature([
+      { name: DataMigration.name, schema: DataMigrationSchema },
+    ]),
     FolderModule,
   ],
   providers: [DataMigrationService],

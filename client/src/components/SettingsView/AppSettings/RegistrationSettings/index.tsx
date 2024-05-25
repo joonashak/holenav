@@ -21,7 +21,9 @@ const RegistrationSettings = () => {
         control={
           <Switch
             color="secondary"
-            checked={appSettingsQuery.data?.getAppData.settings.registration.enabled}
+            checked={
+              appSettingsQuery.data?.getAppData.settings.registration.enabled
+            }
             onChange={toggle}
           />
         }
@@ -31,9 +33,9 @@ const RegistrationSettings = () => {
         <AllowedAlliances />
       </SplitRow>
       <Typography variant="body2">
-        If both filters are activated, satisfying one condition (i.e. matching corp or alliance) is
-        enough for registration to be allowed. Deactivating both filters allows registration using
-        any character.
+        If both filters are activated, satisfying one condition (i.e. matching
+        corp or alliance) is enough for registration to be allowed. Deactivating
+        both filters allows registration using any character.
       </Typography>
     </SettingsGroup>
   );

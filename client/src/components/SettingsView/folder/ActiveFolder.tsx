@@ -8,10 +8,16 @@ const ActiveFolder = () => {
   const { activeFolder, setActiveFolder } = useUserSettings();
   const { accessibleFolders } = useSettingsData();
 
-  const options = accessibleFolders.map(({ id, name }) => ({ id, value: id, label: name }));
+  const options = accessibleFolders.map(({ id, name }) => ({
+    id,
+    value: id,
+    label: name,
+  }));
 
   const onChange = (event: SelectChangeEvent<string>) => {
-    const newActiveFolder = accessibleFolders.find((folder) => folder.id === event.target.value);
+    const newActiveFolder = accessibleFolders.find(
+      (folder) => folder.id === event.target.value,
+    );
     if (newActiveFolder) {
       setActiveFolder(newActiveFolder);
     }
@@ -20,7 +26,12 @@ const ActiveFolder = () => {
   return (
     <>
       <PageTitle>Active Folder</PageTitle>
-      <Select options={options} onChange={onChange} value={activeFolder.id} title="Active Folder" />
+      <Select
+        options={options}
+        onChange={onChange}
+        value={activeFolder.id}
+        title="Active Folder"
+      />
     </>
   );
 };

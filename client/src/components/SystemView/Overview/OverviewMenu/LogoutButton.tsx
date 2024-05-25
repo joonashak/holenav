@@ -17,7 +17,9 @@ const LogoutButton = () => {
 
   const onClick = async () => {
     if (mocking) {
-      showInfoNotification("Logoff not implemented for mock users. Please use the dev toolbar.");
+      showInfoNotification(
+        "Logoff not implemented for mock users. Please use the dev toolbar.",
+      );
       return;
     }
     await logoutMutation();

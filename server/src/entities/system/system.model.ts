@@ -12,8 +12,9 @@ export class System {
   folderId: string;
 
   /**
-   * Indicates if a system is an unknown system. These pseudo-systems are created for the purpose
-   * of graph completeness when the system on the otherside of a wormhole is not known.
+   * Indicates if a system is an unknown system. These pseudo-systems are
+   * created for the purpose of graph completeness when the system on the
+   * otherside of a wormhole is not known.
    */
   @Field()
   pseudo: boolean;

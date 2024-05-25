@@ -44,7 +44,9 @@ describe("TokenAuthGuard", () => {
 
   it("Access denied with missing token", async () => {
     const context = mockContextWithHeaders({});
-    await expect(authGuard.canActivate(context)).rejects.toThrowError(AuthenticationError);
+    await expect(authGuard.canActivate(context)).rejects.toThrowError(
+      AuthenticationError,
+    );
     expect(userService.findById).not.toBeCalled();
     expect(authService.verifyToken).not.toBeCalled();
     expect(sessionService.verifySession).not.toBeCalled();
@@ -55,7 +57,9 @@ describe("TokenAuthGuard", () => {
     jest
       .spyOn(sessionService, "verifySession")
       .mockResolvedValueOnce({ ...testSession, user: null });
-    await expect(authGuard.canActivate(context)).rejects.toThrowError(AuthenticationError);
+    await expect(authGuard.canActivate(context)).rejects.toThrowError(
+      AuthenticationError,
+    );
     expect(userService.findById).not.toBeCalled();
     expect(authService.verifyToken).toBeCalledTimes(1);
     expect(authService.verifyToken).toBeCalledWith(testToken);

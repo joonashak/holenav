@@ -32,9 +32,7 @@ export class DevToolsService {
     private mockConnectionGraphService: MockConnectionGraphService,
   ) {}
 
-  /**
-   * Clear collections and run data migrations.
-   */
+  /** Clear collections and run data migrations. */
   async resetDatabase() {
     await this.clearCollections();
 
@@ -42,9 +40,7 @@ export class DevToolsService {
     await this.mockUserService.mock();
   }
 
-  /**
-   * Clear database and seed it with mock data.
-   */
+  /** Clear database and seed it with mock data. */
   async seedDatabase() {
     await this.clearCollections();
 

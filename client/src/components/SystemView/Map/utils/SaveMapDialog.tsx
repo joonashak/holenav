@@ -18,7 +18,9 @@ const SaveMapDialog = ({ open, onClose }: SaveMapDialogProps) => {
   const { showSuccessNotification } = useNotification();
   const { addSavedMap } = useUserData();
   const { name: systemName } = useSystemData();
-  const { handleSubmit, control } = useForm({ defaultValues: { rootSystemName: systemName } });
+  const { handleSubmit, control } = useForm({
+    defaultValues: { rootSystemName: systemName },
+  });
 
   const submit = async (formData: FieldValues) => {
     const res = await addSavedMap(formData as SavedMap);

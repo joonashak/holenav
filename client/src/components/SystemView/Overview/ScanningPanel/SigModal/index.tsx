@@ -23,8 +23,13 @@ type SigModalProps = {
   signature?: Signature;
 };
 
-const SigModal = ({ open, onClose: onCloseSuper, signature }: SigModalProps) => {
-  const { disableSigPasteListener, enableSigPasteListener } = useSigPasteListener();
+const SigModal = ({
+  open,
+  onClose: onCloseSuper,
+  signature,
+}: SigModalProps) => {
+  const { disableSigPasteListener, enableSigPasteListener } =
+    useSigPasteListener();
   const defaultType = signature?.type || SigType.Unknown;
   const [type, setType] = useState(defaultType);
   const defaultEveId = signature?.eveId || "";
@@ -69,12 +74,21 @@ const SigModal = ({ open, onClose: onCloseSuper, signature }: SigModalProps) => 
             title="Signature Type"
             options={typeOptions}
           />
-          <EveIdField value={eveId} onChange={onEveIdChange} existingId={signature?.id || null} />
+          <EveIdField
+            value={eveId}
+            onChange={onEveIdChange}
+            existingId={signature?.id || null}
+          />
         </FormGroupRow>
         {showWormholeForm ? (
           <WormholeForm eveId={eveId} existing={signature} onClose={onClose} />
         ) : (
-          <SigForm type={type} eveId={eveId} existing={signature} onClose={onClose} />
+          <SigForm
+            type={type}
+            eveId={eveId}
+            existing={signature}
+            onClose={onClose}
+          />
         )}
       </DialogContent>
     </Dialog>

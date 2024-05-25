@@ -22,7 +22,11 @@ const massOptions = [
 ];
 
 const whTypeOptions = [{ key: "wh-K162", value: "K162", label: "K162" }].concat(
-  wormholes.map(({ type }) => ({ key: `wh-${type}`, value: type, label: type }))
+  wormholes.map(({ type }) => ({
+    key: `wh-${type}`,
+    value: type,
+    label: type,
+  })),
 );
 
 const WormholeForm = (props: UseWormholeFormProps) => {
@@ -35,7 +39,8 @@ const WormholeForm = (props: UseWormholeFormProps) => {
       mass: existing?.connection?.massStatus || MassStatus.Stable,
       whType: existing?.wormholeType || "",
       whReverseType: existing?.connection?.reverseSignature.wormholeType || "",
-      destinationName: existing?.connection?.reverseSignature.systemName || null,
+      destinationName:
+        existing?.connection?.reverseSignature.systemName || null,
     },
   });
 

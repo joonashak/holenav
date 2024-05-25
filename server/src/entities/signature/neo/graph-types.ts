@@ -1,6 +1,4 @@
-/**
- * Types for the nodes and relations used in Neo4j.
- */
+/** Types for the nodes and relations used in Neo4j. */
 
 import MassStatus from "../enums/mass-status.enum";
 import SigType from "../enums/sig-type.enum";

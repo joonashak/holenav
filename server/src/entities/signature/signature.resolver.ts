@@ -5,7 +5,10 @@ import FolderRole from "../../user/roles/folder-role.enum";
 import { Folder } from "../folder/folder.model";
 import { AddSignaturesInput } from "./dto/add-signatures.dto";
 import { DeleteSignaturesInput } from "./dto/delete-signatures.dto";
-import { SignaturePaste, SignaturePasteResult } from "./dto/paste-signatures.dto";
+import {
+  SignaturePaste,
+  SignaturePasteResult,
+} from "./dto/paste-signatures.dto";
 import { UpdateSignaturesInput } from "./dto/update-signatures.dto";
 import { SignaturePasteService } from "./signature-paste.service";
 import { Signature } from "./signature.model";
@@ -24,7 +27,10 @@ export class SignatureResolver {
     @Args("systemName") systemName: string,
     @ActiveFolder() activeFolder: Folder,
   ): Promise<Signature[]> {
-    const signatures = await this.sigService.getBySystem(systemName, activeFolder);
+    const signatures = await this.sigService.getBySystem(
+      systemName,
+      activeFolder,
+    );
     return signatures;
   }
 
@@ -34,7 +40,10 @@ export class SignatureResolver {
     @Args("input") input: AddSignaturesInput,
     @ActiveFolder() activeFolder: Folder,
   ): Promise<Signature[]> {
-    const signatures = await this.sigService.createSignatures(input.signatures, activeFolder);
+    const signatures = await this.sigService.createSignatures(
+      input.signatures,
+      activeFolder,
+    );
     return signatures;
   }
 
@@ -44,13 +53,18 @@ export class SignatureResolver {
     @Args("input") input: UpdateSignaturesInput,
     @ActiveFolder() activeFolder: Folder,
   ): Promise<Signature[]> {
-    const signatures = await this.sigService.updateSignatures(input.signatures, activeFolder);
+    const signatures = await this.sigService.updateSignatures(
+      input.signatures,
+      activeFolder,
+    );
     return signatures;
   }
 
   @RequireFolderRole(FolderRole.WRITE)
   @Mutation((returns) => [Signature])
-  async deleteSignatures(@Args("input") input: DeleteSignaturesInput): Promise<Signature[]> {
+  async deleteSignatures(
+    @Args("input") input: DeleteSignaturesInput,
+  ): Promise<Signature[]> {
     const signatures = await this.sigService.deleteSignatures(input.ids);
     return signatures;
   }

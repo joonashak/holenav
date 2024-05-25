@@ -14,9 +14,7 @@ import { Session } from "./session/session.model";
 export default class AuthResolver {
   constructor(private authService: AuthService) {}
 
-  /**
-   * Callback for client to get Holenav's auth token after successful SSO login.
-   */
+  /** Callback for client to get Holenav's auth token after successful SSO login. */
   @Mutation((returns) => AccessTokenDto)
   async getToken(@Args("state") state: string): Promise<AccessTokenDto> {
     const accessToken = await this.authService.validateSsoLogin(state);

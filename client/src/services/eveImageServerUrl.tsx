@@ -11,7 +11,8 @@ const eveImageServerUrl = (
   id: string,
   size?: EveImageServerImageSize,
 ) => {
-  const variation = category === EveImageServerCategories.CHARACTERS ? "portrait" : "logo";
+  const variation =
+    category === EveImageServerCategories.CHARACTERS ? "portrait" : "logo";
   const queryParams = size ? `?size=${size}` : "";
   return `https://images.evetech.net/${category}/${id}/${variation}${queryParams}`;
 };

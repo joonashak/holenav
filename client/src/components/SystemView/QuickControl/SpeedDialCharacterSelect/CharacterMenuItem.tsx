@@ -1,6 +1,11 @@
 import CheckIcon from "@mui/icons-material/Check";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { IconButton, ListItemIcon, ListItemText, MenuItem } from "@mui/material";
+import {
+  IconButton,
+  ListItemIcon,
+  ListItemText,
+  MenuItem,
+} from "@mui/material";
 import { SyntheticEvent } from "react";
 import { Character } from "../../../../generated/graphqlOperations";
 import useNotification from "../../../GlobalNotification/useNotification";
@@ -12,7 +17,10 @@ type CharacterMenuItemProps = {
   selectCharacter: () => void;
 };
 
-const CharacterMenuItem = ({ character, selectCharacter }: CharacterMenuItemProps) => {
+const CharacterMenuItem = ({
+  character,
+  selectCharacter,
+}: CharacterMenuItemProps) => {
   const { showSuccessNotification } = useNotification();
   const { activeCharacter, setActiveCharacter } = useLocalData();
   const { main, removeAlt } = useUserData();
@@ -39,7 +47,10 @@ const CharacterMenuItem = ({ character, selectCharacter }: CharacterMenuItemProp
         {selected ? <CheckIcon sx={{ color: "secondary.light" }} /> : null}
       </ListItemIcon>
       <ListItemText
-        sx={{ marginRight: 2, color: selected ? "secondary.light" : "primary.contrastText" }}
+        sx={{
+          marginRight: 2,
+          color: selected ? "secondary.light" : "primary.contrastText",
+        }}
       >
         {name}
       </ListItemText>

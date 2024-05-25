@@ -7,7 +7,8 @@ import { Character, CharacterDocument } from "./character.model";
 @Injectable()
 export class CharacterService {
   constructor(
-    @InjectModel(Character.name) private characterModel: Model<CharacterDocument>,
+    @InjectModel(Character.name)
+    private characterModel: Model<CharacterDocument>,
     private esiService: EsiService,
   ) {}
 
@@ -23,6 +24,7 @@ export class CharacterService {
 
   /**
    * Upsert character into DB.
+   *
    * @param data Character to be upserted.
    * @returns New or updated character.
    */
@@ -30,7 +32,9 @@ export class CharacterService {
     const { esiId, ...rest } = data;
     const exists = !!(await this.characterModel.findOne({ esiId }));
     const character = exists
-      ? await this.characterModel.findOneAndUpdate({ esiId }, rest, { new: true })
+      ? await this.characterModel.findOneAndUpdate({ esiId }, rest, {
+          new: true,
+        })
       : this.create(data);
     return character;
   }
@@ -47,15 +51,20 @@ export class CharacterService {
 
   async searchByMain(search: string): Promise<Character[]> {
     // FIXME: Paginate this properly.
-    return this.characterModel.find({ name: { $regex: RegExp(search, "i") } }).limit(10);
+    return this.characterModel
+      .find({ name: { $regex: RegExp(search, "i") } })
+      .limit(10);
   }
 
-  private async appendPublicInfoFromEsi(character: CharacterDocument): Promise<CharacterDocument> {
-    const { corporation_id, alliance_id } = await this.esiService.getCharacterPublicInfo(
+  private async appendPublicInfoFromEsi(
+    character: CharacterDocument,
+  ): Promise<CharacterDocument> {
+    const { corporation_id, alliance_id } =
+      await this.esiService.getCharacterPublicInfo(character.esiId);
+
+    const { px512x512 } = await this.esiService.getCharacterPortraitUrl(
       character.esiId,
     );
-
-    const { px512x512 } = await this.esiService.getCharacterPortraitUrl(character.esiId);
     character.portraitUrl = px512x512;
 
     const { name, ticker } = await this.esiService.getCorporationPublicInfo(

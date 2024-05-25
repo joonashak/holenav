@@ -4,7 +4,10 @@ import { FilterQuery, Model } from "mongoose";
 import { Character } from "../entities/character/character.model";
 import { CharacterService } from "../entities/character/character.service";
 import { FolderService } from "../entities/folder/folder.service";
-import { Credentials, CredentialsDocument } from "./credentials/credentials.model";
+import {
+  Credentials,
+  CredentialsDocument,
+} from "./credentials/credentials.model";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { SanitizedUserForManager } from "./dto/sanitized-user-for-manager.dto";
 import { UserSsoTokens } from "./dto/user-sso-tokens.dto";
@@ -17,7 +20,8 @@ import { User, UserDocument } from "./user.model";
 export class UserService {
   constructor(
     @InjectModel(User.name) private userModel: Model<UserDocument>,
-    @InjectModel(Credentials.name) private credentialsModel: Model<CredentialsDocument>,
+    @InjectModel(Credentials.name)
+    private credentialsModel: Model<CredentialsDocument>,
     private folderService: FolderService,
     private characterService: CharacterService,
     private userRoleService: UserRoleService,
@@ -25,6 +29,7 @@ export class UserService {
 
   /**
    * Create new user.
+   *
    * @param user User to be created.
    * @returns Newly created user.
    */
@@ -32,7 +37,10 @@ export class UserService {
     await this.ensureCharacterNotInUse(user.main);
     await this.characterService.makeMain(user.main);
 
-    const folder = await this.folderService.createFolder({ name: "My Folder", personal: true });
+    const folder = await this.folderService.createFolder({
+      name: "My Folder",
+      personal: true,
+    });
     const systemRole = await this.userRoleService.getNewUserSystemRole();
     const newUser = await this.userModel.create({
       ...user,
@@ -46,18 +54,23 @@ export class UserService {
   /**
    * Get all users but do not include private or sensitive fields.
    *
-   * Designed to be safe for use in frontend for listing users etc. Fields such as
-   * settings and alts are removed.
+   * Designed to be safe for use in frontend for listing users etc. Fields such
+   * as settings and alts are removed.
+   *
    * @returns List of users.
    */
   async findUsersSanitizedForManager(
     query?: FilterQuery<UserDocument>,
   ): Promise<SanitizedUserForManager[]> {
-    return this.userModel.find(query).populate(["main"]).select(["id", "main", "systemRole"]);
+    return this.userModel
+      .find(query)
+      .populate(["main"])
+      .select(["id", "main", "systemRole"]);
   }
 
   /**
    * Find a user by ID (Holenav's internal `User.id`).
+   *
    * @param id User id to search for.
    * @returns The found user or `undefined`.
    */
@@ -74,7 +87,9 @@ export class UserService {
   }
 
   async findByCharacter(character: Character): Promise<User> {
-    return this.userModel.findOne({ $or: [{ main: character }, { alts: character }] }).exec();
+    return this.userModel
+      .findOne({ $or: [{ main: character }, { alts: character }] })
+      .exec();
   }
 
   async findByEsiId(esiId: string): Promise<User> {
@@ -87,7 +102,9 @@ export class UserService {
    *
    * Both mains and alts are searched over. If a match is not found, new user is
    * create with the given character as its main.
-   * @param character Character to search for or use as the main if creating new user.
+   *
+   * @param character Character to search for or use as the main if creating new
+   *   user.
    * @returns The found or created user.
    */
   async findByCharacterOrCreateUser(character: Character): Promise<User> {
@@ -105,6 +122,7 @@ export class UserService {
    * Find a user by username and include password hash.
    *
    * For use in authentication only.
+   *
    * @param username Username to search for.
    * @returns User or null if not found.
    */
@@ -113,9 +131,7 @@ export class UserService {
     return this.userModel.findOne({ credentials }).populate("credentials");
   }
 
-  /**
-   * Add a new alt to a user.
-   */
+  /** Add a new alt to a user. */
   async addAlt(alt: Character, userId: string): Promise<void> {
     await this.ensureCharacterNotInUse(alt);
 
@@ -132,15 +148,16 @@ export class UserService {
     this.characterService.remove(esiId);
   }
 
-  /**
-   * Throws `HttpException` if given character is used anywhere.
-   */
+  /** Throws `HttpException` if given character is used anywhere. */
   private async ensureCharacterNotInUse(char: Character): Promise<void> {
     const mains = await this.userModel.find({ main: char });
     const alts = await this.userModel.find({ alts: char });
 
     if (mains.length || alts.length) {
-      throw new HttpException("Character already in use.", HttpStatus.BAD_REQUEST);
+      throw new HttpException(
+        "Character already in use.",
+        HttpStatus.BAD_REQUEST,
+      );
     }
   }
 
@@ -148,10 +165,17 @@ export class UserService {
     // FIXME: Check for user's rights to manage the target folder.
     // FIXME: Account for existing roles.
     const { id } = user;
-    return await this.userModel.findOneAndUpdate({ id }, { $push: { folderRoles: folderRole } });
+    return await this.userModel.findOneAndUpdate(
+      { id },
+      { $push: { folderRoles: folderRole } },
+    );
   }
 
-  async addFolderRoleByEsiId(userEsiId: string, folderId: string, role: FolderRole): Promise<User> {
+  async addFolderRoleByEsiId(
+    userEsiId: string,
+    folderId: string,
+    role: FolderRole,
+  ): Promise<User> {
     const user = await this.findByEsiId(userEsiId);
     const folder = await this.folderService.getFolderById(folderId);
     return await this.addFolderRole(user, { folder, role });

@@ -11,7 +11,9 @@ const getRequest = (context: ExecutionContext) => {
     return gqlContext.getContext().req;
   }
 
-  throw new BadRequestException("Server only accepts HTTP and GraphQL requests.");
+  throw new BadRequestException(
+    "Server only accepts HTTP and GraphQL requests.",
+  );
 };
 
 export default getRequest;

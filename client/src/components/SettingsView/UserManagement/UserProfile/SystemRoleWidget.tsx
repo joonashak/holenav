@@ -1,6 +1,15 @@
-import { Box, Button, MenuItem, Select, SelectChangeEvent } from "@mui/material";
+import {
+  Box,
+  Button,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+} from "@mui/material";
 import { useState } from "react";
-import { SanitizedUserForManager, SystemRoles } from "../../../../generated/graphqlOperations";
+import {
+  SanitizedUserForManager,
+  SystemRoles,
+} from "../../../../generated/graphqlOperations";
 import useSettingsData from "../../SettingsData/useSettingsData";
 
 const options = [

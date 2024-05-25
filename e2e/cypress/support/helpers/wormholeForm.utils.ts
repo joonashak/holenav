@@ -34,7 +34,7 @@ const wormholePropertyTests = {
 
 export const testWormholeProperties = (
   props: TestableWormholeProps,
-  url: string | null = null
+  url: string | null = null,
 ): void => {
   const { name } = props;
 

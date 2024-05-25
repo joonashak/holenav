@@ -6,7 +6,10 @@ import { CharacterModule } from "../entities/character/character.module";
 import { CharacterService } from "../entities/character/character.service";
 import { FolderService } from "../entities/folder/folder.service";
 import { EsiModule } from "../esi/esi.module";
-import { Credentials, CredentialsSchema } from "./credentials/credentials.model";
+import {
+  Credentials,
+  CredentialsSchema,
+} from "./credentials/credentials.model";
 import { UserSettingsService } from "./settings/user-settings.service";
 import { UserRoleService } from "./user-role.service";
 import { User, UserSchema } from "./user.model";
@@ -34,6 +37,12 @@ import { UserService } from "./user.service";
     CharacterService,
     UserResolver,
   ],
-  exports: [UserService, UserRoleService, UserSettingsService, MongooseModule, CharacterService],
+  exports: [
+    UserService,
+    UserRoleService,
+    UserSettingsService,
+    MongooseModule,
+    CharacterService,
+  ],
 })
 export class UserModule {}

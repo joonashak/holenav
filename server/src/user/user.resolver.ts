@@ -52,13 +52,19 @@ export class UserResolver {
 
   @RequireAuth()
   @Mutation((returns) => User)
-  async deleteSavedMap(@Args("mapId") mapId: string, @CurrentUser() user: User): Promise<User> {
+  async deleteSavedMap(
+    @Args("mapId") mapId: string,
+    @CurrentUser() user: User,
+  ): Promise<User> {
     return this.userSettingsService.deleteSavedMap(mapId, user);
   }
 
   @RequireAuth()
   @Mutation((returns) => User)
-  async removeAlt(@Args("esiId") esiId: string, @CurrentUser() user: User): Promise<User> {
+  async removeAlt(
+    @Args("esiId") esiId: string,
+    @CurrentUser() user: User,
+  ): Promise<User> {
     await this.userService.removeAlt(esiId, user.id);
     return this.whoami(user);
   }
@@ -91,7 +97,9 @@ export class UserResolver {
     @Args("input") input: AssignSystemRoleInput,
   ): Promise<SanitizedUserForManager> {
     await this.userRoleService.assignSystemRole(input.userId, input.systemRole);
-    const users = await this.userService.findUsersSanitizedForManager({ id: input.userId });
+    const users = await this.userService.findUsersSanitizedForManager({
+      id: input.userId,
+    });
     return users[0];
   }
 

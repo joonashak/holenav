@@ -4,7 +4,11 @@ import { SsoToken, SsoTokenSchema } from "./sso-token.model";
 import { SsoTokenService } from "./sso-token.service";
 
 @Module({
-  imports: [MongooseModule.forFeature([{ name: SsoToken.name, schema: SsoTokenSchema }])],
+  imports: [
+    MongooseModule.forFeature([
+      { name: SsoToken.name, schema: SsoTokenSchema },
+    ]),
+  ],
   providers: [SsoTokenService],
   exports: [SsoTokenService, MongooseModule],
 })

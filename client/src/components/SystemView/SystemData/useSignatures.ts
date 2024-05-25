@@ -34,56 +34,85 @@ const useSignatures = () => {
     return addSigsMutation({ variables: { input: { signatures } } });
   };
 
-  const [updateSigsMutation] = useAuthenticatedMutation(UpdateSignaturesDocument, {
-    onCompleted: (data) => {
-      state.signatures.set((sigs) =>
-        sigs.map(
-          (sig) => data.updateSignatures.find((updated: Signature) => updated.id === sig.id) || sig
-        )
-      );
+  const [updateSigsMutation] = useAuthenticatedMutation(
+    UpdateSignaturesDocument,
+    {
+      onCompleted: (data) => {
+        state.signatures.set((sigs) =>
+          sigs.map(
+            (sig) =>
+              data.updateSignatures.find(
+                (updated: Signature) => updated.id === sig.id,
+              ) || sig,
+          ),
+        );
+      },
     },
-  });
+  );
 
-  const updateSignatures = async (signatures: UpdateableSignature[]): Promise<FetchResult> =>
+  const updateSignatures = async (
+    signatures: UpdateableSignature[],
+  ): Promise<FetchResult> =>
     updateSigsMutation({
-      variables: { input: { signatures: signatures.map(stripGraphQlTypenames) } },
+      variables: {
+        input: { signatures: signatures.map(stripGraphQlTypenames) },
+      },
     });
 
-  const [deleteSigsMutation] = useAuthenticatedMutation(DeleteSignaturesDocument, {
-    onCompleted: (data) => {
-      const deletedIds = data.deleteSignatures.map((sig: Signature) => sig.id);
-      state.signatures.set((sigs) => sigs.filter((sig) => !deletedIds.includes(sig.id)));
+  const [deleteSigsMutation] = useAuthenticatedMutation(
+    DeleteSignaturesDocument,
+    {
+      onCompleted: (data) => {
+        const deletedIds = data.deleteSignatures.map(
+          (sig: Signature) => sig.id,
+        );
+        state.signatures.set((sigs) =>
+          sigs.filter((sig) => !deletedIds.includes(sig.id)),
+        );
+      },
     },
-  });
+  );
 
   const deleteSignatures = async (ids: string[]): Promise<void> => {
     await deleteSigsMutation({ variables: { input: { ids } } });
   };
 
-  const [pasteSigsMutation] = useAuthenticatedMutation(PasteSignaturesDocument, {
-    onCompleted: (data) => {
-      const { added, updated, deleted } = data.pasteSignatures as SignaturePasteResult;
+  const [pasteSigsMutation] = useAuthenticatedMutation(
+    PasteSignaturesDocument,
+    {
+      onCompleted: (data) => {
+        const { added, updated, deleted } =
+          data.pasteSignatures as SignaturePasteResult;
 
-      if (added.length) {
-        state.signatures.set((sigs) => sigs.concat(added));
-      }
+        if (added.length) {
+          state.signatures.set((sigs) => sigs.concat(added));
+        }
 
-      if (updated.length) {
-        state.signatures.set((sigs) =>
-          sigs.map(
-            (sig) => updated.find((updatedSig: Signature) => updatedSig.id === sig.id) || sig
-          )
-        );
-      }
+        if (updated.length) {
+          state.signatures.set((sigs) =>
+            sigs.map(
+              (sig) =>
+                updated.find(
+                  (updatedSig: Signature) => updatedSig.id === sig.id,
+                ) || sig,
+            ),
+          );
+        }
 
-      if (deleted.length) {
-        const deletedIds = deleted.map((sig) => sig.id);
-        state.signatures.set((sigs) => sigs.filter((sig) => !deletedIds.includes(sig.id)));
-      }
+        if (deleted.length) {
+          const deletedIds = deleted.map((sig) => sig.id);
+          state.signatures.set((sigs) =>
+            sigs.filter((sig) => !deletedIds.includes(sig.id)),
+          );
+        }
+      },
     },
-  });
+  );
 
-  const pasteSignatures = async (pastedSignatures: PastedSignature[], deleteMissingSigs = false) =>
+  const pasteSignatures = async (
+    pastedSignatures: PastedSignature[],
+    deleteMissingSigs = false,
+  ) =>
     pasteSigsMutation({
       variables: {
         input: {

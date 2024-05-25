@@ -18,25 +18,33 @@ export class EsiService {
     this.axios = httpService.axiosRef;
   }
 
-  async getAlliancePublicInfo(allianceId: string): Promise<EsiAlliancePublicInfo> {
+  async getAlliancePublicInfo(
+    allianceId: string,
+  ): Promise<EsiAlliancePublicInfo> {
     const url = this.url("v4", "alliances", allianceId);
     const res = await this.axios.get<EsiAlliancePublicInfo>(url);
     return res.data;
   }
 
-  async getCharacterPortraitUrl(characterId: string): Promise<EsiCharacterPortraitUrl> {
+  async getCharacterPortraitUrl(
+    characterId: string,
+  ): Promise<EsiCharacterPortraitUrl> {
     const url = this.url("v3", "characters", characterId, "portrait");
     const res = await this.axios.get<EsiCharacterPortraitUrl>(url);
     return res.data;
   }
 
-  async getCharacterPublicInfo(characterId: string): Promise<EsiCharacterPublicInfo> {
+  async getCharacterPublicInfo(
+    characterId: string,
+  ): Promise<EsiCharacterPublicInfo> {
     const url = this.url("v5", "characters", characterId);
     const res = await this.axios.get<EsiCharacterPublicInfo>(url);
     return res.data;
   }
 
-  async getCorporationPublicInfo(corporationId: string): Promise<EsiCorporationPublicInfo> {
+  async getCorporationPublicInfo(
+    corporationId: string,
+  ): Promise<EsiCorporationPublicInfo> {
     const url = this.url("v5", "corporations", corporationId);
     const res = await this.axios.get<EsiCorporationPublicInfo>(url);
     return res.data;

@@ -40,7 +40,11 @@ const MenuContent = ({ sx, bottomListSx }: MenuContentProps) => (
       </List>
       <MenuDivider>Folder Settings</MenuDivider>
       <List>
-        <MenuItem text="Active Folder" Icon={FolderOpenIcon} href={settingsRoutes.activeFolder} />
+        <MenuItem
+          text="Active Folder"
+          Icon={FolderOpenIcon}
+          href={settingsRoutes.activeFolder}
+        />
         <SystemRoleGuard hideFrom={[SystemRoles.User]}>
           <MenuItem
             text="Folder Management"
@@ -52,13 +56,21 @@ const MenuContent = ({ sx, bottomListSx }: MenuContentProps) => (
       <SystemRoleGuard hideFrom={[SystemRoles.User]}>
         <MenuDivider>Manager Settings</MenuDivider>
         <List>
-          <MenuItem text="Users" Icon={GroupIcon} href={settingsRoutes.userManagement} />
+          <MenuItem
+            text="Users"
+            Icon={GroupIcon}
+            href={settingsRoutes.userManagement}
+          />
         </List>
       </SystemRoleGuard>
       <SystemRoleGuard showTo={[SystemRoles.Administrator]}>
         <MenuDivider>Admin Settings</MenuDivider>
         <List>
-          <MenuItem text="App Settings" Icon={SettingsIcon} href={settingsRoutes.appSettings} />
+          <MenuItem
+            text="App Settings"
+            Icon={SettingsIcon}
+            href={settingsRoutes.appSettings}
+          />
         </List>
       </SystemRoleGuard>
       <List sx={{ bgcolor: "primary.light", ...bottomListSx }}>

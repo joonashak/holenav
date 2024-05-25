@@ -20,7 +20,8 @@ const useWormholeForm = (props: UseWormholeFormProps) => {
   const { addSignatures, updateSignatures } = useSignatures();
 
   const submitNew = async (formData: FieldValues) => {
-    const { whType, whReverseType, life, mass, name, destinationName } = formData;
+    const { whType, whReverseType, life, mass, name, destinationName } =
+      formData;
     const mutationData = {
       eveId,
       systemName,
@@ -51,7 +52,8 @@ const useWormholeForm = (props: UseWormholeFormProps) => {
 
   const submitEdit = async (formData: FieldValues) => {
     const id = existing?.id || "";
-    const { whType, whReverseType, life, mass, name, destinationName } = formData;
+    const { whType, whReverseType, life, mass, name, destinationName } =
+      formData;
 
     // Add missing fields when updating non-WH sig into WH.
     const reverseSignature = existing?.connection

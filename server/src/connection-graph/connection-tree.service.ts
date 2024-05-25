@@ -6,10 +6,19 @@ import { ConnectionTree, ConnectionTreeNode } from "./dto/connection-tree.dto";
 export class ConnectionTreeService {
   constructor(private connectionGraphService: ConnectionGraphService) {}
 
-  async getConnectionTree(rootSystemName: string, folderId: string): Promise<ConnectionTree> {
-    const records = await this.connectionGraphService.getConnectionGraph(rootSystemName, folderId);
+  async getConnectionTree(
+    rootSystemName: string,
+    folderId: string,
+  ): Promise<ConnectionTree> {
+    const records = await this.connectionGraphService.getConnectionGraph(
+      rootSystemName,
+      folderId,
+    );
     const connections = records.map((record) => ({ ...record._fields[0] }));
-    const connectionTree = this.buildConnectionTree(rootSystemName, connections);
+    const connectionTree = this.buildConnectionTree(
+      rootSystemName,
+      connections,
+    );
 
     return connectionTree;
   }
