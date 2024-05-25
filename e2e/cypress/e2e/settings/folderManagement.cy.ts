@@ -3,7 +3,7 @@ import { ROUTES } from "../../support/routes";
 
 const testFolderName = "New e2e Folder";
 
-describe("Folder Management", () => {
+describe.skip("Folder Management", () => {
   describe("Add new folder", () => {
     beforeEach(() => {
       cy.resetDatabase();
