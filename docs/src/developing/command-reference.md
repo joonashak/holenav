@@ -7,10 +7,10 @@ root.
 
 ### Install NPM Packages
 
-Install NPM packages in all sub-projects on the local machine.
+Install NPM modules for all projects (incl. root project) on the local machine.
 
 ```bash
-npm run setup
+npm run install:all
 ```
 
 :::tip Installing NPM packages locally is not always required as the

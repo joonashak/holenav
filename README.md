@@ -35,7 +35,7 @@ This is not required if you only want to test the app. For developing and
 running tests, install the NPM packages:
 
 ```bash
-npm run setup
+npm run install:all
 ```
 
 #### Launch Development Environment
