@@ -14,26 +14,23 @@ services:
       - MONGO_URL=mongodb://mongo-ci/ci
       - NEO_URL=neo4j://neo-ci
       - NEO_DB=neo4j
-      - CLIENT_URL=http://client-ci:3000
+      - CLIENT_URL=http://web-ci:5173
       - JWT_SECRET=asdasd
       - ENABLE_DEVTOOLS=true
     depends_on:
       - mongo-ci
       - neo-ci
 
-  client-ci:
-    build: ./client/
-    ports:
-      - 3000:3000
-      - 30011:30011
+  web-ci:
+    build: ./web/
+    container_name: holenav-web-ci
     networks:
       - ci
-    container_name: holenav-client-ci
     environment:
-      - PORT=3000
-      - INTERNAL_STATUS_PORT=30011
-      - REACT_APP_BACKEND_URL=http://server-ci:3001
-      - REACT_APP_ENABLE_DEVTOOLS=true
+      - VITE_BACKEND_URL=http://server-ci:3001
+      - VITE_ENABLE_DEVTOOLS=true
+    volumes:
+      - ./web/src:/usr/src/app/src
 
   mongo-ci:
     image: mongo:4.4-bionic
@@ -62,7 +59,7 @@ services:
       - ci
     container_name: holenav-e2e-ci
     environment:
-      - CYPRESS_BASE_URL=http://client-ci:3000
+      - CYPRESS_BASE_URL=http://web-ci:5173
       - CYPRESS_API_URL=http://server-ci:3001
     volumes:
       - ./e2e/cypress:/e2e/cypress

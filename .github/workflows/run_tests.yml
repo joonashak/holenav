@@ -66,7 +66,7 @@ jobs:
       - name: Build and start containers
         run:
           docker compose -f ci.compose.yaml up -d mongo-ci neo-ci server-ci
-          client-ci
+          web-ci
       - name: Run E2E tests
         run: docker compose -f ci.compose.yaml run e2e-ci
       - uses: actions/upload-artifact@v4
