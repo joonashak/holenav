@@ -1,6 +1,6 @@
-export const backendUrl = process.env.REACT_APP_BACKEND_URL;
+export const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
-export const devToolsEnabled = process.env.REACT_APP_ENABLE_DEVTOOLS === "true";
+export const devToolsEnabled = import.meta.env.VITE_ENABLE_DEVTOOLS === "true";
 
 export const endpoints = {
   graphQl: `${backendUrl}/graphql`,
