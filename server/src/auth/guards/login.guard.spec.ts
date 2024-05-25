@@ -1,20 +1,22 @@
+import { createMock } from "@golevelup/ts-jest";
 import { ExecutionContext } from "@nestjs/common";
+import { GraphQLExecutionContext } from "@nestjs/graphql";
 import { JwtModule } from "@nestjs/jwt";
 import { Test } from "@nestjs/testing";
-import { createMock } from "@golevelup/ts-jest";
-import { AuthService } from "../auth.service";
-import { SessionService } from "../session/session.service";
-import { LoginGuard } from "./login.guard";
-import { GraphQLExecutionContext } from "@nestjs/graphql";
 import { AuthenticationError } from "apollo-server-express";
 import { JWT_LIFETIME, JWT_SECRET } from "../../config";
 import {
   MockAuthService,
   MockSessionService,
 } from "../../test-utils/mock-services";
+import { AuthService } from "../auth.service";
+import { SessionService } from "../session/session.service";
+import { LoginGuard } from "./login.guard";
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const createContextWithGqlArgs = (gqlArgs: any): ExecutionContext => {
   const gqlContext = createMock<GraphQLExecutionContext>();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const args: any = [{}, gqlArgs, gqlContext, {}];
   const context = createMock<ExecutionContext>({
     getArgs: () => args,

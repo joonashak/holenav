@@ -16,6 +16,7 @@ export class Neo4jService {
     await this.driver.close();
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async read(query: string, params?: any) {
     const session = this.getSession(neo4j.session.READ);
     let result;
@@ -29,6 +30,7 @@ export class Neo4jService {
     return result;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async write(query: string, params?: any) {
     const session = this.getSession(neo4j.session.WRITE);
     let result;

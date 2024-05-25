@@ -59,6 +59,7 @@ export class AppSettingsService {
     ]);
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private async pushToList(key: string, value: any): Promise<AppDataDocument> {
     await this.appDataModel.updateOne(
       {},
@@ -73,6 +74,7 @@ export class AppSettingsService {
 
   private async removeFromList(
     key: string,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     value: any[],
   ): Promise<AppDataDocument> {
     await this.appDataModel.updateOne(

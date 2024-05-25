@@ -45,6 +45,7 @@ export class ConnectionGraphService {
   async getConnectionGraph(
     rootSystemName: string,
     folderId: string,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ): Promise<any> {
     // Kudos to glilienfield for helping with this query:
     // https://community.neo4j.com/t5/neo4j-graph-platform/expand-sets-of-multiple-relations-when-querying-for-hierarchical/m-p/59381

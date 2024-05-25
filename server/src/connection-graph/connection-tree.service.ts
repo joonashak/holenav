@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Injectable } from "@nestjs/common";
 import { ConnectionGraphService } from "./connection-graph.service";
 import { ConnectionTree, ConnectionTreeNode } from "./dto/connection-tree.dto";

@@ -9,6 +9,7 @@ import { Folder } from "./folder.model";
 
 @Injectable({ scope: Scope.REQUEST })
 export class ActiveFolderService {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   constructor(@Inject(CONTEXT) private context: any) {}
 
   populateWithActiveFolder<T>(objects: T[]): Array<T & { folder: Folder }> {

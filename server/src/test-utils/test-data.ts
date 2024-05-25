@@ -29,6 +29,7 @@ export const testUserCredentials = {
 export const testUser: User = {
   id: "asd",
   alts: [],
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   folderRoles: [{ folder: testFolder.id as any, role: FolderRole.READ }],
   main: {
     name: "test character",
