@@ -1,35 +1,43 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
+import { CssBaseline, ThemeProvider } from "@mui/material";
+import GlobalNotification from "./components/GlobalNotification";
+import useLocalData from "./components/LocalData/useLocalData";
+import Router from "./components/Router";
+import SettingsData from "./components/SettingsView/SettingsData";
+import UserData from "./components/UserData";
+import ViewportContainer from "./components/ViewportContainer";
+import { devToolsEnabled, endpoints } from "./config";
+import DevTools from "./dev/DevTools";
+import appTheme from "./theme";
 
-function App() {
-  const [count, setCount] = useState(0)
+const apolloClient = new ApolloClient({
+  uri: endpoints.graphQl,
+  cache: new InMemoryCache(),
+});
+
+const App = () => {
+  const { loadingLocalState } = useLocalData();
+
+  if (loadingLocalState) {
+    return null;
+  }
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <ThemeProvider theme={appTheme}>
+      <CssBaseline />
+      <ApolloProvider client={apolloClient}>
+        <UserData>
+          <SettingsData>
+            <ViewportContainer>
+              <Router />
+              <GlobalNotification />
+            </ViewportContainer>
+          </SettingsData>
+        </UserData>
+        {devToolsEnabled && <DevTools />}
+      </ApolloProvider>
+    </ThemeProvider>
+  );
+};
 
-export default App
+export default App;
