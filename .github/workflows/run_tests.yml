@@ -1,4 +1,4 @@
-name: Run test suite
+name: Run tests
 
 on:
   push:
@@ -6,6 +6,19 @@ on:
       - update-docs
 
 jobs:
+  format:
+    name: Format
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+      - name: Install dependencies
+        run: npm ci
+      - name: Check format
+        run: npm run format:check
+
   lint-client:
     name: Lint (client)
     runs-on: ubuntu-latest
@@ -76,7 +89,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Build and start containers
-        run: docker compose -f ci.compose.yaml up -d mongo-ci neo-ci server-ci client-ci
+        run:
+          docker compose -f ci.compose.yaml up -d mongo-ci neo-ci server-ci
+          client-ci
       - name: Run E2E tests
         run: docker compose -f ci.compose.yaml run e2e-ci
       - uses: actions/upload-artifact@v4
