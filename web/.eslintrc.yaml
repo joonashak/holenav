@@ -6,6 +6,8 @@ extends:
   - "eslint:recommended"
   - "plugin:@typescript-eslint/recommended"
   - "plugin:react-hooks/recommended"
+  # Keep prettier last so it overrides other configs correctly!
+  - prettier
 ignorePatterns:
   - "dist"
   - "src/graphql/generated"
