@@ -35,6 +35,17 @@ services:
     volumes:
       - ./client/src:/usr/src/app/src
 
+  web:
+    build: ./web/
+    container_name: holenav-web
+    environment:
+      - VITE_BACKEND_URL=http://localhost:3001
+      - VITE_ENABLE_DEVTOOLS=true
+    ports:
+      - 3000:5173
+    volumes:
+      - ./web/src:/usr/src/app/src
+
   mongo:
     image: mongo:5.0-focal
     restart: unless-stopped
