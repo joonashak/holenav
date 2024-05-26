@@ -15,12 +15,6 @@ export const JWT_LIFETIME = process.env.JWT_LIFETIME || "30d";
 export const ENABLE_DEVTOOLS = process.env.ENABLE_DEVTOOLS === "true";
 export const APP_VERSION =
   process.env.npm_package_version || process.env.APP_VERSION.replace("v", "");
-export const CLIENT_CD_TOKEN = process.env.CLIENT_CD_TOKEN;
-export const CLIENT_CD_OWNER = process.env.CLIENT_CD_OWNER;
-export const CLIENT_CD_REPO = process.env.CLIENT_CD_REPO;
-export const CLIENT_CD_WORKFLOW_ID = process.env.CLIENT_CD_WORKFLOW_ID;
-export const DISABLE_CLIENT_CD_VERSION_INPUT =
-  process.env.DISABLE_CLIENT_CD_VERSION_INPUT === "true";
 export const DEV_KEY = process.env.DEV_KEY;
 export const HOST_FRONTEND = process.env.HOST_FRONTEND === "true";
 
