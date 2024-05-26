@@ -7,7 +7,9 @@ services:
       - ./web/src:/usr/src/app/src
 
   server-base:
-    build: ./server/
+    build:
+      context: server
+      dockerfile: Dockerfile.dev
     environment:
       - PORT=3001
       - NEO_DB=neo4j
