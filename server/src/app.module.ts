@@ -14,6 +14,7 @@ import { FolderModule } from "./entities/folder/folder.module";
 import { SignatureModule } from "./entities/signature/signature.module";
 import { SystemModule } from "./entities/system/system.module";
 import { EsiModule } from "./esi/esi.module";
+import { FrontendModule } from "./frontend/frontend.module";
 import { Neo4jModule } from "./integration/neo4j/neo4j.module";
 import { ScheduledTasksModule } from "./scheduled-tasks/scheduled-tasks.module";
 
@@ -38,6 +39,7 @@ import { ScheduledTasksModule } from "./scheduled-tasks/scheduled-tasks.module";
     ScheduledTasksModule,
     SignatureModule,
     SystemModule,
+    FrontendModule,
   ],
 })
 export class AppModule {}
