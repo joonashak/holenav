@@ -1,0 +1,66 @@
+services:
+  server:
+    extends:
+      file: compose.common.yaml
+      service: server-base
+    build:
+      context: ./server
+      dockerfile: Dockerfile.production
+    networks:
+      - ci
+    container_name: holenav-server-ci
+    environment:
+      - NODE_ENV=test
+      - MONGO_URL=mongodb://mongo/ci
+      - NEO_URL=neo4j://neo
+      - NEO_DB=neo4j
+      - CLIENT_URL=http://web:5173
+    depends_on:
+      - mongo
+      - neo
+
+  web:
+    extends:
+      file: compose.common.yaml
+      service: web-base
+    container_name: holenav-web-ci
+    networks:
+      - ci
+    environment:
+      - VITE_BACKEND_URL=http://server:3001
+
+  mongo:
+    extends:
+      file: compose.common.yaml
+      service: mongo-base
+    container_name: holenav-mongo-ci
+    networks:
+      - ci
+
+  neo:
+    extends:
+      file: compose.common.yaml
+      service: neo-test-base
+    container_name: holenav-neo-ci
+    networks:
+      - ci
+
+  e2e:
+    build: ./e2e/
+    networks:
+      - ci
+    container_name: holenav-e2e
+    environment:
+      - CYPRESS_BASE_URL=http://web:5173
+      - CYPRESS_API_URL=http://server:3001
+    volumes:
+      - ./e2e/cypress:/e2e/cypress
+    depends_on:
+      - server
+
+networks:
+  ci:
+
+volumes:
+  mongo-data:
+  neo-data:
