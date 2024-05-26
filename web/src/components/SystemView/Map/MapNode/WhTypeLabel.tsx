@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Typography } from "@mui/material";
 import { useState } from "react";
 import { Wormhole } from "../MapData/types";
