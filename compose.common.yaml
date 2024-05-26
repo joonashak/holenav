@@ -9,7 +9,7 @@ services:
   server-base:
     build:
       context: server
-      dockerfile: Dockerfile.dev
+      dockerfile: server/Dockerfile.dev
     environment:
       - PORT=3001
       - NEO_DB=neo4j
@@ -22,12 +22,6 @@ services:
     image: mongo:5.0-focal
     restart: unless-stopped
     container_name: holenav-mongo
-    volumes:
-      - type: volume
-        source: mongo-data
-        target: /data/db
-        volume:
-          nocopy: true
     ports:
       - 27017:27017
 
@@ -37,10 +31,6 @@ services:
     container_name: holenav-neo
     environment:
       - NEO4J_AUTH=none
-    volumes:
-      - type: volume
-        source: neo-data
-        target: /data
     ports:
       - 7474:7474
       - 7687:7687

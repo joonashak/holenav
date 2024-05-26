@@ -57,11 +57,21 @@ services:
     extends:
       file: compose.common.yaml
       service: mongo-base
+    volumes:
+      - type: volume
+        source: mongo-data
+        target: /data/db
+        volume:
+          nocopy: true
 
   neo:
     extends:
       file: compose.common.yaml
       service: neo-base
+    volumes:
+      - type: volume
+        source: neo-data
+        target: /data
 
   # Community edition does not allow multiple databases, so we must spin up another container for tests.
   neo-test:

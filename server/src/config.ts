@@ -1,3 +1,5 @@
+import { version } from "../package.json";
+
 export const NODE_ENV = process.env.NODE_ENV;
 export const NOT_PRODUCTION = NODE_ENV !== "production";
 export const MONGO_URL = process.env.MONGO_URL;
@@ -13,8 +15,7 @@ export const PORT = process.env.PORT || 3001;
 export const JWT_SECRET = process.env.JWT_SECRET;
 export const JWT_LIFETIME = process.env.JWT_LIFETIME || "30d";
 export const ENABLE_DEVTOOLS = process.env.ENABLE_DEVTOOLS === "true";
-export const APP_VERSION =
-  process.env.npm_package_version || process.env.APP_VERSION.replace("v", "");
+export const APP_VERSION = version;
 export const DEV_KEY = process.env.DEV_KEY;
 export const HOST_FRONTEND = process.env.HOST_FRONTEND === "true";
 

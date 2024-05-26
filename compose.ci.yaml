@@ -1,20 +1,18 @@
 services:
   server:
-    extends:
-      file: compose.common.yaml
-      service: server-base
-    build:
-      context: ./server
-      dockerfile: Dockerfile.production
+    build: .
+    container_name: holenav-server-ci
     networks:
       - ci
-    container_name: holenav-server-ci
     environment:
       - NODE_ENV=test
+      - PORT=3001
       - MONGO_URL=mongodb://mongo/ci
       - NEO_URL=neo4j://neo
       - NEO_DB=neo4j
       - CLIENT_URL=http://web:5173
+      - JWT_SECRET=asdasd
+      - ENABLE_DEVTOOLS=true
     depends_on:
       - mongo
       - neo
@@ -60,7 +58,3 @@ services:
 
 networks:
   ci:
-
-volumes:
-  mongo-data:
-  neo-data:
