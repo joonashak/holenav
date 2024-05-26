@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { FetchResult } from "@apollo/client";
 import { Downgraded, useState } from "@hookstate/core";
 import { systemState } from ".";
@@ -6,12 +7,12 @@ import {
   AddSignaturesDocument,
   CreatableSignature,
   DeleteSignaturesDocument,
-  PastedSignature,
   PasteSignaturesDocument,
+  PastedSignature,
   Signature,
   SignaturePasteResult,
-  UpdateableSignature,
   UpdateSignaturesDocument,
+  UpdateableSignature,
 } from "../../../generated/graphqlOperations";
 import { stripGraphQlTypenames } from "../../../utils/stripGraphQlTypenames";
 
@@ -21,7 +22,7 @@ const useSignatures = () => {
   const state = useState(systemState);
 
   const [addSigsMutation] = useAuthenticatedMutation(AddSignaturesDocument, {
-    onCompleted: (data) => {
+    onCompleted: (data: any) => {
       state.signatures.set((sigs) => sigs.concat(data.addSignatures));
     },
   });
@@ -37,7 +38,7 @@ const useSignatures = () => {
   const [updateSigsMutation] = useAuthenticatedMutation(
     UpdateSignaturesDocument,
     {
-      onCompleted: (data) => {
+      onCompleted: (data: any) => {
         state.signatures.set((sigs) =>
           sigs.map(
             (sig) =>
@@ -62,7 +63,7 @@ const useSignatures = () => {
   const [deleteSigsMutation] = useAuthenticatedMutation(
     DeleteSignaturesDocument,
     {
-      onCompleted: (data) => {
+      onCompleted: (data: any) => {
         const deletedIds = data.deleteSignatures.map(
           (sig: Signature) => sig.id,
         );
@@ -80,7 +81,7 @@ const useSignatures = () => {
   const [pasteSigsMutation] = useAuthenticatedMutation(
     PasteSignaturesDocument,
     {
-      onCompleted: (data) => {
+      onCompleted: (data: any) => {
         const { added, updated, deleted } =
           data.pasteSignatures as SignaturePasteResult;
 

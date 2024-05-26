@@ -1,7 +1,7 @@
 import { SelectChangeEvent } from "@mui/material";
+import useUserSettings from "../../UserData/settings/useUserSettings";
 import PageTitle from "../../common/PageTitle";
 import Select from "../../controls/Select";
-import useUserSettings from "../../UserData/settings/useUserSettings";
 import useSettingsData from "../SettingsData/useSettingsData";
 
 const ActiveFolder = () => {
@@ -29,7 +29,7 @@ const ActiveFolder = () => {
       <Select
         options={options}
         onChange={onChange}
-        value={activeFolder.id}
+        value={activeFolder?.id || ""}
         title="Active Folder"
       />
     </>

@@ -3,7 +3,8 @@ import { Control, Controller } from "react-hook-form";
 
 type ControlledSelectProps = {
   name: string;
-  control: Control;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  control: Control<any, object>;
   label: string;
   options: Options[];
 };

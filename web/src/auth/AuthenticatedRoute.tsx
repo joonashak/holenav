@@ -1,8 +1,11 @@
+import { ReactNode } from "react";
 import { Route, RouteProps } from "react-router-dom";
 import AuthenticatedComponent from "./AuthenticatedComponent";
 import useAuth from "./useAuth";
 
-type AuthenticatedRouteProps = Omit<RouteProps, "component">;
+type AuthenticatedRouteProps = Omit<RouteProps, "component"> & {
+  children: ReactNode;
+};
 
 const AuthenticatedRoute = ({
   children,

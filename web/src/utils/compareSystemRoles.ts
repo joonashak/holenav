@@ -1,6 +1,7 @@
 import { SystemRoles } from "../generated/graphqlOperations";
 
 const systemRoleValues = {
+  [SystemRoles.None]: 0,
   [SystemRoles.User]: 1,
   [SystemRoles.Manager]: 2,
   [SystemRoles.Administrator]: 3,

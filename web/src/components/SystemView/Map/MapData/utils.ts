@@ -1,5 +1,5 @@
 import { flatMapDeep } from "lodash";
-import { RawNodeDatum } from "react-d3-tree/lib/types/types/common.d";
+import { RawNodeDatum } from "react-d3-tree";
 import { MapNodeDatum } from "./types";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

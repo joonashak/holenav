@@ -1,6 +1,5 @@
 import { Box } from "@mui/material";
-import Tree from "react-d3-tree";
-import { RawNodeDatum } from "react-d3-tree/lib/types/types/common.d";
+import Tree, { RawNodeDatum } from "react-d3-tree";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
 import useMapData from "./MapData/useMapData";
 import MapNode from "./MapNode";

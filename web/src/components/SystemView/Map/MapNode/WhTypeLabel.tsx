@@ -8,8 +8,8 @@ type WhTypeLabelProps = {
   signature: Wormhole | undefined;
 };
 
-const WhTypeLabel = ({ type, signature }: WhTypeLabelProps) => {
-  const [modalOpen, setModalOpen] = useState(false);
+const WhTypeLabel = ({ type }: WhTypeLabelProps) => {
+  const [, setModalOpen] = useState(false);
   const toggleModal = () => setModalOpen((prev) => !prev);
 
   return (

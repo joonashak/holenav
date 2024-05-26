@@ -1,9 +1,9 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
+import { set } from "lodash";
+import useLocalData from "../components/LocalData/useLocalData";
 import useUserSettings from "../components/UserData/settings/useUserSettings";
 import { backendUrl, devToolsEnabled } from "../config";
 import useAuth from "./useAuth";
-import useLocalData from "../components/LocalData/useLocalData";
-import { set } from "lodash";
 
 const useAuthenticatedRestApi = () => {
   const { token } = useAuth();
@@ -11,7 +11,7 @@ const useAuthenticatedRestApi = () => {
   const { devKey } = useLocalData();
 
   const baseConfig: AxiosRequestConfig = {
-    headers: { accesstoken: token || "", activefolder: activeFolder.id },
+    headers: { accesstoken: token || "", activefolder: activeFolder?.id || "" },
   };
 
   if (devToolsEnabled && devKey) {

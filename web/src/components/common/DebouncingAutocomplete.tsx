@@ -65,7 +65,7 @@ export default function DebouncingAutocomplete<T>({
       onClose={toggleOpen}
       loading={loading}
       options={options}
-      getOptionLabel={(opt) => get(opt, optionLabelKey, "")}
+      getOptionLabel={(opt) => get(opt, optionLabelKey, "") as string}
       isOptionEqualToValue={(opt, val) =>
         get(opt, optionValueKey) === get(val, optionValueKey)
       }

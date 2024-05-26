@@ -5,6 +5,7 @@ import useAuth from "../../auth/useAuth";
 import useLazyAuthenticatedQuery from "../../auth/useLazyAuthenticatedQuery";
 import {
   Folder,
+  SystemRoles,
   UserDataDocument,
   UserDataQuery,
   UserDataQueryVariables,
@@ -40,7 +41,7 @@ export const userState = createState<UserData>({
   },
   alts: [],
   accessibleFolders: [],
-  systemRole: null,
+  systemRole: SystemRoles.None,
   folderRoles: [],
   userDataReady: false,
 });

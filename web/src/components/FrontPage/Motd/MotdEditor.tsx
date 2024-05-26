@@ -4,9 +4,9 @@ import { FieldValues, useForm } from "react-hook-form";
 import { motdState } from ".";
 import useAuthenticatedMutation from "../../../auth/useAuthenticatedMutation";
 import { UpdateMotdDocument } from "../../../generated/graphqlOperations";
+import useNotification from "../../GlobalNotification/useNotification";
 import ControlledTextField from "../../controls/ControlledTextField";
 import FormGroupRow from "../../controls/FormGroupRow";
-import useNotification from "../../GlobalNotification/useNotification";
 
 const MotdEditor = () => {
   const state = useState(motdState);
@@ -18,7 +18,8 @@ const MotdEditor = () => {
   });
 
   const [updateMotd] = useAuthenticatedMutation(UpdateMotdDocument, {
-    onCompleted: (data) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    onCompleted: (data: any) => {
       state.set(data.updateMotd.motd);
       showSuccessNotification("MOTD updated.");
     },

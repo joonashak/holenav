@@ -1,8 +1,4 @@
-import {
-  RawNodeDatum,
-  TreeLinkDatum,
-  TreeNodeDatum,
-} from "react-d3-tree/lib/types/types/common.d";
+import { RawNodeDatum, TreeLinkDatum, TreeNodeDatum } from "react-d3-tree";
 import { MassStatus, Signature } from "../../../../generated/graphqlOperations";
 
 export type MapState = {

@@ -1,6 +1,7 @@
 import {
   ApolloError,
   MutationHookOptions,
+  OperationVariables,
   QueryHookOptions,
 } from "@apollo/client";
 import { useState } from "@hookstate/core";
@@ -10,14 +11,16 @@ import { userState } from "../components/UserData";
 import { devToolsEnabled } from "../config";
 import useAuth from "./useAuth";
 
-type HookOptions<T, V> = MutationHookOptions<T, V> | QueryHookOptions<T, V>;
+type HookOptions<T, V extends OperationVariables> =
+  | MutationHookOptions<T, V>
+  | QueryHookOptions<T, V>;
 
-type AuthenticatedApolloOptions<T, V> =
+type AuthenticatedApolloOptions<T, V extends OperationVariables> =
   HookOptions<T, V> extends MutationHookOptions<T, V>
     ? QueryHookOptions<T, V>
     : MutationHookOptions<T, V>;
 
-const useApolloOptions = <T, V>(
+const useApolloOptions = <T, V extends OperationVariables>(
   options: HookOptions<T, V>,
 ): AuthenticatedApolloOptions<T, V> => {
   const { token } = useAuth();

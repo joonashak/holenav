@@ -1,8 +1,7 @@
 import { findOneSystem } from "@eve-data/systems";
 import { System } from "@eve-data/systems/lib/src/api/system.type";
 import { Box } from "@mui/material";
-import { CustomNodeElementProps } from "react-d3-tree/lib/types/types/common.d";
-
+import { CustomNodeElementProps } from "react-d3-tree";
 import useUserData from "../../../UserData/useUserData";
 import useSystemData from "../../SystemData/useSystemData";
 import { MapNodeDatum } from "../MapData/types";
