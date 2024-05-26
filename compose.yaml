@@ -1,13 +1,8 @@
 services:
-  web-base:
-    build: ./web/
-    environment:
-      - VITE_ENABLE_DEVTOOLS=true
-    volumes:
-      - ./web/src:/usr/src/app/src
-
   web:
-    extends: web-base
+    extends:
+      file: compose.common.yaml
+      service: web-base
     container_name: holenav-web
     environment:
       - VITE_BACKEND_URL=http://localhost:3001
@@ -15,25 +10,19 @@ services:
       - 3000:5173
 
   web-test:
-    extends: web-base
+    extends:
+      file: compose.common.yaml
+      service: web-base
     container_name: holenav-web-test
     environment:
       - VITE_BACKEND_URL=http://localhost:4001
     ports:
       - 4000:5173
 
-  server-base:
-    build: ./server/
-    environment:
-      - PORT=3001
-      - NEO_DB=neo4j
-      - JWT_SECRET=asdasd
-      - ENABLE_DEVTOOLS=true
-    volumes:
-      - ./server/src:/usr/src/app/src
-
   server:
-    extends: server-base
+    extends:
+      file: compose.common.yaml
+      service: server-base
     container_name: holenav-server
     ports:
       - 3001:3001
@@ -49,7 +38,9 @@ services:
       - neo
 
   server-test:
-    extends: server-base
+    extends:
+      file: compose.common.yaml
+      service: server-base
     container_name: holenav-server-test
     ports:
       - 4001:3001
@@ -63,42 +54,20 @@ services:
       - neo-test
 
   mongo:
-    image: mongo:5.0-focal
-    restart: unless-stopped
-    container_name: holenav-mongo
-    volumes:
-      - type: volume
-        source: mongo-data
-        target: /data/db
-        volume:
-          nocopy: true
-    ports:
-      - 27017:27017
+    extends:
+      file: compose.common.yaml
+      service: mongo-base
 
   neo:
-    image: neo4j:4.4
-    restart: unless-stopped
-    container_name: holenav-neo
-    environment:
-      - NEO4J_AUTH=none
-    volumes:
-      - type: volume
-        source: neo-data
-        target: /data
-    ports:
-      - 7474:7474
-      - 7687:7687
+    extends:
+      file: compose.common.yaml
+      service: neo-base
 
   # Community edition does not allow multiple databases, so we must spin up another container for tests.
   neo-test:
-    image: neo4j:4.4
-    restart: unless-stopped
-    container_name: holenav-neo-test
-    environment:
-      - NEO4J_AUTH=none
-    ports:
-      - 7475:7474
-      - 7688:7687
+    extends:
+      file: compose.common.yaml
+      service: neo-test-base
 
 volumes:
   mongo-data:

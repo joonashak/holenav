@@ -1,0 +1,55 @@
+services:
+  web-base:
+    build: ./web/
+    environment:
+      - VITE_ENABLE_DEVTOOLS=true
+    volumes:
+      - ./web/src:/usr/src/app/src
+
+  server-base:
+    build: ./server/
+    environment:
+      - PORT=3001
+      - NEO_DB=neo4j
+      - JWT_SECRET=asdasd
+      - ENABLE_DEVTOOLS=true
+    volumes:
+      - ./server/src:/usr/src/app/src
+
+  mongo-base:
+    image: mongo:5.0-focal
+    restart: unless-stopped
+    container_name: holenav-mongo
+    volumes:
+      - type: volume
+        source: mongo-data
+        target: /data/db
+        volume:
+          nocopy: true
+    ports:
+      - 27017:27017
+
+  neo-base:
+    image: neo4j:4.4
+    restart: unless-stopped
+    container_name: holenav-neo
+    environment:
+      - NEO4J_AUTH=none
+    volumes:
+      - type: volume
+        source: neo-data
+        target: /data
+    ports:
+      - 7474:7474
+      - 7687:7687
+
+  # Community edition does not allow multiple databases, so we must spin up another container for tests.
+  neo-test-base:
+    image: neo4j:4.4
+    restart: unless-stopped
+    container_name: holenav-neo-test
+    environment:
+      - NEO4J_AUTH=none
+    ports:
+      - 7475:7474
+      - 7688:7687
