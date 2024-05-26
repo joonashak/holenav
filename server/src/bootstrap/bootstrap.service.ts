@@ -17,7 +17,6 @@ export class BootstrapService implements OnApplicationBootstrap {
     if (await this.appUpdateService.appUpdated()) {
       this.logger.log("Application update detected.");
       await this.appUpdateService.updateAppDataVersion();
-      await this.appUpdateService.triggerClientDeployment();
     }
   }
 }
