@@ -12,8 +12,4 @@ const AuthenticatedComponent = ({
 }: AuthenticatedComponentProps) =>
   token ? <>{children}</> : <Redirect to="/login" />;
 
-AuthenticatedComponent.defaultProps = {
-  children: null,
-};
-
 export default AuthenticatedComponent;

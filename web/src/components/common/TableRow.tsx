@@ -25,8 +25,4 @@ const TableRow = ({
   );
 };
 
-TableRow.defaultProps = {
-  hideLastSeparator: false,
-};
-
 export default TableRow;

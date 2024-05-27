@@ -95,8 +95,4 @@ const SigModal = ({
   );
 };
 
-SigModal.defaultProps = {
-  signature: null,
-};
-
 export default SigModal;

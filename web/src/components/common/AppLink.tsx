@@ -7,14 +7,10 @@ type AppLinkProps = {
   to: string;
 };
 
-const AppLink = ({ children, to }: AppLinkProps) => (
+const AppLink = ({ children = null, to }: AppLinkProps) => (
   <Link to={to} component={RouterLink}>
     <Typography sx={{ color: "white" }}>{children}</Typography>
   </Link>
 );
-
-AppLink.defaultProps = {
-  children: null,
-};
 
 export default AppLink;

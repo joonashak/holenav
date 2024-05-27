@@ -49,11 +49,4 @@ const DataChip = ({
   />
 );
 
-DataChip.defaultProps = {
-  sx: {},
-  labelSx: {},
-  valueSx: {},
-  labelProps: {},
-};
-
 export default DataChip;
