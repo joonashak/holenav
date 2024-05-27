@@ -1,6 +1,6 @@
 import { findOneSystem } from "@eve-data/systems";
 import { createState, useState } from "@hookstate/core";
-import { useEffect, ReactElement } from "react";
+import { ReactElement, useEffect } from "react";
 import SecurityClasses from "../../../enum/SecurityClasses";
 import { SystemState } from "./types";
 
@@ -12,7 +12,6 @@ export const systemState = createState<SystemState>({
   securityStatus: 1,
   whClass: null,
   effect: null,
-  signatures: [],
   region: { id: 0, name: "" },
   constellation: { id: 0, name: "" },
   staticConnections: [],

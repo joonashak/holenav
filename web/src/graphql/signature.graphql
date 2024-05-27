@@ -32,6 +32,12 @@ query System($name: String!) {
   }
 }
 
+query GetSignatures($systemName: String!) {
+  getSignaturesBySystem(systemName: $systemName) {
+    ...SignatureFields
+  }
+}
+
 mutation AddSignatures($input: AddSignaturesInput!) {
   addSignatures(input: $input) {
     ...SignatureFields

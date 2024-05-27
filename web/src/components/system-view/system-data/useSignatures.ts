@@ -1,30 +1,36 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { FetchResult } from "@apollo/client";
-import { Downgraded, useState } from "@hookstate/core";
+import { useState } from "@hookstate/core";
 import useAuthenticatedMutation from "../../../auth/useAuthenticatedMutation";
+import useAuthenticatedQuery from "../../../auth/useAuthenticatedQuery";
 import {
   AddSignaturesDocument,
   CreatableSignature,
   DeleteSignaturesDocument,
+  GetSignaturesDocument,
   PasteSignaturesDocument,
   PastedSignature,
   Signature,
-  SignaturePasteResult,
   UpdateSignaturesDocument,
   UpdateableSignature,
 } from "../../../generated/graphqlOperations";
 import { stripGraphQlTypenames } from "../../../utils/stripGraphQlTypenames";
+import useCurrentSystemName from "../useCurrentSystemName";
 import { systemState } from "./SystemData";
 
 export type AddSignatureHookInput = Omit<Signature, "id" | "systemName">;
 
 const useSignatures = () => {
+  const systemName = useCurrentSystemName();
   const state = useState(systemState);
 
+  // FIXME: Fix `useAuthenticatedQuery` typing.
+  const { data }: any = useAuthenticatedQuery(GetSignaturesDocument, {
+    variables: { systemName },
+  });
+  const signatures: Signature[] = data?.getSignaturesBySystem || [];
+
   const [addSigsMutation] = useAuthenticatedMutation(AddSignaturesDocument, {
-    onCompleted: (data: any) => {
-      state.signatures.set((sigs) => sigs.concat(data.addSignatures));
-    },
+    refetchQueries: [GetSignaturesDocument],
   });
 
   const addSignatures = async (newSigs: CreatableSignature[]) => {
@@ -37,23 +43,10 @@ const useSignatures = () => {
 
   const [updateSigsMutation] = useAuthenticatedMutation(
     UpdateSignaturesDocument,
-    {
-      onCompleted: (data: any) => {
-        state.signatures.set((sigs) =>
-          sigs.map(
-            (sig) =>
-              data.updateSignatures.find(
-                (updated: Signature) => updated.id === sig.id,
-              ) || sig,
-          ),
-        );
-      },
-    },
+    { refetchQueries: [GetSignaturesDocument] },
   );
 
-  const updateSignatures = async (
-    signatures: UpdateableSignature[],
-  ): Promise<FetchResult> =>
+  const updateSignatures = async (signatures: UpdateableSignature[]) =>
     updateSigsMutation({
       variables: {
         input: { signatures: signatures.map(stripGraphQlTypenames) },
@@ -62,16 +55,7 @@ const useSignatures = () => {
 
   const [deleteSigsMutation] = useAuthenticatedMutation(
     DeleteSignaturesDocument,
-    {
-      onCompleted: (data: any) => {
-        const deletedIds = data.deleteSignatures.map(
-          (sig: Signature) => sig.id,
-        );
-        state.signatures.set((sigs) =>
-          sigs.filter((sig) => !deletedIds.includes(sig.id)),
-        );
-      },
-    },
+    { refetchQueries: [GetSignaturesDocument] },
   );
 
   const deleteSignatures = async (ids: string[]): Promise<void> => {
@@ -80,34 +64,7 @@ const useSignatures = () => {
 
   const [pasteSigsMutation] = useAuthenticatedMutation(
     PasteSignaturesDocument,
-    {
-      onCompleted: (data: any) => {
-        const { added, updated, deleted } =
-          data.pasteSignatures as SignaturePasteResult;
-
-        if (added.length) {
-          state.signatures.set((sigs) => sigs.concat(added));
-        }
-
-        if (updated.length) {
-          state.signatures.set((sigs) =>
-            sigs.map(
-              (sig) =>
-                updated.find(
-                  (updatedSig: Signature) => updatedSig.id === sig.id,
-                ) || sig,
-            ),
-          );
-        }
-
-        if (deleted.length) {
-          const deletedIds = deleted.map((sig) => sig.id);
-          state.signatures.set((sigs) =>
-            sigs.filter((sig) => !deletedIds.includes(sig.id)),
-          );
-        }
-      },
-    },
+    { refetchQueries: [GetSignaturesDocument] },
   );
 
   const pasteSignatures = async (
@@ -125,9 +82,7 @@ const useSignatures = () => {
     });
 
   return {
-    get signatures() {
-      return state.signatures.attach(Downgraded).get();
-    },
+    signatures,
     addSignatures,
     updateSignatures,
     deleteSignatures,

@@ -14,11 +14,11 @@ export default () => {
     SystemQuery,
     SystemQueryVariables
   >(SystemDocument, {
-    onCompleted: ({ getSystemByName, getSignaturesBySystem }) => {
+    onCompleted: ({ getSystemByName }) => {
       if (!getSystemByName) {
         return;
       }
-      state.merge({ ...getSystemByName, signatures: getSignaturesBySystem });
+      state.merge({ ...getSystemByName });
     },
   });
 
