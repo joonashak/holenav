@@ -15,7 +15,7 @@
     "generate": "graphql-codegen"
   },
   "dependencies": {
-    "@apollo/client": "^3.4.5",
+    "@apollo/client": "^3.10.4",
     "@emotion/react": "^11.5.0",
     "@emotion/styled": "^11.3.0",
     "@eve-data/systems": "^3.1.0",
@@ -45,10 +45,10 @@
     "uuid": "^9.0.0"
   },
   "devDependencies": {
-    "@graphql-codegen/cli": "^2.6.2",
-    "@graphql-codegen/typed-document-node": "^2.2.8",
-    "@graphql-codegen/typescript": "^2.4.8",
-    "@graphql-codegen/typescript-operations": "^2.3.5",
+    "@graphql-codegen/cli": "^5.0.2",
+    "@graphql-codegen/typed-document-node": "^5.0.7",
+    "@graphql-codegen/typescript": "^4.0.7",
+    "@graphql-codegen/typescript-operations": "^4.2.1",
     "@types/lodash": "^4.14.177",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
