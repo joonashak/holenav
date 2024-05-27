@@ -1,7 +1,7 @@
 import { useMutation } from "@apollo/client";
 import { useEffect } from "react";
 import { Redirect } from "react-router-dom";
-import useLocalData from "../components/LocalData/useLocalData";
+import useLocalData from "../components/local-data/useLocalData";
 import { GetTokenDocument } from "../generated/graphqlOperations";
 
 interface GetTokenProps {

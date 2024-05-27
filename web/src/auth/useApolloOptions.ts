@@ -6,8 +6,8 @@ import {
 } from "@apollo/client";
 import { useState } from "@hookstate/core";
 import { set } from "lodash";
-import useLocalData from "../components/LocalData/useLocalData";
-import { userState } from "../components/UserData";
+import useLocalData from "../components/local-data/useLocalData";
+import { userState } from "../components/user-data/UserData";
 import { devToolsEnabled } from "../config";
 import useAuth from "./useAuth";
 

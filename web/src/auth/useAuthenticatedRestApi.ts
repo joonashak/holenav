@@ -1,7 +1,7 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 import { set } from "lodash";
-import useLocalData from "../components/LocalData/useLocalData";
-import useUserSettings from "../components/UserData/settings/useUserSettings";
+import useLocalData from "../components/local-data/useLocalData";
+import useUserSettings from "../components/user-data/settings/useUserSettings";
 import { backendUrl, devToolsEnabled } from "../config";
 import useAuth from "./useAuth";
 

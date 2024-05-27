@@ -1,6 +1,6 @@
 import { ReactElement } from "react";
 import { getWormholeProperties } from "../../utils/wormholeUtils";
-import GridTooltip from "./GridToolTip";
+import GridTooltip from "./grid-tooltip/GridTooltip";
 
 type WormholeInfoTooltipProps = {
   children: ReactElement;

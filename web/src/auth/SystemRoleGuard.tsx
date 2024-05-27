@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import useUserData from "../components/UserData/useUserData";
+import useUserData from "../components/user-data/useUserData";
 import { SystemRoles } from "../generated/graphqlOperations";
 
 type RoleGuardProps = {

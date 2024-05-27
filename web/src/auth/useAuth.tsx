@@ -1,4 +1,4 @@
-import useLocalData from "../components/LocalData/useLocalData";
+import useLocalData from "../components/local-data/useLocalData";
 import { devToolsEnabled } from "../config";
 
 export default () => {
