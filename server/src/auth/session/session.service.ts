@@ -1,6 +1,6 @@
+import { AuthenticationError } from "@nestjs/apollo";
 import { Injectable, Logger } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
-import { AuthenticationError } from "apollo-server-express";
 import dayjs from "dayjs";
 import { Model } from "mongoose";
 import ms from "ms";

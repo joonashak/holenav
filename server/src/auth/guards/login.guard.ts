@@ -1,6 +1,6 @@
+import { AuthenticationError } from "@nestjs/apollo";
 import { CanActivate, ExecutionContext, Injectable } from "@nestjs/common";
 import { GqlExecutionContext } from "@nestjs/graphql";
-import { AuthenticationError } from "apollo-server-express";
 import { AuthService } from "../auth.service";
 
 /**

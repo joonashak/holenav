@@ -1,17 +1,17 @@
+import { AuthenticationError } from "@nestjs/apollo";
 import { Test } from "@nestjs/testing";
-import { AuthenticationError } from "apollo-server-express";
-import { SessionService } from "../session/session.service";
-import { TokenAuthGuard } from "./token-auth.guard";
-import { UserService } from "../../user/user.service";
-import { AuthService } from "../auth.service";
+import mockUsers from "../../dev-tools/data/users";
+import { mockContextWithHeaders } from "../../test-utils/mock-context";
 import {
   MockAuthService,
   MockSessionService,
   MockUserService,
 } from "../../test-utils/mock-services";
 import { testSession } from "../../test-utils/test-data";
-import mockUsers from "../../dev-tools/data/users";
-import { mockContextWithHeaders } from "../../test-utils/mock-context";
+import { UserService } from "../../user/user.service";
+import { AuthService } from "../auth.service";
+import { SessionService } from "../session/session.service";
+import { TokenAuthGuard } from "./token-auth.guard";
 
 const testToken = "jf0e8438b7ww";
 

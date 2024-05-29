@@ -1,11 +1,11 @@
+import { AuthenticationError } from "@nestjs/apollo";
 import { InternalServerErrorException } from "@nestjs/common";
-import { Test } from "@nestjs/testing";
 import { Reflector } from "@nestjs/core";
-import { requiredSystemRoleKey, SystemRoleGuard } from "./system-role.guard";
-import SystemRole from "../../user/roles/system-role.enum";
-import { testUser } from "../../test-utils/test-data";
-import { AuthenticationError } from "apollo-server-express";
+import { Test } from "@nestjs/testing";
 import { mockContextWithUser } from "../../test-utils/mock-context";
+import { testUser } from "../../test-utils/test-data";
+import SystemRole from "../../user/roles/system-role.enum";
+import { requiredSystemRoleKey, SystemRoleGuard } from "./system-role.guard";
 
 describe("SystemRoleGuard", () => {
   let systemRoleGuard: SystemRoleGuard;
@@ -69,7 +69,10 @@ describe("SystemRoleGuard", () => {
     });
 
     it("Invalid system role", async () => {
-      const context = mockContextWithUser({ ...testUser, systemRole: 5 });
+      const context = mockContextWithUser({
+        ...testUser,
+        systemRole: 5 as SystemRole,
+      });
       jest.spyOn(reflector, "get").mockReturnValueOnce(SystemRole.USER);
       expect(() => systemRoleGuard.canActivate(context)).toThrow(
         AuthenticationError,

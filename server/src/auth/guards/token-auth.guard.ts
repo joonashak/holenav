@@ -1,5 +1,5 @@
+import { AuthenticationError } from "@nestjs/apollo";
 import { CanActivate, ExecutionContext, Injectable } from "@nestjs/common";
-import { AuthenticationError } from "apollo-server-express";
 import { ENABLE_DEVTOOLS, NOT_PRODUCTION } from "../../config";
 import mockUsers from "../../dev-tools/data/users";
 import { UserService } from "../../user/user.service";

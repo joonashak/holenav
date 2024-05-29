@@ -1,3 +1,4 @@
+import { AuthenticationError } from "@nestjs/apollo";
 import {
   CanActivate,
   ExecutionContext,
@@ -6,7 +7,6 @@ import {
 } from "@nestjs/common";
 import { Reflector } from "@nestjs/core";
 import { GqlExecutionContext } from "@nestjs/graphql";
-import { AuthenticationError } from "apollo-server-express";
 import SystemRole from "../../user/roles/system-role.enum";
 
 export const requiredSystemRoleKey = "requiredSystemRole";

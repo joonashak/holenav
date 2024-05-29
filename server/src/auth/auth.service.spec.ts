@@ -1,6 +1,6 @@
+import { AuthenticationError } from "@nestjs/apollo";
 import { JwtModule, JwtService } from "@nestjs/jwt";
 import { Test } from "@nestjs/testing";
-import { AuthenticationError } from "apollo-server-express";
 import {
   MockSessionService,
   MockSsoSessionService,

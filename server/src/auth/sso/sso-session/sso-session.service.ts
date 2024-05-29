@@ -1,6 +1,6 @@
+import { AuthenticationError } from "@nestjs/apollo";
 import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
-import { AuthenticationError } from "apollo-server-express";
 import dayjs from "dayjs";
 import { Model } from "mongoose";
 import { v4 as uuid } from "uuid";
@@ -28,7 +28,7 @@ export class SsoSessionService {
 
   /** Remove given SSO state secret. */
   async removeSsoSession(key: string) {
-    await this.ssoSessionModel.findOneAndRemove({ key });
+    await this.ssoSessionModel.findOneAndDelete({ key });
   }
 
   /** Verify given SSO state secret to be valid and not expired. */

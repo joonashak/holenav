@@ -1,9 +1,9 @@
 import { createMock } from "@golevelup/ts-jest";
+import { AuthenticationError } from "@nestjs/apollo";
 import { ExecutionContext } from "@nestjs/common";
 import { GraphQLExecutionContext } from "@nestjs/graphql";
 import { JwtModule } from "@nestjs/jwt";
 import { Test } from "@nestjs/testing";
-import { AuthenticationError } from "apollo-server-express";
 import { JWT_LIFETIME, JWT_SECRET } from "../../config";
 import {
   MockAuthService,

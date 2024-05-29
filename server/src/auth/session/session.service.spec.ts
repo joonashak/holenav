@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { AuthenticationError } from "@nestjs/apollo";
 import { getModelToken } from "@nestjs/mongoose";
 import { Test } from "@nestjs/testing";
-import { AuthenticationError } from "apollo-server-express";
 import dayjs from "dayjs";
 import { Model } from "mongoose";
 import ms from "ms";

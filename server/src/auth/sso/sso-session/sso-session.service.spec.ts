@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { AuthenticationError } from "@nestjs/apollo";
 import { getModelToken } from "@nestjs/mongoose";
 import { Test } from "@nestjs/testing";
-import { AuthenticationError } from "apollo-server-express";
 import dayjs from "dayjs";
 import { Model } from "mongoose";
 import { testSsoSession, testUser } from "../../../test-utils/test-data";
@@ -24,7 +24,7 @@ describe("SsoSessionService", () => {
           useFactory: () => ({
             create: jest.fn().mockResolvedValue(testSsoSession),
             findOne: jest.fn(() => ({ populate: () => testSsoSession })),
-            findOneAndRemove: jest.fn(),
+            findOneAndDelete: jest.fn(),
             findOneAndUpdate: jest.fn(),
             deleteMany: jest.fn(),
           }),
@@ -77,7 +77,7 @@ describe("SsoSessionService", () => {
       await expect(
         ssoSessionService.removeSsoSession(testSsoSession.key),
       ).resolves.not.toThrow();
-      expect(ssoSessionModel.findOneAndRemove).toBeCalledWith({
+      expect(ssoSessionModel.findOneAndDelete).toBeCalledWith({
         key: testSsoSession.key,
       });
     });

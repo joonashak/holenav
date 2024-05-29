@@ -1,6 +1,6 @@
+import { AuthenticationError } from "@nestjs/apollo";
 import { Injectable } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
-import { AuthenticationError } from "apollo-server-express";
 import { compare } from "bcrypt";
 import { User } from "../user/user.model";
 import { UserService } from "../user/user.service";
