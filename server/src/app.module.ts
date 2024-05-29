@@ -1,3 +1,5 @@
+import { CloneBayModule } from "@joonashak/nestjs-clone-bay";
+import { EveAuthModule } from "@joonashak/nestjs-eve-auth";
 import { ApolloDriver, ApolloDriverConfig } from "@nestjs/apollo";
 import { Module } from "@nestjs/common";
 import { GraphQLModule } from "@nestjs/graphql";
@@ -6,7 +8,13 @@ import { ScheduleModule } from "@nestjs/schedule";
 import { AppDataModule } from "./app-data/app-data.module";
 import { AuthModule } from "./auth/auth.module";
 import { BootstrapModule } from "./bootstrap/bootstrap.module";
-import { MONGO_URL } from "./config";
+import {
+  CLIENT_URL,
+  MONGO_URL,
+  SSO_CALLBACK_URL,
+  SSO_CLIENT_ID,
+  SSO_SECRET_KEY,
+} from "./config";
 import { ConnectionGraphModule } from "./connection-graph/connection-graph.module";
 import { DevToolsModule } from "./dev-tools/dev-tools.module";
 import { CharacterModule } from "./entities/character/character.module";
@@ -25,6 +33,14 @@ import { ScheduledTasksModule } from "./scheduled-tasks/scheduled-tasks.module";
       autoSchemaFile: true,
       driver: ApolloDriver,
       playground: true,
+    }),
+    EveAuthModule.forRoot({
+      clientId: SSO_CLIENT_ID,
+      secretKey: SSO_SECRET_KEY,
+      callbackUrl: SSO_CALLBACK_URL,
+    }),
+    CloneBayModule.forRoot({
+      afterLoginUrl: CLIENT_URL,
     }),
     ScheduleModule.forRoot(),
     AppDataModule,

@@ -2,7 +2,7 @@ import { AuthenticationError } from "@nestjs/apollo";
 import { Injectable } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import { compare } from "bcrypt";
-import { User } from "../user/user.model";
+import { HolenavUser } from "../user/user.model";
 import { UserService } from "../user/user.service";
 import { Session } from "./session/session.model";
 import { SessionService } from "./session/session.service";
@@ -47,7 +47,7 @@ export class AuthService {
   async validateUserCredentials(
     username: string,
     password: string,
-  ): Promise<User | null> {
+  ): Promise<HolenavUser | null> {
     const user = await this.userService.findWithCredentials(username);
     if (!user) {
       return null;
@@ -94,7 +94,7 @@ export class AuthService {
    * @param user User to link to session.
    * @returns JWT token to be saved on the client.
    */
-  async createAccessToken(user: User): Promise<string> {
+  async createAccessToken(user: HolenavUser): Promise<string> {
     const session = await this.sessionService.create(user);
     const payload: JwtPayload = { sessionId: session.id };
     return this.jwtService.sign(payload);

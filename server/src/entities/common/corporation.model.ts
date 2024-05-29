@@ -3,7 +3,7 @@ import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 
 @ObjectType()
 @Schema()
-export class Corporation {
+export class HolenavCorporation {
   @Field()
   @Prop()
   esiId: string;
@@ -17,4 +17,5 @@ export class Corporation {
   ticker: string;
 }
 
-export const CorporationSchema = SchemaFactory.createForClass(Corporation);
+export const CorporationSchema =
+  SchemaFactory.createForClass(HolenavCorporation);

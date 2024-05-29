@@ -25,13 +25,13 @@ fragment FolderFields on Folder {
   personal
 }
 
-fragment CorporationFields on Corporation {
+fragment CorporationFields on HolenavCorporation {
   esiId
   name
   ticker
 }
 
-fragment CharacterFields on Character {
+fragment CharacterFields on HolenavCharacter {
   esiId
   name
   isMain

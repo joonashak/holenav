@@ -1,6 +1,6 @@
 import { UseGuards } from "@nestjs/common";
 import { Args, Mutation, Resolver } from "@nestjs/graphql";
-import { User } from "../user/user.model";
+import { HolenavUser } from "../user/user.model";
 import { AuthService } from "./auth.service";
 import { CurrentSession } from "./decorators/session.decorator";
 import { CurrentUser } from "./decorators/user.decorator";
@@ -26,7 +26,7 @@ export default class AuthResolver {
   async login(
     @Args("username") username: string,
     @Args("password") password: string,
-    @CurrentUser() user: User,
+    @CurrentUser() user: HolenavUser,
   ): Promise<AccessTokenDto> {
     const accessToken = await this.authService.createAccessToken(user);
     return { accessToken };

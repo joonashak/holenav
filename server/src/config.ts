@@ -18,6 +18,7 @@ export const ENABLE_DEVTOOLS = process.env.ENABLE_DEVTOOLS === "true";
 export const APP_VERSION = version;
 export const DEV_KEY = process.env.DEV_KEY;
 export const HOST_FRONTEND = process.env.HOST_FRONTEND === "true";
+export const SESSION_SECRET = process.env.SESSION_SECRET;
 
 export const getClientLoginCallbackUrl = (state: string) =>
   `${CLIENT_URL}/login/${state}`;

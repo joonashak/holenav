@@ -2,14 +2,14 @@ import { Field, ObjectType } from "@nestjs/graphql";
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import mongoose, { Document } from "mongoose";
 import { SsoToken } from "../../auth/sso/sso-token/sso-token.model";
-import { Alliance } from "../common/alliance.model";
-import { Corporation } from "../common/corporation.model";
+import { HolenavAlliance } from "../common/alliance.model";
+import { HolenavCorporation } from "../common/corporation.model";
 
-export type CharacterDocument = Character & Document;
+export type CharacterDocument = HolenavCharacter & Document;
 
 @ObjectType()
 @Schema()
-export class Character {
+export class HolenavCharacter {
   @Field()
   @Prop({ unique: true })
   name: string;
@@ -30,19 +30,21 @@ export class Character {
   @Prop({ default: false })
   isMain: boolean;
 
-  @Field((type) => Corporation)
-  @Prop({ type: Corporation })
-  corporation: Corporation;
+  @Field((type) => HolenavCorporation)
+  @Prop({ type: HolenavCorporation })
+  corporation: HolenavCorporation;
 
-  @Field((type) => Alliance, { nullable: true })
-  @Prop({ type: Alliance })
-  alliance: Alliance;
+  @Field((type) => HolenavAlliance, { nullable: true })
+  @Prop({ type: HolenavAlliance })
+  alliance: HolenavAlliance;
 
   @Field({ defaultValue: "" })
   @Prop()
   portraitUrl: string;
 }
 
-export const CharacterSchema = SchemaFactory.createForClass(Character).index({
+export const CharacterSchema = SchemaFactory.createForClass(
+  HolenavCharacter,
+).index({
   name: "text",
 });

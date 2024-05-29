@@ -8,7 +8,7 @@ import {
 } from "../../config";
 import { CharacterService } from "../../entities/character/character.service";
 import { EsiService } from "../../esi/esi.service";
-import { User } from "../../user/user.model";
+import { HolenavUser } from "../../user/user.model";
 import { UserService } from "../../user/user.service";
 import { SsoApiService } from "./sso-api.service";
 import SsoSessionType from "./sso-session/sso-session-type.enum";
@@ -34,7 +34,7 @@ export class SsoService {
   ) {}
 
   /** Generate EVE SSO login page URL. */
-  async getSsoLoginUrl(user: User = null) {
+  async getSsoLoginUrl(user: HolenavUser = null) {
     const { key } = await this.ssoSessionService.createSsoSession(user);
     const scopes = this.moduleConfig.scopes.join(" ");
     const loginUrl = `${SsoUrl.Authorize}/?response_type=code&redirect_uri=${SSO_CALLBACK_URL}&client_id=${SSO_CLIENT_ID}&state=${key}&scope=${scopes}`;

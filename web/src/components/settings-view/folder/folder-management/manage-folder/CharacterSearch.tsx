@@ -2,7 +2,7 @@ import { useState } from "@hookstate/core";
 import { useState as useReactState } from "react";
 import useLazyAuthenticatedQuery from "../../../../../auth/useLazyAuthenticatedQuery";
 import {
-  Character,
+  HolenavCharacter,
   SearchCharactersByMainDocument,
   SearchCharactersByMainQuery,
   SearchCharactersByMainQueryVariables,
@@ -12,7 +12,7 @@ import { manageFolderState } from "./ManageFolder";
 
 const CharacterSearch = () => {
   const { selectedCharacter } = useState(manageFolderState);
-  const [options, setOptions] = useReactState<Character[]>([]);
+  const [options, setOptions] = useReactState<HolenavCharacter[]>([]);
 
   const [searchQuery, { loading }] = useLazyAuthenticatedQuery<
     SearchCharactersByMainQuery,
@@ -24,7 +24,7 @@ const CharacterSearch = () => {
   });
 
   return (
-    <DebouncingAutocomplete<Character>
+    <DebouncingAutocomplete<HolenavCharacter>
       dataCy="character-search-textfield"
       label="Select Character"
       options={options}

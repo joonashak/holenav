@@ -2,14 +2,14 @@ import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { FolderService } from "../../entities/folder/folder.service";
-import { User, UserDocument } from "../user.model";
+import { HolenavUser, UserDocument } from "../user.model";
 import { UserService } from "../user.service";
 import { UserSettings } from "./user-settings.model";
 
 @Injectable()
 export class UserSettingsService {
   constructor(
-    @InjectModel(User.name) private userModel: Model<UserDocument>,
+    @InjectModel(HolenavUser.name) private userModel: Model<UserDocument>,
     private userService: UserService,
     private folderService: FolderService,
   ) {}
@@ -24,7 +24,7 @@ export class UserSettingsService {
   private async updateUserSettings(
     userId: string,
     update: Partial<UserSettings>,
-  ): Promise<User> {
+  ): Promise<HolenavUser> {
     const user = await this.userModel.findOne({ id: userId });
     const { id, settings } = user.toObject();
     const updatedSettings = { ...settings, ...update };
@@ -37,7 +37,10 @@ export class UserSettingsService {
     return updatedUser;
   }
 
-  async updateSelectedMap(selectedMapId: string, user: User): Promise<User> {
+  async updateSelectedMap(
+    selectedMapId: string,
+    user: HolenavUser,
+  ): Promise<HolenavUser> {
     const { settings } = await this.userService.findById(user.id);
     const selectedMap =
       settings.maps.find((map) => map.id === selectedMapId) || null;
@@ -47,14 +50,14 @@ export class UserSettingsService {
   async createSavedMap(
     name: string,
     rootSystemName: string,
-    user: User,
-  ): Promise<User> {
+    user: HolenavUser,
+  ): Promise<HolenavUser> {
     const { settings } = await this.userService.findById(user.id);
     const maps = settings.maps.concat({ name, rootSystemName });
     return this.updateUserSettings(user.id, { maps });
   }
 
-  async deleteSavedMap(mapId: string, user: User): Promise<User> {
+  async deleteSavedMap(mapId: string, user: HolenavUser): Promise<HolenavUser> {
     const { settings } = await this.userService.findById(user.id);
     const maps = settings.maps.filter((map) => map.id !== mapId);
     const selectedMap =
@@ -62,7 +65,10 @@ export class UserSettingsService {
     return this.updateUserSettings(user.id, { maps, selectedMap });
   }
 
-  async changeActiveFolder(folderId: string, user: User): Promise<User> {
+  async changeActiveFolder(
+    folderId: string,
+    user: HolenavUser,
+  ): Promise<HolenavUser> {
     // FIXME: Check for roles.
     const activeFolder = await this.folderService.getFolderById(folderId);
     return this.updateUserSettings(user.id, { activeFolder });

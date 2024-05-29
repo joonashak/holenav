@@ -2,21 +2,23 @@ import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { EsiService } from "../../esi/esi.service";
-import { Character, CharacterDocument } from "./character.model";
+import { CharacterDocument, HolenavCharacter } from "./character.model";
 
 @Injectable()
 export class CharacterService {
   constructor(
-    @InjectModel(Character.name)
+    @InjectModel(HolenavCharacter.name)
     private characterModel: Model<CharacterDocument>,
     private esiService: EsiService,
   ) {}
 
-  async findByEsiId(esiId: string): Promise<Character> {
+  async findByEsiId(esiId: string): Promise<HolenavCharacter> {
     return this.characterModel.findOne({ esiId });
   }
 
-  async create(character: Partial<Character>): Promise<Character> {
+  async create(
+    character: Partial<HolenavCharacter>,
+  ): Promise<HolenavCharacter> {
     const newCharacter = await this.characterModel.create(character);
     const charWithInfo = await this.appendPublicInfoFromEsi(newCharacter);
     return charWithInfo;
@@ -28,7 +30,7 @@ export class CharacterService {
    * @param data Character to be upserted.
    * @returns New or updated character.
    */
-  async upsert(data: Partial<Character>): Promise<Character> {
+  async upsert(data: Partial<HolenavCharacter>): Promise<HolenavCharacter> {
     const { esiId, ...rest } = data;
     const exists = !!(await this.characterModel.findOne({ esiId }));
     const character = exists
@@ -43,13 +45,13 @@ export class CharacterService {
     await this.characterModel.deleteOne({ esiId });
   }
 
-  async makeMain(character: Character): Promise<Character> {
+  async makeMain(character: HolenavCharacter): Promise<HolenavCharacter> {
     const main = await this.characterModel.findOne(character);
     main.isMain = true;
     return await main.save();
   }
 
-  async searchByMain(search: string): Promise<Character[]> {
+  async searchByMain(search: string): Promise<HolenavCharacter[]> {
     // FIXME: Paginate this properly.
     return this.characterModel
       .find({ name: { $regex: RegExp(search, "i") } })

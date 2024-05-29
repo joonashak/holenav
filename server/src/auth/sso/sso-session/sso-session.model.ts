@@ -1,8 +1,8 @@
 import { Field, ObjectType, registerEnumType } from "@nestjs/graphql";
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import * as mongoose from "mongoose";
-import { Character } from "../../../entities/character/character.model";
-import { User } from "../../../user/user.model";
+import { HolenavCharacter } from "../../../entities/character/character.model";
+import { HolenavUser } from "../../../user/user.model";
 import SsoSessionType from "./sso-session-type.enum";
 
 export type SsoSessionDocument = SsoSession & mongoose.Document;
@@ -33,13 +33,13 @@ export class SsoSession {
   @Prop({ default: false })
   ssoLoginSuccess: boolean;
 
-  @Field((type) => Character)
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: "Character" })
-  character: Character;
+  @Field((type) => HolenavCharacter)
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: "HolenavCharacter" })
+  character: HolenavCharacter;
 
-  @Field((type) => User)
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: "User" })
-  user: User;
+  @Field((type) => HolenavUser)
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: "HolenavUser" })
+  user: HolenavUser;
 }
 
 export const SsoSessionSchema = SchemaFactory.createForClass(SsoSession);

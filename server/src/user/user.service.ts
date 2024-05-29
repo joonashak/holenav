@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { FilterQuery, Model } from "mongoose";
-import { Character } from "../entities/character/character.model";
+import { HolenavCharacter } from "../entities/character/character.model";
 import { CharacterService } from "../entities/character/character.service";
 import { FolderService } from "../entities/folder/folder.service";
 import {
@@ -14,12 +14,12 @@ import { UserSsoTokens } from "./dto/user-sso-tokens.dto";
 import FolderRole from "./roles/folder-role.enum";
 import { FolderRole as FolderRoleModel } from "./roles/folder-role.model";
 import { UserRoleService } from "./user-role.service";
-import { User, UserDocument } from "./user.model";
+import { HolenavUser, UserDocument } from "./user.model";
 
 @Injectable()
 export class UserService {
   constructor(
-    @InjectModel(User.name) private userModel: Model<UserDocument>,
+    @InjectModel(HolenavUser.name) private userModel: Model<UserDocument>,
     @InjectModel(Credentials.name)
     private credentialsModel: Model<CredentialsDocument>,
     private folderService: FolderService,
@@ -86,13 +86,13 @@ export class UserService {
     return user;
   }
 
-  async findByCharacter(character: Character): Promise<User> {
+  async findByCharacter(character: HolenavCharacter): Promise<HolenavUser> {
     return this.userModel
       .findOne({ $or: [{ main: character }, { alts: character }] })
       .exec();
   }
 
-  async findByEsiId(esiId: string): Promise<User> {
+  async findByEsiId(esiId: string): Promise<HolenavUser> {
     const character = await this.characterService.findByEsiId(esiId);
     return this.findByCharacter(character);
   }
@@ -107,7 +107,9 @@ export class UserService {
    *   user.
    * @returns The found or created user.
    */
-  async findByCharacterOrCreateUser(character: Character): Promise<User> {
+  async findByCharacterOrCreateUser(
+    character: HolenavCharacter,
+  ): Promise<HolenavUser> {
     let user = await this.findByCharacter(character);
 
     if (!user) {
@@ -126,13 +128,13 @@ export class UserService {
    * @param username Username to search for.
    * @returns User or null if not found.
    */
-  async findWithCredentials(username: string): Promise<User> {
+  async findWithCredentials(username: string): Promise<HolenavUser> {
     const credentials = await this.credentialsModel.findOne({ username });
     return this.userModel.findOne({ credentials }).populate("credentials");
   }
 
   /** Add a new alt to a user. */
-  async addAlt(alt: Character, userId: string): Promise<void> {
+  async addAlt(alt: HolenavCharacter, userId: string): Promise<void> {
     await this.ensureCharacterNotInUse(alt);
 
     const user = await this.userModel.findOne({ id: userId });
@@ -149,7 +151,7 @@ export class UserService {
   }
 
   /** Throws `HttpException` if given character is used anywhere. */
-  private async ensureCharacterNotInUse(char: Character): Promise<void> {
+  private async ensureCharacterNotInUse(char: HolenavCharacter): Promise<void> {
     const mains = await this.userModel.find({ main: char });
     const alts = await this.userModel.find({ alts: char });
 
@@ -161,7 +163,10 @@ export class UserService {
     }
   }
 
-  async addFolderRole(user: User, folderRole: FolderRoleModel): Promise<User> {
+  async addFolderRole(
+    user: HolenavUser,
+    folderRole: FolderRoleModel,
+  ): Promise<HolenavUser> {
     // FIXME: Check for user's rights to manage the target folder.
     // FIXME: Account for existing roles.
     const { id } = user;
@@ -175,13 +180,13 @@ export class UserService {
     userEsiId: string,
     folderId: string,
     role: FolderRole,
-  ): Promise<User> {
+  ): Promise<HolenavUser> {
     const user = await this.findByEsiId(userEsiId);
     const folder = await this.folderService.getFolderById(folderId);
     return await this.addFolderRole(user, { folder, role });
   }
 
-  async getSsoTokens(user: User): Promise<UserSsoTokens> {
+  async getSsoTokens(user: HolenavUser): Promise<UserSsoTokens> {
     const { main, alts } = await (
       await this.userModel
         .findOne({ id: user.id })

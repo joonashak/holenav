@@ -6,7 +6,10 @@ import {
   SelectChangeEvent,
 } from "@mui/material";
 import { useState } from "react";
-import { SystemRoles, User } from "../../../../generated/graphqlOperations";
+import {
+  HolenavUser,
+  SystemRoles,
+} from "../../../../generated/graphqlOperations";
 import useSettingsData from "../../useSettingsData";
 
 const options = [
@@ -17,7 +20,7 @@ const options = [
 ];
 
 type SystemRoleWidgetProps = {
-  user: User;
+  user: HolenavUser;
 };
 
 const SystemRoleWidget = ({ user }: SystemRoleWidgetProps) => {

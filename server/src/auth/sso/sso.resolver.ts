@@ -1,5 +1,5 @@
 import { Query, Resolver } from "@nestjs/graphql";
-import { User } from "../../user/user.model";
+import { HolenavUser } from "../../user/user.model";
 import RequireAuth from "../decorators/auth.decorator";
 import { CurrentUser } from "../decorators/user.decorator";
 import StartSsoLoginDto from "../dto/start-sso-login.dto";
@@ -22,7 +22,9 @@ export default class SsoResolver {
    */
   @RequireAuth()
   @Query((returns) => StartSsoLoginDto)
-  async addCharacter(@CurrentUser() user: User): Promise<StartSsoLoginDto> {
+  async addCharacter(
+    @CurrentUser() user: HolenavUser,
+  ): Promise<StartSsoLoginDto> {
     const ssoLoginUrl = await this.ssoService.getSsoLoginUrl(user);
     return { ssoLoginUrl };
   }

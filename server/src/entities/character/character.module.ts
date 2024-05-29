@@ -1,15 +1,15 @@
 import { Module } from "@nestjs/common";
-import { CharacterService } from "./character.service";
 import { MongooseModule } from "@nestjs/mongoose";
-import { Character, CharacterSchema } from "./character.model";
-import { CharacterResolver } from "./character.resolver";
 import { EsiModule } from "../../esi/esi.module";
 import { EsiService } from "../../esi/esi.service";
+import { CharacterSchema, HolenavCharacter } from "./character.model";
+import { CharacterResolver } from "./character.resolver";
+import { CharacterService } from "./character.service";
 
 @Module({
   imports: [
     MongooseModule.forFeature([
-      { name: Character.name, schema: CharacterSchema },
+      { name: HolenavCharacter.name, schema: CharacterSchema },
     ]),
     EsiModule,
   ],

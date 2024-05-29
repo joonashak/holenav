@@ -1,5 +1,5 @@
 import { ObjectType, PickType } from "@nestjs/graphql";
-import { User } from "../user.model";
+import { HolenavUser } from "../user.model";
 
 @ObjectType()
-export class SanitizedUser extends PickType(User, ["id", "main"]) {}
+export class SanitizedUser extends PickType(HolenavUser, ["id", "main"]) {}

@@ -7,11 +7,14 @@ import {
   Typography,
 } from "@mui/material";
 import SystemRoleGuard from "../../../../auth/SystemRoleGuard";
-import { SystemRoles, User } from "../../../../generated/graphqlOperations";
+import {
+  HolenavUser,
+  SystemRoles,
+} from "../../../../generated/graphqlOperations";
 import SystemRoleWidget from "./SystemRoleWidget";
 
 type UserProfileProps = {
-  user: User;
+  user: HolenavUser;
 };
 
 const UserProfile = ({ user }: UserProfileProps) => (

@@ -5,7 +5,7 @@ import dayjs from "dayjs";
 import { Model } from "mongoose";
 import ms from "ms";
 import { JWT_LIFETIME } from "../../config";
-import { User } from "../../user/user.model";
+import { HolenavUser } from "../../user/user.model";
 import { Session, SessionDocument } from "./session.model";
 
 @Injectable()
@@ -16,7 +16,7 @@ export class SessionService {
     @InjectModel(Session.name) private sessionModel: Model<SessionDocument>,
   ) {}
 
-  async create(user: User): Promise<Session> {
+  async create(user: HolenavUser): Promise<Session> {
     const expiresAt = dayjs().add(ms(JWT_LIFETIME), "ms").toDate();
     return this.sessionModel.create({ expiresAt, user });
   }

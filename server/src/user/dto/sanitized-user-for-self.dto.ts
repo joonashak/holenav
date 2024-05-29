@@ -1,5 +1,7 @@
 import { ObjectType, OmitType } from "@nestjs/graphql";
-import { User } from "../user.model";
+import { HolenavUser } from "../user.model";
 
 @ObjectType()
-export class SanitizedUserForSelf extends OmitType(User, ["credentials"]) {}
+export class SanitizedUserForSelf extends OmitType(HolenavUser, [
+  "credentials",
+]) {}

@@ -2,13 +2,13 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { Collapse, IconButton, Paper, TableCell } from "@mui/material";
 import { useState } from "react";
-import { User } from "../../../generated/graphqlOperations";
+import { HolenavUser } from "../../../generated/graphqlOperations";
 import useLayout from "../../../utils/useLayout";
 import TableRow from "../../common/TableRow";
 import UserProfile from "./user-profile/UserProfile";
 
 type UserListRowProps = {
-  user: User;
+  user: HolenavUser;
 };
 
 const UserListRow = ({ user }: UserListRowProps) => {

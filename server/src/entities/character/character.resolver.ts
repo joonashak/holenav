@@ -1,7 +1,7 @@
 import { Args, Query, Resolver } from "@nestjs/graphql";
 import { RequireSystemRole } from "../../auth/decorators/role.decorator";
 import SystemRole from "../../user/roles/system-role.enum";
-import { Character } from "./character.model";
+import { HolenavCharacter } from "./character.model";
 import { CharacterService } from "./character.service";
 
 @Resolver()
@@ -9,10 +9,10 @@ export class CharacterResolver {
   constructor(private characterService: CharacterService) {}
 
   @RequireSystemRole(SystemRole.MANAGER)
-  @Query((returns) => [Character])
+  @Query((returns) => [HolenavCharacter])
   async searchCharactersByMain(
     @Args("search") search: string,
-  ): Promise<Character[]> {
+  ): Promise<HolenavCharacter[]> {
     return this.characterService.searchByMain(search);
   }
 }

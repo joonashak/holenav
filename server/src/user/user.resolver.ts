@@ -11,7 +11,7 @@ import { UserSsoTokens } from "./dto/user-sso-tokens.dto";
 import SystemRole from "./roles/system-role.enum";
 import { UserSettingsService } from "./settings/user-settings.service";
 import { UserRoleService } from "./user-role.service";
-import { User } from "./user.model";
+import { HolenavUser } from "./user.model";
 import { UserService } from "./user.service";
 
 @Resolver()
@@ -32,39 +32,39 @@ export class UserResolver {
   }
 
   @RequireAuth()
-  @Mutation((returns) => User)
+  @Mutation((returns) => HolenavUser)
   async updateSelectedMap(
     @Args("selectedMapId") selectedMapId: string,
-    @CurrentUser() user: User,
-  ): Promise<User> {
+    @CurrentUser() user: HolenavUser,
+  ): Promise<HolenavUser> {
     return this.userSettingsService.updateSelectedMap(selectedMapId, user);
   }
 
   @RequireAuth()
-  @Mutation((returns) => User)
+  @Mutation((returns) => HolenavUser)
   async addSavedMap(
     @Args("name") name: string,
     @Args("rootSystemName") rootSystemName: string,
-    @CurrentUser() user: User,
-  ): Promise<User> {
+    @CurrentUser() user: HolenavUser,
+  ): Promise<HolenavUser> {
     return this.userSettingsService.createSavedMap(name, rootSystemName, user);
   }
 
   @RequireAuth()
-  @Mutation((returns) => User)
+  @Mutation((returns) => HolenavUser)
   async deleteSavedMap(
     @Args("mapId") mapId: string,
-    @CurrentUser() user: User,
-  ): Promise<User> {
+    @CurrentUser() user: HolenavUser,
+  ): Promise<HolenavUser> {
     return this.userSettingsService.deleteSavedMap(mapId, user);
   }
 
   @RequireAuth()
-  @Mutation((returns) => User)
+  @Mutation((returns) => HolenavUser)
   async removeAlt(
     @Args("esiId") esiId: string,
-    @CurrentUser() user: User,
-  ): Promise<User> {
+    @CurrentUser() user: HolenavUser,
+  ): Promise<HolenavUser> {
     await this.userService.removeAlt(esiId, user.id);
     return this.whoami(user);
   }
@@ -77,7 +77,9 @@ export class UserResolver {
 
   @RequireSystemRole(SystemRole.MANAGER)
   @Mutation((returns) => SanitizedUser)
-  async addFolderRole(@Args("input") input: AddFolderRoleInput): Promise<User> {
+  async addFolderRole(
+    @Args("input") input: AddFolderRoleInput,
+  ): Promise<HolenavUser> {
     const { userEsiId, folderId, role } = input;
     return this.userService.addFolderRoleByEsiId(userEsiId, folderId, role);
   }
@@ -86,8 +88,8 @@ export class UserResolver {
   @Mutation((returns) => SanitizedUser)
   async changeActiveFolder(
     @Args("folderId") folderId: string,
-    @CurrentUser() user: User,
-  ): Promise<User> {
+    @CurrentUser() user: HolenavUser,
+  ): Promise<HolenavUser> {
     return this.userSettingsService.changeActiveFolder(folderId, user);
   }
 
@@ -105,7 +107,7 @@ export class UserResolver {
 
   @RequireSystemRole(SystemRole.USER)
   @Query((returns) => UserSsoTokens)
-  async getSsoTokens(@CurrentUser() user: User): Promise<UserSsoTokens> {
+  async getSsoTokens(@CurrentUser() user: HolenavUser): Promise<UserSsoTokens> {
     return this.userService.getSsoTokens(user);
   }
 }

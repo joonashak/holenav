@@ -3,18 +3,18 @@ import dayjs from "dayjs";
 import { Session } from "../auth/session/session.model";
 import SsoSessionType from "../auth/sso/sso-session/sso-session-type.enum";
 import { SsoSession } from "../auth/sso/sso-session/sso-session.model";
-import { Corporation } from "../entities/common/corporation.model";
+import { HolenavCorporation } from "../entities/common/corporation.model";
 import { Folder } from "../entities/folder/folder.model";
 import FolderRole from "../user/roles/folder-role.enum";
 import SystemRole from "../user/roles/system-role.enum";
-import { User } from "../user/user.model";
+import { HolenavUser } from "../user/user.model";
 
 export const testFolder: Folder = {
   id: "test-folder",
   name: "Test Folder",
 };
 
-export const testCorp: Corporation = {
+export const testCorp: HolenavCorporation = {
   esiId: "123",
   name: "test-corp",
   ticker: "TEST",
@@ -26,7 +26,7 @@ export const testUserCredentials = {
   passwordHash: hashSync(testUserPassword, 12),
 };
 
-export const testUser: User = {
+export const testUser: HolenavUser = {
   id: "asd",
   alts: [],
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

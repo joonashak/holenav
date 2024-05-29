@@ -4,8 +4,8 @@ import { InjectModel } from "@nestjs/mongoose";
 import dayjs from "dayjs";
 import { Model } from "mongoose";
 import { v4 as uuid } from "uuid";
-import { Character } from "../../../entities/character/character.model";
-import { User } from "../../../user/user.model";
+import { HolenavCharacter } from "../../../entities/character/character.model";
+import { HolenavUser } from "../../../user/user.model";
 import SsoSessionType from "./sso-session-type.enum";
 import { SsoSession, SsoSessionDocument } from "./sso-session.model";
 
@@ -17,7 +17,7 @@ export class SsoSessionService {
   ) {}
 
   /** Create new SSO state. */
-  async createSsoSession(user: User): Promise<SsoSession> {
+  async createSsoSession(user: HolenavUser): Promise<SsoSession> {
     return this.ssoSessionModel.create({
       key: uuid(),
       type: user ? SsoSessionType.ADD_CHARACTER : SsoSessionType.LOGIN,
@@ -50,7 +50,7 @@ export class SsoSessionService {
   }
 
   /** Mark given (and valid) SSO state with a successful login. */
-  async setSsoLoginSuccess(key: string, character: Character) {
+  async setSsoLoginSuccess(key: string, character: HolenavCharacter) {
     await this.verifySsoSession(key);
     await this.ssoSessionModel.findOneAndUpdate(
       { key },

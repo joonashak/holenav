@@ -3,8 +3,8 @@ import { Button, Stack } from "@mui/material";
 import useAuthenticatedMutation from "../../../../../auth/useAuthenticatedMutation";
 import {
   AddFolderRoleDocument,
-  Character,
   FolderRoles,
+  HolenavCharacter,
 } from "../../../../../generated/graphqlOperations";
 import Select from "../../../../controls/select/Select";
 import useNotification from "../../../../global-notification/useNotification";
@@ -13,7 +13,7 @@ import CharacterSearch from "./CharacterSearch";
 
 type ManageFolderState = {
   selectedFolder: string;
-  selectedCharacter: Character | null;
+  selectedCharacter: HolenavCharacter | null;
   selectedRole: string;
 };
 

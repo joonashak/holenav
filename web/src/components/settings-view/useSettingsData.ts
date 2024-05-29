@@ -10,10 +10,10 @@ import {
   CreateFolderMutation,
   CreateFolderMutationVariables,
   Folder,
+  HolenavUser,
   SettingsDataDocument,
   SettingsDataForManagerDocument,
   SystemRoles,
-  User,
 } from "../../generated/graphqlOperations";
 import { atLeastManager } from "../../utils/compareSystemRoles";
 import useNotification from "../global-notification/useNotification";
@@ -35,7 +35,7 @@ const useSettingsData = () => {
     managerSettings?.getManageableFolders || [];
 
   const { data: userData }: any = useAuthenticatedQuery(AllUsersDocument);
-  const users: User[] = userData?.getAllUsersForManager || [];
+  const users: HolenavUser[] = userData?.getAllUsersForManager || [];
 
   const [createFolderMutation] = useAuthenticatedMutation<
     CreateFolderMutation,

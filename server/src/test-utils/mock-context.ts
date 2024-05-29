@@ -2,7 +2,7 @@
 import { createMock } from "@golevelup/ts-jest";
 import { ExecutionContext } from "@nestjs/common";
 import FolderRole from "../user/roles/folder-role.enum";
-import { User } from "../user/user.model";
+import { HolenavUser } from "../user/user.model";
 import { testFolder, testUser } from "./test-data";
 
 export const mockContextWithRequest = (req: any): ExecutionContext => {
@@ -14,7 +14,7 @@ export const mockContextWithRequest = (req: any): ExecutionContext => {
   return context;
 };
 
-export const mockContextWithUser = (user: User): ExecutionContext =>
+export const mockContextWithUser = (user: HolenavUser): ExecutionContext =>
   mockContextWithRequest({ user });
 
 export const mockContextWithHeaders = (headers: any): ExecutionContext =>

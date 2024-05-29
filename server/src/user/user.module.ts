@@ -12,7 +12,7 @@ import {
 } from "./credentials/credentials.model";
 import { UserSettingsService } from "./settings/user-settings.service";
 import { UserRoleService } from "./user-role.service";
-import { User, UserSchema } from "./user.model";
+import { HolenavUser, UserSchema } from "./user.model";
 import { UserResolver } from "./user.resolver";
 import { UserService } from "./user.service";
 
@@ -20,7 +20,7 @@ import { UserService } from "./user.service";
 @Module({
   imports: [
     MongooseModule.forFeature([
-      { name: User.name, schema: UserSchema },
+      { name: HolenavUser.name, schema: UserSchema },
       { name: Credentials.name, schema: CredentialsSchema },
     ]),
     JwtModule.register({

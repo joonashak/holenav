@@ -15,6 +15,7 @@ services:
       - NEO_DB=neo4j
       - JWT_SECRET=asdasd
       - ENABLE_DEVTOOLS=true
+      - SESSION_SECRET=dsqefw
     volumes:
       - ./server/src:/usr/src/app/src
 

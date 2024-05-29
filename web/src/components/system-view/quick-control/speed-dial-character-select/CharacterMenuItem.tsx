@@ -7,13 +7,13 @@ import {
   MenuItem,
 } from "@mui/material";
 import { SyntheticEvent } from "react";
-import { Character } from "../../../../generated/graphqlOperations";
+import { HolenavCharacter } from "../../../../generated/graphqlOperations";
 import useNotification from "../../../global-notification/useNotification";
 import useLocalData from "../../../local-data/useLocalData";
 import useUserData from "../../../user-data/useUserData";
 
 type CharacterMenuItemProps = {
-  character: Character;
+  character: HolenavCharacter;
   selectCharacter: () => void;
 };
 

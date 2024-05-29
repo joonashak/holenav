@@ -6,10 +6,10 @@ import { AppDataService } from "../app-data/app-data.service";
 import { Session } from "../auth/session/session.model";
 import { SsoSession } from "../auth/sso/sso-session/sso-session.model";
 import { ConnectionGraphService } from "../connection-graph/connection-graph.service";
-import { Character } from "../entities/character/character.model";
+import { HolenavCharacter } from "../entities/character/character.model";
 import { Folder } from "../entities/folder/folder.model";
 import { Credentials } from "../user/credentials/credentials.model";
-import { User } from "../user/user.model";
+import { HolenavUser } from "../user/user.model";
 import users from "./data/users";
 import { MockConnectionGraphService } from "./mock-data-services/mock-connection-graph.service";
 import { MockFolderService } from "./mock-data-services/mock-folder.service";
@@ -18,10 +18,11 @@ import { MockUserService } from "./mock-data-services/mock-user.service";
 @Injectable()
 export class DevToolsService {
   constructor(
-    @InjectModel(Character.name) private characterModel: Model<Character>,
+    @InjectModel(HolenavCharacter.name)
+    private characterModel: Model<HolenavCharacter>,
     @InjectModel(Folder.name) private folderModel: Model<Folder>,
     @InjectModel(SsoSession.name) private ssoSessionModel: Model<SsoSession>,
-    @InjectModel(User.name) private userModel: Model<User>,
+    @InjectModel(HolenavUser.name) private userModel: Model<HolenavUser>,
     @InjectModel(Credentials.name) private credentialsModel: Model<Credentials>,
     @InjectModel(Session.name) private sessionModel: Model<Session>,
     @InjectModel(AppData.name) private appDataModel: Model<AppData>,
