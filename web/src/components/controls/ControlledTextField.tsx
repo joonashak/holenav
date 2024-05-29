@@ -12,8 +12,8 @@ type ControlledTextFieldProps = TextFieldProps & {
 const ControlledTextField = ({
   name,
   control,
-  rules,
-  type,
+  rules = {},
+  type = "text",
   ...rest
 }: ControlledTextFieldProps) => {
   const { field, fieldState } = useController({
@@ -36,11 +36,6 @@ const ControlledTextField = ({
       {...rest}
     />
   );
-};
-
-ControlledTextField.defaultProps = {
-  rules: {},
-  type: "text",
 };
 
 export default ControlledTextField;

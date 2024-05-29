@@ -14,7 +14,7 @@ type MenuItemProps = {
 };
 
 /** Menu button with router navigation. Must be enclosed in MUI `List`. */
-const MenuItem = ({ text, Icon, href }: MenuItemProps) => {
+const MenuItem = ({ text, Icon, href = "" }: MenuItemProps) => {
   const history = useHistory();
 
   const onClick = () => {
@@ -34,10 +34,6 @@ const MenuItem = ({ text, Icon, href }: MenuItemProps) => {
       </ListItemButton>
     </ListItem>
   );
-};
-
-MenuItem.defaultProps = {
-  href: "",
 };
 
 export default MenuItem;

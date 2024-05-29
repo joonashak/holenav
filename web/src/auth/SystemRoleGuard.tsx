@@ -4,9 +4,9 @@ import { SystemRoles } from "../generated/graphqlOperations";
 
 type RoleGuardProps = {
   children: ReactNode;
-  defaultComponent: ReactNode;
-  showTo: SystemRoles[];
-  hideFrom: SystemRoles[];
+  defaultComponent?: ReactNode;
+  showTo?: SystemRoles[];
+  hideFrom?: SystemRoles[];
 };
 
 /**
@@ -20,8 +20,8 @@ type RoleGuardProps = {
 const SystemRoleGuard = ({
   children,
   defaultComponent,
-  showTo,
-  hideFrom,
+  showTo = [SystemRoles.Administrator, SystemRoles.Manager, SystemRoles.User],
+  hideFrom = [],
 }: RoleGuardProps) => {
   const { systemRole } = useUserData();
 
@@ -36,12 +36,6 @@ const SystemRoleGuard = ({
   }
 
   return <>{children}</>;
-};
-
-SystemRoleGuard.defaultProps = {
-  defaultComponent: null,
-  showTo: [SystemRoles.Administrator, SystemRoles.Manager, SystemRoles.User],
-  hideFrom: [],
 };
 
 export default SystemRoleGuard;

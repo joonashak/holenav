@@ -31,8 +31,4 @@ const SigForm = (props: UseSigFormProps) => {
   );
 };
 
-SigForm.defaultProps = {
-  existing: null,
-};
-
 export default SigForm;

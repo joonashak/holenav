@@ -87,9 +87,4 @@ const MenuContent = ({ sx, bottomListSx }: MenuContentProps) => (
   </nav>
 );
 
-MenuContent.defaultProps = {
-  sx: {},
-  bottomListSx: {},
-};
-
 export default MenuContent;

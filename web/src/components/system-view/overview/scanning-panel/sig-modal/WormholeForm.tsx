@@ -95,8 +95,4 @@ const WormholeForm = (props: UseWormholeFormProps) => {
   );
 };
 
-WormholeForm.defaultProps = {
-  existing: null,
-};
-
 export default WormholeForm;

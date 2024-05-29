@@ -6,7 +6,7 @@ type FormGroupRowProps = {
   fullWidth?: boolean;
 };
 
-const FormGroupRow = ({ children, fullWidth }: FormGroupRowProps) => {
+const FormGroupRow = ({ children, fullWidth = false }: FormGroupRowProps) => {
   const dualColumnSx = {
     justifyContent: "space-between",
     "& > *": { maxWidth: 0.48 },
@@ -27,10 +27,6 @@ const FormGroupRow = ({ children, fullWidth }: FormGroupRowProps) => {
       {children}
     </FormGroup>
   );
-};
-
-FormGroupRow.defaultProps = {
-  fullWidth: false,
 };
 
 export default FormGroupRow;
