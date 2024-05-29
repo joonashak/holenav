@@ -1,31 +1,51 @@
-import { Downgraded, useState } from "@hookstate/core";
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import useAuthenticatedMutation from "../../../auth/useAuthenticatedMutation";
+import useAuthenticatedQuery from "../../../auth/useAuthenticatedQuery";
 import {
+  AllUsersDocument,
   AssignSystemRoleDocument,
   AssignSystemRoleMutation,
   AssignSystemRoleMutationVariables,
   CreateFolderDocument,
   CreateFolderMutation,
   CreateFolderMutationVariables,
+  Folder,
+  SettingsDataDocument,
+  SettingsDataForManagerDocument,
   SystemRoles,
+  User,
 } from "../../../generated/graphqlOperations";
+import { atLeastManager } from "../../../utils/compareSystemRoles";
 import useNotification from "../../global-notification/useNotification";
-import { settingsState } from "./SettingsData";
+import useUserData from "../../user-data/useUserData";
 
 const useSettingsData = () => {
-  const state = useState(settingsState);
+  const { systemRole } = useUserData();
   const { showSuccessNotification, showErrorNotification } = useNotification();
+
+  const { data: settingsData }: any =
+    useAuthenticatedQuery(SettingsDataDocument);
+  const accessibleFolders: Folder[] = settingsData?.getAccessibleFolders || [];
+
+  const { data: managerSettings }: any = useAuthenticatedQuery(
+    SettingsDataForManagerDocument,
+    { skip: !atLeastManager(systemRole) },
+  );
+  const manageableFolders: Folder[] =
+    managerSettings?.getManageableFolders || [];
+
+  const { data: userData }: any = useAuthenticatedQuery(AllUsersDocument);
+  const users: User[] = userData?.getAllUsersForManager || [];
 
   const [createFolderMutation] = useAuthenticatedMutation<
     CreateFolderMutation,
     CreateFolderMutationVariables
   >(CreateFolderDocument, {
-    onCompleted: ({ createFolder }) => {
-      state.accessibleFolders.set((folders) => folders.concat([createFolder]));
-      state.manageableFolders.set((folders) => folders.concat([createFolder]));
+    onCompleted: () => {
       showSuccessNotification("Folder created.");
     },
     onError: () => showErrorNotification("Could not create new folder."),
+    refetchQueries: [SettingsDataDocument, SettingsDataForManagerDocument],
   });
 
   const createFolder = async (name: string) =>
@@ -35,28 +55,16 @@ const useSettingsData = () => {
     AssignSystemRoleMutation,
     AssignSystemRoleMutationVariables
   >(AssignSystemRoleDocument, {
-    onCompleted: ({ assignSystemRole }) => {
-      state.users.set((users) =>
-        users
-          .filter((user) => user.id !== assignSystemRole.id)
-          .concat(assignSystemRole),
-      );
-    },
+    refetchQueries: [AllUsersDocument],
   });
 
   const assignSystemRole = async (userId: string, systemRole: SystemRoles) =>
     assignSystemRoleMutation({ variables: { userId, systemRole } });
 
   return {
-    get accessibleFolders() {
-      return state.accessibleFolders.attach(Downgraded).get();
-    },
-    get manageableFolders() {
-      return state.manageableFolders.attach(Downgraded).get();
-    },
-    get users() {
-      return state.users.attach(Downgraded).get();
-    },
+    accessibleFolders,
+    manageableFolders,
+    users,
     createFolder,
     assignSystemRole,
   };

@@ -6,11 +6,8 @@ import {
   SelectChangeEvent,
 } from "@mui/material";
 import { useState } from "react";
-import {
-  SanitizedUserForManager,
-  SystemRoles,
-} from "../../../../generated/graphqlOperations";
-import useSettingsData from "../../settings-data/useSettingsData";
+import { SystemRoles, User } from "../../../../generated/graphqlOperations";
+import useSettingsData from "../../useSettingsData";
 
 const options = [
   { value: SystemRoles.None, label: "Account Disabled" },
@@ -20,7 +17,7 @@ const options = [
 ];
 
 type SystemRoleWidgetProps = {
-  user: SanitizedUserForManager;
+  user: User;
 };
 
 const SystemRoleWidget = ({ user }: SystemRoleWidgetProps) => {

@@ -7,14 +7,11 @@ import {
   Typography,
 } from "@mui/material";
 import SystemRoleGuard from "../../../../auth/SystemRoleGuard";
-import {
-  SanitizedUserForManager,
-  SystemRoles,
-} from "../../../../generated/graphqlOperations";
+import { SystemRoles, User } from "../../../../generated/graphqlOperations";
 import SystemRoleWidget from "./SystemRoleWidget";
 
 type UserProfileProps = {
-  user: SanitizedUserForManager;
+  user: User;
 };
 
 const UserProfile = ({ user }: UserProfileProps) => (
