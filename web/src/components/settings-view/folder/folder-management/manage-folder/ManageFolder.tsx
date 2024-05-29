@@ -8,7 +8,7 @@ import {
 } from "../../../../../generated/graphqlOperations";
 import Select from "../../../../controls/select/Select";
 import useNotification from "../../../../global-notification/useNotification";
-import useSettingsData from "../../../settings-data/useSettingsData";
+import useSettingsData from "../../../useSettingsData";
 import CharacterSearch from "./CharacterSearch";
 
 type ManageFolderState = {

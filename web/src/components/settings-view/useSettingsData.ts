@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import useAuthenticatedMutation from "../../../auth/useAuthenticatedMutation";
-import useAuthenticatedQuery from "../../../auth/useAuthenticatedQuery";
+import useAuthenticatedMutation from "../../auth/useAuthenticatedMutation";
+import useAuthenticatedQuery from "../../auth/useAuthenticatedQuery";
 import {
   AllUsersDocument,
   AssignSystemRoleDocument,
@@ -14,10 +14,10 @@ import {
   SettingsDataForManagerDocument,
   SystemRoles,
   User,
-} from "../../../generated/graphqlOperations";
-import { atLeastManager } from "../../../utils/compareSystemRoles";
-import useNotification from "../../global-notification/useNotification";
-import useUserData from "../../user-data/useUserData";
+} from "../../generated/graphqlOperations";
+import { atLeastManager } from "../../utils/compareSystemRoles";
+import useNotification from "../global-notification/useNotification";
+import useUserData from "../user-data/useUserData";
 
 const useSettingsData = () => {
   const { systemRole } = useUserData();

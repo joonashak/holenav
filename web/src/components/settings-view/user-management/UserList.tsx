@@ -9,7 +9,7 @@ import {
 import { clone } from "lodash";
 import useLayout from "../../../utils/useLayout";
 import TableRow from "../../common/TableRow";
-import useSettingsData from "../settings-data/useSettingsData";
+import useSettingsData from "../useSettingsData";
 import UserListRow from "./UserListRow";
 
 const UserList = () => {

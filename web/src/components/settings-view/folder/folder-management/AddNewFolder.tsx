@@ -1,7 +1,7 @@
 import { Box, Button, FormGroup } from "@mui/material";
 import { FieldValues, useForm } from "react-hook-form";
 import ControlledTextField from "../../../controls/ControlledTextField";
-import useSettingsData from "../../settings-data/useSettingsData";
+import useSettingsData from "../../useSettingsData";
 
 const AddNewFolder = () => {
   const { handleSubmit, control } = useForm();

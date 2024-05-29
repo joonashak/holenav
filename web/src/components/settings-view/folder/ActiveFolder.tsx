@@ -2,7 +2,7 @@ import { SelectChangeEvent } from "@mui/material";
 import PageTitle from "../../common/PageTitle";
 import Select from "../../controls/select/Select";
 import useUserSettings from "../../user-data/settings/useUserSettings";
-import useSettingsData from "../settings-data/useSettingsData";
+import useSettingsData from "../useSettingsData";
 
 const ActiveFolder = () => {
   const { activeFolder, setActiveFolder } = useUserSettings();
