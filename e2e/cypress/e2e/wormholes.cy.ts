@@ -13,7 +13,7 @@ import {
 const testSystem = "J104809";
 const testSystemUrl = `/system/${testSystem}`;
 
-describe.skip("Wormholes", () => {
+describe("Wormholes", () => {
   beforeEach(() => {
     cy.resetDatabase();
     cy.mockNormalUser();

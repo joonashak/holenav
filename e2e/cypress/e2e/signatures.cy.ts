@@ -7,7 +7,7 @@ import {
 
 const testSystemUrl = "/system/Jita";
 
-describe.skip("Signatures", () => {
+describe("Signatures", () => {
   beforeEach(() => {
     cy.resetDatabase();
     cy.mockNormalUser();
