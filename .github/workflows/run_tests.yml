@@ -67,7 +67,14 @@ jobs:
         run: docker compose -f compose.ci.yaml up -d mongo neo server web
       - name: Run E2E tests
         run: docker compose -f compose.ci.yaml run e2e
-      - uses: actions/upload-artifact@v4
+      - name: Print server logs
+        if: failure()
+        run: docker compose -f compose.ci.yaml logs server
+      - name: Print stack status
+        if: failure()
+        run: docker ps
+      - name: Save Cypress results
+        uses: actions/upload-artifact@v4
         if: failure()
         with:
           name: Cypress Results
