@@ -1,12 +1,9 @@
 import { UseGuards } from "@nestjs/common";
 import { Args, Mutation, Resolver } from "@nestjs/graphql";
-import { HolenavUser } from "../user/user.model";
 import { AuthService } from "./auth.service";
 import { CurrentSession } from "./decorators/session.decorator";
-import { CurrentUser } from "./decorators/user.decorator";
 import AccessTokenDto from "./dto/access-token.dto";
 import LogoutDto from "./dto/logout.dto";
-import { LoginGuard } from "./guards/login.guard";
 import { TokenAuthGuard } from "./guards/token-auth.guard";
 import { Session } from "./session/session.model";
 
@@ -18,17 +15,6 @@ export default class AuthResolver {
   @Mutation((returns) => AccessTokenDto)
   async getToken(@Args("state") state: string): Promise<AccessTokenDto> {
     const accessToken = await this.authService.validateSsoLogin(state);
-    return { accessToken };
-  }
-
-  @UseGuards(LoginGuard)
-  @Mutation((returns) => AccessTokenDto)
-  async login(
-    @Args("username") username: string,
-    @Args("password") password: string,
-    @CurrentUser() user: HolenavUser,
-  ): Promise<AccessTokenDto> {
-    const accessToken = await this.authService.createAccessToken(user);
     return { accessToken };
   }
 

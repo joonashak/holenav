@@ -20,8 +20,6 @@ import { SsoSessionService } from "./sso-session/sso-session.service";
 import { SSO_MODULE_CONFIG_TOKEN } from "./sso.module-definition";
 import { SsoService } from "./sso.service";
 
-const expectedCallbackUrl = `https://login.eveonline.com/v2/oauth/authorize/?response_type=code&redirect_uri=test-callback-url&client_id=test-sso-client-id&state=${testSsoSession.key}&scope=test-scope%20another.scope`;
-
 describe("SsoService", () => {
   let userService: UserService;
   let ssoService: SsoService;
@@ -52,22 +50,6 @@ describe("SsoService", () => {
     ssoService = module.get<SsoService>(SsoService);
     ssoSessionService = module.get<SsoSessionService>(SsoSessionService);
     ssoApiService = module.get<SsoApiService>(SsoApiService);
-  });
-
-  it("Initializes SSO login", async () => {
-    await expect(ssoService.getSsoLoginUrl()).resolves.toEqual(
-      expectedCallbackUrl,
-    );
-    expect(ssoSessionService.createSsoSession).toBeCalledTimes(1);
-    expect(ssoSessionService.createSsoSession).toBeCalledWith(null);
-  });
-
-  it("Initializes SSO login for adding an alt", async () => {
-    await expect(ssoService.getSsoLoginUrl(testUser)).resolves.toEqual(
-      expectedCallbackUrl,
-    );
-    expect(ssoSessionService.createSsoSession).toBeCalledTimes(1);
-    expect(ssoSessionService.createSsoSession).toBeCalledWith(testUser);
   });
 
   it("Handles SSO login callback correctly", async () => {

@@ -3,7 +3,6 @@ import { JwtModule } from "@nestjs/jwt";
 import { JWT_LIFETIME, JWT_SECRET } from "../config";
 import { CharacterModule } from "../entities/character/character.module";
 import { EsiModule } from "../esi/esi.module";
-import { AuthController } from "./auth.controller";
 import AuthResolver from "./auth.resolver";
 import { AuthService } from "./auth.service";
 import { SessionModule } from "./session/session.module";
@@ -13,7 +12,6 @@ import { SsoModule } from "./sso/sso.module";
 
 @Global()
 @Module({
-  controllers: [AuthController],
   imports: [
     JwtModule.register({
       secret: JWT_SECRET,

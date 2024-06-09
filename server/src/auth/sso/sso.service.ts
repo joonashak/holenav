@@ -1,29 +1,17 @@
-import { ForbiddenException, Inject, Injectable } from "@nestjs/common";
+import { ForbiddenException, Injectable } from "@nestjs/common";
 import { AppSettingsService } from "../../app-data/settings/app-settings.service";
-import {
-  CLIENT_URL,
-  SSO_CALLBACK_URL,
-  SSO_CLIENT_ID,
-  getClientLoginCallbackUrl,
-} from "../../config";
+import { CLIENT_URL, getClientLoginCallbackUrl } from "../../config";
 import { CharacterService } from "../../entities/character/character.service";
 import { EsiService } from "../../esi/esi.service";
-import { HolenavUser } from "../../user/user.model";
 import { UserService } from "../../user/user.service";
 import { SsoApiService } from "./sso-api.service";
 import SsoSessionType from "./sso-session/sso-session-type.enum";
 import { SsoSessionService } from "./sso-session/sso-session.service";
 import { SsoTokenService } from "./sso-token/sso-token.service";
-import { SsoUrl } from "./sso-url.enum";
-import {
-  SSO_MODULE_CONFIG_TOKEN,
-  SsoModuleConfig,
-} from "./sso.module-definition";
 
 @Injectable()
 export class SsoService {
   constructor(
-    @Inject(SSO_MODULE_CONFIG_TOKEN) private moduleConfig: SsoModuleConfig,
     private ssoSessionService: SsoSessionService,
     private ssoTokenService: SsoTokenService,
     private characterService: CharacterService,
@@ -32,14 +20,6 @@ export class SsoService {
     private appSettingsService: AppSettingsService,
     private esiService: EsiService,
   ) {}
-
-  /** Generate EVE SSO login page URL. */
-  async getSsoLoginUrl(user: HolenavUser = null) {
-    const { key } = await this.ssoSessionService.createSsoSession(user);
-    const scopes = this.moduleConfig.scopes.join(" ");
-    const loginUrl = `${SsoUrl.Authorize}/?response_type=code&redirect_uri=${SSO_CALLBACK_URL}&client_id=${SSO_CLIENT_ID}&state=${key}&scope=${scopes}`;
-    return encodeURI(loginUrl);
-  }
 
   /**
    * Get the SSO tokens using the authorization code supplied by the user, save
