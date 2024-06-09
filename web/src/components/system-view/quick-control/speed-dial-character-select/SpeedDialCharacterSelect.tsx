@@ -10,12 +10,7 @@ import {
   SpeedDialActionProps,
 } from "@mui/material";
 import { useRef, useState } from "react";
-import useLazyAuthenticatedQuery from "../../../../auth/useLazyAuthenticatedQuery";
-import {
-  AddCharacterDocument,
-  AddCharacterQuery,
-  AddCharacterQueryVariables,
-} from "../../../../generated/graphqlOperations";
+import { backendUrl } from "../../../../config";
 import useLocalData from "../../../local-data/useLocalData";
 import useUserData from "../../../user-data/useUserData";
 import CharacterMenuItem from "./CharacterMenuItem";
@@ -27,17 +22,6 @@ const SpeedDialCharacterSelect = (props: SpeedDialActionProps) => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const toggleMenu = () => setMenuOpen((prev) => !prev);
-
-  const [ssoLoginQuery] = useLazyAuthenticatedQuery<
-    AddCharacterQuery,
-    AddCharacterQueryVariables
-  >(AddCharacterDocument, {
-    onCompleted: ({ addCharacter }) => {
-      window.location.href = addCharacter.ssoLoginUrl;
-    },
-  });
-
-  const addCharacter = () => ssoLoginQuery();
 
   const selectCharacter = (esiId: string) => () => {
     setActiveCharacter(esiId);
@@ -77,7 +61,11 @@ const SpeedDialCharacterSelect = (props: SpeedDialActionProps) => {
           />
         ))}
         <Divider />
-        <MenuItem onClick={addCharacter}>
+        <MenuItem
+          onClick={() => {
+            window.location.href = `${backendUrl}/sso/login`;
+          }}
+        >
           <ListItemIcon>
             <AddIcon sx={{ color: "secondary.light" }} />
           </ListItemIcon>
