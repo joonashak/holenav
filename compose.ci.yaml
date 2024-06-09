@@ -13,6 +13,9 @@ services:
       - CLIENT_URL=http://web:5173
       - JWT_SECRET=asdasd
       - ENABLE_DEVTOOLS=true
+      - SSO_CLIENT_ID=asd
+      - SSO_SECRET_KEY=asd
+      - SSO_CALLBACK_URL=asd
     depends_on:
       - mongo
       - neo
