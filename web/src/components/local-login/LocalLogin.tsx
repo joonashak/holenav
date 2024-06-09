@@ -2,7 +2,7 @@ import { useMutation } from "@apollo/client";
 import { Button, DialogContent, DialogTitle } from "@mui/material";
 import { useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { LoginDocument } from "../../generated/graphqlOperations";
 import Dialog from "../common/Dialog";
 import ControlledTextField from "../controls/ControlledTextField";
@@ -11,7 +11,7 @@ import useNotification from "../global-notification/useNotification";
 import useLocalData from "../local-data/useLocalData";
 
 const LocalLogin = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const { setAuthToken } = useLocalData();
   const { control, handleSubmit } = useForm();
   const { showErrorNotification } = useNotification();
@@ -22,7 +22,7 @@ const LocalLogin = () => {
   const [loginMutation] = useMutation(LoginDocument, {
     onCompleted: async ({ login }) => {
       await setAuthToken(login.accessToken);
-      history.push("/system/J104809");
+      navigate("/system/J104809");
     },
     onError: () => {
       showErrorNotification("Login failed.");

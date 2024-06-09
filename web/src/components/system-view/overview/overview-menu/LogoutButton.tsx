@@ -1,6 +1,6 @@
 import LogoutIcon from "@mui/icons-material/Logout";
 import { Button } from "@mui/material";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import useAuth from "../../../../auth/useAuth";
 import useAuthenticatedMutation from "../../../../auth/useAuthenticatedMutation";
 import { LogoutDocument } from "../../../../generated/graphqlOperations";
@@ -10,7 +10,7 @@ import useLocalData from "../../../local-data/useLocalData";
 const LogoutButton = () => {
   const { mocking } = useAuth();
   const { setAuthToken } = useLocalData();
-  const history = useHistory();
+  const navigate = useNavigate();
   const { showInfoNotification } = useNotification();
 
   const [logoutMutation] = useAuthenticatedMutation(LogoutDocument);
@@ -24,7 +24,7 @@ const LogoutButton = () => {
     }
     await logoutMutation();
     await setAuthToken(null);
-    history.push("/");
+    navigate("/");
   };
 
   return (

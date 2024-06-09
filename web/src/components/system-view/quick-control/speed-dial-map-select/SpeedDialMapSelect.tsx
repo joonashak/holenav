@@ -10,7 +10,7 @@ import {
   SpeedDialActionProps,
 } from "@mui/material";
 import { useRef, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { SavedMap } from "../../../../generated/graphqlOperations";
 import useUserData from "../../../user-data/useUserData";
 import useMapData from "../../map/map-data/useMapData";
@@ -30,13 +30,13 @@ const SpeedDialMapSelect = (props: SpeedDialActionProps) => {
     settings: { maps },
   } = useUserData();
   const { fetchConnectionTree } = useMapData();
-  const { push } = useHistory();
+  const navigate = useNavigate();
 
   const selectMap = async (map: SavedMap) => {
     setSelectedMap(map.id);
     await fetchConnectionTree(map.rootSystemName);
     toggleMenu();
-    push(`/system/${map.rootSystemName}`);
+    navigate(`/system/${map.rootSystemName}`);
   };
 
   return (

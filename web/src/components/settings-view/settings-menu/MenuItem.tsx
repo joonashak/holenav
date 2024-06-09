@@ -5,7 +5,7 @@ import {
   ListItemText,
   SvgIcon,
 } from "@mui/material";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 type MenuItemProps = {
   text: string;
@@ -15,13 +15,13 @@ type MenuItemProps = {
 
 /** Menu button with router navigation. Must be enclosed in MUI `List`. */
 const MenuItem = ({ text, Icon, href = "" }: MenuItemProps) => {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const onClick = () => {
     if (!href) {
       return;
     }
-    history.push(href);
+    navigate(href);
   };
 
   return (
