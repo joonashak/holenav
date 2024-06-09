@@ -1,0 +1,6 @@
+query GetMyTokens {
+  getMyTokens {
+    accessToken
+    eveId
+  }
+}
