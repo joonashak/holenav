@@ -1,4 +1,8 @@
-import { CloneBayModule } from "@joonashak/nestjs-clone-bay";
+import {
+  CloneBayModule,
+  CloneBayResolversModule,
+  CloneBaySsoModule,
+} from "@joonashak/nestjs-clone-bay";
 import { EveAuthModule } from "@joonashak/nestjs-eve-auth";
 import { ApolloDriver, ApolloDriverConfig } from "@nestjs/apollo";
 import { Module } from "@nestjs/common";
@@ -38,10 +42,13 @@ import { ScheduledTasksModule } from "./scheduled-tasks/scheduled-tasks.module";
       clientId: SSO_CLIENT_ID,
       secretKey: SSO_SECRET_KEY,
       callbackUrl: SSO_CALLBACK_URL,
+      scopes: ["esi-search.search_structures.v1"],
     }),
     CloneBayModule.forRoot({
       afterLoginUrl: CLIENT_URL,
     }),
+    CloneBaySsoModule,
+    CloneBayResolversModule,
     ScheduleModule.forRoot(),
     AppDataModule,
     AuthModule,
