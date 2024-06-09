@@ -16,6 +16,7 @@ services:
       - SSO_CLIENT_ID=asd
       - SSO_SECRET_KEY=asd
       - SSO_CALLBACK_URL=asd
+      - SESSION_SECRET=dsqefw
     depends_on:
       - mongo
       - neo
