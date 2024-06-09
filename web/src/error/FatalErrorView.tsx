@@ -1,18 +1,13 @@
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import { Alert, Button, Container } from "@mui/material";
-import { ReactNode } from "react";
+import { Alert, AlertProps, Button, Container } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
-type FatalErrorViewProps = {
-  children: ReactNode;
-};
-
-const FatalErrorView = ({ children }: FatalErrorViewProps) => {
+const FatalErrorView = (props: AlertProps) => {
   const navigate = useNavigate();
 
   return (
     <Container sx={{ pt: 4 }}>
-      <Alert severity="error">{children}</Alert>
+      <Alert severity="error" {...props}></Alert>
       <Button
         variant="contained"
         color="secondary"
