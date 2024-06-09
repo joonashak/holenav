@@ -1,5 +1,5 @@
-import { Alert } from "@mui/material";
 import { useRouteError } from "react-router-dom";
+import FatalErrorView from "./FatalErrorView";
 import { UnauthorizedException } from "./exceptions/UnauthorizedException";
 
 const GlobalErrorBoundary = () => {
@@ -9,7 +9,7 @@ const GlobalErrorBoundary = () => {
     return "pitäis kirjautua uudelleen";
   }
 
-  return <Alert severity="error">Unknown error happened.</Alert>;
+  return <FatalErrorView>Unknown error happened.</FatalErrorView>;
 };
 
 export default GlobalErrorBoundary;

@@ -1,4 +1,5 @@
 import { useQuery } from "@apollo/client";
+import { Outlet } from "react-router-dom";
 import { UnauthorizedException } from "./error/exceptions/UnauthorizedException";
 import { GetMyTokensDocument } from "./generated/graphqlOperations";
 
@@ -17,7 +18,7 @@ const AppContainer = () => {
     throw new Error();
   }
 
-  return "app";
+  return <Outlet />;
 };
 
 export default AppContainer;

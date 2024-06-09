@@ -1,23 +1,24 @@
+import { useQuery } from "@apollo/client";
 import axios from "axios";
-import useSsoTokens from "../../auth/useSsoTokens";
+import { GetMyTokensDocument } from "../../generated/graphqlOperations";
 import esiUrls from "./esiUrls";
 import { EsiSearchCategories, EsiSearchResult } from "./types";
 
 const useEsiSearch = () => {
-  const { getSsoTokens } = useSsoTokens();
+  const { data } = useQuery(GetMyTokensDocument);
 
   const getSearchResult = async (
     search: string,
     categories: EsiSearchCategories[],
   ): Promise<EsiSearchResult> => {
-    if (!getSsoTokens.data || search.length < 3) {
+    if (!data || search.length < 3) {
       return Object.fromEntries(
         Object.values(EsiSearchCategories).map((cat) => [cat, []]),
       ) as unknown as EsiSearchResult;
     }
 
-    const { accessToken, esiId } = getSsoTokens.data.getSsoTokens.main;
-    const url = esiUrls.search(esiId);
+    const { accessToken, eveId } = data.getMyTokens[0];
+    const url = esiUrls.search(eveId);
     const res = await axios.get(url, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
