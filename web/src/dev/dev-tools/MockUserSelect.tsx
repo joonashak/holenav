@@ -12,11 +12,11 @@ import devToolsService from "../../services/devToolsService";
 const MockUserSelect = () => {
   const [users, setUsers] = useState([]);
   const nullString = "none";
-  const { mockUser, setMockUser, devKey } = useLocalData();
+  const { mockUser, setMockUser } = useLocalData();
 
   useEffect(() => {
     (async () => {
-      const { data } = await devToolsService.getMockUsers(devKey);
+      const { data } = await devToolsService.getMockUsers();
       setUsers(data);
     })();
   }, []);

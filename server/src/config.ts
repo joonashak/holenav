@@ -16,7 +16,6 @@ export const JWT_SECRET = process.env.JWT_SECRET;
 export const JWT_LIFETIME = process.env.JWT_LIFETIME || "30d";
 export const ENABLE_DEVTOOLS = process.env.ENABLE_DEVTOOLS === "true";
 export const APP_VERSION = version;
-export const DEV_KEY = process.env.DEV_KEY;
 export const HOST_FRONTEND = process.env.HOST_FRONTEND === "true";
 export const SESSION_SECRET = process.env.SESSION_SECRET;
 

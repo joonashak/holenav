@@ -5,10 +5,8 @@ import {
   QueryHookOptions,
 } from "@apollo/client";
 import { useState } from "@hookstate/core";
-import { set } from "lodash";
 import useLocalData from "../components/local-data/useLocalData";
 import { userState } from "../components/user-data/UserData";
-import { devToolsEnabled } from "../config";
 import useAuth from "./useAuth";
 
 type HookOptions<T, V extends OperationVariables> =
@@ -25,7 +23,7 @@ const useApolloOptions = <T, V extends OperationVariables>(
 ): AuthenticatedApolloOptions<T, V> => {
   const { token } = useAuth();
   const { settings } = useState(userState);
-  const { setAuthToken, devKey } = useLocalData();
+  const { setAuthToken } = useLocalData();
 
   const handleAuthError = async (error: ApolloError) => {
     const isAuthError = !!error.graphQLErrors?.find(
@@ -48,10 +46,6 @@ const useApolloOptions = <T, V extends OperationVariables>(
     onError: async (error: ApolloError) =>
       options.onError ? options.onError(error) : handleAuthError(error),
   };
-
-  if (devToolsEnabled && devKey) {
-    set(optionsWithAuth, "context.headers.devkey", devKey);
-  }
 
   return optionsWithAuth as AuthenticatedApolloOptions<T, V>;
 };

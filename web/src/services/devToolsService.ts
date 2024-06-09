@@ -1,19 +1,10 @@
 import axios from "axios";
 import { endpoints } from "../config";
 
-const makeOptions = (devKey = "") => ({
-  headers: {
-    devkey: devKey,
-  },
-});
+const reset = async () => axios.get(endpoints.dev.reset);
+const seed = async () => axios.get(endpoints.dev.seed);
 
-const reset = async (devKey?: string) =>
-  axios.get(endpoints.dev.reset, makeOptions(devKey));
-const seed = async (devKey?: string) =>
-  axios.get(endpoints.dev.seed, makeOptions(devKey));
-
-const getMockUsers = async (devKey?: string) =>
-  axios.get(endpoints.dev.mockUsers, makeOptions(devKey));
+const getMockUsers = async () => axios.get(endpoints.dev.mockUsers);
 
 const devToolsService = { reset, seed, getMockUsers };
 export default devToolsService;

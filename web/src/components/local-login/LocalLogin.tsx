@@ -36,6 +36,7 @@ const LocalLogin = () => {
   return (
     <>
       <Button
+        disabled
         variant="contained"
         color="secondary"
         onClick={toggleOpen}

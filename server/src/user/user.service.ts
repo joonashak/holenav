@@ -1,4 +1,10 @@
-import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
+import {
+  HttpException,
+  HttpStatus,
+  Inject,
+  Injectable,
+  forwardRef,
+} from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { FilterQuery, Model } from "mongoose";
 import { HolenavCharacter } from "../entities/character/character.model";
@@ -22,6 +28,7 @@ export class UserService {
     @InjectModel(HolenavUser.name) private userModel: Model<UserDocument>,
     @InjectModel(Credentials.name)
     private credentialsModel: Model<CredentialsDocument>,
+    @Inject(forwardRef(() => FolderService))
     private folderService: FolderService,
     private characterService: CharacterService,
     private userRoleService: UserRoleService,

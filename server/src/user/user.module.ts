@@ -4,7 +4,6 @@ import { MongooseModule } from "@nestjs/mongoose";
 import { JWT_SECRET } from "../config";
 import { CharacterModule } from "../entities/character/character.module";
 import { CharacterService } from "../entities/character/character.service";
-import { FolderService } from "../entities/folder/folder.service";
 import { EsiModule } from "../esi/esi.module";
 import {
   Credentials,
@@ -33,7 +32,6 @@ import { UserService } from "./user.service";
     UserService,
     UserRoleService,
     UserSettingsService,
-    FolderService,
     CharacterService,
     UserResolver,
   ],

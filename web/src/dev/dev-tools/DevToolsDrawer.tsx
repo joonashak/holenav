@@ -1,8 +1,5 @@
 import { Button, Drawer } from "@mui/material";
 import { yellow } from "@mui/material/colors";
-import useLocalData from "../../components/local-data/useLocalData";
-import devToolsService from "../../services/devToolsService";
-import DevKeyForm from "./DevKeyForm";
 import MockUserSelect from "./MockUserSelect";
 import PollSettingSwitch from "./PollSettingSwitch";
 
@@ -12,15 +9,11 @@ type DevToolsDrawerProps = {
 };
 
 const DevToolsDrawer = ({ open, onClose }: DevToolsDrawerProps) => {
-  const { devKey } = useLocalData();
-
   const reset = async () => {
-    await devToolsService.reset(devKey);
     window.location.reload();
   };
 
   const seed = async () => {
-    await devToolsService.seed(devKey);
     window.location.reload();
   };
 
@@ -41,7 +34,6 @@ const DevToolsDrawer = ({ open, onClose }: DevToolsDrawerProps) => {
         },
       }}
     >
-      <DevKeyForm />
       <PollSettingSwitch />
       <Button variant="contained" color="primary" onClick={reset}>
         Reset Database
