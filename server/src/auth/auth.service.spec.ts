@@ -6,12 +6,7 @@ import {
   MockSsoSessionService,
   MockUserService,
 } from "../test-utils/mock-services";
-import {
-  testSsoSession,
-  testUser,
-  testUserCredentials,
-  testUserPassword,
-} from "../test-utils/test-data";
+import { testSsoSession, testUser } from "../test-utils/test-data";
 import { UserService } from "../user/user.service";
 import { AuthService } from "./auth.service";
 import { SessionService } from "./session/session.service";
@@ -110,42 +105,6 @@ describe("AuthService", () => {
       expect(payload).toHaveProperty("sessionId", "123");
       expect(payload).toHaveProperty("exp");
       expect(payload).toHaveProperty("iat");
-    });
-  });
-
-  describe("Local authentication", () => {
-    it("Validate legit user correctly", async () => {
-      await expect(
-        authService.validateUserCredentials(
-          testUserCredentials.username,
-          testUserPassword,
-        ),
-      ).resolves.toStrictEqual(testUser);
-      expect(userService.findWithCredentials).toBeCalledWith(
-        testUserCredentials.username,
-      );
-      expect(userService.findWithCredentials).toBeCalledTimes(1);
-    });
-
-    it("Invalidate unknown user", async () => {
-      jest
-        .spyOn(userService, "findWithCredentials")
-        .mockResolvedValueOnce(null);
-      await expect(
-        authService.validateUserCredentials("", testUserPassword),
-      ).resolves.toBeNull();
-    });
-
-    it("Invalidate wrong password", async () => {
-      await expect(
-        authService.validateUserCredentials(testUserCredentials.username, ""),
-      ).resolves.toBeNull();
-      await expect(
-        authService.validateUserCredentials(
-          testUserCredentials.username,
-          testUserPassword.slice(1),
-        ),
-      ).resolves.toBeNull();
     });
   });
 });

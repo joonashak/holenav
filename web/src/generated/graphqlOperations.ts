@@ -121,12 +121,6 @@ export type CreatableSignatureWithoutConnection = {
   wormholeType?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type Credentials = {
-  __typename?: 'Credentials';
-  passwordHash: Scalars['String']['output'];
-  username: Scalars['String']['output'];
-};
-
 export type DeleteSignaturesInput = {
   ids: Array<Scalars['String']['input']>;
 };
@@ -185,7 +179,6 @@ export type HolenavCorporation = {
 export type HolenavUser = {
   __typename?: 'HolenavUser';
   alts: Array<HolenavCharacter>;
-  credentials: Credentials;
   folderRoles: Array<FolderRole>;
   id: Scalars['String']['output'];
   main: HolenavCharacter;
@@ -354,7 +347,7 @@ export type Query = {
   getSsoTokens: UserSsoTokens;
   getSystemByName?: Maybe<System>;
   searchCharactersByMain: Array<HolenavCharacter>;
-  whoami: SanitizedUserForSelf;
+  whoami: HolenavUser;
 };
 
 
@@ -397,16 +390,6 @@ export type SanitizedUserForManager = {
   __typename?: 'SanitizedUserForManager';
   id: Scalars['String']['output'];
   main: HolenavCharacter;
-  systemRole: SystemRoles;
-};
-
-export type SanitizedUserForSelf = {
-  __typename?: 'SanitizedUserForSelf';
-  alts: Array<HolenavCharacter>;
-  folderRoles: Array<FolderRole>;
-  id: Scalars['String']['output'];
-  main: HolenavCharacter;
-  settings: UserSettings;
   systemRole: SystemRoles;
 };
 
@@ -726,7 +709,7 @@ export type GetMyTokensQuery = { __typename?: 'Query', getMyTokens: Array<{ __ty
 export type UserDataQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type UserDataQuery = { __typename?: 'Query', whoami: { __typename?: 'SanitizedUserForSelf', id: string, systemRole: SystemRoles, main: { __typename?: 'HolenavCharacter', esiId: string, name: string, isMain: boolean, portraitUrl: string, corporation: { __typename?: 'HolenavCorporation', esiId: string, name: string, ticker: string } }, alts: Array<{ __typename?: 'HolenavCharacter', esiId: string, name: string, isMain: boolean, portraitUrl: string, corporation: { __typename?: 'HolenavCorporation', esiId: string, name: string, ticker: string } }>, settings: { __typename?: 'UserSettings', maps: Array<{ __typename?: 'SavedMap', id: string, name: string, rootSystemName: string }>, selectedMap?: { __typename?: 'SavedMap', id: string, name: string, rootSystemName: string } | null, activeFolder?: { __typename?: 'Folder', id: string, name: string, personal: boolean } | null } }, getAccessibleFolders: Array<{ __typename?: 'Folder', id: string, name: string, personal: boolean }> };
+export type UserDataQuery = { __typename?: 'Query', whoami: { __typename?: 'HolenavUser', id: string, systemRole: SystemRoles, main: { __typename?: 'HolenavCharacter', esiId: string, name: string, isMain: boolean, portraitUrl: string, corporation: { __typename?: 'HolenavCorporation', esiId: string, name: string, ticker: string } }, alts: Array<{ __typename?: 'HolenavCharacter', esiId: string, name: string, isMain: boolean, portraitUrl: string, corporation: { __typename?: 'HolenavCorporation', esiId: string, name: string, ticker: string } }>, settings: { __typename?: 'UserSettings', maps: Array<{ __typename?: 'SavedMap', id: string, name: string, rootSystemName: string }>, selectedMap?: { __typename?: 'SavedMap', id: string, name: string, rootSystemName: string } | null, activeFolder?: { __typename?: 'Folder', id: string, name: string, personal: boolean } | null } }, getAccessibleFolders: Array<{ __typename?: 'Folder', id: string, name: string, personal: boolean }> };
 
 export type RemoveAltMutationVariables = Exact<{
   esiId: Scalars['String']['input'];

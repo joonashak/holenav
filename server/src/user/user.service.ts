@@ -10,10 +10,6 @@ import { FilterQuery, Model } from "mongoose";
 import { HolenavCharacter } from "../entities/character/character.model";
 import { CharacterService } from "../entities/character/character.service";
 import { FolderService } from "../entities/folder/folder.service";
-import {
-  Credentials,
-  CredentialsDocument,
-} from "./credentials/credentials.model";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { SanitizedUserForManager } from "./dto/sanitized-user-for-manager.dto";
 import { UserSsoTokens } from "./dto/user-sso-tokens.dto";
@@ -26,8 +22,6 @@ import { HolenavUser, UserDocument } from "./user.model";
 export class UserService {
   constructor(
     @InjectModel(HolenavUser.name) private userModel: Model<UserDocument>,
-    @InjectModel(Credentials.name)
-    private credentialsModel: Model<CredentialsDocument>,
     @Inject(forwardRef(() => FolderService))
     private folderService: FolderService,
     private characterService: CharacterService,
@@ -125,19 +119,6 @@ export class UserService {
     }
 
     return user;
-  }
-
-  /**
-   * Find a user by username and include password hash.
-   *
-   * For use in authentication only.
-   *
-   * @param username Username to search for.
-   * @returns User or null if not found.
-   */
-  async findWithCredentials(username: string): Promise<HolenavUser> {
-    const credentials = await this.credentialsModel.findOne({ username });
-    return this.userModel.findOne({ credentials }).populate("credentials");
   }
 
   /** Add a new alt to a user. */

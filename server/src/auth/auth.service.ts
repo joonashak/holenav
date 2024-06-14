@@ -1,7 +1,6 @@
 import { AuthenticationError } from "@nestjs/apollo";
 import { Injectable } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
-import { compare } from "bcrypt";
 import { HolenavUser } from "../user/user.model";
 import { UserService } from "../user/user.service";
 import { Session } from "./session/session.model";
@@ -34,34 +33,6 @@ export class AuthService {
 
     const user = await this.userService.findByCharacterOrCreateUser(character);
     return this.createAccessToken(user);
-  }
-
-  /**
-   * Validate user credentials for local login.
-   *
-   * @param username Username.
-   * @param password Password.
-   * @returns User whose valid credentials were supplied or `null` if not
-   *   successful.
-   */
-  async validateUserCredentials(
-    username: string,
-    password: string,
-  ): Promise<HolenavUser | null> {
-    const user = await this.userService.findWithCredentials(username);
-    if (!user) {
-      return null;
-    }
-
-    const { passwordHash } = user.credentials;
-
-    if (user && (await compare(password, passwordHash))) {
-      /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
-      const { credentials, ...result } = user;
-      return result;
-    }
-
-    return null;
   }
 
   /**

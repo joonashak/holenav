@@ -8,7 +8,6 @@ import { SsoSession } from "../auth/sso/sso-session/sso-session.model";
 import { ConnectionGraphService } from "../connection-graph/connection-graph.service";
 import { HolenavCharacter } from "../entities/character/character.model";
 import { Folder } from "../entities/folder/folder.model";
-import { Credentials } from "../user/credentials/credentials.model";
 import { HolenavUser } from "../user/user.model";
 import users from "./data/users";
 import { MockConnectionGraphService } from "./mock-data-services/mock-connection-graph.service";
@@ -23,7 +22,6 @@ export class DevToolsService {
     @InjectModel(Folder.name) private folderModel: Model<Folder>,
     @InjectModel(SsoSession.name) private ssoSessionModel: Model<SsoSession>,
     @InjectModel(HolenavUser.name) private userModel: Model<HolenavUser>,
-    @InjectModel(Credentials.name) private credentialsModel: Model<Credentials>,
     @InjectModel(Session.name) private sessionModel: Model<Session>,
     @InjectModel(AppData.name) private appDataModel: Model<AppData>,
     private appDataService: AppDataService,
@@ -61,7 +59,6 @@ export class DevToolsService {
     await this.folderModel.deleteMany({});
     await this.ssoSessionModel.deleteMany({});
     await this.userModel.deleteMany({});
-    await this.credentialsModel.deleteMany({});
     await this.sessionModel.deleteMany({});
     await this.appDataModel.deleteMany({});
     await this.connectionGraphService.deleteAll();

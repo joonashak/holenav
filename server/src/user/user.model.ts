@@ -2,7 +2,6 @@ import { Field, ObjectType, registerEnumType } from "@nestjs/graphql";
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import mongoose from "mongoose";
 import { HolenavCharacter } from "../entities/character/character.model";
-import { Credentials } from "./credentials/credentials.model";
 import { FolderRole, FolderRoleSchema } from "./roles/folder-role.model";
 import SystemRole from "./roles/system-role.enum";
 import defaultUserSettings from "./settings/default-user-settings";
@@ -46,14 +45,6 @@ export class HolenavUser {
   @Field((type) => SystemRole)
   @Prop({ default: SystemRole.NONE })
   systemRole: SystemRole;
-
-  @Field((type) => Credentials)
-  @Prop({
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Credentials",
-    unique: true,
-  })
-  credentials?: Credentials;
 }
 
 export const UserSchema = SchemaFactory.createForClass(HolenavUser);
