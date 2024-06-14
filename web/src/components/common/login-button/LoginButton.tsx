@@ -5,7 +5,7 @@ import ssoLogo from "./eve_sso_login_button_dark.png";
 const LoginButton = (props: ButtonProps) => (
   <Button
     onClick={() => {
-      window.location.href = `${backendUrl}/sso/login`;
+      window.location.href = `${backendUrl}/sso/login?afterLoginUrl=${window.location.href}`;
     }}
     {...props}
   >

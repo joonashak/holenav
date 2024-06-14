@@ -26,7 +26,7 @@
     "@apollo/server": "^4.10.4",
     "@eve-data/systems": "^3.1.0",
     "@eve-data/wormholes": "^0.0.8",
-    "@joonashak/nestjs-clone-bay": "^0.0.7",
+    "@joonashak/nestjs-clone-bay": "^0.0.9",
     "@joonashak/nestjs-eve-auth": "^0.3.1",
     "@nestjs/apollo": "^12.0.7",
     "@nestjs/axios": "^3.0.2",
