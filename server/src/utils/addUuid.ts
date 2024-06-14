@@ -1,5 +1,3 @@
-import { v4 } from "uuid";
-
 type AddUuidOptions = {
   overwrite: boolean;
 };
@@ -20,7 +18,7 @@ export const addUuid = <T>(
   obj: T,
   opt: AddUuidOptions = defaultOptions,
 ): T & { id: string } => {
-  const id = v4();
+  const id = crypto.randomUUID();
 
   if (opt.overwrite) {
     return { ...obj, id };

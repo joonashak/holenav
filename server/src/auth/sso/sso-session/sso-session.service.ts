@@ -3,7 +3,6 @@ import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import dayjs from "dayjs";
 import { Model } from "mongoose";
-import { v4 as uuid } from "uuid";
 import { HolenavCharacter } from "../../../entities/character/character.model";
 import { HolenavUser } from "../../../user/user.model";
 import SsoSessionType from "./sso-session-type.enum";
@@ -19,7 +18,7 @@ export class SsoSessionService {
   /** Create new SSO state. */
   async createSsoSession(user: HolenavUser): Promise<SsoSession> {
     return this.ssoSessionModel.create({
-      key: uuid(),
+      key: crypto.randomUUID(),
       type: user ? SsoSessionType.ADD_CHARACTER : SsoSessionType.LOGIN,
       user,
       expiry: dayjs().add(5, "minute"),

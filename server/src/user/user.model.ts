@@ -1,7 +1,6 @@
 import { Field, ObjectType, registerEnumType } from "@nestjs/graphql";
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import mongoose from "mongoose";
-import { v4 as uuid } from "uuid";
 import { HolenavCharacter } from "../entities/character/character.model";
 import { Credentials } from "./credentials/credentials.model";
 import { FolderRole, FolderRoleSchema } from "./roles/folder-role.model";
@@ -20,7 +19,6 @@ registerEnumType(SystemRole, { name: "SystemRoles" });
 @Schema({ collection: "holenav-users" })
 export class HolenavUser {
   @Field()
-  @Prop({ default: uuid, unique: true })
   id: string;
 
   @Field((type) => HolenavCharacter)

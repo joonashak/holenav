@@ -1,9 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { isEqual, set, uniqWith } from "lodash";
-import { validate } from "uuid";
 import { Neo4jService } from "../../../integration/neo4j/neo4j.service";
 import { addUuid } from "../../../utils/addUuid";
-import uuid from "../../../utils/uuid";
 import {
   CreatableSignature,
   CreatableSignatureWithoutConnection,
@@ -100,7 +98,7 @@ export class SystemMutationService {
     return set(
       signature,
       "connection.reverseSignature.systemName",
-      systemName ? systemName : uuid(),
+      systemName ? systemName : crypto.randomUUID(),
     );
   }
 
@@ -108,7 +106,10 @@ export class SystemMutationService {
     (folderId: string) =>
     (signature: SignatureWithoutConnection): SystemNode => {
       const { systemName } = signature;
-      const pseudo = validate(systemName);
+      // Regex for UUID.
+      const pseudo = !!systemName.match(
+        /^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i,
+      );
 
       return addUuid({
         name: systemName,

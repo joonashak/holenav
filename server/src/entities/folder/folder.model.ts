@@ -1,7 +1,6 @@
 import { Field, ObjectType } from "@nestjs/graphql";
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { Document } from "mongoose";
-import { v4 as uuid } from "uuid";
 
 export type FolderDocument = Folder & Document;
 
@@ -9,7 +8,6 @@ export type FolderDocument = Folder & Document;
 @Schema()
 export class Folder {
   @Field()
-  @Prop({ default: uuid, unique: true })
   id: string;
 
   @Field()
