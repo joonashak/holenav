@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import { Folder } from "../../entities/folder/folder.model";
 import { SavedMap, SavedMapSchema } from "./saved-map.model";
 
+// FIXME: Replace with `UserPreferences`.
 @ObjectType()
 @Schema()
 export class UserSettings {

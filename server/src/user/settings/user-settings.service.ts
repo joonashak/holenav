@@ -6,6 +6,7 @@ import { HolenavUser, UserDocument } from "../user.model";
 import { UserService } from "../user.service";
 import { UserSettings } from "./user-settings.model";
 
+// FIXME: Replace with `UserPreferences`.
 @Injectable()
 export class UserSettingsService {
   constructor(
