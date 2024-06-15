@@ -4,7 +4,7 @@ import {
   CloneBaySsoModule,
 } from "@joonashak/nestjs-clone-bay";
 import { EveAuthModule } from "@joonashak/nestjs-eve-auth";
-import { ApolloDriver, ApolloDriverConfig } from "@nestjs/apollo";
+import { ApolloDriverConfig } from "@nestjs/apollo";
 import { Module } from "@nestjs/common";
 import { GraphQLModule } from "@nestjs/graphql";
 import { MongooseModule } from "@nestjs/mongoose";
@@ -27,17 +27,14 @@ import { SignatureModule } from "./entities/signature/signature.module";
 import { SystemModule } from "./entities/system/system.module";
 import { EsiModule } from "./esi/esi.module";
 import { FrontendModule } from "./frontend/frontend.module";
+import graphQlModuleConfig from "./graphql-module-config";
 import { Neo4jModule } from "./integration/neo4j/neo4j.module";
 import { ScheduledTasksModule } from "./scheduled-tasks/scheduled-tasks.module";
 
 @Module({
   imports: [
     MongooseModule.forRoot(MONGO_URL),
-    GraphQLModule.forRoot<ApolloDriverConfig>({
-      autoSchemaFile: true,
-      driver: ApolloDriver,
-      playground: true,
-    }),
+    GraphQLModule.forRoot<ApolloDriverConfig>(graphQlModuleConfig),
     EveAuthModule.forRoot({
       clientId: SSO_CLIENT_ID,
       secretKey: SSO_SECRET_KEY,
