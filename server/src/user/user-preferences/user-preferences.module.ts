@@ -4,6 +4,7 @@ import {
   UserPreferences,
   UserPreferencesSchema,
 } from "./user-preferences.model";
+import { UserPreferencesService } from "./user-preferences.service";
 
 @Module({
   imports: [
@@ -11,5 +12,7 @@ import {
       { name: UserPreferences.name, schema: UserPreferencesSchema },
     ]),
   ],
+  providers: [UserPreferencesService],
+  exports: [UserPreferencesService],
 })
 export class UserPreferencesModule {}
