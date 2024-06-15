@@ -1,4 +1,4 @@
-import { User } from "@joonashak/nestjs-clone-bay";
+import { CloneBayUserService } from "@joonashak/nestjs-clone-bay";
 import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
@@ -12,6 +12,7 @@ export class UserPreferencesService {
   constructor(
     @InjectModel(UserPreferences.name)
     private userPreferencesModel: Model<UserPreferencesDocument>,
+    private userService: CloneBayUserService,
   ) {}
 
   /**
@@ -21,11 +22,15 @@ export class UserPreferencesService {
    * method safely creates a default user preferences document for the given
    * user if one does not exist.
    */
-  async findByUserId(user: User): Promise<UserPreferencesDocument> {
-    const existing = await this.userPreferencesModel.findOne({ user });
+  async findByUserId(userId: string): Promise<UserPreferencesDocument> {
+    const user = await this.userService.findById(userId);
+    const existing = await this.userPreferencesModel
+      .findOne({ user })
+      .populate("user");
 
     if (!existing) {
-      return this.userPreferencesModel.create({ user });
+      await this.userPreferencesModel.create({ user });
+      return this.findByUserId(userId);
     }
 
     return existing;

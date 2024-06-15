@@ -30,6 +30,7 @@ import { FrontendModule } from "./frontend/frontend.module";
 import graphQlModuleConfig from "./graphql-module-config";
 import { Neo4jModule } from "./integration/neo4j/neo4j.module";
 import { ScheduledTasksModule } from "./scheduled-tasks/scheduled-tasks.module";
+import { UserPreferencesModule } from "./user/user-preferences/user-preferences.module";
 
 @Module({
   imports: [
@@ -60,6 +61,7 @@ import { ScheduledTasksModule } from "./scheduled-tasks/scheduled-tasks.module";
     SignatureModule,
     SystemModule,
     FrontendModule,
+    UserPreferencesModule,
   ],
 })
 export class AppModule {}

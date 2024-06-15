@@ -4,7 +4,7 @@ import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import mongoose, { Document } from "mongoose";
 import { Map } from "./map.model";
 
-@Schema()
+@Schema({ collection: "user-preferences" })
 @ObjectType()
 export class UserPreferences {
   @Field()
@@ -15,7 +15,7 @@ export class UserPreferences {
   user: User;
 
   @Field(() => [Map])
-  @Prop(() => [Map])
+  @Prop({ type: [Map], default: [] })
   maps: Map[];
 }
 
