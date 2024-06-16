@@ -9,6 +9,7 @@ import { Module } from "@nestjs/common";
 import { GraphQLModule } from "@nestjs/graphql";
 import { MongooseModule } from "@nestjs/mongoose";
 import { ScheduleModule } from "@nestjs/schedule";
+import { AccessControlModule } from "./access-control/access-control.module";
 import { AppDataModule } from "./app-data/app-data.module";
 import { AuthModule } from "./auth/auth.module";
 import { BootstrapModule } from "./bootstrap/bootstrap.module";
@@ -62,6 +63,7 @@ import { UserPreferencesModule } from "./user/user-preferences/user-preferences.
     SystemModule,
     FrontendModule,
     UserPreferencesModule,
+    AccessControlModule,
   ],
 })
 export class AppModule {}
