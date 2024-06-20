@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "@apollo/server": "^4.10.4",
+    "@casl/ability": "^6.7.1",
     "@eve-data/systems": "^3.1.0",
     "@eve-data/wormholes": "^0.0.8",
     "@joonashak/nestjs-clone-bay": "^0.0.9",
