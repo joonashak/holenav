@@ -2,7 +2,6 @@ import { Field, ObjectType, registerEnumType } from "@nestjs/graphql";
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import mongoose from "mongoose";
 import { HolenavCharacter } from "../entities/character/character.model";
-import { FolderRole, FolderRoleSchema } from "./roles/folder-role.model";
 import SystemRole from "./roles/system-role.enum";
 import defaultUserSettings from "./settings/default-user-settings";
 import {
@@ -33,10 +32,6 @@ export class HolenavUser {
     type: [{ type: mongoose.Schema.Types.ObjectId, ref: "HolenavCharacter" }],
   })
   alts: HolenavCharacter[];
-
-  @Field((type) => [FolderRole])
-  @Prop({ type: [FolderRoleSchema] })
-  folderRoles: FolderRole[];
 
   @Field((type) => UserSettings)
   @Prop({ type: UserSettingsSchema, default: defaultUserSettings })

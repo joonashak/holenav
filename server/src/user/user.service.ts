@@ -14,7 +14,6 @@ import { CreateUserDto } from "./dto/create-user.dto";
 import { SanitizedUserForManager } from "./dto/sanitized-user-for-manager.dto";
 import { UserSsoTokens } from "./dto/user-sso-tokens.dto";
 import FolderRole from "./roles/folder-role.enum";
-import { FolderRole as FolderRoleModel } from "./roles/folder-role.model";
 import { UserRoleService } from "./user-role.service";
 import { HolenavUser, UserDocument } from "./user.model";
 
@@ -153,15 +152,16 @@ export class UserService {
 
   async addFolderRole(
     user: HolenavUser,
-    folderRole: FolderRoleModel,
+    folderRole: any,
   ): Promise<HolenavUser> {
     // FIXME: Check for user's rights to manage the target folder.
     // FIXME: Account for existing roles.
     const { id } = user;
-    return await this.userModel.findOneAndUpdate(
-      { id },
-      { $push: { folderRoles: folderRole } },
-    );
+    // return await this.userModel.findOneAndUpdate(
+    //   { id },
+    //   { $push: { folderRoles: folderRole } },
+    // );
+    return this.userModel.findOne({ id });
   }
 
   async addFolderRoleByEsiId(

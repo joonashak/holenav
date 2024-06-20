@@ -5,7 +5,6 @@ import SsoSessionType from "../auth/sso/sso-session/sso-session-type.enum";
 import { SsoSession } from "../auth/sso/sso-session/sso-session.model";
 import { HolenavCorporation } from "../entities/common/corporation.model";
 import { Folder } from "../entities/folder/folder.model";
-import FolderRole from "../user/roles/folder-role.enum";
 import SystemRole from "../user/roles/system-role.enum";
 import { HolenavUser } from "../user/user.model";
 
@@ -29,8 +28,6 @@ export const testUserCredentials = {
 export const testUser: HolenavUser = {
   id: "asd",
   alts: [],
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  folderRoles: [{ folder: testFolder.id as any, role: FolderRole.READ }],
   main: {
     name: "test character",
     esiId: "uske67ent",
