@@ -4,6 +4,7 @@ import { Module } from "@nestjs/common";
 import { MongooseModule } from "@nestjs/mongoose";
 import { FolderAbilityFactory } from "./folder-ability.factory";
 import { FolderRole, FolderRoleSchema } from "./folder-role.model";
+import { FolderRoleResolver } from "./folder-role.resolver";
 import { FolderRoleService } from "./folder-role.service";
 import { FolderAccessControl } from "./folder.access-control";
 
@@ -19,6 +20,7 @@ import { FolderAccessControl } from "./folder.access-control";
     FolderAbilityFactory,
     CloneBayUserService,
     FolderRoleService,
+    FolderRoleResolver,
   ],
   exports: [MongooseModule, FolderAccessControl],
 })
