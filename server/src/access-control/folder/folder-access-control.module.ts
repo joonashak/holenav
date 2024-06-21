@@ -13,7 +13,7 @@ import { FolderAccessControl } from "./folder.access-control";
     MongooseModule.forFeature([
       { name: FolderRole.name, schema: FolderRoleSchema },
     ]),
-    CacheModule.register({ ttl: 5000 }),
+    CacheModule.register({ ttl: 1000 * 60 }),
   ],
   providers: [
     FolderAccessControl,
