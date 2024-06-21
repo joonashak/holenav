@@ -1,5 +1,6 @@
 import { CloneBayUserService } from "@joonashak/nestjs-clone-bay";
 import { ForbiddenException, Injectable } from "@nestjs/common";
+import { Folder } from "../../entities/folder/folder.model";
 import { FolderAbilityFactory } from "./folder-ability.factory";
 import { FolderAction } from "./folder-action.enum";
 import { FolderRoleService } from "./folder-role.service";
@@ -12,12 +13,16 @@ export class FolderAccessControl {
     private userService: CloneBayUserService,
   ) {}
 
-  async canRead(userId: string, folderId: string): Promise<void> {
+  async authorize(
+    userId: string,
+    folderId: string,
+    action: FolderAction,
+  ): Promise<void> {
     const user = await this.userService.findById(userId);
     const roles = await this.folderRoleService.findRoles(user, folderId);
-    const ability = this.folderAbilityFactory.createForUser(user);
+    const ability = this.folderAbilityFactory.createForUser(user, roles);
 
-    if (ability.cannot(FolderAction.Read, user)) {
+    if (ability.cannot(action, Folder)) {
       throw new ForbiddenException();
     }
   }

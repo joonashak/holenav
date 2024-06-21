@@ -29,7 +29,7 @@ export class FolderRoleService {
     const user = await this.userService.findById(userId);
     const role = await this.folderRoleModel.create({ user, folderId, action });
     await this.invalidateCache(user, folderId);
-    return role;
+    return role.populate("user");
   }
 
   private cacheKey(user: User, folderId: string): string {
