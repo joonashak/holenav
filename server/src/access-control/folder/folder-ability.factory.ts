@@ -23,8 +23,10 @@ export class FolderAbilityFactory {
     );
 
     // TODO: High system role should give access to folders.
+    // TODO: Corp and ally roles.
 
-    for (const role of roles) {
+    const userRoles = roles.filter((r) => r.user.id === user.id);
+    for (const role of userRoles) {
       can(role.action, Folder);
     }
 

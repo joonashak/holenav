@@ -1,4 +1,4 @@
-import { CloneBayUserService, User } from "@joonashak/nestjs-clone-bay";
+import { CloneBayUserService } from "@joonashak/nestjs-clone-bay";
 import { CACHE_MANAGER } from "@nestjs/cache-manager";
 import { Inject, Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
@@ -15,9 +15,9 @@ export class FolderRoleService {
     private userService: CloneBayUserService,
   ) {}
 
-  async findRoles(user: User, folderId: string): Promise<FolderRole[]> {
-    return this.cacheManager.wrap(this.cacheKey(user, folderId), async () =>
-      this.folderRoleModel.find({ user, folderId }),
+  async findRoles(folderId: string): Promise<FolderRole[]> {
+    return this.cacheManager.wrap(this.cacheKey(folderId), async () =>
+      this.folderRoleModel.find({ folderId }).populate("user"),
     );
   }
 
@@ -28,15 +28,15 @@ export class FolderRoleService {
   ): Promise<FolderRole> {
     const user = await this.userService.findById(userId);
     const role = await this.folderRoleModel.create({ user, folderId, action });
-    await this.invalidateCache(user, folderId);
+    await this.invalidateCache(folderId);
     return role.populate("user");
   }
 
-  private cacheKey(user: User, folderId: string): string {
-    return `folder-role-${user.id}-${folderId}`;
+  private cacheKey(folderId: string): string {
+    return `folder-roles-${folderId}`;
   }
 
-  private async invalidateCache(user: User, folderId: string): Promise<void> {
-    await this.cacheManager.del(this.cacheKey(user, folderId));
+  private async invalidateCache(folderId: string): Promise<void> {
+    await this.cacheManager.del(this.cacheKey(folderId));
   }
 }

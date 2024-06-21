@@ -19,7 +19,7 @@ export class FolderAccessControl {
     action: FolderAction,
   ): Promise<void> {
     const user = await this.userService.findById(userId);
-    const roles = await this.folderRoleService.findRoles(user, folderId);
+    const roles = await this.folderRoleService.findRoles(folderId);
     const ability = this.folderAbilityFactory.createForUser(user, roles);
 
     if (ability.cannot(action, Folder)) {
