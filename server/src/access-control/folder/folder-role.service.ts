@@ -3,7 +3,7 @@ import { Inject, Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Cache } from "cache-manager";
 import { Model } from "mongoose";
-import { FolderAction } from "./folder-action.enum";
+import { CreateFolderRoleDto } from "./dto/create-folder-role.dto";
 import { FolderRole } from "./folder-role.model";
 
 @Injectable()
@@ -19,18 +19,10 @@ export class FolderRoleService {
     );
   }
 
-  async create(
-    userId: string,
-    folderId: string,
-    action: FolderAction,
-  ): Promise<FolderRole> {
-    const role = await this.folderRoleModel.create({
-      userId,
-      folderId,
-      action,
-    });
-    await this.invalidateCache(folderId);
-    return role;
+  async create(role: CreateFolderRoleDto): Promise<FolderRole> {
+    const created = await this.folderRoleModel.create(role);
+    await this.invalidateCache(role.folderId);
+    return created;
   }
 
   private cacheKey(folderId: string): string {

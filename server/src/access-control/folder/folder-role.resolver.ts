@@ -23,10 +23,6 @@ export class FolderRoleResolver {
       role.folderId,
       FolderAction.Manage,
     );
-    return this.folderRoleService.create(
-      role.userId,
-      role.folderId,
-      role.action,
-    );
+    return this.folderRoleService.create(role);
   }
 }
