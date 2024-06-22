@@ -1,5 +1,5 @@
 import { CloneBayUserService } from "@joonashak/nestjs-clone-bay";
-import { ForbiddenException, Injectable } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 import { Folder } from "../../entities/folder/folder.model";
 import { FolderAbilityFactory } from "./folder-ability.factory";
 import { FolderAction } from "./folder-role/folder-action.enum";
@@ -17,13 +17,11 @@ export class FolderAccessControl {
     userId: string,
     folderId: string,
     action: FolderAction,
-  ): Promise<void> {
+  ): Promise<boolean> {
     const user = await this.userService.findById(userId);
     const roles = await this.folderRoleService.findRoles(folderId);
     const ability = this.folderAbilityFactory.createForUser(user, roles);
 
-    if (ability.cannot(action, Folder)) {
-      throw new ForbiddenException();
-    }
+    return ability.can(action, Folder);
   }
 }
