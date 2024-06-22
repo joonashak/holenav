@@ -23,9 +23,8 @@ export class FolderAbilityFactory {
     );
 
     // TODO: High system role should give access to folders.
-    // TODO: Corp and ally roles.
 
-    const userRoles = roles.filter((r) => r.userId === user.id);
+    const userRoles = this.buildUserRoles(user, roles);
     for (const role of userRoles) {
       can(role.action, Folder);
     }
@@ -33,6 +32,22 @@ export class FolderAbilityFactory {
     return build({
       detectSubjectType: (item) =>
         item.constructor as ExtractSubjectType<Subjects>,
+    });
+  }
+
+  private buildUserRoles(user: User, roles: FolderRole[]): FolderRole[] {
+    return roles.filter((role) => {
+      // Lot of nulls and undefineds here so let's check for them explicitly.
+      if (role.userId) {
+        return role.userId === user.id;
+      }
+      if (role.corporationEveId) {
+        return role.corporationEveId === user.main.corporation.eveId;
+      }
+      if (role.allianceEveId) {
+        return role.allianceEveId === user.main.alliance?.eveId;
+      }
+      return false;
     });
   }
 }
