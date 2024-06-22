@@ -47,7 +47,7 @@ export class FolderAbilityFactory {
       if (role.allianceEveId) {
         return role.allianceEveId === user.main.alliance?.eveId;
       }
-      return false;
+      return role.public;
     });
   }
 }

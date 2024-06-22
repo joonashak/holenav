@@ -10,11 +10,14 @@ export class CreateFolderRoleDto {
   action: FolderAction;
 
   @Field({ nullable: true })
-  userId: string | null;
+  public?: boolean;
 
   @Field({ nullable: true })
-  corporationEveId: number | null;
+  userId?: string;
 
   @Field({ nullable: true })
-  allianceEveId: number | null;
+  corporationEveId?: number;
+
+  @Field({ nullable: true })
+  allianceEveId?: number;
 }

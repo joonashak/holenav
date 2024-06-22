@@ -13,6 +13,9 @@ registerEnumType(FolderAction, { name: "FolderAction" });
  * specified, only the first one is used for authorization (processing order:
  * user, corporation, alliance).
  *
+ * A folder role can authorize all users by specifying no actors and setting
+ * `public = true`.
+ *
  * Only the user's main character is used to match for corporation and alliance
  * roles. (This avoids the confusing situation where, e.g., corporation X is
  * allowed to read a folder and a user showing up as a corporation Y member can
@@ -29,17 +32,21 @@ export class FolderRole {
   @Prop()
   action: FolderAction;
 
-  @Field({ nullable: true })
-  @Prop()
-  userId: string | null;
+  @Field()
+  @Prop({ default: false })
+  public: boolean;
 
   @Field({ nullable: true })
   @Prop()
-  corporationEveId: number | null;
+  userId?: string;
 
   @Field({ nullable: true })
   @Prop()
-  allianceEveId: number | null;
+  corporationEveId?: number;
+
+  @Field({ nullable: true })
+  @Prop()
+  allianceEveId?: number;
 }
 
 export const FolderRoleSchema = SchemaFactory.createForClass(FolderRole);
