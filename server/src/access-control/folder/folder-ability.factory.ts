@@ -8,8 +8,8 @@ import {
 import { User } from "@joonashak/nestjs-clone-bay";
 import { Injectable } from "@nestjs/common";
 import { Folder } from "../../entities/folder/folder.model";
-import { FolderAction } from "./folder-action.enum";
-import { FolderRole } from "./folder-role.model";
+import { FolderAction } from "./folder-role/folder-action.enum";
+import { FolderRole } from "./folder-role/folder-role.model";
 
 type Subjects = InferSubjects<typeof Folder> | "all";
 

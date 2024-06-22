@@ -2,8 +2,8 @@ import { CloneBayUserService } from "@joonashak/nestjs-clone-bay";
 import { ForbiddenException, Injectable } from "@nestjs/common";
 import { Folder } from "../../entities/folder/folder.model";
 import { FolderAbilityFactory } from "./folder-ability.factory";
-import { FolderAction } from "./folder-action.enum";
-import { FolderRoleService } from "./folder-role.service";
+import { FolderAction } from "./folder-role/folder-action.enum";
+import { FolderRoleService } from "./folder-role/folder-role.service";
 
 @Injectable()
 export class FolderAccessControl {

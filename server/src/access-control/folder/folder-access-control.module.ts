@@ -3,9 +3,9 @@ import { CacheModule } from "@nestjs/cache-manager";
 import { Module } from "@nestjs/common";
 import { MongooseModule } from "@nestjs/mongoose";
 import { FolderAbilityFactory } from "./folder-ability.factory";
-import { FolderRole, FolderRoleSchema } from "./folder-role.model";
-import { FolderRoleResolver } from "./folder-role.resolver";
-import { FolderRoleService } from "./folder-role.service";
+import { FolderRole, FolderRoleSchema } from "./folder-role/folder-role.model";
+import { FolderRoleResolver } from "./folder-role/folder-role.resolver";
+import { FolderRoleService } from "./folder-role/folder-role.service";
 import { FolderAccessControl } from "./folder.access-control";
 
 @Module({
