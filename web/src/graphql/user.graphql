@@ -15,18 +15,12 @@ query UserData {
       selectedMap {
         ...MapFields
       }
-      activeFolder {
-        id
-        name
-        personal
-      }
     }
   }
 
   getAccessibleFolders {
     id
     name
-    personal
   }
 }
 

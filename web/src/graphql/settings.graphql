@@ -22,18 +22,6 @@ mutation CreateFolder($name: String!) {
   }
 }
 
-mutation AddFolderRole($input: AddFolderRoleInput!) {
-  addFolderRole(input: $input) {
-    id
-  }
-}
-
-mutation ChangeActiveFolder($folderId: String!) {
-  changeActiveFolder(folderId: $folderId) {
-    id
-  }
-}
-
 mutation SetRegistrationEnabled($enabled: Boolean) {
   updateAppData(input: { settings: { registration: { enabled: $enabled } } }) {
     settings {

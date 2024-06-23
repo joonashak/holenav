@@ -22,7 +22,6 @@ fragment UserFieldsForManager on SanitizedUserForManager {
 fragment FolderFields on Folder {
   id
   name
-  personal
 }
 
 fragment CorporationFields on HolenavCorporation {

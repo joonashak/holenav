@@ -21,43 +21,43 @@ fragment SignatureFields on Signature {
   }
 }
 
-query System($name: String!) {
-  getSystemByName(name: $name) {
+query System($name: String!, $folderId: String!) {
+  getSystemByName(name: $name, folderId: $folderId) {
     id
     name
   }
 
-  getSignaturesBySystem(systemName: $name) {
+  getSignaturesBySystem(systemName: $name, folderId: $folderId) {
     ...SignatureFields
   }
 }
 
-query GetSignatures($systemName: String!) {
-  getSignaturesBySystem(systemName: $systemName) {
+query GetSignatures($systemName: String!, $folderId: String!) {
+  getSignaturesBySystem(systemName: $systemName, folderId: $folderId) {
     ...SignatureFields
   }
 }
 
-mutation AddSignatures($input: AddSignaturesInput!) {
-  addSignatures(input: $input) {
+mutation AddSignatures($input: AddSignaturesInput!, $folderId: String!) {
+  addSignatures(input: $input, folderId: $folderId) {
     ...SignatureFields
   }
 }
 
-mutation UpdateSignatures($input: UpdateSignaturesInput!) {
-  updateSignatures(input: $input) {
+mutation UpdateSignatures($input: UpdateSignaturesInput!, $folderId: String!) {
+  updateSignatures(input: $input, folderId: $folderId) {
     ...SignatureFields
   }
 }
 
-mutation DeleteSignatures($input: DeleteSignaturesInput!) {
-  deleteSignatures(input: $input) {
+mutation DeleteSignatures($input: DeleteSignaturesInput!, $folderId: String!) {
+  deleteSignatures(input: $input, folderId: $folderId) {
     ...SignatureFields
   }
 }
 
-mutation PasteSignatures($input: SignaturePaste!) {
-  pasteSignatures(input: $input) {
+mutation PasteSignatures($input: SignaturePaste!, $folderId: String!) {
+  pasteSignatures(input: $input, folderId: $folderId) {
     added {
       ...SignatureFields
     }
