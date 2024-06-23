@@ -12,6 +12,6 @@ export class MockConnectionGraphService {
 
   async mock() {
     const folder = await this.folderService.getDefaultFolder();
-    await this.signatureService.createSignatures(mainTestChain, folder);
+    await this.signatureService.createSignatures(mainTestChain, folder.id);
   }
 }

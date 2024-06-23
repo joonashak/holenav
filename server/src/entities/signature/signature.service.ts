@@ -1,7 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { set } from "lodash";
 import { addUuid } from "../../utils/addUuid";
-import { Folder } from "../folder/folder.model";
 import { CreatableSignature } from "./dto/add-signatures.dto";
 import { UpdateableSignature } from "./dto/update-signatures.dto";
 import SigType from "./enums/sig-type.enum";
@@ -26,16 +25,19 @@ export class SignatureService {
     private systemMutationService: SystemMutationService,
   ) {}
 
-  async getBySystem(systemName: string, folder: Folder): Promise<Signature[]> {
+  async getBySystem(
+    systemName: string,
+    folderId: string,
+  ): Promise<Signature[]> {
     return this.signatureSearchService.findBySystem({
       systemName,
-      folderId: folder.id,
+      folderId,
     });
   }
 
   async createSignatures(
     signatures: CreatableSignature[],
-    folder: Folder,
+    folderId: string,
   ): Promise<Signature[]> {
     if (!signatures.length) {
       return [];
@@ -47,7 +49,7 @@ export class SignatureService {
     );
     await this.signatureMutationService.createSignatures(
       graphSafeSigs,
-      folder.id,
+      folderId,
     );
 
     const wormholes = graphSafeSigs
@@ -65,7 +67,7 @@ export class SignatureService {
 
   async updateSignatures(
     sigUpdates: UpdateableSignature[],
-    folder: Folder,
+    folderId: string,
   ): Promise<Signature[]> {
     if (!sigUpdates.length) {
       return [];
@@ -76,7 +78,7 @@ export class SignatureService {
 
     return Promise.all(
       sigUpdates.map(async (update) =>
-        this.updateSignature(update, oldSigs, folder),
+        this.updateSignature(update, oldSigs, folderId),
       ),
     );
   }
@@ -98,7 +100,7 @@ export class SignatureService {
   private async updateSignature(
     update: UpdateableSignature,
     existing: Signature[],
-    folder: Folder,
+    folderId: string,
   ): Promise<Signature> {
     const old = existing.find((sig) => sig.id === update.id);
 
@@ -115,7 +117,7 @@ export class SignatureService {
 
       await this.signatureMutationService.createSignatures(
         [graphSafeSig.connection.reverseSignature],
-        folder.id,
+        folderId,
       );
 
       await this.signatureMutationService.updateSignatures([graphSafeSig]);
@@ -178,7 +180,7 @@ export class SignatureService {
 
       await this.signatureMutationService.createSignatures(
         [updatedSig.connection.reverseSignature],
-        folder.id,
+        folderId,
       );
       await this.connectionMutationService.createConnectionsFromSignatures([
         updatedSig,

@@ -1,5 +1,4 @@
 import { Injectable } from "@nestjs/common";
-import { Folder } from "../folder/folder.model";
 import {
   SignaturePaste,
   SignaturePasteResult,
@@ -14,23 +13,23 @@ export class SignaturePasteService {
 
   async applySignaturePaste(
     paste: SignaturePaste,
-    folder: Folder,
+    folderId: string,
   ): Promise<SignaturePasteResult> {
     const existingSigs = await this.signatureService.getBySystem(
       paste.systemName,
-      folder,
+      folderId,
     );
 
     const addableSigs = this.getAddableSigs(paste, existingSigs);
     const added = await this.signatureService.createSignatures(
       addableSigs,
-      folder,
+      folderId,
     );
 
     const updateableSigs = this.getUpdateableSigs(paste, existingSigs);
     const updated = await this.signatureService.updateSignatures(
       updateableSigs,
-      folder,
+      folderId,
     );
 
     const deletableSigs = this.getDeletableSigs(paste, existingSigs);
