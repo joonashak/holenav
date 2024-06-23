@@ -1,22 +1,21 @@
+import { RequireAuthentication } from "@joonashak/nestjs-clone-bay";
 import { Args, Query, Resolver } from "@nestjs/graphql";
-import { ActiveFolder } from "../../auth/decorators/active-folder.decorator";
-import { RequireFolderRole } from "../../auth/decorators/role.decorator";
-import FolderRole from "../../user/roles/folder-role.enum";
-import { FolderDocument } from "../folder/folder.model";
+import { FolderAction } from "../../access-control/folder/folder-role/folder-action.enum";
+import { RequireFolderAccess } from "../../access-control/folder/require-folder-access.decorator";
 import { SystemMutationService } from "../signature/neo/system-mutation.service";
 import { System } from "./system.model";
 
-@Resolver((of) => System)
+@Resolver()
+@RequireAuthentication()
 export class SystemResolver {
   constructor(private systemService: SystemMutationService) {}
 
-  @RequireFolderRole(FolderRole.READ)
-  @Query((returns) => System, { nullable: true })
+  @RequireFolderAccess(FolderAction.Read)
+  @Query(() => System, { nullable: true })
   async getSystemByName(
     @Args("name") name: string,
-    @ActiveFolder() activeFolder: FolderDocument,
+    @Args("folderId") folderId: string,
   ) {
-    const res = await this.systemService.findSystem(name, activeFolder.id);
-    return res;
+    return this.systemService.findSystem(name, folderId);
   }
 }
