@@ -1,11 +1,11 @@
 import { SelectChangeEvent } from "@mui/material";
 import PageTitle from "../../common/PageTitle";
 import Select from "../../controls/select/Select";
-import useUserSettings from "../../user-data/settings/useUserSettings";
 import useSettingsData from "../useSettingsData";
 
+// FIXME: This will probably be rewritten, so functionality is just disabled for now.
+
 const ActiveFolder = () => {
-  const { activeFolder, setActiveFolder } = useUserSettings();
   const { accessibleFolders } = useSettingsData();
 
   const options = accessibleFolders.map(({ id, name }) => ({
@@ -19,7 +19,7 @@ const ActiveFolder = () => {
       (folder) => folder.id === event.target.value,
     );
     if (newActiveFolder) {
-      setActiveFolder(newActiveFolder);
+      // setActiveFolder(newActiveFolder);
     }
   };
 
@@ -29,7 +29,7 @@ const ActiveFolder = () => {
       <Select
         options={options}
         onChange={onChange}
-        value={activeFolder?.id || ""}
+        value={""}
         title="Active Folder"
       />
     </>
