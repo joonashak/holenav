@@ -33,19 +33,19 @@ export class FolderRole {
   action: FolderAction;
 
   @Field()
-  @Prop({ default: false })
+  @Prop({ default: false, index: true })
   public: boolean;
 
   @Field({ nullable: true })
-  @Prop()
+  @Prop({ index: true })
   userId?: string;
 
   @Field({ nullable: true })
-  @Prop()
+  @Prop({ index: true })
   corporationEveId?: number;
 
   @Field({ nullable: true })
-  @Prop()
+  @Prop({ index: true })
   allianceEveId?: number;
 }
 

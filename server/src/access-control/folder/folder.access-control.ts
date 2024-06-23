@@ -1,5 +1,6 @@
 import { CloneBayUserService } from "@joonashak/nestjs-clone-bay";
 import { Injectable } from "@nestjs/common";
+import { groupBy } from "lodash";
 import { Folder } from "../../entities/folder/folder.model";
 import { FolderAbilityFactory } from "./folder-ability.factory";
 import { FolderAction } from "./folder-role/folder-action.enum";
@@ -23,5 +24,31 @@ export class FolderAccessControl {
     const ability = this.folderAbilityFactory.createForUser(user, roles);
 
     return ability.can(action, Folder);
+  }
+
+  /**
+   * Folders user is allowed to take given action on.
+   *
+   * Returns folder ID's.
+   */
+  async authorizedFolders(
+    userId: string,
+    action: FolderAction,
+  ): Promise<string[]> {
+    const user = await this.userService.findById(userId);
+    const roles = await this.folderRoleService.findRolesForUser(user);
+    const rolesByFolder = groupBy(roles, "folderId");
+
+    const authorizedFolderIds = Object.keys(rolesByFolder).filter(
+      (folderId) => {
+        const ability = this.folderAbilityFactory.createForUser(
+          user,
+          rolesByFolder[folderId],
+        );
+        return ability.can(action, Folder);
+      },
+    );
+
+    return authorizedFolderIds;
   }
 }
