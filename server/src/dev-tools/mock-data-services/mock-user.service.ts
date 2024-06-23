@@ -20,7 +20,7 @@ export class MockUserService {
     const defaultFolder = await this.folderService.getDefaultFolder();
 
     for (const user of users) {
-      const { id, main, defaultFolderRole, systemRole } = user;
+      const { id, main, systemRole } = user;
       const newChar = await this.characterModel.create({
         ...main,
         isMain: true,
@@ -29,7 +29,6 @@ export class MockUserService {
         main: newChar,
         id,
         systemRole,
-        folderRoles: [{ role: defaultFolderRole, folder: defaultFolder }],
         settings: { ...defaultUserSettings, activeFolder: defaultFolder },
       });
       await this.preSelectMap(newUser);

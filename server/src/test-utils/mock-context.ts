@@ -25,6 +25,6 @@ export const mockContextWithTestFolderRole = (
   headers: any = { activefolder: testFolder.id },
 ): ExecutionContext =>
   mockContextWithRequest({
-    user: { ...testUser, folderRoles: [{ folder: testFolder.id, role }] },
+    user: { ...testUser },
     headers,
   });

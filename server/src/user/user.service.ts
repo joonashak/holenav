@@ -1,19 +1,11 @@
-import {
-  HttpException,
-  HttpStatus,
-  Inject,
-  Injectable,
-  forwardRef,
-} from "@nestjs/common";
+import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { FilterQuery, Model } from "mongoose";
 import { HolenavCharacter } from "../entities/character/character.model";
 import { CharacterService } from "../entities/character/character.service";
-import { FolderService } from "../entities/folder/folder.service";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { SanitizedUserForManager } from "./dto/sanitized-user-for-manager.dto";
 import { UserSsoTokens } from "./dto/user-sso-tokens.dto";
-import FolderRole from "./roles/folder-role.enum";
 import { UserRoleService } from "./user-role.service";
 import { HolenavUser, UserDocument } from "./user.model";
 
@@ -21,8 +13,6 @@ import { HolenavUser, UserDocument } from "./user.model";
 export class UserService {
   constructor(
     @InjectModel(HolenavUser.name) private userModel: Model<UserDocument>,
-    @Inject(forwardRef(() => FolderService))
-    private folderService: FolderService,
     private characterService: CharacterService,
     private userRoleService: UserRoleService,
   ) {}
@@ -37,13 +27,9 @@ export class UserService {
     await this.ensureCharacterNotInUse(user.main);
     await this.characterService.makeMain(user.main);
 
-    const folder = await this.folderService.createFolder({
-      name: "My Folder",
-    });
     const systemRole = await this.userRoleService.getNewUserSystemRole();
     const newUser = await this.userModel.create({
       ...user,
-      folderRoles: [{ role: FolderRole.ADMIN, folder }],
       systemRole,
     });
 
@@ -147,30 +133,6 @@ export class UserService {
         HttpStatus.BAD_REQUEST,
       );
     }
-  }
-
-  async addFolderRole(
-    user: HolenavUser,
-    folderRole: any,
-  ): Promise<HolenavUser> {
-    // FIXME: Check for user's rights to manage the target folder.
-    // FIXME: Account for existing roles.
-    const { id } = user;
-    // return await this.userModel.findOneAndUpdate(
-    //   { id },
-    //   { $push: { folderRoles: folderRole } },
-    // );
-    return this.userModel.findOne({ id });
-  }
-
-  async addFolderRoleByEsiId(
-    userEsiId: string,
-    folderId: string,
-    role: FolderRole,
-  ): Promise<HolenavUser> {
-    const user = await this.findByEsiId(userEsiId);
-    const folder = await this.folderService.getFolderById(folderId);
-    return await this.addFolderRole(user, { folder, role });
   }
 
   async getSsoTokens(user: HolenavUser): Promise<UserSsoTokens> {
