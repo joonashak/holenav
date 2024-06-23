@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import Container from "./Container";
+import FloatingMapperControls from "./floating-mapper-controls/FloatingMapperControls";
 import Map from "./map/Map";
 import MapData from "./map/map-data/MapData";
 import Overview from "./overview/Overview";
@@ -21,6 +22,7 @@ const SystemView = () => {
         <Container>
           <Overview />
           <Map />
+          <FloatingMapperControls />
         </Container>
       </MapData>
     </SystemData>

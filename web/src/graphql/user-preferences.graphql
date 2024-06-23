@@ -1,0 +1,13 @@
+query GetMyUserPreferences {
+  getMyUserPreferences {
+    id
+    user {
+      ...CompleteCloneBayUser
+    }
+    maps {
+      id
+      name
+      rootSystemName
+    }
+  }
+}

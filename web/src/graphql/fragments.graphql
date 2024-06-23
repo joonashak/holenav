@@ -62,3 +62,36 @@ fragment AppDataFields on AppData {
     ...AppSettingsFields
   }
 }
+
+fragment CompleteCloneBayUser on User {
+  id
+  main {
+    eveId
+    name
+    corporation {
+      eveId
+      name
+      ticker
+    }
+    alliance {
+      eveId
+      name
+      ticker
+    }
+  }
+  alts {
+    eveId
+    name
+    corporation {
+      eveId
+      name
+      ticker
+    }
+    alliance {
+      eveId
+      name
+      ticker
+    }
+  }
+  admin
+}
