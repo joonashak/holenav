@@ -6,9 +6,7 @@ import {
   ValidationPipe,
 } from "@nestjs/common";
 import { ActiveFolder } from "../auth/decorators/active-folder.decorator";
-import { RequireFolderRole } from "../auth/decorators/role.decorator";
 import { Folder } from "../entities/folder/folder.model";
-import FolderRole from "../user/roles/folder-role.enum";
 import { ConnectionTreeService } from "./connection-tree.service";
 import {
   ConnectionTree,
@@ -21,7 +19,8 @@ export class ConnectionGraphController {
   constructor(private connectionTreeService: ConnectionTreeService) {}
 
   @Get("connection-tree/:rootSystemName")
-  @RequireFolderRole(FolderRole.READ)
+  // Folder roles removed because this controller will be deprecated.
+  // @RequireFolderRole(FolderRole.READ)
   async connectionTree(
     @Param() params: ConnectionTreeParams,
     @ActiveFolder() folder: Folder,
