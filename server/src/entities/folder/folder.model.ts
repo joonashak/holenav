@@ -15,11 +15,6 @@ export class Folder {
   @Field()
   @Prop()
   name: string;
-
-  // FIXME: Remove
-  @Field()
-  @Prop({ default: false })
-  personal?: boolean;
 }
 
 export const FolderSchema = SchemaFactory.createForClass(Folder);

@@ -39,7 +39,6 @@ export class UserService {
 
     const folder = await this.folderService.createFolder({
       name: "My Folder",
-      personal: true,
     });
     const systemRole = await this.userRoleService.getNewUserSystemRole();
     const newUser = await this.userModel.create({
