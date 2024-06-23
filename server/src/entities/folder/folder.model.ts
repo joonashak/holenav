@@ -1,5 +1,6 @@
 import { Field, ObjectType } from "@nestjs/graphql";
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
+import { randomUUID } from "crypto";
 import { Document } from "mongoose";
 
 export type FolderDocument = Folder & Document;
@@ -8,12 +9,14 @@ export type FolderDocument = Folder & Document;
 @Schema()
 export class Folder {
   @Field()
+  @Prop({ default: randomUUID, unique: true, index: true })
   id: string;
 
   @Field()
   @Prop()
   name: string;
 
+  // FIXME: Remove
   @Field()
   @Prop({ default: false })
   personal?: boolean;

@@ -1,8 +1,8 @@
+import { UserId } from "@joonashak/nestjs-clone-bay";
 import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
+import { FolderAction } from "../../access-control/folder/folder-role/folder-action.enum";
 import { RequireSystemRole } from "../../auth/decorators/role.decorator";
-import { CurrentUser } from "../../auth/decorators/user.decorator";
 import SystemRole from "../../user/roles/system-role.enum";
-import { UserDocument } from "../../user/user.model";
 import { Folder } from "./folder.model";
 import { FolderService } from "./folder.service";
 
@@ -11,23 +11,29 @@ export class FolderResolver {
   constructor(private folderService: FolderService) {}
 
   @RequireSystemRole(SystemRole.USER)
-  @Query((type) => [Folder])
-  async getAccessibleFolders(@CurrentUser() user: UserDocument) {
-    return this.folderService.getAccessibleFolders(user);
+  @Query(() => [Folder])
+  async getAccessibleFolders(@UserId() userId: string) {
+    return this.folderService.findFoldersByAllowedAction(
+      userId,
+      FolderAction.Read,
+    );
   }
 
   @RequireSystemRole(SystemRole.MANAGER)
-  @Query((type) => [Folder])
-  async getManageableFolders(@CurrentUser() user: UserDocument) {
-    return this.folderService.getManageableFolders(user);
+  @Query(() => [Folder])
+  async getManageableFolders(@UserId() userId: string) {
+    return this.folderService.findFoldersByAllowedAction(
+      userId,
+      FolderAction.Manage,
+    );
   }
 
   @RequireSystemRole(SystemRole.MANAGER)
-  @Mutation((type) => Folder)
+  @Mutation(() => Folder)
   async createFolder(
     @Args("name") name: string,
-    @CurrentUser() user: UserDocument,
+    @UserId() userId: string,
   ): Promise<Folder> {
-    return this.folderService.createFolderAndPermissions(name, user);
+    return this.folderService.createFolderAndPermissions(name, userId);
   }
 }

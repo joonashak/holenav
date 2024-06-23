@@ -22,6 +22,6 @@ import { FolderAccessControl } from "./folder.access-control";
     FolderRoleService,
     FolderRoleResolver,
   ],
-  exports: [MongooseModule, FolderAccessControl],
+  exports: [MongooseModule, FolderAccessControl, FolderRoleService],
 })
 export class FolderAccessControlModule {}

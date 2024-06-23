@@ -1,10 +1,9 @@
-import { forwardRef, Inject, Injectable } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
-import mongoose, { Model } from "mongoose";
-import FolderRole from "../../user/roles/folder-role.enum";
-import SystemRole from "../../user/roles/system-role.enum";
-import { UserDocument } from "../../user/user.model";
-import { UserService } from "../../user/user.service";
+import { Model } from "mongoose";
+import { FolderAction } from "../../access-control/folder/folder-role/folder-action.enum";
+import { FolderRoleService } from "../../access-control/folder/folder-role/folder-role.service";
+import { FolderAccessControl } from "../../access-control/folder/folder.access-control";
 import { Folder, FolderDocument } from "./folder.model";
 
 const defaultFolderName = "Default Folder";
@@ -13,7 +12,8 @@ const defaultFolderName = "Default Folder";
 export class FolderService {
   constructor(
     @InjectModel(Folder.name) private folderModel: Model<FolderDocument>,
-    @Inject(forwardRef(() => UserService)) private userService: UserService,
+    private folderAccessControl: FolderAccessControl,
+    private folderRoleService: FolderRoleService,
   ) {}
 
   async createFolder(folder: Partial<FolderDocument>): Promise<Folder> {
@@ -29,16 +29,18 @@ export class FolderService {
    */
   async createFolderAndPermissions(
     name: string,
-    user: UserDocument,
+    userId: string,
   ): Promise<Folder> {
     const folder = await this.createFolder({ name });
-    await this.userService.addFolderRole(user, {
-      folder,
-      role: FolderRole.ADMIN,
+    await this.folderRoleService.create({
+      action: FolderAction.Manage,
+      folderId: folder.id,
+      userId,
     });
     return folder;
   }
 
+  // TODO: Remove
   async getDefaultFolder(): Promise<Folder> {
     return this.folderModel.findOne({ name: defaultFolderName });
   }
@@ -47,44 +49,12 @@ export class FolderService {
     return this.folderModel.findOne({ id });
   }
 
-  private async getFolderByRole(
-    user: UserDocument,
-    minRole: FolderRole,
+  async findFoldersByAllowedAction(
+    userId: string,
+    action: FolderAction,
   ): Promise<Folder[]> {
-    if (user.systemRole === SystemRole.ADMINISTRATOR) {
-      return this.folderModel.find({});
-    }
-
-    const folderIds = user.folderRoles
-      .filter(({ role }) => role >= minRole)
-      .map(
-        ({ folder }) =>
-          new mongoose.Types.ObjectId(folder as unknown as string),
-      );
-    return this.folderModel.find({ _id: { $in: folderIds } });
-  }
-
-  /**
-   * Get `Folder`s that `user` has any roles for.
-   *
-   * Returns all folders for system admins.
-   *
-   * @param user Usually current user.
-   * @returns List of `Folder`s.
-   */
-  async getAccessibleFolders(user: UserDocument): Promise<Folder[]> {
-    return this.getFolderByRole(user, FolderRole.READ);
-  }
-
-  /**
-   * Get `Folder`s that `user` can manage.
-   *
-   * Returns all folders for system admins.
-   *
-   * @param user Usually current user.
-   * @returns List of `Folder`s.
-   */
-  async getManageableFolders(user: UserDocument): Promise<Folder[]> {
-    return this.getFolderByRole(user, FolderRole.MANAGE);
+    const authorizedFolderIds =
+      await this.folderAccessControl.authorizedFolders(userId, action);
+    return this.folderModel.find({ id: { $in: authorizedFolderIds } });
   }
 }
