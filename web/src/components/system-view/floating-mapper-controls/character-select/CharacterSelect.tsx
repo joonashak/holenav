@@ -3,19 +3,28 @@ import { Button, Menu, MenuItem } from "@mui/material";
 import { sortBy } from "lodash";
 import { useState } from "react";
 import { GetMyUserPreferencesDocument } from "../../../../generated/graphqlOperations";
+import useSelectedCharacter from "../../../../hooks/useSelectedCharacter";
 
 const CharacterSelect = () => {
   const { data } = useQuery(GetMyUserPreferencesDocument);
+  const { selectedCharacter, setSelectedCharacterEveId } =
+    useSelectedCharacter();
+
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
-  const handleClose = () => {
+  const closeMenu = () => {
     setAnchorEl(null);
   };
 
-  if (!data) {
+  const selectCharacter = (id: number) => {
+    setSelectedCharacterEveId(id);
+    closeMenu();
+  };
+
+  if (!data || !selectedCharacter) {
     return null;
   }
 
@@ -24,10 +33,13 @@ const CharacterSelect = () => {
 
   return (
     <>
-      <Button onClick={handleClick}>Selecter Character</Button>
-      <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
+      <Button onClick={handleClick}>{selectedCharacter.name}</Button>
+      <Menu anchorEl={anchorEl} open={open} onClose={closeMenu}>
         {characters.map((char) => (
-          <MenuItem key={char.eveId} onClick={handleClose}>
+          <MenuItem
+            key={char.eveId}
+            onClick={() => selectCharacter(char.eveId)}
+          >
             {char.name}
           </MenuItem>
         ))}

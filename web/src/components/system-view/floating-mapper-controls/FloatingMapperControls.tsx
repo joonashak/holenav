@@ -5,8 +5,8 @@ import CharacterSelect from "./character-select/CharacterSelect";
 const FloatingMapperControls = () => {
   return (
     <Box sx={{ position: "absolute", top: 0, right: 0 }}>
+      <CharacterSelect />
       <IconButton>
-        <CharacterSelect />
         <SettingsIcon sx={{ width: "auto", height: 70 }} />
       </IconButton>
     </Box>
