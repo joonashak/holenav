@@ -12,6 +12,7 @@ import {
   UpdateSignaturesDocument,
   UpdateableSignature,
 } from "../../../generated/graphqlOperations";
+import useSelectedFolder from "../../../hooks/useSelectedFolder";
 import { stripGraphQlTypenames } from "../../../utils/stripGraphQlTypenames";
 import useCurrentSystemName from "../useCurrentSystemName";
 import { systemState } from "./SystemData";
@@ -21,9 +22,10 @@ export type AddSignatureHookInput = Omit<Signature, "id" | "systemName">;
 const useSignatures = () => {
   const systemName = useCurrentSystemName();
   const state = useState(systemState);
+  const { selectedFolderId: folderId } = useSelectedFolder();
 
   const { data }: any = useQuery(GetSignaturesDocument, {
-    variables: { systemName },
+    variables: { systemName, folderId },
   });
   const signatures: Signature[] = data?.getSignaturesBySystem || [];
 
@@ -36,7 +38,7 @@ const useSignatures = () => {
       ...sig,
       systemName: state.name.get(),
     }));
-    return addSigsMutation({ variables: { input: { signatures } } });
+    return addSigsMutation({ variables: { folderId, input: { signatures } } });
   };
 
   const [updateSigsMutation] = useMutation(UpdateSignaturesDocument, {
@@ -47,6 +49,7 @@ const useSignatures = () => {
     updateSigsMutation({
       variables: {
         input: { signatures: signatures.map(stripGraphQlTypenames) },
+        folderId,
       },
     });
 
@@ -55,7 +58,7 @@ const useSignatures = () => {
   });
 
   const deleteSignatures = async (ids: string[]): Promise<void> => {
-    await deleteSigsMutation({ variables: { input: { ids } } });
+    await deleteSigsMutation({ variables: { input: { ids }, folderId } });
   };
 
   const [pasteSigsMutation] = useMutation(PasteSignaturesDocument, {
@@ -68,6 +71,7 @@ const useSignatures = () => {
   ) =>
     pasteSigsMutation({
       variables: {
+        folderId,
         input: {
           pastedSignatures,
           systemName: state.name.get(),

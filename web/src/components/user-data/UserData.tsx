@@ -4,7 +4,6 @@ import { cloneDeep } from "lodash";
 import { ReactElement, ReactNode, useEffect } from "react";
 import useAuth from "../../auth/useAuth";
 import {
-  Folder,
   SystemRoles,
   UserDataDocument,
   UserDataQuery,
@@ -25,7 +24,6 @@ export const userState = createState<UserData>({
     activeFolder: {
       id: "",
       name: "",
-      personal: false,
     },
   },
   main: {
@@ -42,7 +40,6 @@ export const userState = createState<UserData>({
   alts: [],
   accessibleFolders: [],
   systemRole: SystemRoles.None,
-  folderRoles: [],
   userDataReady: false,
 });
 
@@ -62,12 +59,6 @@ export default ({ children }: UserDataProviderProps) => {
     onCompleted: (data) => {
       const { whoami, getAccessibleFolders } = data;
       const { main, settings, ...rest } = cloneDeep(whoami);
-
-      if (!settings.activeFolder) {
-        settings.activeFolder =
-          getAccessibleFolders.find((folder: Folder) => folder.personal) ||
-          getAccessibleFolders[0];
-      }
 
       state.merge({
         main,

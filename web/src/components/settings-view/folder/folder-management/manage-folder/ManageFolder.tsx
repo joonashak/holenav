@@ -1,9 +1,7 @@
-import { useMutation } from "@apollo/client";
 import { createState, useState } from "@hookstate/core";
 import { Button, Stack } from "@mui/material";
 import {
-  AddFolderRoleDocument,
-  FolderRoles,
+  FolderAction,
   HolenavCharacter,
 } from "../../../../../generated/graphqlOperations";
 import Select from "../../../../controls/select/Select";
@@ -24,10 +22,9 @@ export const manageFolderState = createState<ManageFolderState>({
 });
 
 const ManageFolder = () => {
-  const { selectedFolder, selectedRole, selectedCharacter } =
-    useState(manageFolderState);
+  const { selectedFolder, selectedRole } = useState(manageFolderState);
   const { manageableFolders } = useSettingsData();
-  const [addFolderRoleMutation] = useMutation(AddFolderRoleDocument);
+
   const { showSuccessNotification } = useNotification();
 
   const folderOptions = manageableFolders.map(({ id, name }) => ({
@@ -35,22 +32,14 @@ const ManageFolder = () => {
     value: id,
     label: name,
   }));
-  const roleOptions = Object.keys(FolderRoles).map((role) => ({
+  const roleOptions = Object.keys(FolderAction).map((role) => ({
     id: `role-${role}`,
-    value: FolderRoles[role as keyof typeof FolderRoles],
+    value: FolderAction[role as keyof typeof FolderAction],
     label: role,
   }));
 
   const onSubmit = async () => {
-    await addFolderRoleMutation({
-      variables: {
-        input: {
-          userEsiId: selectedCharacter.value?.esiId,
-          folderId: selectedFolder.value,
-          role: selectedRole.value,
-        },
-      },
-    });
+    // FIXME: Missing mutation.
     showSuccessNotification("Role added.");
   };
 
