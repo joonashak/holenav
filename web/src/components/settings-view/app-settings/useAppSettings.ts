@@ -1,5 +1,4 @@
-import useAuthenticatedMutation from "../../../auth/useAuthenticatedMutation";
-import useAuthenticatedQuery from "../../../auth/useAuthenticatedQuery";
+import { useMutation, useQuery } from "@apollo/client";
 import {
   AddAllowedAllianceDocument,
   AddAllowedAllianceMutation,
@@ -32,13 +31,13 @@ const useAppSettings = () => {
   const { showSuccessNotification } = useNotification();
   const refetchQueries = [AppSettingsDocument];
 
-  const appSettingsQuery = useAuthenticatedQuery<
+  const appSettingsQuery = useQuery<
     AppSettingsQuery,
     AppSettingsQueryVariables
   >(AppSettingsDocument);
 
   const [setRegistrationEnabledMutation, setRegistrationEnabledResult] =
-    useAuthenticatedMutation<
+    useMutation<
       SetRegistrationEnabledMutation,
       SetRegistrationEnabledMutationVariables
     >(SetRegistrationEnabledDocument, {
@@ -54,7 +53,7 @@ const useAppSettings = () => {
   const [
     setCorporationFilterEnabledMutation,
     setCorporationFilterEnabledResult,
-  ] = useAuthenticatedMutation<
+  ] = useMutation<
     SetCorporationFilterEnabledMutation,
     SetCorporationFilterEnabledMutationVariables
   >(SetCorporationFilterEnabledDocument, {
@@ -68,7 +67,7 @@ const useAppSettings = () => {
     setCorporationFilterEnabledMutation({ variables: { enabled } });
 
   const [setAllianceFilterEnabledMutation, setAllianceFilterEnabledResult] =
-    useAuthenticatedMutation<
+    useMutation<
       SetAllianceFilterEnabledMutation,
       SetAllianceFilterEnabledMutationVariables
     >(SetAllianceFilterEnabledDocument, {
@@ -82,7 +81,7 @@ const useAppSettings = () => {
     setAllianceFilterEnabledMutation({ variables: { enabled } });
 
   const [addAllowedCorporationMutation, addAllowedCorporationResult] =
-    useAuthenticatedMutation<
+    useMutation<
       AddAllowedCorporationMutation,
       AddAllowedCorporationMutationVariables
     >(AddAllowedCorporationDocument, {
@@ -95,22 +94,21 @@ const useAppSettings = () => {
   const addAllowedCorporation = (esiId: string) =>
     addAllowedCorporationMutation({ variables: { esiId } });
 
-  const [addAllowedAllianceMutation, addAllowedAllianceResult] =
-    useAuthenticatedMutation<
-      AddAllowedAllianceMutation,
-      AddAllowedAllianceMutationVariables
-    >(AddAllowedAllianceDocument, {
-      refetchQueries,
-      onCompleted: () => {
-        showSuccessNotification("Alliance added to allowlist.");
-      },
-    });
+  const [addAllowedAllianceMutation, addAllowedAllianceResult] = useMutation<
+    AddAllowedAllianceMutation,
+    AddAllowedAllianceMutationVariables
+  >(AddAllowedAllianceDocument, {
+    refetchQueries,
+    onCompleted: () => {
+      showSuccessNotification("Alliance added to allowlist.");
+    },
+  });
 
   const addAllowedAlliance = (esiId: string) =>
     addAllowedAllianceMutation({ variables: { esiId } });
 
   const [removeAllowedCorporationMutation, removeAllowedCorporationResult] =
-    useAuthenticatedMutation<
+    useMutation<
       RemoveAllowedCorporationMutation,
       RemoveAllowedCorporationMutationVariables
     >(RemoveAllowedCorporationDocument, {
@@ -124,7 +122,7 @@ const useAppSettings = () => {
     removeAllowedCorporationMutation({ variables: { esiId } });
 
   const [removeAllowedAllianceMutation, removeAllowedAllianceResult] =
-    useAuthenticatedMutation<
+    useMutation<
       RemoveAllowedAllianceMutation,
       RemoveAllowedAllianceMutationVariables
     >(RemoveAllowedAllianceDocument, {

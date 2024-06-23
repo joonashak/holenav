@@ -1,5 +1,5 @@
+import { useLazyQuery } from "@apollo/client";
 import { Downgraded, useState } from "@hookstate/core";
-import useLazyAuthenticatedQuery from "../../../auth/useLazyAuthenticatedQuery";
 import {
   SystemDocument,
   SystemQuery,
@@ -10,17 +10,17 @@ import { systemState } from "./SystemData";
 export default () => {
   const state = useState(systemState);
 
-  const [changeSystemQuery] = useLazyAuthenticatedQuery<
-    SystemQuery,
-    SystemQueryVariables
-  >(SystemDocument, {
-    onCompleted: ({ getSystemByName }) => {
-      if (!getSystemByName) {
-        return;
-      }
-      state.merge({ ...getSystemByName });
+  const [changeSystemQuery] = useLazyQuery<SystemQuery, SystemQueryVariables>(
+    SystemDocument,
+    {
+      onCompleted: ({ getSystemByName }) => {
+        if (!getSystemByName) {
+          return;
+        }
+        state.merge({ ...getSystemByName });
+      },
     },
-  });
+  );
 
   const changeSystem = (name: string) => {
     state.merge({ name });

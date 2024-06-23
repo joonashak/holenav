@@ -1,7 +1,7 @@
+import { useMutation } from "@apollo/client";
 import { useState } from "@hookstate/core";
 import { Button, Typography } from "@mui/material";
 import { FieldValues, useForm } from "react-hook-form";
-import useAuthenticatedMutation from "../../../auth/useAuthenticatedMutation";
 import { UpdateMotdDocument } from "../../../generated/graphqlOperations";
 import ControlledTextField from "../../controls/ControlledTextField";
 import FormGroupRow from "../../controls/FormGroupRow";
@@ -17,7 +17,7 @@ const MotdEditor = () => {
     },
   });
 
-  const [updateMotd] = useAuthenticatedMutation(UpdateMotdDocument, {
+  const [updateMotd] = useMutation(UpdateMotdDocument, {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onCompleted: (data: any) => {
       state.set(data.updateMotd.motd);

@@ -1,6 +1,6 @@
+import { useLazyQuery } from "@apollo/client";
 import { useState } from "@hookstate/core";
 import { useState as useReactState } from "react";
-import useLazyAuthenticatedQuery from "../../../../../auth/useLazyAuthenticatedQuery";
 import {
   HolenavCharacter,
   SearchCharactersByMainDocument,
@@ -14,7 +14,7 @@ const CharacterSearch = () => {
   const { selectedCharacter } = useState(manageFolderState);
   const [options, setOptions] = useReactState<HolenavCharacter[]>([]);
 
-  const [searchQuery, { loading }] = useLazyAuthenticatedQuery<
+  const [searchQuery, { loading }] = useLazyQuery<
     SearchCharactersByMainQuery,
     SearchCharactersByMainQueryVariables
   >(SearchCharactersByMainDocument, {

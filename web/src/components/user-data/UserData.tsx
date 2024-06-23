@@ -1,8 +1,8 @@
+import { useLazyQuery } from "@apollo/client";
 import { createState, useState } from "@hookstate/core";
 import { cloneDeep } from "lodash";
 import { ReactElement, ReactNode, useEffect } from "react";
 import useAuth from "../../auth/useAuth";
-import useLazyAuthenticatedQuery from "../../auth/useLazyAuthenticatedQuery";
 import {
   Folder,
   SystemRoles,
@@ -55,7 +55,7 @@ export default ({ children }: UserDataProviderProps) => {
   const { token } = useAuth();
   const { setDefaultActiveCharacter } = useLocalData();
 
-  const [userQuery, { loading }] = useLazyAuthenticatedQuery<
+  const [userQuery, { loading }] = useLazyQuery<
     UserDataQuery,
     UserDataQueryVariables
   >(UserDataDocument, {

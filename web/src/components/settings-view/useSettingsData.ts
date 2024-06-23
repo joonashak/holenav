@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import useAuthenticatedMutation from "../../auth/useAuthenticatedMutation";
-import useAuthenticatedQuery from "../../auth/useAuthenticatedQuery";
+import { useMutation, useQuery } from "@apollo/client";
 import {
   AllUsersDocument,
   AssignSystemRoleDocument,
@@ -23,21 +22,20 @@ const useSettingsData = () => {
   const { systemRole } = useUserData();
   const { showSuccessNotification, showErrorNotification } = useNotification();
 
-  const { data: settingsData }: any =
-    useAuthenticatedQuery(SettingsDataDocument);
+  const { data: settingsData }: any = useQuery(SettingsDataDocument);
   const accessibleFolders: Folder[] = settingsData?.getAccessibleFolders || [];
 
-  const { data: managerSettings }: any = useAuthenticatedQuery(
+  const { data: managerSettings }: any = useQuery(
     SettingsDataForManagerDocument,
     { skip: !atLeastManager(systemRole) },
   );
   const manageableFolders: Folder[] =
     managerSettings?.getManageableFolders || [];
 
-  const { data: userData }: any = useAuthenticatedQuery(AllUsersDocument);
+  const { data: userData }: any = useQuery(AllUsersDocument);
   const users: HolenavUser[] = userData?.getAllUsersForManager || [];
 
-  const [createFolderMutation] = useAuthenticatedMutation<
+  const [createFolderMutation] = useMutation<
     CreateFolderMutation,
     CreateFolderMutationVariables
   >(CreateFolderDocument, {
@@ -51,7 +49,7 @@ const useSettingsData = () => {
   const createFolder = async (name: string) =>
     createFolderMutation({ variables: { name } });
 
-  const [assignSystemRoleMutation] = useAuthenticatedMutation<
+  const [assignSystemRoleMutation] = useMutation<
     AssignSystemRoleMutation,
     AssignSystemRoleMutationVariables
   >(AssignSystemRoleDocument, {

@@ -1,5 +1,5 @@
+import { useMutation } from "@apollo/client";
 import { useState } from "@hookstate/core";
-import useAuthenticatedMutation from "../../../auth/useAuthenticatedMutation";
 import {
   ChangeActiveFolderDocument,
   Folder,
@@ -9,9 +9,7 @@ import { userState } from "../UserData";
 const useUserSettings = () => {
   const state = useState(userState);
 
-  const [changeActiveFolderMutation] = useAuthenticatedMutation(
-    ChangeActiveFolderDocument,
-  );
+  const [changeActiveFolderMutation] = useMutation(ChangeActiveFolderDocument);
 
   const setActiveFolder = async (folder: Folder) => {
     await changeActiveFolderMutation({ variables: { folderId: folder.id } });

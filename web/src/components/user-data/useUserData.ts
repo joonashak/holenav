@@ -1,6 +1,5 @@
-import { FetchResult } from "@apollo/client";
+import { FetchResult, useMutation } from "@apollo/client";
 import { Downgraded, useState } from "@hookstate/core";
-import useAuthenticatedMutation from "../../auth/useAuthenticatedMutation";
 import {
   AddSavedMapDocument,
   AddSavedMapMutation,
@@ -21,7 +20,7 @@ import { userState } from "./UserData";
 const useUserData = () => {
   const state = useState(userState);
 
-  const [updateSelectedMapMutation] = useAuthenticatedMutation<
+  const [updateSelectedMapMutation] = useMutation<
     UpdateSelectedMapMutation,
     UpdateSelectedMapMutationVariables
   >(UpdateSelectedMapDocument, {
@@ -38,7 +37,7 @@ const useUserData = () => {
     }
   };
 
-  const [addSavedMapMutation] = useAuthenticatedMutation<
+  const [addSavedMapMutation] = useMutation<
     AddSavedMapMutation,
     AddSavedMapMutationVariables
   >(AddSavedMapDocument, {
@@ -51,7 +50,7 @@ const useUserData = () => {
   const addSavedMap = async (newMap: SavedMap): Promise<FetchResult> =>
     addSavedMapMutation({ variables: newMap });
 
-  const [deleteSavedMapMutation] = useAuthenticatedMutation<
+  const [deleteSavedMapMutation] = useMutation<
     DeleteSavedMapMutation,
     DeleteSavedMapMutationVariables
   >(DeleteSavedMapDocument, {
@@ -64,7 +63,7 @@ const useUserData = () => {
   const deleteSavedMap = async (mapId: string): Promise<FetchResult> =>
     deleteSavedMapMutation({ variables: { mapId } });
 
-  const [removeAltMutation] = useAuthenticatedMutation<
+  const [removeAltMutation] = useMutation<
     RemoveAltMutation,
     RemoveAltMutationVariables
   >(RemoveAltDocument, {

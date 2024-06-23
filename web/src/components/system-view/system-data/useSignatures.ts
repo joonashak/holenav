@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { useMutation, useQuery } from "@apollo/client";
 import { useState } from "@hookstate/core";
-import useAuthenticatedMutation from "../../../auth/useAuthenticatedMutation";
-import useAuthenticatedQuery from "../../../auth/useAuthenticatedQuery";
 import {
   AddSignaturesDocument,
   CreatableSignature,
@@ -23,13 +22,12 @@ const useSignatures = () => {
   const systemName = useCurrentSystemName();
   const state = useState(systemState);
 
-  // FIXME: Fix `useAuthenticatedQuery` typing.
-  const { data }: any = useAuthenticatedQuery(GetSignaturesDocument, {
+  const { data }: any = useQuery(GetSignaturesDocument, {
     variables: { systemName },
   });
   const signatures: Signature[] = data?.getSignaturesBySystem || [];
 
-  const [addSigsMutation] = useAuthenticatedMutation(AddSignaturesDocument, {
+  const [addSigsMutation] = useMutation(AddSignaturesDocument, {
     refetchQueries: [GetSignaturesDocument],
   });
 
@@ -41,10 +39,9 @@ const useSignatures = () => {
     return addSigsMutation({ variables: { input: { signatures } } });
   };
 
-  const [updateSigsMutation] = useAuthenticatedMutation(
-    UpdateSignaturesDocument,
-    { refetchQueries: [GetSignaturesDocument] },
-  );
+  const [updateSigsMutation] = useMutation(UpdateSignaturesDocument, {
+    refetchQueries: [GetSignaturesDocument],
+  });
 
   const updateSignatures = async (signatures: UpdateableSignature[]) =>
     updateSigsMutation({
@@ -53,19 +50,17 @@ const useSignatures = () => {
       },
     });
 
-  const [deleteSigsMutation] = useAuthenticatedMutation(
-    DeleteSignaturesDocument,
-    { refetchQueries: [GetSignaturesDocument] },
-  );
+  const [deleteSigsMutation] = useMutation(DeleteSignaturesDocument, {
+    refetchQueries: [GetSignaturesDocument],
+  });
 
   const deleteSignatures = async (ids: string[]): Promise<void> => {
     await deleteSigsMutation({ variables: { input: { ids } } });
   };
 
-  const [pasteSigsMutation] = useAuthenticatedMutation(
-    PasteSignaturesDocument,
-    { refetchQueries: [GetSignaturesDocument] },
-  );
+  const [pasteSigsMutation] = useMutation(PasteSignaturesDocument, {
+    refetchQueries: [GetSignaturesDocument],
+  });
 
   const pasteSignatures = async (
     pastedSignatures: PastedSignature[],

@@ -1,12 +1,11 @@
 import { Downgraded, useState } from "@hookstate/core";
-import useAuthenticatedRestApi from "../../../../auth/useAuthenticatedRestApi";
+import axios from "axios";
 import useUserData from "../../../user-data/useUserData";
 import { mapState } from "./MapData";
 
 export default () => {
   const state = useState(mapState);
   const { settings } = useUserData();
-  const { get } = useAuthenticatedRestApi();
   const { selectedMap } = settings;
 
   const fetchConnectionTree = async (
@@ -19,7 +18,7 @@ export default () => {
       return;
     }
 
-    const res = await get(
+    const res = await axios.get(
       ["connection-graph", "connection-tree", rootSystemName].join("/"),
     );
     state.merge({ connectionTree: res.data });

@@ -1,6 +1,6 @@
+import { useMutation } from "@apollo/client";
 import { createState, useState } from "@hookstate/core";
 import { Button, Stack } from "@mui/material";
-import useAuthenticatedMutation from "../../../../../auth/useAuthenticatedMutation";
 import {
   AddFolderRoleDocument,
   FolderRoles,
@@ -27,9 +27,7 @@ const ManageFolder = () => {
   const { selectedFolder, selectedRole, selectedCharacter } =
     useState(manageFolderState);
   const { manageableFolders } = useSettingsData();
-  const [addFolderRoleMutation] = useAuthenticatedMutation(
-    AddFolderRoleDocument,
-  );
+  const [addFolderRoleMutation] = useMutation(AddFolderRoleDocument);
   const { showSuccessNotification } = useNotification();
 
   const folderOptions = manageableFolders.map(({ id, name }) => ({
