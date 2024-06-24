@@ -1,5 +1,15 @@
 import { useQuery } from "@apollo/client";
-import { Button, Menu, MenuItem } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Button,
+  ListItemAvatar,
+  ListItemText,
+  Menu,
+  MenuItem,
+  Typography,
+} from "@mui/material";
+import { grey } from "@mui/material/colors";
 import { sortBy } from "lodash";
 import { useState } from "react";
 import { GetMyUserPreferencesDocument } from "../../../../generated/graphqlOperations";
@@ -33,14 +43,40 @@ const CharacterSelect = () => {
 
   return (
     <>
-      <Button onClick={handleClick}>{selectedCharacter.name}</Button>
-      <Menu anchorEl={anchorEl} open={open} onClose={closeMenu}>
+      <Button variant="outlined" onClick={handleClick}>
+        {selectedCharacter.name}
+      </Button>
+      <Menu
+        anchorEl={anchorEl}
+        anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+        transformOrigin={{ horizontal: "right", vertical: "top" }}
+        open={open}
+        onClose={closeMenu}
+      >
         {characters.map((char) => (
           <MenuItem
             key={char.eveId}
             onClick={() => selectCharacter(char.eveId)}
+            selected={char.eveId === selectedCharacter.eveId}
+            sx={{
+              "&.Mui-selected": { bgcolor: "primary.main" },
+            }}
           >
-            {char.name}
+            <ListItemAvatar>
+              <Avatar
+                alt={char.name}
+                src={`https://images.evetech.net/characters/${char.eveId}/portrait?size=128`}
+              />
+            </ListItemAvatar>
+            <ListItemText>
+              <Box>{char.name}</Box>
+              <Typography
+                variant="overline"
+                sx={{ lineHeight: 0, textTransform: "none", color: grey[600] }}
+              >
+                {char.corporation.name}
+              </Typography>
+            </ListItemText>
           </MenuItem>
         ))}
       </Menu>
