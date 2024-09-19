@@ -24,6 +24,7 @@ import { ConnectionGraphModule } from "./connection-graph/connection-graph.modul
 import { DevToolsModule } from "./dev-tools/dev-tools.module";
 import { CharacterModule } from "./entities/character/character.module";
 import { FolderModule } from "./entities/folder/folder.module";
+import { MapModule } from "./entities/map/map.module";
 import { SignatureModule } from "./entities/signature/signature.module";
 import { SystemModule } from "./entities/system/system.module";
 import { EsiModule } from "./esi/esi.module";
@@ -64,6 +65,7 @@ import { UserPreferencesModule } from "./user/user-preferences/user-preferences.
     FrontendModule,
     UserPreferencesModule,
     FolderAccessControlModule,
+    MapModule,
   ],
 })
 export class AppModule {}
