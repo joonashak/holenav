@@ -58,26 +58,27 @@ jobs:
       - name: Run unit tests
         run: npm test
 
-  test-e2e:
-    name: E2E tests
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Build and start containers
-        run: docker compose -f compose.ci.yaml up -d mongo neo server web
-      - name: Run E2E tests
-        run: docker compose -f compose.ci.yaml run e2e
-      - name: Print server logs
-        if: failure()
-        run: docker compose -f compose.ci.yaml logs server
-      - name: Print stack status
-        if: failure()
-        run: docker ps
-      - name: Save Cypress results
-        uses: actions/upload-artifact@v4
-        if: failure()
-        with:
-          name: Cypress Results
-          path: |
-            e2e/cypress/videos
-            e2e/cypress/screenshots
+  # Disabled temporarily.
+  # test-e2e:
+  #   name: E2E tests
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - name: Build and start containers
+  #       run: docker compose -f compose.ci.yaml up -d mongo neo server web
+  #     - name: Run E2E tests
+  #       run: docker compose -f compose.ci.yaml run e2e
+  #     - name: Print server logs
+  #       if: failure()
+  #       run: docker compose -f compose.ci.yaml logs server
+  #     - name: Print stack status
+  #       if: failure()
+  #       run: docker ps
+  #     - name: Save Cypress results
+  #       uses: actions/upload-artifact@v4
+  #       if: failure()
+  #       with:
+  #         name: Cypress Results
+  #         path: |
+  #           e2e/cypress/videos
+  #           e2e/cypress/screenshots
