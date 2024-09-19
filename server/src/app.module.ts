@@ -22,11 +22,7 @@ import {
 } from "./config";
 import { ConnectionGraphModule } from "./connection-graph/connection-graph.module";
 import { DevToolsModule } from "./dev-tools/dev-tools.module";
-import { CharacterModule } from "./entities/character/character.module";
-import { FolderModule } from "./entities/folder/folder.module";
-import { MapModule } from "./entities/map/map.module";
-import { SignatureModule } from "./entities/signature/signature.module";
-import { SystemModule } from "./entities/system/system.module";
+import { EntitiesModule } from "./entities/entities.module";
 import { EsiModule } from "./esi/esi.module";
 import { FrontendModule } from "./frontend/frontend.module";
 import graphQlModuleConfig from "./graphql-module-config";
@@ -36,36 +32,32 @@ import { UserPreferencesModule } from "./user/user-preferences/user-preferences.
 
 @Module({
   imports: [
-    MongooseModule.forRoot(MONGO_URL),
-    GraphQLModule.forRoot<ApolloDriverConfig>(graphQlModuleConfig),
+    AppDataModule,
+    AuthModule,
+    BootstrapModule,
+    CloneBayModule.forRoot({
+      afterLoginUrl: CLIENT_URL,
+    }),
+    CloneBayResolversModule,
+    CloneBaySsoModule,
+    ConnectionGraphModule,
+    DevToolsModule,
+    EntitiesModule,
+    EsiModule,
     EveAuthModule.forRoot({
       clientId: SSO_CLIENT_ID,
       secretKey: SSO_SECRET_KEY,
       callbackUrl: SSO_CALLBACK_URL,
       scopes: ["esi-search.search_structures.v1"],
     }),
-    CloneBayModule.forRoot({
-      afterLoginUrl: CLIENT_URL,
-    }),
-    CloneBaySsoModule,
-    CloneBayResolversModule,
-    ScheduleModule.forRoot(),
-    AppDataModule,
-    AuthModule,
-    BootstrapModule,
-    CharacterModule,
-    ConnectionGraphModule,
-    DevToolsModule,
-    EsiModule,
-    FolderModule,
+    FolderAccessControlModule,
+    FrontendModule,
+    GraphQLModule.forRoot<ApolloDriverConfig>(graphQlModuleConfig),
+    MongooseModule.forRoot(MONGO_URL),
     Neo4jModule,
     ScheduledTasksModule,
-    SignatureModule,
-    SystemModule,
-    FrontendModule,
+    ScheduleModule.forRoot(),
     UserPreferencesModule,
-    FolderAccessControlModule,
-    MapModule,
   ],
 })
 export class AppModule {}
