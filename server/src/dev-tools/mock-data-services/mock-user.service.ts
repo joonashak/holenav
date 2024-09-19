@@ -3,8 +3,7 @@ import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { HolenavCharacter } from "../../entities/character/character.model";
 import { FolderService } from "../../entities/folder/folder.service";
-import defaultUserSettings from "../../user/settings/default-user-settings";
-import { HolenavUser, UserDocument } from "../../user/user.model";
+import { HolenavUser } from "../../user/user.model";
 import users from "../data/users";
 
 @Injectable()
@@ -17,26 +16,19 @@ export class MockUserService {
   ) {}
 
   async mock() {
-    const defaultFolder = await this.folderService.getDefaultFolder();
-
     for (const user of users) {
       const { id, main, systemRole } = user;
+
       const newChar = await this.characterModel.create({
         ...main,
         isMain: true,
       });
-      const newUser = await this.userModel.create({
+
+      await this.userModel.create({
         main: newChar,
         id,
         systemRole,
-        settings: { ...defaultUserSettings, activeFolder: defaultFolder },
       });
-      await this.preSelectMap(newUser);
     }
-  }
-
-  private async preSelectMap(user: UserDocument) {
-    user.settings.selectedMap = user.settings.maps[0];
-    await user.save();
   }
 }

@@ -5,7 +5,6 @@ import { JWT_SECRET } from "../config";
 import { CharacterModule } from "../entities/character/character.module";
 import { CharacterService } from "../entities/character/character.service";
 import { EsiModule } from "../esi/esi.module";
-import { UserSettingsService } from "./settings/user-settings.service";
 import { UserRoleService } from "./user-role.service";
 import { HolenavUser, UserSchema } from "./user.model";
 import { UserResolver } from "./user.resolver";
@@ -21,19 +20,7 @@ import { UserService } from "./user.service";
     CharacterModule,
     EsiModule,
   ],
-  providers: [
-    UserService,
-    UserRoleService,
-    UserSettingsService,
-    CharacterService,
-    UserResolver,
-  ],
-  exports: [
-    UserService,
-    UserRoleService,
-    UserSettingsService,
-    MongooseModule,
-    CharacterService,
-  ],
+  providers: [UserService, UserRoleService, CharacterService, UserResolver],
+  exports: [UserService, UserRoleService, MongooseModule, CharacterService],
 })
 export class UserModule {}

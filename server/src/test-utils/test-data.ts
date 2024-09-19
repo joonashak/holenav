@@ -37,7 +37,6 @@ export const testUser: HolenavUser = {
     alliance: null,
     portraitUrl: "",
   },
-  settings: null,
   systemRole: SystemRole.USER,
 };
 

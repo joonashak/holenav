@@ -3,11 +3,6 @@ import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import mongoose from "mongoose";
 import { HolenavCharacter } from "../entities/character/character.model";
 import SystemRole from "./roles/system-role.enum";
-import defaultUserSettings from "./settings/default-user-settings";
-import {
-  UserSettings,
-  UserSettingsSchema,
-} from "./settings/user-settings.model";
 
 export type UserDocument = HolenavUser & mongoose.Document;
 
@@ -32,10 +27,6 @@ export class HolenavUser {
     type: [{ type: mongoose.Schema.Types.ObjectId, ref: "HolenavCharacter" }],
   })
   alts: HolenavCharacter[];
-
-  @Field((type) => UserSettings)
-  @Prop({ type: UserSettingsSchema, default: defaultUserSettings })
-  settings: UserSettings;
 
   @Field((type) => SystemRole)
   @Prop({ default: SystemRole.NONE })
