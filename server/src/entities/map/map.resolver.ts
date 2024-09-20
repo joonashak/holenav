@@ -3,7 +3,7 @@ import {
   RequireAuthentication,
   UserId,
 } from "@joonashak/nestjs-clone-bay";
-import { Args, Mutation, Resolver } from "@nestjs/graphql";
+import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
 import { CreateMapDto } from "./dto/create-map.dto";
 import { FindMap } from "./dto/find-map.dto";
 import { Map } from "./map.model";
@@ -24,5 +24,12 @@ export class MapResolver {
   ): Promise<Map> {
     const user = await this.userService.findById(userId);
     return this.mapService.createMap(input, user);
+  }
+
+  @RequireAuthentication()
+  @Query(() => [FindMap])
+  async findMaps(@UserId() userId: string): Promise<Map[]> {
+    const user = await this.userService.findById(userId);
+    return this.mapService.findMapsForUser(user);
   }
 }

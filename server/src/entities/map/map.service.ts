@@ -12,4 +12,8 @@ export class MapService {
   async createMap(input: CreateMapDto, user: User): Promise<Map> {
     return this.mapModel.create({ ...input, user });
   }
+
+  async findMapsForUser(user: User): Promise<Map[]> {
+    return this.mapModel.find({ user });
+  }
 }
