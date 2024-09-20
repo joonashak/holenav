@@ -1,18 +1,17 @@
 import { Downgraded, useState } from "@hookstate/core";
 import axios from "axios";
-import useUserData from "../../../user-data/useUserData";
 import { mapState } from "./MapData";
 
 export default () => {
   const state = useState(mapState);
-  const { settings } = useUserData();
-  const { selectedMap } = settings;
+  // FIXME: Use new selected map hook here.
+  // const { settings } = useUserData();
+  // const { selectedMap } = settings;
 
   const fetchConnectionTree = async (
     rootSystemNameOverride: string | null = null,
   ) => {
-    const rootSystemName =
-      rootSystemNameOverride || selectedMap?.rootSystemName;
+    const rootSystemName = rootSystemNameOverride || "Jita";
 
     if (!rootSystemName) {
       return;

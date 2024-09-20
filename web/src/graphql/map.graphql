@@ -1,29 +1,5 @@
-mutation UpdateSelectedMap($selectedMapId: String!) {
-  updateSelectedMap(selectedMapId: $selectedMapId) {
-    settings {
-      selectedMap {
-        ...MapFields
-      }
-    }
-  }
-}
-
-mutation AddSavedMap($name: String!, $rootSystemName: String!) {
-  addSavedMap(name: $name, rootSystemName: $rootSystemName) {
-    settings {
-      maps {
-        ...MapFields
-      }
-    }
-  }
-}
-
-mutation DeleteSavedMap($mapId: String!) {
-  deleteSavedMap(mapId: $mapId) {
-    settings {
-      maps {
-        ...MapFields
-      }
-    }
+query FindMaps {
+  findMaps {
+    ...MapFields
   }
 }

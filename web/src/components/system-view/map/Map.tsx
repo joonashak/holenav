@@ -1,7 +1,6 @@
 import { Box } from "@mui/material";
 import Tree, { RawNodeDatum } from "react-d3-tree";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
-import useMapData from "./map-data/useMapData";
 import MapNode from "./map-node/MapNode";
 import MapStyles from "./map-styles/MapStyles";
 import pathClassFunc from "./map-styles/pathClassFunc";
@@ -15,8 +14,10 @@ const Node = (props: any) => <MapNode {...props} />;
 
 const Map = () => {
   const { width } = useWindowDimensions();
-  const { connectionTree } = useMapData();
-  const { rootSystemName, children: rootChildren } = connectionTree;
+  // const { connectionTree } = useMapData();
+  // const { rootSystemName, children: rootChildren } = connectionTree;
+  const rootSystemName = "";
+  const rootChildren: RawNodeDatum[] = [];
 
   if (!rootSystemName) {
     return null;

@@ -8,14 +8,6 @@ query UserData {
     alts {
       ...CharacterFields
     }
-    settings {
-      maps {
-        ...MapFields
-      }
-      selectedMap {
-        ...MapFields
-      }
-    }
   }
 
   getAccessibleFolders {

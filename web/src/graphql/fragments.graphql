@@ -40,7 +40,7 @@ fragment CharacterFields on HolenavCharacter {
   }
 }
 
-fragment MapFields on SavedMap {
+fragment MapFields on FindMap {
   id
   name
   rootSystemName
