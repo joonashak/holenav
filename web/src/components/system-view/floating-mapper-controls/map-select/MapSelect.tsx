@@ -1,6 +1,9 @@
+import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
+import EditIcon from "@mui/icons-material/Edit";
 import {
   Box,
   Button,
+  Divider,
   ListItemText,
   Menu,
   MenuItem,
@@ -48,7 +51,7 @@ const MapSelect = () => {
               "&.Mui-selected": { bgcolor: "primary.main" },
             }}
           >
-            <ListItemText>
+            <ListItemText sx={{ pr: 3 }}>
               <Box>{map.name}</Box>
               <Typography
                 variant="overline"
@@ -57,8 +60,14 @@ const MapSelect = () => {
                 {map.rootSystemName}
               </Typography>
             </ListItemText>
+            <EditIcon />
           </MenuItem>
         ))}
+        <Divider />
+        <MenuItem>
+          <ListItemText sx={{ pr: 3 }}>New Map</ListItemText>
+          <AddOutlinedIcon />
+        </MenuItem>
       </Menu>
     </>
   );
