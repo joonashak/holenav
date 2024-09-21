@@ -11,9 +11,11 @@ import {
 } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import useSelectedMap from "../../../../hooks/useSelectedMap";
 
 const MapSelect = () => {
+  const navigate = useNavigate();
   const { selectedMap, setSelectedMapId, maps } = useSelectedMap();
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -28,6 +30,10 @@ const MapSelect = () => {
   const selectMap = (id: string) => {
     setSelectedMapId(id);
     closeMenu();
+  };
+
+  const openNewMapDialog = () => {
+    navigate("new-map");
   };
 
   return (
@@ -64,7 +70,7 @@ const MapSelect = () => {
           </MenuItem>
         ))}
         <Divider />
-        <MenuItem>
+        <MenuItem onClick={openNewMapDialog}>
           <ListItemText sx={{ pr: 3 }}>New Map</ListItemText>
           <AddOutlinedIcon />
         </MenuItem>
