@@ -1,4 +1,5 @@
 import { useQuery } from "@apollo/client";
+import { useEffect, useMemo } from "react";
 import { useLocalStorage } from "usehooks-ts";
 import { FindMapsDocument } from "../generated/graphqlOperations";
 
@@ -9,8 +10,21 @@ const useSelectedMap = () => {
   );
 
   const { data } = useQuery(FindMapsDocument);
-  const maps = data?.findMaps || [];
+  const maps = useMemo(() => data?.findMaps || [], [data]);
   const selectedMap = maps.find((map) => map.id === selectedMapId);
+
+  // Select first map automatically if a map is not selected or the selected map doesn't exist.
+  useEffect(() => {
+    if (!maps.length) {
+      return;
+    }
+
+    const mapIds = maps.map((m) => m.id);
+
+    if (!selectedMapId || !mapIds.includes(selectedMapId)) {
+      setSelectedMapId(mapIds[0]);
+    }
+  }, [maps, selectedMapId, setSelectedMapId]);
 
   return {
     selectedMap,
