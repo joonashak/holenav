@@ -1,3 +1,4 @@
+import { useMutation } from "@apollo/client";
 import systems from "@eve-data/systems";
 import {
   Box,
@@ -9,13 +10,25 @@ import {
   DialogTitle,
   FormGroup,
 } from "@mui/material";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import {
+  CreateMapDocument,
+  FindMapsDocument,
+} from "../../../../generated/graphqlOperations";
 import ControlledTextField from "../../../controls/ControlledTextField";
 import RhfAutocomplete from "../../../controls/RhfAutocomplete";
 
+type Inputs = {
+  name: string;
+  rootSystemName: string;
+};
+
 const MapDialog = () => {
   const navigate = useNavigate();
+  const [createMap] = useMutation(CreateMapDocument, {
+    refetchQueries: [FindMapsDocument],
+  });
 
   const { handleSubmit, control } = useForm({
     defaultValues: {
@@ -24,10 +37,15 @@ const MapDialog = () => {
     },
   });
 
-  const onClose = () => navigate(-1);
+  const closeDialog = () => navigate("..");
+
+  const onSubmit: SubmitHandler<Inputs> = async (map) => {
+    await createMap({ variables: { map } });
+    closeDialog();
+  };
 
   return (
-    <Dialog open onClose={onClose}>
+    <Dialog open onClose={closeDialog}>
       <DialogTitle>Create New Map</DialogTitle>
       <DialogContent>
         <DialogContentText color="secondary.light">
@@ -75,14 +93,14 @@ const MapDialog = () => {
         </form>
       </DialogContent>
       <DialogActions sx={{ mt: 2 }}>
-        <Button color="secondary" variant="outlined" onClick={onClose}>
+        <Button color="secondary" variant="outlined" onClick={closeDialog}>
           Cancel
         </Button>
         <Button
           type="submit"
           color="secondary"
           variant="contained"
-          onClick={handleSubmit(() => {})}
+          onClick={handleSubmit(onSubmit)}
         >
           Save
         </Button>

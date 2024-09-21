@@ -3,3 +3,9 @@ query FindMaps {
     ...MapFields
   }
 }
+
+mutation CreateMap($map: CreateMapDto!) {
+  createMap(input: $map) {
+    id
+  }
+}
