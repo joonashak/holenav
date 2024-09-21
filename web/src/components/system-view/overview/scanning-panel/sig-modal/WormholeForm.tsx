@@ -79,6 +79,7 @@ const WormholeForm = (props: UseWormholeFormProps) => {
         <RhfAutocomplete
           name="destinationName"
           control={control}
+          label="Destination"
           options={systems.map((system) => system.name)}
         />
       </FormGroupRow>

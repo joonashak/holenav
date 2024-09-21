@@ -6,9 +6,15 @@ type RhfAutocompleteProps = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   control: Control<any, object>;
   options: string[];
+  label?: string;
 };
 
-const RhfAutocomplete = ({ options, name, control }: RhfAutocompleteProps) => {
+const RhfAutocomplete = ({
+  options,
+  name,
+  control,
+  label,
+}: RhfAutocompleteProps) => {
   const getOptionLabel = (option: unknown): string =>
     typeof option === "string" ? option : "";
 
@@ -21,7 +27,7 @@ const RhfAutocomplete = ({ options, name, control }: RhfAutocompleteProps) => {
       renderInput={(params) => (
         <TextField
           {...params}
-          label="Destination"
+          label={label}
           data-cy={`autocomplete-${name}-input`}
         />
       )}
