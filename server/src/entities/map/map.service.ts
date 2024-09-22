@@ -24,4 +24,8 @@ export class MapService {
       returnDocument: "after",
     });
   }
+
+  async removeMap(id: string, user: User): Promise<void> {
+    await this.mapModel.deleteOne({ _id: id, user });
+  }
 }

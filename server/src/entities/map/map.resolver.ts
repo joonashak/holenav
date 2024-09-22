@@ -43,4 +43,15 @@ export class MapResolver {
     const user = await this.userService.findById(userId);
     return this.mapService.updateMap(update, user);
   }
+
+  @RequireAuthentication()
+  @Mutation(() => String)
+  async removeMap(
+    @Args("id") mapId: string,
+    @UserId() userId: string,
+  ): Promise<string> {
+    const user = await this.userService.findById(userId);
+    await this.mapService.removeMap(mapId, user);
+    return "OK";
+  }
 }
