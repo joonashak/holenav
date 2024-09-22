@@ -1,6 +1,5 @@
 import { Container, Drawer, List, ListItem } from "@mui/material";
 import LogoutButton from "./LogoutButton";
-import MapSelector from "./MapSelector";
 import SettingsButton from "./SettingsButton";
 
 type OverviewMenuProps = {
@@ -12,9 +11,6 @@ const OverviewMenu = ({ open, toggle }: OverviewMenuProps) => (
   <Drawer anchor="top" open={open} onClose={toggle}>
     <Container>
       <List>
-        <ListItem>
-          <MapSelector />
-        </ListItem>
         <ListItem
           sx={{ justifyContent: { xs: "space-between", md: "center" } }}
         >
