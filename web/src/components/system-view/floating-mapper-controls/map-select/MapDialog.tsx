@@ -16,6 +16,7 @@ import {
   CreateMapDocument,
   FindMap,
   FindMapsDocument,
+  UpdateMapDocument,
 } from "../../../../generated/graphqlOperations";
 import ControlledTextField from "../../../controls/ControlledTextField";
 import RhfAutocomplete from "../../../controls/RhfAutocomplete";
@@ -38,6 +39,10 @@ const MapDialog = ({ edit = false }: MapDialogProps) => {
     refetchQueries: [FindMapsDocument],
   });
 
+  const [updateMap] = useMutation(UpdateMapDocument, {
+    refetchQueries: [FindMapsDocument],
+  });
+
   const { handleSubmit, control } = useForm({
     defaultValues: {
       name: map?.name || "",
@@ -47,8 +52,13 @@ const MapDialog = ({ edit = false }: MapDialogProps) => {
 
   const closeDialog = () => navigate("..");
 
-  const onSubmit: SubmitHandler<Inputs> = async (map) => {
-    await createMap({ variables: { map } });
+  const onSubmit: SubmitHandler<Inputs> = async (formData) => {
+    if (edit && map) {
+      await updateMap({ variables: { update: { ...formData, id: map.id } } });
+    } else {
+      await createMap({ variables: { map: formData } });
+    }
+
     closeDialog();
   };
 
@@ -66,7 +76,7 @@ const MapDialog = ({ edit = false }: MapDialogProps) => {
             sx={{
               display: "flex",
               flexDirection: "column",
-              gap: 2,
+              gap: 4,
               mt: 4,
               ml: "auto",
               mr: "auto",

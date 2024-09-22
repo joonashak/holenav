@@ -9,3 +9,9 @@ mutation CreateMap($map: CreateMapDto!) {
     id
   }
 }
+
+mutation UpdateMap($update: UpdateMapDto!) {
+  updateMap(update: $update) {
+    id
+  }
+}
