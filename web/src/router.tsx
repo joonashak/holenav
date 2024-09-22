@@ -25,6 +25,10 @@ const router = createBrowserRouter([
             path: "new-map",
             element: <MapDialog />,
           },
+          {
+            path: "edit-map",
+            element: <MapDialog edit />,
+          },
         ],
       },
       {

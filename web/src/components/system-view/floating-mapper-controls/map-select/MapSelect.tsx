@@ -4,6 +4,7 @@ import {
   Box,
   Button,
   Divider,
+  IconButton,
   ListItemText,
   Menu,
   MenuItem,
@@ -66,7 +67,14 @@ const MapSelect = () => {
                 {map.rootSystemName}
               </Typography>
             </ListItemText>
-            <EditIcon />
+            <IconButton
+              onClick={(event) => {
+                event.stopPropagation();
+                navigate("edit-map", { state: { map } });
+              }}
+            >
+              <EditIcon />
+            </IconButton>
           </MenuItem>
         ))}
         <Divider />

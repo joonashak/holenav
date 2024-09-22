@@ -11,9 +11,10 @@ import {
   FormGroup,
 } from "@mui/material";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   CreateMapDocument,
+  FindMap,
   FindMapsDocument,
 } from "../../../../generated/graphqlOperations";
 import ControlledTextField from "../../../controls/ControlledTextField";
@@ -24,16 +25,23 @@ type Inputs = {
   rootSystemName: string;
 };
 
-const MapDialog = () => {
+type MapDialogProps = {
+  edit?: boolean;
+};
+
+const MapDialog = ({ edit = false }: MapDialogProps) => {
   const navigate = useNavigate();
+  const loc = useLocation();
+  const map = edit ? (loc.state.map as FindMap) : undefined;
+
   const [createMap] = useMutation(CreateMapDocument, {
     refetchQueries: [FindMapsDocument],
   });
 
   const { handleSubmit, control } = useForm({
     defaultValues: {
-      name: "",
-      rootSystemName: "",
+      name: map?.name || "",
+      rootSystemName: map?.rootSystemName || "",
     },
   });
 
@@ -46,7 +54,7 @@ const MapDialog = () => {
 
   return (
     <Dialog open onClose={closeDialog}>
-      <DialogTitle>Create New Map</DialogTitle>
+      <DialogTitle>{edit ? "Edit Map" : "Create New Map"}</DialogTitle>
       <DialogContent>
         <DialogContentText color="secondary.light">
           Saved maps allow you to quickly switch between mapper views. The
