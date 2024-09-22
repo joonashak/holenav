@@ -3,6 +3,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { CreateMapDto } from "./dto/create-map.dto";
+import { UpdateMapDto } from "./dto/update-map.dto";
 import { Map, MapDocument } from "./map.model";
 
 @Injectable()
@@ -15,5 +16,12 @@ export class MapService {
 
   async findMapsForUser(user: User): Promise<Map[]> {
     return this.mapModel.find({ user });
+  }
+
+  async updateMap(map: UpdateMapDto, user: User): Promise<Map> {
+    const { id, ...update } = map;
+    return this.mapModel.findOneAndUpdate({ _id: id, user }, update, {
+      returnDocument: "after",
+    });
   }
 }
