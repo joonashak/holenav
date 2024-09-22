@@ -15,3 +15,7 @@ mutation UpdateMap($update: UpdateMapDto!) {
     id
   }
 }
+
+mutation RemoveMap($id: String!) {
+  removeMap(id: $id)
+}

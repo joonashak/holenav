@@ -1,4 +1,6 @@
+import { useMutation } from "@apollo/client";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
+import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import {
   Box,
@@ -13,11 +15,20 @@ import {
 import { grey } from "@mui/material/colors";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import {
+  FindMapsDocument,
+  RemoveMapDocument,
+} from "../../../../generated/graphqlOperations";
 import useSelectedMap from "../../../../hooks/useSelectedMap";
+import ConfirmButton from "../../../common/ConfirmButton";
 
 const MapSelect = () => {
   const navigate = useNavigate();
   const { selectedMap, setSelectedMapId, maps } = useSelectedMap();
+
+  const [removeMap] = useMutation(RemoveMapDocument, {
+    refetchQueries: [FindMapsDocument],
+  });
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -35,6 +46,10 @@ const MapSelect = () => {
 
   const openNewMapDialog = () => {
     navigate("new-map");
+  };
+
+  const handleRemove = (id: string) => async () => {
+    await removeMap({ variables: { id } });
   };
 
   return (
@@ -68,6 +83,7 @@ const MapSelect = () => {
               </Typography>
             </ListItemText>
             <IconButton
+              color="secondary"
               onClick={(event) => {
                 event.stopPropagation();
                 navigate("edit-map", { state: { map } });
@@ -75,6 +91,10 @@ const MapSelect = () => {
             >
               <EditIcon />
             </IconButton>
+            <ConfirmButton
+              icon={<DeleteIcon />}
+              onConfirm={handleRemove(map.id)}
+            />
           </MenuItem>
         ))}
         <Divider />
