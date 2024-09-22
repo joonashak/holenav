@@ -26,16 +26,6 @@ export class UserResolver {
     return acualUser;
   }
 
-  @RequireAuth()
-  @Mutation((returns) => HolenavUser)
-  async removeAlt(
-    @Args("esiId") esiId: string,
-    @CurrentUser() user: HolenavUser,
-  ): Promise<HolenavUser> {
-    await this.userService.removeAlt(esiId, user.id);
-    return this.whoami(user);
-  }
-
   @RequireSystemRole(SystemRole.MANAGER)
   @Query((returns) => [SanitizedUserForManager])
   async getAllUsersForManager(): Promise<SanitizedUserForManager[]> {

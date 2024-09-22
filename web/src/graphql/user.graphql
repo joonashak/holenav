@@ -15,11 +15,3 @@ query UserData {
     name
   }
 }
-
-mutation RemoveAlt($esiId: String!) {
-  removeAlt(esiId: $esiId) {
-    alts {
-      ...CharacterFields
-    }
-  }
-}
