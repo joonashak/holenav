@@ -1,4 +1,5 @@
-import { useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
+import DeleteIcon from "@mui/icons-material/Delete";
 import {
   Avatar,
   Box,
@@ -12,11 +13,18 @@ import {
 import { grey } from "@mui/material/colors";
 import { sortBy } from "lodash";
 import { useState } from "react";
-import { GetMyUserPreferencesDocument } from "../../../../generated/graphqlOperations";
+import {
+  GetMyUserPreferencesDocument,
+  RemoveAltDocument,
+} from "../../../../generated/graphqlOperations";
 import useSelectedCharacter from "../../../../hooks/useSelectedCharacter";
+import ConfirmButton from "../../../common/ConfirmButton";
 
 const CharacterSelect = () => {
   const { data } = useQuery(GetMyUserPreferencesDocument);
+  const [removeAlt] = useMutation(RemoveAltDocument, {
+    refetchQueries: [GetMyUserPreferencesDocument],
+  });
   const { selectedCharacter, setSelectedCharacterEveId } =
     useSelectedCharacter();
 
@@ -32,6 +40,10 @@ const CharacterSelect = () => {
   const selectCharacter = (id: number) => {
     setSelectedCharacterEveId(id);
     closeMenu();
+  };
+
+  const handleRemove = (eveId: number) => async () => {
+    await removeAlt({ variables: { eveId } });
   };
 
   if (!data || !selectedCharacter) {
@@ -77,6 +89,12 @@ const CharacterSelect = () => {
                 {char.corporation.name}
               </Typography>
             </ListItemText>
+            {char.eveId !== data.getMyUserPreferences.user.main.eveId && (
+              <ConfirmButton
+                icon={<DeleteIcon />}
+                onConfirm={handleRemove(char.eveId)}
+              />
+            )}
           </MenuItem>
         ))}
       </Menu>
