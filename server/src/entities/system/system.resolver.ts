@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { RequireAuthentication } from "@joonashak/nestjs-clone-bay";
 import { Args, Query, Resolver } from "@nestjs/graphql";
 import { FolderAction } from "../../access-control/folder/folder-role/folder-action.enum";

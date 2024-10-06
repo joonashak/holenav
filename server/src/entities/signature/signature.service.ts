@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Injectable } from "@nestjs/common";
 import { CreatableSignature } from "./dto/add-signatures.dto";
 import { UpdateableSignature } from "./dto/update-signatures.dto";
