@@ -2,7 +2,6 @@ import { omit } from "lodash";
 import { FieldValues } from "react-hook-form";
 import { Signature, SigType } from "../../../../../generated/graphqlOperations";
 import useNotification from "../../../../global-notification/useNotification";
-import useMapData from "../../../map/map-data/useMapData";
 import useSignatures from "../../../system-data/useSignatures";
 import useSystemData from "../../../system-data/useSystemData";
 
@@ -15,7 +14,6 @@ export type UseWormholeFormProps = {
 const useWormholeForm = (props: UseWormholeFormProps) => {
   const { eveId, existing, onClose } = props;
   const { name: systemName } = useSystemData();
-  const { fetchConnectionTree } = useMapData();
   const { showSuccessNotification } = useNotification();
   const { addSignatures, updateSignatures } = useSignatures();
 
@@ -44,7 +42,7 @@ const useWormholeForm = (props: UseWormholeFormProps) => {
     const res = await addSignatures([mutationData]);
 
     if (res.data && !res.errors) {
-      fetchConnectionTree();
+      // fetchConnectionTree();
       showSuccessNotification("Wormhole added.");
       onClose();
     }
@@ -87,7 +85,7 @@ const useWormholeForm = (props: UseWormholeFormProps) => {
     const res = await updateSignatures([mutationData]);
 
     if (res.data && !res.errors) {
-      fetchConnectionTree();
+      // fetchConnectionTree();
       showSuccessNotification("Wormhole updated.");
       onClose();
     }
