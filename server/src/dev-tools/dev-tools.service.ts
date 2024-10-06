@@ -5,7 +5,6 @@ import { AppData } from "../app-data/app-data.model";
 import { AppDataService } from "../app-data/app-data.service";
 import { Session } from "../auth/session/session.model";
 import { SsoSession } from "../auth/sso/sso-session/sso-session.model";
-import { ConnectionGraphService } from "../connection-graph/connection-graph.service";
 import { HolenavCharacter } from "../entities/character/character.model";
 import { Folder } from "../entities/folder/folder.model";
 import { HolenavUser } from "../user/user.model";
@@ -27,7 +26,6 @@ export class DevToolsService {
     private appDataService: AppDataService,
     private mockUserService: MockUserService,
     private mockFolderService: MockFolderService,
-    private connectionGraphService: ConnectionGraphService,
     private mockConnectionGraphService: MockConnectionGraphService,
   ) {}
 
@@ -61,6 +59,5 @@ export class DevToolsService {
     await this.userModel.deleteMany({});
     await this.sessionModel.deleteMany({});
     await this.appDataModel.deleteMany({});
-    await this.connectionGraphService.deleteAll();
   }
 }

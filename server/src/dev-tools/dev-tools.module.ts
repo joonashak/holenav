@@ -2,7 +2,6 @@ import { Module } from "@nestjs/common";
 import { SessionModule } from "../auth/session/session.module";
 import { SsoSessionModule } from "../auth/sso/sso-session/sso-session.module";
 import { ENABLE_DEVTOOLS } from "../config";
-import { ConnectionGraphModule } from "../connection-graph/connection-graph.module";
 import { CharacterModule } from "../entities/character/character.module";
 import { FolderModule } from "../entities/folder/folder.module";
 import { SignatureModule } from "../entities/signature/signature.module";
@@ -19,7 +18,6 @@ const options = {
     SignatureModule,
     SsoSessionModule,
     SessionModule,
-    ConnectionGraphModule,
   ],
   providers: [
     DevToolsService,

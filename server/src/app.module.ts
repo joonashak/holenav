@@ -20,7 +20,6 @@ import {
   SSO_CLIENT_ID,
   SSO_SECRET_KEY,
 } from "./config";
-import { ConnectionGraphModule } from "./connection-graph/connection-graph.module";
 import { DevToolsModule } from "./dev-tools/dev-tools.module";
 import { EntitiesModule } from "./entities/entities.module";
 import { EsiModule } from "./esi/esi.module";
@@ -40,7 +39,6 @@ import { UserPreferencesModule } from "./user/user-preferences/user-preferences.
     }),
     CloneBayResolversModule,
     CloneBaySsoModule,
-    ConnectionGraphModule,
     DevToolsModule,
     EntitiesModule,
     EsiModule,
