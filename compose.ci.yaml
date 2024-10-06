@@ -8,8 +8,6 @@ services:
       - NODE_ENV=test
       - PORT=3001
       - MONGO_URL=mongodb://mongo/ci
-      - NEO_URL=neo4j://neo
-      - NEO_DB=neo4j
       - CLIENT_URL=http://web:5173
       - JWT_SECRET=asdasd
       - ENABLE_DEVTOOLS=true
@@ -19,7 +17,6 @@ services:
       - SESSION_SECRET=dsqefw
     depends_on:
       - mongo
-      - neo
 
   web:
     extends:
@@ -36,14 +33,6 @@ services:
       file: compose.common.yaml
       service: mongo-base
     container_name: holenav-mongo-ci
-    networks:
-      - ci
-
-  neo:
-    extends:
-      file: compose.common.yaml
-      service: neo-test-base
-    container_name: holenav-neo-ci
     networks:
       - ci
 

@@ -65,7 +65,7 @@ jobs:
   #   steps:
   #     - uses: actions/checkout@v4
   #     - name: Build and start containers
-  #       run: docker compose -f compose.ci.yaml up -d mongo neo server web
+  #       run: docker compose -f compose.ci.yaml up -d mongo server web
   #     - name: Run E2E tests
   #       run: docker compose -f compose.ci.yaml run e2e
   #     - name: Print server logs

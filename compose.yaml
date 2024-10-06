@@ -29,13 +29,11 @@ services:
     environment:
       - NODE_ENV=development
       - MONGO_URL=mongodb://mongo/holenav
-      - NEO_URL=neo4j://neo
       - CLIENT_URL=http://localhost:3000
     env_file:
       - .env.development
     depends_on:
       - mongo
-      - neo
 
   server-test:
     extends:
@@ -47,14 +45,12 @@ services:
     environment:
       - NODE_ENV=test
       - MONGO_URL=mongodb://mongo/holenav-test
-      - NEO_URL=neo4j://neo-test
       - CLIENT_URL=http://localhost:4000
       - SSO_CLIENT_ID=asd
       - SSO_SECRET_KEY=asd
       - SSO_CALLBACK_URL=asd
     depends_on:
       - mongo
-      - neo-test
 
   mongo:
     extends:
@@ -67,21 +63,5 @@ services:
         volume:
           nocopy: true
 
-  neo:
-    extends:
-      file: compose.common.yaml
-      service: neo-base
-    volumes:
-      - type: volume
-        source: neo-data
-        target: /data
-
-  # Community edition does not allow multiple databases, so we must spin up another container for tests.
-  neo-test:
-    extends:
-      file: compose.common.yaml
-      service: neo-test-base
-
 volumes:
   mongo-data:
-  neo-data:
