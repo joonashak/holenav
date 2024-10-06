@@ -25,7 +25,6 @@ import { EntitiesModule } from "./entities/entities.module";
 import { EsiModule } from "./esi/esi.module";
 import { FrontendModule } from "./frontend/frontend.module";
 import graphQlModuleConfig from "./graphql-module-config";
-import { Neo4jModule } from "./integration/neo4j/neo4j.module";
 import { ScheduledTasksModule } from "./scheduled-tasks/scheduled-tasks.module";
 import { UserPreferencesModule } from "./user/user-preferences/user-preferences.module";
 
@@ -52,7 +51,6 @@ import { UserPreferencesModule } from "./user/user-preferences/user-preferences.
     FrontendModule,
     GraphQLModule.forRoot<ApolloDriverConfig>(graphQlModuleConfig),
     MongooseModule.forRoot(MONGO_URL),
-    Neo4jModule,
     ScheduledTasksModule,
     ScheduleModule.forRoot(),
     UserPreferencesModule,
