@@ -1,6 +1,8 @@
 import { Module } from "@nestjs/common";
 import { MongooseModule } from "@nestjs/mongoose";
 import { Connection, ConnectionSchema } from "./connection.model";
+import { ConnectionResolver } from "./connection.resolver";
+import { ConnectionService } from "./connection.service";
 
 @Module({
   imports: [
@@ -8,6 +10,7 @@ import { Connection, ConnectionSchema } from "./connection.model";
       { name: Connection.name, schema: ConnectionSchema },
     ]),
   ],
-  exports: [MongooseModule],
+  providers: [ConnectionService, ConnectionResolver],
+  exports: [MongooseModule, ConnectionService],
 })
 export class ConnectionModule {}
