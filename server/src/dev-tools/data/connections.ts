@@ -1,4 +1,4 @@
-import MassStatus from "../../entities/signature/enums/mass-status.enum";
+import MassStatus from "../../entities/connection/mass-status.enum";
 import SigType from "../../entities/signature/enums/sig-type.enum";
 
 /*

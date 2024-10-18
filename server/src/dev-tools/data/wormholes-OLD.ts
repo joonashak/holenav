@@ -1,4 +1,4 @@
-import MassStatus from "../../entities/signature/enums/mass-status.enum";
+import MassStatus from "../../entities/connection/mass-status.enum";
 
 export default [
   // Jita chain.

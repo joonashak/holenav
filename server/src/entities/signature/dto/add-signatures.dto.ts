@@ -1,5 +1,5 @@
 import { Field, InputType, OmitType } from "@nestjs/graphql";
-import MassStatus from "../enums/mass-status.enum";
+import MassStatus from "../../connection/mass-status.enum";
 import { SignatureWithoutConnection } from "../signature.model";
 
 @InputType()
