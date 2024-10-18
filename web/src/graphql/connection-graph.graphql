@@ -1,0 +1,28 @@
+query FindConnectionGraph($root: String!) {
+  findConnectionGraph(root: $root) {
+    root
+    chains {
+      id
+      from
+      to
+      type
+      k162
+      eol
+      eolAt
+      massStatus
+      reverse
+      children {
+        id
+        from
+        to
+        type
+        k162
+        eol
+        eolAt
+        massStatus
+        reverse
+        depth
+      }
+    }
+  }
+}

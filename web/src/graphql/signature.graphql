@@ -10,14 +10,6 @@ fragment SignatureFields on Signature {
     eol
     eolAt
     massStatus
-    reverseSignature {
-      id
-      name
-      type
-      eveId
-      systemName
-      wormholeType
-    }
   }
 }
 
