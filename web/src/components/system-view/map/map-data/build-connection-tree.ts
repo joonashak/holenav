@@ -1,14 +1,23 @@
+import { sortBy } from "lodash";
 import { RawNodeDatum } from "react-d3-tree";
 import {
   FindConnectionGraphQuery,
   GraphConnection,
 } from "../../../../generated/graphqlOperations";
 
+let visitedSystems: string[] = [];
+
 /** Recursive factory to build tree from flat connection node list. */
 const findChildren = (
   start: GraphConnection,
   connections: GraphConnection[],
 ): RawNodeDatum => {
+  visitedSystems.push(start.from || "");
+  const loop = visitedSystems.includes(start.to || "");
+
+  if (loop) {
+    console.log("loop");
+  }
   // Remove reverse connection to prevent traversing backwards through it.
   const connectionsWithoutReverse = connections.filter(
     (conn) => conn.id !== start.reverse,
@@ -18,7 +27,7 @@ const findChildren = (
     (conn) => start.to && conn.from === start.to,
   );
 
-  if (directChildren.length === 0) {
+  if (directChildren.length === 0 || loop) {
     return {
       name: start.to || "",
       children: [],
@@ -44,11 +53,17 @@ const buildConnectionTree = (
 
   const { chains } = data.findConnectionGraph;
   // FIXME: Cleaner way to pass the nodes from backend...
-  const connections = chains.length ? chains[0].children : [];
+  /**
+   * Children may be sorted differently for rendering but when building the tree
+   * the original child list should probably be sorted by ID to keep the tree
+   * stable (especially when there are loops).
+   */
+  const connections = chains.length ? sortBy(chains[0].children, "id") : [];
 
   const chainRoots = connections.filter((conn) => conn.from === from);
 
-  // TODO: Sort children at all levels.
+  visitedSystems = [];
+
   return {
     name: from,
     children: chainRoots.map((chainRoot) =>
