@@ -2,7 +2,7 @@ import { findOneSystem } from "@eve-data/systems";
 import { System } from "@eve-data/systems/lib/src/api/system.type";
 import { Box } from "@mui/material";
 import { CustomNodeElementProps } from "react-d3-tree";
-import useUserData from "../../../user-data/useUserData";
+import useSelectedMap from "../../../../hooks/useSelectedMap";
 import useSystemData from "../../system-data/useSystemData";
 import { MapNodeDatum } from "../map-data/types";
 import ConnectionName from "./ConnectionName";
@@ -15,15 +15,13 @@ export type MapNodeProps = CustomNodeElementProps & {
 };
 
 const MapNode = ({ nodeDatum }: MapNodeProps) => {
-  const { settings } = useUserData();
+  const { selectedMap } = useSelectedMap();
   const { wormhole } = nodeDatum;
   const { name: selectedSystemName } = useSystemData();
 
   const name = nodeDatum?.name || "";
   const type = wormhole?.wormholeType || "";
   const destinationName = wormhole?.destinationName || "";
-
-  const { selectedMap } = settings;
 
   if (!selectedMap) {
     return null;
