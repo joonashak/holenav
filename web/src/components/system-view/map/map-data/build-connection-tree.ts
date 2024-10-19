@@ -15,8 +15,7 @@ const findChildren = (
   );
 
   const directChildren = connectionsWithoutReverse.filter(
-    //FIXME: This will probably break for unknown destinations.
-    (conn) => conn.from === start.to,
+    (conn) => start.to && conn.from === start.to,
   );
 
   if (directChildren.length === 0) {

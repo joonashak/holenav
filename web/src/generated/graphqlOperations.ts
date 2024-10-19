@@ -62,7 +62,7 @@ export type ChainRoot = {
   children: Array<GraphConnection>;
   eol: Scalars['Boolean']['output'];
   eolAt?: Maybe<Scalars['DateTime']['output']>;
-  from: Scalars['String']['output'];
+  from?: Maybe<Scalars['String']['output']>;
   id: Scalars['String']['output'];
   k162: Scalars['Boolean']['output'];
   massStatus: MassStatus;
@@ -83,7 +83,7 @@ export type Connection = {
   __typename?: 'Connection';
   eol: Scalars['Boolean']['output'];
   eolAt?: Maybe<Scalars['DateTime']['output']>;
-  from: Scalars['String']['output'];
+  from?: Maybe<Scalars['String']['output']>;
   id: Scalars['String']['output'];
   k162: Scalars['Boolean']['output'];
   massStatus: MassStatus;
@@ -210,7 +210,7 @@ export type GraphConnection = {
   depth: Scalars['Float']['output'];
   eol: Scalars['Boolean']['output'];
   eolAt?: Maybe<Scalars['DateTime']['output']>;
-  from: Scalars['String']['output'];
+  from?: Maybe<Scalars['String']['output']>;
   id: Scalars['String']['output'];
   k162: Scalars['Boolean']['output'];
   massStatus: MassStatus;
@@ -589,7 +589,7 @@ export type FindConnectionGraphQueryVariables = Exact<{
 }>;
 
 
-export type FindConnectionGraphQuery = { __typename?: 'Query', findConnectionGraph: { __typename?: 'FindConnectionGraph', root: string, chains: Array<{ __typename?: 'ChainRoot', id: string, from: string, to?: string | null, type?: string | null, k162: boolean, eol: boolean, eolAt?: any | null, massStatus: MassStatus, reverse: string, children: Array<{ __typename?: 'GraphConnection', id: string, from: string, to?: string | null, type?: string | null, k162: boolean, eol: boolean, eolAt?: any | null, massStatus: MassStatus, reverse: string, depth: number }> }> } };
+export type FindConnectionGraphQuery = { __typename?: 'Query', findConnectionGraph: { __typename?: 'FindConnectionGraph', root: string, chains: Array<{ __typename?: 'ChainRoot', id: string, from?: string | null, to?: string | null, type?: string | null, k162: boolean, eol: boolean, eolAt?: any | null, massStatus: MassStatus, reverse: string, children: Array<{ __typename?: 'GraphConnection', id: string, from?: string | null, to?: string | null, type?: string | null, k162: boolean, eol: boolean, eolAt?: any | null, massStatus: MassStatus, reverse: string, depth: number }> }> } };
 
 export type UserFieldsForManagerFragment = { __typename?: 'SanitizedUserForManager', id: string, systemRole: SystemRoles, main: { __typename?: 'HolenavCharacter', esiId: string, name: string, portraitUrl: string, isMain: boolean, corporation: { __typename?: 'HolenavCorporation', esiId: string, name: string, ticker: string }, alliance?: { __typename?: 'HolenavAlliance', esiId: string, name: string, ticker: string } | null } };
 

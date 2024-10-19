@@ -11,7 +11,7 @@ export class Connection {
   @Field()
   id: string;
 
-  @Field()
+  @Field({ nullable: true })
   @Prop({ index: true })
   from: string;
 
