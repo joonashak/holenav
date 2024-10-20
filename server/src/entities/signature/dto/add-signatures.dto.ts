@@ -1,42 +1,21 @@
-import { Field, InputType, OmitType } from "@nestjs/graphql";
-import MassStatus from "../../connection/mass-status.enum";
-import { SignatureWithoutConnection } from "../signature.model";
+import { Field, InputType } from "@nestjs/graphql";
+import { CreateConnection } from "../../connection/dto/create-connection.dto";
+import SigType from "../enums/sig-type.enum";
 
 @InputType()
-class SignatureWithoutConnectionInput extends SignatureWithoutConnection {}
-
-@InputType()
-export class CreatableSignatureWithoutConnection extends OmitType(
-  SignatureWithoutConnectionInput,
-  ["id"],
-) {
-  @Field({ nullable: true })
-  id?: string;
-}
-
-@InputType()
-export class ConnectionInput {
+export class CreateSignature {
   @Field()
-  eol: boolean;
+  eveId: string;
 
-  @Field((type) => Date, { nullable: true })
-  eolAt?: Date;
+  @Field(() => SigType)
+  type: SigType;
 
-  @Field((type) => MassStatus)
-  massStatus: MassStatus;
+  @Field()
+  name: string;
 
-  @Field((type) => CreatableSignatureWithoutConnection)
-  reverseSignature: CreatableSignatureWithoutConnection;
-}
+  @Field()
+  systemName: string;
 
-@InputType()
-export class AddSignaturesInput {
-  @Field((type) => [CreatableSignature])
-  signatures: CreatableSignature[];
-}
-
-@InputType()
-export class CreatableSignature extends CreatableSignatureWithoutConnection {
-  @Field((type) => ConnectionInput, { nullable: true })
-  connection?: ConnectionInput;
+  @Field(() => CreateConnection, { nullable: true })
+  connection: CreateConnection | null;
 }

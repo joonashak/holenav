@@ -1,7 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Injectable } from "@nestjs/common";
-import { CreatableSignature } from "./dto/add-signatures.dto";
-import { UpdateableSignature } from "./dto/update-signatures.dto";
 import { Signature } from "./signature.model";
 
 @Injectable()
@@ -16,14 +14,14 @@ export class SignatureService {
   }
 
   async createSignatures(
-    signatures: CreatableSignature[],
+    signatures: unknown[],
     folderId: string,
   ): Promise<Signature[]> {
     return [];
   }
 
   async updateSignatures(
-    sigUpdates: UpdateableSignature[],
+    sigUpdates: unknown[],
     folderId: string,
   ): Promise<Signature[]> {
     return [];

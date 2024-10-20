@@ -1,39 +1,53 @@
 import { Field, ObjectType, registerEnumType } from "@nestjs/graphql";
+import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
+import mongoose, { Document } from "mongoose";
 import { Connection } from "../connection/connection.model";
 import SigType from "./enums/sig-type.enum";
 
 registerEnumType(SigType, { name: "SigType" });
 
-// FIXME: This is probably not right and should be refactored.
-// This split is done because a reference to another @InputType class with
-// duplicate field names breaks the GraphQL type system.
 @ObjectType()
-export class SignatureWithoutConnection {
+@Schema({ timestamps: true })
+export class Signature {
   @Field()
   id: string;
 
   @Field()
+  @Prop()
   eveId: string;
 
-  @Field((type) => SigType)
+  @Field(() => SigType)
+  @Prop()
   type: SigType;
 
-  // FIXME: Remove.
-  @Field({ nullable: true })
-  wormholeType?: string;
-
   @Field()
+  @Prop()
   name: string;
 
   @Field()
+  @Prop()
   systemName: string;
 
-  @Field((type) => Date, { nullable: true })
-  createdAt?: Date;
+  @Field(() => Connection, { nullable: true })
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: Connection.name })
+  connection: Connection | null;
+
+  @Field(() => Date)
+  @Prop({ default: Date.now })
+  createdAt: Date;
+
+  @Field()
+  @Prop()
+  createdBy: string;
+
+  @Field(() => Date)
+  @Prop({ default: Date.now })
+  updatedAt: Date;
+
+  @Field()
+  @Prop()
+  updatedBy: string;
 }
 
-@ObjectType()
-export class Signature extends SignatureWithoutConnection {
-  @Field((type) => Connection, { nullable: true })
-  connection?: Connection;
-}
+export const SignatureSchema = SchemaFactory.createForClass(Signature);
+export type SignatureDocument = Signature & Document;

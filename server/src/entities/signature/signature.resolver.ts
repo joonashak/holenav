@@ -2,13 +2,11 @@ import { RequireAuthentication } from "@joonashak/nestjs-clone-bay";
 import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
 import { FolderAction } from "../../access-control/folder/folder-role/folder-action.enum";
 import { RequireFolderAccess } from "../../access-control/folder/require-folder-access.decorator";
-import { AddSignaturesInput } from "./dto/add-signatures.dto";
-import { DeleteSignaturesInput } from "./dto/delete-signatures.dto";
+import { CreateSignature } from "./dto/add-signatures.dto";
 import {
   SignaturePaste,
   SignaturePasteResult,
 } from "./dto/paste-signatures.dto";
-import { UpdateSignaturesInput } from "./dto/update-signatures.dto";
 import { SignaturePasteService } from "./signature-paste.service";
 import { Signature } from "./signature.model";
 import { SignatureService } from "./signature.service";
@@ -21,6 +19,16 @@ export class SignatureResolver {
     private sigPasteService: SignaturePasteService,
   ) {}
 
+  @RequireAuthentication()
+  @Mutation(() => [Signature])
+  async createSignatures(
+    @Args({ name: "signatures", type: () => [CreateSignature] })
+    signatures: CreateSignature[],
+  ): Promise<Signature[]> {
+    console.log(signatures);
+    return [];
+  }
+
   @RequireFolderAccess(FolderAction.Read)
   @Query(() => [Signature])
   async getSignaturesBySystem(
@@ -28,43 +36,6 @@ export class SignatureResolver {
     @Args("folderId") folderId: string,
   ): Promise<Signature[]> {
     const signatures = await this.sigService.getBySystem(systemName, folderId);
-    return signatures;
-  }
-
-  @RequireFolderAccess(FolderAction.Write)
-  @Mutation(() => [Signature])
-  async addSignatures(
-    @Args("input") input: AddSignaturesInput,
-    @Args("folderId") folderId: string,
-  ): Promise<Signature[]> {
-    const signatures = await this.sigService.createSignatures(
-      input.signatures,
-      folderId,
-    );
-    return signatures;
-  }
-
-  @RequireFolderAccess(FolderAction.Write)
-  @Mutation(() => [Signature])
-  async updateSignatures(
-    @Args("input") input: UpdateSignaturesInput,
-    @Args("folderId") folderId: string,
-  ): Promise<Signature[]> {
-    const signatures = await this.sigService.updateSignatures(
-      input.signatures,
-      folderId,
-    );
-    return signatures;
-  }
-
-  @RequireFolderAccess(FolderAction.Write)
-  @Mutation(() => [Signature])
-  async deleteSignatures(
-    @Args("input") input: DeleteSignaturesInput,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    @Args("folderId") _folderId: string,
-  ): Promise<Signature[]> {
-    const signatures = await this.sigService.deleteSignatures(input.ids);
     return signatures;
   }
 

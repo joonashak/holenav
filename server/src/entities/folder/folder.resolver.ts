@@ -1,4 +1,4 @@
-import { UserId } from "@joonashak/nestjs-clone-bay";
+import { RequireAuthentication, UserId } from "@joonashak/nestjs-clone-bay";
 import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
 import { FolderAction } from "../../access-control/folder/folder-role/folder-action.enum";
 import { RequireSystemRole } from "../../auth/decorators/role.decorator";
@@ -28,7 +28,8 @@ export class FolderResolver {
     );
   }
 
-  @RequireSystemRole(SystemRole.MANAGER)
+  // @RequireSystemRole(SystemRole.MANAGER)
+  @RequireAuthentication()
   @Mutation(() => Folder)
   async createFolder(
     @Args("name") name: string,
