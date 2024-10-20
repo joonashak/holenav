@@ -33,7 +33,7 @@ export class SignatureResolver {
     @UserId() userId: string,
   ): Promise<Signature[]> {
     const user = await this.userService.findById(userId);
-    return this.signatureService.createSignatures(signatures, user);
+    return this.signatureService.createSignatures(signatures, folderId, user);
   }
 
   @RequireFolderAccess(FolderAction.Read)

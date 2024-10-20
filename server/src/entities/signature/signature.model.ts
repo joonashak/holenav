@@ -2,6 +2,7 @@ import { Field, ObjectType, registerEnumType } from "@nestjs/graphql";
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import mongoose, { Document } from "mongoose";
 import { Connection } from "../connection/connection.model";
+import { Folder } from "../folder/folder.model";
 import SigType from "./enums/sig-type.enum";
 
 registerEnumType(SigType, { name: "SigType" });
@@ -31,6 +32,15 @@ export class Signature {
   @Field(() => Connection, { nullable: true })
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: Connection.name })
   connection: Connection | null;
+
+  @Field(() => Folder)
+  @Prop({
+    type: mongoose.Schema.Types.ObjectId,
+    ref: Folder.name,
+    index: true,
+    required: true,
+  })
+  folder: Folder;
 
   @Field(() => Date)
   @Prop({ default: Date.now })

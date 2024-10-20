@@ -23,7 +23,8 @@ export class SignaturePasteService {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const addableSigs = this.getAddableSigs(paste, existingSigs);
     // FIXME:
-    const added = await this.signatureService.createSignatures([]);
+    // const added = await this.signatureService.createSignatures([]);
+    const added = [];
 
     const updateableSigs = this.getUpdateableSigs(paste, existingSigs);
     const updated = await this.signatureService.updateSignatures(

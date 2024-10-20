@@ -4,6 +4,8 @@ import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { ConnectionService } from "../connection/connection.service";
+import { Folder } from "../folder/folder.model";
+import { FolderService } from "../folder/folder.service";
 import { CreateSignature } from "./dto/add-signatures.dto";
 import SigType from "./enums/sig-type.enum";
 import { Signature } from "./signature.model";
@@ -13,6 +15,7 @@ export class SignatureService {
   constructor(
     @InjectModel(Signature.name) private signatureModel: Model<Signature>,
     private connectionService: ConnectionService,
+    private folderService: FolderService,
   ) {}
 
   async getBySystem(
@@ -31,6 +34,7 @@ export class SignatureService {
    */
   async createSignature(
     signature: CreateSignature,
+    folder: Folder,
     user?: User,
   ): Promise<Signature> {
     // Create new connection for wormholes.
@@ -41,6 +45,7 @@ export class SignatureService {
 
     const created = await this.signatureModel.create({
       ...signature,
+      folder,
       connection,
       createdBy: user?.main.name || "",
     });
@@ -50,10 +55,12 @@ export class SignatureService {
 
   async createSignatures(
     signatures: CreateSignature[],
+    folderId: string,
     user?: User,
   ): Promise<Signature[]> {
+    const folder = await this.folderService.getFolderById(folderId);
     return Promise.all(
-      signatures.map((sig) => this.createSignature(sig, user)),
+      signatures.map((sig) => this.createSignature(sig, folder, user)),
     );
   }
 
