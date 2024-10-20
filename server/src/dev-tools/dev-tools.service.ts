@@ -1,13 +1,8 @@
 import { Injectable } from "@nestjs/common";
-import { InjectModel } from "@nestjs/mongoose";
-import { Model } from "mongoose";
-import { AppData } from "../app-data/app-data.model";
+import { InjectConnection, InjectModel } from "@nestjs/mongoose";
+import { Connection } from "mongoose";
 import { AppDataService } from "../app-data/app-data.service";
-import { Session } from "../auth/session/session.model";
-import { SsoSession } from "../auth/sso/sso-session/sso-session.model";
 import { HolenavCharacter } from "../entities/character/character.model";
-import { Folder } from "../entities/folder/folder.model";
-import { HolenavUser } from "../user/user.model";
 import users from "./data/users";
 import { MockConnectionGraphService } from "./mock-data-services/mock-connection-graph.service";
 import { MockFolderService } from "./mock-data-services/mock-folder.service";
@@ -16,30 +11,22 @@ import { MockUserService } from "./mock-data-services/mock-user.service";
 @Injectable()
 export class DevToolsService {
   constructor(
+    @InjectConnection() private dbConnection: Connection,
     @InjectModel(HolenavCharacter.name)
-    private characterModel: Model<HolenavCharacter>,
-    @InjectModel(Folder.name) private folderModel: Model<Folder>,
-    @InjectModel(SsoSession.name) private ssoSessionModel: Model<SsoSession>,
-    @InjectModel(HolenavUser.name) private userModel: Model<HolenavUser>,
-    @InjectModel(Session.name) private sessionModel: Model<Session>,
-    @InjectModel(AppData.name) private appDataModel: Model<AppData>,
     private appDataService: AppDataService,
     private mockUserService: MockUserService,
     private mockFolderService: MockFolderService,
     private mockConnectionGraphService: MockConnectionGraphService,
   ) {}
 
-  /** Clear collections and run data migrations. */
+  /** Clear entire database. */
   async resetDatabase() {
-    await this.clearCollections();
-
-    await this.mockFolderService.mock();
-    await this.mockUserService.mock();
+    await this.dropAllCollections();
   }
 
   /** Clear database and seed it with mock data. */
   async seedDatabase() {
-    await this.clearCollections();
+    await this.dropAllCollections();
 
     await this.appDataService.initialize();
     await this.mockFolderService.mock();
@@ -52,12 +39,13 @@ export class DevToolsService {
     return users.map(({ id, main: { name } }) => ({ id, name }));
   }
 
-  private async clearCollections() {
-    await this.characterModel.deleteMany({});
-    await this.folderModel.deleteMany({});
-    await this.ssoSessionModel.deleteMany({});
-    await this.userModel.deleteMany({});
-    await this.sessionModel.deleteMany({});
-    await this.appDataModel.deleteMany({});
+  private async dropAllCollections() {
+    const collections = await this.dbConnection.listCollections();
+    await Promise.all(
+      collections
+        // If `dynamic-config` is dropped, the server needs to be restarted.
+        .filter((collection) => collection.name !== "dynamic-config")
+        .map((collection) => this.dbConnection.dropCollection(collection.name)),
+    );
   }
 }
