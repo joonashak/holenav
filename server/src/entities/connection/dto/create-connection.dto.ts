@@ -7,7 +7,7 @@ export class CreateConnection {
   from: string;
 
   @Field({ nullable: true })
-  to: string;
+  to: string | null;
 
   @Field({ nullable: true })
   type: string;

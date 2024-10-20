@@ -11,13 +11,23 @@ export class Connection {
   @Field()
   id: string;
 
-  @Field({ nullable: true })
+  @Field()
   @Prop({ index: true })
   from: string;
 
-  @Field({ nullable: true })
+  @Field()
   @Prop()
   to: string;
+
+  /**
+   * Indicates unknown destination.
+   *
+   * This is a convenience flag to make working with unknown connections easier
+   * and basically just tells if either `from` or `to` is unknown (UUID).
+   */
+  @Field()
+  @Prop()
+  unknown: boolean;
 
   /**
    * Connection's inherent type.

@@ -5,6 +5,7 @@ query FindConnectionGraph($root: String!) {
       id
       from
       to
+      unknown
       type
       k162
       eol
@@ -15,6 +16,7 @@ query FindConnectionGraph($root: String!) {
         id
         from
         to
+        unknown
         type
         k162
         eol

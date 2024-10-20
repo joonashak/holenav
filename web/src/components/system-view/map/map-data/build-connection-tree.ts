@@ -12,8 +12,8 @@ const findChildren = (
   start: GraphConnection,
   connections: GraphConnection[],
 ): RawNodeDatum => {
-  visitedSystems.push(start.from || "");
-  const loop = visitedSystems.includes(start.to || "");
+  visitedSystems.push(start.from);
+  const loop = visitedSystems.includes(start.to);
 
   if (loop) {
     console.log("loop");
@@ -24,18 +24,18 @@ const findChildren = (
   );
 
   const directChildren = connectionsWithoutReverse.filter(
-    (conn) => start.to && conn.from === start.to,
+    (conn) => conn.from === start.to,
   );
 
   if (directChildren.length === 0 || loop) {
     return {
-      name: start.to || "",
+      name: start.to,
       children: [],
     };
   }
 
   return {
-    name: start.to || "",
+    name: start.to,
     children: directChildren.map((conn) =>
       findChildren(conn, connectionsWithoutReverse),
     ),
