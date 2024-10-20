@@ -4,7 +4,6 @@ import { Connection } from "mongoose";
 import { AppDataService } from "../app-data/app-data.service";
 import { HolenavCharacter } from "../entities/character/character.model";
 import users from "./data/users";
-import { MockConnectionGraphService } from "./mock-data-services/mock-connection-graph.service";
 import { MockFolderService } from "./mock-data-services/mock-folder.service";
 import { MockUserService } from "./mock-data-services/mock-user.service";
 
@@ -16,7 +15,6 @@ export class DevToolsService {
     private appDataService: AppDataService,
     private mockUserService: MockUserService,
     private mockFolderService: MockFolderService,
-    private mockConnectionGraphService: MockConnectionGraphService,
   ) {}
 
   /** Clear entire database. */
@@ -31,7 +29,6 @@ export class DevToolsService {
     await this.appDataService.initialize();
     await this.mockFolderService.mock();
     await this.mockUserService.mock();
-    await this.mockConnectionGraphService.mock();
   }
 
   async getMockUsers() {

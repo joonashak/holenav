@@ -1,10 +1,16 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import { User } from "@joonashak/nestjs-clone-bay";
 import { Injectable } from "@nestjs/common";
+import { InjectModel } from "@nestjs/mongoose";
+import { Model } from "mongoose";
+import { CreateSignature } from "./dto/add-signatures.dto";
 import { Signature } from "./signature.model";
 
 @Injectable()
 export class SignatureService {
-  constructor() {}
+  constructor(
+    @InjectModel(Signature.name) private signatureModel: Model<Signature>,
+  ) {}
 
   async getBySystem(
     systemName: string,
@@ -13,11 +19,25 @@ export class SignatureService {
     return [];
   }
 
+  async createSignature(
+    signature: CreateSignature,
+    user?: User,
+  ): Promise<Signature> {
+    const created = await this.signatureModel.create({
+      ...signature,
+      connection: null,
+      createdBy: user?.main.name || "",
+    });
+    return created;
+  }
+
   async createSignatures(
-    signatures: unknown[],
-    folderId: string,
+    signatures: CreateSignature[],
+    user?: User,
   ): Promise<Signature[]> {
-    return [];
+    return Promise.all(
+      signatures.map((sig) => this.createSignature(sig, user)),
+    );
   }
 
   async updateSignatures(

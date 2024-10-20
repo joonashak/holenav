@@ -1,4 +1,8 @@
-import { RequireAuthentication } from "@joonashak/nestjs-clone-bay";
+import {
+  CloneBayUserService,
+  RequireAuthentication,
+  UserId,
+} from "@joonashak/nestjs-clone-bay";
 import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
 import { FolderAction } from "../../access-control/folder/folder-role/folder-action.enum";
 import { RequireFolderAccess } from "../../access-control/folder/require-folder-access.decorator";
@@ -15,8 +19,9 @@ import { SignatureService } from "./signature.service";
 @Resolver()
 export class SignatureResolver {
   constructor(
-    private sigService: SignatureService,
+    private signatureService: SignatureService,
     private sigPasteService: SignaturePasteService,
+    private userService: CloneBayUserService,
   ) {}
 
   @RequireAuthentication()
@@ -24,9 +29,10 @@ export class SignatureResolver {
   async createSignatures(
     @Args({ name: "signatures", type: () => [CreateSignature] })
     signatures: CreateSignature[],
+    @UserId() userId: string,
   ): Promise<Signature[]> {
-    console.log(signatures);
-    return [];
+    const user = await this.userService.findById(userId);
+    return this.signatureService.createSignatures(signatures, user);
   }
 
   @RequireFolderAccess(FolderAction.Read)
@@ -35,7 +41,10 @@ export class SignatureResolver {
     @Args("systemName") systemName: string,
     @Args("folderId") folderId: string,
   ): Promise<Signature[]> {
-    const signatures = await this.sigService.getBySystem(systemName, folderId);
+    const signatures = await this.signatureService.getBySystem(
+      systemName,
+      folderId,
+    );
     return signatures;
   }
 

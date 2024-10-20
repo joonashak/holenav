@@ -7,7 +7,6 @@ import { FolderModule } from "../entities/folder/folder.module";
 import { SignatureModule } from "../entities/signature/signature.module";
 import { DevToolsController } from "./dev-tools.controller";
 import { DevToolsService } from "./dev-tools.service";
-import { MockConnectionGraphService } from "./mock-data-services/mock-connection-graph.service";
 import { MockFolderService } from "./mock-data-services/mock-folder.service";
 import { MockUserService } from "./mock-data-services/mock-user.service";
 
@@ -19,12 +18,7 @@ const options = {
     SsoSessionModule,
     SessionModule,
   ],
-  providers: [
-    DevToolsService,
-    MockUserService,
-    MockFolderService,
-    MockConnectionGraphService,
-  ],
+  providers: [DevToolsService, MockUserService, MockFolderService],
   controllers: [DevToolsController],
 };
 

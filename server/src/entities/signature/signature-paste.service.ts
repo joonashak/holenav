@@ -20,11 +20,10 @@ export class SignaturePasteService {
       folderId,
     );
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const addableSigs = this.getAddableSigs(paste, existingSigs);
-    const added = await this.signatureService.createSignatures(
-      addableSigs,
-      folderId,
-    );
+    // FIXME:
+    const added = await this.signatureService.createSignatures([]);
 
     const updateableSigs = this.getUpdateableSigs(paste, existingSigs);
     const updated = await this.signatureService.updateSignatures(

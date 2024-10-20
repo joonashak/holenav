@@ -7,25 +7,25 @@ import SigType from "./enums/sig-type.enum";
 registerEnumType(SigType, { name: "SigType" });
 
 @ObjectType()
-@Schema({ timestamps: true })
+@Schema({ timestamps: true, validateBeforeSave: true })
 export class Signature {
   @Field()
   id: string;
 
   @Field()
-  @Prop()
+  @Prop({ required: true })
   eveId: string;
 
   @Field(() => SigType)
-  @Prop()
+  @Prop({ required: true })
   type: SigType;
 
   @Field()
-  @Prop()
+  @Prop({ required: true })
   name: string;
 
   @Field()
-  @Prop()
+  @Prop({ required: true })
   systemName: string;
 
   @Field(() => Connection, { nullable: true })
@@ -36,7 +36,7 @@ export class Signature {
   @Prop({ default: Date.now })
   createdAt: Date;
 
-  @Field()
+  @Field({ defaultValue: "" })
   @Prop()
   createdBy: string;
 
@@ -44,7 +44,7 @@ export class Signature {
   @Prop({ default: Date.now })
   updatedAt: Date;
 
-  @Field()
+  @Field({ defaultValue: "" })
   @Prop()
   updatedBy: string;
 }
