@@ -18,6 +18,7 @@ const findChildren = (
   if (loop) {
     console.log("loop");
   }
+
   // Remove reverse connection to prevent traversing backwards through it.
   const connectionsWithoutReverse = connections.filter(
     (conn) => conn.id !== start.reverse,
@@ -47,18 +48,16 @@ const buildConnectionTree = (
   from: string,
   data: FindConnectionGraphQuery | undefined,
 ) => {
-  if (!data || data.findConnectionGraph.chains.length === 0) {
+  if (!data || data.findConnectionGraph.connections.length === 0) {
     return { name: from, children: [] };
   }
 
-  const { chains } = data.findConnectionGraph;
-  // FIXME: Cleaner way to pass the nodes from backend...
   /**
    * Children may be sorted differently for rendering but when building the tree
    * the original child list should probably be sorted by ID to keep the tree
    * stable (especially when there are loops).
    */
-  const connections = chains.length ? sortBy(chains[0].children, "id") : [];
+  const connections = sortBy(data.findConnectionGraph.connections, "id");
 
   const chainRoots = connections.filter((conn) => conn.from === from);
 

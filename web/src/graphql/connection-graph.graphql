@@ -1,7 +1,7 @@
 query FindConnectionGraph($root: String!) {
   findConnectionGraph(root: $root) {
     root
-    chains {
+    connections {
       id
       from
       to
@@ -12,19 +12,7 @@ query FindConnectionGraph($root: String!) {
       eolAt
       massStatus
       reverse
-      children {
-        id
-        from
-        to
-        unknown
-        type
-        k162
-        eol
-        eolAt
-        massStatus
-        reverse
-        depth
-      }
+      depth
     }
   }
 }

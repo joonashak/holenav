@@ -26,10 +26,13 @@ export class ConnectionGraphService {
       },
     ]);
 
+    const connections = chains.length
+      ? chains[0].children.map((conn) => ({ ...conn, id: conn._id }))
+      : [];
+
     return {
       root,
-      // TODO: All children are repeated in each chain. Filter or return only one list of children?
-      chains: chains.map(this.addIdsToChain),
+      connections,
     };
   }
 
