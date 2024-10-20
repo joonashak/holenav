@@ -24,11 +24,12 @@ export class SignatureResolver {
     private userService: CloneBayUserService,
   ) {}
 
-  @RequireAuthentication()
+  @RequireFolderAccess(FolderAction.Write)
   @Mutation(() => [Signature])
   async createSignatures(
     @Args({ name: "signatures", type: () => [CreateSignature] })
     signatures: CreateSignature[],
+    @Args("folderId") folderId: string,
     @UserId() userId: string,
   ): Promise<Signature[]> {
     const user = await this.userService.findById(userId);
