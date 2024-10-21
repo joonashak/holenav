@@ -4,7 +4,6 @@ import { FolderAccessControlModule } from "../../access-control/folder/folder-ac
 import { UserModule } from "../../user/user.module";
 import { UserService } from "../../user/user.service";
 import { CharacterModule } from "../character/character.module";
-import { ActiveFolderService } from "./active-folder.service";
 import { Folder, FolderSchema } from "./folder.model";
 import { FolderResolver } from "./folder.resolver";
 import { FolderService } from "./folder.service";
@@ -17,7 +16,7 @@ import { FolderService } from "./folder.service";
     UserModule,
     FolderAccessControlModule,
   ],
-  exports: [MongooseModule, FolderService, ActiveFolderService],
-  providers: [FolderService, FolderResolver, UserService, ActiveFolderService],
+  exports: [MongooseModule, FolderService],
+  providers: [FolderService, FolderResolver, UserService],
 })
 export class FolderModule {}
