@@ -4,7 +4,6 @@ fragment SignatureFields on Signature {
   type
   eveId
   systemName
-  wormholeType
   createdAt
   connection {
     eol
@@ -30,21 +29,12 @@ query GetSignatures($systemName: String!, $folderId: String!) {
   }
 }
 
-mutation AddSignatures($input: AddSignaturesInput!, $folderId: String!) {
-  addSignatures(input: $input, folderId: $folderId) {
-    ...SignatureFields
-  }
-}
-
-mutation UpdateSignatures($input: UpdateSignaturesInput!, $folderId: String!) {
-  updateSignatures(input: $input, folderId: $folderId) {
-    ...SignatureFields
-  }
-}
-
-mutation DeleteSignatures($input: DeleteSignaturesInput!, $folderId: String!) {
-  deleteSignatures(input: $input, folderId: $folderId) {
-    ...SignatureFields
+mutation CreateSignatures(
+  $signatures: [CreateSignature!]!
+  $folderId: String!
+) {
+  createSignatures(signatures: $signatures, folderId: $folderId) {
+    id
   }
 }
 
