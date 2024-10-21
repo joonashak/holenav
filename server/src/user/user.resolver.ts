@@ -1,5 +1,4 @@
 import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
-import RequireAuth from "../auth/decorators/auth.decorator";
 import { RequireSystemRole } from "../auth/decorators/role.decorator";
 import { CurrentUser } from "../auth/decorators/user.decorator";
 import AssignSystemRoleInput from "./dto/assign-system-role.dto";
@@ -16,15 +15,6 @@ export class UserResolver {
     private userService: UserService,
     private userRoleService: UserRoleService,
   ) {}
-
-  @RequireAuth()
-  @Query((returns) => HolenavUser)
-  async whoami(@CurrentUser() user: HolenavUser) {
-    // ^ The name is all lowercase intentionally.. ;)
-    // Don't return the decorator's User object to avoid leaking sensitive data.
-    const acualUser = await this.userService.findById(user.id);
-    return acualUser;
-  }
 
   @RequireSystemRole(SystemRole.MANAGER)
   @Query((returns) => [SanitizedUserForManager])

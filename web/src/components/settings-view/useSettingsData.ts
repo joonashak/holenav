@@ -16,10 +16,10 @@ import {
 } from "../../generated/graphqlOperations";
 import { atLeastManager } from "../../utils/compareSystemRoles";
 import useNotification from "../global-notification/useNotification";
-import useUserData from "../user-data/useUserData";
 
 const useSettingsData = () => {
-  const { systemRole } = useUserData();
+  // const { systemRole } = useUserData();
+  const systemRole = SystemRoles.Manager;
   const { showSuccessNotification, showErrorNotification } = useNotification();
 
   const { data: settingsData }: any = useQuery(SettingsDataDocument);

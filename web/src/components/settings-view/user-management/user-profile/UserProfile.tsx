@@ -6,11 +6,7 @@ import {
   CardMedia,
   Typography,
 } from "@mui/material";
-import SystemRoleGuard from "../../../../auth/SystemRoleGuard";
-import {
-  HolenavUser,
-  SystemRoles,
-} from "../../../../generated/graphqlOperations";
+import { HolenavUser } from "../../../../generated/graphqlOperations";
 import SystemRoleWidget from "./SystemRoleWidget";
 
 type UserProfileProps = {
@@ -37,16 +33,7 @@ const UserProfile = ({ user }: UserProfileProps) => (
           {user.main.alliance &&
             ` / ${user.main.alliance.name} [${user.main.alliance.ticker}]`}
         </Typography>
-        <SystemRoleGuard
-          showTo={[SystemRoles.Administrator]}
-          defaultComponent={
-            <Typography variant="body2">
-              System Role: {user.systemRole}
-            </Typography>
-          }
-        >
-          <SystemRoleWidget user={user} />
-        </SystemRoleGuard>
+        <SystemRoleWidget user={user} />
       </CardContent>
       <CardActions>
         <Button size="small" color="primary">

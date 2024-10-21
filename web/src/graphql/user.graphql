@@ -1,21 +1,3 @@
-query UserData {
-  whoami {
-    id
-    systemRole
-    main {
-      ...CharacterFields
-    }
-    alts {
-      ...CharacterFields
-    }
-  }
-
-  getAccessibleFolders {
-    id
-    name
-  }
-}
-
 mutation RemoveAlt($eveId: Float!) {
   removeAlt(eveId: $eveId) {
     id

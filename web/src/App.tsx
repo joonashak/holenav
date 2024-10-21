@@ -4,7 +4,6 @@ import { RouterProvider } from "react-router-dom";
 import ViewportContainer from "./components/ViewportContainer";
 import GlobalNotification from "./components/global-notification/GlobalNotification";
 import useLocalData from "./components/local-data/useLocalData";
-import UserData from "./components/user-data/UserData";
 import { devToolsEnabled, endpoints } from "./config";
 import DevTools from "./dev/dev-tools/DevTools";
 import router from "./router";
@@ -27,12 +26,10 @@ const App = () => {
     <ThemeProvider theme={appTheme}>
       <CssBaseline />
       <ApolloProvider client={apolloClient}>
-        <UserData>
-          <ViewportContainer>
-            <RouterProvider router={router} />
-            <GlobalNotification />
-          </ViewportContainer>
-        </UserData>
+        <ViewportContainer>
+          <RouterProvider router={router} />
+          <GlobalNotification />
+        </ViewportContainer>
         {devToolsEnabled && <DevTools />}
       </ApolloProvider>
     </ThemeProvider>

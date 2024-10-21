@@ -4,18 +4,13 @@ import EditIcon from "@mui/icons-material/Edit";
 import { Box, IconButton, Paper, Typography } from "@mui/material";
 import { useState as useReactState } from "react";
 import ReactMarkdown from "react-markdown";
-import {
-  GetPublicAppDataDocument,
-  SystemRoles,
-} from "../../../generated/graphqlOperations";
-import useUserData from "../../user-data/useUserData";
+import { GetPublicAppDataDocument } from "../../../generated/graphqlOperations";
 import MotdEditor from "./MotdEditor";
 
 export const motdState = createState("");
 
 const Motd = () => {
-  const { systemRole } = useUserData();
-  const userIsAdmin = systemRole === SystemRoles.Administrator;
+  const userIsAdmin = false;
 
   const [editOpen, setEditOpen] = useReactState(false);
   const toggleEditOpen = () => setEditOpen((prev) => !prev);

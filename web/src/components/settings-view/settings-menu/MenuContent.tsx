@@ -13,8 +13,6 @@ import {
   ListItemText,
   ListProps,
 } from "@mui/material";
-import SystemRoleGuard from "../../../auth/SystemRoleGuard";
-import { SystemRoles } from "../../../generated/graphqlOperations";
 import { settingsRoutes } from "../SettingsView";
 import MenuDivider from "./MenuDivider";
 import MenuItem from "./MenuItem";
@@ -45,34 +43,28 @@ const MenuContent = ({ sx, bottomListSx }: MenuContentProps) => (
           Icon={FolderOpenIcon}
           href={settingsRoutes.activeFolder}
         />
-        <SystemRoleGuard hideFrom={[SystemRoles.User]}>
-          <MenuItem
-            text="Folder Management"
-            Icon={FolderSharedIcon}
-            href={settingsRoutes.folderManagement}
-          />
-        </SystemRoleGuard>
+        <MenuItem
+          text="Folder Management"
+          Icon={FolderSharedIcon}
+          href={settingsRoutes.folderManagement}
+        />
       </List>
-      <SystemRoleGuard hideFrom={[SystemRoles.User]}>
-        <MenuDivider>Manager Settings</MenuDivider>
-        <List>
-          <MenuItem
-            text="Users"
-            Icon={GroupIcon}
-            href={settingsRoutes.userManagement}
-          />
-        </List>
-      </SystemRoleGuard>
-      <SystemRoleGuard showTo={[SystemRoles.Administrator]}>
-        <MenuDivider>Admin Settings</MenuDivider>
-        <List>
-          <MenuItem
-            text="App Settings"
-            Icon={SettingsIcon}
-            href={settingsRoutes.appSettings}
-          />
-        </List>
-      </SystemRoleGuard>
+      <MenuDivider>Manager Settings</MenuDivider>
+      <List>
+        <MenuItem
+          text="Users"
+          Icon={GroupIcon}
+          href={settingsRoutes.userManagement}
+        />
+      </List>
+      <MenuDivider>Admin Settings</MenuDivider>
+      <List>
+        <MenuItem
+          text="App Settings"
+          Icon={SettingsIcon}
+          href={settingsRoutes.appSettings}
+        />
+      </List>
       <List sx={{ bgcolor: "primary.light", ...bottomListSx }}>
         <ListItem>
           <ListItemButton>
