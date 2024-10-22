@@ -1,11 +1,14 @@
 import { useMutation, useQuery } from "@apollo/client";
 import {
+  Button,
   FormControl,
   InputLabel,
   MenuItem,
   Select,
   SelectChangeEvent,
+  Typography,
 } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import {
   FindAccessibleFoldersDocument,
   GetMyUserPreferencesDocument,
@@ -14,6 +17,7 @@ import {
 import SettingsDialog from "../SettingsDialog";
 
 const FolderSettings = () => {
+  const navigate = useNavigate();
   const { data: folderData } = useQuery(FindAccessibleFoldersDocument);
   const { data: prefsData } = useQuery(GetMyUserPreferencesDocument);
   const [updateActiveFolder] = useMutation(UpdateActiveFolderDocument, {
@@ -45,6 +49,10 @@ const FolderSettings = () => {
           ))}
         </Select>
       </FormControl>
+      <Typography variant="h4">
+        List of manageable folders here, click to navigate to edit view.
+      </Typography>
+      <Button onClick={() => navigate("../new-folder")}>New Folder</Button>
     </SettingsDialog>
   );
 };
