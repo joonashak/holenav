@@ -1,4 +1,4 @@
-import { useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import {
   FormControl,
   InputLabel,
@@ -6,13 +6,27 @@ import {
   Select,
   SelectChangeEvent,
 } from "@mui/material";
-import { FindAccessibleFoldersDocument } from "../../../generated/graphqlOperations";
+import {
+  FindAccessibleFoldersDocument,
+  GetMyUserPreferencesDocument,
+  UpdateActiveFolderDocument,
+} from "../../../generated/graphqlOperations";
 import SettingsDialog from "../SettingsDialog";
 
 const FolderSettings = () => {
-  const { data } = useQuery(FindAccessibleFoldersDocument);
+  const { data: folderData } = useQuery(FindAccessibleFoldersDocument);
+  const { data: prefsData } = useQuery(GetMyUserPreferencesDocument);
+  const [updateActiveFolder] = useMutation(UpdateActiveFolderDocument, {
+    refetchQueries: [GetMyUserPreferencesDocument],
+  });
 
-  const handleChange = (event: SelectChangeEvent) => {};
+  const handleChange = async (event: SelectChangeEvent) => {
+    await updateActiveFolder({ variables: { folderId: event.target.value } });
+  };
+
+  if (!folderData || !prefsData) {
+    return null;
+  }
 
   return (
     <SettingsDialog title="Folder Options">
@@ -22,9 +36,9 @@ const FolderSettings = () => {
           labelId="active-folder-select"
           label="Active Folder"
           onChange={handleChange}
-          defaultValue=""
+          defaultValue={prefsData.getMyUserPreferences.activeFolder?.id || ""}
         >
-          {data?.findAccessibleFolders.map((folder) => (
+          {folderData.findAccessibleFolders.map((folder) => (
             <MenuItem key={folder.id} value={folder.id}>
               {folder.name}
             </MenuItem>

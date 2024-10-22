@@ -1,8 +1,19 @@
 query GetMyUserPreferences {
   getMyUserPreferences {
     id
+    activeFolder {
+      id
+    }
     user {
       ...CompleteCloneBayUser
+    }
+  }
+}
+
+mutation UpdateActiveFolder($folderId: String!) {
+  updateActiveFolder(folderId: $folderId) {
+    activeFolder {
+      id
     }
   }
 }
