@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import AppContainer from "./AppContainer";
 import FrontPage from "./components/front-page/FrontPage";
+import FolderSettings from "./components/settings/folder-settings/FolderSettings";
 import MapDialog from "./components/system-view/floating-mapper-controls/map-select/MapDialog";
 import SystemView from "./components/system-view/SystemView";
 import GlobalErrorBoundary from "./error/GlobalErrorBoundary";
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
           {
             path: "edit-map",
             element: <MapDialog edit />,
+          },
+          {
+            path: "folder-options",
+            element: <FolderSettings />,
           },
         ],
       },

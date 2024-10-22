@@ -1,24 +1,8 @@
-query SettingsData {
-  getAccessibleFolders {
-    ...FolderFields
-  }
-}
-
-query SettingsDataForManager {
-  getManageableFolders {
-    ...FolderFields
-  }
-}
+# FIXME: Most of these are not used anymore?
 
 query AppSettings {
   getAppData {
     ...AppDataFields
-  }
-}
-
-mutation CreateFolder($name: String!) {
-  createFolder(name: $name) {
-    ...FolderFields
   }
 }
 

@@ -1,15 +1,24 @@
 import SettingsIcon from "@mui/icons-material/Settings";
 import { IconButton, Menu, MenuItem } from "@mui/material";
 import { useState } from "react";
+import { To, useNavigate } from "react-router-dom";
 
 const SettingsMenu = () => {
+  const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
+
   const closeMenu = () => {
     setAnchorEl(null);
+  };
+
+  const linkTo = (to: To) => () => {
+    navigate(to);
+    closeMenu();
   };
 
   return (
@@ -24,7 +33,7 @@ const SettingsMenu = () => {
         open={open}
         onClose={closeMenu}
       >
-        <MenuItem>Folder Options</MenuItem>
+        <MenuItem onClick={linkTo("folder-options")}>Folder Options</MenuItem>
       </Menu>
     </>
   );

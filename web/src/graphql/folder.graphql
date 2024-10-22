@@ -1,0 +1,12 @@
+query FindAccessibleFolders {
+  findAccessibleFolders {
+    id
+    name
+  }
+}
+
+mutation CreateFolder($name: String!) {
+  createFolder(name: $name) {
+    id
+  }
+}

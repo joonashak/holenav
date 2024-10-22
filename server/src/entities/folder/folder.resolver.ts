@@ -10,7 +10,7 @@ export class FolderResolver {
 
   @RequireAuthentication()
   @Query(() => [Folder])
-  async getAccessibleFolders(@UserId() userId: string) {
+  async findAccessibleFolders(@UserId() userId: string) {
     return this.folderService.findFoldersByAllowedAction(
       userId,
       FolderAction.Read,
@@ -19,7 +19,7 @@ export class FolderResolver {
 
   @RequireAuthentication()
   @Query(() => [Folder])
-  async getManageableFolders(@UserId() userId: string) {
+  async findManageableFolders(@UserId() userId: string) {
     return this.folderService.findFoldersByAllowedAction(
       userId,
       FolderAction.Manage,
