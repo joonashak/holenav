@@ -26,7 +26,7 @@ export class UserPreferencesService {
     const user = await this.userService.findById(userId);
     const existing = await this.userPreferencesModel
       .findOne({ user })
-      .populate("user");
+      .populate(["user", "activeFolder"]);
 
     if (!existing) {
       await this.userPreferencesModel.create({ user });
@@ -34,5 +34,11 @@ export class UserPreferencesService {
     }
 
     return existing;
+  }
+
+  async update(userId: string, update: Partial<UserPreferences>) {
+    const prefs = await this.findByUserId(userId);
+    await this.userPreferencesModel.findByIdAndUpdate(prefs, update);
+    return this.findByUserId(userId);
   }
 }
