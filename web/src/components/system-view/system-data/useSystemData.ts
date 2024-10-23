@@ -5,12 +5,12 @@ import {
   SystemQuery,
   SystemQueryVariables,
 } from "../../../generated/graphqlOperations";
-import useSelectedFolder from "../../../hooks/useSelectedFolder";
+import useActiveFolder from "../../../hooks/useActiveFolder";
 import { systemState } from "./SystemData";
 
 export default () => {
   const state = useState(systemState);
-  const { selectedFolderId } = useSelectedFolder();
+  const { activeFolderId } = useActiveFolder();
 
   const [changeSystemQuery] = useLazyQuery<SystemQuery, SystemQueryVariables>(
     SystemDocument,
@@ -26,7 +26,7 @@ export default () => {
 
   const changeSystem = (name: string) => {
     state.merge({ name });
-    changeSystemQuery({ variables: { name, folderId: selectedFolderId } });
+    changeSystemQuery({ variables: { name, folderId: activeFolderId } });
   };
 
   return {

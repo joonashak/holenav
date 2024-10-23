@@ -7,7 +7,7 @@ import {
   PastedSignature,
   Signature,
 } from "../../../generated/graphqlOperations";
-import useSelectedFolder from "../../../hooks/useSelectedFolder";
+import useActiveFolder from "../../../hooks/useActiveFolder";
 import useCurrentSystemName from "../useCurrentSystemName";
 import { systemState } from "./SystemData";
 
@@ -16,7 +16,7 @@ export type AddSignatureHookInput = Omit<Signature, "id" | "systemName">;
 const useSignatures = () => {
   const systemName = useCurrentSystemName();
   const state = useState(systemState);
-  const { selectedFolderId: folderId } = useSelectedFolder();
+  const { activeFolderId: folderId } = useActiveFolder();
 
   const { data }: any = useQuery(GetSignaturesDocument, {
     variables: { systemName, folderId },
