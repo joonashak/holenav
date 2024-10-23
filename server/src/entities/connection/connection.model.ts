@@ -6,7 +6,7 @@ import MassStatus from "./mass-status.enum";
 registerEnumType(MassStatus, { name: "MassStatus" });
 
 @ObjectType()
-@Schema()
+@Schema({ validateBeforeSave: true })
 export class Connection {
   @Field()
   id: string;

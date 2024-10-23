@@ -15,34 +15,40 @@ const useWormholeForm = (props: UseWormholeFormProps) => {
   const { eveId, existing, onClose } = props;
   const { name: systemName } = useSystemData();
   const { showSuccessNotification } = useNotification();
-  const { addSignatures, updateSignatures } = useSignatures();
+  const { createSignatures, updateSignatures } = useSignatures();
 
   const submitNew = async (formData: FieldValues) => {
-    const { whType, whReverseType, life, mass, name, destinationName } =
-      formData;
-    const mutationData = {
-      eveId,
-      systemName,
-      type: SigType.Wormhole,
+    const {
+      whType: fwd,
+      whReverseType: rev,
+      life,
+      mass,
       name,
-      wormholeType: whType,
-      connection: {
-        eol: life === "eol",
-        massStatus: mass,
-        reverseSignature: {
-          eveId: "",
-          name: "",
-          systemName: destinationName || "",
-          type: SigType.Wormhole,
-          wormholeType: whReverseType,
+      destinationName,
+    } = formData;
+
+    const k162 = fwd === "K162" || (!!rev && rev !== "K162");
+    const _type = !k162 ? fwd : rev;
+    const type = _type || null;
+
+    const res = await createSignatures([
+      {
+        eveId,
+        name,
+        systemName,
+        type: SigType.Wormhole,
+        connection: {
+          eol: life === "eol",
+          massStatus: mass,
+          from: systemName,
+          to: destinationName || undefined,
+          type,
+          k162,
         },
       },
-    };
-
-    const res = await addSignatures([mutationData]);
+    ]);
 
     if (res.data && !res.errors) {
-      // fetchConnectionTree();
       showSuccessNotification("Wormhole added.");
       onClose();
     }

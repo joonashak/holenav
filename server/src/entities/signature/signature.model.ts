@@ -22,7 +22,7 @@ export class Signature {
   type: SigType;
 
   @Field()
-  @Prop({ required: true })
+  @Prop({ default: "" })
   name: string;
 
   @Field()

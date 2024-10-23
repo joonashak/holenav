@@ -13,14 +13,14 @@ export type UseSigFormProps = {
 
 const useSigForm = (props: UseSigFormProps) => {
   const { type, eveId, existing, onClose } = props;
-  const { addSignatures, updateSignatures } = useSignatures();
+  const { createSignatures, updateSignatures } = useSignatures();
   const { name: systemName } = useSystemData();
   const { showSuccessNotification } = useNotification();
 
   const submitNew = async (formData: FieldValues) => {
     const name = formData.name || "";
-    const res = await addSignatures([
-      { ...formData, type, eveId, name, systemName },
+    const res = await createSignatures([
+      { ...formData, eveId, name, systemName, type },
     ]);
 
     if (res.data && !res.errors) {

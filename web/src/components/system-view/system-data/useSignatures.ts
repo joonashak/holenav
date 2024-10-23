@@ -2,6 +2,9 @@
 import { useMutation, useQuery } from "@apollo/client";
 import { useState } from "@hookstate/core";
 import {
+  CreateSignature,
+  CreateSignaturesDocument,
+  FindConnectionGraphDocument,
   GetSignaturesDocument,
   PasteSignaturesDocument,
   PastedSignature,
@@ -23,7 +26,12 @@ const useSignatures = () => {
   });
   const signatures: Signature[] = data?.getSignaturesBySystem || [];
 
-  const addSignatures = async () => {};
+  const [_createSignatures] = useMutation(CreateSignaturesDocument, {
+    refetchQueries: [GetSignaturesDocument, FindConnectionGraphDocument],
+  });
+
+  const createSignatures = (signatures: CreateSignature[]) =>
+    _createSignatures({ variables: { signatures, folderId } });
 
   const updateSignatures = async () => {
     // TODO:
@@ -52,7 +60,7 @@ const useSignatures = () => {
 
   return {
     signatures,
-    addSignatures,
+    createSignatures,
     updateSignatures,
     deleteSignatures,
     pasteSignatures,

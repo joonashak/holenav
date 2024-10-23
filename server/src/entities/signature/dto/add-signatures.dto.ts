@@ -10,7 +10,7 @@ export class CreateSignature {
   @Field(() => SigType)
   type: SigType;
 
-  @Field()
+  @Field({ nullable: true })
   name: string;
 
   @Field()
