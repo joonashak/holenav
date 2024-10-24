@@ -6,18 +6,25 @@ import { Model } from "mongoose";
 import { ConnectionService } from "../connection/connection.service";
 import { Folder } from "../folder/folder.model";
 import { FolderService } from "../folder/folder.service";
-import { CreateSignature } from "./dto/add-signatures.dto";
+import { CreateSignature } from "./dto/create-signature.dto";
 import { FindSignature } from "./dto/find-signature.dto";
+import { UpdateSignature } from "./dto/update-signature.dto";
 import SigType from "./enums/sig-type.enum";
 import { Signature } from "./signature.model";
 
 @Injectable()
 export class SignatureService {
+  private readonly populateFields = ["connection", "folder"];
+
   constructor(
     @InjectModel(Signature.name) private signatureModel: Model<Signature>,
     private connectionService: ConnectionService,
     private folderService: FolderService,
   ) {}
+
+  async findById(id: string): Promise<FindSignature> {
+    return this.signatureModel.findById(id).populate(this.populateFields);
+  }
 
   async findBySystem(
     systemName: string,
@@ -26,7 +33,7 @@ export class SignatureService {
     const folder = await this.folderService.getFolderById(folderId);
     return this.signatureModel
       .find({ folder, systemName })
-      .populate(["connection", "folder"]);
+      .populate(this.populateFields);
   }
 
   /**
@@ -73,11 +80,26 @@ export class SignatureService {
     );
   }
 
+  async update(update: UpdateSignature, folder: Folder) {
+    const { id, connection: connectionUpdate, ...sigUpdate } = update;
+
+    // Require folder ID to be correct for security.
+    const signature = await this.signatureModel
+      .findOne({ id, folder })
+      .populate(this.populateFields);
+    await this.signatureModel.findByIdAndUpdate(id, sigUpdate);
+
+    // TODO: Update connection.
+
+    return this.findById(id);
+  }
+
   async updateSignatures(
-    sigUpdates: unknown[],
+    updates: UpdateSignature[],
     folderId: string,
-  ): Promise<Signature[]> {
-    return [];
+  ): Promise<FindSignature[]> {
+    const folder = await this.folderService.getFolderById(folderId);
+    return Promise.all(updates.map((update) => this.update(update, folder)));
   }
 
   /**

@@ -1,6 +1,7 @@
 import { Field, InputType, ObjectType } from "@nestjs/graphql";
 import SigType from "../enums/sig-type.enum";
 import { Signature } from "../signature.model";
+import { FindSignature } from "./find-signature.dto";
 
 @InputType()
 export class SignaturePaste {
@@ -31,8 +32,8 @@ export class SignaturePasteResult {
   @Field((type) => [Signature])
   added: Signature[];
 
-  @Field((type) => [Signature])
-  updated: Signature[];
+  @Field((type) => [FindSignature])
+  updated: FindSignature[];
 
   @Field((type) => [Signature])
   deleted: Signature[];

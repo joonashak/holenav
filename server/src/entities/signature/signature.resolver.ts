@@ -6,12 +6,13 @@ import {
 import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
 import { FolderAction } from "../../access-control/folder/folder-role/folder-action.enum";
 import { RequireFolderAccess } from "../../access-control/folder/require-folder-access.decorator";
-import { CreateSignature } from "./dto/add-signatures.dto";
+import { CreateSignature } from "./dto/create-signature.dto";
 import { FindSignature } from "./dto/find-signature.dto";
 import {
   SignaturePaste,
   SignaturePasteResult,
 } from "./dto/paste-signatures.dto";
+import { UpdateSignature } from "./dto/update-signature.dto";
 import { SignaturePasteService } from "./signature-paste.service";
 import { Signature } from "./signature.model";
 import { SignatureService } from "./signature.service";
@@ -44,6 +45,16 @@ export class SignatureResolver {
     @Args("folderId") folderId: string,
   ): Promise<FindSignature[]> {
     return this.signatureService.findBySystem(systemName, folderId);
+  }
+
+  @RequireFolderAccess(FolderAction.Write)
+  @Mutation(() => [FindSignature])
+  async updateSignatures(
+    @Args({ name: "updates", type: () => [UpdateSignature] })
+    updates: UpdateSignature[],
+    @Args("folderId") folderId: string,
+  ): Promise<FindSignature[]> {
+    return this.signatureService.updateSignatures(updates, folderId);
   }
 
   @RequireFolderAccess(FolderAction.Write)
