@@ -1,10 +1,10 @@
 import { Injectable } from "@nestjs/common";
+import { FindSignature } from "./dto/find-signature.dto";
 import {
   SignaturePaste,
   SignaturePasteResult,
 } from "./dto/paste-signatures.dto";
 import SigType from "./enums/sig-type.enum";
-import { Signature } from "./signature.model";
 import { SignatureService } from "./signature.service";
 
 @Injectable()
@@ -15,7 +15,7 @@ export class SignaturePasteService {
     paste: SignaturePaste,
     folderId: string,
   ): Promise<SignaturePasteResult> {
-    const existingSigs = await this.signatureService.getBySystem(
+    const existingSigs = await this.signatureService.findBySystem(
       paste.systemName,
       folderId,
     );
@@ -38,7 +38,7 @@ export class SignaturePasteService {
     return { added, updated, deleted };
   }
 
-  private getAddableSigs(paste: SignaturePaste, existing: Signature[]) {
+  private getAddableSigs(paste: SignaturePaste, existing: FindSignature[]) {
     const existingEveIds = existing.map((sig) => sig.eveId);
 
     const addableSigs = paste.pastedSignatures
@@ -48,7 +48,7 @@ export class SignaturePasteService {
     return addableSigs;
   }
 
-  private getUpdateableSigs(paste: SignaturePaste, existing: Signature[]) {
+  private getUpdateableSigs(paste: SignaturePaste, existing: FindSignature[]) {
     return paste.pastedSignatures.reduce((updateableSigs, pastedSig) => {
       const existingSig = existing.find((sig) => sig.eveId === pastedSig.eveId);
 
@@ -80,7 +80,7 @@ export class SignaturePasteService {
     }, []);
   }
 
-  private getDeletableSigs(paste: SignaturePaste, existing: Signature[]) {
+  private getDeletableSigs(paste: SignaturePaste, existing: FindSignature[]) {
     if (!paste.deleteMissingSigs) {
       return [];
     }

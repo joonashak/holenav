@@ -7,6 +7,7 @@ import { ConnectionService } from "../connection/connection.service";
 import { Folder } from "../folder/folder.model";
 import { FolderService } from "../folder/folder.service";
 import { CreateSignature } from "./dto/add-signatures.dto";
+import { FindSignature } from "./dto/find-signature.dto";
 import SigType from "./enums/sig-type.enum";
 import { Signature } from "./signature.model";
 
@@ -18,11 +19,14 @@ export class SignatureService {
     private folderService: FolderService,
   ) {}
 
-  async getBySystem(
+  async findBySystem(
     systemName: string,
     folderId: string,
-  ): Promise<Signature[]> {
-    return [];
+  ): Promise<FindSignature[]> {
+    const folder = await this.folderService.getFolderById(folderId);
+    return this.signatureModel
+      .find({ folder, systemName })
+      .populate(["connection", "folder"]);
   }
 
   /**
