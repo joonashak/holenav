@@ -1,32 +1,11 @@
-import { useLazyQuery } from "@apollo/client";
 import { Downgraded, useState } from "@hookstate/core";
-import {
-  SystemDocument,
-  SystemQuery,
-  SystemQueryVariables,
-} from "../../../generated/graphqlOperations";
-import useActiveFolder from "../../../hooks/useActiveFolder";
 import { systemState } from "./SystemData";
 
 export default () => {
   const state = useState(systemState);
-  const { activeFolderId } = useActiveFolder();
-
-  const [changeSystemQuery] = useLazyQuery<SystemQuery, SystemQueryVariables>(
-    SystemDocument,
-    {
-      onCompleted: ({ getSystemByName }) => {
-        if (!getSystemByName) {
-          return;
-        }
-        state.merge({ ...getSystemByName });
-      },
-    },
-  );
 
   const changeSystem = (name: string) => {
     state.merge({ name });
-    changeSystemQuery({ variables: { name, folderId: activeFolderId } });
   };
 
   return {

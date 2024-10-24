@@ -12,23 +12,6 @@ fragment SignatureFields on Signature {
   }
 }
 
-query System($name: String!, $folderId: String!) {
-  getSystemByName(name: $name, folderId: $folderId) {
-    id
-    name
-  }
-
-  getSignaturesBySystem(systemName: $name, folderId: $folderId) {
-    ...SignatureFields
-  }
-}
-
-query GetSignatures($systemName: String!, $folderId: String!) {
-  getSignaturesBySystem(systemName: $systemName, folderId: $folderId) {
-    ...SignatureFields
-  }
-}
-
 mutation CreateSignatures(
   $signatures: [CreateSignature!]!
   $folderId: String!
