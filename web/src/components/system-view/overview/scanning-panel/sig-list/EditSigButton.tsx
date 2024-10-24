@@ -1,11 +1,11 @@
 import EditIcon from "@mui/icons-material/Edit";
 import { IconButton } from "@mui/material";
 import { useState } from "react";
-import { Signature } from "../../../../../generated/graphqlOperations";
+import { FindSignature } from "../../../../../generated/graphqlOperations";
 import SigModal from "../sig-modal/SigModal";
 
 type EditSigButtonProps = {
-  signature: Signature;
+  signature: FindSignature;
 };
 
 const EditSigButton = ({ signature }: EditSigButtonProps) => {

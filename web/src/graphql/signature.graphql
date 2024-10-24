@@ -36,3 +36,32 @@ mutation PasteSignatures($input: SignaturePaste!, $folderId: String!) {
     }
   }
 }
+
+query FindSignaturesBySystem($systemName: String!, $folderId: String!) {
+  findSignaturesBySystem(systemName: $systemName, folderId: $folderId) {
+    id
+    eveId
+    type
+    name
+    systemName
+    createdAt
+    createdBy
+    updatedAt
+    updatedBy
+    folder {
+      id
+      name
+    }
+    connection {
+      id
+      eol
+      eolAt
+      from
+      k162
+      massStatus
+      to
+      type
+      unknown
+    }
+  }
+}

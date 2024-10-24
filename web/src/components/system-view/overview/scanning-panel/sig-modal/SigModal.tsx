@@ -1,6 +1,9 @@
 import { DialogContent, DialogTitle, SelectChangeEvent } from "@mui/material";
 import { ChangeEvent, useEffect, useState } from "react";
-import { SigType, Signature } from "../../../../../generated/graphqlOperations";
+import {
+  FindSignature,
+  SigType,
+} from "../../../../../generated/graphqlOperations";
 import Dialog from "../../../../common/Dialog";
 import FormGroupRow from "../../../../controls/FormGroupRow";
 import Select from "../../../../controls/select/Select";
@@ -20,7 +23,7 @@ const typeOptions = [
 type SigModalProps = {
   open: boolean;
   onClose: () => void;
-  signature?: Signature;
+  signature?: FindSignature;
 };
 
 const SigModal = ({

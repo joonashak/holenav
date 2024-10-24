@@ -5,7 +5,7 @@ import {
   CreateSignature,
   CreateSignaturesDocument,
   FindConnectionGraphDocument,
-  GetSignaturesDocument,
+  FindSignaturesBySystemDocument,
   PasteSignaturesDocument,
   PastedSignature,
   Signature,
@@ -21,13 +21,16 @@ const useSignatures = () => {
   const state = useState(systemState);
   const { activeFolderId: folderId } = useActiveFolder();
 
-  const { data }: any = useQuery(GetSignaturesDocument, {
+  const { data } = useQuery(FindSignaturesBySystemDocument, {
     variables: { systemName, folderId },
   });
-  const signatures: Signature[] = data?.getSignaturesBySystem || [];
+  const signatures = data?.findSignaturesBySystem || [];
 
   const [_createSignatures] = useMutation(CreateSignaturesDocument, {
-    refetchQueries: [GetSignaturesDocument, FindConnectionGraphDocument],
+    refetchQueries: [
+      FindSignaturesBySystemDocument,
+      FindConnectionGraphDocument,
+    ],
   });
 
   const createSignatures = (signatures: CreateSignature[]) =>
@@ -40,7 +43,7 @@ const useSignatures = () => {
   const deleteSignatures = async (): Promise<void> => {};
 
   const [pasteSigsMutation] = useMutation(PasteSignaturesDocument, {
-    refetchQueries: [GetSignaturesDocument],
+    refetchQueries: [FindSignaturesBySystemDocument],
   });
 
   const pasteSignatures = async (

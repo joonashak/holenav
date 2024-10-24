@@ -1,26 +1,22 @@
 import { Box, useTheme } from "@mui/material";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
-import { Signature } from "../../../../../generated/graphqlOperations";
+import { FindSignature } from "../../../../../generated/graphqlOperations";
 import dayjs, {
   fixNegativeDurationMinuteFormatting,
 } from "../../../../../utils/dayjs";
-import {
-  getWormholeProperties,
-  getWormholeTrueType,
-} from "../../../../../utils/wormholeUtils";
+import { getWormholeProperties } from "../../../../../utils/wormholeUtils";
 import GridTooltip from "../../../../common/grid-tooltip/GridTooltip";
 
 type LifetimeClockProps = {
-  signature: Signature;
+  signature: FindSignature;
 };
 
 const LifetimeClock = ({ signature }: LifetimeClockProps) => {
   const eol = !!signature.connection?.eol;
   const { palette } = useTheme();
 
-  const trueType = getWormholeTrueType(signature);
-  const whProps = getWormholeProperties(trueType);
+  const whProps = getWormholeProperties(signature.connection?.type);
 
   const lifetime = dayjs.duration(whProps?.lifetimeHrs || 24, "h");
   const createdAt = dayjs(signature.createdAt);

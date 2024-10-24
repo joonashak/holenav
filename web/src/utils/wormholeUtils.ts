@@ -1,9 +1,10 @@
 import wormholes from "@eve-data/wormholes";
-import { Maybe, Signature } from "../generated/graphqlOperations";
+import { Connection, Maybe, Signature } from "../generated/graphqlOperations";
 
 const isTrueType = (wormholeType: Maybe<string> | undefined) =>
   wormholeType && wormholeType !== "K162";
 
+// FIXME: Remove
 /** Get the true type (i.e., not K162) of given wormhole or `null`. */
 export const getWormholeTrueType = (sig: Signature): string | null => {
   if (isTrueType(sig.wormholeType)) {
@@ -17,5 +18,5 @@ export const getWormholeTrueType = (sig: Signature): string | null => {
   return null;
 };
 
-export const getWormholeProperties = (type: string | null) =>
+export const getWormholeProperties = (type: Connection["type"]) =>
   wormholes.find((wh) => wh.type === type);

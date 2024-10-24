@@ -1,21 +1,20 @@
-import { Signature } from "../../../../../generated/graphqlOperations";
-import { getWormholeTrueType } from "../../../../../utils/wormholeUtils";
+import { FindSignature } from "../../../../../generated/graphqlOperations";
 import WormholeInfoTooltip from "../../../../common/WormholeInfoTooltip";
 
 type SigTypeLabelProps = {
-  signature: Signature;
+  signature: FindSignature;
 };
 
 const SigTypeLabel = ({ signature }: SigTypeLabelProps) => {
-  const label = signature.wormholeType || signature.type.toLowerCase();
-  const trueType = getWormholeTrueType(signature);
+  const type = signature.connection?.type;
+  const label = type || signature.type.toLowerCase();
 
-  if (!trueType) {
+  if (!type) {
     return <>{label}</>;
   }
 
   return (
-    <WormholeInfoTooltip type={trueType}>
+    <WormholeInfoTooltip type={type}>
       <>{label}</>
     </WormholeInfoTooltip>
   );
