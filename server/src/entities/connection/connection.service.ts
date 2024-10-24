@@ -52,7 +52,13 @@ export class ConnectionService {
 
     created.reverse = reverse;
     await created.save();
-
     return created.populate("reverse");
+  }
+
+  /** Remove connection and its linked pair. */
+  async delete(id: string): Promise<void> {
+    const conn = await this.connectionModel.findById(id).populate("reverse");
+    await this.connectionModel.findByIdAndDelete(conn.id);
+    await this.connectionModel.findByIdAndDelete(conn.reverse.id);
   }
 }

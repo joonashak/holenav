@@ -47,14 +47,19 @@ export class SignatureService {
         ? await this.connectionService.create(signature.connection)
         : null;
 
-    const created = await this.signatureModel.create({
-      ...signature,
-      folder,
-      connection,
-      createdBy: user?.main.name || "",
-    });
-
-    return created;
+    try {
+      const created = await this.signatureModel.create({
+        ...signature,
+        folder,
+        connection,
+        createdBy: user?.main.name || "",
+      });
+      return created;
+    } catch (error) {
+      // Connections will have been created by this point and must be removed if sig creation fails.
+      await this.connectionService.delete(connection.id);
+      throw error;
+    }
   }
 
   async createSignatures(

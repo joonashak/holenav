@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useMutation, useQuery } from "@apollo/client";
 import { useState } from "@hookstate/core";
 import {
