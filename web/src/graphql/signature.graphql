@@ -65,3 +65,9 @@ query FindSignaturesBySystem($systemName: String!, $folderId: String!) {
     }
   }
 }
+
+mutation UpdateSignatures($updates: [UpdateSignature!]!, $folderId: String!) {
+  updateSignatures(updates: $updates, folderId: $folderId) {
+    id
+  }
+}

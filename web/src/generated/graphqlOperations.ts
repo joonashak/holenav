@@ -67,7 +67,7 @@ export type Connection = {
   eolAt?: Maybe<Scalars['DateTime']['output']>;
   from: Scalars['String']['output'];
   id: Scalars['String']['output'];
-  k162: Scalars['Boolean']['output'];
+  k162?: Maybe<Scalars['Boolean']['output']>;
   massStatus: MassStatus;
   reverse: Connection;
   to: Scalars['String']['output'];
@@ -81,7 +81,7 @@ export type ConnectionWithoutReverse = {
   eolAt?: Maybe<Scalars['DateTime']['output']>;
   from: Scalars['String']['output'];
   id: Scalars['String']['output'];
-  k162: Scalars['Boolean']['output'];
+  k162?: Maybe<Scalars['Boolean']['output']>;
   massStatus: MassStatus;
   to: Scalars['String']['output'];
   type?: Maybe<Scalars['String']['output']>;
@@ -191,7 +191,7 @@ export type GraphConnection = {
   eolAt?: Maybe<Scalars['DateTime']['output']>;
   from: Scalars['String']['output'];
   id: Scalars['String']['output'];
-  k162: Scalars['Boolean']['output'];
+  k162?: Maybe<Scalars['Boolean']['output']>;
   massStatus: MassStatus;
   reverse: Scalars['String']['output'];
   to: Scalars['String']['output'];
@@ -502,6 +502,14 @@ export enum SystemRoles {
   User = 'USER'
 }
 
+export type UpdateConnection = {
+  eol?: InputMaybe<Scalars['Boolean']['input']>;
+  k162?: InputMaybe<Scalars['Boolean']['input']>;
+  massStatus?: InputMaybe<MassStatus>;
+  to?: InputMaybe<Scalars['String']['input']>;
+  type?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type UpdateMapDto = {
   id: Scalars['String']['input'];
   name: Scalars['String']['input'];
@@ -509,11 +517,11 @@ export type UpdateMapDto = {
 };
 
 export type UpdateSignature = {
-  connection?: InputMaybe<CreateConnection>;
-  eveId: Scalars['String']['input'];
+  connection?: InputMaybe<UpdateConnection>;
+  eveId?: InputMaybe<Scalars['String']['input']>;
   id: Scalars['String']['input'];
   name?: InputMaybe<Scalars['String']['input']>;
-  type: SigType;
+  type?: InputMaybe<SigType>;
 };
 
 export type User = {
@@ -549,7 +557,7 @@ export type FindConnectionGraphQueryVariables = Exact<{
 }>;
 
 
-export type FindConnectionGraphQuery = { __typename?: 'Query', findConnectionGraph: { __typename?: 'FindConnectionGraph', root: string, connections: Array<{ __typename?: 'GraphConnection', id: string, from: string, to: string, unknown: boolean, type?: string | null, k162: boolean, eol: boolean, eolAt?: any | null, massStatus: MassStatus, reverse: string, depth: number }> } };
+export type FindConnectionGraphQuery = { __typename?: 'Query', findConnectionGraph: { __typename?: 'FindConnectionGraph', root: string, connections: Array<{ __typename?: 'GraphConnection', id: string, from: string, to: string, unknown: boolean, type?: string | null, k162?: boolean | null, eol: boolean, eolAt?: any | null, massStatus: MassStatus, reverse: string, depth: number }> } };
 
 export type FindAccessibleFoldersQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -695,7 +703,15 @@ export type FindSignaturesBySystemQueryVariables = Exact<{
 }>;
 
 
-export type FindSignaturesBySystemQuery = { __typename?: 'Query', findSignaturesBySystem: Array<{ __typename?: 'FindSignature', id: string, eveId: string, type: SigType, name: string, systemName: string, createdAt: any, createdBy: string, updatedAt: any, updatedBy: string, folder: { __typename?: 'Folder', id: string, name: string }, connection?: { __typename?: 'ConnectionWithoutReverse', id: string, eol: boolean, eolAt?: any | null, from: string, k162: boolean, massStatus: MassStatus, to: string, type?: string | null, unknown: boolean } | null }> };
+export type FindSignaturesBySystemQuery = { __typename?: 'Query', findSignaturesBySystem: Array<{ __typename?: 'FindSignature', id: string, eveId: string, type: SigType, name: string, systemName: string, createdAt: any, createdBy: string, updatedAt: any, updatedBy: string, folder: { __typename?: 'Folder', id: string, name: string }, connection?: { __typename?: 'ConnectionWithoutReverse', id: string, eol: boolean, eolAt?: any | null, from: string, k162?: boolean | null, massStatus: MassStatus, to: string, type?: string | null, unknown: boolean } | null }> };
+
+export type UpdateSignaturesMutationVariables = Exact<{
+  updates: Array<UpdateSignature> | UpdateSignature;
+  folderId: Scalars['String']['input'];
+}>;
+
+
+export type UpdateSignaturesMutation = { __typename?: 'Mutation', updateSignatures: Array<{ __typename?: 'FindSignature', id: string }> };
 
 export type GetMyTokensQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -764,6 +780,7 @@ export const RemoveAllowedAllianceDocument = {"kind":"Document","definitions":[{
 export const CreateSignaturesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateSignatures"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"signatures"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateSignature"}}}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"folderId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createSignatures"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"signatures"},"value":{"kind":"Variable","name":{"kind":"Name","value":"signatures"}}},{"kind":"Argument","name":{"kind":"Name","value":"folderId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"folderId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<CreateSignaturesMutation, CreateSignaturesMutationVariables>;
 export const PasteSignaturesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"PasteSignatures"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SignaturePaste"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"folderId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"pasteSignatures"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}},{"kind":"Argument","name":{"kind":"Name","value":"folderId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"folderId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"added"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"SignatureFields"}}]}},{"kind":"Field","name":{"kind":"Name","value":"updated"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"deleted"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"SignatureFields"}}]}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"SignatureFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Signature"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"eveId"}},{"kind":"Field","name":{"kind":"Name","value":"systemName"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"connection"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"eol"}},{"kind":"Field","name":{"kind":"Name","value":"eolAt"}},{"kind":"Field","name":{"kind":"Name","value":"massStatus"}}]}}]}}]} as unknown as DocumentNode<PasteSignaturesMutation, PasteSignaturesMutationVariables>;
 export const FindSignaturesBySystemDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"FindSignaturesBySystem"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"systemName"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"folderId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"findSignaturesBySystem"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"systemName"},"value":{"kind":"Variable","name":{"kind":"Name","value":"systemName"}}},{"kind":"Argument","name":{"kind":"Name","value":"folderId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"folderId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"eveId"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"systemName"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"createdBy"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedBy"}},{"kind":"Field","name":{"kind":"Name","value":"folder"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"connection"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"eol"}},{"kind":"Field","name":{"kind":"Name","value":"eolAt"}},{"kind":"Field","name":{"kind":"Name","value":"from"}},{"kind":"Field","name":{"kind":"Name","value":"k162"}},{"kind":"Field","name":{"kind":"Name","value":"massStatus"}},{"kind":"Field","name":{"kind":"Name","value":"to"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"unknown"}}]}}]}}]}}]} as unknown as DocumentNode<FindSignaturesBySystemQuery, FindSignaturesBySystemQueryVariables>;
+export const UpdateSignaturesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateSignatures"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"updates"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UpdateSignature"}}}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"folderId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateSignatures"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"updates"},"value":{"kind":"Variable","name":{"kind":"Name","value":"updates"}}},{"kind":"Argument","name":{"kind":"Name","value":"folderId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"folderId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<UpdateSignaturesMutation, UpdateSignaturesMutationVariables>;
 export const GetMyTokensDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetMyTokens"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getMyTokens"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"accessToken"}},{"kind":"Field","name":{"kind":"Name","value":"eveId"}}]}}]}}]} as unknown as DocumentNode<GetMyTokensQuery, GetMyTokensQueryVariables>;
 export const GetMyUserPreferencesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetMyUserPreferences"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getMyUserPreferences"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"activeFolder"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"CompleteCloneBayUser"}}]}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"CompleteCloneBayUser"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"User"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"main"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"eveId"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"corporation"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"eveId"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"ticker"}}]}},{"kind":"Field","name":{"kind":"Name","value":"alliance"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"eveId"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"ticker"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"alts"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"eveId"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"corporation"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"eveId"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"ticker"}}]}},{"kind":"Field","name":{"kind":"Name","value":"alliance"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"eveId"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"ticker"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"admin"}}]}}]} as unknown as DocumentNode<GetMyUserPreferencesQuery, GetMyUserPreferencesQueryVariables>;
 export const UpdateActiveFolderDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateActiveFolder"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"folderId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateActiveFolder"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"folderId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"folderId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"activeFolder"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]} as unknown as DocumentNode<UpdateActiveFolderMutation, UpdateActiveFolderMutationVariables>;

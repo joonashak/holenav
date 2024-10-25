@@ -8,6 +8,8 @@ import {
   PasteSignaturesDocument,
   PastedSignature,
   Signature,
+  UpdateSignature,
+  UpdateSignaturesDocument,
 } from "../../../generated/graphqlOperations";
 import useActiveFolder from "../../../hooks/useActiveFolder";
 import useCurrentSystemName from "../useCurrentSystemName";
@@ -35,9 +37,15 @@ const useSignatures = () => {
   const createSignatures = (signatures: CreateSignature[]) =>
     _createSignatures({ variables: { signatures, folderId } });
 
-  const updateSignatures = async () => {
-    // TODO:
-  };
+  const [_updateSignatures] = useMutation(UpdateSignaturesDocument, {
+    refetchQueries: [
+      FindSignaturesBySystemDocument,
+      FindConnectionGraphDocument,
+    ],
+  });
+
+  const updateSignatures = async (updates: UpdateSignature[]) =>
+    _updateSignatures({ variables: { updates, folderId } });
 
   const deleteSignatures = async (): Promise<void> => {};
 
