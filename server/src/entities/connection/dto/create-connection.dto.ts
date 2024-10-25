@@ -18,9 +18,6 @@ export class CreateConnection {
   @Field()
   eol: boolean;
 
-  @Field((type) => Date, { nullable: true })
-  eolAt?: Date;
-
-  @Field((type) => MassStatus)
+  @Field(() => MassStatus)
   massStatus: MassStatus;
 }

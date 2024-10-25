@@ -28,7 +28,7 @@ mutation PasteSignatures($input: SignaturePaste!, $folderId: String!) {
     }
 
     updated {
-      ...SignatureFields
+      id
     }
 
     deleted {
