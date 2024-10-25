@@ -15,7 +15,10 @@ import { Signature } from "./signature.model";
 
 @Injectable()
 export class SignatureService {
-  private readonly populateFields = ["connection", "folder"];
+  private readonly populateFields = [
+    "folder",
+    { path: "connection", populate: { path: "reverse" } },
+  ];
 
   constructor(
     @InjectModel(Signature.name) private signatureModel: Model<Signature>,
