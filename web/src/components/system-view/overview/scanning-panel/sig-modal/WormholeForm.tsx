@@ -2,7 +2,10 @@ import systems from "@eve-data/systems";
 import wormholes from "@eve-data/wormholes";
 import { Button } from "@mui/material";
 import { useForm } from "react-hook-form";
-import { MassStatus } from "../../../../../generated/graphqlOperations";
+import {
+  Connection,
+  MassStatus,
+} from "../../../../../generated/graphqlOperations";
 import ControlledRadioGroup from "../../../../controls/ControlledRadioGroup";
 import ControlledTextField from "../../../../controls/ControlledTextField";
 import FormGroupRow from "../../../../controls/FormGroupRow";
@@ -29,6 +32,16 @@ const whTypeOptions = [{ key: "wh-K162", value: "K162", label: "K162" }].concat(
   })),
 );
 
+const whType = (connection?: Connection | null) => {
+  if (connection?.type && !connection.k162) {
+    return connection.type;
+  }
+  if (connection?.k162) {
+    return "K162";
+  }
+  return "";
+};
+
 const WormholeForm = (props: UseWormholeFormProps) => {
   const { existing } = props;
   const { submitWormholeForm } = useWormholeForm(props);
@@ -37,10 +50,9 @@ const WormholeForm = (props: UseWormholeFormProps) => {
       name: existing?.name || "",
       life: existing?.connection?.eol ? "eol" : "lt-24-hrs",
       mass: existing?.connection?.massStatus || MassStatus.Stable,
-      whType: existing?.wormholeType || "",
-      whReverseType: existing?.connection?.reverseSignature.wormholeType || "",
-      destinationName:
-        existing?.connection?.reverseSignature.systemName || null,
+      whType: whType(existing?.connection),
+      whReverseType: whType(existing?.connection?.reverse),
+      destinationName: existing?.connection?.to || null,
     },
   });
 

@@ -1,9 +1,18 @@
-import { omit } from "lodash";
 import { FieldValues } from "react-hook-form";
 import { Signature, SigType } from "../../../../../generated/graphqlOperations";
 import useNotification from "../../../../global-notification/useNotification";
 import useSignatures from "../../../system-data/useSignatures";
 import useSystemData from "../../../system-data/useSystemData";
+
+const getType = (type: string, rev: string) => {
+  if (type && type !== "K162") {
+    return type;
+  }
+  if (rev && rev !== "K162") {
+    return rev;
+  }
+  return null;
+};
 
 export type UseWormholeFormProps = {
   eveId: string;
@@ -60,35 +69,51 @@ const useWormholeForm = (props: UseWormholeFormProps) => {
       formData;
 
     // Add missing fields when updating non-WH sig into WH.
-    const reverseSignature = existing?.connection
-      ? omit(existing?.connection?.reverseSignature, ["__typename"])
-      : {
-          eveId: "",
-          type: SigType.Wormhole,
-          name: "",
-          id: "",
-        };
+    // const reverseSignature = existing?.connection
+    //   ? omit(existing?.connection?.reverseSignature, ["__typename"])
+    //   : {
+    //       eveId: "",
+    //       type: SigType.Wormhole,
+    //       name: "",
+    //       id: "",
+    //     };
 
-    const mutationData = {
-      ...omit(existing, ["__typename"]),
-      id,
-      eveId,
-      type: SigType.Wormhole,
-      wormholeType: whType,
-      name,
-      connection: {
-        ...omit(existing?.connection, ["__typename"]),
-        eol: life === "eol",
-        massStatus: mass,
-        reverseSignature: {
-          ...reverseSignature,
-          systemName: destinationName || "",
-          wormholeType: whReverseType,
+    // const mutationData = {
+    //   ...omit(existing, ["__typename"]),
+    //   id,
+    //   eveId,
+    //   type: SigType.Wormhole,
+    //   wormholeType: whType,
+    //   name,
+    //   connection: {
+    //     ...omit(existing?.connection, ["__typename"]),
+    //     eol: life === "eol",
+    //     massStatus: mass,
+    //     reverseSignature: {
+    //       ...reverseSignature,
+    //       systemName: destinationName || "",
+    //       wormholeType: whReverseType,
+    //     },
+    //   },
+    // };
+
+    const type = getType(whType, whReverseType);
+
+    const res = await updateSignatures([
+      {
+        id,
+        eveId,
+        name,
+        type: SigType.Wormhole,
+        connection: {
+          to: destinationName,
+          eol: life === "eol",
+          massStatus: mass,
+          type,
+          k162: whType === "K162",
         },
       },
-    };
-
-    const res = await updateSignatures([mutationData]);
+    ]);
 
     if (res.data && !res.errors) {
       // fetchConnectionTree();

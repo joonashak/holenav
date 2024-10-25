@@ -62,6 +62,11 @@ query FindSignaturesBySystem($systemName: String!, $folderId: String!) {
       to
       type
       unknown
+      reverse {
+        id
+        type
+        k162
+      }
     }
   }
 }

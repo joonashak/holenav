@@ -35,7 +35,9 @@ const useSigForm = (props: UseSigFormProps) => {
   const submitEdit = async (formData: FieldValues) => {
     const id = existing?.id || "";
     const { name } = formData;
-    const res = await updateSignatures([{ name, type, eveId, id }]);
+    const res = await updateSignatures([
+      { name, type, eveId, id, connection: null },
+    ]);
 
     if (res.data && !res.errors) {
       showSuccessNotification("Signature updated.");
