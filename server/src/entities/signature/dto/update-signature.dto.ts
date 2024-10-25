@@ -1,8 +1,14 @@
-import { Field, InputType, OmitType } from "@nestjs/graphql";
+import { Field, InputType, OmitType, PartialType } from "@nestjs/graphql";
+import { UpdateConnection } from "../../connection/dto/update-connection.dto";
 import { CreateSignature } from "./create-signature.dto";
 
 @InputType()
-export class UpdateSignature extends OmitType(CreateSignature, ["systemName"]) {
+export class UpdateSignature extends PartialType(
+  OmitType(CreateSignature, ["systemName", "connection"]),
+) {
   @Field()
   id: string;
+
+  @Field(() => UpdateConnection, { nullable: true })
+  connection?: UpdateConnection;
 }

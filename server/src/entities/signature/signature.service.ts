@@ -4,6 +4,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { ConnectionService } from "../connection/connection.service";
+import MassStatus from "../connection/mass-status.enum";
 import { Folder } from "../folder/folder.model";
 import { FolderService } from "../folder/folder.service";
 import { CreateSignature } from "./dto/create-signature.dto";
@@ -85,13 +86,38 @@ export class SignatureService {
 
     // Require folder ID to be correct for security.
     const signature = await this.signatureModel
-      .findOne({ id, folder })
+      .findOne({ _id: id, folder })
       .populate(this.populateFields);
-    await this.signatureModel.findByIdAndUpdate(id, sigUpdate);
+    await this.signatureModel.findByIdAndUpdate(signature.id, sigUpdate);
 
-    // TODO: Update connection.
+    if (!signature.connection && connectionUpdate) {
+      const connection = await this.connectionService.create({
+        to: null,
+        type: null,
+        k162: false,
+        eol: false,
+        massStatus: MassStatus.STABLE,
+        ...connectionUpdate,
+        from: signature.systemName,
+      });
+      await this.signatureModel.findByIdAndUpdate(signature.id, { connection });
+    }
 
-    return this.findById(id);
+    if (signature.connection && connectionUpdate) {
+      await this.connectionService.update(
+        signature.connection.id,
+        connectionUpdate,
+      );
+    }
+
+    if (signature.connection && connectionUpdate === null) {
+      await this.connectionService.delete(signature.connection.id);
+      await this.signatureModel.findByIdAndUpdate(signature.id, {
+        connection: null,
+      });
+    }
+
+    return this.findById(signature.id);
   }
 
   async updateSignatures(
