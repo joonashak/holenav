@@ -2,9 +2,10 @@ import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { randomUUID } from "crypto";
 import { pick } from "lodash";
-import { Model } from "mongoose";
+import { Model, UpdateQuery } from "mongoose";
 import { Connection, ConnectionDocument } from "./connection.model";
 import { CreateConnection } from "./dto/create-connection.dto";
+import { UpdateConnection } from "./dto/update-connection.dto";
 
 /**
  * Main concern of this service is to maintain the two-way connection graph by
@@ -14,6 +15,14 @@ import { CreateConnection } from "./dto/create-connection.dto";
  */
 @Injectable()
 export class ConnectionService {
+  private readonly duplicateFieldKeys = [
+    "massStatus",
+    "eol",
+    "eolAt",
+    "type",
+    "unknown",
+  ];
+
   constructor(
     @InjectModel(Connection.name) private connectionModel: Model<Connection>,
   ) {}
@@ -34,13 +43,7 @@ export class ConnectionService {
       unknown,
     });
 
-    const duplicateFields = pick(created.toObject(), [
-      "massStatus",
-      "eol",
-      "eolAt",
-      "type",
-      "unknown",
-    ]);
+    const duplicateFields = pick(created.toObject(), this.duplicateFieldKeys);
 
     const reverse = await this.connectionModel.create({
       ...duplicateFields,
@@ -53,6 +56,37 @@ export class ConnectionService {
     created.reverse = reverse;
     await created.save();
     return created.populate("reverse");
+  }
+
+  /**
+   * Update connection and its linked pair.
+   *
+   * Note that updating `from` field is not supported.
+   */
+  async update(id: string, update: UpdateConnection): Promise<Connection> {
+    const query: UpdateQuery<Connection> = update;
+
+    const revQuery: UpdateQuery<Connection> = pick(
+      query,
+      this.duplicateFieldKeys,
+    );
+
+    // Check for undefined to keep `to` field optional.
+    if (update.to !== undefined) {
+      query.to = update.to || randomUUID();
+      query.unknown = !update.to;
+      revQuery.from = query.to;
+      revQuery.unknown = query.unknown;
+    }
+
+    // Check for undefined to keep `k162` field optional.
+    if (update.k162 !== undefined) {
+      revQuery.k162 = update.k162 !== null && !update.k162;
+    }
+
+    const connection = await this.connectionModel.findByIdAndUpdate(id, query);
+    await this.connectionModel.findByIdAndUpdate(connection.reverse, revQuery);
+    return this.connectionModel.findById(connection).populate("reverse");
   }
 
   /** Remove connection and its linked pair. */

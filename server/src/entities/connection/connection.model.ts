@@ -39,7 +39,7 @@ export class Connection {
   @Prop()
   type: string;
 
-  @Field()
+  @Field({ nullable: true })
   @Prop()
   k162: boolean;
 
