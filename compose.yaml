@@ -30,6 +30,7 @@ services:
       - NODE_ENV=development
       - MONGO_URL=mongodb://mongo/holenav
       - CLIENT_URL=http://localhost:3000
+      - SSO_CALLBACK_URL=http://localhost:3001/sso/callback
     env_file:
       - .env.development
     depends_on:
@@ -41,14 +42,19 @@ services:
       service: server-base
     container_name: holenav-server-test
     ports:
-      - 4001:3001
+      - 4001:4001
     environment:
-      - NODE_ENV=test
+      - PORT=4001
+      - NODE_ENV=development
       - MONGO_URL=mongodb://mongo/holenav-test
       - CLIENT_URL=http://localhost:4000
       - SSO_CLIENT_ID=asd
       - SSO_SECRET_KEY=asd
-      - SSO_CALLBACK_URL=asd
+      - SSO_CALLBACK_URL=http://localhost:4001/sso/callback
+      - TOKEN_URL=http://mock-esi:4200/oauth/token
+      - VERIFY_URL=http://mock-esi:4200/oauth/verify
+      - ESI_BASE_URL=http://mock-esi:4200
+      - AUTHORIZATION_URL=http://localhost:4001/sso/callback?code=asd
     depends_on:
       - mongo
 
@@ -62,6 +68,15 @@ services:
         target: /data/db
         volume:
           nocopy: true
+
+  mock-esi:
+    image: mockoon/cli
+    container_name: beancounter-mock-esi
+    ports:
+      - 4200:4200
+    volumes:
+      - ./testing/mock-esi:/data
+    command: "--port 4200 --data /data/mockoon.config.json"
 
 volumes:
   mongo-data:

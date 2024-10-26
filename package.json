@@ -7,8 +7,8 @@
   },
   "scripts": {
     "start": "docker compose up -d mongo server web && npm run logs",
-    "start:test": "docker compose up -d mongo server-test web-test",
-    "stop": "docker compose down && docker compose -f compose.ci.yaml down",
+    "start:test": "docker compose up -d mongo mock-esi server-test web-test",
+    "stop": "docker compose down",
     "logs": "docker compose logs -f server web",
     "logs:all": "docker compose logs -f",
     "test": "npm run lint && npm run test:server",
