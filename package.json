@@ -13,6 +13,7 @@
     "logs:all": "docker compose logs -f",
     "test": "npm run lint && npm run test:server",
     "test:server": "cd server && npm test",
+    "test:e2e": "npm run start:test && cd testing/e2e && npm test",
     "lint": "cd web && npm run lint && cd ../server && npm run lint && npm run lint",
     "build": "docker compose build",
     "db:drop": "docker volume rm holenav_mongo-data",
