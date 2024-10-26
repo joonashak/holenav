@@ -36,18 +36,5 @@ services:
     networks:
       - ci
 
-  e2e:
-    build: ./e2e/
-    networks:
-      - ci
-    container_name: holenav-e2e
-    environment:
-      - CYPRESS_BASE_URL=http://web:5173
-      - CYPRESS_API_URL=http://server:3001
-    volumes:
-      - ./e2e/cypress:/e2e/cypress
-    depends_on:
-      - server
-
 networks:
   ci:

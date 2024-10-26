@@ -61,7 +61,7 @@ up. :::
 ### Run Linter
 
 Lints all sub-projects when run in repository root. Can also be run in
-sub-project folders `client`, `e2e` and `server`.
+sub-project folders `client` and `server`.
 
 ```bash
 npm run lint
@@ -99,18 +99,6 @@ commands.
 
 ```bash
 npm test
-```
-
-### Run Only End-to-End Tests (Cypress)
-
-```bash
-npm run test:e2e
-```
-
-### Open Cypress GUI
-
-```bash
-npm run test:open
 ```
 
 ## Database Management

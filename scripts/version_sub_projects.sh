@@ -9,7 +9,6 @@
 projects=(
   "web"
   "docs"
-  "e2e"
   "server"
 )
 
