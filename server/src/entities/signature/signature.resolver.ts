@@ -58,6 +58,16 @@ export class SignatureResolver {
   }
 
   @RequireFolderAccess(FolderAction.Write)
+  @Mutation(() => [FindSignature])
+  async removeSignatures(
+    @Args({ name: "signatureIds", type: () => [String] })
+    signatureIds: string[],
+    @Args("folderId") folderId: string,
+  ): Promise<FindSignature[]> {
+    return this.signatureService.deleteSignatures(signatureIds, folderId);
+  }
+
+  @RequireFolderAccess(FolderAction.Write)
   @Mutation(() => SignaturePasteResult)
   async pasteSignatures(
     @Args("input") input: SignaturePaste,

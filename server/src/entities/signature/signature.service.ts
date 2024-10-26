@@ -131,14 +131,36 @@ export class SignatureService {
     return Promise.all(updates.map((update) => this.update(update, folder)));
   }
 
+  async delete(signatureId: string, folder: Folder): Promise<FindSignature> {
+    // Require folder ID to be correct for security.
+    const signature = await this.signatureModel
+      .findOne({ _id: signatureId, folder })
+      .populate("connection");
+
+    if (!signature) {
+      return null;
+    }
+
+    if (signature.connection) {
+      await this.connectionService.delete(signature.connection.id);
+    }
+
+    return this.signatureModel.findByIdAndDelete(signature);
+  }
+
   /**
-   * Delete signatures and their possible reverse wormholes by ID.
+   * Delete signatures and their connections.
    *
-   * @param ids IDs of the Signatures to delete.
-   * @returns Deleted Signatures (not including possible deleted reverse
-   *   wormholes).
+   * Safe to use for non-existent signatures.
    */
-  async deleteSignatures(ids: string[]): Promise<Signature[]> {
-    return [];
+  async deleteSignatures(
+    ids: string[],
+    folderId: string,
+  ): Promise<FindSignature[]> {
+    const folder = await this.folderService.getFolderById(folderId);
+    const results = await Promise.all(
+      ids.map(async (id) => this.delete(id, folder)),
+    );
+    return results.filter(Boolean);
   }
 }

@@ -33,7 +33,10 @@ export class SignaturePasteService {
     );
 
     const deletableSigs = this.getDeletableSigs(paste, existingSigs);
-    const deleted = await this.signatureService.deleteSignatures(deletableSigs);
+    const deleted = await this.signatureService.deleteSignatures(
+      deletableSigs,
+      folderId,
+    );
 
     return { added, updated, deleted };
   }
