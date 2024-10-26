@@ -7,6 +7,7 @@ import {
   FindSignaturesBySystemDocument,
   PasteSignaturesDocument,
   PastedSignature,
+  RemoveSignaturesDocument,
   Signature,
   UpdateSignature,
   UpdateSignaturesDocument,
@@ -47,7 +48,15 @@ const useSignatures = () => {
   const updateSignatures = async (updates: UpdateSignature[]) =>
     _updateSignatures({ variables: { updates, folderId } });
 
-  const deleteSignatures = async (): Promise<void> => {};
+  const [_removeSignatures] = useMutation(RemoveSignaturesDocument, {
+    refetchQueries: [
+      FindSignaturesBySystemDocument,
+      FindConnectionGraphDocument,
+    ],
+  });
+
+  const removeSignatures = async (ids: string[]) =>
+    _removeSignatures({ variables: { signatureIds: ids, folderId } });
 
   const [pasteSigsMutation] = useMutation(PasteSignaturesDocument, {
     refetchQueries: [FindSignaturesBySystemDocument],
@@ -72,7 +81,7 @@ const useSignatures = () => {
     signatures,
     createSignatures,
     updateSignatures,
-    deleteSignatures,
+    removeSignatures,
     pasteSignatures,
   };
 };

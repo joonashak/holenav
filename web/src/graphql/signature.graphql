@@ -76,3 +76,9 @@ mutation UpdateSignatures($updates: [UpdateSignature!]!, $folderId: String!) {
     id
   }
 }
+
+mutation RemoveSignatures($signatureIds: [String!]!, $folderId: String!) {
+  removeSignatures(signatureIds: $signatureIds, folderId: $folderId) {
+    id
+  }
+}

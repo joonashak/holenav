@@ -11,7 +11,7 @@ type DeleteSigButtonProps = {
 
 const DeleteSigButton = ({ sig }: DeleteSigButtonProps) => {
   const [anchor, setAnchor] = useState<Element | null>(null);
-  const { deleteSignatures } = useSignatures();
+  const { removeSignatures } = useSignatures();
   const { showSuccessNotification } = useNotification();
 
   const onOpen = (event: MouseEvent<HTMLElement>) => {
@@ -23,7 +23,7 @@ const DeleteSigButton = ({ sig }: DeleteSigButtonProps) => {
   };
 
   const onConfirm = async () => {
-    await deleteSignatures([sig.id]);
+    await removeSignatures([sig.id]);
     showSuccessNotification("Signature deleted.");
 
     onClose();
