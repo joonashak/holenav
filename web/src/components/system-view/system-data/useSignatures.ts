@@ -1,5 +1,4 @@
 import { useMutation, useQuery } from "@apollo/client";
-import { useState } from "@hookstate/core";
 import {
   CreateSignature,
   CreateSignaturesDocument,
@@ -8,20 +7,20 @@ import {
   PasteSignaturesDocument,
   PastedSignature,
   RemoveSignaturesDocument,
-  Signature,
   UpdateSignature,
   UpdateSignaturesDocument,
 } from "../../../generated/graphqlOperations";
 import useActiveFolder from "../../../hooks/useActiveFolder";
 import useCurrentSystemName from "../useCurrentSystemName";
-import { systemState } from "./SystemData";
-
-export type AddSignatureHookInput = Omit<Signature, "id" | "systemName">;
 
 const useSignatures = () => {
   const systemName = useCurrentSystemName();
-  const state = useState(systemState);
   const { activeFolderId: folderId } = useActiveFolder();
+
+  const refetchQueries = [
+    FindSignaturesBySystemDocument,
+    FindConnectionGraphDocument,
+  ];
 
   const { data } = useQuery(FindSignaturesBySystemDocument, {
     variables: { systemName, folderId },
@@ -29,37 +28,28 @@ const useSignatures = () => {
   const signatures = data?.findSignaturesBySystem || [];
 
   const [_createSignatures] = useMutation(CreateSignaturesDocument, {
-    refetchQueries: [
-      FindSignaturesBySystemDocument,
-      FindConnectionGraphDocument,
-    ],
+    refetchQueries,
   });
 
   const createSignatures = (signatures: CreateSignature[]) =>
     _createSignatures({ variables: { signatures, folderId } });
 
   const [_updateSignatures] = useMutation(UpdateSignaturesDocument, {
-    refetchQueries: [
-      FindSignaturesBySystemDocument,
-      FindConnectionGraphDocument,
-    ],
+    refetchQueries,
   });
 
   const updateSignatures = async (updates: UpdateSignature[]) =>
     _updateSignatures({ variables: { updates, folderId } });
 
   const [_removeSignatures] = useMutation(RemoveSignaturesDocument, {
-    refetchQueries: [
-      FindSignaturesBySystemDocument,
-      FindConnectionGraphDocument,
-    ],
+    refetchQueries,
   });
 
   const removeSignatures = async (ids: string[]) =>
     _removeSignatures({ variables: { signatureIds: ids, folderId } });
 
   const [pasteSigsMutation] = useMutation(PasteSignaturesDocument, {
-    refetchQueries: [FindSignaturesBySystemDocument],
+    refetchQueries,
   });
 
   const pasteSignatures = async (
@@ -71,7 +61,7 @@ const useSignatures = () => {
         folderId,
         input: {
           pastedSignatures,
-          systemName: state.name.get(),
+          systemName,
           deleteMissingSigs,
         },
       },
