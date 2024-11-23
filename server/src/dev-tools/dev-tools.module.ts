@@ -1,3 +1,4 @@
+import { CloneBayMockingModule } from "@joonashak/nestjs-clone-bay";
 import { Module } from "@nestjs/common";
 import { SessionModule } from "../auth/session/session.module";
 import { SsoSessionModule } from "../auth/sso/sso-session/sso-session.module";
@@ -17,6 +18,7 @@ const options = {
     SignatureModule,
     SsoSessionModule,
     SessionModule,
+    CloneBayMockingModule,
   ],
   providers: [DevToolsService, MockUserService, MockFolderService],
   controllers: [DevToolsController],

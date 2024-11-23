@@ -71,7 +71,7 @@ services:
 
   mock-esi:
     image: mockoon/cli
-    container_name: beancounter-mock-esi
+    container_name: holenav-mock-esi
     ports:
       - 4200:4200
     volumes:
