@@ -1,6 +1,6 @@
 import { test } from "@playwright/test";
 
-type Account = {
+export type Account = {
   eveId: number;
   name: string;
 };
