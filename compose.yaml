@@ -51,9 +51,6 @@ services:
       - SSO_CLIENT_ID=asd
       - SSO_SECRET_KEY=asd
       - SSO_CALLBACK_URL=http://localhost:4001/sso/callback
-      - TOKEN_URL=http://mock-esi:4200/oauth/token
-      - VERIFY_URL=http://mock-esi:4200/oauth/verify
-      - ESI_BASE_URL=http://mock-esi:4200
       - AUTHORIZATION_URL=http://localhost:4001/sso/callback?code=asd
     depends_on:
       - mongo
@@ -68,15 +65,6 @@ services:
         target: /data/db
         volume:
           nocopy: true
-
-  mock-esi:
-    image: mockoon/cli
-    container_name: holenav-mock-esi
-    ports:
-      - 4200:4200
-    volumes:
-      - ./testing/mock-esi:/data
-    command: "--port 4200 --data /data/mockoon.config.json"
 
 volumes:
   mongo-data:

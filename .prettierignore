@@ -6,4 +6,3 @@
 server/public/
 testing/e2e/playwright-report/
 testing/e2e/test-results/
-testing/mock-esi/mockoon.config.json

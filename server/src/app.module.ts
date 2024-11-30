@@ -26,10 +26,6 @@ import { EsiModule } from "./esi/esi.module";
 import { FrontendModule } from "./frontend/frontend.module";
 import graphQlModuleConfig from "./graphql-module-config";
 import { ScheduledTasksModule } from "./scheduled-tasks/scheduled-tasks.module";
-import {
-  getCloneBayMockingOptions,
-  getEveAuthMockingOptions,
-} from "./test-utils/mock-esi-config";
 import { UserPreferencesModule } from "./user/user-preferences/user-preferences.module";
 
 @Module({
@@ -39,7 +35,6 @@ import { UserPreferencesModule } from "./user/user-preferences/user-preferences.
     BootstrapModule,
     CloneBayModule.forRoot({
       afterLoginUrl: CLIENT_URL,
-      ...getCloneBayMockingOptions(),
     }),
     CloneBayResolversModule,
     CloneBaySsoModule,
@@ -51,7 +46,6 @@ import { UserPreferencesModule } from "./user/user-preferences/user-preferences.
       secretKey: SSO_SECRET_KEY,
       callbackUrl: SSO_CALLBACK_URL,
       scopes: ["esi-search.search_structures.v1"],
-      ...getEveAuthMockingOptions(),
     }),
     FolderAccessControlModule,
     FrontendModule,
