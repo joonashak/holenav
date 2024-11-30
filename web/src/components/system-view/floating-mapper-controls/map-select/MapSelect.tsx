@@ -54,7 +54,11 @@ const MapSelect = () => {
 
   return (
     <>
-      <Button variant="outlined" onClick={handleClick}>
+      <Button
+        variant="outlined"
+        onClick={handleClick}
+        aria-label="Select active map"
+      >
         {selectedMap?.name || "Map not selected"}
       </Button>
       <Menu
