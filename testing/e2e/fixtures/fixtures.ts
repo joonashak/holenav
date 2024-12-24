@@ -1,4 +1,5 @@
 import { mergeTests } from "@playwright/test";
+import { alertFixture } from "./alert/alert.fixture";
 import { authFixture } from "./auth.fixture";
 import { folderFixture } from "./folder/folder.fixture";
 import { mapFixture } from "./map/map.fixture";
@@ -9,4 +10,5 @@ export const test = mergeTests(
   mapFixture,
   folderFixture,
   signatureFixture,
+  alertFixture,
 );
