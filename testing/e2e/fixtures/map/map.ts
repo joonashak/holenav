@@ -1,14 +1,11 @@
 import { expect, Page } from "@playwright/test";
-import { Account } from "../auth.fixture";
 
 export class Map {
-  constructor(
-    public readonly page: Page,
-    public readonly account: Account,
-  ) {}
+  constructor(public readonly page: Page) {}
 
-  async create() {
-    const mapName = `E2E Map ${this.account.eveId}`;
+  async create(name?: string) {
+    const hash = crypto.randomUUID().slice(9, 13);
+    const mapName = name || `E2E Map ${hash}`;
     await this.page.goto("/system/J104809");
     await this.page.getByRole("button", { name: "Select active map" }).click();
     await this.page.getByRole("menuitem", { name: "New Map" }).click();
