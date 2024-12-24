@@ -8,8 +8,25 @@ export class Signature {
     await this.page.getByRole("button", { name: "Add Signature" }).click();
   }
 
+  async fillSignatureForm({ id, type }: { id: string; type?: string }) {
+    await this.getIdField().fill(id);
+
+    if (type) {
+      await this.selectType(type);
+    }
+  }
+
   getIdField() {
     return this.page.getByLabel("ID");
+  }
+
+  getTypeField() {
+    return this.page.getByLabel("Signature Type");
+  }
+
+  async selectType(type: string) {
+    await this.getTypeField().click();
+    await this.page.getByRole("option", { name: type }).click();
   }
 
   getSaveButton() {

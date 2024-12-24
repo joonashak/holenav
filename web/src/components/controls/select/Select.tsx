@@ -31,7 +31,7 @@ const Select = ({ options, onChange, value, title }: SelectProps) => {
         labelId={labelId}
         label={title}
         onChange={onChange}
-        data-cy={`select-${title}`}
+        aria-label={title}
       >
         {options.map((opt) => (
           <MenuItem key={`select-${title}-option-${opt.id}`} value={opt.value}>
