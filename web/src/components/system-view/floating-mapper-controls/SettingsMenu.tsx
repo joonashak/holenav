@@ -23,7 +23,7 @@ const SettingsMenu = () => {
 
   return (
     <>
-      <IconButton onClick={handleClick}>
+      <IconButton onClick={handleClick} aria-label="Open Settings Menu">
         <SettingsIcon sx={{ width: "auto", height: 70 }} />
       </IconButton>
       <Menu
