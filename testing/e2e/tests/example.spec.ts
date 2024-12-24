@@ -14,7 +14,8 @@ test("test if map fixture breaks", async ({ map }) => {
   map.asd();
 });
 
-test("Create unknown signature", async ({ page }) => {
+test("Create unknown signature", async ({ page, folder }) => {
+  await folder.create();
   await page.goto("/system/J100001");
   await page.getByRole("button", { name: "Add Signature" }).click();
   await page.getByLabel("ID").fill("ASD-123");
