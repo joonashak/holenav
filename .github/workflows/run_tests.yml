@@ -84,17 +84,41 @@ jobs:
           npx playwright test --shard=${{ matrix.shardIndex }}/${{
           matrix.shardTotal }}
         working-directory: testing/e2e
-      - name: Upload test report
+      - name: Upload blob report
         uses: actions/upload-artifact@v4
-        if: always()
+        if: ${{ !cancelled() }}
         with:
-          # name: playwright-report
-          name: playwright-report-blob-${{ matrix.shardIndex }}
-          path: testing/e2e/playwright-report/
-      - name: Upload test results on failure
+          name: blob-report-${{ matrix.shardIndex }}
+          path: testing/e2e/blob-report/
+          retention-days: 1
+
+  e2e-report:
+    name: E2E test report
+    runs-on: ubuntu-latest
+    needs:
+      - test-e2e
+    if: ${{ !cancelled() }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+      - name: Install dependencies
+        run: npm ci
+        working-directory: testing/e2e
+      - name: Download blob reports
+        uses: actions/download-artifact@v4
+        with:
+          path: testing/e2e/all-blob-reports
+          pattern: blob-report-*
+          merge-multiple: true
+      - name: Merge into HTML Report
+        run: npx playwright merge-reports --reporter html ./all-blob-reports
+        working-directory: testing/e2e
+      - name: Upload HTML report
         uses: actions/upload-artifact@v4
-        if: failure()
         with:
-          # name: test-results
-          name: test-results-blob-${{ matrix.shardIndex }}
-          path: testing/e2e/test-results/
+          name: e2e-test-report--attempt-${{ github.run_attempt }}
+          path: testing/e2e/playwright-report
