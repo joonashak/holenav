@@ -18,7 +18,7 @@ const EditSigButton = ({ signature }: EditSigButtonProps) => {
         size="small"
         sx={{ pt: 0, pb: 0 }}
         onClick={toggleModal}
-        aria-label="Edit Signature"
+        aria-label={`Edit Signature ${signature.eveId}`}
         data-cy={`edit-sig-${signature.name}`}
       >
         <EditIcon fontSize="inherit" />

@@ -34,7 +34,7 @@ const DeleteSigButton = ({ sig }: DeleteSigButtonProps) => {
       <IconButton
         onClick={onOpen}
         size="small"
-        aria-label="Delete Signature"
+        aria-label={`Delete Signature ${sig.eveId}`}
         data-cy={`delete-sig-${sig.name}`}
       >
         <DeleteIcon fontSize="inherit" />

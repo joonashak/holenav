@@ -50,3 +50,22 @@ test("Alert is shown after adding a signature", async ({
 
   await expect(alert.getAlert()).toContainText("Signature added");
 });
+
+test("Create a signature with a name", async ({ signature }) => {
+  const name = "Maximum jeejee";
+  await signature.fillSignatureForm({ id, name });
+  await signature.getSaveButton().click();
+
+  await expect(signature.getSignatureList()).toContainText(name);
+});
+
+test("Alerts about duplicate ID", async ({ signature, page }) => {
+  await signature.fillSignatureForm({ id });
+  await signature.getSaveButton().click();
+  await signature.openSignatureModal();
+  await signature.fillSignatureForm({ id });
+
+  await expect(
+    page.getByRole("button", { name: "Remove duplicate" }),
+  ).toBeVisible();
+});
