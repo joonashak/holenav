@@ -9,7 +9,7 @@ on:
 jobs:
   publish-docs:
     name: Publish documentation
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     environment: docs.holenav.com
     steps:
       - name: Checkout
