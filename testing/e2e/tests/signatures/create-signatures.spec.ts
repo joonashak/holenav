@@ -1,15 +1,15 @@
 import { expect } from "@playwright/test";
-import { test } from "../fixtures/fixtures";
+import { test } from "../../fixtures/fixtures";
 
 const id = "ASD-123";
 
-test.beforeEach(async ({ folder, page }) => {
+test.beforeEach(async ({ folder, page, signature }) => {
   await folder.create();
   await page.goto("/system/J100001");
+  await signature.openSignatureModal();
 });
 
 test("Create an unknown signature", async ({ signature }) => {
-  await signature.openSignatureModal();
   await signature.fillSignatureForm({ id });
   await signature.getSaveButton().click();
 
@@ -18,7 +18,6 @@ test("Create an unknown signature", async ({ signature }) => {
 });
 
 test("Create a data signature", async ({ signature }) => {
-  await signature.openSignatureModal();
   await signature.fillSignatureForm({ id, type: "Data" });
   await signature.getSaveButton().click();
 
@@ -27,7 +26,6 @@ test("Create a data signature", async ({ signature }) => {
 });
 
 test("Create a relic signature", async ({ signature }) => {
-  await signature.openSignatureModal();
   await signature.fillSignatureForm({ id, type: "Relic" });
   await signature.getSaveButton().click();
 
@@ -36,7 +34,6 @@ test("Create a relic signature", async ({ signature }) => {
 });
 
 test("Create a gas signature", async ({ signature }) => {
-  await signature.openSignatureModal();
   await signature.fillSignatureForm({ id, type: "Gas" });
   await signature.getSaveButton().click();
 
@@ -48,7 +45,6 @@ test("Alert is shown after adding a signature", async ({
   signature,
   alert,
 }) => {
-  await signature.openSignatureModal();
   await signature.fillSignatureForm({ id });
   await signature.getSaveButton().click();
 
