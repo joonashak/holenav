@@ -4,8 +4,8 @@ import { test } from "../../fixtures/fixtures";
 const id = "DSA-456";
 
 test.beforeEach(async ({ folder, signature, page }) => {
-  await folder.create();
   await page.goto("/system/J100001");
+  await folder.create();
   await signature.openSignatureModal();
   await signature.fillSignatureForm({ id });
   await signature.getSaveButton().click();

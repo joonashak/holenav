@@ -4,8 +4,8 @@ import { test } from "../../fixtures/fixtures";
 const id = "ASD-123";
 
 test.beforeEach(async ({ folder, page, signature }) => {
-  await folder.create();
   await page.goto("/system/J100001");
+  await folder.create();
   await signature.openSignatureModal();
 });
 
