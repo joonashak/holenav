@@ -21,6 +21,7 @@ const Map = () => {
 
   return (
     <Box
+      aria-label="Connection tree"
       sx={{
         backgroundColor: "primary.dark",
         position: "absolute",

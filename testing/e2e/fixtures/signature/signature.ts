@@ -21,10 +21,12 @@ export class Signature {
     id,
     type,
     name,
+    destination,
   }: {
     id?: string;
     type?: string;
     name?: string;
+    destination?: string;
   }) {
     if (id) {
       await this.getIdField().fill(id);
@@ -36,6 +38,10 @@ export class Signature {
 
     if (name) {
       await this.getNameField().fill(name);
+    }
+
+    if (destination) {
+      await this.selectDestination(destination);
     }
   }
 
@@ -61,8 +67,19 @@ export class Signature {
     return this.page.getByLabel("Name");
   }
 
-  getSaveButton() {
-    return this.page.getByRole("button", { name: "Save Signature" });
+  getDestinationField() {
+    return this.page.getByLabel("Destination");
+  }
+
+  async selectDestination(name: string) {
+    await this.getDestinationField().fill(name);
+    await this.page.getByRole("option", { name, exact: true }).click();
+  }
+
+  getSaveButton(type: "signature" | "wormhole" = "signature") {
+    return this.page.getByRole("button", {
+      name: type === "signature" ? "Save Signature" : "Save Wormhole",
+    });
   }
 
   getSignatureList() {
