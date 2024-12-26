@@ -23,6 +23,13 @@ export class Folder {
     return folderName;
   }
 
+  /** Change active folder including opening and closing folder settings modal. */
+  async changeActiveFolder(name: string) {
+    await this.openFolderSettings();
+    await this.selectActiveFolder(name);
+    await this.page.keyboard.press("Escape");
+  }
+
   async openFolderSettings() {
     await this.page.getByLabel("Open Settings Menu").click();
     await this.page.getByRole("menuitem", { name: "Folder Options" }).click();
