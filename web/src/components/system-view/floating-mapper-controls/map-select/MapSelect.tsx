@@ -67,6 +67,7 @@ const MapSelect = () => {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         open={open}
         onClose={closeMenu}
+        aria-label="Map list"
       >
         {maps.map((map) => (
           <MenuItem
@@ -88,6 +89,7 @@ const MapSelect = () => {
             </ListItemText>
             <IconButton
               color="secondary"
+              aria-label={`Edit map "${map.name}"`}
               onClick={(event) => {
                 event.stopPropagation();
                 navigate("edit-map", { state: { map } });
@@ -98,6 +100,7 @@ const MapSelect = () => {
             <ConfirmButton
               icon={<DeleteIcon />}
               onConfirm={handleRemove(map.id)}
+              aria-label={`Delete map "${map.name}"`}
             />
           </MenuItem>
         ))}

@@ -27,6 +27,7 @@ const ConfirmButton = ({ onConfirm, ...props }: ConfirmButtonProps) => {
       {...props}
       onClick={onClick}
       color={confirming ? "error" : undefined}
+      aria-label={confirming ? "Confirm delete" : props["aria-label"]}
     >
       {confirming ? <CheckOutlinedIcon /> : props.icon}
     </IconButton>
