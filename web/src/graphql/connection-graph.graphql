@@ -1,5 +1,5 @@
-query FindConnectionGraph($root: String!) {
-  findConnectionGraph(root: $root) {
+query FindConnectionGraph($root: String!, $folderId: String!) {
+  findConnectionGraph(root: $root, folderId: $folderId) {
     root
     connections {
       id

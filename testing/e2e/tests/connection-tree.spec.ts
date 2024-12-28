@@ -27,8 +27,9 @@ test("Connection is shown", async ({ page }) => {
   await expect(page.getByLabel("Connection tree")).toContainText("J170002");
 });
 
-test.skip("Removed connection is not shown", async ({ page, signature }) => {
-  // TODO: Access control (folders) for connections must be implemented before this.
+test("Removed connection is not shown", async ({ page, signature }) => {
   await signature.deleteSignature(id);
   await expect(page.getByLabel("Connection tree")).not.toContainText("J170002");
 });
+
+// TODO: Test that changing map changes shown connection tree root.

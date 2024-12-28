@@ -10,9 +10,12 @@ export class ConnectionGraphService {
     @InjectModel(Connection.name) private connectionModel: Model<Connection>,
   ) {}
 
-  async findBySystem(root: string): Promise<FindConnectionGraph> {
+  async findBySystem(
+    root: string,
+    folderId: string,
+  ): Promise<FindConnectionGraph> {
     const chains = await this.connectionModel.aggregate([
-      { $match: { from: root } },
+      { $match: { from: root, folderId } },
       {
         $graphLookup: {
           from: "connections",
@@ -22,6 +25,7 @@ export class ConnectionGraphService {
           as: "children",
           depthField: "depth",
           maxDepth: 100,
+          restrictSearchWithMatch: { folderId },
         },
       },
     ]);
@@ -33,24 +37,6 @@ export class ConnectionGraphService {
     return {
       root,
       connections,
-    };
-  }
-
-  /**
-   * Mongo's default ID's (`_id`) need to be mapped manually to GraphQL `id`
-   * fields because Mongoose does not apply the model to aggregate pipeline
-   * results.
-   */
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private addIdsToChain(chain: any) {
-    return {
-      ...chain,
-      id: chain._id,
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      children: chain.children.map((child: any) => ({
-        ...child,
-        id: child._id,
-      })),
     };
   }
 }
