@@ -1,4 +1,4 @@
-import { FindSignature } from "../../../../../generated/graphqlOperations";
+import { FindSignature } from "../../../../../generated/graphql-operations";
 import WormholeInfoTooltip from "../../../../common/WormholeInfoTooltip";
 
 type SigTypeLabelProps = {

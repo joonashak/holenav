@@ -1,6 +1,6 @@
 import { useQuery } from "@apollo/client";
 import axios from "axios";
-import { GetMyTokensDocument } from "../../generated/graphqlOperations";
+import { GetMyTokensDocument } from "../../generated/graphql-operations";
 import esiUrls from "./esiUrls";
 import { EsiSearchCategories, EsiSearchResult } from "./types";
 

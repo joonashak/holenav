@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import Tree from "react-d3-tree";
+import useConnectionData from "../../../hooks/useConnectionData";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
-import useConnectionData from "./connection-data/useConnectionData";
 import MapNode from "./map-node/MapNode";
 import MapStyles from "./map-styles/MapStyles";
 import pathClassFunc from "./map-styles/pathClassFunc";

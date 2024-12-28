@@ -1,5 +1,8 @@
 import { RawNodeDatum, TreeLinkDatum, TreeNodeDatum } from "react-d3-tree";
-import { MassStatus, Signature } from "../../../../generated/graphqlOperations";
+import {
+  MassStatus,
+  Signature,
+} from "../../../../generated/graphql-operations";
 
 export type MapState = {
   connectionTree: ConnectionTree;

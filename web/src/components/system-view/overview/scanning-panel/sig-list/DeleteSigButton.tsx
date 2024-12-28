@@ -1,7 +1,7 @@
 import DeleteIcon from "@mui/icons-material/Delete";
 import { IconButton, Menu, MenuItem } from "@mui/material";
 import { MouseEvent, useState } from "react";
-import { FindSignature } from "../../../../../generated/graphqlOperations";
+import { FindSignature } from "../../../../../generated/graphql-operations";
 import useNotification from "../../../../global-notification/useNotification";
 import useSignatures from "../../../system-data/useSignatures";
 

@@ -4,7 +4,7 @@ import { useLocalStorage } from "usehooks-ts";
 import {
   Character,
   GetMyUserPreferencesDocument,
-} from "../generated/graphqlOperations";
+} from "../generated/graphql-operations";
 
 const useSelectedCharacter = () => {
   const [selectedCharacterEveId, setSelectedCharacterEveId] = useLocalStorage(

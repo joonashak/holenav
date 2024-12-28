@@ -13,7 +13,7 @@ import {
   FindAccessibleFoldersDocument,
   GetMyUserPreferencesDocument,
   UpdateActiveFolderDocument,
-} from "../../../generated/graphqlOperations";
+} from "../../../generated/graphql-operations";
 import SettingsDialog from "../SettingsDialog";
 
 const FolderSettings = () => {

@@ -1,9 +1,9 @@
 import { useQuery } from "@apollo/client";
 import { useMemo } from "react";
-import { FindConnectionGraphDocument } from "../../../../generated/graphqlOperations";
-import useActiveFolder from "../../../../hooks/useActiveFolder";
-import useSelectedMap from "../../../../hooks/useSelectedMap";
-import buildConnectionTree from "./build-connection-tree";
+import buildConnectionTree from "../components/system-view/map/connection-data/build-connection-tree";
+import { FindConnectionGraphDocument } from "../generated/graphql-operations";
+import useActiveFolder from "./useActiveFolder";
+import useSelectedMap from "./useSelectedMap";
 
 const useConnectionData = () => {
   const { selectedMap } = useSelectedMap();

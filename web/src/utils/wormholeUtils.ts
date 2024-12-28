@@ -1,5 +1,5 @@
 import wormholes from "@eve-data/wormholes";
-import { Connection, Maybe, Signature } from "../generated/graphqlOperations";
+import { Connection, Maybe, Signature } from "../generated/graphql-operations";
 
 const isTrueType = (wormholeType: Maybe<string> | undefined) =>
   wormholeType && wormholeType !== "K162";

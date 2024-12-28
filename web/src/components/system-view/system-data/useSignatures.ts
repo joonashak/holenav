@@ -9,7 +9,7 @@ import {
   RemoveSignaturesDocument,
   UpdateSignature,
   UpdateSignaturesDocument,
-} from "../../../generated/graphqlOperations";
+} from "../../../generated/graphql-operations";
 import useActiveFolder from "../../../hooks/useActiveFolder";
 import useCurrentSystemName from "../useCurrentSystemName";
 

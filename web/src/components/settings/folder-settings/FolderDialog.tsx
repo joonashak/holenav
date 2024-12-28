@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import {
   CreateFolderDocument,
   FindAccessibleFoldersDocument,
-} from "../../../generated/graphqlOperations";
+} from "../../../generated/graphql-operations";
 import ControlledTextField from "../../controls/ControlledTextField";
 import SettingsDialog from "../SettingsDialog";
 

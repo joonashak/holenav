@@ -1,4 +1,4 @@
-import { SystemRoles } from "../generated/graphqlOperations";
+import { SystemRoles } from "../generated/graphql-operations";
 
 const systemRoleValues = {
   [SystemRoles.None]: 0,

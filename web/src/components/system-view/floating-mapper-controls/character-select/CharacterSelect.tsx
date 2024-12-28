@@ -16,7 +16,7 @@ import { useState } from "react";
 import {
   GetMyUserPreferencesDocument,
   RemoveAltDocument,
-} from "../../../../generated/graphqlOperations";
+} from "../../../../generated/graphql-operations";
 import useSelectedCharacter from "../../../../hooks/useSelectedCharacter";
 import ConfirmButton from "../../../common/ConfirmButton";
 

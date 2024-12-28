@@ -3,7 +3,7 @@ import { ChangeEvent, useEffect, useState } from "react";
 import {
   FindSignature,
   SigType,
-} from "../../../../../generated/graphqlOperations";
+} from "../../../../../generated/graphql-operations";
 import Dialog from "../../../../common/Dialog";
 import FormGroupRow from "../../../../controls/FormGroupRow";
 import Select from "../../../../controls/select/Select";

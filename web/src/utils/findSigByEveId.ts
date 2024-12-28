@@ -1,4 +1,4 @@
-import { Signature } from "../generated/graphqlOperations";
+import { Signature } from "../generated/graphql-operations";
 
 export const findSigByEveId = (
   eveId: string,

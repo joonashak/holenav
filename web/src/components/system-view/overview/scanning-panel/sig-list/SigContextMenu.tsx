@@ -5,7 +5,7 @@ import { MouseEvent, ReactNode, useState } from "react";
 import {
   FindSignature,
   SigType,
-} from "../../../../../generated/graphqlOperations";
+} from "../../../../../generated/graphql-operations";
 import TableRow from "../../../../common/TableRow";
 import useNotification from "../../../../global-notification/useNotification";
 import useSignatures from "../../../system-data/useSignatures";

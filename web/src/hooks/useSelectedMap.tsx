@@ -1,7 +1,7 @@
 import { useQuery } from "@apollo/client";
 import { useEffect, useMemo } from "react";
 import { useLocalStorage } from "usehooks-ts";
-import { FindMapsDocument } from "../generated/graphqlOperations";
+import { FindMapsDocument } from "../generated/graphql-operations";
 
 const useSelectedMap = () => {
   const [selectedMapId, setSelectedMapId] = useLocalStorage<string | undefined>(

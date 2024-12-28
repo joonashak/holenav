@@ -1,7 +1,7 @@
 import EditIcon from "@mui/icons-material/Edit";
 import { IconButton } from "@mui/material";
 import { useState } from "react";
-import { FindSignature } from "../../../../../generated/graphqlOperations";
+import { FindSignature } from "../../../../../generated/graphql-operations";
 import SigModal from "../sig-modal/SigModal";
 
 type EditSigButtonProps = {

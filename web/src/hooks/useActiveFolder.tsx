@@ -1,5 +1,5 @@
 import { useQuery } from "@apollo/client";
-import { GetMyUserPreferencesDocument } from "../generated/graphqlOperations";
+import { GetMyUserPreferencesDocument } from "../generated/graphql-operations";
 
 const useActiveFolder = () => {
   const { data } = useQuery(GetMyUserPreferencesDocument);

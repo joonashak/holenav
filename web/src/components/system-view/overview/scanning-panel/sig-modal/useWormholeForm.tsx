@@ -1,5 +1,8 @@
 import { FieldValues } from "react-hook-form";
-import { Signature, SigType } from "../../../../../generated/graphqlOperations";
+import {
+  Signature,
+  SigType,
+} from "../../../../../generated/graphql-operations";
 import useNotification from "../../../../global-notification/useNotification";
 import useSignatures from "../../../system-data/useSignatures";
 import useSystemData from "../../../system-data/useSystemData";

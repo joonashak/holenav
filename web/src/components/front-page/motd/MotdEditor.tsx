@@ -2,7 +2,7 @@ import { useMutation } from "@apollo/client";
 import { useState } from "@hookstate/core";
 import { Button, Typography } from "@mui/material";
 import { FieldValues, useForm } from "react-hook-form";
-import { UpdateMotdDocument } from "../../../generated/graphqlOperations";
+import { UpdateMotdDocument } from "../../../generated/graphql-operations";
 import ControlledTextField from "../../controls/ControlledTextField";
 import FormGroupRow from "../../controls/FormGroupRow";
 import useNotification from "../../global-notification/useNotification";

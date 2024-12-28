@@ -1,7 +1,7 @@
 import { Box, useTheme } from "@mui/material";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
-import { FindSignature } from "../../../../../generated/graphqlOperations";
+import { FindSignature } from "../../../../../generated/graphql-operations";
 import dayjs, {
   fixNegativeDurationMinuteFormatting,
 } from "../../../../../utils/dayjs";

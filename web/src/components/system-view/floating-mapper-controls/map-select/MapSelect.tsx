@@ -18,7 +18,7 @@ import { useNavigate } from "react-router-dom";
 import {
   FindMapsDocument,
   RemoveMapDocument,
-} from "../../../../generated/graphqlOperations";
+} from "../../../../generated/graphql-operations";
 import useSelectedMap from "../../../../hooks/useSelectedMap";
 import ConfirmButton from "../../../common/ConfirmButton";
 

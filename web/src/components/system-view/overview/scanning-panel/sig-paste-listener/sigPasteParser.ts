@@ -1,4 +1,4 @@
-import { SigType } from "../../../../../generated/graphqlOperations";
+import { SigType } from "../../../../../generated/graphql-operations";
 
 export type PastedSig = {
   eveId: string;

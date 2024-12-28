@@ -3,7 +3,7 @@ import { RawNodeDatum } from "react-d3-tree";
 import {
   FindConnectionGraphQuery,
   GraphConnection,
-} from "../../../../generated/graphqlOperations";
+} from "../../../../generated/graphql-operations";
 
 let visitedSystems: string[] = [];
 

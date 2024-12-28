@@ -1,5 +1,5 @@
 import wormholes from "@eve-data/wormholes";
-import { MassStatus } from "../../../../generated/graphqlOperations";
+import { MassStatus } from "../../../../generated/graphql-operations";
 import { MapLinkDatum } from "../connection-data/types";
 import MapLinkClasses from "./MapLinkClasses.enum";
 

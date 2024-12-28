@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import {
   Connection,
   MassStatus,
-} from "../../../../../generated/graphqlOperations";
+} from "../../../../../generated/graphql-operations";
 import ControlledRadioGroup from "../../../../controls/ControlledRadioGroup";
 import ControlledTextField from "../../../../controls/ControlledTextField";
 import FormGroupRow from "../../../../controls/FormGroupRow";

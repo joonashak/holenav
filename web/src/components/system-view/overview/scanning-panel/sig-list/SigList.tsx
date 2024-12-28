@@ -9,7 +9,7 @@ import {
   TableHead,
 } from "@mui/material";
 import { sortBy } from "lodash";
-import { SigType } from "../../../../../generated/graphqlOperations";
+import { SigType } from "../../../../../generated/graphql-operations";
 import TableRow from "../../../../common/TableRow";
 import useSignatures from "../../../system-data/useSignatures";
 import DeleteSigButton from "./DeleteSigButton";

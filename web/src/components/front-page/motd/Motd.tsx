@@ -4,7 +4,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import { Box, IconButton, Paper, Typography } from "@mui/material";
 import { useState as useReactState } from "react";
 import ReactMarkdown from "react-markdown";
-import { GetPublicAppDataDocument } from "../../../generated/graphqlOperations";
+import { GetPublicAppDataDocument } from "../../../generated/graphql-operations";
 import MotdEditor from "./MotdEditor";
 
 export const motdState = createState("");

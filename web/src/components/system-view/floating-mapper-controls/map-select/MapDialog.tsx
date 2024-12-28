@@ -17,7 +17,7 @@ import {
   FindMap,
   FindMapsDocument,
   UpdateMapDocument,
-} from "../../../../generated/graphqlOperations";
+} from "../../../../generated/graphql-operations";
 import ControlledTextField from "../../../controls/ControlledTextField";
 import RhfAutocomplete from "../../../controls/RhfAutocomplete";
 
