@@ -55,7 +55,7 @@ export class SignatureService {
     // Create new connection for wormholes.
     const connection =
       signature.type === SigType.WORMHOLE
-        ? await this.connectionService.create(signature.connection)
+        ? await this.connectionService.create(signature.connection, folder.id)
         : null;
 
     try {
@@ -94,15 +94,18 @@ export class SignatureService {
     await this.signatureModel.findByIdAndUpdate(signature.id, sigUpdate);
 
     if (!signature.connection && connectionUpdate) {
-      const connection = await this.connectionService.create({
-        to: null,
-        type: null,
-        k162: false,
-        eol: false,
-        massStatus: MassStatus.STABLE,
-        ...connectionUpdate,
-        from: signature.systemName,
-      });
+      const connection = await this.connectionService.create(
+        {
+          to: null,
+          type: null,
+          k162: false,
+          eol: false,
+          massStatus: MassStatus.STABLE,
+          ...connectionUpdate,
+          from: signature.systemName,
+        },
+        folder.id,
+      );
       await this.signatureModel.findByIdAndUpdate(signature.id, { connection });
     }
 

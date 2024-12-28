@@ -11,6 +11,14 @@ export class Connection {
   @Field()
   id: string;
 
+  /**
+   * Folder ID for access control.
+   *
+   * Note that this is the folder's UUID, not Mongo's internal ID.
+   */
+  @Prop({ index: true })
+  folderId: string;
+
   @Field()
   @Prop({ index: true })
   from: string;

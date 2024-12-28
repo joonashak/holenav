@@ -21,6 +21,7 @@ export class ConnectionService {
     "eolAt",
     "type",
     "unknown",
+    "folderId",
   ];
 
   constructor(
@@ -28,7 +29,10 @@ export class ConnectionService {
   ) {}
 
   /** Create `Connection` and its linked reverse `Connection`. */
-  async create(connection: CreateConnection): Promise<ConnectionDocument> {
+  async create(
+    connection: CreateConnection,
+    folderId: string,
+  ): Promise<ConnectionDocument> {
     /**
      * Assigning random destination names to connections with unknown
      * destinations prevents $graphLookup from connecting all unknown
@@ -41,6 +45,7 @@ export class ConnectionService {
       ...connection,
       to,
       unknown,
+      folderId,
     });
 
     const duplicateFields = pick(created.toObject(), this.duplicateFieldKeys);
