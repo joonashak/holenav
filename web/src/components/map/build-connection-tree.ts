@@ -1,9 +1,8 @@
 import { sortBy } from "lodash";
-import { RawNodeDatum } from "react-d3-tree";
 import {
   FindConnectionGraphQuery,
   GraphConnection,
-} from "../../../../generated/graphql-operations";
+} from "../../generated/graphql-operations";
 
 let visitedSystems: string[] = [];
 
@@ -11,7 +10,7 @@ let visitedSystems: string[] = [];
 const findChildren = (
   start: GraphConnection,
   connections: GraphConnection[],
-): RawNodeDatum => {
+): any => {
   visitedSystems.push(start.from);
   const loop = visitedSystems.includes(start.to);
 

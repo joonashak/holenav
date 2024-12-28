@@ -1,6 +1,6 @@
 import { useQuery } from "@apollo/client";
 import { useMemo } from "react";
-import buildConnectionTree from "../components/system-view/map/connection-data/build-connection-tree";
+import buildConnectionTree from "../components/map/build-connection-tree";
 import { FindConnectionGraphDocument } from "../generated/graphql-operations";
 import useActiveFolder from "./useActiveFolder";
 import useSelectedMap from "./useSelectedMap";
