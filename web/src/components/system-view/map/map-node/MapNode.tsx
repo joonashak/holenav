@@ -4,7 +4,7 @@ import { Box } from "@mui/material";
 import { CustomNodeElementProps } from "react-d3-tree";
 import useSelectedMap from "../../../../hooks/useSelectedMap";
 import useSystemData from "../../system-data/useSystemData";
-import { MapNodeDatum } from "../map-data/types";
+import { MapNodeDatum } from "../connection-data/types";
 import ConnectionName from "./ConnectionName";
 import MapNodeRect from "./MapNodeRect";
 import RootNodeName from "./RootNodeName";

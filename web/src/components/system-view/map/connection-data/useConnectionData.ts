@@ -5,9 +5,10 @@ import useActiveFolder from "../../../../hooks/useActiveFolder";
 import useCurrentSystemName from "../../useCurrentSystemName";
 import buildConnectionTree from "./build-connection-tree";
 
-const useMapData = () => {
+const useConnectionData = () => {
   const root = useCurrentSystemName();
   const { activeFolderId } = useActiveFolder();
+
   const { data } = useQuery(FindConnectionGraphDocument, {
     variables: { root, folderId: activeFolderId },
   });
@@ -20,4 +21,4 @@ const useMapData = () => {
   return { connectionTree };
 };
 
-export default useMapData;
+export default useConnectionData;

@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import Tree from "react-d3-tree";
 import useWindowDimensions from "../../../utils/useWindowDimensions";
-import useMapData from "./map-data/useMapData";
+import useConnectionData from "./connection-data/useConnectionData";
 import MapNode from "./map-node/MapNode";
 import MapStyles from "./map-styles/MapStyles";
 import pathClassFunc from "./map-styles/pathClassFunc";
@@ -15,7 +15,7 @@ const Node = (props: any) => <MapNode {...props} />;
 
 const Map = () => {
   const { width } = useWindowDimensions();
-  const { connectionTree } = useMapData();
+  const { connectionTree } = useConnectionData();
 
   const x = width / 2 + 240;
 

@@ -1,6 +1,6 @@
 import wormholes from "@eve-data/wormholes";
 import { MassStatus } from "../../../../generated/graphqlOperations";
-import { MapLinkDatum } from "../map-data/types";
+import { MapLinkDatum } from "../connection-data/types";
 import MapLinkClasses from "./MapLinkClasses.enum";
 
 const getWhSizeClass = (type: string, reverseType: string): MapLinkClasses => {

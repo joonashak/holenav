@@ -1,6 +1,6 @@
 import { Typography } from "@mui/material";
 import { useState } from "react";
-import { Wormhole } from "../map-data/types";
+import { Wormhole } from "../connection-data/types";
 
 type WhTypeLabelProps = {
   type: string | undefined;
