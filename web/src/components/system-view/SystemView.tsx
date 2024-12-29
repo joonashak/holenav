@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { Outlet } from "react-router-dom";
+import Map from "../map/Map";
 import Container from "./Container";
 import FloatingMapperControls from "./floating-mapper-controls/FloatingMapperControls";
 import Overview from "./overview/Overview";
@@ -19,6 +20,7 @@ const SystemView = () => {
     <SystemData>
       <Container>
         <Overview />
+        <Map />
         <FloatingMapperControls />
         <Outlet />
       </Container>

@@ -1,9 +1,9 @@
 import { useQuery } from "@apollo/client";
 import { useMemo } from "react";
-import buildConnectionTree from "../components/map/build-connection-tree";
-import { FindConnectionGraphDocument } from "../generated/graphql-operations";
-import useActiveFolder from "./useActiveFolder";
-import useSelectedMap from "./useSelectedMap";
+import { FindConnectionGraphDocument } from "../../../generated/graphql-operations";
+import useActiveFolder from "../../../hooks/useActiveFolder";
+import useSelectedMap from "../../../hooks/useSelectedMap";
+import buildFlowData from "./build-flow-data";
 
 const useConnectionData = () => {
   const { selectedMap } = useSelectedMap();
@@ -16,11 +16,14 @@ const useConnectionData = () => {
   });
 
   const connectionTree = useMemo(
-    () => buildConnectionTree(root, data),
-    [root, data],
+    () => buildFlowData(selectedMap, data),
+    [selectedMap, data],
   );
 
-  return { connectionTree };
+  return {
+    nodes: connectionTree.nodes || [],
+    edges: connectionTree.edges || [],
+  };
 };
 
 export default useConnectionData;
