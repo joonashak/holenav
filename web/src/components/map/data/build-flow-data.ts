@@ -6,73 +6,76 @@ import {
   GraphConnection,
 } from "../../../generated/graphql-operations";
 
-/** J100001 -> J100015 -> Tama -> J155311 */
+type MapNodeData = {
+  label: string;
+  systemName: string;
+};
 
-let visitedSystems: string[] = [];
-let nodes: Node[] = [];
+let nodes: Node<MapNodeData>[] = [];
+// TODO: Edges need data from GraphConnection.
 let edges: Edge[] = [];
 
-const connectionToNode = (c: GraphConnection): Node => ({
-  id: c.id,
+const connectionToNode = (connection: GraphConnection): Node<MapNodeData> => ({
+  id: connection.id,
   position: { x: 0, y: 0 },
-  data: { label: c.to },
+  data: { label: connection.to, systemName: connection.to },
 });
 
 /** Recursive factory to build tree from flat connection node list. */
 const findChildren = (
-  start: GraphConnection,
+  current: GraphConnection,
   connections: GraphConnection[],
-): any => {
-  nodes.push(connectionToNode(start));
-  visitedSystems.push(start.from);
-  const loop = visitedSystems.includes(start.to);
+): void => {
+  // Check for loop before pushing new node.
+  const loop = !!nodes.find((n) => n.data.systemName === current.to);
+  nodes.push(connectionToNode(current));
 
   if (loop) {
-    console.log("loop");
+    console.log("loop", current.to);
   }
 
   // Remove reverse connection to prevent traversing backwards through it.
   const connectionsWithoutReverse = connections.filter(
-    (conn) => conn.id !== start.reverse,
+    (conn) => conn.id !== current.reverse,
   );
 
   const directChildren = connectionsWithoutReverse.filter(
-    (conn) => conn.from === start.to,
+    (conn) => conn.from === current.to,
   );
 
   if (directChildren.length === 0 || loop) {
-    return {
-      name: start.to,
-      children: [],
-    };
+    return;
   }
 
   directChildren.forEach((child) =>
     edges.push({
-      id: `${start.id}-${child.id}`,
-      source: start.id,
+      id: `${current.id}-${child.id}`,
+      source: current.id,
       target: child.id,
     }),
   );
 
-  return {
-    name: start.to,
-    children: directChildren.map((conn) =>
-      findChildren(conn, connectionsWithoutReverse),
-    ),
-  };
+  directChildren.forEach((conn) =>
+    findChildren(conn, connectionsWithoutReverse),
+  );
 };
 
 /** Build hierarchical connection tree from given root system. */
 const buildFlowData = (
-  from: FindMap | undefined,
+  map: FindMap | undefined,
   data: FindConnectionGraphQuery | undefined,
 ) => {
-  if (!from) {
+  if (!map) {
     return { nodes: [], edges: [] };
   }
 
-  nodes = [{ id: "1", position: { x: 0, y: 0 }, data: { label: from.name } }];
+  nodes = [
+    {
+      id: "1",
+      position: { x: 0, y: 0 },
+      data: { label: map.name, systemName: map.rootSystemName },
+    },
+  ];
 
   if (!data || data.findConnectionGraph.connections.length === 0) {
     return { nodes, edges: [] };
@@ -86,11 +89,10 @@ const buildFlowData = (
   const connections = sortBy(data.findConnectionGraph.connections, "id");
 
   const chainRoots = connections.filter(
-    (conn) => conn.from === from.rootSystemName,
+    (conn) => conn.from === map.rootSystemName,
   );
 
   edges = [];
-  visitedSystems = [];
 
   chainRoots.forEach((child) =>
     edges.push({
@@ -103,9 +105,6 @@ const buildFlowData = (
   chainRoots.forEach((chainRoot) => findChildren(chainRoot, connections));
 
   return {
-    // children: chainRoots.map((chainRoot) =>
-    //   findChildren(chainRoot, connections),
-    // ),
     nodes,
     edges,
   };

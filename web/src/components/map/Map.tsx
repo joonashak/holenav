@@ -6,7 +6,7 @@ import MapFlow from "./MapFlow";
 
 const Map = () => {
   const asd = useConnectionData();
-  console.log(JSON.stringify(asd, null, 2));
+  // console.log(JSON.stringify(asd, null, 2));
 
   if (asd.nodes.length === 0) {
     return null;
