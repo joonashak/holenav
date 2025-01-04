@@ -1,9 +1,11 @@
 import { useQuery } from "@apollo/client";
 import Dagre from "@dagrejs/dagre";
 import {
+  applyNodeChanges,
   Controls,
   Edge,
   Node,
+  NodeChange,
   ReactFlow,
   useEdgesState,
   useNodesState,
@@ -74,8 +76,16 @@ const MapFlow = ({ selectedMap }: MapFlowProps) => {
   // END DATA
 
   const { fitView } = useReactFlow();
-  const [nodesState, setNodes, onNodesChange] = useNodesState<Node>([]);
+  const [nodesState, setNodes] = useNodesState<Node>([]);
   const [edgesState, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
+
+  const onNodesChange = useCallback(
+    (changes: NodeChange[]) => {
+      setNodes((oldNodes) => applyNodeChanges(changes, oldNodes));
+      fitView();
+    },
+    [setNodes, fitView],
+  );
 
   const arrange = useCallback(() => {
     console.log("arrange");
@@ -98,15 +108,6 @@ const MapFlow = ({ selectedMap }: MapFlowProps) => {
     }
   }, [data]);
 
-  useEffect(() => {
-    console.log("nodesState changed, fitting view");
-    /**
-     * This works when map is switched but causes a flash of new content as it
-     * is before fitting (or applying layout?).
-     */
-    fitView();
-  }, [nodesState]);
-
   return (
     <ReactFlow
       nodes={nodesState}
@@ -116,6 +117,9 @@ const MapFlow = ({ selectedMap }: MapFlowProps) => {
       onEdgesChange={onEdgesChange}
       colorMode="dark"
       fitView={true}
+      nodesDraggable={false}
+      nodesConnectable={false}
+      deleteKeyCode={null}
     >
       <Controls />
     </ReactFlow>
