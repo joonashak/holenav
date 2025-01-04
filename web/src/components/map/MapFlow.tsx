@@ -1,86 +1,113 @@
+import { useQuery } from "@apollo/client";
 import Dagre from "@dagrejs/dagre";
 import {
   Controls,
   Edge,
   Node,
+  Panel,
   ReactFlow,
   useEdgesState,
   useNodesState,
-  useReactFlow,
 } from "@xyflow/react";
-import "@xyflow/react/dist/style.css";
 import { useCallback, useEffect } from "react";
+import { FindConnectionGraphDocument } from "../../generated/graphql-operations";
+import useActiveFolder from "../../hooks/useActiveFolder";
+import useSelectedMap from "../../hooks/useSelectedMap";
+import buildFlowData from "./data/build-flow-data";
 
-const MapFlow = (props: { nodes: Node[]; edges: Edge[] }) => {
+const getLaidOutElements = (nodes: Node[], edges: Edge[]) => {
   const nodeWidth = 150;
   const nodeHeight = 50;
 
-  const getLayoutedElements = (nodes: Node[], edges: Edge[]) => {
-    const g = new Dagre.graphlib.Graph().setDefaultEdgeLabel(() => ({}));
-    g.setGraph({ rankdir: "TB" });
+  const g = new Dagre.graphlib.Graph().setDefaultEdgeLabel(() => ({}));
+  g.setGraph({ rankdir: "TB" });
 
-    edges.forEach((edge) => g.setEdge(edge.source, edge.target));
-    nodes.forEach((node) => {
-      g.setNode(node.id, {
-        ...node,
-        // width: node.measured?.width ?? 0,
-        width: nodeWidth,
-        // height: node.measured?.height ?? 0,
-        height: nodeHeight,
-      });
+  edges.forEach((edge) => g.setEdge(edge.source, edge.target));
+  nodes.forEach((node) => {
+    g.setNode(node.id, {
+      ...node,
+      // width: node.measured?.width ?? 0,
+      width: nodeWidth,
+      // height: node.measured?.height ?? 0,
+      height: nodeHeight,
     });
+  });
 
-    Dagre.layout(g);
+  Dagre.layout(g);
 
-    return {
-      nodes: nodes.map((node) => {
-        const position = g.node(node.id);
+  return {
+    nodes: nodes.map((node) => {
+      const position = g.node(node.id);
 
-        // We are shifting the dagre node position (anchor=center center) to the top left
-        // so it matches the React Flow node anchor point (top left).
-        // const x = position.x - (node.measured?.width ?? 0) / 2;
-        // const y = position.y - (node.measured?.height ?? 0) / 2;
-        const x = position.x - nodeWidth / 2;
-        const y = position.y - nodeHeight / 2;
+      // We are shifting the dagre node position (anchor=center center) to the top left
+      // so it matches the React Flow node anchor point (top left).
+      // const x = position.x - (node.measured?.width ?? 0) / 2;
+      // const y = position.y - (node.measured?.height ?? 0) / 2;
+      const x = position.x - nodeWidth / 2;
+      const y = position.y - nodeHeight / 2;
 
-        return { ...node, position: { x, y } };
-      }),
-      edges,
-    };
+      return { ...node, position: { x, y } };
+    }),
+    edges,
   };
+};
 
-  const { fitView } = useReactFlow();
-  // const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
-  const [nodes, setNodes, onNodesChange] = useNodesState(props.nodes);
-  // const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
-  const [edges, setEdges, onEdgesChange] = useEdgesState(props.edges);
+const MapFlow = () => {
+  // DATA
+  const { selectedMap } = useSelectedMap();
+  const root = selectedMap?.rootSystemName || "";
+  const { activeFolderId } = useActiveFolder();
 
-  const onLayout = useCallback(() => {
-    const layouted = getLayoutedElements(props.nodes, props.edges);
+  const { data } = useQuery(FindConnectionGraphDocument, {
+    variables: { root, folderId: activeFolderId },
+    skip: root === "",
+  });
 
-    setNodes([...layouted.nodes]);
-    setEdges([...layouted.edges]);
+  const connectionTree = buildFlowData(selectedMap, data);
+  const { nodes, edges } = connectionTree;
+  // END DATA
 
-    window.requestAnimationFrame(() => {
-      fitView();
-    });
-  }, [props.nodes, props.edges]);
+  const [nodesState, setNodes, onNodesChange] = useNodesState<Node>([]);
+  const [edgesState, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
 
+  const arrange = useCallback(() => {
+    console.log("arrange");
+    const laidOut = getLaidOutElements(nodes, edges);
+    setNodes(laidOut.nodes);
+    setEdges(laidOut.edges);
+  }, [setEdges, setNodes, nodes, edges]);
+
+  console.log("nodesState", nodesState);
+
+  /**
+   * This works on initial load/refresh.
+   *
+   * `arrange` is not stable, probably because of `setNodes` and `setEdges` are
+   * not stable.
+   *
+   * Map switching still needs to be worked out. Maybe we can just re-render
+   * this component when map is switched?
+   */
   useEffect(() => {
-    // FIXME: Find a solid way to apply layout. This is a hack.
-    onLayout();
-  }, [props]);
+    if (data) {
+      arrange();
+    }
+  }, [data]);
 
   return (
     <ReactFlow
-      nodes={nodes}
-      edges={edges}
+      nodes={nodesState}
+      edges={edgesState}
+      // Change functions are necessary for interactivity. Node focus (vanilla) does not seem to work without them.
       onNodesChange={onNodesChange}
       onEdgesChange={onEdgesChange}
-      fitView
       colorMode="dark"
+      fitView={true}
     >
       <Controls />
+      <Panel position="bottom-center">
+        <button onClick={arrange}>Arrange</button>
+      </Panel>
     </ReactFlow>
   );
 };

@@ -31,7 +31,7 @@ const findChildren = (
   nodes.push(connectionToNode(current));
 
   if (loop) {
-    console.log("loop", current.to);
+    // console.log("loop", current.to);
   }
 
   // Remove reverse connection to prevent traversing backwards through it.

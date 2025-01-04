@@ -10,15 +10,22 @@ const useConnectionData = () => {
   const root = selectedMap?.rootSystemName || "";
   const { activeFolderId } = useActiveFolder();
 
-  const { data } = useQuery(FindConnectionGraphDocument, {
+  const { data, loading } = useQuery(FindConnectionGraphDocument, {
     variables: { root, folderId: activeFolderId },
     skip: root === "",
   });
 
-  const connectionTree = useMemo(
-    () => buildFlowData(selectedMap, data),
-    [selectedMap, data],
-  );
+  const connectionTree = useMemo(() => {
+    if (!data || loading) {
+      return {
+        nodes: [],
+        edges: [],
+      };
+    }
+    return buildFlowData(selectedMap, data);
+  }, [selectedMap, data, loading]);
+
+  // console.log("data", data);
 
   return {
     nodes: connectionTree.nodes || [],
