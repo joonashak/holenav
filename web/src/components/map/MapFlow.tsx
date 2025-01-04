@@ -4,15 +4,17 @@ import {
   Controls,
   Edge,
   Node,
-  Panel,
   ReactFlow,
   useEdgesState,
   useNodesState,
+  useReactFlow,
 } from "@xyflow/react";
 import { useCallback, useEffect } from "react";
-import { FindConnectionGraphDocument } from "../../generated/graphql-operations";
+import {
+  FindConnectionGraphDocument,
+  FindMap,
+} from "../../generated/graphql-operations";
 import useActiveFolder from "../../hooks/useActiveFolder";
-import useSelectedMap from "../../hooks/useSelectedMap";
 import buildFlowData from "./data/build-flow-data";
 
 const getLaidOutElements = (nodes: Node[], edges: Edge[]) => {
@@ -52,10 +54,14 @@ const getLaidOutElements = (nodes: Node[], edges: Edge[]) => {
   };
 };
 
-const MapFlow = () => {
+type MapFlowProps = {
+  selectedMap: FindMap;
+};
+
+const MapFlow = ({ selectedMap }: MapFlowProps) => {
   // DATA
-  const { selectedMap } = useSelectedMap();
-  const root = selectedMap?.rootSystemName || "";
+  // const { selectedMap } = useSelectedMap();
+  const root = selectedMap.rootSystemName;
   const { activeFolderId } = useActiveFolder();
 
   const { data } = useQuery(FindConnectionGraphDocument, {
@@ -67,6 +73,7 @@ const MapFlow = () => {
   const { nodes, edges } = connectionTree;
   // END DATA
 
+  const { fitView } = useReactFlow();
   const [nodesState, setNodes, onNodesChange] = useNodesState<Node>([]);
   const [edgesState, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
 
@@ -84,15 +91,21 @@ const MapFlow = () => {
    *
    * `arrange` is not stable, probably because of `setNodes` and `setEdges` are
    * not stable.
-   *
-   * Map switching still needs to be worked out. Maybe we can just re-render
-   * this component when map is switched?
    */
   useEffect(() => {
     if (data) {
       arrange();
     }
   }, [data]);
+
+  useEffect(() => {
+    console.log("nodesState changed, fitting view");
+    /**
+     * This works when map is switched but causes a flash of new content as it
+     * is before fitting (or applying layout?).
+     */
+    fitView();
+  }, [nodesState]);
 
   return (
     <ReactFlow
@@ -105,9 +118,6 @@ const MapFlow = () => {
       fitView={true}
     >
       <Controls />
-      <Panel position="bottom-center">
-        <button onClick={arrange}>Arrange</button>
-      </Panel>
     </ReactFlow>
   );
 };
