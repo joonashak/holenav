@@ -25,11 +25,9 @@ const useConnectionData = () => {
     return buildFlowData(selectedMap, data);
   }, [selectedMap, data, loading]);
 
-  // console.log("data", data);
-
   return {
-    nodes: connectionTree.nodes || [],
-    edges: connectionTree.edges || [],
+    nodes: connectionTree.nodes,
+    edges: connectionTree.edges,
   };
 };
 

@@ -14,7 +14,7 @@ const Map = () => {
   return (
     <Box sx={{ width: "100vw", height: "100vh" }} aria-label="Connection tree">
       <ReactFlowProvider>
-        <MapFlow selectedMap={selectedMap} />
+        <MapFlow />
       </ReactFlowProvider>
     </Box>
   );

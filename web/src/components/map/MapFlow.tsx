@@ -1,4 +1,3 @@
-import { useQuery } from "@apollo/client";
 import Dagre from "@dagrejs/dagre";
 import {
   applyNodeChanges,
@@ -12,12 +11,7 @@ import {
   useReactFlow,
 } from "@xyflow/react";
 import { useCallback, useEffect } from "react";
-import {
-  FindConnectionGraphDocument,
-  FindMap,
-} from "../../generated/graphql-operations";
-import useActiveFolder from "../../hooks/useActiveFolder";
-import buildFlowData from "./data/build-flow-data";
+import useConnectionData from "./data/useConnectionData";
 
 const getLaidOutElements = (nodes: Node[], edges: Edge[]) => {
   const nodeWidth = 150;
@@ -56,24 +50,8 @@ const getLaidOutElements = (nodes: Node[], edges: Edge[]) => {
   };
 };
 
-type MapFlowProps = {
-  selectedMap: FindMap;
-};
-
-const MapFlow = ({ selectedMap }: MapFlowProps) => {
-  // DATA
-  // const { selectedMap } = useSelectedMap();
-  const root = selectedMap.rootSystemName;
-  const { activeFolderId } = useActiveFolder();
-
-  const { data } = useQuery(FindConnectionGraphDocument, {
-    variables: { root, folderId: activeFolderId },
-    skip: root === "",
-  });
-
-  const connectionTree = buildFlowData(selectedMap, data);
-  const { nodes, edges } = connectionTree;
-  // END DATA
+const MapFlow = () => {
+  const { edges, nodes } = useConnectionData();
 
   const { fitView } = useReactFlow();
   const [nodesState, setNodes] = useNodesState<Node>([]);
@@ -96,17 +74,9 @@ const MapFlow = ({ selectedMap }: MapFlowProps) => {
 
   console.log("nodesState", nodesState);
 
-  /**
-   * This works on initial load/refresh.
-   *
-   * `arrange` is not stable, probably because of `setNodes` and `setEdges` are
-   * not stable.
-   */
   useEffect(() => {
-    if (data) {
-      arrange();
-    }
-  }, [data]);
+    arrange();
+  }, [nodes, arrange]);
 
   return (
     <ReactFlow
