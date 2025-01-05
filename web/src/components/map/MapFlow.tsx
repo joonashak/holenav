@@ -12,6 +12,7 @@ import {
 } from "@xyflow/react";
 import { useCallback, useEffect } from "react";
 import useConnectionData from "./data/useConnectionData";
+import SystemNode from "./SystemNode";
 
 const getLaidOutElements = (nodes: Node[], edges: Edge[]) => {
   const nodeWidth = 150;
@@ -50,6 +51,9 @@ const getLaidOutElements = (nodes: Node[], edges: Edge[]) => {
   };
 };
 
+// Must be defined outside of component or memoized to avoid rendering issues.
+const nodeTypes = { systemNode: SystemNode };
+
 const MapFlow = () => {
   const { edges, nodes } = useConnectionData();
 
@@ -80,6 +84,7 @@ const MapFlow = () => {
 
   return (
     <ReactFlow
+      nodeTypes={nodeTypes}
       nodes={nodesState}
       edges={edgesState}
       // Change functions are necessary for interactivity. Node focus (vanilla) does not seem to work without them.

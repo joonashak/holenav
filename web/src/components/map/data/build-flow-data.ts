@@ -5,20 +5,19 @@ import {
   FindMap,
   GraphConnection,
 } from "../../../generated/graphql-operations";
+import { SystemNodeData } from "./map-flow-types";
 
-type MapNodeData = {
-  label: string;
-  systemName: string;
-};
-
-let nodes: Node<MapNodeData>[] = [];
+let nodes: Node<SystemNodeData>[] = [];
 // TODO: Edges need data from GraphConnection.
 let edges: Edge[] = [];
 
-const connectionToNode = (connection: GraphConnection): Node<MapNodeData> => ({
+const connectionToNode = (
+  connection: GraphConnection,
+): Node<SystemNodeData> => ({
   id: connection.id,
+  type: "systemNode",
   position: { x: 0, y: 0 },
-  data: { label: connection.to, systemName: connection.to },
+  data: { systemName: connection.to },
 });
 
 /** Recursive factory to build tree from flat connection node list. */
@@ -72,8 +71,9 @@ const buildFlowData = (
   nodes = [
     {
       id: "1",
+      type: "systemNode",
       position: { x: 0, y: 0 },
-      data: { label: map.name, systemName: map.rootSystemName },
+      data: { systemName: map.rootSystemName, name: map.name },
     },
   ];
 
