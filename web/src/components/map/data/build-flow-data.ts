@@ -17,7 +17,7 @@ const connectionToNode = (
   id: connection.id,
   type: "systemNode",
   position: { x: 0, y: 0 },
-  data: { systemName: connection.to },
+  data: { systemName: connection.to, name: connection.signature?.name },
 });
 
 /** Recursive factory to build tree from flat connection node list. */

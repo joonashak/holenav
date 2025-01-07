@@ -13,6 +13,10 @@ query FindConnectionGraph($root: String!, $folderId: String!) {
       massStatus
       reverse
       depth
+      signature {
+        id
+        name
+      }
     }
   }
 }
