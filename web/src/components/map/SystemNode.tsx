@@ -9,10 +9,24 @@ type SystemNodeProps = {
 const SystemNode = ({ data }: SystemNodeProps) => {
   const { systemName, name } = data;
   return (
-    <Box>
-      <Handle type="target" position={Position.Top} />
+    <Box
+      sx={{
+        border: "1px solid #4f4f4f",
+        borderRadius: 1,
+        bgcolor: "#3c3c3c",
+        width: "100px",
+        textAlign: "center",
+        pt: 0.3,
+        pb: 0.3,
+        pl: 0.7,
+        pr: 0.7,
+        // Not sure this is cool but it does make the edges sit flush when handles are hidden.
+        m: "-3px",
+      }}
+    >
+      <Handle type="target" position={Position.Top} style={{ opacity: 0 }} />
       <Typography>{name || systemName}</Typography>
-      <Handle type="source" position={Position.Bottom} />
+      <Handle type="source" position={Position.Bottom} style={{ opacity: 0 }} />
     </Box>
   );
 };
