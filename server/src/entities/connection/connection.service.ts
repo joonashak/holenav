@@ -3,6 +3,7 @@ import { InjectModel } from "@nestjs/mongoose";
 import { randomUUID } from "crypto";
 import { pick } from "lodash";
 import { Model, UpdateQuery } from "mongoose";
+import isUuid from "../../utils/isUuid";
 import { Connection, ConnectionDocument } from "./connection.model";
 import { CreateConnection } from "./dto/create-connection.dto";
 import { UpdateConnection } from "./dto/update-connection.dto";
@@ -39,7 +40,7 @@ export class ConnectionService {
      * connections together.
      */
     const to = connection.to || randomUUID();
-    const unknown = !connection.to;
+    const unknown = isUuid(connection.to);
 
     const created = await this.connectionModel.create({
       ...connection,
@@ -79,7 +80,7 @@ export class ConnectionService {
     // Check for undefined to keep `to` field optional.
     if (update.to !== undefined) {
       query.to = update.to || randomUUID();
-      query.unknown = !update.to;
+      query.unknown = isUuid(update.to);
       revQuery.from = query.to;
       revQuery.unknown = query.unknown;
     }
