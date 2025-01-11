@@ -17,7 +17,11 @@ const connectionToNode = (
   id: connection.id,
   type: "systemNode",
   position: { x: 0, y: 0 },
-  data: { systemName: connection.to, name: connection.signature?.name },
+  data: {
+    systemName: connection.to,
+    name: connection.signature?.name,
+    unknown: connection.unknown,
+  },
 });
 
 /** Recursive factory to build tree from flat connection node list. */
@@ -73,7 +77,7 @@ const buildFlowData = (
       id: "1",
       type: "systemNode",
       position: { x: 0, y: 0 },
-      data: { systemName: map.rootSystemName, name: map.name },
+      data: { systemName: map.rootSystemName, name: map.name, unknown: false },
     },
   ];
 

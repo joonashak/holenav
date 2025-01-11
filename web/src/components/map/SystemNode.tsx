@@ -1,5 +1,6 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Link, Typography } from "@mui/material";
 import { Handle, Position } from "@xyflow/react";
+import { Link as RouterLink } from "react-router-dom";
 import { SystemNodeData } from "./data/map-flow-types";
 
 type SystemNodeProps = {
@@ -7,7 +8,9 @@ type SystemNodeProps = {
 };
 
 const SystemNode = ({ data }: SystemNodeProps) => {
-  const { systemName, name } = data;
+  const { systemName, name, unknown } = data;
+  const to = !unknown && `/system/${systemName}`;
+
   return (
     <Box
       sx={{
@@ -25,7 +28,15 @@ const SystemNode = ({ data }: SystemNodeProps) => {
       }}
     >
       <Handle type="target" position={Position.Top} style={{ opacity: 0 }} />
-      <Typography>{name || systemName}</Typography>
+
+      {to ? (
+        <Link component={RouterLink} to={to}>
+          {name || systemName}
+        </Link>
+      ) : (
+        <Typography>{name || systemName}</Typography>
+      )}
+
       <Handle type="source" position={Position.Bottom} style={{ opacity: 0 }} />
     </Box>
   );
