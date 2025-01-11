@@ -4,6 +4,7 @@ import { randomUUID } from "crypto";
 import { pick } from "lodash";
 import { Model, UpdateQuery } from "mongoose";
 import isUuid from "../../utils/isUuid";
+import { SignatureService } from "../signature/signature.service";
 import { Connection, ConnectionDocument } from "./connection.model";
 import { CreateConnection } from "./dto/create-connection.dto";
 import { UpdateConnection } from "./dto/update-connection.dto";
@@ -13,6 +14,12 @@ import { UpdateConnection } from "./dto/update-connection.dto";
  * keeping two mirrored connections in sync for each wormhole. This enables use
  * of the `$graphLookup` aggregation stage to traverse the graph and build map
  * trees.
+ *
+ * This service also takes care of creating, updating, and deleting the
+ * signature linked to the respective reverse connection. The reverse signature
+ * is created even when the connection's destination is unknown. This is done to
+ * keep things simple as we don't have to account for optionality and can just
+ * assume the reverse signature always exists.
  */
 @Injectable()
 export class ConnectionService {
@@ -27,6 +34,7 @@ export class ConnectionService {
 
   constructor(
     @InjectModel(Connection.name) private connectionModel: Model<Connection>,
+    private signatureService: SignatureService,
   ) {}
 
   /** Create `Connection` and its linked reverse `Connection`. */
@@ -40,7 +48,7 @@ export class ConnectionService {
      * connections together.
      */
     const to = connection.to || randomUUID();
-    const unknown = isUuid(connection.to);
+    const unknown = isUuid(to);
 
     const created = await this.connectionModel.create({
       ...connection,
@@ -59,6 +67,8 @@ export class ConnectionService {
       reverse: created,
     });
 
+    await this.signatureService.createReverseSignature(reverse);
+
     created.reverse = reverse;
     await created.save();
     return created.populate("reverse");
@@ -70,6 +80,7 @@ export class ConnectionService {
    * Note that updating `from` field is not supported.
    */
   async update(id: string, update: UpdateConnection): Promise<Connection> {
+    // TODO: Update reverse signature.
     const query: UpdateQuery<Connection> = update;
 
     const revQuery: UpdateQuery<Connection> = pick(
@@ -80,7 +91,7 @@ export class ConnectionService {
     // Check for undefined to keep `to` field optional.
     if (update.to !== undefined) {
       query.to = update.to || randomUUID();
-      query.unknown = isUuid(update.to);
+      query.unknown = isUuid(query.to);
       revQuery.from = query.to;
       revQuery.unknown = query.unknown;
     }
@@ -97,6 +108,7 @@ export class ConnectionService {
 
   /** Remove connection and its linked pair. */
   async delete(id: string): Promise<void> {
+    // TODO: Remove reverse signature.
     const conn = await this.connectionModel.findById(id).populate("reverse");
     await this.connectionModel.findByIdAndDelete(conn.id);
     await this.connectionModel.findByIdAndDelete(conn.reverse.id);

@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { User } from "@joonashak/nestjs-clone-bay";
-import { Injectable } from "@nestjs/common";
+import { forwardRef, Inject, Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
+import { Connection } from "../connection/connection.model";
 import { ConnectionService } from "../connection/connection.service";
 import MassStatus from "../connection/mass-status.enum";
 import { Folder } from "../folder/folder.model";
@@ -22,6 +23,7 @@ export class SignatureService {
 
   constructor(
     @InjectModel(Signature.name) private signatureModel: Model<Signature>,
+    @Inject(forwardRef(() => ConnectionService))
     private connectionService: ConnectionService,
     private folderService: FolderService,
   ) {}
@@ -82,6 +84,17 @@ export class SignatureService {
     return Promise.all(
       signatures.map((sig) => this.createSignature(sig, folder, user)),
     );
+  }
+
+  async createReverseSignature(connection: Connection) {
+    // FIXME: Missing `createdBy` field.
+    const folder = await this.folderService.getFolderById(connection.folderId);
+    return this.signatureModel.create({
+      connection,
+      folder,
+      systemName: connection.from,
+      type: SigType.WORMHOLE,
+    });
   }
 
   async update(update: UpdateSignature, folder: Folder) {

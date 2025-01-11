@@ -14,7 +14,7 @@ export class Signature {
   id: string;
 
   @Field()
-  @Prop({ required: true })
+  @Prop()
   eveId: string;
 
   @Field(() => SigType)
