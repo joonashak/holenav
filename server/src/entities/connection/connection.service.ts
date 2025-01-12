@@ -1,3 +1,4 @@
+import { User } from "@joonashak/nestjs-clone-bay";
 import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { randomUUID } from "crypto";
@@ -23,6 +24,7 @@ import { UpdateConnection } from "./dto/update-connection.dto";
  */
 @Injectable()
 export class ConnectionService {
+  /** Duplicate fields for reverse connections. */
   private readonly duplicateFieldKeys = [
     "massStatus",
     "eol",
@@ -30,6 +32,8 @@ export class ConnectionService {
     "type",
     "unknown",
     "folderId",
+    "createdBy",
+    "updatedBy",
   ];
 
   constructor(
@@ -41,6 +45,7 @@ export class ConnectionService {
   async create(
     connection: CreateConnection,
     folderId: string,
+    user?: User,
   ): Promise<ConnectionDocument> {
     /**
      * Assigning random destination names to connections with unknown
@@ -55,6 +60,7 @@ export class ConnectionService {
       to,
       unknown,
       folderId,
+      createdBy: user?.main.name || "",
     });
 
     const duplicateFields = pick(created.toObject(), this.duplicateFieldKeys);
@@ -79,9 +85,16 @@ export class ConnectionService {
    *
    * Note that updating `from` field is not supported.
    */
-  async update(id: string, update: UpdateConnection): Promise<Connection> {
+  async update(
+    id: string,
+    update: UpdateConnection,
+    user?: User,
+  ): Promise<Connection> {
     // TODO: Update reverse signature.
-    const query: UpdateQuery<Connection> = update;
+    const query: UpdateQuery<Connection> = {
+      ...update,
+      updatedBy: user?.main.name || "",
+    };
 
     const revQuery: UpdateQuery<Connection> = pick(
       query,

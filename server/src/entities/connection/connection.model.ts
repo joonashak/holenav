@@ -6,7 +6,7 @@ import MassStatus from "./mass-status.enum";
 registerEnumType(MassStatus, { name: "MassStatus" });
 
 @ObjectType()
-@Schema({ validateBeforeSave: true })
+@Schema({ timestamps: true, validateBeforeSave: true })
 export class Connection {
   @Field()
   id: string;
@@ -66,6 +66,22 @@ export class Connection {
   @Field((type) => Connection)
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: Connection.name })
   reverse: Connection;
+
+  @Field(() => Date)
+  @Prop({ default: Date.now })
+  createdAt: Date;
+
+  @Field({ defaultValue: "" })
+  @Prop()
+  createdBy: string;
+
+  @Field(() => Date)
+  @Prop({ default: Date.now })
+  updatedAt: Date;
+
+  @Field({ defaultValue: "" })
+  @Prop()
+  updatedBy: string;
 }
 
 export type ConnectionDocument = Connection & Document;

@@ -57,7 +57,11 @@ export class SignatureService {
     // Create new connection for wormholes.
     const connection =
       signature.type === SigType.WORMHOLE
-        ? await this.connectionService.create(signature.connection, folder.id)
+        ? await this.connectionService.create(
+            signature.connection,
+            folder.id,
+            user,
+          )
         : null;
 
     try {
@@ -87,13 +91,13 @@ export class SignatureService {
   }
 
   async createReverseSignature(connection: Connection) {
-    // FIXME: Missing `createdBy` field.
     const folder = await this.folderService.getFolderById(connection.folderId);
     return this.signatureModel.create({
       connection,
       folder,
       systemName: connection.from,
       type: SigType.WORMHOLE,
+      createdBy: connection.createdBy,
     });
   }
 
@@ -119,9 +123,9 @@ export class SignatureService {
           massStatus: MassStatus.STABLE,
           ...connectionUpdate,
           from: signature.systemName,
-          createdBy: user.main.name || "",
         },
         folder.id,
+        user,
       );
       await this.signatureModel.findByIdAndUpdate(signature.id, { connection });
     }
@@ -130,6 +134,7 @@ export class SignatureService {
       await this.connectionService.update(
         signature.connection.id,
         connectionUpdate,
+        user,
       );
     }
 
