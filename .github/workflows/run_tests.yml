@@ -38,21 +38,22 @@ jobs:
         run: npm run lint
         working-directory: server
 
-  test-server:
-    name: Server tests
-    runs-on: ubuntu-24.04
-    defaults:
-      run:
-        working-directory: server
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version-file: .nvmrc
-      - name: Install dependencies
-        run: npm ci
-      - name: Run unit tests
-        run: npm test
+  # No unit tests at the moment after deleting deprecated auth code etc.
+  # test-server:
+  #   name: Server tests
+  #   runs-on: ubuntu-24.04
+  #   defaults:
+  #     run:
+  #       working-directory: server
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - uses: actions/setup-node@v4
+  #       with:
+  #         node-version-file: .nvmrc
+  #     - name: Install dependencies
+  #       run: npm ci
+  #     - name: Run unit tests
+  #       run: npm test
 
   test-e2e:
     name: E2E tests

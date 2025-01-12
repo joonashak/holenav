@@ -11,7 +11,6 @@ import { MongooseModule } from "@nestjs/mongoose";
 import { ScheduleModule } from "@nestjs/schedule";
 import { FolderAccessControlModule } from "./access-control/folder/folder-access-control.module";
 import { AppDataModule } from "./app-data/app-data.module";
-import { AuthModule } from "./auth/auth.module";
 import { BootstrapModule } from "./bootstrap/bootstrap.module";
 import {
   CLIENT_URL,
@@ -25,13 +24,11 @@ import { EntitiesModule } from "./entities/entities.module";
 import { EsiModule } from "./esi/esi.module";
 import { FrontendModule } from "./frontend/frontend.module";
 import graphQlModuleConfig from "./graphql-module-config";
-import { ScheduledTasksModule } from "./scheduled-tasks/scheduled-tasks.module";
 import { UserPreferencesModule } from "./user/user-preferences/user-preferences.module";
 
 @Module({
   imports: [
     AppDataModule,
-    AuthModule,
     BootstrapModule,
     CloneBayModule.forRoot({
       afterLoginUrl: CLIENT_URL,
@@ -51,7 +48,6 @@ import { UserPreferencesModule } from "./user/user-preferences/user-preferences.
     FrontendModule,
     GraphQLModule.forRoot<ApolloDriverConfig>(graphQlModuleConfig),
     MongooseModule.forRoot(MONGO_URL),
-    ScheduledTasksModule,
     ScheduleModule.forRoot(),
     UserPreferencesModule,
   ],

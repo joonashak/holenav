@@ -1,19 +1,14 @@
 import { Injectable } from "@nestjs/common";
-import { InjectConnection, InjectModel } from "@nestjs/mongoose";
+import { InjectConnection } from "@nestjs/mongoose";
 import { Connection } from "mongoose";
 import { AppDataService } from "../app-data/app-data.service";
-import { HolenavCharacter } from "../entities/character/character.model";
-import users from "./data/users";
 import { MockFolderService } from "./mock-data-services/mock-folder.service";
-import { MockUserService } from "./mock-data-services/mock-user.service";
 
 @Injectable()
 export class DevToolsService {
   constructor(
     @InjectConnection() private dbConnection: Connection,
-    @InjectModel(HolenavCharacter.name)
     private appDataService: AppDataService,
-    private mockUserService: MockUserService,
     private mockFolderService: MockFolderService,
   ) {}
 
@@ -28,12 +23,11 @@ export class DevToolsService {
 
     await this.appDataService.initialize();
     await this.mockFolderService.mock();
-    await this.mockUserService.mock();
   }
 
   async getMockUsers() {
     // Do not read these from db to avoid potentially leaking actual user data!
-    return users.map(({ id, main: { name } }) => ({ id, name }));
+    return [];
   }
 
   private async dropAllCollections() {
