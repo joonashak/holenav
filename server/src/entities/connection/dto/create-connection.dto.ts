@@ -6,11 +6,11 @@ export class CreateConnection {
   @Field()
   from: string;
 
-  @Field({ nullable: true })
+  @Field(() => String, { nullable: true })
   to: string | null;
 
-  @Field({ nullable: true })
-  type: string;
+  @Field(() => String, { nullable: true })
+  type: string | null;
 
   @Field()
   k162: boolean;

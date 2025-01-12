@@ -1,12 +1,10 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { FolderAction } from "../../access-control/folder/folder-role/folder-action.enum";
 import { FolderRoleService } from "../../access-control/folder/folder-role/folder-role.service";
 import { FolderAccessControl } from "../../access-control/folder/folder.access-control";
 import { Folder, FolderDocument } from "./folder.model";
-
-const defaultFolderName = "Default Folder";
 
 @Injectable()
 export class FolderService {
@@ -40,13 +38,12 @@ export class FolderService {
     return folder;
   }
 
-  // TODO: Remove
-  async getDefaultFolder(): Promise<Folder> {
-    return this.folderModel.findOne({ name: defaultFolderName });
-  }
-
   async getFolderById(id: string): Promise<FolderDocument> {
-    return this.folderModel.findOne({ id });
+    const folder = await this.folderModel.findOne({ id });
+    if (!folder) {
+      throw new NotFoundException();
+    }
+    return folder;
   }
 
   async findFoldersByAllowedAction(

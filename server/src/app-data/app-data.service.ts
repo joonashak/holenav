@@ -31,12 +31,17 @@ export class AppDataService {
   }
 
   async getAppData(): Promise<AppDataDocument> {
-    return this.appDataModel.findOne();
+    const appData = await this.appDataModel.findOne();
+    if (!appData) {
+      throw new InternalServerErrorException();
+    }
+    return appData;
   }
 
   async updateAppData(update: PartialDeep<AppData>) {
     const current = await this.getAppData();
     merge(current, update);
-    return this.appDataModel.findOneAndUpdate({}, current, { new: true });
+    await this.appDataModel.findOneAndUpdate({}, current);
+    return this.getAppData();
   }
 }

@@ -52,7 +52,8 @@ export class SignaturePasteService {
   }
 
   private getUpdateableSigs(paste: SignaturePaste, existing: FindSignature[]) {
-    return paste.pastedSignatures.reduce((updateableSigs, pastedSig) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return paste.pastedSignatures.reduce((updateableSigs: any[], pastedSig) => {
       const existingSig = existing.find((sig) => sig.eveId === pastedSig.eveId);
 
       if (!existingSig) {

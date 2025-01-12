@@ -1,6 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { User } from "@joonashak/nestjs-clone-bay";
-import { forwardRef, Inject, Injectable } from "@nestjs/common";
+import {
+  forwardRef,
+  Inject,
+  Injectable,
+  NotFoundException,
+} from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { Connection } from "../connection/connection.model";
@@ -28,7 +33,7 @@ export class SignatureService {
     private folderService: FolderService,
   ) {}
 
-  async findById(id: string): Promise<FindSignature> {
+  async findById(id: string): Promise<FindSignature | null> {
     return this.signatureModel.findById(id).populate(this.populateFields);
   }
 
@@ -56,7 +61,7 @@ export class SignatureService {
   ): Promise<Signature> {
     // Create new connection for wormholes.
     const connection =
-      signature.type === SigType.WORMHOLE
+      signature.type === SigType.WORMHOLE && signature.connection
         ? await this.connectionService.create(
             signature.connection,
             folder.id,
@@ -74,7 +79,9 @@ export class SignatureService {
       return created;
     } catch (error) {
       // Connections will have been created by this point and must be removed if sig creation fails.
-      await this.connectionService.delete(connection.id);
+      if (connection) {
+        await this.connectionService.delete(connection.id);
+      }
       throw error;
     }
   }
@@ -108,9 +115,14 @@ export class SignatureService {
     const signature = await this.signatureModel
       .findOne({ _id: id, folder })
       .populate(this.populateFields);
+
+    if (!signature) {
+      throw new NotFoundException();
+    }
+
     await this.signatureModel.findByIdAndUpdate(signature.id, {
       ...sigUpdate,
-      updatedBy: user.main.name || "",
+      updatedBy: user?.main.name || "",
     });
 
     if (!signature.connection && connectionUpdate) {
@@ -154,12 +166,16 @@ export class SignatureService {
     user?: User,
   ): Promise<FindSignature[]> {
     const folder = await this.folderService.getFolderById(folderId);
-    return Promise.all(
+    const updated = await Promise.all(
       updates.map((update) => this.update(update, folder, user)),
     );
+    return updated.filter((res) => res !== null);
   }
 
-  async delete(signatureId: string, folder: Folder): Promise<FindSignature> {
+  async delete(
+    signatureId: string,
+    folder: Folder,
+  ): Promise<FindSignature | null> {
     // Require folder ID to be correct for security.
     const signature = await this.signatureModel
       .findOne({ _id: signatureId, folder })
@@ -189,6 +205,6 @@ export class SignatureService {
     const results = await Promise.all(
       ids.map(async (id) => this.delete(id, folder)),
     );
-    return results.filter(Boolean);
+    return results.filter((res) => res !== null);
   }
 }

@@ -1,5 +1,5 @@
 import { User } from "@joonashak/nestjs-clone-bay";
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { randomUUID } from "crypto";
 import { pick } from "lodash";
@@ -115,15 +115,32 @@ export class ConnectionService {
     }
 
     const connection = await this.connectionModel.findByIdAndUpdate(id, query);
+    if (!connection) {
+      throw new NotFoundException();
+    }
+
     await this.connectionModel.findByIdAndUpdate(connection.reverse, revQuery);
-    return this.connectionModel.findById(connection).populate("reverse");
+
+    const updated = await this.connectionModel
+      .findById(connection)
+      .populate("reverse");
+    if (!updated) {
+      throw new NotFoundException();
+    }
+
+    return updated;
   }
 
   /** Remove connection and its linked pair. */
   async delete(id: string): Promise<void> {
     // TODO: Remove reverse signature.
-    const conn = await this.connectionModel.findById(id).populate("reverse");
-    await this.connectionModel.findByIdAndDelete(conn.id);
-    await this.connectionModel.findByIdAndDelete(conn.reverse.id);
+    const connection = await this.connectionModel
+      .findById(id)
+      .populate("reverse");
+    if (!connection) {
+      throw new NotFoundException();
+    }
+    await this.connectionModel.findByIdAndDelete(connection.id);
+    await this.connectionModel.findByIdAndDelete(connection.reverse.id);
   }
 }

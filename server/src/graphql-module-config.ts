@@ -1,7 +1,8 @@
+import { ApolloServerPlugin } from "@apollo/server";
 import { ApolloServerPluginLandingPageLocalDefault } from "@apollo/server/plugin/landingPage/default";
 import { ApolloDriver, ApolloDriverConfig } from "@nestjs/apollo";
 
-const plugins = [];
+const plugins: ApolloServerPlugin[] = [];
 
 if (process.env.NODE_ENV !== "production") {
   plugins.push(

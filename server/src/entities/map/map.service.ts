@@ -1,5 +1,5 @@
 import { User } from "@joonashak/nestjs-clone-bay";
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { CreateMapDto } from "./dto/create-map.dto";
@@ -20,9 +20,17 @@ export class MapService {
 
   async updateMap(map: UpdateMapDto, user: User): Promise<Map> {
     const { id, ...update } = map;
-    return this.mapModel.findOneAndUpdate({ _id: id, user }, update, {
-      returnDocument: "after",
-    });
+    const updated = await this.mapModel.findOneAndUpdate(
+      { _id: id, user },
+      update,
+      {
+        returnDocument: "after",
+      },
+    );
+    if (!updated) {
+      throw new NotFoundException();
+    }
+    return updated;
   }
 
   async removeMap(id: string, user: User): Promise<void> {

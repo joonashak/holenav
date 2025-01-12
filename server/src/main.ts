@@ -5,6 +5,10 @@ import { AppModule } from "./app.module";
 import { CLIENT_URL, HOST_FRONTEND, PORT, SESSION_SECRET } from "./config";
 
 async function bootstrap() {
+  if (!SESSION_SECRET) {
+    throw new Error("Session secret must be configured.");
+  }
+
   const app = await NestFactory.create(AppModule, {
     cors: HOST_FRONTEND ? false : { origin: CLIENT_URL, credentials: true },
   });

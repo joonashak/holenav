@@ -8,22 +8,22 @@ import { PublicAppData } from "./dto/public-app-data.dto";
 export class AppDataResolver {
   constructor(private appDataService: AppDataService) {}
 
-  @Query((returns) => PublicAppData)
+  @Query(() => PublicAppData)
   async getPublicAppData(): Promise<PublicAppData> {
     return this.appDataService.getAppData();
   }
 
-  @Query((returns) => AppData)
+  @Query(() => AppData)
   async getAppData(): Promise<AppData> {
     return this.appDataService.getAppData();
   }
 
-  @Mutation((returns) => AppData)
+  @Mutation(() => AppData)
   async updateMotd(@Args("motd") motd: string): Promise<AppData> {
     return this.appDataService.updateAppData({ motd });
   }
 
-  @Mutation((returns) => AppData)
+  @Mutation(() => AppData)
   async updateAppData(
     @Args("input") input: AppDataUpdateDto,
   ): Promise<AppData> {
