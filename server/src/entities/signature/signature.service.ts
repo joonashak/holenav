@@ -97,14 +97,17 @@ export class SignatureService {
     });
   }
 
-  async update(update: UpdateSignature, folder: Folder) {
+  async update(update: UpdateSignature, folder: Folder, user?: User) {
     const { id, connection: connectionUpdate, ...sigUpdate } = update;
 
     // Require folder ID to be correct for security.
     const signature = await this.signatureModel
       .findOne({ _id: id, folder })
       .populate(this.populateFields);
-    await this.signatureModel.findByIdAndUpdate(signature.id, sigUpdate);
+    await this.signatureModel.findByIdAndUpdate(signature.id, {
+      ...sigUpdate,
+      updatedBy: user.main.name || "",
+    });
 
     if (!signature.connection && connectionUpdate) {
       const connection = await this.connectionService.create(
@@ -116,6 +119,7 @@ export class SignatureService {
           massStatus: MassStatus.STABLE,
           ...connectionUpdate,
           from: signature.systemName,
+          createdBy: user.main.name || "",
         },
         folder.id,
       );
@@ -142,9 +146,12 @@ export class SignatureService {
   async updateSignatures(
     updates: UpdateSignature[],
     folderId: string,
+    user?: User,
   ): Promise<FindSignature[]> {
     const folder = await this.folderService.getFolderById(folderId);
-    return Promise.all(updates.map((update) => this.update(update, folder)));
+    return Promise.all(
+      updates.map((update) => this.update(update, folder, user)),
+    );
   }
 
   async delete(signatureId: string, folder: Folder): Promise<FindSignature> {

@@ -53,8 +53,10 @@ export class SignatureResolver {
     @Args({ name: "updates", type: () => [UpdateSignature] })
     updates: UpdateSignature[],
     @Args("folderId") folderId: string,
+    @UserId() userId: string,
   ): Promise<FindSignature[]> {
-    return this.signatureService.updateSignatures(updates, folderId);
+    const user = await this.userService.findById(userId);
+    return this.signatureService.updateSignatures(updates, folderId, user);
   }
 
   @RequireFolderAccess(FolderAction.Write)
