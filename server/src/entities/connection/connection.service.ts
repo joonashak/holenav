@@ -131,9 +131,8 @@ export class ConnectionService {
     return updated;
   }
 
-  /** Remove connection and its linked pair. */
+  /** Remove connection, its linked pair, and reverse signature. */
   async delete(id: string): Promise<void> {
-    // TODO: Remove reverse signature.
     const connection = await this.connectionModel
       .findById(id)
       .populate("reverse");
@@ -142,5 +141,6 @@ export class ConnectionService {
     }
     await this.connectionModel.findByIdAndDelete(connection.id);
     await this.connectionModel.findByIdAndDelete(connection.reverse.id);
+    await this.signatureService.deleteByConnection(connection.reverse);
   }
 }

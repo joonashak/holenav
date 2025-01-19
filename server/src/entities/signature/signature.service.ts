@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { User } from "@joonashak/nestjs-clone-bay";
 import {
+  BadRequestException,
   forwardRef,
   Inject,
   Injectable,
@@ -206,5 +207,12 @@ export class SignatureService {
       ids.map(async (id) => this.delete(id, folder)),
     );
     return results.filter((res) => res !== null);
+  }
+
+  async deleteByConnection(connection: Connection) {
+    if (!connection) {
+      throw new BadRequestException("Must provide Connection to delete by.");
+    }
+    return this.signatureModel.findOneAndDelete({ connection });
   }
 }
