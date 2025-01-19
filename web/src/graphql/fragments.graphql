@@ -1,43 +1,6 @@
-fragment UserFieldsForManager on SanitizedUserForManager {
-  id
-  systemRole
-  main {
-    esiId
-    name
-    portraitUrl
-    isMain
-    corporation {
-      esiId
-      name
-      ticker
-    }
-    alliance {
-      esiId
-      name
-      ticker
-    }
-  }
-}
-
 fragment FolderFields on Folder {
   id
   name
-}
-
-fragment CorporationFields on HolenavCorporation {
-  esiId
-  name
-  ticker
-}
-
-fragment CharacterFields on HolenavCharacter {
-  esiId
-  name
-  isMain
-  portraitUrl
-  corporation {
-    ...CorporationFields
-  }
 }
 
 fragment MapFields on FindMap {
