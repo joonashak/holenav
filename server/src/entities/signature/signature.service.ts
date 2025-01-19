@@ -19,6 +19,7 @@ import { FindSignature } from "./dto/find-signature.dto";
 import { UpdateSignature } from "./dto/update-signature.dto";
 import SigType from "./enums/sig-type.enum";
 import { Signature } from "./signature.model";
+import { ReverseSignatureUpdate } from "./types";
 
 @Injectable()
 export class SignatureService {
@@ -171,6 +172,22 @@ export class SignatureService {
       updates.map((update) => this.update(update, folder, user)),
     );
     return updated.filter((res) => res !== null);
+  }
+
+  /**
+   * Update signature associated with given `Connection`.
+   *
+   * Allows updating only `systemName`.
+   */
+  async updateReverseSignature({
+    connection,
+    systemName,
+    user,
+  }: ReverseSignatureUpdate) {
+    return this.signatureModel.findOneAndUpdate(
+      { connection },
+      { systemName, updatedBy: user?.main.name },
+    );
   }
 
   async delete(

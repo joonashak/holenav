@@ -90,7 +90,6 @@ export class ConnectionService {
     update: UpdateConnection,
     user?: User,
   ): Promise<Connection> {
-    // TODO: Update reverse signature.
     const query: UpdateQuery<Connection> = {
       ...update,
       updatedBy: user?.main.name || "",
@@ -120,6 +119,11 @@ export class ConnectionService {
     }
 
     await this.connectionModel.findByIdAndUpdate(connection.reverse, revQuery);
+    await this.signatureService.updateReverseSignature({
+      connection: connection.reverse,
+      systemName: revQuery.from,
+      user,
+    });
 
     const updated = await this.connectionModel
       .findById(connection)
