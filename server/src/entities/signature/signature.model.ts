@@ -13,9 +13,15 @@ export class Signature {
   @Field()
   id: string;
 
-  @Field()
-  @Prop()
-  eveId: string;
+  /**
+   * Signature's in-game ID.
+   *
+   * Missing (`null`) ID is allowed because the ID's of signatures for reverse
+   * connections cannot be known ahead of time.
+   */
+  @Field(() => String, { nullable: true })
+  @Prop({ type: String })
+  eveId: string | null;
 
   @Field(() => SigType)
   @Prop({ required: true })

@@ -131,7 +131,7 @@ export type FindSignature = {
   connection?: Maybe<Connection>;
   createdAt: Scalars['DateTime']['output'];
   createdBy: Scalars['String']['output'];
-  eveId: Scalars['String']['output'];
+  eveId?: Maybe<Scalars['String']['output']>;
   folder: Folder;
   id: Scalars['String']['output'];
   name: Scalars['String']['output'];
@@ -380,7 +380,7 @@ export type Signature = {
   connection?: Maybe<Connection>;
   createdAt: Scalars['DateTime']['output'];
   createdBy: Scalars['String']['output'];
-  eveId: Scalars['String']['output'];
+  eveId?: Maybe<Scalars['String']['output']>;
   folder: Folder;
   id: Scalars['String']['output'];
   name: Scalars['String']['output'];
@@ -570,7 +570,7 @@ export type RemoveAllowedAllianceMutationVariables = Exact<{
 
 export type RemoveAllowedAllianceMutation = { __typename?: 'Mutation', removeAllowedAlliance: { __typename?: 'AppData', settings: { __typename?: 'AppSettings', registration: { __typename?: 'RegistrationSettings', allowedCorporations: Array<string> } } } };
 
-export type SignatureFieldsFragment = { __typename?: 'Signature', id: string, name: string, type: SigType, eveId: string, systemName: string, createdAt: any, connection?: { __typename?: 'Connection', eol: boolean, eolAt?: any | null, massStatus: MassStatus } | null };
+export type SignatureFieldsFragment = { __typename?: 'Signature', id: string, name: string, type: SigType, eveId?: string | null, systemName: string, createdAt: any, connection?: { __typename?: 'Connection', eol: boolean, eolAt?: any | null, massStatus: MassStatus } | null };
 
 export type CreateSignaturesMutationVariables = Exact<{
   signatures: Array<CreateSignature> | CreateSignature;
@@ -586,7 +586,7 @@ export type PasteSignaturesMutationVariables = Exact<{
 }>;
 
 
-export type PasteSignaturesMutation = { __typename?: 'Mutation', pasteSignatures: { __typename?: 'SignaturePasteResult', added: Array<{ __typename?: 'Signature', id: string, name: string, type: SigType, eveId: string, systemName: string, createdAt: any, connection?: { __typename?: 'Connection', eol: boolean, eolAt?: any | null, massStatus: MassStatus } | null }>, updated: Array<{ __typename?: 'FindSignature', id: string }>, deleted: Array<{ __typename?: 'Signature', id: string, name: string, type: SigType, eveId: string, systemName: string, createdAt: any, connection?: { __typename?: 'Connection', eol: boolean, eolAt?: any | null, massStatus: MassStatus } | null }> } };
+export type PasteSignaturesMutation = { __typename?: 'Mutation', pasteSignatures: { __typename?: 'SignaturePasteResult', added: Array<{ __typename?: 'Signature', id: string, name: string, type: SigType, eveId?: string | null, systemName: string, createdAt: any, connection?: { __typename?: 'Connection', eol: boolean, eolAt?: any | null, massStatus: MassStatus } | null }>, updated: Array<{ __typename?: 'FindSignature', id: string }>, deleted: Array<{ __typename?: 'Signature', id: string, name: string, type: SigType, eveId?: string | null, systemName: string, createdAt: any, connection?: { __typename?: 'Connection', eol: boolean, eolAt?: any | null, massStatus: MassStatus } | null }> } };
 
 export type FindSignaturesBySystemQueryVariables = Exact<{
   systemName: Scalars['String']['input'];
@@ -594,7 +594,7 @@ export type FindSignaturesBySystemQueryVariables = Exact<{
 }>;
 
 
-export type FindSignaturesBySystemQuery = { __typename?: 'Query', findSignaturesBySystem: Array<{ __typename?: 'FindSignature', id: string, eveId: string, type: SigType, name: string, systemName: string, createdAt: any, createdBy: string, updatedAt: any, updatedBy: string, folder: { __typename?: 'Folder', id: string, name: string }, connection?: { __typename?: 'Connection', id: string, eol: boolean, eolAt?: any | null, from: string, k162?: boolean | null, massStatus: MassStatus, to: string, type?: string | null, unknown: boolean, reverse: { __typename?: 'Connection', id: string, type?: string | null, k162?: boolean | null } } | null }> };
+export type FindSignaturesBySystemQuery = { __typename?: 'Query', findSignaturesBySystem: Array<{ __typename?: 'FindSignature', id: string, eveId?: string | null, type: SigType, name: string, systemName: string, createdAt: any, createdBy: string, updatedAt: any, updatedBy: string, folder: { __typename?: 'Folder', id: string, name: string }, connection?: { __typename?: 'Connection', id: string, eol: boolean, eolAt?: any | null, from: string, k162?: boolean | null, massStatus: MassStatus, to: string, type?: string | null, unknown: boolean, reverse: { __typename?: 'Connection', id: string, type?: string | null, k162?: boolean | null } } | null }> };
 
 export type UpdateSignaturesMutationVariables = Exact<{
   updates: Array<UpdateSignature> | UpdateSignature;

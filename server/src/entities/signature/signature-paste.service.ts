@@ -91,7 +91,7 @@ export class SignaturePasteService {
 
     const pastedEveIds = paste.pastedSignatures.map((sig) => sig.eveId);
     const deletableSigs = existing.filter(
-      (sig) => !pastedEveIds.includes(sig.eveId),
+      (sig) => !pastedEveIds.includes(sig.eveId || ""),
     );
     return deletableSigs.map((sig) => sig.id);
   }
