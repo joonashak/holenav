@@ -6,6 +6,7 @@ import { pick } from "lodash";
 import { Model, UpdateQuery } from "mongoose";
 import isUuid from "../../utils/isUuid";
 import { SignatureService } from "../signature/signature.service";
+import { computeEolAt } from "./connection-utils";
 import { Connection, ConnectionDocument } from "./connection.model";
 import { CreateConnection } from "./dto/create-connection.dto";
 import { UpdateConnection } from "./dto/update-connection.dto";
@@ -41,6 +42,21 @@ export class ConnectionService {
     private signatureService: SignatureService,
   ) {}
 
+  /**
+   * Find connection by ID.
+   *
+   * Throws if not found.
+   */
+  async findById(id: string): Promise<Connection> {
+    const connection = await this.connectionModel.findById(id);
+
+    if (!connection) {
+      throw new NotFoundException(`Connection not found (${id}).`);
+    }
+
+    return connection;
+  }
+
   /** Create `Connection` and its linked reverse `Connection`. */
   async create(
     connection: CreateConnection,
@@ -54,12 +70,14 @@ export class ConnectionService {
      */
     const to = connection.to || randomUUID();
     const unknown = isUuid(to);
+    const eolAt = computeEolAt(connection);
 
     const created = await this.connectionModel.create({
       ...connection,
       to,
       unknown,
       folderId,
+      eolAt,
       createdBy: user?.main.name || "",
     });
 
@@ -90,8 +108,12 @@ export class ConnectionService {
     update: UpdateConnection,
     user?: User,
   ): Promise<Connection> {
+    const current = await this.findById(id);
+    const eolAt = computeEolAt(update, current);
+
     const query: UpdateQuery<Connection> = {
       ...update,
+      eolAt,
       updatedBy: user?.main.name || "",
     };
 

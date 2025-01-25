@@ -55,9 +55,17 @@ export class Connection {
   @Prop()
   eol: boolean;
 
+  /**
+   * Time when connection will go or went EOL.
+   *
+   * For connections not yet EOL, this field records the best guess for when it
+   * will go EOL.
+   *
+   * For EOL connections, this field tells when it was marked as EOL.
+   */
   @Field((type) => Date, { nullable: true })
-  @Prop()
-  eolAt?: Date;
+  @Prop({ type: Date })
+  eolAt: Date | null;
 
   @Field((type) => MassStatus)
   @Prop()
