@@ -5,6 +5,7 @@ import { FolderAccessControlModule } from "../../access-control/folder/folder-ac
 import { ConnectionModule } from "../connection/connection.module";
 import { FolderModule } from "../folder/folder.module";
 import { FolderService } from "../folder/folder.service";
+import { SignatureMaintenanceService } from "./signature-maintenance.service";
 import { SignaturePasteService } from "./signature-paste.service";
 import { Signature, SignatureSchema } from "./signature.model";
 import { SignatureResolver } from "./signature.resolver";
@@ -20,12 +21,13 @@ import { SignatureService } from "./signature.service";
     ]),
   ],
   providers: [
+    CloneBayUserService,
+    FolderService,
+    SignatureMaintenanceService,
+    SignaturePasteService,
     SignatureResolver,
     SignatureService,
-    SignaturePasteService,
-    FolderService,
-    CloneBayUserService,
   ],
-  exports: [SignatureService, MongooseModule],
+  exports: [SignatureService, MongooseModule, SignatureMaintenanceService],
 })
 export class SignatureModule {}
