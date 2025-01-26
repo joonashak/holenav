@@ -6,7 +6,7 @@ import { pick } from "lodash";
 import { Model, UpdateQuery } from "mongoose";
 import isUuid from "../../utils/isUuid";
 import { SignatureService } from "../signature/signature.service";
-import { computeEolAt } from "./connection-utils";
+import { computeEolAt } from "./compute-eol-at";
 import { Connection, ConnectionDocument } from "./connection.model";
 import { CreateConnection } from "./dto/create-connection.dto";
 import { UpdateConnection } from "./dto/update-connection.dto";
