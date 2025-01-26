@@ -4,6 +4,7 @@ import { FolderAccessControlModule } from "../../access-control/folder/folder-ac
 import { SignatureModule } from "../signature/signature.module";
 import { ConnectionGraphResolver } from "./connection-graph.resolver";
 import { ConnectionGraphService } from "./connection-graph.service";
+import { ConnectionMaintenanceService } from "./connection-maintenance.service";
 import { Connection, ConnectionSchema } from "./connection.model";
 import { ConnectionService } from "./connection.service";
 
@@ -19,7 +20,13 @@ import { ConnectionService } from "./connection.service";
     ConnectionService,
     ConnectionGraphService,
     ConnectionGraphResolver,
+    ConnectionMaintenanceService,
   ],
-  exports: [MongooseModule, ConnectionService, ConnectionGraphService],
+  exports: [
+    MongooseModule,
+    ConnectionService,
+    ConnectionGraphService,
+    ConnectionMaintenanceService,
+  ],
 })
 export class ConnectionModule {}
