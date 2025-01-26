@@ -24,6 +24,7 @@ import { EntitiesModule } from "./entities/entities.module";
 import { EsiModule } from "./esi/esi.module";
 import { FrontendModule } from "./frontend/frontend.module";
 import graphQlModuleConfig from "./graphql-module-config";
+import { MaintenanceModule } from "./maintenance/maintenance.module";
 import { UserPreferencesModule } from "./user/user-preferences/user-preferences.module";
 
 @Module({
@@ -47,6 +48,7 @@ import { UserPreferencesModule } from "./user/user-preferences/user-preferences.
     FolderAccessControlModule,
     FrontendModule,
     GraphQLModule.forRoot<ApolloDriverConfig>(graphQlModuleConfig),
+    MaintenanceModule,
     MongooseModule.forRoot(MONGO_URL),
     ScheduleModule.forRoot(),
     UserPreferencesModule,
