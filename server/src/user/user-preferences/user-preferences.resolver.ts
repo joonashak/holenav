@@ -1,4 +1,7 @@
-import { CurrentUserId, RequireAuthentication } from "@joonashak/nestjs-clone-bay";
+import {
+  CurrentUserId,
+  RequireAuthentication,
+} from "@joonashak/nestjs-clone-bay";
 import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
 import { FolderService } from "../../entities/folder/folder.service";
 import { UserPreferences } from "./user-preferences.model";
