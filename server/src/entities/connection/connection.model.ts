@@ -63,15 +63,15 @@ export class Connection {
    *
    * For EOL connections, this field tells when it was marked as EOL.
    */
-  @Field((type) => Date, { nullable: true })
+  @Field(() => Date, { nullable: true })
   @Prop({ type: Date })
   eolAt: Date | null;
 
-  @Field((type) => MassStatus)
+  @Field(() => MassStatus)
   @Prop()
   massStatus: MassStatus;
 
-  @Field((type) => Connection)
+  @Field(() => Connection)
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: Connection.name })
   reverse: Connection;
 

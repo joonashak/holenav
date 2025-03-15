@@ -2,6 +2,6 @@ import { Field, InputType } from "@nestjs/graphql";
 
 @InputType()
 export class DeleteSignaturesInput {
-  @Field((type) => [String])
+  @Field(() => [String])
   ids: string[];
 }

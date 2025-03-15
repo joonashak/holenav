@@ -5,8 +5,9 @@ export type Account = {
   name: string;
 };
 
-export const authFixture = test.extend<{}, { account: Account }>({
+export const authFixture = test.extend<object, { account: Account }>({
   account: [
+    // eslint-disable-next-line no-empty-pattern
     async ({}, use, workerInfo) => {
       await use({
         eveId: workerInfo.workerIndex,

@@ -6,24 +6,24 @@ import { AppSettingsService } from "./app-settings.service";
 export class AppSettingsResolver {
   constructor(private appSettingsService: AppSettingsService) {}
 
-  @Mutation((returns) => AppData)
+  @Mutation(() => AppData)
   async addAllowedCorporation(@Args("esiId") esiId: string): Promise<AppData> {
     return this.appSettingsService.addAllowedCorporation(esiId);
   }
 
-  @Mutation((returns) => AppData)
+  @Mutation(() => AppData)
   async addAllowedAlliance(@Args("esiId") esiId: string): Promise<AppData> {
     return this.appSettingsService.addAllowedAlliance(esiId);
   }
 
-  @Mutation((returns) => AppData)
+  @Mutation(() => AppData)
   async removeAllowedCorporation(
     @Args("esiId") esiId: string,
   ): Promise<AppData> {
     return this.appSettingsService.removeAllowedCorporation(esiId);
   }
 
-  @Mutation((returns) => AppData)
+  @Mutation(() => AppData)
   async removeAllowedAlliance(@Args("esiId") esiId: string): Promise<AppData> {
     return this.appSettingsService.removeAllowedAlliance(esiId);
   }

@@ -10,7 +10,12 @@ const config = tseslint.config(
   { languageOptions: { globals: globals.node } },
   {
     // `ignores` must be in its own object without other config options.
-    ignores: ["**/dist", "**/.vuepress/.temp", "**/.vuepress/.cache"],
+    ignores: [
+      "**/dist",
+      "**/.vuepress/.temp",
+      "**/.vuepress/.cache",
+      "web/src/generated",
+    ],
   },
 );
 
