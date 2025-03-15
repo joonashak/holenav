@@ -1,4 +1,7 @@
-import { RequireAuthentication, UserId } from "@joonashak/nestjs-clone-bay";
+import {
+  CurrentUserId,
+  RequireAuthentication,
+} from "@joonashak/nestjs-clone-bay";
 import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
 import { FolderAction } from "../../access-control/folder/folder-role/folder-action.enum";
 import { Folder } from "./folder.model";
@@ -10,7 +13,7 @@ export class FolderResolver {
 
   @RequireAuthentication()
   @Query(() => [Folder])
-  async findAccessibleFolders(@UserId() userId: string) {
+  async findAccessibleFolders(@CurrentUserId() userId: string) {
     return this.folderService.findFoldersByAllowedAction(
       userId,
       FolderAction.Read,
@@ -19,7 +22,7 @@ export class FolderResolver {
 
   @RequireAuthentication()
   @Query(() => [Folder])
-  async findManageableFolders(@UserId() userId: string) {
+  async findManageableFolders(@CurrentUserId() userId: string) {
     return this.folderService.findFoldersByAllowedAction(
       userId,
       FolderAction.Manage,
@@ -30,7 +33,7 @@ export class FolderResolver {
   @Mutation(() => Folder)
   async createFolder(
     @Args("name") name: string,
-    @UserId() userId: string,
+    @CurrentUserId() userId: string,
   ): Promise<Folder> {
     return this.folderService.createFolderAndPermissions(name, userId);
   }

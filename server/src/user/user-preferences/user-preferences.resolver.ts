@@ -1,4 +1,4 @@
-import { RequireAuthentication, UserId } from "@joonashak/nestjs-clone-bay";
+import { CurrentUserId, RequireAuthentication } from "@joonashak/nestjs-clone-bay";
 import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
 import { FolderService } from "../../entities/folder/folder.service";
 import { UserPreferences } from "./user-preferences.model";
@@ -13,7 +13,7 @@ export class UserPreferencesResolver {
 
   @RequireAuthentication()
   @Query(() => UserPreferences)
-  async getMyUserPreferences(@UserId() userId: string) {
+  async getMyUserPreferences(@CurrentUserId() userId: string) {
     return this.userPreferencesService.findByUserId(userId);
   }
 
@@ -21,7 +21,7 @@ export class UserPreferencesResolver {
   @Mutation(() => UserPreferences)
   async updateActiveFolder(
     @Args("folderId") folderId: string,
-    @UserId() userId: string,
+    @CurrentUserId() userId: string,
   ): Promise<UserPreferences> {
     const activeFolder = await this.folderService.getFolderById(folderId);
     return this.userPreferencesService.update(userId, { activeFolder });

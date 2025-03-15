@@ -1,4 +1,4 @@
-import { CloneBayUserService } from "@joonashak/nestjs-clone-bay";
+import { CloneBayModule } from "@joonashak/nestjs-clone-bay";
 import { Module } from "@nestjs/common";
 import { MongooseModule } from "@nestjs/mongoose";
 import {
@@ -13,12 +13,9 @@ import { UserPreferencesService } from "./user-preferences.service";
     MongooseModule.forFeature([
       { name: UserPreferences.name, schema: UserPreferencesSchema },
     ]),
+    CloneBayModule.forChildren(),
   ],
-  providers: [
-    UserPreferencesService,
-    UserPreferencesResolver,
-    CloneBayUserService,
-  ],
+  providers: [UserPreferencesService, UserPreferencesResolver],
   exports: [UserPreferencesService],
 })
 export class UserPreferencesModule {}

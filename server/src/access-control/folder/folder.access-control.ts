@@ -1,5 +1,5 @@
 import { CloneBayUserService } from "@joonashak/nestjs-clone-bay";
-import { Injectable } from "@nestjs/common";
+import { Injectable, UnauthorizedException } from "@nestjs/common";
 import { groupBy } from "lodash";
 import { Folder } from "../../entities/folder/folder.model";
 import { FolderAbilityFactory } from "./folder-ability.factory";
@@ -15,11 +15,17 @@ export class FolderAccessControl {
   ) {}
 
   async authorize(
+    // TODO: Refactor to `User`?
     userId: string,
     folderId: string,
     action: FolderAction,
   ): Promise<boolean> {
     const user = await this.userService.findById(userId);
+
+    if (!user) {
+      throw new UnauthorizedException();
+    }
+
     const roles = await this.folderRoleService.findRoles(folderId);
     const ability = this.folderAbilityFactory.createForUser(user, roles);
 
@@ -36,6 +42,11 @@ export class FolderAccessControl {
     action: FolderAction,
   ): Promise<string[]> {
     const user = await this.userService.findById(userId);
+
+    if (!user) {
+      throw new UnauthorizedException();
+    }
+
     const roles = await this.folderRoleService.findRolesForUser(user);
     const rolesByFolder = groupBy(roles, "folderId");
 

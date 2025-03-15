@@ -1,7 +1,7 @@
 import {
-  CloneBayUserService,
+  CurrentUser,
   RequireAuthentication,
-  UserId,
+  User,
 } from "@joonashak/nestjs-clone-bay";
 import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
 import { FolderAction } from "../../access-control/folder/folder-role/folder-action.enum";
@@ -23,7 +23,6 @@ export class SignatureResolver {
   constructor(
     private signatureService: SignatureService,
     private sigPasteService: SignaturePasteService,
-    private userService: CloneBayUserService,
   ) {}
 
   @RequireFolderAccess(FolderAction.Write)
@@ -32,9 +31,8 @@ export class SignatureResolver {
     @Args({ name: "signatures", type: () => [CreateSignature] })
     signatures: CreateSignature[],
     @Args("folderId") folderId: string,
-    @UserId() userId: string,
+    @CurrentUser() user: User,
   ): Promise<Signature[]> {
-    const user = await this.userService.findById(userId);
     return this.signatureService.createSignatures(signatures, folderId, user);
   }
 
@@ -53,9 +51,8 @@ export class SignatureResolver {
     @Args({ name: "updates", type: () => [UpdateSignature] })
     updates: UpdateSignature[],
     @Args("folderId") folderId: string,
-    @UserId() userId: string,
+    @CurrentUser() user: User,
   ): Promise<FindSignature[]> {
-    const user = await this.userService.findById(userId);
     return this.signatureService.updateSignatures(updates, folderId, user);
   }
 

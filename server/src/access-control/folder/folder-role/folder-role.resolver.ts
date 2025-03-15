@@ -1,4 +1,4 @@
-import { UserId } from "@joonashak/nestjs-clone-bay";
+import { CurrentUserId } from "@joonashak/nestjs-clone-bay";
 import { Args, Mutation, Resolver } from "@nestjs/graphql";
 import { FolderAccessControl } from "../folder.access-control";
 import { CreateFolderRoleDto } from "./dto/create-folder-role.dto";
@@ -15,7 +15,7 @@ export class FolderRoleResolver {
 
   @Mutation(() => FolderRole)
   async createFolderRole(
-    @UserId() userId: string,
+    @CurrentUserId() userId: string,
     @Args("role") role: CreateFolderRoleDto,
   ): Promise<FolderRole> {
     await this.folderAccessControl.authorize(

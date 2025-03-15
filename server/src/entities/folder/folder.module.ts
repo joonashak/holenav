@@ -1,3 +1,4 @@
+import { CloneBayModule } from "@joonashak/nestjs-clone-bay";
 import { Global, Module } from "@nestjs/common";
 import { MongooseModule } from "@nestjs/mongoose";
 import { FolderAccessControlModule } from "../../access-control/folder/folder-access-control.module";
@@ -10,6 +11,7 @@ import { FolderService } from "./folder.service";
   imports: [
     MongooseModule.forFeature([{ name: Folder.name, schema: FolderSchema }]),
     FolderAccessControlModule,
+    CloneBayModule.forChildren(),
   ],
   exports: [MongooseModule, FolderService],
   providers: [FolderService, FolderResolver],
