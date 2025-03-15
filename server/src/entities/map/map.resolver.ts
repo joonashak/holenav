@@ -1,7 +1,7 @@
 import {
-  CloneBayUserService,
+  CurrentUser,
   RequireAuthentication,
-  UserId,
+  User,
 } from "@joonashak/nestjs-clone-bay";
 import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
 import { CreateMapDto } from "./dto/create-map.dto";
@@ -12,25 +12,20 @@ import { MapService } from "./map.service";
 
 @Resolver()
 export class MapResolver {
-  constructor(
-    private mapService: MapService,
-    private userService: CloneBayUserService,
-  ) {}
+  constructor(private mapService: MapService) {}
 
   @RequireAuthentication()
   @Mutation(() => FindMap)
   async createMap(
     @Args("input") input: CreateMapDto,
-    @UserId() userId: string,
+    @CurrentUser() user: User,
   ): Promise<Map> {
-    const user = await this.userService.findById(userId);
     return this.mapService.createMap(input, user);
   }
 
   @RequireAuthentication()
   @Query(() => [FindMap])
-  async findMaps(@UserId() userId: string): Promise<Map[]> {
-    const user = await this.userService.findById(userId);
+  async findMaps(@CurrentUser() user: User): Promise<Map[]> {
     return this.mapService.findMapsForUser(user);
   }
 
@@ -38,9 +33,8 @@ export class MapResolver {
   @Mutation(() => FindMap)
   async updateMap(
     @Args("update") update: UpdateMapDto,
-    @UserId() userId: string,
+    @CurrentUser() user: User,
   ): Promise<Map> {
-    const user = await this.userService.findById(userId);
     return this.mapService.updateMap(update, user);
   }
 
@@ -48,9 +42,8 @@ export class MapResolver {
   @Mutation(() => String)
   async removeMap(
     @Args("id") mapId: string,
-    @UserId() userId: string,
+    @CurrentUser() user: User,
   ): Promise<string> {
-    const user = await this.userService.findById(userId);
     await this.mapService.removeMap(mapId, user);
     return "OK";
   }

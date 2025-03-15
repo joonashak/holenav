@@ -1,4 +1,4 @@
-import { CloneBayUserService } from "@joonashak/nestjs-clone-bay";
+import { CloneBayModule } from "@joonashak/nestjs-clone-bay";
 import { Module } from "@nestjs/common";
 import { MongooseModule } from "@nestjs/mongoose";
 import { FolderAccessControlModule } from "../../access-control/folder/folder-access-control.module";
@@ -16,12 +16,12 @@ import { SignatureService } from "./signature.service";
     FolderModule,
     FolderAccessControlModule,
     ConnectionModule,
+    CloneBayModule.forChildren(),
     MongooseModule.forFeature([
       { name: Signature.name, schema: SignatureSchema },
     ]),
   ],
   providers: [
-    CloneBayUserService,
     FolderService,
     SignatureMaintenanceService,
     SignaturePasteService,

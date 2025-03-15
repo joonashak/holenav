@@ -1,8 +1,4 @@
-import {
-  CloneBayModule,
-  CloneBayResolversModule,
-  CloneBaySsoModule,
-} from "@joonashak/nestjs-clone-bay";
+import { CloneBayModule } from "@joonashak/nestjs-clone-bay";
 import { EveAuthModule } from "@joonashak/nestjs-eve-auth";
 import { ApolloDriverConfig } from "@nestjs/apollo";
 import { Module } from "@nestjs/common";
@@ -34,8 +30,6 @@ import { UserPreferencesModule } from "./user/user-preferences/user-preferences.
     CloneBayModule.forRoot({
       afterLoginUrl: CLIENT_URL,
     }),
-    CloneBayResolversModule,
-    CloneBaySsoModule,
     DevToolsModule,
     EntitiesModule,
     EsiModule,

@@ -1,4 +1,4 @@
-import { CloneBayUserService } from "@joonashak/nestjs-clone-bay";
+import { CloneBayModule } from "@joonashak/nestjs-clone-bay";
 import { CacheModule } from "@nestjs/cache-manager";
 import { Module } from "@nestjs/common";
 import { MongooseModule } from "@nestjs/mongoose";
@@ -14,11 +14,11 @@ import { FolderAccessControl } from "./folder.access-control";
       { name: FolderRole.name, schema: FolderRoleSchema },
     ]),
     CacheModule.register({ ttl: 1000 * 60 }),
+    CloneBayModule.forChildren(),
   ],
   providers: [
     FolderAccessControl,
     FolderAbilityFactory,
-    CloneBayUserService,
     FolderRoleService,
     FolderRoleResolver,
   ],
