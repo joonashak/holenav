@@ -8,6 +8,7 @@ projects=(
   "web"
   "docs"
   "server"
+  "testing/e2e"
 )
 
 project_root=$(pwd)

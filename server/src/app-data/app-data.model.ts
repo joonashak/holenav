@@ -16,7 +16,7 @@ export class AppData {
   @Prop({ default: "" })
   motd: string;
 
-  @Field((type) => AppSettings)
+  @Field(() => AppSettings)
   @Prop({ type: AppSettings })
   settings: AppSettings;
 }

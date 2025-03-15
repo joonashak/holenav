@@ -5,7 +5,7 @@ import { RegistrationSettings } from "./registration-settings.model";
 @ObjectType()
 @Schema()
 export class AppSettings {
-  @Field((type) => RegistrationSettings)
+  @Field(() => RegistrationSettings)
   @Prop({ type: RegistrationSettings })
   registration: RegistrationSettings;
 }

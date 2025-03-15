@@ -28,15 +28,9 @@ jobs:
         with:
           node-version-file: .nvmrc
       - name: Install dependencies
-        run: npm run install:all
-      - name: Lint client
-        if: success() || failure()
+        run: npm ci
+      - name: Lint project
         run: npm run lint
-        working-directory: web
-      - name: Lint server
-        if: success() || failure()
-        run: npm run lint
-        working-directory: server
 
   # No unit tests at the moment after deleting deprecated auth code etc.
   # test-server:

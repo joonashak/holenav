@@ -5,7 +5,7 @@ import { FindSignature } from "./find-signature.dto";
 
 @InputType()
 export class SignaturePaste {
-  @Field((type) => [PastedSignature])
+  @Field(() => [PastedSignature])
   pastedSignatures: PastedSignature[];
 
   @Field()
@@ -20,7 +20,7 @@ export class PastedSignature {
   @Field()
   eveId: string;
 
-  @Field((type) => SigType)
+  @Field(() => SigType)
   type: SigType;
 
   @Field()
@@ -29,12 +29,12 @@ export class PastedSignature {
 
 @ObjectType()
 export class SignaturePasteResult {
-  @Field((type) => [Signature])
+  @Field(() => [Signature])
   added: Signature[];
 
-  @Field((type) => [FindSignature])
+  @Field(() => [FindSignature])
   updated: FindSignature[];
 
-  @Field((type) => [Signature])
+  @Field(() => [Signature])
   deleted: Signature[];
 }

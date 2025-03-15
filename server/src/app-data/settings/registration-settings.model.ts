@@ -20,12 +20,12 @@ export class RegistrationSettings {
   allianceFilterEnabled: boolean;
 
   /** List of tickers of corporations that registrations are allowed from. */
-  @Field((type) => [String])
+  @Field(() => [String])
   @Prop({ type: [String] })
   allowedCorporations: string[];
 
   /** List of tickers of alliances that registrations are allowed from. */
-  @Field((type) => [String])
+  @Field(() => [String])
   @Prop({ type: [String] })
   allowedAlliances: string[];
 }

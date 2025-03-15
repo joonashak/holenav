@@ -14,12 +14,12 @@ export class RegistrationSettingsUpdateDto {
 
 @InputType()
 export class AppSettingsUpdateDto {
-  @Field((type) => RegistrationSettingsUpdateDto, { nullable: true })
+  @Field(() => RegistrationSettingsUpdateDto, { nullable: true })
   registration: RegistrationSettingsUpdateDto;
 }
 
 @InputType()
 export class AppDataUpdateDto {
-  @Field((type) => AppSettingsUpdateDto, { nullable: true })
+  @Field(() => AppSettingsUpdateDto, { nullable: true })
   settings: AppSettingsUpdateDto;
 }
