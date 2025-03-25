@@ -146,4 +146,19 @@ describe("SignatureService", () => {
     );
     expect(connectionService.delete).toHaveBeenCalledTimes(1);
   });
+
+  it("Does not attempt to delete a missing signature", async () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    signatureModel.findOne().populate.mockResolvedValueOnce(undefined as any);
+
+    const test = async () => signatureService.delete("anything", testFolder);
+
+    await expect(test()).resolves.toBeNull();
+  });
+
+  it("Deletes connection along with signature", async () => {
+    signatureModel.findOne().populate.mockResolvedValueOnce(testSignature);
+    await signatureService.delete("whatever", testFolder);
+    expect(connectionService.delete).toHaveReturnedTimes(1);
+  });
 });
