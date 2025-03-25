@@ -10,5 +10,5 @@ export class UpdateSignature extends PartialType(
   id: string;
 
   @Field(() => UpdateConnection, { nullable: true })
-  connection?: UpdateConnection;
+  connection?: UpdateConnection | null;
 }
