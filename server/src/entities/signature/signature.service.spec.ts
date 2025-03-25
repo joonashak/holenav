@@ -1,9 +1,11 @@
 import { createMock, DeepMocked } from "@golevelup/ts-jest";
+import { NotFoundException } from "@nestjs/common";
 import { getModelToken } from "@nestjs/mongoose";
 import { Test } from "@nestjs/testing";
 import { Model } from "mongoose";
 import { ConnectionDocument } from "../connection/connection.model";
 import { ConnectionService } from "../connection/connection.service";
+import { UpdateConnection } from "../connection/dto/update-connection.dto";
 import MassStatus from "../connection/mass-status.enum";
 import { Folder } from "../folder/folder.model";
 import { CreateSignature } from "./dto/create-signature.dto";
@@ -97,5 +99,51 @@ describe("SignatureService", () => {
     await expect(test).rejects.toThrow();
     expect(connectionService.delete).toHaveBeenCalledTimes(1);
     expect(connectionService.delete).toHaveBeenCalledWith(createdConnectionId);
+  });
+
+  it("Does not attempt to update a missing signature", async () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    signatureModel.findOne().populate.mockResolvedValueOnce(undefined as any);
+
+    const test = async () =>
+      signatureService.update({ id: "anything" }, testFolder);
+
+    await expect(test).rejects.toThrow(NotFoundException);
+  });
+
+  it("Creates new connection when update adds one", async () => {
+    signatureModel.findOne().populate.mockResolvedValueOnce(testRelic);
+    await signatureService.update(
+      {
+        id: "anything",
+        connection: testSignature.connection as UpdateConnection,
+      },
+      testFolder,
+    );
+    expect(connectionService.create).toHaveBeenCalledTimes(1);
+  });
+
+  it("Updates existing connection", async () => {
+    signatureModel.findOne().populate.mockResolvedValueOnce(testSignature);
+    await signatureService.update(
+      {
+        id: "anything",
+        connection: testSignature.connection as UpdateConnection,
+      },
+      testFolder,
+    );
+    expect(connectionService.update).toHaveBeenCalledTimes(1);
+  });
+
+  it("Deletes existing connection when update does not include one", async () => {
+    signatureModel.findOne().populate.mockResolvedValueOnce(testSignature);
+    await signatureService.update(
+      {
+        id: "anything",
+        connection: null,
+      },
+      testFolder,
+    );
+    expect(connectionService.delete).toHaveBeenCalledTimes(1);
   });
 });
