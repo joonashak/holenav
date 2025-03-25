@@ -1,7 +1,8 @@
-import { createMock } from "@golevelup/ts-jest";
+import { createMock, DeepMocked } from "@golevelup/ts-jest";
 import { getModelToken } from "@nestjs/mongoose";
 import { Test } from "@nestjs/testing";
 import { Model } from "mongoose";
+import { ConnectionDocument } from "../connection/connection.model";
 import { ConnectionService } from "../connection/connection.service";
 import MassStatus from "../connection/mass-status.enum";
 import { Folder } from "../folder/folder.model";
@@ -40,8 +41,8 @@ const testFolder: Folder = {
 
 describe("SignatureService", () => {
   let signatureService: SignatureService;
-  let signatureModel: Model<SignatureDocument>;
-  let connectionService: ConnectionService;
+  let signatureModel: DeepMocked<Model<SignatureDocument>>;
+  let connectionService: DeepMocked<ConnectionService>;
 
   const modelToken = getModelToken(Signature.name);
 
@@ -79,5 +80,22 @@ describe("SignatureService", () => {
       testFolder.id,
       undefined,
     );
+  });
+
+  it("Connections are deleted if signature creation fails", async () => {
+    const createdConnectionId = "aoeirgh9385";
+
+    connectionService.create.mockResolvedValueOnce({
+      id: createdConnectionId,
+    } as ConnectionDocument);
+
+    signatureModel.create.mockRejectedValueOnce(new Error());
+
+    const test = async () =>
+      signatureService.createSignature(testSignature, testFolder);
+
+    await expect(test).rejects.toThrow();
+    expect(connectionService.delete).toHaveBeenCalledTimes(1);
+    expect(connectionService.delete).toHaveBeenCalledWith(createdConnectionId);
   });
 });
