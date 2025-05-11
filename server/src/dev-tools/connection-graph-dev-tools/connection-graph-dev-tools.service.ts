@@ -4,6 +4,7 @@ import { ConnectionService } from "../../entities/connection/connection.service"
 import { MapService } from "../../entities/map/map.service";
 import { SignatureService } from "../../entities/signature/signature.service";
 import { UserPreferencesService } from "../../user/user-preferences/user-preferences.service";
+import { connectionGraphData } from "./connection-graph-data";
 
 @Injectable()
 export class ConnectionGraphDevToolsService {
@@ -14,11 +15,9 @@ export class ConnectionGraphDevToolsService {
     private mapService: MapService,
   ) {}
 
-  async generateAndSave(user: User) {
-    const activeFolder = await this.getActiveFolder(user);
+  async reset(user: User) {
     await this.cleanUp(user);
-    // TODO: Create maps.
-    // TODO: Save new sigs and connections.
+    await this.generateConnectionGraph(user);
     return "OK";
   }
 
@@ -39,5 +38,19 @@ export class ConnectionGraphDevToolsService {
       );
     }
     return activeFolder;
+  }
+
+  private async generateConnectionGraph(user: User) {
+    await Promise.all(
+      connectionGraphData.map(async ({ name, rootSystemName, signatures }) => {
+        await this.mapService.createMap({ name, rootSystemName }, user);
+        const folder = await this.getActiveFolder(user);
+        await this.signatureService.createSignatures(
+          signatures,
+          folder.id,
+          user,
+        );
+      }),
+    );
   }
 }

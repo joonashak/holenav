@@ -18,6 +18,6 @@ export class DevToolsController {
 
   @Get("seed")
   async seed(@CurrentUser() user: User) {
-    return this.connectionGraphDevToolsService.generateAndSave(user);
+    return this.connectionGraphDevToolsService.reset(user);
   }
 }
