@@ -15,6 +15,7 @@ const config = tseslint.config(
       "**/.vuepress/.temp",
       "**/.vuepress/.cache",
       "web/src/generated",
+      "testing/e2e/playwright-report",
     ],
   },
 );

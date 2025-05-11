@@ -8,15 +8,11 @@ import {
 } from "@mui/material";
 import { devToolsEnabled } from "../../config";
 import AppTitle from "../common/AppTitle";
-import useLocalData from "../local-data/useLocalData";
 import DevToolsNotice from "./DevToolsNotice";
 import LoginOrAppButton from "./LoginOrAppButton";
 import Motd from "./motd/Motd";
 
 const FrontPage = () => {
-  const { authToken, mockUser } = useLocalData();
-  const loggedIn = authToken || mockUser;
-
   return (
     <>
       <AppBar
@@ -25,7 +21,10 @@ const FrontPage = () => {
       >
         <Toolbar sx={{ flexDirection: { xs: "column", md: "row" } }}>
           <AppTitle sx={{ flexGrow: 1 }} />
-          <LoginOrAppButton loggedIn={!!loggedIn} />
+          {
+            // FIXME: Make login button change.
+          }
+          <LoginOrAppButton loggedIn={false} />
         </Toolbar>
       </AppBar>
       <Container maxWidth="md">
