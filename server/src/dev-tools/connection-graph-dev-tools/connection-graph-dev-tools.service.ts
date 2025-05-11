@@ -1,7 +1,7 @@
 import { User } from "@joonashak/nestjs-clone-bay";
 import { BadRequestException, Injectable } from "@nestjs/common";
 import { ConnectionService } from "../../entities/connection/connection.service";
-import { Folder } from "../../entities/folder/folder.model";
+import { MapService } from "../../entities/map/map.service";
 import { SignatureService } from "../../entities/signature/signature.service";
 import { UserPreferencesService } from "../../user/user-preferences/user-preferences.service";
 
@@ -11,18 +11,22 @@ export class ConnectionGraphDevToolsService {
     private userPreferencesService: UserPreferencesService,
     private signatureService: SignatureService,
     private connectionService: ConnectionService,
+    private mapService: MapService,
   ) {}
 
   async generateAndSave(user: User) {
     const activeFolder = await this.getActiveFolder(user);
-    await this.cleanUp(activeFolder);
+    await this.cleanUp(user);
+    // TODO: Create maps.
     // TODO: Save new sigs and connections.
     return "OK";
   }
 
-  private async cleanUp(folder: Folder) {
-    await this.signatureService.deleteByFolder(folder.id);
-    await this.connectionService.deleteByFolder(folder.id);
+  private async cleanUp(user: User) {
+    const activeFolder = await this.getActiveFolder(user);
+    await this.signatureService.deleteByFolder(activeFolder.id);
+    await this.connectionService.deleteByFolder(activeFolder.id);
+    await this.mapService.deleteByUser(user);
   }
 
   private async getActiveFolder(user: User) {
