@@ -14,15 +14,7 @@ export class ConnectionGraphDevToolsService {
   ) {}
 
   async generateAndSave(user: User) {
-    const { activeFolder } = await this.userPreferencesService.findByUserId(
-      user.id,
-    );
-    if (!activeFolder) {
-      throw new BadRequestException(
-        "Active folder is not set. Cannot continue with connection graph generation.",
-      );
-    }
-
+    const activeFolder = await this.getActiveFolder(user);
     await this.cleanUp(activeFolder);
     // TODO: Save new sigs and connections.
     return "OK";
@@ -31,5 +23,17 @@ export class ConnectionGraphDevToolsService {
   private async cleanUp(folder: Folder) {
     await this.signatureService.deleteByFolder(folder.id);
     await this.connectionService.deleteByFolder(folder.id);
+  }
+
+  private async getActiveFolder(user: User) {
+    const { activeFolder } = await this.userPreferencesService.findByUserId(
+      user.id,
+    );
+    if (!activeFolder) {
+      throw new BadRequestException(
+        "Active folder is not set. Cannot continue with connection graph generation.",
+      );
+    }
+    return activeFolder;
   }
 }
