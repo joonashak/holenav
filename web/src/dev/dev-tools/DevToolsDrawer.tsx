@@ -1,7 +1,6 @@
 import { Button, Drawer } from "@mui/material";
 import { yellow } from "@mui/material/colors";
 import MockUserSelect from "./MockUserSelect";
-import PollSettingSwitch from "./PollSettingSwitch";
 
 type DevToolsDrawerProps = {
   open: boolean;
@@ -34,7 +33,6 @@ const DevToolsDrawer = ({ open, onClose }: DevToolsDrawerProps) => {
         },
       }}
     >
-      <PollSettingSwitch />
       <Button variant="contained" color="primary" onClick={reset}>
         Reset Database
       </Button>
