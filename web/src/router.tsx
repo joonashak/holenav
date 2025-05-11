@@ -1,5 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import AppContainer from "./AppContainer";
+import DevTools from "./components/dev-tools/DevTools";
 import FrontPage from "./components/front-page/FrontPage";
 import FolderDialog from "./components/settings/folder-settings/FolderDialog";
 import FolderSettings from "./components/settings/folder-settings/FolderSettings";
@@ -26,6 +27,7 @@ const router = createBrowserRouter([
           { path: "edit-map", element: <MapDialog edit /> },
           { path: "folder-options", element: <FolderSettings /> },
           { path: "new-folder", element: <FolderDialog /> },
+          { path: "dev-tools", element: <DevTools /> },
         ],
       },
       { path: "*", element: <NotFoundView /> },
