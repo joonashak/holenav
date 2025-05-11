@@ -175,4 +175,13 @@ export class ConnectionService {
     await this.connectionModel.findByIdAndDelete(connection.reverse.id);
     await this.signatureService.deleteByConnection(connection.reverse);
   }
+
+  /**
+   * Delete all connections in given folder.
+   *
+   * Does not remove associated signatures. Does not check for permissions.
+   */
+  async deleteByFolder(folderId: string) {
+    await this.connectionModel.deleteMany({ folderId });
+  }
 }

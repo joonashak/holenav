@@ -231,4 +231,14 @@ export class SignatureService {
     }
     return this.signatureModel.findOneAndDelete({ connection });
   }
+
+  /**
+   * Delete all signatures in given folder.
+   *
+   * Does not remove associated connections. Does not check for permissions.
+   */
+  async deleteByFolder(folderId: string) {
+    const folder = await this.folderService.getFolderById(folderId);
+    await this.signatureModel.deleteMany({ folder });
+  }
 }
