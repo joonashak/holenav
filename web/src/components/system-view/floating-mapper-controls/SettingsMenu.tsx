@@ -34,6 +34,16 @@ const SettingsMenu = () => {
         onClose={closeMenu}
       >
         <MenuItem onClick={linkTo("folder-options")}>Folder Options</MenuItem>
+        <MenuItem
+          onClick={linkTo("dev-tools")}
+          sx={{
+            bgcolor: "#ffd700",
+            color: "black",
+            ":hover": { color: "#675700", bgcolor: "#ffd700" },
+          }}
+        >
+          Developer Tools
+        </MenuItem>
       </Menu>
     </>
   );
