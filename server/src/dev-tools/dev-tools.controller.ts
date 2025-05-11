@@ -1,9 +1,14 @@
+import { CurrentUser, User } from "@joonashak/nestjs-clone-bay";
 import { Controller, Get } from "@nestjs/common";
+import { ConnectionGraphDevToolsService } from "./connection-graph-dev-tools/connection-graph-dev-tools.service";
 import { DevToolsService } from "./dev-tools.service";
 
 @Controller("dev")
 export class DevToolsController {
-  constructor(private devToolsService: DevToolsService) {}
+  constructor(
+    private devToolsService: DevToolsService,
+    private connectionGraphDevToolsService: ConnectionGraphDevToolsService,
+  ) {}
 
   @Get("reset")
   async reset() {
@@ -11,16 +16,8 @@ export class DevToolsController {
     return "OK";
   }
 
-  // TODO: Replace with more granular methods.
   @Get("seed")
-  async seed() {
-    await this.devToolsService.seedDatabase();
-    return "OK";
-  }
-
-  // TODO: Replace with mock ESI?
-  @Get("mockUsers")
-  async mockUsers() {
-    return this.devToolsService.getMockUsers();
+  async seed(@CurrentUser() user: User) {
+    return this.connectionGraphDevToolsService.reset(user);
   }
 }

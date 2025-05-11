@@ -9,6 +9,7 @@
     "start": "docker compose up -d mongo server web && npm run logs",
     "start:test": "docker compose up mongo server-test web-test",
     "stop": "docker compose down",
+    "restart": "npm stop && npm start",
     "logs": "docker compose logs -f server web",
     "logs:all": "docker compose logs -f",
     "test": "npm run lint && npm run test:server",

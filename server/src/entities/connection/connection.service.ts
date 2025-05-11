@@ -1,5 +1,10 @@
 import { User } from "@joonashak/nestjs-clone-bay";
-import { Injectable, NotFoundException } from "@nestjs/common";
+import {
+  forwardRef,
+  Inject,
+  Injectable,
+  NotFoundException,
+} from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { randomUUID } from "crypto";
 import { pick } from "lodash";
@@ -39,6 +44,7 @@ export class ConnectionService {
 
   constructor(
     @InjectModel(Connection.name) private connectionModel: Model<Connection>,
+    @Inject(forwardRef(() => SignatureService))
     private signatureService: SignatureService,
   ) {}
 
@@ -168,5 +174,14 @@ export class ConnectionService {
     await this.connectionModel.findByIdAndDelete(connection.id);
     await this.connectionModel.findByIdAndDelete(connection.reverse.id);
     await this.signatureService.deleteByConnection(connection.reverse);
+  }
+
+  /**
+   * Delete all connections in given folder.
+   *
+   * Does not remove associated signatures. Does not check for permissions.
+   */
+  async deleteByFolder(folderId: string) {
+    await this.connectionModel.deleteMany({ folderId });
   }
 }
