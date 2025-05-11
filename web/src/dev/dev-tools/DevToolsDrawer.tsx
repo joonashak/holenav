@@ -1,6 +1,5 @@
 import { Button, Drawer } from "@mui/material";
 import { yellow } from "@mui/material/colors";
-import MockUserSelect from "./MockUserSelect";
 
 type DevToolsDrawerProps = {
   open: boolean;
@@ -39,7 +38,6 @@ const DevToolsDrawer = ({ open, onClose }: DevToolsDrawerProps) => {
       <Button variant="contained" color="primary" onClick={seed}>
         Reset &amp; Seed Database
       </Button>
-      <MockUserSelect />
     </Drawer>
   );
 };

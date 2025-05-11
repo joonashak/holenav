@@ -1,13 +1,12 @@
 import { createState, useState } from "@hookstate/core";
 import activeCharacterStore from "./stores/activeCharacterStore";
-import mockUserStore from "./stores/mockUserStore";
 import tokenStore from "./stores/tokenStore";
 
 const localState = createState(async () => {
   const activeCharacter = await activeCharacterStore.getActiveCharacter();
   const authToken = await tokenStore.getToken();
-  const mockUser = await mockUserStore.getMockUser();
-  return { activeCharacter, authToken, mockUser };
+
+  return { activeCharacter, authToken };
 });
 
 const useLocalData = () => {
@@ -29,11 +28,6 @@ const useLocalData = () => {
     state.merge({ authToken });
   };
 
-  const setMockUser = async (mockUser: string | null) => {
-    await mockUserStore.setMockUser(mockUser);
-    state.merge({ mockUser });
-  };
-
   return {
     get loadingLocalState() {
       return state.promised;
@@ -44,13 +38,9 @@ const useLocalData = () => {
     get authToken() {
       return state.authToken.get();
     },
-    get mockUser() {
-      return state.mockUser.get();
-    },
     setActiveCharacter,
     setDefaultActiveCharacter,
     setAuthToken,
-    setMockUser,
   };
 };
 
