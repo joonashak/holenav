@@ -99,4 +99,33 @@ export const connectionGraphData: ConnectionGraphData[] = [
       }),
     ],
   },
+  {
+    name: "Big Tree",
+    rootSystemName: "J100120",
+    signatures: [
+      // D-chain.
+      wh("EFG-925", "D2A EFG", "D364", "J100120", "J155737"),
+      wh("UWI-199", "D3B UWI", "O477", "J155737"),
+      wh("BNS-724", "DHB BNS", "B274", "J155737", "Chaktaren"),
+      // E-chain.
+      wh("IHF-972", "E5A IHF", "H296", "J100120", "J114154", { k162: true }),
+      wh("ERV-127", "E6B ERV", "V753", "J114154", "J144420"),
+      wh("UIO-237", "ENB UIO", "Z142", "J114154", "0ZN7-G"),
+      wh("IDN-389", "ENB IDN", "N432", "J114154", "O-N589"),
+      wh("WEU-892", "E4B WEU", "H900", "J114154", "J160800", { k162: true }),
+      wh("NWE-457", "E5C NWE", "V911", "J144420"),
+      wh("IOW-238", "E1C IOW", "P060", "J160800", "J135411"),
+      wh("WEF-843", "ELD WEF", "J244", "J135411", "Oyeman"),
+      // F-chain.
+      wh("ERF-328", "FLA ERF", "C140", "J100120"),
+      // G-chain.
+      wh("WUI-389", "G5A WUI", "H296", "J100120", "J170540"),
+      wh("JIQ-832", "G5B JIQ", "H296", "J170540", "J133440"),
+      wh("ORS-569", "G5C ORS", "H296", "J133440", "J103251", { k162: true }),
+      wh("EIO-023", "G5C EIO", "H296", "J133440", "J140717"),
+      wh("ONI-824", "G2D ONI", "D364", "J140717", "J233555"),
+      wh("IER-023", "GHE IER", "N110", "J233555", "Uktiad"),
+      wh("IGJ-892", "G1E IGJ", "Z647", "J233555"),
+    ],
+  },
 ];
