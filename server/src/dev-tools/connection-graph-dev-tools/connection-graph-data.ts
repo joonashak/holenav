@@ -10,7 +10,7 @@ export type ConnectionGraphData = CreateMapDto & {
 const wh = (
   eveId: string,
   name: string,
-  type: string,
+  type: string | null,
   from: string,
   to: string | null = null,
   { k162 = false, eol = false, massStatus = MassStatus.STABLE } = {},
@@ -86,8 +86,17 @@ export const connectionGraphData: ConnectionGraphData[] = [
       relic("OIE-128", "J111141", "Ruined Sansha Monument Site"),
       gas("RWE-573", "J111141"),
       unkn("JSO-882", "J111141"),
+      data("NPQ-852", "J222822"),
+      data("EEE-078", "J222822"),
       wh("NOW-820", "D2A NOW", "D382", "J111141", "J222822"),
       wh("OAS-842", "ALA OAS", "A239", "J111141", "Tama"),
+      wh("WNG-020", "", null, "J111141"),
+      wh("OSN-543", "D3B OSN", "O477", "J222822"),
+      wh("SSO-384", "DHB SSO", "B274", "J222822", "Sobaseki", { eol: true }),
+      wh("HHW-710", "DLC HHW", "B449", "Sobaseki", "Ahbazon", {
+        k162: true,
+        massStatus: MassStatus.CRIT,
+      }),
     ],
   },
 ];
