@@ -1,5 +1,10 @@
 import { User } from "@joonashak/nestjs-clone-bay";
-import { Injectable, NotFoundException } from "@nestjs/common";
+import {
+  forwardRef,
+  Inject,
+  Injectable,
+  NotFoundException,
+} from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { randomUUID } from "crypto";
 import { pick } from "lodash";
@@ -39,6 +44,7 @@ export class ConnectionService {
 
   constructor(
     @InjectModel(Connection.name) private connectionModel: Model<Connection>,
+    @Inject(forwardRef(() => SignatureService))
     private signatureService: SignatureService,
   ) {}
 

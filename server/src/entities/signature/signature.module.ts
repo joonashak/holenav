@@ -1,10 +1,9 @@
 import { CloneBayModule } from "@joonashak/nestjs-clone-bay";
-import { Module } from "@nestjs/common";
+import { forwardRef, Module } from "@nestjs/common";
 import { MongooseModule } from "@nestjs/mongoose";
 import { FolderAccessControlModule } from "../../access-control/folder/folder-access-control.module";
 import { ConnectionModule } from "../connection/connection.module";
 import { FolderModule } from "../folder/folder.module";
-import { FolderService } from "../folder/folder.service";
 import { SignatureMaintenanceService } from "./signature-maintenance.service";
 import { SignaturePasteService } from "./signature-paste.service";
 import { Signature, SignatureSchema } from "./signature.model";
@@ -15,14 +14,13 @@ import { SignatureService } from "./signature.service";
   imports: [
     FolderModule,
     FolderAccessControlModule,
-    ConnectionModule,
+    forwardRef(() => ConnectionModule),
     CloneBayModule.forChildren(),
     MongooseModule.forFeature([
       { name: Signature.name, schema: SignatureSchema },
     ]),
   ],
   providers: [
-    FolderService,
     SignatureMaintenanceService,
     SignaturePasteService,
     SignatureResolver,

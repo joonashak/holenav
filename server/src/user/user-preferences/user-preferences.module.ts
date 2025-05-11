@@ -1,6 +1,7 @@
 import { CloneBayModule } from "@joonashak/nestjs-clone-bay";
 import { Module } from "@nestjs/common";
 import { MongooseModule } from "@nestjs/mongoose";
+import { FolderModule } from "../../entities/folder/folder.module";
 import {
   UserPreferences,
   UserPreferencesSchema,
@@ -14,6 +15,7 @@ import { UserPreferencesService } from "./user-preferences.service";
       { name: UserPreferences.name, schema: UserPreferencesSchema },
     ]),
     CloneBayModule.forChildren(),
+    FolderModule,
   ],
   providers: [UserPreferencesService, UserPreferencesResolver],
   exports: [UserPreferencesService],
