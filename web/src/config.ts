@@ -6,8 +6,6 @@ export const endpoints = {
   graphQl: `${backendUrl}/graphql`,
   dev: {
     reset: `${backendUrl}/dev/reset`,
-    seed: `${backendUrl}/dev/seed`,
-    mockUsers: `${backendUrl}/dev/mockUsers`,
   },
 };
 
