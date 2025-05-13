@@ -4,7 +4,6 @@ import Map from "../map/Map";
 import Container from "./Container";
 import FloatingMapperControls from "./floating-mapper-controls/FloatingMapperControls";
 import Overview from "./overview/Overview";
-import SystemData from "./system-data/SystemData";
 import useSystemData from "./system-data/useSystemData";
 import useCurrentSystemName from "./useCurrentSystemName";
 
@@ -17,14 +16,12 @@ const SystemView = () => {
   }, [systemName]);
 
   return (
-    <SystemData>
-      <Container>
-        <Overview />
-        <Map />
-        <FloatingMapperControls />
-        <Outlet />
-      </Container>
-    </SystemData>
+    <Container>
+      <Overview />
+      <Map />
+      <FloatingMapperControls />
+      <Outlet />
+    </Container>
   );
 };
 

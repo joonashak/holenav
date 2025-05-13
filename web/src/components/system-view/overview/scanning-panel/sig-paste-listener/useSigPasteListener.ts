@@ -1,17 +1,28 @@
-import { createState, useState } from "@hookstate/core";
+import { create } from "zustand";
 import useNotification from "../../../../global-notification/useNotification";
 import useSignatures from "../../../system-data/useSignatures";
 import parsePaste from "./sigPasteParser";
 
-const sigPasteListenerDisabledState = createState(false);
+const useStore = create<{
+  sigPasteListenerEnabled: boolean;
+  disableSigPasteListener: () => void;
+  enableSigPasteListener: () => void;
+}>((set) => ({
+  sigPasteListenerEnabled: true,
+  disableSigPasteListener: () => set({ sigPasteListenerEnabled: false }),
+  enableSigPasteListener: () => set({ sigPasteListenerEnabled: true }),
+}));
 
 const useSigPasteListener = () => {
-  const sigPasteListenerDisabled = useState(sigPasteListenerDisabledState);
+  const { disableSigPasteListener, enableSigPasteListener } = useStore();
+
   const { showWarningNotification } = useNotification();
   const { pasteSignatures } = useSignatures();
 
   const sigPasteListener = async (event: Event) => {
-    if (sigPasteListenerDisabled.get()) {
+    const { sigPasteListenerEnabled } = useStore.getState();
+
+    if (!sigPasteListenerEnabled) {
       return;
     }
 
@@ -35,9 +46,6 @@ const useSigPasteListener = () => {
       showWarningNotification(error.message, { autoHide: true });
     }
   };
-
-  const disableSigPasteListener = () => sigPasteListenerDisabled.set(true);
-  const enableSigPasteListener = () => sigPasteListenerDisabled.set(false);
 
   return {
     sigPasteListener,

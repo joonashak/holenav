@@ -1,5 +1,4 @@
 import { useQuery } from "@apollo/client";
-import { createState, useState } from "@hookstate/core";
 import EditIcon from "@mui/icons-material/Edit";
 import { Box, IconButton, Paper, Typography } from "@mui/material";
 import { useState as useReactState } from "react";
@@ -7,22 +6,15 @@ import ReactMarkdown from "react-markdown";
 import { GetPublicAppDataDocument } from "../../../generated/graphql-operations";
 import MotdEditor from "./MotdEditor";
 
-export const motdState = createState("");
-
 const Motd = () => {
   const userIsAdmin = false;
 
   const [editOpen, setEditOpen] = useReactState(false);
   const toggleEditOpen = () => setEditOpen((prev) => !prev);
 
-  const state = useState(motdState);
-  const { loading } = useQuery(GetPublicAppDataDocument, {
-    onCompleted: (data) => {
-      state.set(data.getPublicAppData.motd);
-    },
-  });
+  const { data } = useQuery(GetPublicAppDataDocument);
 
-  if ((!state.value || loading) && !userIsAdmin) {
+  if (!data?.getPublicAppData.motd) {
     return null;
   }
 
@@ -57,7 +49,7 @@ const Motd = () => {
         )}
       </Box>
       {!editOpen ? (
-        <ReactMarkdown>{state.value}</ReactMarkdown>
+        <ReactMarkdown>{data?.getPublicAppData.motd || ""}</ReactMarkdown>
       ) : (
         <MotdEditor />
       )}
