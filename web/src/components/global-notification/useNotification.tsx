@@ -1,108 +1,104 @@
-import { createState, useState } from "@hookstate/core";
 import { AlertColor } from "@mui/material";
+import { ReactNode } from "react";
+import { create } from "zustand";
 
 type NotificationState = {
   type: AlertColor | undefined;
   message: string | null;
   autoHide: boolean;
+  action?: ReactNode;
 };
 
-type NotificationOptions = {
-  type: AlertColor | undefined;
-  autoHide: boolean;
+type NotificationActions = {
+  setNotification: (notification: NotificationState) => void;
+  resetNotification: () => void;
 };
 
 const defaultState = {
   type: undefined,
   message: null,
   autoHide: false,
+  action: null,
 };
 
-const notificationState = createState<NotificationState>(defaultState);
+export const useNotificationState = create<
+  NotificationState & NotificationActions
+>()((set) => ({
+  ...defaultState,
+  setNotification: (notification: NotificationState) => set(() => notification),
+  resetNotification: () => set(() => defaultState),
+}));
 
-export default () => {
-  const state = useState(notificationState);
+type NotificationOptions = Partial<Pick<NotificationState, "autoHide">>;
 
-  const setNotification = (
-    message: string,
-    options: NotificationOptions,
-  ): void => {
-    state.set({ message, type: options.type, autoHide: options.autoHide });
-  };
-
-  /** Hide current notification. */
-  const resetNotification = (): void => state.set(defaultState);
-
-  /**
-   * Display a global success notification. Hides automatically after a while.
-   *
-   * @param message Message text.
-   * @param options Options object. Set `autoHide` to `false` to make the
-   *   notification persistent.
-   */
-  const showSuccessNotification = (
-    message: string,
-    options: Partial<NotificationOptions> = {},
-  ): void => {
-    setNotification(message, { type: "success", autoHide: true, ...options });
-  };
-
-  /**
-   * Display a global info notification. Hides automatically after a while.
-   *
-   * @param message Message text.
-   * @param options Options object. Set `autoHide` to `false` to make the
-   *   notification persistent.
-   */
-  const showInfoNotification = (
-    message: string,
-    options: Partial<NotificationOptions> = {},
-  ): void => {
-    setNotification(message, { type: "info", autoHide: true, ...options });
-  };
-
-  /**
-   * Display a global error notification.
-   *
-   * @param message Message text.
-   * @param options Options object. Set `autoHide` to `true` to make the
-   *   notification hide itself automatically after a while.
-   */
-  const showErrorNotification = (
-    message: string,
-    options: Partial<NotificationOptions> = {},
-  ): void => {
-    setNotification(message, { type: "error", autoHide: false, ...options });
-  };
-
-  /**
-   * Display a global warning notification.
-   *
-   * @param message Message text.
-   * @param options Options object. Set `autoHide` to `true` to make the
-   *   notification hide itself automatically after a while.
-   */
-  const showWarningNotification = (
-    message: string,
-    options: Partial<NotificationOptions> = {},
-  ): void => {
-    setNotification(message, { type: "warning", autoHide: false, ...options });
-  };
+/**
+ * Convenience hook for showing global notifications without directly
+ * interacting with state.
+ *
+ * This hook subscribes only to the `setNotification` property of the state thus
+ * avoiding unnecessary re-renders. For direct access to the notification state,
+ * use `useNotificationState` hook.
+ */
+const useNotification = () => {
+  const setNotification = useNotificationState(
+    (state) => state.setNotification,
+  );
 
   return {
-    get type() {
-      return state.type.get();
+    /**
+     * Show success notification. Hides automatically.
+     *
+     * @param message Notification content.
+     * @param options Options override.
+     */
+    showSuccessNotification: (
+      message: string,
+      options: NotificationOptions = {},
+    ): void => {
+      setNotification({ message, type: "success", autoHide: true, ...options });
     },
-    get message() {
-      return state.message.get();
+    /**
+     * Show info notification. Hides automatically.
+     *
+     * @param message Notification content.
+     * @param options Options override.
+     */
+    showInfoNotification: (
+      message: string,
+      options: NotificationOptions = {},
+    ): void => {
+      setNotification({ message, type: "info", autoHide: true, ...options });
     },
-    get autoHide() {
-      return state.autoHide.get();
+    /**
+     * Show persistent warning notification.
+     *
+     * @param message Notification content.
+     * @param options Options override.
+     */
+    showWarningNotification: (
+      message: string,
+      options: NotificationOptions = {},
+    ): void => {
+      setNotification({
+        message,
+        type: "warning",
+        autoHide: false,
+        ...options,
+      });
     },
-    showSuccessNotification,
-    showErrorNotification,
-    showWarningNotification,
-    showInfoNotification,
-    resetNotification,
+    /**
+     * Show persistent error notification.
+     *
+     * @param message Notification content.
+     * @param options Options override.
+     */
+    showErrorNotification: (
+      message: string,
+      options: NotificationOptions = {},
+    ): void => {
+      setNotification({ message, type: "error", autoHide: false, ...options });
+    },
   };
 };
+
+export default useNotification;

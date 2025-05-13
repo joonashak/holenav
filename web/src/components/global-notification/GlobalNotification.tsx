@@ -3,20 +3,16 @@
  * Material Design rules. To trigger the notification, use the custom hook
  * `useNotification`.
  */
-import { useState, useEffect } from "react";
-import { Snackbar, Alert } from "@mui/material";
-
-import useNotification from "./useNotification";
+import { Alert, Snackbar } from "@mui/material";
+import { useEffect, useState } from "react";
+import { useNotificationState } from "./useNotification";
 
 const GlobalNotification = () => {
   const [open, setOpen] = useState(false);
-  const { type, message, autoHide, resetNotification } = useNotification();
-
-  const severity = type || "info";
+  const { autoHide, message, type, resetNotification, action } =
+    useNotificationState();
   const autoHideDuration = autoHide ? 5000 : null;
-
   const close = () => setOpen(false);
-  const reset = () => resetNotification();
 
   useEffect(() => {
     if (type) {
@@ -28,11 +24,16 @@ const GlobalNotification = () => {
     <Snackbar
       open={open}
       onClose={close}
-      TransitionProps={{ onExited: reset }}
+      TransitionProps={{ onExited: resetNotification }}
       autoHideDuration={autoHideDuration}
     >
-      <Alert severity={severity} variant="filled" onClose={close}>
-        {message}
+      <Alert
+        severity={type}
+        variant="filled"
+        onClose={close}
+        sx={{ color: "white" }}
+      >
+        {message} {action}
       </Alert>
     </Snackbar>
   );
