@@ -45,16 +45,16 @@
     "zustand": "^5.0.4"
   },
   "devDependencies": {
-    "@graphql-codegen/cli": "^5.0.2",
-    "@graphql-codegen/typed-document-node": "^5.0.7",
-    "@graphql-codegen/typescript": "^4.0.7",
-    "@graphql-codegen/typescript-operations": "^4.2.1",
-    "@types/lodash": "^4.14.177",
+    "@graphql-codegen/cli": "^5.0.6",
+    "@graphql-codegen/typed-document-node": "^5.1.1",
+    "@graphql-codegen/typescript": "^4.1.6",
+    "@graphql-codegen/typescript-operations": "^4.6.1",
+    "@types/lodash": "^4.17.16",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
     "@types/react-router-dom": "^5.1.8",
     "@vitejs/plugin-react": "^4.2.1",
-    "typescript": "^5.2.2",
+    "typescript": "^5.8.3",
     "vite": "^5.2.0"
   }
 }
