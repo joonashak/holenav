@@ -1,28 +1,29 @@
-import { useMutation } from "@apollo/client";
-import { useState } from "@hookstate/core";
+import { useMutation, useQuery } from "@apollo/client";
 import { Button, Typography } from "@mui/material";
 import { FieldValues, useForm } from "react-hook-form";
-import { UpdateMotdDocument } from "../../../generated/graphql-operations";
+import {
+  GetPublicAppDataDocument,
+  UpdateMotdDocument,
+} from "../../../generated/graphql-operations";
 import ControlledTextField from "../../controls/ControlledTextField";
 import FormGroupRow from "../../controls/FormGroupRow";
 import useNotification from "../../global-notification/useNotification";
-import { motdState } from "./Motd";
 
 const MotdEditor = () => {
-  const state = useState(motdState);
+  const { data } = useQuery(GetPublicAppDataDocument);
   const { showSuccessNotification } = useNotification();
   const { handleSubmit, control } = useForm({
     defaultValues: {
-      motd: state.value,
+      // FIXME: This might not work but I didn't wanna spend time on it now. The whole editor thing is not in use right now.
+      motd: data?.getPublicAppData.motd || "",
     },
   });
 
   const [updateMotd] = useMutation(UpdateMotdDocument, {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    onCompleted: (data: any) => {
-      state.set(data.updateMotd.motd);
+    onCompleted: () => {
       showSuccessNotification("MOTD updated.");
     },
+    refetchQueries: [GetPublicAppDataDocument],
   });
 
   const onSubmit = ({ motd }: FieldValues) => {
