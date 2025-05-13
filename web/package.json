@@ -23,7 +23,6 @@
     "@fontsource/gugi": "^4.5.0",
     "@fontsource/roboto": "^5.0.13",
     "@graphql-typed-document-node/core": "^3.1.1",
-    "@hookstate/core": "^4.0.0-rc21",
     "@mui/icons-material": "^5.11.0",
     "@mui/lab": "^5.0.0-alpha.51",
     "@mui/material": "^5.0.4",
