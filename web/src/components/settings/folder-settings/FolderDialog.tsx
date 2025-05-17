@@ -2,18 +2,13 @@ import { useMutation } from "@apollo/client";
 import { Box, Button, FormGroup } from "@mui/material";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import {
-  CreateFolderDocument,
-  FindAccessibleFoldersDocument,
-} from "../../../generated/graphql-operations";
+import { CreateFolderDocument } from "../../../generated/graphql-operations";
 import ControlledTextField from "../../controls/ControlledTextField";
 import SettingsDialog from "../SettingsDialog";
 
 const FolderDialog = () => {
   const navigate = useNavigate();
-  const [createFolder] = useMutation(CreateFolderDocument, {
-    refetchQueries: [FindAccessibleFoldersDocument],
-  });
+  const [createFolder] = useMutation(CreateFolderDocument);
 
   const { handleSubmit, control } = useForm({
     defaultValues: {
