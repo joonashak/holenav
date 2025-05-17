@@ -13,7 +13,7 @@ const GridTooltip = ({ children, rows }: GridTooltipProps) => {
     <Tooltip
       title={<GridTooltipTitle rows={rows} />}
       arrow
-      componentsProps={{
+      slotProps={{
         tooltip: {
           sx: {
             bgcolor: theme.palette.primary.dark,
