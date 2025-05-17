@@ -10,7 +10,7 @@ const AppContainer = () => {
     return null;
   }
 
-  if (error?.graphQLErrors[0].extensions.code === "FORBIDDEN") {
+  if (error?.graphQLErrors[0].extensions?.code === "FORBIDDEN") {
     throw new UnauthorizedException();
   }
 
