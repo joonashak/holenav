@@ -30,10 +30,12 @@ const ControlledTextField = ({
       error={!!error}
       helperText={error && error.message}
       variant="outlined"
-      inputProps={{ "data-cy": `textfield-${name}` }}
       type={type}
       fullWidth
       {...rest}
+      slotProps={{
+        htmlInput: { "data-cy": `textfield-${name}` },
+      }}
     />
   );
 };

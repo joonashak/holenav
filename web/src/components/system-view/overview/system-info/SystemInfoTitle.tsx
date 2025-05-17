@@ -6,7 +6,7 @@ import EffectInfoTable, { EffectInfoTableProps } from "./EffectInfoTable";
 const EffectLabel = ({ effect }: EffectInfoTableProps) => (
   <Tooltip
     title={<EffectInfoTable effect={effect} />}
-    componentsProps={{
+    slotProps={{
       tooltip: {
         sx: { padding: 0, margin: 1 },
       },

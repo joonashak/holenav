@@ -18,7 +18,9 @@ import SettingsDialog from "../SettingsDialog";
 
 const FolderSettings = () => {
   const navigate = useNavigate();
-  const { data: folderData } = useQuery(FindAccessibleFoldersDocument);
+  const { data: folderData } = useQuery(FindAccessibleFoldersDocument, {
+    fetchPolicy: "no-cache",
+  });
   const { data: prefsData } = useQuery(GetMyUserPreferencesDocument);
   const [updateActiveFolder] = useMutation(UpdateActiveFolderDocument, {
     refetchQueries: [GetMyUserPreferencesDocument],

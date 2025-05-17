@@ -24,8 +24,10 @@ const GlobalNotification = () => {
     <Snackbar
       open={open}
       onClose={close}
-      TransitionProps={{ onExited: resetNotification }}
       autoHideDuration={autoHideDuration}
+      slotProps={{
+        transition: { onExited: resetNotification },
+      }}
     >
       <Alert
         severity={type}
