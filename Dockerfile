@@ -1,5 +1,5 @@
 # Production image.
-FROM node:20.13.1 as build
+FROM node:24.0.2 as build
 
 # Build backend.
 WORKDIR /server
@@ -17,7 +17,7 @@ RUN npm run build
 
 
 # Final stage with only necessary files.
-FROM node:20.13.1-alpine
+FROM node:24.0.2-alpine
 
 USER node
 
