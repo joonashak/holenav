@@ -10,7 +10,7 @@ jobs:
     name: Format
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: actions/setup-node@v4
         with:
           node-version-file: .nvmrc
@@ -23,7 +23,7 @@ jobs:
     name: Lint
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: actions/setup-node@v4
         with:
           node-version-file: .nvmrc
@@ -39,7 +39,7 @@ jobs:
       run:
         working-directory: server
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: actions/setup-node@v4
         with:
           node-version-file: .nvmrc
@@ -58,7 +58,7 @@ jobs:
         shardTotal: [4]
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Create empty .env file
         run: touch .env.development
       - name: Set up Node.js
@@ -94,7 +94,7 @@ jobs:
     if: ${{ !cancelled() }}
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
